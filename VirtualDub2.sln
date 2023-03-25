@@ -3,63 +3,63 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VirtualDub", "VirtualDub\VirtualDub.vcxproj", "{0766DAC1-1BC2-4FC8-BDDA-E083FC2F56F4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VirtualDub", "src\VirtualDub\VirtualDub.vcxproj", "{0766DAC1-1BC2-4FC8-BDDA-E083FC2F56F4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kasumi", "Kasumi\Kasumi.vcxproj", "{0D252872-7542-4232-8D02-53F9182AEE15}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kasumi", "src\Kasumi\Kasumi.vcxproj", "{0D252872-7542-4232-8D02-53F9182AEE15}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ami", "Ami\Ami.vcxproj", "{5BAFC3FB-8BFA-4D01-8A71-EBD6CF056283}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ami", "src\Ami\Ami.vcxproj", "{5BAFC3FB-8BFA-4D01-8A71-EBD6CF056283}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Asuka", "Asuka\Asuka.vcxproj", "{6AA99A18-196F-4334-A3DE-D9EEA62CD5E9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Asuka", "src\Asuka\Asuka.vcxproj", "{6AA99A18-196F-4334-A3DE-D9EEA62CD5E9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "disasm", "disasm\disasm.vcxproj", "{7E14A488-0038-48FB-B573-CD10369E9CA7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "disasm", "src\disasm\disasm.vcxproj", "{7E14A488-0038-48FB-B573-CD10369E9CA7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Meia", "Meia\Meia.vcxproj", "{A8006C9B-E3C0-436D-8046-C3180B939E7A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Meia", "src\Meia\Meia.vcxproj", "{A8006C9B-E3C0-436D-8046-C3180B939E7A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lina", "Lina\Lina.vcxproj", "{CED5BA56-E7A7-4AD4-B8F5-C0259B03A821}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lina", "src\Lina\Lina.vcxproj", "{CED5BA56-E7A7-4AD4-B8F5-C0259B03A821}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Priss", "Priss\Priss.vcxproj", "{73619A81-5E8C-48E9-A96A-60A48D8A65C7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Priss", "src\Priss\Priss.vcxproj", "{73619A81-5E8C-48E9-A96A-60A48D8A65C7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Riza", "Riza\Riza.vcxproj", "{AF613049-D4E2-4C65-ADEE-40DC037995CC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Riza", "src\Riza\Riza.vcxproj", "{AF613049-D4E2-4C65-ADEE-40DC037995CC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setup", "Setup\Setup.vcxproj", "{6A3E162D-4403-486B-A1DF-2AA22E2F34FC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setup", "src\Setup\Setup.vcxproj", "{6A3E162D-4403-486B-A1DF-2AA22E2F34FC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sylia", "Sylia\Sylia.vcxproj", "{146714D9-1D90-4D50-B830-F453484EC2CD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sylia", "src\Sylia\Sylia.vcxproj", "{146714D9-1D90-4D50-B830-F453484EC2CD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "system", "system\system.vcxproj", "{C2082189-3ECB-4079-91FA-89D3C8A305C0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "system", "src\system\system.vcxproj", "{C2082189-3ECB-4079-91FA-89D3C8A305C0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{2839395D-BCEF-4D00-B847-031EDA2752E4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "src\test\test.vcxproj", "{2839395D-BCEF-4D00-B847-031EDA2752E4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdicmdrv", "vdicmdrv\vdicmdrv.vcxproj", "{5F0777EC-CD14-43CD-9BA6-ED9295F6312E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdicmdrv", "src\vdicmdrv\vdicmdrv.vcxproj", "{5F0777EC-CD14-43CD-9BA6-ED9295F6312E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdremote", "vdremote\vdremote.vcxproj", "{34D516A5-3A5B-4F4C-803F-B9360D507E31}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdremote", "src\vdremote\vdremote.vcxproj", "{34D516A5-3A5B-4F4C-803F-B9360D507E31}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdsvrlnk", "vdsvrlnk\vdsvrlnk.vcxproj", "{89AF8B3E-6173-4778-9D7C-A41F0D3CAB9C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdsvrlnk", "src\vdsvrlnk\vdsvrlnk.vcxproj", "{89AF8B3E-6173-4778-9D7C-A41F0D3CAB9C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdub", "vdub\vdub.vcxproj", "{3039BD0D-620D-4C6C-93E4-DFD4EDC8042A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdub", "src\vdub\vdub.vcxproj", "{3039BD0D-620D-4C6C-93E4-DFD4EDC8042A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dita", "Dita\Dita.vcxproj", "{308BF83F-B11C-48DC-AAF2-4A2003E8C377}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dita", "src\Dita\Dita.vcxproj", "{308BF83F-B11C-48DC-AAF2-4A2003E8C377}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDLib", "VDLib\VDLib.vcxproj", "{1D6B560F-064D-401E-AC94-C12B6354429C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDLib", "src\VDLib\VDLib.vcxproj", "{1D6B560F-064D-401E-AC94-C12B6354429C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDXFrame", "VDXFrame\VDXFrame.vcxproj", "{8102A7FC-A8CF-4D5A-A5D7-D858B4626D0D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDXFrame", "src\VDXFrame\VDXFrame.vcxproj", "{8102A7FC-A8CF-4D5A-A5D7-D858B4626D0D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tessa", "Tessa\Tessa.vcxproj", "{81ADB599-84B5-4FF3-B781-FB39D5CC63EE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tessa", "src\Tessa\Tessa.vcxproj", "{81ADB599-84B5-4FF3-B781-FB39D5CC63EE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdlaunch", "vdlaunch\vdlaunch.vcxproj", "{6CC5D826-A36B-40B6-A40B-63733D47C4B5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdlaunch", "src\vdlaunch\vdlaunch.vcxproj", "{6CC5D826-A36B-40B6-A40B-63733D47C4B5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdjson", "vdjson\vdjson.vcxproj", "{E6FA3718-4AD2-4B58-903A-45F35CCD2FDE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdjson", "src\vdjson\vdjson.vcxproj", "{E6FA3718-4AD2-4B58-903A-45F35CCD2FDE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDFilters", "VDFilters\VDFilters.vcxproj", "{E256E8BB-FFDA-4D5A-A999-B796C0C97AF1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDFilters", "src\VDFilters\VDFilters.vcxproj", "{E256E8BB-FFDA-4D5A-A999-B796C0C97AF1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDCapture", "VDCapture\VDCapture.vcxproj", "{D6C8E0F0-B596-4F62-A5A8-760F425B2BAC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDCapture", "src\VDCapture\VDCapture.vcxproj", "{D6C8E0F0-B596-4F62-A5A8-760F425B2BAC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDDisplay", "VDDisplay\VDDisplay.vcxproj", "{6638DCCD-01B4-49F8-BC66-696648AA0B84}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VDDisplay", "src\VDDisplay\VDDisplay.vcxproj", "{6638DCCD-01B4-49F8-BC66-696648AA0B84}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib\zlib.vcxproj", "{DBBE5717-54C3-494F-8EEF-6123B6DC8A00}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "src\zlib\zlib.vcxproj", "{DBBE5717-54C3-494F-8EEF-6123B6DC8A00}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libav_tiff", "libav_tiff\libav_tiff.vcxproj", "{5E347AEF-8712-47A5-93C6-13CCA58DD09C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libav_tiff", "src\libav_tiff\libav_tiff.vcxproj", "{5E347AEF-8712-47A5-93C6-13CCA58DD09C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "strmbasd", "directshow\baseclasses.vcxproj", "{E8A3F6FA-AE1C-4C8E-A0B6-9C8480324EAA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "strmbasd", "src\directshow\baseclasses.vcxproj", "{E8A3F6FA-AE1C-4C8E-A0B6-9C8480324EAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

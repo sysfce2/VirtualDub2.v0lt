@@ -24,7 +24,7 @@
 #endif
 
 #include <d3d9.h>
-#include <d3dx9.h>
+#include <../../directx/Include/d3dx9.h>
 
 // {017C18AC-103F-4417-8C51-6BF6EF1E56BE}
 DEFINE_GUID(IID_ID3DXBaseEffectVersion25, 0x17c18ac, 0x103f, 0x4417, 0x8c, 0x51, 0x6b, 0xf6, 0xef, 0x1e, 0x56, 0xbe);

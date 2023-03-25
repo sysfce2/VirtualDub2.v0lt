@@ -17,7 +17,7 @@
 //	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include <d3d9.h>
-#include <d3dx9.h>
+#include <../../directx/Include/d3dx9.h>
 #include <vd2/system/VDString.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/system/math.h>

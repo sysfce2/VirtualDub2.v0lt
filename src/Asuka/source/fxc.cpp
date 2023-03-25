@@ -20,7 +20,7 @@
 #include <list>
 #include <string>
 #include <d3d9.h>
-#include <d3dx9.h>
+#include <../../directx/Include/d3dx9.h>
 #include <objbase.h>
 #include <vd2/system/refcount.h>
 #include <vd2/system/filesys.h>

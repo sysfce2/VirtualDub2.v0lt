@@ -281,7 +281,7 @@ STDMETHODIMP CAVIStreamRemote::QueryInterface(const IID& iid, void **ppv) {
 	} else if (iid == IID_IClassFactory) {
 		*ppv = (IClassFactory *)&iclassfactory;
 		_RPT0(0,"IClassFactory)\n");
-	} else if (iid == IID_IAVIStream) {
+	} else if (iid == another_IID_IAVIStream) {
 		*ppv = (IAVIStream *)this;
 		_RPT0(0,"IAVIStream)\n");
 	} else {
