@@ -775,7 +775,7 @@ VDStringW VDGetLongPathW(const wchar_t *s) {
 
 #if VD_CPU_X86
 	VDStringW VDGetLongPathAutodetect(const wchar_t *s) {
-		VDGetLongPath = VDIsWindowsNT() ? VDGetLongPathW : VDGetLongPathA;
+		VDGetLongPath = VDGetLongPathW;
 
 		return VDGetLongPath(s);
 	}
