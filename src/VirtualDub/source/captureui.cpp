@@ -636,7 +636,7 @@ VDCaptureProjectUI::VDCaptureProjectUI()
 	mpVumeter2 = 0;
 	mhPanelFont2 = 0;
 	mhPanelFont3 = 0;
-	enable_power_scheme = VDIsAtLeastVistaW32();
+	enable_power_scheme = true;
 	mpPrevPower = 0;
 	mpNewPower = 0;
 	ref_procAmp = 0;

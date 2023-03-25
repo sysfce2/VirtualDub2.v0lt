@@ -895,7 +895,7 @@ const VDStringW VDGetDirectory(long nKey, VDGUIHandle ctxParent, const wchar_t *
 
 		if (SUCCEEDED(SHGetMalloc(&pMalloc))) {
 
-			if (VDIsAtLeastVistaW32()) {
+			{
 				IFileOpenDialog *pFileOpen;
 				HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, IID_IFileOpenDialog, reinterpret_cast<void**>(&pFileOpen));
 
@@ -933,28 +933,6 @@ const VDStringW VDGetDirectory(long nKey, VDGUIHandle ctxParent, const wchar_t *
 					pFileOpen->Release();
 				}
 
-			} else {
-				if (wchar_t *pszBuffer = (wchar_t *)pMalloc->Alloc(MAX_PATH * sizeof(wchar_t))) {
-					BROWSEINFOW bi;
-					ITEMIDLIST *pidlBrowse;
-
-					bi.hwndOwner		= (HWND)ctxParent;
-					bi.pidlRoot			= NULL;
-					bi.pszDisplayName	= pszBuffer;
-					bi.lpszTitle		= pszTitle;
-					bi.ulFlags			= BIF_EDITBOX | /*BIF_NEWDIALOGSTYLE |*/ BIF_RETURNONLYFSDIRS | BIF_VALIDATE;
-					bi.lpfn				= NULL;
-
-					if (pidlBrowse = SHBrowseForFolderW(&bi)) {
-						if (SHGetPathFromIDListW(pidlBrowse, pszBuffer)) {
-							wcscpy(fsent.szFile, pszBuffer);
-							bSuccess = true;
-						}
-
-						pMalloc->Free(pidlBrowse);
-					}
-					pMalloc->Free(pszBuffer);
-				}
 			}
 		}
 

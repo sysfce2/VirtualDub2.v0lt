@@ -2060,8 +2060,7 @@ void Dubber::Stop() {
 	if (pStatusHandler && vInfo.cur_proc_src >= 0)
 		pStatusHandler->SetLastPosition(vInfo.cur_proc_src, false);
 
-	if (VDIsAtLeastVistaW32())
-		SetPriorityClass(GetCurrentProcess(), PROCESS_MODE_BACKGROUND_END);
+	SetPriorityClass(GetCurrentProcess(), PROCESS_MODE_BACKGROUND_END);
 
 	if (fError) {
 		throw err;
@@ -2126,8 +2125,6 @@ void Dubber::SetPriority(int index) {
 
 void Dubber::SetBackground(bool background) {
 	// Requires Vista or above.
-	if (!VDIsAtLeastVistaW32())
-		return;
 
 	if (background == mbBackground)
 		return;

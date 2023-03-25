@@ -830,14 +830,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				CheckDlgButton(hdlg, IDC_DRAW_OUTPUT, thisPtr->opt->video.fShowOutputFrame);
 				CheckDlgButton(hdlg, IDC_DRAW_DOUTPUT, thisPtr->opt->video.fShowDecompressedFrame);
 
-				if (VDIsAtLeastVistaW32())
-					CheckDlgButton(hdlg, IDC_BACKGROUND, thisPtr->pDubber->IsBackground());
-				else {
-					HWND hwndItem = GetDlgItem(hdlg, IDC_BACKGROUND);
-
-					if (hwndItem)
-						ShowWindow(hwndItem, SW_HIDE);
-				}
+				CheckDlgButton(hdlg, IDC_BACKGROUND, thisPtr->pDubber->IsBackground());
 
 				hwndItem = GetDlgItem(hdlg, IDC_PRIORITY);
 				SendMessage(hwndItem, CB_RESETCONTENT,0,0);

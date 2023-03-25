@@ -651,12 +651,7 @@ public:
 				}
 			}
 
-			if (!VDIsAtLeastVistaW32()) {
-				IVDUIWindow *w = mpBase->GetControl(105);
-				if (w)
-					w->Destroy();
-			} else
-				SetValue(105, mPrefs.mbRenderBackgroundPriority);
+			SetValue(105, mPrefs.mbRenderBackgroundPriority);
 
 			return true;
 		case kEventDetach:

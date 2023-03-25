@@ -381,7 +381,7 @@ bool VDScreenGrabberGDI::InitDisplay(HWND hwndParent, bool preview) {
 
 	mbExcludeSelf = true;
 	BOOL enabled = false;
-	if (VDIsAtLeastVistaW32()) {
+	{
 		// with composition enabled GetRandomRgn is useless.
 		DwmIsCompositionEnabled(&enabled);
 		if (enabled) mbExcludeSelf = false;

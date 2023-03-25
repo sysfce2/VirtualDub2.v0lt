@@ -30,10 +30,6 @@
 
 #include <vd2/system/VDString.h>
 
-inline bool VDIsAtLeastVistaW32() {
-	return true;
-}
-
 // useful constants missing from the Platform SDK
 
 enum {

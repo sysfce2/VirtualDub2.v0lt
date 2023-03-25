@@ -479,14 +479,11 @@ bool VDCaptureDriverScreen::SetVideoFormat(const BITMAPINFOHEADER *pbih, uint32 
 }
 
 int VDCaptureDriverScreen::GetAudioDeviceCount() {
-	return mbAudioHardwarePresent ? VDIsAtLeastVistaW32() ? 2 : 1 : 0;
+	return mbAudioHardwarePresent ? 2 : 0;
 }
 
 const wchar_t *VDCaptureDriverScreen::GetAudioDeviceName(int idx) {
 	if (idx >= 2 || !mbAudioHardwarePresent)
-		return NULL;
-
-	if (idx == 1 && !VDIsAtLeastVistaW32())
 		return NULL;
 
 	if (idx == 0)
@@ -497,9 +494,6 @@ const wchar_t *VDCaptureDriverScreen::GetAudioDeviceName(int idx) {
 
 bool VDCaptureDriverScreen::SetAudioDevice(int idx) {
 	if (idx < -1 || idx >= 2)
-		return false;
-
-	if (!VDIsAtLeastVistaW32() && idx == 1)
 		return false;
 	
 	if (!idx && !mbAudioHardwarePresent)

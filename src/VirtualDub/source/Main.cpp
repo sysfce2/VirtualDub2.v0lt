@@ -677,7 +677,6 @@ UINT_PTR CALLBACK OpenVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 			dlg->filename = fn->lpstrFile;
 			dlg->DlgProc(msg,wParam,lParam);
 			dlg->ChangeFilename();
-			if (!VDIsAtLeastVistaW32()) SetTimer(hdlg,2,0,0);
 			SetTimer(hdlg,1,200,0);
 			return TRUE;
 		}
@@ -1078,7 +1077,6 @@ UINT_PTR CALLBACK SaveVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 			dlg->mhdlg = hdlg;
 			dlg->nFilterIndex = fn->nFilterIndex;
 			dlg->DlgProc(msg,wParam,lParam);
-			if (!VDIsAtLeastVistaW32()) SetTimer(hdlg,2,0,0);
 			return TRUE;
 		}
 
@@ -2224,7 +2222,6 @@ UINT_PTR CALLBACK SaveImageProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 			SetWindowLongPtr(hdlg, DWLP_USER, (LONG_PTR)dlg);
 			dlg->mhdlg = hdlg;
 			dlg->DlgProc(msg,wParam,lParam);
-			if (!VDIsAtLeastVistaW32()) SetTimer(hdlg,2,0,0);
 			return TRUE;
 		}
 
