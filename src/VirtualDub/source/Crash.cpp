@@ -1910,7 +1910,7 @@ static bool DoSave(const char *pszFilename, const wchar_t *pwszFilename, HANDLE 
 			version = "Vista SP1";
 		}
 		else if (IsWindowsVistaOrGreater()) {
-			version = "Vista SP2";
+			version = "Vista";
 		}
 
 		out.WriteF("Windows %s %s\n" ,version ,build);
