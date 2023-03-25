@@ -201,16 +201,11 @@ ATOM VDUIFrame::Register() {
     wc.a.hCursor		= LoadCursor(NULL, IDC_ARROW);
     wc.a.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1); //GetStockObject(LTGRAY_BRUSH); 
 
-	if (GetVersion() < 0x80000000) {
+	{
 	    wc.w.lpszMenuName	= MAKEINTRESOURCEW(IDR_MAIN_MENU);
 		wc.w.lpszClassName	= szAppNameW;
 
 		sClass = RegisterClassW(&wc.w);
-	} else {
-	    wc.a.lpszMenuName	= MAKEINTRESOURCEA(IDR_MAIN_MENU);
-		wc.a.lpszClassName	= szAppName;
-
-		sClass = RegisterClassA(&wc.a);
 	}
 
 	return !!sClass;

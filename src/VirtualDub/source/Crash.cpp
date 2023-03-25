@@ -76,6 +76,7 @@
 #include <vd2/system/debugx86.h>
 #include <vd2/system/protscope.h>
 #include <vd2/system/w32assist.h>
+#include <VersionHelpers.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -1865,14 +1866,11 @@ static bool DoSave(const char *pszFilename, const wchar_t *pwszFilename, HANDLE 
 
 	// Detect operating system.
 
-	OSVERSIONINFO ovi;
-	ovi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
 #ifndef _M_AMD64
 	HMODULE hmodKernel32 = GetModuleHandle("kernel32");
 #endif
 
-	if (GetVersionEx(&ovi)) {
+	{
 #ifdef _M_AMD64
 		const char *build = "x64";
 #else
@@ -1890,36 +1888,32 @@ static bool DoSave(const char *pszFilename, const wchar_t *pwszFilename, HANDLE 
 
 		const char *version = "?";
 
-		if (ovi.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) {
-			if (ovi.dwMinorVersion > 0)
-				version = "98";
-			else
-				version = "95";
-		} else if (ovi.dwPlatformId == VER_PLATFORM_WIN32_NT) {
-			if (ovi.dwMajorVersion >= 6) {
-				if (ovi.dwMinorVersion > 0)
-					version = "7";
-				else
-					version = "Vista";
-			} else if (ovi.dwMajorVersion == 5) {
-				if (ovi.dwMinorVersion >= 2)
-					version = "Server 2003";
-				else if (ovi.dwMinorVersion >= 1)
-					version = "XP";
-				else
-					version = "2000";
-			} else {
-				version = "NT";
-			}
+		if (IsWindows10OrGreater()) {
+			version = "10";
+		}
+		else if (IsWindows8Point1OrGreater()) {
+			version = "8.1";
+		}
+		else if (IsWindows8OrGreater()) {
+			version = "8";
+		}
+		else if (IsWindows7SP1OrGreater()) {
+			version = "7 SP1";
+		}
+		else if (IsWindows7OrGreater()) {
+			version = "7";
+		}
+		else if (IsWindowsVistaSP2OrGreater()) {
+			version = "Vista SP2";
+		}
+		else if (IsWindowsVistaSP1OrGreater()) {
+			version = "Vista SP1";
+		}
+		else if (IsWindowsVistaOrGreater()) {
+			version = "Vista SP2";
 		}
 
-		out.WriteF("Windows %d.%d (Windows %s %s build %d) [%s]\n"
-			,ovi.dwMajorVersion
-			,ovi.dwMinorVersion
-			,version
-			,build
-			,ovi.dwBuildNumber & 0xffff
-			,ovi.szCSDVersion);
+		out.WriteF("Windows %s %s\n" ,version ,build);
 	}
 
 	uint64	virtualFree = 0;

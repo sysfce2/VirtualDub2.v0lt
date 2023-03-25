@@ -3450,13 +3450,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 			}
 			break;
 		case ID_AUDIO_WINMIXER:
-			{
-				OSVERSIONINFO ovi = {sizeof(OSVERSIONINFO)};
-				if (GetVersionEx(&ovi) && ovi.dwMajorVersion >= 6)
-					ShellExecute((HWND)mhwnd, NULL, "rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1", NULL, SW_SHOWNORMAL);
-				else
-					ShellExecute((HWND)mhwnd, NULL, "sndvol32.exe", "/r", NULL, SW_SHOWNORMAL);
-			}
+			ShellExecute((HWND)mhwnd, NULL, "rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1", NULL, SW_SHOWNORMAL);
 			break;
 		case ID_VIDEO_NODISPLAY:
 			SetDisplayMode(kDisplayNone);

@@ -29,16 +29,9 @@ BOOL WINAPI CtrlHandler(DWORD dwCtrlType) {
 	return FALSE;
 }
 
-#ifdef _M_AMD64
-	inline bool IsUnicodeAPIAvailable() {
-		return true;
-	}
-#else
-	inline bool IsUnicodeAPIAvailable() {
-		return !(GetVersion() & 0x80000000);
-	}
-#endif
-
+inline bool IsUnicodeAPIAvailable() {
+	return true;
+}
 int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TCHAR mappingName[32];
 

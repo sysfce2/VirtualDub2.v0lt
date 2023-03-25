@@ -34,22 +34,8 @@ extern HINSTANCE g_hInst;
 
 namespace {
 	DWORD AutodetectCaptureBltMode() {
-		OSVERSIONINFOA verinfo={sizeof(OSVERSIONINFOA)};
-
-		if (GetVersionExA(&verinfo)) {
-			if (verinfo.dwPlatformId == VER_PLATFORM_WIN32_NT) {
 				// Windows 2000 or newer
-				if (verinfo.dwMajorVersion >= 5)
-					return SRCCOPY | CAPTUREBLT;
-			} else if (verinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) {
-				// Test for Windows 98 or newer
-				if (verinfo.dwMajorVersion >= 5 || (verinfo.dwMajorVersion == 4 && verinfo.dwMinorVersion >= 10))
-					return SRCCOPY | CAPTUREBLT;
-			}
-
-		}
-
-		return SRCCOPY;
+		return SRCCOPY | CAPTUREBLT;
 	}
 }
 

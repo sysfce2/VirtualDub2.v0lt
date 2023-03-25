@@ -53,11 +53,7 @@ vdautoptr<VDVideoDisplayManager> g_pVDVideoDisplayManager;
 
 namespace {
 	bool VDIsTerminalServicesClient() {
-		if ((sint32)(GetVersion() & 0x000000FF) >= 0x00000005) {
-			return GetSystemMetrics(SM_REMOTESESSION) != 0;		// Requires Windows NT SP4 or later.
-		}
-
-		return false;	// Ignore Windows 95/98/98SE/ME/NT3/NT4.  (Broken on NT4 Terminal Server, but oh well.)
+		return GetSystemMetrics(SM_REMOTESESSION) != 0;		// Requires Windows NT SP4 or later.
 	}
 }
 

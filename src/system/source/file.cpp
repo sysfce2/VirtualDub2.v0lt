@@ -33,8 +33,7 @@
 
 namespace {
 	bool IsWindowsNT() {
-		static bool sbIsNT = (LONG)GetVersion()>=0;
-		return sbIsNT;
+		return true;
 	}
 
 	bool IsHardDrivePath(const wchar_t *path) {
@@ -228,9 +227,6 @@ void VDFile::truncate() {
 }
 
 bool VDFile::extendValidNT(sint64 pos) {
-	if (GetVersion() & 0x80000000)
-		return true;				// No need, Windows 95/98/ME do this automatically anyway.
-
 	// The SetFileValidData() API is only available on XP and Server 2003.
 
 	typedef BOOL (APIENTRY *tpSetFileValidData)(HANDLE hFile, LONGLONG ValidDataLength);		// Windows XP, Server 2003
@@ -250,9 +246,6 @@ void VDFile::extendValid(sint64 pos) {
 }
 
 bool VDFile::enableExtendValid() {
-	if (GetVersion() & 0x80000000)
-		return true;				// Not Windows NT, no privileges involved
-
 	// SetFileValidData() requires the SE_MANAGE_VOLUME_NAME privilege, so we must enable it
 	// on the process token. We don't attempt to strip the privilege afterward as that would
 	// introduce race conditions.

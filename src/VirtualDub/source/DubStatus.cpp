@@ -255,10 +255,7 @@ void DubStatus::InitLinks(	DubAudioStreamInfo	*painfo,
 HWND DubStatus::Display(HWND hwndParent, int iInitialPriority) {
 	iPriority = iInitialPriority;
 
-	if (GetVersion()&0x80000000)
-		hwndStatus = CreateDialogParamA(g_hInst, MAKEINTRESOURCEA(IDD_DUBBING), hwndParent, StatusDlgProc, (LPARAM)this);
-	else
-		hwndStatus = CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_DUBBING), hwndParent, StatusDlgProc, (LPARAM)this);
+	hwndStatus = CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_DUBBING), hwndParent, StatusDlgProc, (LPARAM)this);
 
 	if (hwndStatus) {
 		fShowStatusWindow = opt->fShowStatus || opt->mbForceShowStatus;

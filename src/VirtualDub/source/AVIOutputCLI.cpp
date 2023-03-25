@@ -523,8 +523,7 @@ void VDCLIProcessW32::Run(const char *name, const wchar_t *cmdLine, const wchar_
 
 /*
 #if 0	// This requires at least WinSDK 6.0, which we can't switch to yet.
-	OSVERSIONINFO osvi = { sizeof(OSVERSIONINFO) };
-	if (GetVersionEx(&osvi) && osvi.dwMajorVersion >= 6) {
+	{
 		PROC_THREAD_ATTRIBUTE_LIST attList;
 		SIZE_T attListSize;
 		InitializeProcThreadAttributeList(NULL, 1, 0, &attListSize);

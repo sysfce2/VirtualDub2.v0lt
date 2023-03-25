@@ -1058,8 +1058,7 @@ bool VDVideoDisplayMinidriverDirectDraw::Init(HWND hwnd, HMONITOR hmonitor, cons
 			// the result is a failed dependency error when we try loading it. We avoid this by
 			// explicitly checking for Windows Vista or higher.
 
-			OSVERSIONINFO osInfo = { sizeof(OSVERSIONINFO) };
-			if (GetVersionEx(&osInfo) && osInfo.dwMajorVersion >= 6) {
+			{
 				HMODULE hmodDwmApi = LoadLibraryA("dwmapi");
 				if (hmodDwmApi) {
 					typedef HRESULT (WINAPI *tpDwmIsCompositionEnabled)(BOOL *);
@@ -1512,7 +1511,7 @@ bool VDVideoDisplayMinidriverDirectDraw::Update(UpdateMode mode) {
 
 	ddsd.ddpfPixelFormat.dwSize = sizeof(DDPIXELFORMAT);
 	
-	static DWORD dwLockFlags = GetVersion() & 0x80000000 ? DDLOCK_WRITEONLY | DDLOCK_NOSYSLOCK | DDLOCK_WAIT : DDLOCK_WRITEONLY | DDLOCK_WAIT;
+	static DWORD dwLockFlags = DDLOCK_WRITEONLY | DDLOCK_WAIT;
 
 	IDirectDrawSurface2 *pTarget = mpddsBitmap ? mpddsBitmap : mpddsOverlay;
 

@@ -521,10 +521,7 @@ sint64 VDGetDiskFreeSpace(const wchar_t *path) {
 				directoryName += L'\\';
 		}
 
-		if ((LONG)GetVersion() < 0)
-			success = spGetDiskFreeSpaceExA(VDTextWToA(directoryName).c_str(), (PULARGE_INTEGER)&freeClient, (PULARGE_INTEGER)&totalBytes, (PULARGE_INTEGER)&totalFreeBytes);
-		else
-			success = spGetDiskFreeSpaceExW(directoryName.c_str(), (PULARGE_INTEGER)&freeClient, (PULARGE_INTEGER)&totalBytes, (PULARGE_INTEGER)&totalFreeBytes);
+		success = spGetDiskFreeSpaceExW(directoryName.c_str(), (PULARGE_INTEGER)&freeClient, (PULARGE_INTEGER)&totalBytes, (PULARGE_INTEGER)&totalFreeBytes);
 
 		return success ? (sint64)freeClient : -1;
 	} else {
@@ -533,23 +530,14 @@ sint64 VDGetDiskFreeSpace(const wchar_t *path) {
 
 		VDStringW rootPath(VDFileGetRootPath(path));
 
-		if ((LONG)GetVersion() < 0)
-			success = GetDiskFreeSpaceA(rootPath.empty() ? NULL : VDTextWToA(rootPath).c_str(), &sectorsPerCluster, &bytesPerSector, &freeClusters, &totalClusters);
-		else
-			success = GetDiskFreeSpaceW(rootPath.empty() ? NULL : rootPath.c_str(), &sectorsPerCluster, &bytesPerSector, &freeClusters, &totalClusters);
+		success = GetDiskFreeSpaceW(rootPath.empty() ? NULL : rootPath.c_str(), &sectorsPerCluster, &bytesPerSector, &freeClusters, &totalClusters);
 
 		return success ? (sint64)((uint64)sectorsPerCluster * bytesPerSector * freeClusters) : -1;
 	}
 }
 
 bool VDDoesPathExist(const wchar_t *fileName) {
-	bool bExists;
-
-	if (!(GetVersion() & 0x80000000)) {
-		bExists = ((DWORD)-1 != GetFileAttributesW(fileName));
-	} else {
-		bExists = ((DWORD)-1 != GetFileAttributesA(VDTextWToA(fileName).c_str()));
-	}
+	bool bExists = ((DWORD)-1 != GetFileAttributesW(fileName));
 
 	return bExists;
 }
@@ -610,13 +598,7 @@ void VDCreateDirectory(const wchar_t *path) {
 		}
 	}
 
-	BOOL succeeded;
-
-	if (!(GetVersion() & 0x80000000)) {
-		succeeded = CreateDirectoryW(path, NULL);
-	} else {
-		succeeded = CreateDirectoryA(VDTextWToA(path).c_str(), NULL);
-	}
+	BOOL succeeded = CreateDirectoryW(path, NULL);
 
 	if (!succeeded)
 		throw MyWin32Error("Cannot create directory: %%s", GetLastError());
@@ -634,13 +616,7 @@ void VDRemoveDirectory(const wchar_t *path) {
 		}
 	}
 
-	BOOL succeeded;
-
-	if (!(GetVersion() & 0x80000000)) {
-		succeeded = RemoveDirectoryW(path);
-	} else {
-		succeeded = RemoveDirectoryA(VDTextWToA(path).c_str());
-	}
+	BOOL succeeded = RemoveDirectoryW(path);
 
 	if (!succeeded)
 		throw MyWin32Error("Cannot remove directory: %%s", GetLastError());
@@ -746,7 +722,7 @@ VDStringW VDGetFullPath(const wchar_t *partialPath) {
 		wchar_t		w[MAX_PATH];
 	} tmpBuf;
 
-	if (spGetFullPathNameW && !(GetVersion() & 0x80000000)) {
+	if (spGetFullPathNameW) {
 		LPWSTR p;
 
 		tmpBuf.w[0] = 0;
@@ -760,23 +736,6 @@ VDStringW VDGetFullPath(const wchar_t *partialPath) {
 		DWORD newCount = spGetFullPathNameW(partialPath, count, (wchar_t *)tmp.data(), &p);
 		if (newCount < count)
 			return tmp;
-
-		return VDStringW(partialPath);
-	} else {
-		LPSTR p;
-		VDStringA pathA(VDTextWToA(partialPath));
-
-		tmpBuf.a[0] = 0;
-		DWORD count = GetFullPathNameA(pathA.c_str(), MAX_PATH, tmpBuf.a, &p);
-
-		if (count < MAX_PATH)
-			return VDStringW(VDTextAToW(tmpBuf.a));
-
-		VDStringA tmpA(count);
-
-		DWORD newCount = GetFullPathNameA(pathA.c_str(), count, (char *)tmpA.data(), &p);
-		if (newCount < count)
-			return VDTextAToW(tmpA);
 
 		return VDStringW(partialPath);
 	}
@@ -1188,23 +1147,7 @@ bool VDDirectoryIterator::Next() {
 
 	uint32 attribs;
 
-	if (GetVersion() & 0x80000000) {
-		if (mpHandle)
-			mbSearchComplete = !FindNextFileA((HANDLE)mpHandle, &wfd.a);
-		else {
-			mpHandle = FindFirstFileA(VDTextWToA(mSearchPath).c_str(), &wfd.a);
-			mbSearchComplete = (INVALID_HANDLE_VALUE == mpHandle);
-		}
-		if (mbSearchComplete)
-			return false;
-
-		mbDirectory = (wfd.a.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
-		mFilename = VDTextAToW(wfd.a.cFileName);
-		mFileSize = wfd.a.nFileSizeLow + ((sint64)wfd.w.nFileSizeHigh << 32);
-		mLastWriteDate.mTicks = wfd.a.ftLastWriteTime.dwLowDateTime + ((uint64)wfd.a.ftLastWriteTime.dwHighDateTime << 32);
-
-		attribs = wfd.a.dwFileAttributes;
-	} else {
+	{
 		if (mpHandle)
 			mbSearchComplete = !FindNextFileW((HANDLE)mpHandle, &wfd.w);
 		else {
