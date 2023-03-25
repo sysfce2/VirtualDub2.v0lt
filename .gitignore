@@ -1,6 +1,7 @@
 lib
 obj
 out
+.vs
 *.user
 *.ncb
 *.suo
