@@ -3676,15 +3676,7 @@ void VDProjectUI::HandleDragDrop(HDROP hdrop) {
 	Filenames filenames;
 
 	for(UINT i=0; i<fileCount; ++i) {
-		if (!VDIsWindowsNT()) {
-			char szName[MAX_PATH];
-			if (DragQueryFile(hdrop, i, szName, sizeof szName)) {
-				const VDStringW s(VDTextAToW(szName));
-
-				if (!s.empty())
-					filenames.push_back_as(s);
-			}
-		} else {
+		{
 			wchar_t szNameW[MAX_PATH];
 			typedef UINT (APIENTRY *tpDragQueryFileW)(HDROP, UINT, LPWSTR, UINT);
 

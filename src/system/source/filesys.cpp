@@ -641,11 +641,8 @@ bool VDDeleteFileNT(const wchar_t *path) {
 }
 
 bool VDDeletePathAutodetect(const wchar_t *path) {
-	if (VDIsWindowsNT()) {
-		spDeleteFileW = (tpDeleteFileW)GetProcAddress(GetModuleHandle("kernel32"), "DeleteFileW");
-		VDRemoveFile = VDDeleteFileNT;
-	} else
-		VDRemoveFile = VDDeleteFile9x;
+	spDeleteFileW = (tpDeleteFileW)GetProcAddress(GetModuleHandle("kernel32"), "DeleteFileW");
+	VDRemoveFile = VDDeleteFileNT;
 
 	return VDRemoveFile(path);
 }
@@ -653,12 +650,7 @@ bool VDDeletePathAutodetect(const wchar_t *path) {
 ///////////////////////////////////////////////////////////////////////////
 
 void VDMoveFile(const wchar_t *srcPath, const wchar_t *dstPath) {
-	bool success;
-	if (VDIsWindowsNT()) {
-		success = MoveFileW(srcPath, dstPath) != 0;
-	} else {
-		success = MoveFileA(VDTextWToA(srcPath).c_str(), VDTextWToA(dstPath).c_str()) != 0;
-	}
+	bool success = MoveFileW(srcPath, dstPath) != 0;
 
 	if (!success)
 		throw MyWin32Error("Cannot rename \"%ls\" to \"%ls\": %%s", GetLastError(), srcPath, dstPath);
@@ -672,7 +664,7 @@ namespace {
 }
 
 uint64 VDFileGetLastWriteTime(const wchar_t *path) {
-	if (VDIsWindowsNT()) {
+	{
 		WIN32_FIND_DATAW fdw;
 		HANDLE h = FindFirstFileW(path, &fdw);
 		if (h == INVALID_HANDLE_VALUE)
@@ -681,15 +673,6 @@ uint64 VDFileGetLastWriteTime(const wchar_t *path) {
 		FindClose(h);
 
 		return ((uint64)fdw.ftLastWriteTime.dwHighDateTime << 32) + fdw.ftLastWriteTime.dwLowDateTime;
-	} else {
-		WIN32_FIND_DATAA fda;
-		HANDLE h = FindFirstFileA(VDTextWToA(path).c_str(), &fda);
-		if (h == INVALID_HANDLE_VALUE)
-			return 0;
-
-		FindClose(h);
-
-		return ((uint64)fda.ftLastWriteTime.dwHighDateTime << 32) + fda.ftLastWriteTime.dwLowDateTime;
 	}
 }
 
@@ -879,16 +862,11 @@ namespace {
 
 		VDStringW wstr;
 
-		if (VDIsWindowsNT()) {
+		{
 			wcscpy(buf.w, L".");
 			if (GetModuleFileNameW(hInst, buf.w, MAX_PATH))
 				*VDFileSplitPath(buf.w) = 0;
 			wstr = buf.w;
-		} else {
-			strcpy(buf.a, ".");
-			if (GetModuleFileNameA(hInst, buf.a, MAX_PATH))
-				*VDFileSplitPath(buf.a) = 0;
-			wstr = VDTextAToW(buf.a, -1);
 		}
 
 		VDStringW wstr2(VDGetFullPath(wstr.c_str()));
@@ -913,16 +891,11 @@ VDStringW VDGetProgramFilePath() {
 
 	VDStringW wstr;
 
-	if (VDIsWindowsNT()) {
+	{
 		if (!GetModuleFileNameW(NULL, buf.w, MAX_PATH))
 			throw MyWin32Error("Unable to get program path: %%s", GetLastError());
 
 		wstr = buf.w;
-	} else {
-		if (GetModuleFileNameA(NULL, buf.a, MAX_PATH))
-			throw MyWin32Error("Unable to get program path: %%s", GetLastError());
-
-		wstr = VDTextAToW(buf.a, -1);
 	}
 
 	return wstr;
@@ -947,10 +920,7 @@ VDStringW VDGetSystemPathNT() {
 }
 
 VDStringW VDGetSystemPath() {
-	if (VDIsWindowsNT())
-		return VDGetSystemPathNT();
-
-	return VDGetSystemPath9x();
+	return VDGetSystemPathNT();
 }
 
 void VDGetRootPaths(vdvector<VDStringW>& paths) {
@@ -959,7 +929,7 @@ void VDGetRootPaths(vdvector<VDStringW>& paths) {
 		CHAR a[1024];
 	} buf;
 
-	if (VDIsWindowsNT()) {
+	{
 		vdfastvector<WCHAR> heapbufw;
 		WCHAR *pw = buf.w;
 		DWORD wlen = vdcountof(buf.w);
@@ -984,31 +954,6 @@ void VDGetRootPaths(vdvector<VDStringW>& paths) {
 			paths.push_back() = pw;
 			pw += wcslen(pw) + 1;
 		}
-	} else {
-		vdfastvector<CHAR> heapbufa;
-		CHAR *pa = buf.a;
-		DWORD alen = vdcountof(buf.a);
-
-		for(;;) {
-			*pa = 0;
-
-			DWORD r = GetLogicalDriveStringsA(alen, pa);
-
-			if (!r)
-				return;
-
-			if (r <= alen)
-				break;
-
-			heapbufa.resize(r);
-			alen = r;
-			pa = heapbufa.data();
-		}
-
-		while(*pa) {
-			paths.push_back() = VDTextAToW(pa);
-			pa += strlen(pa) + 1;
-		}
 	}
 }
 
@@ -1022,12 +967,9 @@ VDStringW VDGetRootVolumeLabel(const wchar_t *rootPath) {
 	DWORD fsFlags;
 	VDStringW name;
 
-	if (VDIsWindowsNT()) {
+	{
 		if (GetVolumeInformationW(rootPath, buf.w, vdcountof(buf.w), NULL, &maxComponentLength, &fsFlags, NULL, 0))
 			name = buf.w;
-	} else {
-		if (GetVolumeInformationA(VDTextWToA(rootPath).c_str(), buf.a, vdcountof(buf.a), NULL, &maxComponentLength, &fsFlags, NULL, 0))
-			name = VDTextAToW(buf.a);
 	}
 
 	return name;
@@ -1082,11 +1024,7 @@ uint32 VDFileGetNativeAttributesFromAttrsW32(uint32 attrs) {
 }
 
 uint32 VDFileGetAttributes(const wchar_t *path) {
-	uint32 nativeAttrs = 0;
-	if (VDIsWindowsNT())
-		nativeAttrs = ::GetFileAttributesW(path);
-	else
-		nativeAttrs = ::GetFileAttributesA(VDTextWToA(path).c_str());
+	uint32 nativeAttrs = ::GetFileAttributesW(path);
 
 	return VDFileGetAttributesFromNativeW32(nativeAttrs);
 }
@@ -1095,24 +1033,13 @@ void VDFileSetAttributes(const wchar_t *path, uint32 attrsToChange, uint32 newAt
 	const uint32 nativeAttrMask = VDFileGetNativeAttributesFromAttrsW32(attrsToChange);
 	const uint32 nativeAttrVals = VDFileGetNativeAttributesFromAttrsW32(newAttrs);
 
-	if (VDIsWindowsNT()) {
+	{
 		DWORD nativeAttrs = ::GetFileAttributesW(path);
 
 		if (nativeAttrs != INVALID_FILE_ATTRIBUTES) {
 			nativeAttrs ^= (nativeAttrs ^ nativeAttrVals) & nativeAttrMask;
 
 			if (::SetFileAttributesW(path, nativeAttrs))
-				return;
-		}
-	} else {
-		VDStringA pathA(VDTextWToA(path));
-
-		DWORD nativeAttrs = ::GetFileAttributesA(pathA.c_str());
-
-		if (nativeAttrs != INVALID_FILE_ATTRIBUTES) {
-			nativeAttrs ^= (nativeAttrs ^ nativeAttrVals) & nativeAttrMask;
-
-			if (::SetFileAttributesA(pathA.c_str(), nativeAttrs))
 				return;
 		}
 	}

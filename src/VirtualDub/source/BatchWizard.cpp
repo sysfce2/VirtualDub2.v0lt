@@ -434,7 +434,7 @@ bool VDUIBatchWizard::OnCommand(uint32 id, uint32 extcode) {
 							}
 
 							if (success) {
-								if (VDIsWindowsNT()) {
+								{
 									if (!tempPath.empty()) {
 										success = (0 != MoveFileW(srcPath, tempPath.c_str()));
 										if (success) {
@@ -445,22 +445,6 @@ bool VDUIBatchWizard::OnCommand(uint32 id, uint32 extcode) {
 										}
 									} else {
 										success = (0 != MoveFileW(srcPath, dstPath.c_str()));
-									}
-								} else {
-									VDStringA srcPathA(VDTextWToA(srcPath));
-									VDStringA dstPathA(VDTextWToA(dstPath));
-
-									if (!tempPath.empty()) {
-										const VDStringA tempPathA(VDTextWToA(tempPath));
-
-										success = (0 != MoveFileA(srcPathA.c_str(), tempPathA.c_str()));
-										if (success) {
-											success = (0 != MoveFileA(tempPathA.c_str(), dstPathA.c_str()));
-											if (!success)
-												MoveFileA(tempPathA.c_str(), srcPathA.c_str());
-										}
-									} else {
-										success = (0 != MoveFileA(srcPathA.c_str(), dstPathA.c_str()));
 									}
 								}
 							}

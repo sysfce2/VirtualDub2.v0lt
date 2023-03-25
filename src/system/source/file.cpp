@@ -32,10 +32,6 @@
 #include <vd2/system/file.h>
 
 namespace {
-	bool IsWindowsNT() {
-		return true;
-	}
-
 	bool IsHardDrivePath(const wchar_t *path) {
 		const VDStringW rootPath(VDFileGetRootPath(path));
 
@@ -145,17 +141,11 @@ bool VDFile::open_internal(const char *pszFilename, const wchar_t *pwszFilename,
 	VDStringA tempFilenameA;
 	VDStringW tempFilenameW;
 
-	if (IsWindowsNT()) {
+	{
 		if (pszFilename) {
 			tempFilenameW = VDTextAToW(pszFilename);
 			pwszFilename = tempFilenameW.c_str();
 			pszFilename = NULL;
-		}
-	} else {
-		if (pwszFilename) {
-			tempFilenameA = VDTextWToA(pwszFilename);
-			pszFilename = tempFilenameA.c_str();
-			pwszFilename = NULL;
 		}
 	}
 

@@ -45,10 +45,7 @@ bool VDUIControlW32::CreateW32(IVDUIParameters *pParms, const char *pClass, DWOR
 
 	const UINT id = mpBase->GetNextNativeID();
 
-	if (VDIsWindowsNT())
-		mhwnd = CreateWindowExW(exflags, VDTextAToW(pClass).c_str(), mCaption.c_str(), flags, 0, 0, 0, 0, hwndParent, (HMENU)id, GetModuleHandle(NULL), NULL);
-	else
-		mhwnd = CreateWindowExA(exflags, pClass, VDTextWToA(mCaption).c_str(), flags, 0, 0, 0, 0, hwndParent, (HMENU)id, GetModuleHandle(NULL), NULL);
+	mhwnd = CreateWindowExW(exflags, VDTextAToW(pClass).c_str(), mCaption.c_str(), flags, 0, 0, 0, 0, hwndParent, (HMENU)id, GetModuleHandle(NULL), NULL);
 
 	if (!mhwnd)
 		return false;
@@ -109,31 +106,7 @@ SIZE VDUIControlW32::SizeText(int nMaxWidth, int nPadWidth, int nPadHeight) {
 
 	const VDStringW caption(GetCaption());
 
-	if (!VDIsWindowsNT()) {
-		VDStringA tempA(VDTextWToA(caption.c_str()));
-		const char *str = tempA.c_str();
-		HDC hdc;
-
-		if (hdc = GetDC(mhwnd)) {
-			HGDIOBJ hgoOldFont;
-			RECT r={0,0,nMaxWidth};
-			DWORD dwFlags = DT_LEFT|DT_TOP|DT_CALCRECT;
-
-			if (nMaxWidth)
-				dwFlags |= DT_WORDBREAK;
-
-			hgoOldFont = SelectObject(hdc, (HGDIOBJ)SendMessage(mhwnd, WM_GETFONT, 0, 0));
-
-			if (DrawTextA(hdc, str, -1, &r, dwFlags)) {
-				siz.cx = r.right - r.left;
-				siz.cy = r.bottom - r.top;
-			}
-
-			SelectObject(hdc, hgoOldFont);
-
-			ReleaseDC(mhwnd, hdc);
-		}
-	} else {
+	{
 		HDC hdc;
 
 		if (hdc = GetDC(mhwnd)) {
@@ -230,7 +203,7 @@ bool VDUICustomControlW32::Create(IVDUIParameters *pParms, bool forceNonChild, D
 		return false;
 
 	if (!sWindowClass) {
-		if (VDIsWindowsNT()) {
+		{
 			WNDCLASSW wc;
 
 			wc.cbClsExtra		= 0;
@@ -245,23 +218,6 @@ bool VDUICustomControlW32::Create(IVDUIParameters *pParms, bool forceNonChild, D
 			wc.style			= 0;
 
 			sWindowClass = RegisterClassW(&wc);
-			if (!sWindowClass)
-				return false;
-		} else {
-			WNDCLASSA wc;
-
-			wc.cbClsExtra		= 0;
-			wc.cbWndExtra		= DLGWINDOWEXTRA + sizeof(VDUICustomControlW32 *);
-			wc.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1);
-			wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
-			wc.hIcon			= 0;
-			wc.hInstance		= GetModuleHandle(NULL);
-			wc.lpfnWndProc		= StaticWndProc;
-			wc.lpszClassName	= "DitaCustomControl";
-			wc.lpszMenuName		= NULL;
-			wc.style			= 0;
-
-			sWindowClass = RegisterClassA(&wc);
 			if (!sWindowClass)
 				return false;
 		}
@@ -286,10 +242,7 @@ bool VDUICustomControlW32::Create(IVDUIParameters *pParms, bool forceNonChild, D
 	templ.style |= flags;
 	templ.exStyle = exflags;
 
-	if (VDIsWindowsNT())
-		mhwnd = CreateDialogIndirectParamW(GetModuleHandle(NULL), (LPCDLGTEMPLATE)&templ, hwndParent, StaticDlgProc, (LPARAM)this);
-	else
-		mhwnd = CreateDialogIndirectParamA(GetModuleHandle(NULL), (LPCDLGTEMPLATE)&templ, hwndParent, StaticDlgProc, (LPARAM)this);
+	mhwnd = CreateDialogIndirectParamW(GetModuleHandle(NULL), (LPCDLGTEMPLATE)&templ, hwndParent, StaticDlgProc, (LPARAM)this);
 
 	if (mhwnd) {
 		VDSetWindowTextW32(mhwnd, mCaption.c_str());
@@ -318,7 +271,7 @@ LRESULT CALLBACK VDUICustomControlW32::StaticWndProc(HWND hwnd, UINT msg, WPARAM
 	} else
 		pThis = (VDUICustomControlW32 *)GetWindowLongPtr(hwnd, DLGWINDOWEXTRA);
 
-	return pThis ? pThis->WndProc(msg, wParam, lParam) : (VDIsWindowsNT() ? DefDlgProcW : DefDlgProcA)(hwnd, msg, wParam, lParam);
+	return pThis ? pThis->WndProc(msg, wParam, lParam) : DefDlgProcW(hwnd, msg, wParam, lParam);
 }
 
 namespace {
@@ -414,5 +367,5 @@ LRESULT VDUICustomControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		break;
 	}
 
-	return (VDIsWindowsNT() ? DefDlgProcW : DefDlgProcA)(mhwnd, msg, wParam, lParam);
+	return DefDlgProcW(mhwnd, msg, wParam, lParam);
 }

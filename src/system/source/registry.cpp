@@ -122,15 +122,8 @@ bool VDRegistryProviderW32::SetString(void *key, const char *pszName, const char
 }
 
 bool VDRegistryProviderW32::SetString(void *key, const char *pszName, const wchar_t *pszString) {
-	if (!VDIsWindowsNT()) {
-		VDStringA s(VDTextWToA(pszString));
-
-		if (RegSetValueEx((HKEY)key, pszName, 0, REG_SZ, (const BYTE *)s.data(), s.size()))
-			return false;
-	} else {
-		if (RegSetValueExW((HKEY)key, VDTextAToW(pszName).c_str(), 0, REG_SZ, (const BYTE *)pszString, sizeof(wchar_t) * wcslen(pszString)))
-			return false;
-	}
+	if (RegSetValueExW((HKEY)key, VDTextAToW(pszName).c_str(), 0, REG_SZ, (const BYTE *)pszString, sizeof(wchar_t) * wcslen(pszString)))
+		return false;
 
 	return true;
 }
@@ -204,13 +197,6 @@ bool VDRegistryProviderW32::GetString(void *key, const char *pszName, VDStringA&
 }
 
 bool VDRegistryProviderW32::GetString(void *key, const char *pszName, VDStringW& str) {
-	if (!VDIsWindowsNT()) {
-		VDStringA v;
-		if (!GetString(key, pszName, v))
-			return false;
-		str = VDTextAToW(v);
-		return true;
-	}
 
 	const VDStringW wsName(VDTextAToW(pszName));
 	DWORD type;

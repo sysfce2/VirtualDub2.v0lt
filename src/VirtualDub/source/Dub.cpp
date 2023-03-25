@@ -1841,7 +1841,7 @@ void Dubber::Init(IVDVideoSource *const *pVideoSources, uint32 nVideoSources, Au
 
 void Dubber::Go(int iPriority) {
 	// check the version.  if NT, don't touch the processing priority!
-	bool fNoProcessingPriority = VDIsWindowsNT();
+	bool fNoProcessingPriority = true;
 
 	if (!iPriority)
 		iPriority = fNoProcessingPriority || !mpOutputSystem->IsRealTime() ? 5 : 6;

@@ -17,7 +17,7 @@ void VDLaunchProgram(const wchar_t *path) {
 	const DWORD createFlags = CREATE_NEW_PROCESS_GROUP | CREATE_DEFAULT_ERROR_MODE;
 	BOOL success;
 
-	if (VDIsWindowsNT()) {
+	{
 		STARTUPINFOW startupInfoW = { sizeof(STARTUPINFOW) };
 		startupInfoW.dwFlags = STARTF_USESHOWWINDOW;
 		startupInfoW.wShowWindow = SW_SHOWNORMAL;
@@ -27,19 +27,6 @@ void VDLaunchProgram(const wchar_t *path) {
 
 		if (success)
 			success = CreateProcessW(path, (LPWSTR)cmdLine.c_str(), NULL, NULL, FALSE, createFlags, NULL, winDir, &startupInfoW, &processInfo);
-	} else {
-		STARTUPINFOA startupInfoA = { sizeof(STARTUPINFOA) };
-		startupInfoA.dwFlags = STARTF_USESHOWWINDOW;
-		startupInfoA.wShowWindow = SW_SHOWNORMAL;
-
-		const VDStringA& pathA = VDTextWToA(path);
-		const VDStringA& cmdLineA = VDTextWToA(cmdLine);
-		CHAR winDir[MAX_PATH];
-
-		success = GetWindowsDirectoryA(winDir, MAX_PATH);
-
-		if (success)
-			success = CreateProcessA(pathA.c_str(), (LPSTR)cmdLineA.c_str(), NULL, NULL, FALSE, createFlags, NULL, winDir, &startupInfoA, &processInfo);
 	}
 
 	if (!success)

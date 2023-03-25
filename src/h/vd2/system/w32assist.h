@@ -30,10 +30,6 @@
 
 #include <vd2/system/VDString.h>
 
-inline bool VDIsWindowsNT() {
-	return true;
-}
-
 inline bool VDIsAtLeastVistaW32() {
 	return true;
 }

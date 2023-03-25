@@ -916,8 +916,7 @@ IVDFileAsync *VDCreateFileAsync(IVDFileAsync::Mode mode) {
 	switch(mode) {
 
 		case IVDFileAsync::kModeAsynchronous:
-			if (VDIsWindowsNT())
-				return new VDFileAsyncNT;
+			return new VDFileAsyncNT;
 			// Can't do async I/O. Fall-through to 9x method.
 		case IVDFileAsync::kModeThreaded:
 			return new VDFileAsync9x(true, true);
