@@ -11,7 +11,7 @@
     <RootNamespace>helpfile</RootNamespace>
     <Keyword>MakeFileProj</Keyword>
   </PropertyGroup>
-	<Import Project="..\VirtualDub-projects.props" />
+	<Import Project="..\platform.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Makefile</ConfigurationType>
