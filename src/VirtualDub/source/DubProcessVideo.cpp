@@ -998,7 +998,9 @@ void VDDubVideoProcessor::ReadDirectVideoFrame(const VDRenderVideoPipeFrameInfo&
 	RemoveCompletedOutputFrame();
 
 	uint32 flags = (exdata & kBufferFlagDelta) || !(exdata & kBufferFlagDirectWrite) ? 0 : AVIOutputStream::kFlagKeyFrame;
-	mpVideoOut->write(flags, (char *)buffer, lastSize, 1);
+	if (mpVideoOut) { // Checking when the RunNullVideoPass() call is used. Perhaps a better solution is needed.
+		mpVideoOut->write(flags, (char*)buffer, lastSize, 1);
+	}
 
 	mpVInfo->total_size += lastSize + 24;
 	mpVInfo->lastProcessedTimestamp = VDGetCurrentTick();
