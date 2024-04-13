@@ -3942,7 +3942,7 @@ END
 // STUFF
 //
 
-IDR_CHANGES             STUFF                   "changes.bin"
+IDR_CHANGES             STUFF                   "..\\..\\..\\docs\Changes.txt"
 IDR_RELEASE_NOTES       STUFF                   "rel_notes.bin"
 IDR_CREDITS             STUFF                   "credits.txt"
 IDR_LICENSE             STUFF                   "license.bin"

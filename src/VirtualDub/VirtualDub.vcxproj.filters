@@ -1220,9 +1220,6 @@
     <None Include="res\addpoint.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="res\Changes.bin">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="res\dragpoint.cur">
       <Filter>Resource Files</Filter>
     </None>

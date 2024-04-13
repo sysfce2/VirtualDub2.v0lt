@@ -1797,7 +1797,6 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
   </ItemGroup>
   <ItemGroup>
     <None Include="res\addpoint.cur" />
-    <None Include="res\Changes.bin" />
     <None Include="res\dragpoint.cur" />
     <None Include="res\ico00001.ico" />
     <None Include="res\icon1.ico" />
