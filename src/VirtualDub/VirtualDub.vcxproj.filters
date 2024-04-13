@@ -1212,6 +1212,9 @@
     <ClInclude Include="source\tool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="h\Version_num.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\addpoint.cur">

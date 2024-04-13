@@ -16,3 +16,4 @@ verstub.asm
 ipch
 *.db
 *.opendb
+/revision.h

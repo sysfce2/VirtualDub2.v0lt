@@ -87,6 +87,11 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VirtualDub64</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VirtualDub64</TargetName>
   </PropertyGroup>
+  <ItemDefinitionGroup>
+    <PreBuildEvent>
+      <Command>..\update_revision.cmd</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PixelShaderAssembler>
       <OutputPath>$(ProjectDir)\autogen\</OutputPath>
@@ -1703,6 +1708,7 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
     <ClInclude Include="h\prefs.h" />
     <ClInclude Include="h\project.h" />
     <ClInclude Include="h\projectui.h" />
+    <ClInclude Include="h\Version_num.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="..\VDFilters\res\resource.h" />
     <ClInclude Include="..\VDCapture\res\resource.h" />
