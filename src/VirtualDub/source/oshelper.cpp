@@ -251,52 +251,6 @@ void VDSubstituteStrings(VDStringW& s) {
 			case L'p':
 				t.append(VD_PROGRAM_PLATFORM_NAMEW);
 				break;
-
-			case L'k':
-				#if VD_COMPILER_MSVC >= 1910
-					#if VD_CPU_AMD64
-						t.append(L"Microsoft Visual Studio 2017 for AMD64");
-					#else
-						t.append(L"Microsoft Visual Studio 2017 for X86");
-					#endif
-				#elif VD_COMPILER_MSVC >= 1900
-					#if VD_CPU_AMD64
-						t.append(L"Microsoft Visual Studio 2015 for AMD64");
-					#else
-						t.append(L"Microsoft Visual Studio 2015 for X86");
-					#endif
-				#elif VD_COMPILER_MSVC >= 1600
-					#if VD_CPU_AMD64
-						t.append(L"Microsoft Visual Studio 2010 for AMD64");
-					#else
-						t.append(L"Microsoft Visual Studio 2010 for X86");
-					#endif
-				#elif VD_COMPILER_MSVC >= 1500
-					#if VD_CPU_AMD64
-						t.append(L"Microsoft Visual Studio 2008 for AMD64");
-					#else
-						t.append(L"Microsoft Visual Studio 2008 for X86");
-					#endif
-				#elif VD_COMPILER_MSVC >= 1400
-					#if VD_CPU_AMD64
-						#if VD_COMPILER_MSVC_VC8_DDK
-							t.append(L"Microsoft Visual C++ 8.0 for AMD64 (DDK version)");
-						#elif VD_COMPILER_MSVC_VC8_PSDK
-							t.append(L"Microsoft Visual C++ 8.0 for AMD64 (PSDK version)");
-						#else
-							t.append(L"Microsoft Visual Studio 2005 for AMD64");
-						#endif
-					#else
-						t.append(L"Microsoft Visual Studio 2005 for X86");
-					#endif
-				#else
-					t.append("Unknown compiler");
-				#endif
-				break;
-
-			case L'm':
-				t.append(L"Description and updates: <a href=\"https://sourceforge.net/p/vdfiltermod/wiki/Home/\">sourceforge.net/projects/vdfiltermod</a>\nBug reports: <a href=\"https://sourceforge.net/p/vdfiltermod/tickets/\">sourceforge.net/p/vdfiltermod/tickets</a>");
-				break;
 		}
 
 		posLast = pos + 2;

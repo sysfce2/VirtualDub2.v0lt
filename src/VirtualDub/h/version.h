@@ -26,6 +26,8 @@
 	#include <vd2/system/vdtypes.h>
 #endif
 
+#include "../h/Version_num.h"
+
 extern "C" unsigned long version_num;
 
 uint32 VDGetBuildNumber();
@@ -36,7 +38,7 @@ uint32 VDGetBuildNumber();
 #define VD_PROGRAM_NAMEA		"VirtualDub2"
 #define VD_PROGRAM_NAMEW		VD_WIDE_STRING_CONST(VD_PROGRAM_NAMEA)
 
-#define VD_PROGRAM_VERSIONA		""
+#define VD_PROGRAM_VERSIONA		VERSION_STR
 #define VD_PROGRAM_VERSIONW		VD_WIDE_STRING_CONST(VD_PROGRAM_VERSIONA)
 
 #define VD_PROGRAM_SPECIAL_BUILDA	""

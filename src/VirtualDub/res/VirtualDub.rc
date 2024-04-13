@@ -912,14 +912,14 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "About VirtualDub2"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,283,141,50,14
-    CONTROL         "$m\nCompiled with $k\nThis program is free software and may be distributed according to the terms of the GNU General Public License.",IDC_STATIC_VERSION,
-                    "SysLink",WS_TABSTOP,7,7,326,44
-    LTEXT           "Build 0/release (baka baka baka)",IDC_FINALS_SUCK,7,56,238,8
+    LTEXT           "VirtualDub2 version 2.1",IDC_FINALS_SUCK,7,7,238,8
+    CONTROL         "Description: <a href=""https://sourceforge.net/p/vdfiltermod/wiki/Home/"">sourceforge.net/projects/vdfiltermod</a>\n\nThis program is free software and may be distributed according to the terms of the GNU General Public License.",IDC_STATIC_VERSION,
+                    "SysLink",WS_TABSTOP,7,24,326,44
     GROUPBOX        "About original version",IDC_STATIC,7,88,326,44
     LTEXT           "Copyright (C) 1998-2012 by Avery Lee, All Rights Reserved.",IDC_STATIC,14,100,312,10
-    CONTROL         "Home page: <a HREF=""http:\\\\www.virtualdub.org"">virtualdub.org</a>",IDC_ORIGINAL,
+    CONTROL         "Home page: <a href=""http:\\\\www.virtualdub.org"">virtualdub.org</a>",IDC_ORIGINAL,
                     "SysLink",WS_TABSTOP,14,113,312,14
+    DEFPUSHBUTTON   "OK",IDOK,283,141,50,14
 END
 
 IDD_FILTER_CONVOLUTE DIALOGEX 0, 0, 231, 135
@@ -4114,7 +4114,7 @@ IDC_CAP_POINT           CURSOR                  "cap_point.cur"
 
 STRINGTABLE 
 BEGIN
-    IDS_TITLE_INITIAL       "$n $v$s (build $b/$c)"
+    IDS_TITLE_INITIAL       "$n $s($c)"
     IDS_TITLE_NOFILE        "$n $v"
     IDS_TITLE_DUBBING       "$n $v - [%s] (dub in progress)"
     IDS_TITLE_DUBBING_MINIMIZED "%d%% [%s] - $n $v"

@@ -29,6 +29,8 @@
 
 #include <vd2/system/w32assist.h>
 
+#include "../h/Version_num.h"
+
 extern "C" unsigned long version_num;
 extern "C" char version_time[];
 
@@ -332,15 +334,12 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 				AboutSetCompilerBuild(GetDlgItem(hDlg, IDC_STATIC_VERSION));
 
-				wsprintf(buf, "Build %d/"
+				SetDlgItemText(hDlg, IDC_FINALS_SUCK, 
+					"VirtualDub2 version " VERSION_STR
 #ifdef _DEBUG
-					"debug"
-#else
-					"release"
+					" Debug"
 #endif
-					" (%s)", version_num, version_time);
-
-				SetDlgItemText(hDlg, IDC_FINALS_SUCK, buf);
+				);
 
 				HRSRC hrsrc;
 
