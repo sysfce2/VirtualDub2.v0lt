@@ -8,6 +8,6 @@ Fixed crash when calling RunNullVideoPass().
 Updated avlib-1.vdplugin to version 0.6.1.70.
     FFmpeg 6.1.1 is now supported.
     Removed CineForm HD (native) codec.
-    Removed manual lazy loading of DDL for FFmpeg DDLs.
+    Removed manual lazy loading of DLL for FFmpeg DLLs.
     Removed support for systems older than Windows 7.
     The 32-bit plugin is not implemented because there is no official build of FFmpeg 6.1.1 for x86.
