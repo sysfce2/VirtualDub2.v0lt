@@ -531,10 +531,20 @@ void VDUIDialogChooseVideoCompressorW32::EnumerateCodecs() {
 					swprintf(buf, 64, L"A video codec with FOURCC '%.4S'", (const char *)&info.fccHandler);
 					VDExternalCodeBracket bracket(buf, __FILE__, __LINE__);
 
-					if (isEqualFOURCC(info.fccHandler, '1VSA'))
+					if (isEqualFOURCC(info.fccHandler, MAKEFOURCC('A','S','V','1'))) {
 						plugin.hic = ICOpenASV1(info.fccType, info.fccHandler, ICMODE_COMPRESS);
-					else	
+					}
+#ifdef _M_AMD64
+					else if (info.fccHandler == MAKEFOURCC('f','f','d','s')) {
+						// ffdshow Video Codec x64 crashes after changing the compiler
+						// for VirtualDub2 from VS 2008 to VS 2019
+						// TODO: patches welcome
+						plugin.hic = 0;
+					}
+#endif
+					else {
 						plugin.hic = ICOpen(info.fccType, info.fccHandler, ICMODE_COMPRESS);
+					}
 				}
 
 				if (plugin.hic) {
