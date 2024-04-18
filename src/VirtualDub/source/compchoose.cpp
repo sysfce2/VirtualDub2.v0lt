@@ -515,6 +515,14 @@ void VDUIDialogChooseVideoCompressorW32::EnumerateCodecs() {
 	vdprotected("enumerating video codecs") {
 		ICINFO info = {sizeof(ICINFO)};
 		for(int i=0; ICInfo(ICTYPE_VIDEO, i, &info); i++) {
+#ifdef _M_AMD64
+			if (!_wcsicmp(info.szDriver, L"ff_vfw.dll") || !_wcsicmp(info.szDriver, L"lvcod64.dll")) {
+				// "ffdshow Video Codec" x64 and "Logitech Video (I420)" x64 crashes
+				// after changing the compiler for VirtualDub2 from VS 2008 to VS 2019
+				// TODO: patches welcome
+				continue;
+			}
+#endif
 			EncoderHIC plugin;
 
 			// Use "special" routine for ASV1.
@@ -533,16 +541,7 @@ void VDUIDialogChooseVideoCompressorW32::EnumerateCodecs() {
 
 					if (isEqualFOURCC(info.fccHandler, MAKEFOURCC('A','S','V','1'))) {
 						plugin.hic = ICOpenASV1(info.fccType, info.fccHandler, ICMODE_COMPRESS);
-					}
-#ifdef _M_AMD64
-					else if (info.fccHandler == MAKEFOURCC('f','f','d','s')) {
-						// ffdshow Video Codec x64 crashes after changing the compiler
-						// for VirtualDub2 from VS 2008 to VS 2019
-						// TODO: patches welcome
-						plugin.hic = 0;
-					}
-#endif
-					else {
+					} else {
 						plugin.hic = ICOpen(info.fccType, info.fccHandler, ICMODE_COMPRESS);
 					}
 				}
