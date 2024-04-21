@@ -244,10 +244,6 @@ void VDSubstituteStrings(VDStringW& s) {
 				t.append(VD_PROGRAM_CONFIGW);
 				break;
 
-			case L'C':
-				t.append(VD_PROGRAM_GENERIC_CONFIGW);
-				break;
-
 			case L'p':
 				t.append(VD_PROGRAM_PLATFORM_NAMEW);
 				break;

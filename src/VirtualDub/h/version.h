@@ -45,32 +45,19 @@ uint32 VDGetBuildNumber();
 #define VD_PROGRAM_SPECIAL_BUILDW	VD_WIDE_STRING_CONST(VD_PROGRAM_SPECIAL_BUILDA)
 
 #ifdef _DEBUG
-	#define VD_PROGRAM_GENERIC_CONFIGA	"debug"
-
-	#ifdef _M_AMD64
-		#define VD_PROGRAM_CONFIGA			"debug-AMD64"
-	#else
-		#define VD_PROGRAM_CONFIGA			"debug"
-	#endif
+	#define VD_PROGRAM_CONFIGA	"debug"
 #else
-	#define VD_PROGRAM_GENERIC_CONFIGA	"release"
-
-	#ifdef _M_AMD64
-		#define VD_PROGRAM_CONFIGA			"release-AMD64"
-	#else
-		#define VD_PROGRAM_CONFIGA			"release"
-	#endif
+	#define VD_PROGRAM_CONFIGA	""
 #endif
 
-#define VD_PROGRAM_GENERIC_CONFIGW	VD_WIDE_STRING_CONST(VD_PROGRAM_GENERIC_CONFIGA)
 #define VD_PROGRAM_CONFIGW			VD_WIDE_STRING_CONST(VD_PROGRAM_CONFIGA)
 
 #if defined(_M_AMD64)
-	#define VD_PROGRAM_PLATFORM_NAMEW		L"AMD64"
+	#define VD_PROGRAM_PLATFORM_NAMEW		L"x64"
 	#define VD_PROGRAM_EXEFILE_NAMEA		"VirtualDub64.exe"
 	#define VD_PROGRAM_CLIEXE_NAMEA			"vdub64.exe"
 #else
-	#define VD_PROGRAM_PLATFORM_NAMEW		L"80x86"
+	#define VD_PROGRAM_PLATFORM_NAMEW		L"x86"
 	#define VD_PROGRAM_EXEFILE_NAMEA		"VirtualDub.exe"
 	#define VD_PROGRAM_CLIEXE_NAMEA			"vdub.exe"
 #endif

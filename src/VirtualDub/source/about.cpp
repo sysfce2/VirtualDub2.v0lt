@@ -334,13 +334,6 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 				AboutSetCompilerBuild(GetDlgItem(hDlg, IDC_STATIC_VERSION));
 
-				SetDlgItemText(hDlg, IDC_FINALS_SUCK, 
-					"VirtualDub2 version " VERSION_STR
-#ifdef _DEBUG
-					" Debug"
-#endif
-				);
-
 				HRSRC hrsrc;
 
 				if (hrsrc = FindResource(NULL, MAKEINTRESOURCE(IDR_CREDITS), "STUFF")) {
