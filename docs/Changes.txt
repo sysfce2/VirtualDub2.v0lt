@@ -1,10 +1,11 @@
 VirtualDub2.1 change log
 
-2.1.0.600 - 2024-04-14
+2.1.0.605 - 2024-04-21
 ----------------------
 Windows XP is no longer supported.
 Builds for x86 are no longer planned to be released.
 Fixed crash when calling RunNullVideoPass().
+64-bit "ffdshow Video Codec" (ff_vfw.dll) and "Logitech Video (I420)" (lvcod64.dll) are not supported because it crashes when opening the video compression selection window.
 Updated avlib-1.vdplugin to version 0.6.1.70.
     FFmpeg 6.1.1 is now supported.
     Removed CineForm HD (native) codec.
