@@ -500,6 +500,14 @@ namespace {
 		ICINFO info={0};
 
 		for(DWORD id=0; ICInfo(fccType, id, &info); ++id) {
+#ifdef _M_AMD64
+			if (!_wcsicmp(info.szDriver, L"ff_vfw.dll") || !_wcsicmp(info.szDriver, L"lvcod64.dll")) {
+				// "ffdshow Video Codec" x64 and "Logitech Video (I420)" x64 crashes
+				// after changing the compiler for VirtualDub2 from VS 2008 to VS 2019/2022
+				// TODO: patches welcome
+				continue;
+			}
+#endif
 			info.dwSize = sizeof(ICINFO);	// I don't think this is necessary, but just in case....
 
 			HIC hic = VDSafeICOpenW32(fccType, info.fccHandler, ICMODE_DECOMPRESS);

@@ -518,7 +518,7 @@ void VDUIDialogChooseVideoCompressorW32::EnumerateCodecs() {
 #ifdef _M_AMD64
 			if (!_wcsicmp(info.szDriver, L"ff_vfw.dll") || !_wcsicmp(info.szDriver, L"lvcod64.dll")) {
 				// "ffdshow Video Codec" x64 and "Logitech Video (I420)" x64 crashes
-				// after changing the compiler for VirtualDub2 from VS 2008 to VS 2019
+				// after changing the compiler for VirtualDub2 from VS 2008 to VS 2019/2022
 				// TODO: patches welcome
 				continue;
 			}
