@@ -1,9 +1,9 @@
 VirtualDub2.1 change log
 
-2.1.1 dev
+2.1.1.609 - 2024-08-30
 ----------------------
 More careful ignoring of 64-bit "ffdshow Video Codec" (ff_vfw.dll) and "Logitech Video (I420)" (lvcod64.dll) to eliminate crash when opening AVI files.
-Updated avlib-1.vdplugin to version 0.7.0.93.
+Updated avlib-1.vdplugin to version 0.7.0.123.
     FFmpeg 7.0.2 is now supported.
     Added support for JPEG XL images.
     Added support for VVC videos.
