@@ -1,13 +1,16 @@
 ﻿# VirtualDub2 version 2.1
 
-VirtualDub2 v2.1 is a video capture/processing utility for 64-bit Windows platforms (7/8/8.1/10).
+VirtualDub2 v2.1 is a video capture/processing utility for Windows.
 
 ## Minimum system requirements
 
 * x64 compatible CPU
-* Windows 7 x64 or newer
+* Windows 8.1 x64 or newer
+
+VirtualDub2 v2.1 can work on Windows 7 if you replace the FFmpeg DLL files with Windows 7 compatible ones.
 
 ## Downloads
+
 * [Releases](https://github.com/v0lt/VirtualDub2/releases)
 
 ## Source code
