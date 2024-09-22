@@ -476,27 +476,27 @@
     <CustomBuild Include="data\Tuffy.ttf">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(VDBaseDir)\out\$(VDConfigDirTag)\asuka" fontextract "%(FullPath)" Tuffy 32 127 "%(RootDir)%(Directory)\..\h\defaultfont.inl" g_VDDefaultFont
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(VDBaseDir)\out\$(VDDirTag)\asuka" fontextract "%(FullPath)" Tuffy 32 127 "%(RootDir)%(Directory)\..\h\defaultfont.inl" g_VDDefaultFont
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VDBaseDir)\out\$(VDDirTag)\asuka.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)\..\h\defaultfont.inl;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(VDBaseDir)\out\$(VDConfigDirTag)\asuka" fontextract "%(FullPath)" Tuffy 32 127 "%(RootDir)%(Directory)\..\h\defaultfont.inl" g_VDDefaultFont
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(VDBaseDir)\out\$(VDDirTag)\asuka" fontextract "%(FullPath)" Tuffy 32 127 "%(RootDir)%(Directory)\..\h\defaultfont.inl" g_VDDefaultFont
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VDBaseDir)\out\$(VDDirTag)\asuka.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)\..\h\defaultfont.inl;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(VDBaseDir)\out\$(VDConfigDirTag)\asuka" fontextract "%(FullPath)" Tuffy 32 127 "%(RootDir)%(Directory)\..\h\defaultfont.inl" g_VDDefaultFont
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(VDBaseDir)\out\$(VDDirTag)\asuka" fontextract "%(FullPath)" Tuffy 32 127 "%(RootDir)%(Directory)\..\h\defaultfont.inl" g_VDDefaultFont
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(VDBaseDir)\out\$(VDDirTag)\asuka.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)\..\h\defaultfont.inl;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(VDBaseDir)\out\$(VDConfigDirTag)\asuka" fontextract "%(FullPath)" Tuffy 32 127 "%(RootDir)%(Directory)\..\h\defaultfont.inl" g_VDDefaultFont
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(VDBaseDir)\out\$(VDDirTag)\asuka" fontextract "%(FullPath)" Tuffy 32 127 "%(RootDir)%(Directory)\..\h\defaultfont.inl" g_VDDefaultFont
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VDBaseDir)\out\$(VDDirTag)\asuka.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)\..\h\defaultfont.inl;%(Outputs)</Outputs>
     </CustomBuild>
     <None Include="source\a_triblt.inc" />

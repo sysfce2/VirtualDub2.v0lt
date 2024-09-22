@@ -12,7 +12,7 @@
   <ItemDefinitionGroup>
     <PixelShaderAssembler>
       <OutputPath>$(IntDir)</OutputPath>
-      <CommandLineTemplate>"$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe" psa "%(FullPath)" "%(OutputPath)\%(Filename).inl"</CommandLineTemplate>
+      <CommandLineTemplate>"$(VDBaseDir)\out\$(VDDirTag)\asuka.exe" psa "%(FullPath)" "%(OutputPath)\%(Filename).inl"</CommandLineTemplate>
       <Outputs>%(OutputPath)\%(Filename).inl</Outputs>
     </PixelShaderAssembler>
   </ItemDefinitionGroup>

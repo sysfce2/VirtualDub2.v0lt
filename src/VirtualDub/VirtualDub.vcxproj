@@ -124,7 +124,7 @@
     </ResourceCompile>
     <PreLinkEvent>
       <Message>Updating build number information...</Message>
-      <Command>$(VDBaseDir)\out\$(VDConfigDirTag)\Asuka verinc
+      <Command>$(VDBaseDir)\out\$(VDDirTag)\Asuka verinc
 yasm -g cv8 -f win32 -o "$(IntDir)verstub.obj" verstub.asm
 </Command>
     </PreLinkEvent>
@@ -146,7 +146,7 @@ yasm -g cv8 -f win32 -o "$(IntDir)verstub.obj" verstub.asm
     </Bscmake>
     <PostBuildEvent>
       <Message>Compiling function location database...</Message>
-      <Command>$(VDBaseDir)\out\$(VDConfigDirTag)\Asuka mapconv $(VDOutputPath)\VirtualDub.map $(VDOutputPath)\VirtualDub.vdi res\ia32.vdi</Command>
+      <Command>$(VDBaseDir)\out\$(VDDirTag)\Asuka mapconv $(VDOutputPath)\VirtualDub.map $(VDOutputPath)\VirtualDub.vdi res\ia32.vdi</Command>
     </PostBuildEvent>
     <Manifest>
       <InputResourceManifests>
@@ -186,7 +186,7 @@ yasm -g cv8 -f win32 -o "$(IntDir)verstub.obj" verstub.asm
     </ResourceCompile>
     <PreLinkEvent>
       <Message>Updating build number information...</Message>
-      <Command>$(VDBaseDir)\out\$(VDConfigDirTag)\Asuka verinc /amd64
+      <Command>$(VDBaseDir)\out\$(VDDirTag)\Asuka verinc /amd64
 yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
 </Command>
     </PreLinkEvent>
@@ -207,7 +207,7 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
     </Bscmake>
     <PostBuildEvent>
       <Message>Compiling function location database...</Message>
-      <Command>$(VDBaseDir)\out\$(VDConfigDirTag)\Asuka mapconv $(VDOutputPath)\VirtualDub64.map $(VDOutputPath)\VirtualDub64.vdi res\amd64.vdi</Command>
+      <Command>$(VDBaseDir)\out\$(VDDirTag)\Asuka mapconv $(VDOutputPath)\VirtualDub64.map $(VDOutputPath)\VirtualDub64.vdi res\amd64.vdi</Command>
     </PostBuildEvent>
     <Manifest>
       <InputResourceManifests>
@@ -245,7 +245,7 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
     </ResourceCompile>
     <PreLinkEvent>
       <Message>Updating build number information...</Message>
-      <Command>$(VDBaseDir)\out\$(VDConfigDirTag)\Asuka verinc
+      <Command>$(VDBaseDir)\out\$(VDDirTag)\Asuka verinc
 yasm -g cv8 -f win32 -o "$(IntDir)verstub.obj" verstub.asm
 </Command>
     </PreLinkEvent>
@@ -269,7 +269,7 @@ yasm -g cv8 -f win32 -o "$(IntDir)verstub.obj" verstub.asm
     </Bscmake>
     <PostBuildEvent>
       <Message>Compiling function location database...</Message>
-      <Command>$(VDBaseDir)\out\$(VDConfigDirTag)\Asuka mapconv $(VDOutputPath)\VirtualDub.map $(VDOutputPath)\VirtualDub.vdi res\ia32.vdi</Command>
+      <Command>$(VDBaseDir)\out\$(VDDirTag)\Asuka mapconv $(VDOutputPath)\VirtualDub.map $(VDOutputPath)\VirtualDub.vdi res\ia32.vdi</Command>
     </PostBuildEvent>
     <Manifest>
       <InputResourceManifests>
@@ -307,7 +307,7 @@ yasm -g cv8 -f win32 -o "$(IntDir)verstub.obj" verstub.asm
     </ResourceCompile>
     <PreLinkEvent>
       <Message>Updating build number information...</Message>
-      <Command>$(VDBaseDir)\out\$(VDConfigDirTag)\Asuka verinc /amd64
+      <Command>$(VDBaseDir)\out\$(VDDirTag)\Asuka verinc /amd64
 yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
 </Command>
     </PreLinkEvent>
@@ -331,7 +331,7 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
     </Bscmake>
     <PostBuildEvent>
       <Message>Compiling function location database...</Message>
-      <Command>$(VDBaseDir)\out\$(VDConfigDirTag)\Asuka mapconv $(VDOutputPath)\VirtualDub64.map $(VDOutputPath)\VirtualDub64.vdi res\amd64.vdi</Command>
+      <Command>$(VDBaseDir)\out\$(VDDirTag)\Asuka mapconv $(VDOutputPath)\VirtualDub64.map $(VDOutputPath)\VirtualDub64.vdi res\amd64.vdi</Command>
     </PostBuildEvent>
     <Manifest>
       <InputResourceManifests>
@@ -1823,7 +1823,7 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)virtualdub.vdres;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compiling program resources....</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(VDBaseDir)\out\$(VDConfigDirTag)\ami" "%(FullPath)" "$(IntDir)virtualdub.vdres"
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(VDBaseDir)\out\$(VDDirTag)\ami" "%(FullPath)" "$(IntDir)virtualdub.vdres"
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)virtualdub.vdres;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling program resources....</Message>
@@ -1831,7 +1831,7 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)virtualdub.vdres;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling program resources....</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(VDBaseDir)\out\$(VDConfigDirTag)\ami" "%(FullPath)" "$(IntDir)virtualdub.vdres"
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(VDBaseDir)\out\$(VDDirTag)\ami" "%(FullPath)" "$(IntDir)virtualdub.vdres"
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)virtualdub.vdres;%(Outputs)</Outputs>
     </CustomBuild>

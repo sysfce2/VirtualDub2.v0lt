@@ -161,27 +161,27 @@
     <CustomBuild Include="shaders\image.fx">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(VDBaseDir)\out\$(VDConfigDirTag)\asuka" fxc10 "%(FullPath)" "%(RootDir)%(Directory)\..\autogen\%(Filename)_shader.inl"
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(VDBaseDir)\out\$(VDDirTag)\asuka" fxc10 "%(FullPath)" "%(RootDir)%(Directory)\..\autogen\%(Filename)_shader.inl"
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe;$(ProjectDir)shaders\sysdefs.fxh;$(ProjectDir)shaders\pal8.fxh;$(ProjectDir)shaders\ycbcr.fxh;$(ProjectDir)shaders\utils.fxh;$(ProjectDir)shaders\ycbcr_interleaved.fxh;$(ProjectDir)shaders\rgb.fxh;$(ProjectDir)shaders\bicubic.fxh;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VDBaseDir)\out\$(VDDirTag)\asuka.exe;$(ProjectDir)shaders\sysdefs.fxh;$(ProjectDir)shaders\pal8.fxh;$(ProjectDir)shaders\ycbcr.fxh;$(ProjectDir)shaders\utils.fxh;$(ProjectDir)shaders\ycbcr_interleaved.fxh;$(ProjectDir)shaders\rgb.fxh;$(ProjectDir)shaders\bicubic.fxh;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)autogen\%(Filename)_shader.inl;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(VDBaseDir)\out\$(VDConfigDirTag)\asuka" fxc10 "%(FullPath)" "%(RootDir)%(Directory)\..\autogen\%(Filename)_shader.inl"
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(VDBaseDir)\out\$(VDDirTag)\asuka" fxc10 "%(FullPath)" "%(RootDir)%(Directory)\..\autogen\%(Filename)_shader.inl"
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe;$(ProjectDir)shaders\sysdefs.fxh;$(ProjectDir)shaders\pal8.fxh;$(ProjectDir)shaders\ycbcr.fxh;$(ProjectDir)shaders\utils.fxh;$(ProjectDir)shaders\ycbcr_interleaved.fxh;$(ProjectDir)shaders\rgb.fxh;$(ProjectDir)shaders\bicubic.fxh;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VDBaseDir)\out\$(VDDirTag)\asuka.exe;$(ProjectDir)shaders\sysdefs.fxh;$(ProjectDir)shaders\pal8.fxh;$(ProjectDir)shaders\ycbcr.fxh;$(ProjectDir)shaders\utils.fxh;$(ProjectDir)shaders\ycbcr_interleaved.fxh;$(ProjectDir)shaders\rgb.fxh;$(ProjectDir)shaders\bicubic.fxh;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)autogen\%(Filename)_shader.inl;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(VDBaseDir)\out\$(VDConfigDirTag)\asuka" fxc10 "%(FullPath)" "%(RootDir)%(Directory)\..\autogen\%(Filename)_shader.inl"
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(VDBaseDir)\out\$(VDDirTag)\asuka" fxc10 "%(FullPath)" "%(RootDir)%(Directory)\..\autogen\%(Filename)_shader.inl"
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe;$(ProjectDir)shaders\sysdefs.fxh;$(ProjectDir)shaders\pal8.fxh;$(ProjectDir)shaders\ycbcr.fxh;$(ProjectDir)shaders\utils.fxh;$(ProjectDir)shaders\ycbcr_interleaved.fxh;$(ProjectDir)shaders\rgb.fxh;$(ProjectDir)shaders\bicubic.fxh;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(VDBaseDir)\out\$(VDDirTag)\asuka.exe;$(ProjectDir)shaders\sysdefs.fxh;$(ProjectDir)shaders\pal8.fxh;$(ProjectDir)shaders\ycbcr.fxh;$(ProjectDir)shaders\utils.fxh;$(ProjectDir)shaders\ycbcr_interleaved.fxh;$(ProjectDir)shaders\rgb.fxh;$(ProjectDir)shaders\bicubic.fxh;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)autogen\%(Filename)_shader.inl;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(VDBaseDir)\out\$(VDConfigDirTag)\asuka" fxc10 "%(FullPath)" "%(RootDir)%(Directory)\..\autogen\%(Filename)_shader.inl"
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(VDBaseDir)\out\$(VDDirTag)\asuka" fxc10 "%(FullPath)" "%(RootDir)%(Directory)\..\autogen\%(Filename)_shader.inl"
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe;$(ProjectDir)shaders\sysdefs.fxh;$(ProjectDir)shaders\pal8.fxh;$(ProjectDir)shaders\ycbcr.fxh;$(ProjectDir)shaders\utils.fxh;$(ProjectDir)shaders\ycbcr_interleaved.fxh;$(ProjectDir)shaders\rgb.fxh;$(ProjectDir)shaders\bicubic.fxh;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VDBaseDir)\out\$(VDDirTag)\asuka.exe;$(ProjectDir)shaders\sysdefs.fxh;$(ProjectDir)shaders\pal8.fxh;$(ProjectDir)shaders\ycbcr.fxh;$(ProjectDir)shaders\utils.fxh;$(ProjectDir)shaders\ycbcr_interleaved.fxh;$(ProjectDir)shaders\rgb.fxh;$(ProjectDir)shaders\bicubic.fxh;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)autogen\%(Filename)_shader.inl;%(Outputs)</Outputs>
     </CustomBuild>
     <None Include="shaders\pal8.fxh" />

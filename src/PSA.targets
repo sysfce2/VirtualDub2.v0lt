@@ -45,7 +45,7 @@
       />
     <PixelShaderAssembler
       Condition="'@(PixelShaderAssembler)' != '' and '%(PixelShaderAssembler.ExcludedFromBuild)' != 'true'"
-      CommandLineTemplate="&quot;$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe&quot; psa &quot;%(FullPath)&quot; &quot;%(OutputPath)\%(Filename).inl&quot;"
+      CommandLineTemplate="&quot;$(VDBaseDir)\out\$(VDDirTag)\asuka.exe&quot; psa &quot;%(FullPath)&quot; &quot;%(OutputPath)\%(Filename).inl&quot;"
       OutputPath="%(PixelShaderAssembler.OutputPath)"
       AdditionalOptions="%(PixelShaderAssembler.AdditionalOptions)"
       Inputs="%(PixelShaderAssembler.Identity)"

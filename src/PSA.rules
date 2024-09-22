@@ -7,7 +7,7 @@
 		<CustomBuildRule
 			Name="PixelShaderAssembler"
 			DisplayName="Pixel shader assembler"
-			CommandLine="&quot;$(VDBaseDir)\out\$(VDConfigDirTag)\asuka.exe&quot; psa &quot;$(InputPath)&quot; &quot;[$OutputPath]\$(InputName).inl&quot;"
+			CommandLine="&quot;$(VDBaseDir)\out\$(VDDirTag)\asuka.exe&quot; psa &quot;$(InputPath)&quot; &quot;[$OutputPath]\$(InputName).inl&quot;"
 			Outputs="&quot;[$OutputPath]\$(InputName).inl&quot;"
 			FileExtensions="*.vdshaders"
 			>
