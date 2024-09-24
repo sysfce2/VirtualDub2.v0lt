@@ -19,9 +19,6 @@
     <Filter Include="Interface Files">
       <UniqueIdentifier>{51b44c98-c9ab-4d73-8dae-9c258e25b57c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface Files\win32">
-      <UniqueIdentifier>{757894b4-f650-4652-8d6c-dbc55d6138fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader Files">
       <UniqueIdentifier>{966d9fd7-6da5-4f53-bd79-223624e5fd04}</UniqueIdentifier>
     </Filter>
@@ -109,12 +106,6 @@
     </ClInclude>
     <ClInclude Include="..\h\vd2\VDCapture\ScreenGrabberGL.h">
       <Filter>Interface Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\h\vd2\VDCapture\win32\api_dxgi.h">
-      <Filter>Interface Files\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\h\vd2\VDCapture\win32\api_wasapi.h">
-      <Filter>Interface Files\win32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

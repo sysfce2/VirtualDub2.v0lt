@@ -3,8 +3,6 @@
 
 #include <vd2/system/vdtypes.h>
 #include <vd2/system/vdstl.h>
-#include <d3d11.h>
-#include <vd2/VDCapture/win32/api_dxgi.h>
 #include <vd2/VDCapture/ScreenGrabber.h>
 
 class IVDResamplerFilter;

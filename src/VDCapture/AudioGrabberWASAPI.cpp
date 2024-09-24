@@ -20,7 +20,8 @@
 #include <objbase.h>
 #include <vd2/system/refcount.h>
 #include <vd2/VDCapture/AudioGrabberWASAPI.h>
-#include <vd2/VDCapture/win32/api_wasapi.h>
+#include <audioclient.h>
+#include <mmdeviceapi.h>
 #include <vd2/Priss/convert.h>
 
 VDAudioGrabberWASAPI::VDAudioGrabberWASAPI()

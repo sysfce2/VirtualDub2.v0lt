@@ -172,8 +172,6 @@
     <ClInclude Include="..\h\vd2\VDCapture\ScreenGrabberDXGI12.h" />
     <ClInclude Include="..\h\vd2\VDCapture\ScreenGrabberGDI.h" />
     <ClInclude Include="..\h\vd2\VDCapture\ScreenGrabberGL.h" />
-    <ClInclude Include="..\h\vd2\VDCapture\win32\api_dxgi.h" />
-    <ClInclude Include="..\h\vd2\VDCapture\win32\api_wasapi.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="h\d3d11_downscale_shader.inl" />

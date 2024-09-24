@@ -9,9 +9,9 @@
 #include <vd2/system/thunk.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/Kasumi/resample_kernels.h>
-#include <vd2/VDCapture/win32/api_dxgi.h>
-#include <vd2/VDCapture/ScreenGrabberDXGI12.h>
 #include <d3d11.h>
+#include <dxgi1_2.h>
+#include <vd2/VDCapture/ScreenGrabberDXGI12.h>
 
 #include <d3d11_downscale_shader.inl>
 #include <d3d11_colorconv_shader.inl>
@@ -571,9 +571,7 @@ bool VDScreenGrabberDXGI12::InitDevice() {
 		return false;
 
 	DXGI_OUTDUPL_DESC outDesc = {};
-	hr = mpOutDup->GetDesc(&outDesc);
-	if (FAILED(hr))
-		return false;
+	mpOutDup->GetDesc(&outDesc);
 
 	mOutputW = outDesc.ModeDesc.Width;
 	mOutputH = outDesc.ModeDesc.Height;
