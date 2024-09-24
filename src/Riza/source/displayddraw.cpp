@@ -213,16 +213,11 @@ bool VDDirectDrawManager::Init(IVDDirectDrawClient *pClient) {
 	bool isDefaultMonitor = true;
 
 	if (mhMonitor) {
-		typedef BOOL (APIENTRY *tpGetMonitorInfoA)(HMONITOR mon, LPMONITORINFO lpmi);
-		tpGetMonitorInfoA pGetMonitorInfoA = (tpGetMonitorInfoA)GetProcAddress(GetModuleHandle("user32"), "GetMonitorInfoA");
+		MONITORINFO monInfo = {sizeof(MONITORINFO)};
+		if (GetMonitorInfoA(mhMonitor, &monInfo)) {
+			mMonitorRect.set(monInfo.rcMonitor.left, monInfo.rcMonitor.top, monInfo.rcMonitor.right, monInfo.rcMonitor.bottom);
 
-		if (pGetMonitorInfoA) {
-			MONITORINFO monInfo = {sizeof(MONITORINFO)};
-			if (pGetMonitorInfoA(mhMonitor, &monInfo)) {
-				mMonitorRect.set(monInfo.rcMonitor.left, monInfo.rcMonitor.top, monInfo.rcMonitor.right, monInfo.rcMonitor.bottom);
-
-				isDefaultMonitor = (monInfo.dwFlags & MONITORINFOF_PRIMARY) != 0;
-			}
+			isDefaultMonitor = (monInfo.dwFlags & MONITORINFOF_PRIMARY) != 0;
 		}
 	}
 

@@ -1325,19 +1325,11 @@ HRESULT VDD3D9Manager::Present(const RECT *src, HWND hwndDest, bool vsync, float
 			int top = 0;
 			int bottom = GetSystemMetrics(SM_CYSCREEN);
 
-			// GetMonitorInfo() requires Windows 98. We might never fail on this because
-			// I think DirectX 9.0c requires 98+, but we have to dynamically link anyway
-			// to avoid a startup link failure on 95.
-			typedef BOOL (APIENTRY *tpGetMonitorInfo)(HMONITOR mon, LPMONITORINFO lpmi);
-			static tpGetMonitorInfo spGetMonitorInfo = (tpGetMonitorInfo)GetProcAddress(GetModuleHandle("user32"), "GetMonitorInfo");
-
-			if (spGetMonitorInfo) {
-				HMONITOR hmon = mpD3D->GetAdapterMonitor(mAdapter);
-				MONITORINFO monInfo = {sizeof(MONITORINFO)};
-				if (spGetMonitorInfo(hmon, &monInfo)) {
-					top = monInfo.rcMonitor.top;
-					bottom = monInfo.rcMonitor.bottom;
-				}
+			HMONITOR hmon = mpD3D->GetAdapterMonitor(mAdapter);
+			MONITORINFO monInfo = {sizeof(MONITORINFO)};
+			if (GetMonitorInfo(hmon, &monInfo)) {
+				top = monInfo.rcMonitor.top;
+				bottom = monInfo.rcMonitor.bottom;
 			}
 
 			if (r.top < top)

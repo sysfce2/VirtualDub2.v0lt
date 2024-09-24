@@ -127,51 +127,17 @@ bool IsFilenameOnFATVolume(const wchar_t *pszFilename) {
 	}
 }
 
-HWND APIENTRY VDGetAncestorW95(HWND hwnd, UINT gaFlags) {
-	switch(gaFlags) {
-	case GA_PARENT:
-		return GetWindowLong(hwnd, GWL_STYLE) & WS_CHILD ? GetParent(hwnd) : NULL;
-	case GA_ROOT:
-		while(GetWindowLong(hwnd, GWL_STYLE) & WS_CHILD)
-			hwnd = GetParent(hwnd);
-		return hwnd;
-	case GA_ROOTOWNER:
-		while(HWND hwndParent = GetParent(hwnd))
-			hwnd = hwndParent;
-		return hwnd;
-	default:
-		VDNEVERHERE;
-		return NULL;
-	}
-}
-
-HWND APIENTRY VDGetAncestorW98(HWND hwnd, UINT gaFlags);
-
 namespace {
 	HWND APIENTRY VDGetAncestorAutodetect(HWND hwnd, UINT gaFlags);
 
 	typedef HWND (APIENTRY *tpGetAncestor)(HWND, UINT);
 	tpGetAncestor g_pVDGetAncestor = VDGetAncestorAutodetect;
-	tpGetAncestor g_pVDGetAncestorRaw = VDGetAncestorW95;
 
 	HWND APIENTRY VDGetAncestorAutodetect(HWND hwnd, UINT gaFlags) {
-		tpGetAncestor ga = (tpGetAncestor)GetProcAddress(GetModuleHandle("user32"), "GetAncestor");
+		g_pVDGetAncestor = GetAncestor;
 
-		if (!ga)
-			ga = VDGetAncestorW95;
-
-		g_pVDGetAncestor = ga;
-		return ga(hwnd, gaFlags);
+		return GetAncestor(hwnd, gaFlags);
 	}
-}
-
-HWND APIENTRY VDGetAncestorW98(HWND hwnd, UINT gaFlags) {
-	// Believe it or not, HWND_MESSAGE works under Windows 98 -- and if you call GetAncestor()
-	// on such a window, user32 crashes in 16-bit code. :(
-	if (gaFlags == GA_ROOT && GetParent(hwnd) == NULL)
-		return hwnd;
-
-	return g_pVDGetAncestorRaw(hwnd, gaFlags);
 }
 
 HWND VDGetAncestorW32(HWND hwnd, uint32 gaFlags) {
