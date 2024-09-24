@@ -1515,13 +1515,6 @@ void VDVideoDisplayWindow::VerifyDriverResult(bool result) {
 bool VDVideoDisplayWindow::CheckForMonitorChange() {
 	HMONITOR hmon = NULL;
 
-	typedef HMONITOR (WINAPI *tpMonitorFromRect)(LPCRECT, DWORD);
-	static const HMODULE shmodUser32 = GetModuleHandleA("user32");
-	static const tpMonitorFromRect spMonitorFromRect = (tpMonitorFromRect)GetProcAddress(shmodUser32, "MonitorFromRect");
-
-	if (!spMonitorFromRect)
-		return false;
-
 	RECT r;
 	if (!GetWindowRect(mhwnd, &r))
 		return false;
@@ -1555,7 +1548,7 @@ bool VDVideoDisplayWindow::CheckForMonitorChange() {
 		hwndTest = hwndParent;
 	}
 
-	hmon = spMonitorFromRect(&r, MONITOR_DEFAULTTONEAREST);
+	hmon = MonitorFromRect(&r, MONITOR_DEFAULTTONEAREST);
 	if (hmon == mhLastMonitor)
 		return false;
 
@@ -1569,31 +1562,19 @@ bool VDVideoDisplayWindow::IsOnSecondaryMonitor() const {
 	if (!mhLastMonitor)
 		return false;
 
-	typedef BOOL (WINAPI *tpGetMonitorInfo)(HMONITOR, LPMONITORINFO);
-
-	static const tpGetMonitorInfo spGetMonitorInfo = (tpGetMonitorInfo)GetProcAddress(GetModuleHandleA("user32"), "GetMonitorInfoA");
-
-	if (!spGetMonitorInfo)
-		return false;
-
 	MONITORINFO monInfo = {sizeof(MONITORINFO)};
-	if (!spGetMonitorInfo(mhLastMonitor, &monInfo))
+	if (!GetMonitorInfoA(mhLastMonitor, &monInfo))
 		return false;
 
 	return !(monInfo.dwFlags & MONITORINFOF_PRIMARY);
 }
 
 void VDVideoDisplayWindow::GetMonitorRect(RECT *r, HMONITOR hmon) {
-	typedef BOOL (WINAPI *tpGetMonitorInfo)(HMONITOR, LPMONITORINFO);
 
-	static const tpGetMonitorInfo spGetMonitorInfo = (tpGetMonitorInfo)GetProcAddress(GetModuleHandleA("user32"), "GetMonitorInfoA");
-
-	if (spGetMonitorInfo) {
-		MONITORINFO monInfo = {sizeof(MONITORINFO)};
-		if (spGetMonitorInfo(hmon, &monInfo)) {
-			*r = monInfo.rcMonitor;
-			return;
-		}
+	MONITORINFO monInfo = {sizeof(MONITORINFO)};
+	if (GetMonitorInfoA(hmon, &monInfo)) {
+		*r = monInfo.rcMonitor;
+		return;
 	}
 
 	r->left = 0;
