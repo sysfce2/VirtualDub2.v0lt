@@ -494,46 +494,20 @@ VDStringW VDFileResolvePath(const wchar_t *basePath, const wchar_t *pathToResolv
 #include <vd2/system/w32assist.h>
 
 sint64 VDGetDiskFreeSpace(const wchar_t *path) {
-	typedef BOOL (WINAPI *tpGetDiskFreeSpaceExA)(LPCSTR lpDirectoryName, PULARGE_INTEGER lpFreeBytesAvailable, PULARGE_INTEGER lpTotalNumberOfBytes, PULARGE_INTEGER lpTotalNumberOfFreeBytes);
-	typedef BOOL (WINAPI *tpGetDiskFreeSpaceExW)(LPCWSTR lpDirectoryName, PULARGE_INTEGER lpFreeBytesAvailable, PULARGE_INTEGER lpTotalNumberOfBytes, PULARGE_INTEGER lpTotalNumberOfFreeBytes);
+	BOOL success;
+	uint64 freeClient, totalBytes, totalFreeBytes;
+	VDStringW directoryName(path);
 
-	static bool sbChecked = false;
-	static tpGetDiskFreeSpaceExA spGetDiskFreeSpaceExA;
-	static tpGetDiskFreeSpaceExW spGetDiskFreeSpaceExW;
+	if (!directoryName.empty()) {
+		wchar_t c = directoryName[directoryName.length()-1];
 
-	if (!sbChecked) {
-		HMODULE hmodKernel = GetModuleHandle("kernel32.dll");
-		spGetDiskFreeSpaceExA = (tpGetDiskFreeSpaceExA)GetProcAddress(hmodKernel, "GetDiskFreeSpaceExA");
-		spGetDiskFreeSpaceExW = (tpGetDiskFreeSpaceExW)GetProcAddress(hmodKernel, "GetDiskFreeSpaceExW");
-
-		sbChecked = true;
+		if (c != L'/' && c != L'\\')
+			directoryName += L'\\';
 	}
 
-	if (spGetDiskFreeSpaceExA) {
-		BOOL success;
-		uint64 freeClient, totalBytes, totalFreeBytes;
-		VDStringW directoryName(path);
+	success = GetDiskFreeSpaceExW(directoryName.c_str(), (PULARGE_INTEGER)&freeClient, (PULARGE_INTEGER)&totalBytes, (PULARGE_INTEGER)&totalFreeBytes);
 
-		if (!directoryName.empty()) {
-			wchar_t c = directoryName[directoryName.length()-1];
-
-			if (c != L'/' && c != L'\\')
-				directoryName += L'\\';
-		}
-
-		success = spGetDiskFreeSpaceExW(directoryName.c_str(), (PULARGE_INTEGER)&freeClient, (PULARGE_INTEGER)&totalBytes, (PULARGE_INTEGER)&totalFreeBytes);
-
-		return success ? (sint64)freeClient : -1;
-	} else {
-		DWORD sectorsPerCluster, bytesPerSector, freeClusters, totalClusters;
-		BOOL success;
-
-		VDStringW rootPath(VDFileGetRootPath(path));
-
-		success = GetDiskFreeSpaceW(rootPath.empty() ? NULL : rootPath.c_str(), &sectorsPerCluster, &bytesPerSector, &freeClusters, &totalClusters);
-
-		return success ? (sint64)((uint64)sectorsPerCluster * bytesPerSector * freeClusters) : -1;
-	}
+	return success ? (sint64)freeClient : -1;
 }
 
 bool VDDoesPathExist(const wchar_t *fileName) {
