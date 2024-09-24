@@ -3676,18 +3676,11 @@ void VDProjectUI::HandleDragDrop(HDROP hdrop) {
 	Filenames filenames;
 
 	for(UINT i=0; i<fileCount; ++i) {
-		{
-			wchar_t szNameW[MAX_PATH];
-			typedef UINT (APIENTRY *tpDragQueryFileW)(HDROP, UINT, LPWSTR, UINT);
-
-			if (HMODULE hmod = GetModuleHandle("shell32"))
-				if (const tpDragQueryFileW pDragQueryFileW = (tpDragQueryFileW)GetProcAddress(hmod, "DragQueryFileW")) {
-					if (pDragQueryFileW(hdrop, i, szNameW, sizeof szNameW / sizeof szNameW[0])) {
-						if (szNameW[0])
-							filenames.push_back_as(szNameW);
-					}
-				}
-
+		wchar_t szNameW[MAX_PATH];
+		if (DragQueryFileW(hdrop, i, szNameW, sizeof szNameW / sizeof szNameW[0])) {
+			if (szNameW[0]) {
+				filenames.push_back_as(szNameW);
+			}
 		}
 	}
 
