@@ -43,21 +43,11 @@ bool VDIsForegroundTaskW32() {
 }
 
 LPVOID VDConvertThreadToFiberW32(LPVOID parm) {
-	typedef LPVOID (WINAPI *tpConvertThreadToFiber)(LPVOID p);
-	static tpConvertThreadToFiber ctof = (tpConvertThreadToFiber)GetProcAddress(GetModuleHandle("kernel32"), "ConvertThreadToFiber");
-
-	if (!ctof)
-		return NULL;
-
-	return ctof(parm);
+	return ConvertThreadToFiber(parm);
 }
 
 void VDSwitchToFiberW32(LPVOID fiber) {
-	typedef void (WINAPI *tpSwitchToFiber)(LPVOID p);
-	static tpSwitchToFiber stof = (tpSwitchToFiber)GetProcAddress(GetModuleHandle("kernel32"), "SwitchToFiber");
-
-	if (stof)
-		stof(fiber);
+	SwitchToFiber(fiber);
 }
 
 int VDGetSizeOfBitmapHeaderW32(const BITMAPINFOHEADER *pHdr) {
@@ -264,14 +254,8 @@ LRESULT VDDualDefWindowProcW32(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 }
 
 EXECUTION_STATE VDSetThreadExecutionStateW32(EXECUTION_STATE esFlags) {
-	EXECUTION_STATE es = 0;
 
-	// SetThreadExecutionState(): requires Windows 98+/2000+.
-	typedef EXECUTION_STATE (WINAPI *tSetThreadExecutionState)(EXECUTION_STATE);
-	static tSetThreadExecutionState pFunc = (tSetThreadExecutionState)GetProcAddress(GetModuleHandle("kernel32"), "SetThreadExecutionState");
-
-	if (pFunc)
-		es = pFunc(esFlags);
+	EXECUTION_STATE es = SetThreadExecutionState(esFlags);
 
 	return es;
 }

@@ -46,10 +46,7 @@ VDCaptureAutoPriority::~VDCaptureAutoPriority() {
 
 namespace {
 	bool VDIsDebuggerPresent() {
-		typedef BOOL (APIENTRY *tpIsDebuggerPresent)();
-		static const tpIsDebuggerPresent pIsDebuggerPresent = (tpIsDebuggerPresent)GetProcAddress(GetModuleHandle("kernel32"), "IsDebuggerPresent");
-
-		return pIsDebuggerPresent ? 0!=pIsDebuggerPresent() : false;
+		return 0!= IsDebuggerPresent();
 	}
 }
 

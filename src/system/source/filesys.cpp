@@ -627,21 +627,11 @@ void VDRemoveDirectory(const wchar_t *path) {
 bool VDDeletePathAutodetect(const wchar_t *path);
 bool (*VDRemoveFile)(const wchar_t *path) = VDDeletePathAutodetect;
 
-namespace {
-	typedef BOOL (APIENTRY *tpDeleteFileW)(LPCWSTR path);
-	tpDeleteFileW spDeleteFileW;
-}
-
-bool VDDeleteFile9x(const wchar_t *path) {
-	return !!DeleteFileA(VDTextWToA(path).c_str());
-}
-
 bool VDDeleteFileNT(const wchar_t *path) {
-	return !!spDeleteFileW(path);
+	return !!DeleteFileW(path);
 }
 
 bool VDDeletePathAutodetect(const wchar_t *path) {
-	spDeleteFileW = (tpDeleteFileW)GetProcAddress(GetModuleHandle("kernel32"), "DeleteFileW");
 	VDRemoveFile = VDDeleteFileNT;
 
 	return VDRemoveFile(path);
@@ -677,16 +667,13 @@ uint64 VDFileGetLastWriteTime(const wchar_t *path) {
 }
 
 VDStringW VDFileGetRootPath(const wchar_t *path) {
-	static tpGetVolumePathNameW spGetVolumePathNameW = (tpGetVolumePathNameW)GetProcAddress(GetModuleHandle("kernel32.dll"), "GetVolumePathNameW");
-	static tpGetFullPathNameW spGetFullPathNameW = (tpGetFullPathNameW)GetProcAddress(GetModuleHandle("kernel32.dll"), "GetFullPathNameW");
-
 	VDStringW fullPath(VDGetFullPath(path));
 
 	// Windows 2000/XP path
-	if (spGetVolumePathNameW) {
+	{
 		vdblock<wchar_t> buf(std::max<size_t>(fullPath.size() + 1, MAX_PATH));
 
-		if (spGetVolumePathNameW(path, buf.data(), buf.size()))
+		if (GetVolumePathNameW(path, buf.data(), buf.size()))
 			return VDStringW(buf.data());
 	}
 
@@ -698,30 +685,26 @@ VDStringW VDFileGetRootPath(const wchar_t *path) {
 }
 
 VDStringW VDGetFullPath(const wchar_t *partialPath) {
-	static tpGetFullPathNameW spGetFullPathNameW = (tpGetFullPathNameW)GetProcAddress(GetModuleHandle("kernel32.dll"), "GetFullPathNameW");
-
 	union {
 		char		a[MAX_PATH];
 		wchar_t		w[MAX_PATH];
 	} tmpBuf;
 
-	if (spGetFullPathNameW) {
-		LPWSTR p;
+	LPWSTR p;
 
-		tmpBuf.w[0] = 0;
-		DWORD count = spGetFullPathNameW(partialPath, MAX_PATH, tmpBuf.w, &p);
+	tmpBuf.w[0] = 0;
+	DWORD count = GetFullPathNameW(partialPath, MAX_PATH, tmpBuf.w, &p);
 
-		if (count < MAX_PATH)
-			return VDStringW(tmpBuf.w);
+	if (count < MAX_PATH)
+		return VDStringW(tmpBuf.w);
 
-		VDStringW tmp(count);
+	VDStringW tmp(count);
 
-		DWORD newCount = spGetFullPathNameW(partialPath, count, (wchar_t *)tmp.data(), &p);
-		if (newCount < count)
-			return tmp;
+	DWORD newCount = GetFullPathNameW(partialPath, count, (wchar_t *)tmp.data(), &p);
+	if (newCount < count)
+		return tmp;
 
-		return VDStringW(partialPath);
-	}
+	return VDStringW(partialPath);
 }
 
 VDStringW VDGetLongPathA(const wchar_t *s) {

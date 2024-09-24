@@ -769,9 +769,7 @@ void VDFileAsyncNT::ThreadRun() {
 			int state = mState;
 
 			if (state == kStateAbort) {
-				typedef BOOL (WINAPI *tpCancelIo)(HANDLE);
-				static const tpCancelIo pCancelIo = (tpCancelIo)GetProcAddress(GetModuleHandle("kernel32"), "CancelIo");
-				pCancelIo(mhFileFast);
+				CancelIo(mhFileFast);
 
 				// Wait for any pending blocks to complete.
 				for(int i=0; i<requestCount; ++i) {
