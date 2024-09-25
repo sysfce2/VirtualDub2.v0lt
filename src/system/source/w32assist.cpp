@@ -179,12 +179,12 @@ void VDCheckRadioMenuItemByPositionW32(HMENU hmenu, uint32 pos, bool checked) {
 
 	mii.cbSize = sizeof(MENUITEMINFOA);
 	mii.fMask = MIIM_FTYPE | MIIM_STATE;
-	if (GetMenuItemInfo(hmenu, pos, TRUE, &mii)) {
+	if (GetMenuItemInfoA(hmenu, pos, TRUE, &mii)) {
 		mii.fType |= MFT_RADIOCHECK;
 		mii.fState &= ~MFS_CHECKED;
 		if (checked)
 			mii.fState |= MFS_CHECKED;
-		SetMenuItemInfo(hmenu, pos, TRUE, &mii);
+		SetMenuItemInfoA(hmenu, pos, TRUE, &mii);
 	}
 }
 
@@ -193,12 +193,12 @@ void VDCheckRadioMenuItemByCommandW32(HMENU hmenu, UINT cmd, bool checked) {
 
 	mii.cbSize = sizeof(MENUITEMINFOA);
 	mii.fMask = MIIM_FTYPE | MIIM_STATE;
-	if (GetMenuItemInfo(hmenu, cmd, FALSE, &mii)) {
+	if (GetMenuItemInfoA(hmenu, cmd, FALSE, &mii)) {
 		mii.fType |= MFT_RADIOCHECK;
 		mii.fState &= ~MFS_CHECKED;
 		if (checked)
 			mii.fState |= MFS_CHECKED;
-		SetMenuItemInfo(hmenu, cmd, FALSE, &mii);
+		SetMenuItemInfoA(hmenu, cmd, FALSE, &mii);
 	}
 }
 
