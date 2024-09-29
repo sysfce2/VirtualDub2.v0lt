@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include <hash_map>
+#include <unordered_map>
 #include <shellapi.h>
 #include <commctrl.h>
 #include <vd2/system/filesys.h>
@@ -692,7 +692,7 @@ void VDUIBatchWizard::OnDropFiles(IVDUIDropFileList *dropFileList) {
 }
 
 bool VDUIBatchWizard::CheckAndConfirmConflicts() {
-	typedef stdext::hash_multimap<uint32, const VDUIBatchWizardItem *> ConflictMap;
+	typedef std::unordered_multimap<uint32, const VDUIBatchWizardItem *> ConflictMap;
 	ConflictMap conflictMap;
 
 	int conflicts = 0;

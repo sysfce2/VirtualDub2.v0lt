@@ -8,7 +8,7 @@
 #include <vd2/system/time.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/VDLib/Job.h>
-#include <hash_map>
+#include <unordered_map>
 
 #include "misc.h"
 #include "oshelper.h"
@@ -782,7 +782,7 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 
 		if (merge) {
 			// Merge the in-memory and on-disk job queues.
-			typedef stdext::hash_map<uint64, int> JobQueueLookup;
+			typedef std::unordered_map<uint64, int> JobQueueLookup;
 
 			//VDDEBUG("[%d] Merging job queues - last rev %d (order%s modified), new rev %d\n", VDGetCurrentProcessId(), mLastRevision, mbOrderModified ? "" : " not", newRevision);
 
