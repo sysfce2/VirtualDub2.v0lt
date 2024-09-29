@@ -820,7 +820,7 @@ namespace {
 		VDStringW wstr;
 
 		{
-			wcscpy(buf.w, L".");
+			wcscpy_s(buf.w, L".");
 			if (GetModuleFileNameW(hInst, buf.w, MAX_PATH))
 				*VDFileSplitPath(buf.w) = 0;
 			wstr = buf.w;
