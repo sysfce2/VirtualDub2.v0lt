@@ -1,6 +1,7 @@
 #pragma include_alias("stdafx.h", "test.h")
 #pragma include_alias("AVIReadIndex.h", "..\VirtualDub\h\AVIReadIndex.h")
 #include "..\VirtualDub\source\AVIReadIndex.cpp"
+#include <random>
 
 namespace {
 	struct Chunk {
@@ -156,7 +157,7 @@ DEFINE_TEST(AVIReadIndex) {
 
 	ari.Finalize();
 
-	std::random_shuffle(order.begin(), order.end());
+	std::shuffle(order.begin(), order.end(), std::default_random_engine());
 
 	for(int i=0; i<10000; ++i) {
 		int j = order[i];
