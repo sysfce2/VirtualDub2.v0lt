@@ -850,7 +850,7 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 			}
 
 			// compact destination queue by removing null job entries
-			dstQueue.erase(std::remove_if(dstQueue.begin(), dstQueue.end(), std::bind2nd(std::equal_to<VDJob *>(), (VDJob *)NULL)), dstQueue.end());
+			dstQueue.erase(std::remove_if(dstQueue.begin(), dstQueue.end(), [](auto const& elem) {return elem == nullptr; }), dstQueue.end());
 
 			// merge any new jobs from the on-disk version
 			for(JobQueue::iterator it(srcQueue.begin()), itEnd(srcQueue.end()); it!=itEnd; ++it) {
