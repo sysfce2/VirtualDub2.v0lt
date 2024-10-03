@@ -236,10 +236,10 @@ void tool_mapconv(const vdfastvector<const char *>& args, const vdfastvector<con
 	}
 
 	printf("        Raw statistics:\n");
-	printf("            Disassembler:     %ld bytes\n", disasm_size);
-	printf("            RVA bytes:        %ld\n", rvabuf.size()*4);
-	printf("            Class name bytes: %ld\n", cnambuf.size());
-	printf("            Func name bytes:  %ld\n", fnambuf.size());
+	printf("            Disassembler:     %d bytes\n", disasm_size);
+	printf("            RVA bytes:        %zu\n", rvabuf.size()*4);
+	printf("            Class name bytes: %zu\n", cnambuf.size());
+	printf("            Func name bytes:  %zu\n", fnambuf.size());
 
 	printf("    Packing RVA data..."); fflush(stdout);
 
@@ -260,7 +260,7 @@ void tool_mapconv(const vdfastvector<const char *>& args, const vdfastvector<con
 		rvaout.push_back((char)(rvadiff & 0x7F));
 	}
 
-	printf("%ld bytes\n", rvaout.size());
+	printf("%zu bytes\n", rvaout.size());
 
 	// dump data
 

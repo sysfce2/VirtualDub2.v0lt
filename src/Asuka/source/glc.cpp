@@ -432,7 +432,7 @@ void GLCCompiler::Compile(const char *sourceName, const char *src, uint32 len, F
 	}
 
 
-	printf("Asuka: %d techniques, %d fragment shaders.\n", mTechniques.size(), mFragmentShaders.size());
+	printf("Asuka: %zu techniques, %zu fragment shaders.\n", mTechniques.size(), mFragmentShaders.size());
 }
 
 namespace {

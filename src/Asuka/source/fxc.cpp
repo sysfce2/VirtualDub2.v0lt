@@ -606,7 +606,7 @@ namespace {
 			offset >>= 2;
 			size = (size + 3) >> 2;
 
-			VDASSERT(offset + size <= shader.size());
+			VDASSERT(offset + size <= (ptrdiff_t)shader.size());
 
 			// erase comment token, fourcc, and comment data
 			shader.erase(shader.begin() + (offset - 2), shader.begin() + offset + size);
@@ -1141,11 +1141,11 @@ void tool_fxc(const vdfastvector<const char *>& args, const vdfastvector<const c
 	// output effect data
 	fprintf(f, "static const EffectInfo g_effect={\n");
 		fprintf(f, "\tg_shaderData,\n");
-		fprintf(f, "\tg_shaderOffsets+0, %d,\n", mVertexShaderOffsets.size() - 1);
-		fprintf(f, "\tg_shaderOffsets+%d, %d\n", mVertexShaderOffsets.size(), mPixelShaderOffsets.size() - 1);
+		fprintf(f, "\tg_shaderOffsets+0, %zu,\n", mVertexShaderOffsets.size() - 1);
+		fprintf(f, "\tg_shaderOffsets+%zu, %zu\n", mVertexShaderOffsets.size(), mPixelShaderOffsets.size() - 1);
 	fprintf(f, "};\n");
 	fclose(f);
 
-	printf("Asuka: %d techniques, %d shader bytes, %d state bytes.\n", desc.Techniques, mShaderData.size()*4, mStates.size()*4);
+	printf("Asuka: %u techniques, %zu shader bytes, %zu state bytes.\n", desc.Techniques, mShaderData.size()*4, mStates.size()*4);
 	printf("Asuka: Compilation was successful.\n");
 }

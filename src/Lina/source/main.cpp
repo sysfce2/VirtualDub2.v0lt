@@ -100,7 +100,7 @@ void error(const Context& ctx, const char *format, ...) {
 	indent = 3;
 	for(it=ctx.invocation_stack.rbegin(), itEnd=ctx.invocation_stack.rend(); it!=itEnd; ++it) {
 		const TreeNode& tag = **it;
-		printf("%*c%s(%d): while invoked from tag <%s> (%d children)\n", indent, ' ', tag.mpLocation->mName.c_str(), tag.mLineno, tag.mName.c_str(), tag.mChildren.size());
+		printf("%*c%s(%d): while invoked from tag <%s> (%zu children)\n", indent, ' ', tag.mpLocation->mName.c_str(), tag.mLineno, tag.mName.c_str(), tag.mChildren.size());
 		indent += 3;
 	}
 

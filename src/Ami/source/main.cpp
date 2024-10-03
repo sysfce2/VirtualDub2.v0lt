@@ -1339,7 +1339,7 @@ int main(int argc, char **argv) {
 	if (ferror(f) || fclose(f))
 		fatal("Write error creating output file");
 
-	printf("Ami: Compile successful -- %d string tables, %d bytes\n", g_stringResource.size(), bytes);
+	printf("Ami: Compile successful -- %zu string tables, %d bytes\n", g_stringResource.size(), bytes);
 
 	return 0;
 }

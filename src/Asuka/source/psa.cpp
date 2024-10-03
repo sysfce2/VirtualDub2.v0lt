@@ -45,7 +45,7 @@ namespace {
 			offset >>= 2;
 			size = (size + 3) >> 2;
 
-			VDASSERT(offset + size <= shader.size());
+			VDASSERT(offset + size <= (ptrdiff_t)shader.size());
 
 			// erase comment token, fourcc, and comment data
 			shader.erase(shader.begin() + (offset - 2), shader.begin() + offset + size);
@@ -181,7 +181,7 @@ void tool_psa(const vdfastvector<const char *>& args, const vdfastvector<const c
 			}
 		}
 
-		printf("%s(%d,%d): parse error\n", filename, line, (t-s) + 1);
+		printf("%s(%d,%zd): parse error\n", filename, line, (t-s) + 1);
 		exit(5);
 	}
 
