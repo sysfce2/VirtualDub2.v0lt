@@ -597,6 +597,11 @@ output:
 	}
 }
 
+#if defined(_M_AMD64) && _MSC_VER >= 1930
+// Îptimization of this function for x64 does not work correctly.
+// The issue has been confirmed for VisualStudio 2022 17.10.5 and 17.11.4.
+#pragma optimize("", off)
+#endif
 void VDVideoDecoderDV::DecompressFrame(const void *src, bool isPAL) {
 	VDASSERT(VDIsValidReadRegion(src, isPAL ? 144000 : 120000));
 
@@ -847,6 +852,10 @@ void VDVideoDecoderDV::DecompressFrame(const void *src, bool isPAL) {
 
 	mbLastWasPAL = isPAL;
 }
+#if defined(_M_AMD64) && _MSC_VER >= 1930
+// Turn on optimization again.
+#pragma optimize("", on)
+#endif
 
 VDPixmap VDVideoDecoderDV::GetFrameBuffer() {
 	VDPixmap pxsrc = {0};
