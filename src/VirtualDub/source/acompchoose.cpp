@@ -295,8 +295,8 @@ static void AudioChooseShowFormats(HWND hdlg, ACMTagEntry *pTag, bool fShowCompa
 	SendMessage(hwndListFormats, LB_RESETCONTENT, 0, 0);
 
 	if (!pTag) {
-		HWND hwndItem;
-		if (hwndItem = GetDlgItem(hdlg, IDC_CONFIGURE))
+		HWND hwndItem = GetDlgItem(hdlg, IDC_CONFIGURE);
+		if (hwndItem)
 			EnableWindow(hwndItem, false);
 
 		if (hwndItem = GetDlgItem(hdlg, IDC_ABOUT))
@@ -306,8 +306,8 @@ static void AudioChooseShowFormats(HWND hdlg, ACMTagEntry *pTag, bool fShowCompa
 		return;
 	}
 
-	HWND hwndItem;
-	if (hwndItem = GetDlgItem(hdlg, IDC_CONFIGURE))
+	HWND hwndItem = GetDlgItem(hdlg, IDC_CONFIGURE);
+	if (hwndItem)
 		EnableWindow(hwndItem, pTag->mbSupportsConfigure);
 
 	if (hwndItem = GetDlgItem(hdlg, IDC_ABOUT))

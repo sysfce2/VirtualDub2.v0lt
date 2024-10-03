@@ -276,9 +276,9 @@ LRESULT CALLBACK VCMDriverProc(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, 
 		case DRV_CLOSE:
 
 			if (pi) {
-				DriverPtrTranslator *dpt;
+				DriverPtrTranslator *dpt = find_xlator_by_id16(dwDriverID);
 
-				if (dpt = find_xlator_by_id16(dwDriverID))
+				if (dpt)
 					remove_translation(dpt);
 
 				delete pi;

@@ -129,9 +129,6 @@ namespace {
 	void CopyFrameToClipboard(HWND hwnd, const VDPixmap& px) {
 		if (OpenClipboard(hwnd)) {
 			if (EmptyClipboard()) {
-				HANDLE hMem;
-				void *lpvMem;
-
 				VDPixmapLayout layout;
 				uint32 imageSize = VDMakeBitmapCompatiblePixmapLayout(layout, px.w, px.h, nsVDPixmap::kPixFormat_RGB888, 0);
 
@@ -140,8 +137,10 @@ namespace {
 
 				uint32 headerSize = bih.size();
 
-				if (hMem = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, headerSize + imageSize)) {
-					if (lpvMem = GlobalLock(hMem)) {
+				HANDLE hMem = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, headerSize + imageSize);
+				if (hMem) {
+					void *lpvMem = GlobalLock(hMem);
+					if (lpvMem) {
 						memcpy(lpvMem, bih.data(), headerSize);
 
 						VDPixmap dst = VDPixmapFromLayout(layout, (char *)lpvMem + headerSize);

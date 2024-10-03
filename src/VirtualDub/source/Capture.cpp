@@ -2340,9 +2340,8 @@ unknown_PCM_format:
 				// Figure out what drive the first file is on, to get the disk threshold.  If we
 				// don't know, make it 50Mb.
 
-				CapSpillDrive *pcsd;
-
-				if (pcsd = CapSpillFindDrive(firstFileName.c_str()))
+				CapSpillDrive *pcsd = CapSpillFindDrive(firstFileName.c_str());
+				if (pcsd)
 					icd.mSizeThreshold = pcsd->threshold;
 				else
 					icd.mSizeThreshold = 50;

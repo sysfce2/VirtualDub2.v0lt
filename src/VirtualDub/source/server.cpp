@@ -439,7 +439,6 @@ INT_PTR CALLBACK Frameserver::StatusDlgProc2( HWND hWnd, UINT message, WPARAM wP
 
 		{
 			HKEY hkey;
-			HIC hic;
 			BOOL fAVIFile = FALSE, fVCM = FALSE;
 
 			if (RegOpenKeyEx(HKEY_CLASSES_ROOT, "CLSID\\{894288E0-0948-11D2-8109-004845000EB5}\\InProcServer32\\AVIFile", 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS) {
@@ -447,7 +446,8 @@ INT_PTR CALLBACK Frameserver::StatusDlgProc2( HWND hWnd, UINT message, WPARAM wP
 				fAVIFile = TRUE;
 			}
 
-			if (hic = ICOpen('CDIV', 'TSDV', ICMODE_DECOMPRESS)) {
+			HIC hic = ICOpen('CDIV', 'TSDV', ICMODE_DECOMPRESS);
+			if (hic) {
 				ICClose(hic);
 				fVCM = TRUE;
 			}
@@ -489,10 +489,10 @@ FrameserverSession *Frameserver::SessionLookup(LPARAM lParam) {
 
 LRESULT Frameserver::SessionOpen(LPARAM mmapID, WPARAM arena_len) {
 	FrameserverSession *fs;
-	DWORD id;
 
 	if (fs = new FrameserverSession()) {
-		if (id = fs->Init(arena_len, mmapID)) {
+		DWORD id = fs->Init(arena_len, mmapID);
+		if (id) {
 			mSessions[id] = fs;
 			return id;
 		}

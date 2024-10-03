@@ -264,11 +264,11 @@ void VDCopyTextToClipboardA(const char *s) {
 		return;
 
 	if (EmptyClipboard()) {
-		HANDLE hMem;
 		size_t len = strlen(s) + 1;
-		if (hMem = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, len)) {
-			void *lpvMem;
-			if (lpvMem = GlobalLock(hMem)) {
+		HANDLE hMem = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, len);
+		if (hMem) {
+			void *lpvMem = GlobalLock(hMem);
+			if (lpvMem) {
 				memcpy(lpvMem, s, len);
 
 				GlobalUnlock(lpvMem);
@@ -288,11 +288,11 @@ void VDCopyTextToClipboardW(const wchar_t *s) {
 		return;
 
 	if (EmptyClipboard()) {
-		HANDLE hMem;
 		size_t len = sizeof(wchar_t) * (wcslen(s) + 1);
-		if (hMem = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, len)) {
-			void *lpvMem;
-			if (lpvMem = GlobalLock(hMem)) {
+		HANDLE hMem = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, len);
+		if (hMem) {
+			void *lpvMem = GlobalLock(hMem);
+			if (lpvMem) {
 				memcpy(lpvMem, s, len);
 
 				GlobalUnlock(lpvMem);

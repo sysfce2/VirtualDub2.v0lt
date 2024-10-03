@@ -395,10 +395,10 @@ HexViewer::~HexViewer() {
 }
 
 void HexViewer::Init() {
-	HDC hdc;
-
 	nLineHeight = 16;
-	if (hdc = GetDC(hwnd)) {
+
+	HDC hdc = GetDC(hwnd);
+	if (hdc) {
 		TEXTMETRIC tm;
 		HGDIOBJ hfOld;
 
@@ -518,7 +518,6 @@ void HexViewer::MoveToByte(sint64 pos) {
 }
 
 void HexViewer::ScrollTopTo(long lLine) {
-	HDC hdc;
 	RECT rRedraw;
 
 	if (lLine < 0)
@@ -541,12 +540,13 @@ void HexViewer::ScrollTopTo(long lLine) {
 	if (abs(delta) > nCurrentVisLines) {
 		InvalidateRect(hwnd, NULL, TRUE);
 	} else {
-	   if (hdc = GetDC(hwnd)) {
-		   ScrollDC(hdc, 0, -delta*nLineHeight, NULL, NULL, NULL, &rRedraw);
-		   ReleaseDC(hwnd, hdc);
-		   InvalidateRect(hwnd, &rRedraw, TRUE);
-		   UpdateWindow(hwnd);
-	   }
+		HDC hdc = GetDC(hwnd);
+		if (hdc) {
+			ScrollDC(hdc, 0, -delta*nLineHeight, NULL, NULL, NULL, &rRedraw);
+			ReleaseDC(hwnd, hdc);
+			InvalidateRect(hwnd, &rRedraw, TRUE);
+			UpdateWindow(hwnd);
+		}
 	}
 	MoveCaret();
 }
@@ -1152,11 +1152,10 @@ HexEditor::~HexEditor() {
 }
 
 void HexEditor::Init() {
-	HDC hdc;
-
 	VDSetDialogDefaultIcons(hwnd);
 
-	if (hdc = GetDC(hwnd)) {
+	HDC hdc = GetDC(hwnd);
+	if (hdc) {
 		TEXTMETRIC tm;
 		HGDIOBJ hfOld;
 
@@ -1316,12 +1315,10 @@ const char *HexEditor::GetRow(sint64 start, int& len, long& modified_mask) {
 }
 
 void HexEditor::UndoByte(sint64 i64Position) {
-	HVModifiedLine *pLine;
-	sint64 i64Offset;
+	sint64 i64Offset = i64Position & -16i64;
 
-	i64Offset = i64Position & -16i64;
-
-	if (pLine = FindModLine(i64Offset)) {
+	HVModifiedLine *pLine = FindModLine(i64Offset);
+	if (pLine) {
 		// Revert byte.
 
 		int offset = (int)i64Position & 15;

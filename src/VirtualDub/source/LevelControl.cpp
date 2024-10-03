@@ -168,7 +168,6 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 				}
 
 				for(x=xlo; x<xhi; x++) {
-					HBRUSH hbr;
 					COLORREF cr;
 
 					r.left = lcd->rColorBand.left + x;
@@ -179,7 +178,8 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 						+ (((dg*x + w/2)/w) << 8)
 						+ (((db*x + w/2)/w) << 16);
 
-					if (hbr = CreateSolidBrush(cr)) {
+					HBRUSH hbr = CreateSolidBrush(cr);
+					if (hbr) {
 						FillRect(hdc, &r, hbr);
 						DeleteObject(hbr);
 					}
@@ -188,7 +188,6 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 
 			for(i=0; i<lcd->nTabs; i++) {
 				POINT pt[3];
-				HBRUSH hbr;
 				HGDIOBJ hgoOld;
 
 				pt[0].x = lcd->iPixPos[i];
@@ -197,7 +196,8 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 				pt[0].y = pt[2].y = lcd->rColorBand.bottom+lcd->iTabH-1;
 				pt[1].y = lcd->rColorBand.bottom;
 
-				if (hbr = CreateSolidBrush(lcd->rgbTab[i]))
+				HBRUSH hbr = CreateSolidBrush(lcd->rgbTab[i]);
+				if (hbr)
 					hgoOld = SelectObject(hdc, hbr);
 
 				Polygon(hdc, pt, 3);

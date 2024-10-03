@@ -334,18 +334,16 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 				AboutSetCompilerBuild(GetDlgItem(hDlg, IDC_STATIC_VERSION));
 
-				HRSRC hrsrc;
-
-				if (hrsrc = FindResource(NULL, MAKEINTRESOURCE(IDR_CREDITS), "STUFF")) {
-					HGLOBAL hGlobal;
-					if (hGlobal = LoadResource(NULL, hrsrc)) {
-						const char *pData, *pLimit;
-
-						if (pData = (const char *)LockResource(hGlobal)) {
+				HRSRC hrsrc = FindResource(NULL, MAKEINTRESOURCE(IDR_CREDITS), "STUFF");
+				if (hrsrc) {
+					HGLOBAL hGlobal = LoadResource(NULL, hrsrc);
+					if (hGlobal) {
+						const char *pData = (const char *)LockResource(hGlobal);
+						if (pData) {
 							HWND hwndItem = GetDlgItem(hDlg, IDC_CREDITS);
 							const INT tab = 80;
 
-							pLimit = pData + SizeofResource(NULL, hrsrc);
+							const char *pLimit = pData + SizeofResource(NULL, hrsrc);
 
 							SendMessage(hwndItem, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), MAKELPARAM(TRUE, 0));
 							SendMessage(hwndItem, LB_SETTABSTOPS, 1, (LPARAM)&tab);

@@ -1033,8 +1033,6 @@ void VDCaptureProjectUI::LoadLocalSettings() {
 
 	// How about default capture settings?
 	{
-		CAPTUREPARMS *cp;
-
 		int size = key.getBinaryLength(g_szCapSettings);
 		if (size > 0) {
 			int sizeAlloc = size;
@@ -1042,7 +1040,8 @@ void VDCaptureProjectUI::LoadLocalSettings() {
 			if (size < (int)sizeof(CAPTUREPARMS))
 				size = sizeof(CAPTUREPARMS);
 
-			if (cp = (CAPTUREPARMS *)allocmem(sizeAlloc)) {
+			CAPTUREPARMS *cp = (CAPTUREPARMS *)allocmem(sizeAlloc);
+			if (cp) {
 				memset(cp, 0, sizeAlloc);
 
 				if (key.getBinary(g_szCapSettings, (char *)cp, size)) {

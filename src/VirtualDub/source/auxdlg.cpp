@@ -337,11 +337,10 @@ INT_PTR CALLBACK ShowTextDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM
     {
         case WM_INITDIALOG:
 			if (hRSRC = FindResource(NULL, (LPSTR)lParam, "STUFF")) {
-				HGLOBAL hGlobal;
-				if (hGlobal = LoadResource(NULL, hRSRC)) {
-					LPVOID lpData;
-
-					if (lpData = LockResource(hGlobal)) {
+				HGLOBAL hGlobal = LoadResource(NULL, hRSRC);
+				if (hGlobal) {
+					LPVOID lpData = LockResource(hGlobal);
+					if (lpData) {
 						char *s = (char *)lpData;
 						char *ttl = new char[256];
 

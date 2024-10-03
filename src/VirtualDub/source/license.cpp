@@ -46,14 +46,13 @@ public:
 
 void Licensor::depack(HWND hDlg) {
 	unsigned char depackbuf[15073], textbuf[18317];
-	HRSRC hRSRC;
 
-	if (hRSRC = FindResource(NULL, MAKEINTRESOURCE(IDR_LICENSE), "STUFF")) {
-		HGLOBAL hGlobal;
-		if (hGlobal = LoadResource(NULL, hRSRC)) {
-			LPVOID lpData;
-
-			if (lpData = LockResource(hGlobal)) {
+	HRSRC hRSRC = FindResource(NULL, MAKEINTRESOURCE(IDR_LICENSE), "STUFF");
+	if (hRSRC) {
+		HGLOBAL hGlobal = LoadResource(NULL, hRSRC);
+		if (hGlobal) {
+			LPVOID lpData = LockResource(hGlobal);
+			if (lpData) {
 				byte *s = (byte *)lpData;
 				byte *t = depackbuf;
 				int sum = 0;
