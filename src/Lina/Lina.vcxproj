@@ -101,7 +101,6 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\..\obj\Debug\Lina/Lina.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\..\obj\Debug\Lina/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -134,7 +133,6 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\..\obj\Debug\Lina/Lina.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\..\obj\Debug\Lina/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -167,7 +165,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>.\..\obj\Release\Lina/Lina.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\..\obj\Release\Lina/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -201,7 +198,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>.\..\obj\Release\Lina/Lina.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\..\obj\Release\Lina/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>

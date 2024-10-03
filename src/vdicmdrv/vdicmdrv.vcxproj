@@ -106,7 +106,6 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\../obj/Debug/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Debug/vdicmdrv/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -144,7 +143,6 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\../obj/Debug/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Debug/vdicmdrv/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -184,7 +182,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>.\../obj/Release/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Release/vdicmdrv/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
     <ResourceCompile>
@@ -226,7 +223,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>.\../obj/Release/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Release/vdicmdrv/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
     <ResourceCompile>

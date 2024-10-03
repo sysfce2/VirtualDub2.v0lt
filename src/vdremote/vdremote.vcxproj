@@ -110,7 +110,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>.\../obj/Release/vdremote/vdremote.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Release/vdremote/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -154,7 +153,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>.\../obj/Release/vdremote/vdremote.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Release/vdremote/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -195,7 +193,6 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\../obj/Debug/vdremote/vdremote.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Debug/vdremote/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -233,7 +230,6 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\../obj/Debug/vdremote/vdremote.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Debug/vdremote/</AssemblerListingLocation>
-      <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
