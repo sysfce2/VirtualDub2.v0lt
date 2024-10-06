@@ -36,7 +36,7 @@ void VDFilterAccelInterleaveYUV_SSE2(
 
 		uint32 x8 = w >> 3;
 		if (x8) {
-			if (!((int)dst & 15)) {
+			if (!((size_t)dst & 15)) {
 				do {
 					__m128i y = _mm_loadl_epi64((const __m128i *)vsrcY);
 					__m128i cb = _mm_loadl_epi64((const __m128i *)vsrcCb);
