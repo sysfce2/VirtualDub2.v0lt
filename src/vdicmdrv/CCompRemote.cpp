@@ -36,8 +36,8 @@ void CCompRemoteDriver::Free(HDRVR hDriver) {
 	}
 }
 
-DWORD CCompRemoteDriver::Open(HDRVR hDriver, char *szDescription, LPVIDEO_OPEN_PARMS lpVideoOpenParms) {
-	return (DWORD)new CCompRemote();
+void* CCompRemoteDriver::Open(HDRVR hDriver, char *szDescription, LPVIDEO_OPEN_PARMS lpVideoOpenParms) {
+	return new CCompRemote();
 }
 
 void CCompRemoteDriver::Disable(HDRVR hDriver) {

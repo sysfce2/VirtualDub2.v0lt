@@ -35,8 +35,8 @@ BOOL YUVCodecDriver::Load(HDRVR hDriver) {
 void YUVCodecDriver::Free(HDRVR hDriver) {
 }
 
-DWORD YUVCodecDriver::Open(HDRVR hDriver, char *szDescription, LPVIDEO_OPEN_PARMS lpVideoOpenParms) {
-	return (DWORD)new YUVCodec();
+void* YUVCodecDriver::Open(HDRVR hDriver, char *szDescription, LPVIDEO_OPEN_PARMS lpVideoOpenParms) {
+	return new YUVCodec();
 }
 
 void YUVCodecDriver::Disable(HDRVR hDriver) {

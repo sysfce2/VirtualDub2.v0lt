@@ -13,7 +13,7 @@ public:
 
 	BOOL	Load(HDRVR hDriver);
 	void	Free(HDRVR hDriver);
-	DWORD	Open(HDRVR hDriver, char *szDescription, LPVIDEO_OPEN_PARMS lpVideoOpenParms);
+	void*	Open(HDRVR hDriver, char *szDescription, LPVIDEO_OPEN_PARMS lpVideoOpenParms);
 	void	Disable(HDRVR hDriver);
 	void	Enable(HDRVR hDriver);
 	LRESULT	Default(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, LPARAM lParam1, LPARAM lParam2);

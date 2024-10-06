@@ -39,7 +39,7 @@ public:
 
 	virtual BOOL	Load(HDRVR hDriver)																	= 0;
 	virtual void	Free(HDRVR hDriver)																	= 0;
-	virtual DWORD	Open(HDRVR hDriver, char *szDescription, LPVIDEO_OPEN_PARMS lpVideoOpenParms)	= 0;
+	virtual void*	Open(HDRVR hDriver, char *szDescription, LPVIDEO_OPEN_PARMS lpVideoOpenParms)		= 0;
 	virtual void	Disable(HDRVR hDriver)																= 0;
 	virtual void	Enable(HDRVR hDriver)																= 0;
 	virtual LRESULT	Default(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, LPARAM lParam1, LPARAM lParam2) = 0;
