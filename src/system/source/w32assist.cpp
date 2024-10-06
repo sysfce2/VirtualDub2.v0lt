@@ -522,7 +522,7 @@ bool VDPatchModuleExportTableW32(HMODULE hmod, const char *name, void *pCompareV
 				
 				// Reset the protection.
 
-				DWORD newRVA = (DWORD)pNewValue - (DWORD)pBase;
+				DWORD newRVA = (DWORD)((size_t)pNewValue - (size_t)pBase);
 
 				DWORD dwOldProtect;
 				if (VirtualProtect((void *)pRVA, sizeof(DWORD), PAGE_EXECUTE_READWRITE, &dwOldProtect)) {
