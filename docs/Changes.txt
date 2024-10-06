@@ -1,8 +1,21 @@
 VirtualDub2.1 change log
 
+2.1.2 dev
+----------------------
+Fixed "Internal DV decoder".
+
+Updated avlib-1.vdplugin to version 0.7.1.154.
+    FFmpeg 7.1 is now supported.
+
+Updated scripted.vdplugin to version 0.2.0.44.
+    Fixed a crash when trying to save a read-only file.
+    Implemented Unicode support. Now script files are read and saved in UTF-8 format.
+
+
 2.1.1.609 - 2024-08-30
 ----------------------
 More careful ignoring of 64-bit "ffdshow Video Codec" (ff_vfw.dll) and "Logitech Video (I420)" (lvcod64.dll) to eliminate crash when opening AVI files.
+
 Updated avlib-1.vdplugin to version 0.7.0.123.
     FFmpeg 7.0.2 is now supported.
     Added support for JPEG XL images.
@@ -20,6 +33,7 @@ Windows XP is no longer supported.
 Builds for x86 are no longer planned to be released.
 Fixed crash when calling RunNullVideoPass().
 64-bit "ffdshow Video Codec" (ff_vfw.dll) and "Logitech Video (I420)" (lvcod64.dll) are not supported because it crashes when opening the video compression selection window.
+
 Updated avlib-1.vdplugin to version 0.6.1.70.
     FFmpeg 6.1.1 is now supported.
     Removed CineForm HD (native) codec.
