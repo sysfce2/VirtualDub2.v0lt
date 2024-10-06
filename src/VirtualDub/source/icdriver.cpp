@@ -197,7 +197,6 @@ LRESULT CALLBACK VCMDriverProc(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, 
 {
     IVideoCompressor *pi;
     int	    i;
-    LRESULT dw;
 
     if ( (dwDriverID == BOGUS_DRIVER_ID) || (dwDriverID == 0))
         pi = NULL;
@@ -259,10 +258,11 @@ LRESULT CALLBACK VCMDriverProc(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, 
 				DriverPtrTranslator *dpt = create_translation();
 
 				for (i=0; videoDrivers[i]; i++) {
-					if (dw = (DWORD)videoDrivers[i]->Open(hDriver, (char *)lParam1, (LPVIDEO_OPEN_PARMS)lParam2)) {
-						_RPT2(0,"DRV_OPEN: Driver %d returned %p\n", i, dw);
+					void* pVideoDriver = videoDrivers[i]->Open(hDriver, (char*)lParam1, (LPVIDEO_OPEN_PARMS)lParam2);
+					if (pVideoDriver) {
+						_RPT2(0,"DRV_OPEN: Driver %d returned %p\n", i, pVideoDriver);
 
-						dpt->id32 = (IVideoCompressor *)dw;
+						dpt->id32 = (IVideoCompressor*)pVideoDriver;
 
 						return dpt->id16;	// they did, return
 					}
