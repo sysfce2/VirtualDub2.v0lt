@@ -252,7 +252,7 @@ int tiff_encode_frame(AVCodecContext *avctx, AVPacket *pkt,
     int bpp_c;
     int ret = -1;
     int is_yuv = 0, alpha = 0;
-    int shift_h, shift_v;
+    //int shift_h, shift_v;
     int packet_size;
 
     s->width          = avctx->width;
