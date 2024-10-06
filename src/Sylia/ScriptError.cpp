@@ -3,7 +3,7 @@
 namespace {
 	static struct ErrorEnt {
 		int e;
-		char *s;
+		const char *s;
 	} error_list[]={
 		{ VDScriptError::PARSE_ERROR,					"parse error" },
 		{ VDScriptError::SEMICOLON_EXPECTED,			"expected ';'" },

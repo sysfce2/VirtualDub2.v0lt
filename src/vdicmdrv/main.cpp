@@ -111,7 +111,7 @@ void remove_translation(DriverPtrTranslator *dpt) {
 
 struct DriveMessageTranslation {
 	UINT msg;
-	char *name;
+	const char *name;
 } driverMessages[]={
 	DRIVERMESSAGE(DRV_LOAD),
 	DRIVERMESSAGE(DRV_FREE),
@@ -169,7 +169,7 @@ struct DriveMessageTranslation {
 	DRIVERMESSAGE(ICM_SETSTATE),
 };
 
-char *TranslateDriverMessage(UINT msg) {
+const char *TranslateDriverMessage(UINT msg) {
 	static char buf[12];
 
 	for(int i=0; i<(sizeof driverMessages/sizeof driverMessages[0]); i++)

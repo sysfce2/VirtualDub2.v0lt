@@ -23,18 +23,18 @@ const DWORD bits888[] = {0xFF0000,0x00FF00,0x0000FF};
 const struct {
     const GUID *pSubtype;
     WORD BitCount;
-    CHAR *pName;
-    WCHAR *wszName;
-} BitCountMap[] =  { &MEDIASUBTYPE_RGB1,        1,   "RGB Monochrome",     L"RGB Monochrome",   
-                     &MEDIASUBTYPE_RGB4,        4,   "RGB VGA",            L"RGB VGA",          
-                     &MEDIASUBTYPE_RGB8,        8,   "RGB 8",              L"RGB 8",            
-                     &MEDIASUBTYPE_RGB565,      16,  "RGB 565 (16 bit)",   L"RGB 565 (16 bit)", 
-                     &MEDIASUBTYPE_RGB555,      16,  "RGB 555 (16 bit)",   L"RGB 555 (16 bit)", 
-                     &MEDIASUBTYPE_RGB24,       24,  "RGB 24",             L"RGB 24",           
-                     &MEDIASUBTYPE_RGB32,       32,  "RGB 32",             L"RGB 32",
-                     &MEDIASUBTYPE_ARGB32,    32,  "ARGB 32",             L"ARGB 32",
-                     &MEDIASUBTYPE_Overlay,     0,   "Overlay",            L"Overlay",          
-                     &GUID_NULL,                0,   "UNKNOWN",            L"UNKNOWN"           
+    const CHAR *pName;
+    const WCHAR *wszName;
+} BitCountMap[] =  { &MEDIASUBTYPE_RGB1,     1, "RGB Monochrome",   L"RGB Monochrome",
+                     &MEDIASUBTYPE_RGB4,     4, "RGB VGA",          L"RGB VGA",
+                     &MEDIASUBTYPE_RGB8,     8, "RGB 8",            L"RGB 8",
+                     &MEDIASUBTYPE_RGB565,  16, "RGB 565 (16 bit)", L"RGB 565 (16 bit)",
+                     &MEDIASUBTYPE_RGB555,  16, "RGB 555 (16 bit)", L"RGB 555 (16 bit)",
+                     &MEDIASUBTYPE_RGB24,   24, "RGB 24",           L"RGB 24",
+                     &MEDIASUBTYPE_RGB32,   32, "RGB 32",           L"RGB 32",
+                     &MEDIASUBTYPE_ARGB32,  32, "ARGB 32",          L"ARGB 32",
+                     &MEDIASUBTYPE_Overlay,  0, "Overlay",          L"Overlay",
+                     &GUID_NULL,             0, "UNKNOWN",          L"UNKNOWN"
 };
 
 // Return the size of the bitmap as defined by this header
@@ -175,12 +175,12 @@ int LocateSubtype(const GUID *pSubtype)
 
 STDAPI_(WCHAR *) GetSubtypeNameW(const GUID *pSubtype)
 {
-    return BitCountMap[LocateSubtype(pSubtype)].wszName;
+    return const_cast<WCHAR*>(BitCountMap[LocateSubtype(pSubtype)].wszName);
 }
 
 STDAPI_(CHAR *) GetSubtypeNameA(const GUID *pSubtype)
 {
-    return BitCountMap[LocateSubtype(pSubtype)].pName;
+    return const_cast<CHAR*>(BitCountMap[LocateSubtype(pSubtype)].pName);
 }
 
 #ifndef GetSubtypeName

@@ -1,7 +1,7 @@
 #include <windows.h>
 #include "registry.h"
 
-HKEY OpenRegKey(HKEY hkBase, char *szKeyName) {
+HKEY OpenRegKey(HKEY hkBase, const char *szKeyName) {
 	HKEY hkey;
 
 	return RegOpenKeyEx(hkBase, szKeyName, 0, KEY_ALL_ACCESS, &hkey)==ERROR_SUCCESS
@@ -9,7 +9,7 @@ HKEY OpenRegKey(HKEY hkBase, char *szKeyName) {
 			: NULL;
 }
 
-HKEY CreateRegKey(HKEY hkBase, char *szKeyName) {
+HKEY CreateRegKey(HKEY hkBase, const char *szKeyName) {
 	HKEY hkey;
 	DWORD dwDisposition;
 
@@ -18,7 +18,7 @@ HKEY CreateRegKey(HKEY hkBase, char *szKeyName) {
 			: NULL;
 }
 
-HKEY CreateRegKey64(HKEY hkBase, char *szKeyName) {
+HKEY CreateRegKey64(HKEY hkBase, const char *szKeyName) {
 	HKEY hkey;
 	DWORD dwDisposition;
 
@@ -27,7 +27,7 @@ HKEY CreateRegKey64(HKEY hkBase, char *szKeyName) {
 			: NULL;
 }
 
-BOOL DeleteRegValue(HKEY hkBase, char *szKeyName, char *szValueName) {
+BOOL DeleteRegValue(HKEY hkBase, const char *szKeyName, const char *szValueName) {
 	HKEY hkey;
 	BOOL success;
 
@@ -41,7 +41,7 @@ BOOL DeleteRegValue(HKEY hkBase, char *szKeyName, char *szValueName) {
 	return success;
 }
 
-BOOL QueryRegString(HKEY hkBase, char *szKeyName, char *szValueName, char *lpBuffer, int cbBuffer) {
+BOOL QueryRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, char *lpBuffer, int cbBuffer) {
 	HKEY hkey;
 	BOOL success;
 	DWORD type;
@@ -56,7 +56,7 @@ BOOL QueryRegString(HKEY hkBase, char *szKeyName, char *szValueName, char *lpBuf
 	return success;
 }
 
-BOOL SetRegString(HKEY hkBase, char *szKeyName, char *szValueName, char *lpBuffer) {
+BOOL SetRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, const char *lpBuffer) {
 	HKEY hkey;
 	BOOL success;
 
@@ -70,7 +70,7 @@ BOOL SetRegString(HKEY hkBase, char *szKeyName, char *szValueName, char *lpBuffe
 	return success;
 }
 
-BOOL SetRegString64(HKEY hkBase, char *szKeyName, char *szValueName, char *lpBuffer) {
+BOOL SetRegString64(HKEY hkBase, const char *szKeyName, const char *szValueName, const char *lpBuffer) {
 	HKEY hkey;
 	BOOL success;
 

@@ -174,7 +174,7 @@ LRESULT APIENTRY WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 //////////////////////////////////////////////////////////////////////
 
-void ListboxAddf(HWND hwndListbox, char *format, ...) {
+void ListboxAddf(HWND hwndListbox, const char *format, ...) {
 	char buf[256];
 	va_list val;
 
@@ -186,7 +186,7 @@ void ListboxAddf(HWND hwndListbox, char *format, ...) {
 	SendMessage(hwndListbox, LB_ADDSTRING, 0, (LPARAM)buf);
 }
 
-BOOL InstallFile(char *szSource, char *szDestFormat, ...) {
+BOOL InstallFile(const char *szSource, const char *szDestFormat, ...) {
 	char szDest[MAX_PATH];
 	char szDestPath[MAX_PATH];
 	char szDestFile[MAX_PATH];
@@ -287,7 +287,7 @@ BOOL InstallFile(char *szSource, char *szDestFormat, ...) {
 	return TRUE;
 }
 
-BOOL InstallRegStr(HKEY hkBase, char *szKeyName, char *szName, char *szValue) {
+BOOL InstallRegStr(HKEY hkBase, const char *szKeyName, const char *szName, const char *szValue) {
 	char buf[256];
 
 	if (!SetRegString(hkBase, szKeyName, szName, szValue)) {
@@ -299,7 +299,7 @@ BOOL InstallRegStr(HKEY hkBase, char *szKeyName, char *szName, char *szValue) {
 	return TRUE;
 }
 
-BOOL InstallRegStr64(HKEY hkBase, char *szKeyName, char *szName, char *szValue) {
+BOOL InstallRegStr64(HKEY hkBase, const char *szKeyName, const char *szName, const char *szValue) {
 	char buf[256];
 
 	if (!SetRegString64(hkBase, szKeyName, szName, szValue)) {
@@ -311,19 +311,19 @@ BOOL InstallRegStr64(HKEY hkBase, char *szKeyName, char *szName, char *szValue) 
 	return TRUE;
 }
 
-BOOL InstallDeleteKey(HKEY key, char *name) {
+BOOL InstallDeleteKey(HKEY key, const char *name) {
 	LSTATUS r = RegDeleteKey(key,name);
 	if (r==ERROR_FILE_NOT_FOUND) return TRUE;
 	return r==ERROR_SUCCESS;
 }
 
-BOOL InstallDeleteKey64(HKEY key, char *name) {
+BOOL InstallDeleteKey64(HKEY key, const char *name) {
 	LSTATUS r = pfnRegDeleteKeyExA(key,name,KEY_WOW64_64KEY,0);
 	if (r==ERROR_FILE_NOT_FOUND) return TRUE;
 	return r==ERROR_SUCCESS;
 }
 
-BOOL InstallDeleteFile(char *szFileFormat, ...) {
+BOOL InstallDeleteFile(const char *szFileFormat, ...) {
 	char szFile[MAX_PATH+50];
 	va_list val;
 

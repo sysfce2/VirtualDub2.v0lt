@@ -177,7 +177,7 @@ static struct DriveMessageTranslation {
 	DRIVERMESSAGE(ICM_SETSTATE),
 };
 
-static char *TranslateDriverMessage(UINT msg) {
+static const char *TranslateDriverMessage(UINT msg) {
 	static char buf[12];
 
 	for(int i=0; i<(sizeof driverMessages/sizeof driverMessages[0]); i++)
