@@ -744,8 +744,9 @@ void tool_fxc(const vdfastvector<const char *>& args, const vdfastvector<const c
 		pEffect->SetTexture(kTextureNames[i], pDummyTextures[i]);
 	}
 
-	FILE *f = fopen(args[1], "w");
-	if (!f) {
+	FILE *f = nullptr;
+	errno_t err = fopen_s(&f, args[1], "w");
+	if (err) {
 		printf("Couldn't open %s for write\n", args[1]);
 		exit(10);
 	}

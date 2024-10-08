@@ -55,9 +55,11 @@ void tool_verinc(bool amd64) {
 	char datestr[128];
 	sprintf(datestr, "%s %d, %d", sMonths[ts->tm_mon], ts->tm_mday, 1900 + ts->tm_year);
 
-	FILE *f = fopen("verstub.asm", "w");
-	if (!f)
+	FILE *f = nullptr;
+	errno_t err = fopen_s(&f, "verstub.asm", "w");
+	if (err) {
 		fail("Unable to open verstub.asm for write.");
+	}
 
 	if (amd64)
 		fprintf(f,

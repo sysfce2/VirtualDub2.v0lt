@@ -147,10 +147,11 @@ void construct_path(const std::string& dstfile) {
 void copy_file(const std::string& dstfile, const std::string& srcfile) {
 	printf("copying: %s -> %s\n", srcfile.c_str(), dstfile.c_str());
 
-	FILE *fs = fopen(srcfile.c_str(), "rb");
-
-	if (!fs)
+	FILE *fs = nullptr;
+	errno_t err = fopen_s(&fs, srcfile.c_str(), "rb");
+	if (err) {
 		error("couldn't open source file \"%s\"", srcfile.c_str());
+	}
 
 	std::string filename(g_outputDir);
 
@@ -164,9 +165,11 @@ void copy_file(const std::string& dstfile, const std::string& srcfile) {
 
 	construct_path(filename);
 
-	FILE *fd = fopen(filename.c_str(), "wb");
-	if (!fd)
+	FILE *fd = nullptr;
+	err = fopen_s(&fd, filename.c_str(), "wb");
+	if (err) {
 		error("couldn't create \"%s\"", filename.c_str());
+	}
 
 	fseek(fs, 0, SEEK_END);
 	std::vector<char> data(ftell(fs));
@@ -563,9 +566,11 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 
 		std::string filename(create_output_filename(a->mValue));
 
-		FILE *f = fopen(filename.c_str(), "wb");
-		if (!f)
+		FILE *f = nullptr;
+		errno_t err = fopen_s(&f, filename.c_str(), "wb");
+		if (err) {
 			error(ctx, "couldn't create \"%s\"", a->mValue.c_str());
+		}
 		fwrite(s.data(), s.length(), 1, f);
 		fclose(f);
 
@@ -916,9 +921,11 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 		ctx.construction_stack.pop_back();
 		output_tag(ctx, out, *new_tag);
 
-		FILE *f = fopen(filename.c_str(), "wb");
-		if (!f)
+		FILE *f = nullptr;
+		errno_t err = fopen_s(&f, filename.c_str(), "wb");
+		if (err) {
 			error(ctx, "couldn't create htmlhelp toc \"%s\"", a_val->mValue.c_str());
+		}
 		output_toc(f, *new_tag);
 		fclose(f);
 
@@ -941,9 +948,11 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 
 		const std::string filename(create_output_filename(file_val->mValue));
 
-		FILE *f = fopen(filename.c_str(), "wb");
-		if (!f)
+		FILE *f = nullptr;
+		errno_t err = fopen_s(&f, filename.c_str(), "wb");
+		if (err) {
 			error(ctx, "couldn't create htmlhelp project \"%s\"", file_val->mValue.c_str());
+		}
 		fprintf(f,
 			"[OPTIONS]\n"
 			"Auto Index=Yes\n"

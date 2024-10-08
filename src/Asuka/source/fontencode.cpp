@@ -157,8 +157,9 @@ void tool_fontencode(const vdfastvector<const char *>& args, const vdfastvector<
 
 	outheap.resize(((outheap.size() + 7) & ~7), 0);
 
-	FILE *f = fopen(args[8], "w");
-	if (!f) {
+	FILE *f = nullptr;
+	errno_t err = fopen_s(&f, args[8], "w");
+	if (err) {
 		printf("Asuka: Unable to open output file: %s\n", args[5]);
 		exit(10);
 	}

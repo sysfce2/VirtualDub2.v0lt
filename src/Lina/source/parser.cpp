@@ -65,9 +65,11 @@ void TreeParser::ParseFile(const char *fname) {
 }
 
 void TreeParser::PushFile(const char *fname) {
-	FILE *f = fopen(fname, "r");
-	if (!f)
+	FILE *f = nullptr;
+	errno_t err = fopen_s(&f, fname, "r");
+	if (err) {
 		error("cannot open \"%s\"", fname);
+	}
 
 	if (g_file) {
 		FileContext fc;

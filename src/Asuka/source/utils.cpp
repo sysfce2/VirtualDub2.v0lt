@@ -119,9 +119,9 @@ bool read_version() {
 	g_versionMap.clear();
 	g_version = 0;
 
-	FILE *f = fopen("version2.bin","r");
-
-	if (!f) {
+	FILE *f = nullptr;
+	errno_t err = fopen_s(&f, "version2.bin","r");
+	if (err) {
 		printf("    warning: can't open version2.bin for read, starting new version series\n");
 		return false;
 	}
@@ -142,6 +142,7 @@ bool read_version() {
 			printf("    warning: line ignored: %s", linebuf);
 	}
 
+	fclose(f);
 	return true;
 }
 
@@ -172,7 +173,9 @@ bool write_version(const char *tag) {
 	printf("    incrementing to build %d (builds on '%s': %d)\n", g_version, tag, g_versionMap[tag]);
 
 	for(;;) {
-		if (FILE *f = fopen("version2.bin","w")) {
+		FILE* f = nullptr;
+		errno_t err = fopen_s(&f, "version2.bin", "w");
+		if (!err) {
 			tVersionMap::const_iterator it(g_versionMap.begin()), itEnd(g_versionMap.end());
 
 			for(; it!=itEnd; ++it) {
