@@ -101,9 +101,10 @@ AVIStripeSystem::AVIStripeSystem(const char *szFile) {
 		//	0   v   4194304    1048576   "e:\capture video stripe 1.avi"
 		//  -1  v	1048576    524288    "i:\capture video stripe 2.avi"
 
-
-		f = fopen(szFile, "r");
-		if (!f) throw MyError("Couldn't open stripe definition file \"%s\"", szFile);
+		errno_t err = fopen_s(&f, szFile, "r");
+		if (err) {
+			throw MyError("Couldn't open stripe definition file \"%s\"", szFile);
+		}
 
 		if (!get_line(linebuf, sizeof linebuf, f))
 				throw MyError("Failure reading first line of stripe def file");

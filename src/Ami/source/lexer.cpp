@@ -163,18 +163,20 @@ void lextestunicode() {
 
 void lexopen(const char *fn) {
 	g_filename = fn;
-	g_file = fopen(fn, "rb");
-	if (!g_file)
+	errno_t err = fopen_s(&g_file, fn, "rb");
+	if (err) {
 		fatal("cannot open input file %s", g_filename.c_str());
+	}
 	g_lineno = 1;
 	lextestunicode();
 }
 
 void lexinclude(const std::string& filename) {
-	FILE *f = fopen(filename.c_str(), "rb");
-
-	if (!f)
+	FILE* f = nullptr;
+	errno_t err = fopen_s(&f, filename.c_str(), "rb");
+	if (err) {
 		fatal("Cannot open include file \"%s\"", filename.c_str());
+	}
 
 	g_includeStack.push_front(IncludeEntry());
 	g_includeStack.front().f = g_file;

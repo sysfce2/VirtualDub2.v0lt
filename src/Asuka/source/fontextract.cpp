@@ -111,8 +111,9 @@ void tool_fontextract(const vdfastvector<const char *>& args, const vdfastvector
 		exit(10);
 	}
 
-	FILE *f = fopen(args[4], "w");
-	if (!f) {
+	FILE *f = nullptr;
+	errno_t err = fopen_s(&f, args[4], "w");
+	if (err) {
 		printf("Asuka: Unable to open output file: %s\n", args[4]);
 		exit(10);
 	}

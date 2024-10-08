@@ -158,7 +158,6 @@ void VDNORETURN help_mapconv() {
 }
 
 void tool_mapconv(const vdfastvector<const char *>& args, const vdfastvector<const char *>& switches, bool amd64) {
-	FILE *fo;
 	int i;
 
 	if (args.size() < 3)
@@ -170,15 +169,19 @@ void tool_mapconv(const vdfastvector<const char *>& args, const vdfastvector<con
 	vdfastvector<VDSymbol> rvabuf;
 	syms->Init(VDTextAToW(args[0]).c_str());
 
-	if (!(fo=fopen(args[1], "wb")))
+	FILE *fo = nullptr;
+	errno_t err = fopen_s(&fo, args[1], "wb");
+	if (err) {
 		fail("    can't open output file \"%s\"\n", args[1]);
+	}
 
 	int disasm_size = 0;
 	{
-		FILE *fd;
-
-		if (!(fd=fopen(args[2], "rb")))
+		FILE *fd = nullptr;
+		err = fopen_s(&fd, args[2], "rb");
+		if (err) {
 			fail("    can't open disassembler module \"%s\"\n", args[2]);
+		}
 
 		void *buf = malloc(32768);
 		int act;
@@ -296,8 +299,9 @@ void tool_mapconv(const vdfastvector<const char *>& args, const vdfastvector<con
 	if (fclose(fo))
 		throw "output file close failed";
 
-	FILE *fLock = fopen("autobuild.lock", "r");
-	if (fLock) {
+	FILE *fLock = nullptr;
+	err = fopen_s(&fLock, "autobuild.lock", "r");
+	if (!err) {
 		fclose(fLock);
 	} else {
 		ProjectSetup ps;

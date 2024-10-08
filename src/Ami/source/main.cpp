@@ -1329,10 +1329,11 @@ int main(int argc, char **argv) {
 
 	parse();
 
-	FILE *f = fopen(argv[2], "wb");
-
-	if (!f)
+	FILE *f = nullptr;
+	errno_t err = fopen_s(&f, argv[2], "wb");
+	if (err) {
 		fatal("Cannot open output file");
+	}
 
 	int bytes = writeout(f);
 
