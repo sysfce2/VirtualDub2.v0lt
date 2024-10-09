@@ -1376,14 +1376,15 @@ IVDMediaOutputStream *AVIOutputAPNG::createAudioStream()
 
 bool AVIOutputAPNG::init(const wchar_t *szFile) 
 {
-	if ((mpFile = _wfopen(szFile, L"wb")) == 0)
-	{
+	errno_t err = _wfopen_s(&mpFile, szFile, L"wb");
+	if (err) {
 		throw MyError("Cannot create \"%ls\"", szFile);
 		return false;
 	}
 
-	if (!videoOut)
+	if (!videoOut) {
 		return false;
+	}
 
 	static_cast<AVIVideoAPNGOutputStream *>(videoOut)->init(mFramesCount, mLoopCount, mAlpha, mGrayscale, mRate, mScale, mpFile);
 
@@ -1394,6 +1395,7 @@ void AVIOutputAPNG::finalize()
 {
 	if (videoOut)
 		static_cast<AVIVideoAPNGOutputStream *>(videoOut)->finalize();
-	if (mpFile != 0) 
+	if (mpFile) {
 		fclose(mpFile);
+	}
 }
