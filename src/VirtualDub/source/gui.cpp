@@ -412,7 +412,7 @@ void guiSetStatus(const char *format, int nPart, ...) {
 	va_list val;
 
 	va_start(val, nPart);
-	if ((unsigned)_vsnprintf(buf, sizeof buf - 1, format, val) >= sizeof buf)
+	if ((unsigned)vsprintf_s(buf, format, val) >= sizeof buf)
 		buf[0] = 0;
 	va_end(val);
 
@@ -436,7 +436,7 @@ void guiSetTitle(HWND hWnd, UINT uID, ...) {
 	LoadString(g_hInst, uID, buf1, sizeof buf1);
 
 	va_start(val, uID);
-	vsprintf(buf2, buf1, val);
+	vsprintf_s(buf2, buf1, val);
 	va_end(val);
 
 	SetWindowText(hWnd, buf2);
@@ -876,7 +876,7 @@ int guiMessageBoxF(HWND hwnd, LPCTSTR lpCaption, UINT uType, const char *format,
 	va_list val;
 
 	va_start(val,format);
-	vsprintf(buf, format, val);
+	vsprintf_s(buf, format, val);
 	va_end(val);
 
 	return MessageBox(hwnd, buf, lpCaption, uType);

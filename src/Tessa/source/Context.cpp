@@ -7,7 +7,7 @@ void VDTBeginScopeF(IVDTProfiler *profiler, uint32 color, const char *format, ..
 	char buf[256];
 
 	va_start(val, format);
-	_vsnprintf(buf, sizeof buf, format, val);
+	vsprintf_s(buf, format, val);
 	va_end(val);
 	buf[255] = 0;
 	profiler->BeginScope(color, buf);

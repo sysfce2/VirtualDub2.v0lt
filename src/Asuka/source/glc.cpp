@@ -301,7 +301,7 @@ void GLCErrorSink::ThrowError(const char *format, ...) {
 	va_list val;
 
 	va_start(val, format);
-	int cnt = _vsnprintf(buf, 4096, format, val);
+	int cnt = vsprintf_s(buf, format, val);
 	va_end(val);
 
 	if ((unsigned)cnt >= 4096)
@@ -316,7 +316,7 @@ void GLCErrorSink::ThrowError(const GLCCodeLocation& loc, const char *format, ..
 	va_list val;
 
 	va_start(val, format);
-	int cnt = _vsnprintf(buf, 4096, format, val);
+	int cnt = vsprintf_s(buf, format, val);
 	va_end(val);
 
 	if ((unsigned)cnt >= 4096)

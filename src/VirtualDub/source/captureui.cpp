@@ -968,8 +968,9 @@ void VDCaptureProjectUI::SetStatusF(const char *format, ...) {
 	va_list val;
 
 	va_start(val, format);
-	if ((unsigned)_vsnprintf(buf, sizeof buf, format, val) < sizeof buf)
+	if ((unsigned)vsprintf_s(buf, format, val) < sizeof buf) {
 		SendMessage(mhwndStatus, SB_SETTEXT, 0, (LPARAM)buf);
+	}
 	va_end(val);
 }
 
@@ -978,8 +979,9 @@ void VDCaptureProjectUI::SetStatusImmediateF(const char *format, ...) {
 	va_list val;
 
 	va_start(val, format);
-	if ((unsigned)_vsnprintf(buf, sizeof buf, format, val) < sizeof buf)
+	if ((unsigned)vsprintf_s(buf, format, val) < sizeof buf) {
 		SetStatusImmediate(buf);
+	}
 	va_end(val);
 }
 
@@ -1791,7 +1793,7 @@ void VDCaptureProjectUI::UICaptureDriversUpdated() {
 
 		wchar_t buf[1024];
 
-		if ((unsigned)_snwprintf(buf, sizeof buf / sizeof buf[0], L"&%c %ls", '0'+i, name) < sizeof buf / sizeof buf[0]) {
+		if ((unsigned)swprintf_s(buf, L"&%c %ls", '0'+i, name) < std::size(buf)) {
 			VDAppendMenuW32(hmenu, MF_ENABLED, ID_VIDEO_CAPTURE_DRIVER+i, buf);
 			++driversFound;
 		}
@@ -1882,8 +1884,11 @@ void VDCaptureProjectUI::UICaptureAudioDriversUpdated() {
 
 		wchar_t buf[1024];
 		int r;
-		if (i<10) r = _snwprintf(buf, sizeof buf / sizeof buf[0], L"&%d %ls", i, name);
-		else r = _snwprintf(buf, sizeof buf / sizeof buf[0], L"%d %ls", i, name);
+		if (i < 10) {
+			r = swprintf_s(buf, L"&%d %ls", i, name);
+		} else {
+			r = swprintf_s(buf, L"%d %ls", i, name);
+		}
 
 		if (r < sizeof buf / sizeof buf[0]) {
 			VDAppendMenuW32(hmenu, MF_ENABLED, ID_AUDIO_CAPTURE_DRIVER+i, buf);

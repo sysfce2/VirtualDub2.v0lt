@@ -42,7 +42,7 @@ void VDCompilerWriteLogOutputF(IVDCompilerLogOutput& out, const char *format ...
 	va_list val;
 
 	va_start(val, format);
-	int len = _vsnprintf(buf, 3071, format, val);
+	int len = vsprintf_s(buf, format, val);
 	va_end(val);
 
 	if ((unsigned)len <= 3071) {

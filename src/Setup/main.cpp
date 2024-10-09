@@ -123,7 +123,7 @@ void PrintfWindowText(HWND hWnd, char *format, ...) {
 	va_list val;
 
 	va_start(val, format);
-	vsprintf(buf, format, val);
+	vsprintf_s(buf, format, val);
 	va_end(val);
 	SetWindowText(hWnd, buf);
 }
@@ -179,7 +179,7 @@ void ListboxAddf(HWND hwndListbox, const char *format, ...) {
 	va_list val;
 
 	va_start(val, format);
-	_vsnprintf(buf, sizeof buf, format, val);
+	vsprintf_s(buf, format, val);
 	va_end(val);
 	buf[(sizeof buf) - 1] = 0;
 
@@ -200,7 +200,7 @@ BOOL InstallFile(const char *szSource, const char *szDestFormat, ...) {
 	va_list val;
 
 	va_start(val, szDestFormat);
-	vsprintf(szDest, szDestFormat, val);
+	vsprintf_s(szDest, szDestFormat, val);
 	va_end(val);
 
 	if (!GetFullPathName(szDest, sizeof szDestPath, szDestPath, &lpszDestFile))
@@ -328,7 +328,7 @@ BOOL InstallDeleteFile(const char *szFileFormat, ...) {
 	va_list val;
 
 	va_start(val, szFileFormat);
-	vsprintf(szFile, szFileFormat, val);
+	vsprintf_s(szFile, szFileFormat, val);
 	va_end(val);
 
 	if (!DeleteFile(szFile))
