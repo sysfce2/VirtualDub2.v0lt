@@ -31,8 +31,9 @@ namespace {
 	FUNC(IntToString) {
 		char buf[32];
 
-		if ((unsigned)_snprintf(buf, sizeof buf, "%d", argv[0].asInt()) > 31)
+		if ((unsigned)sprintf_s(buf, "%d", argv[0].asInt()) > 31) {
 			buf[0] = 0;
+		}
 
 		argv[0] = isi->DupCString(buf);
 	}
@@ -40,8 +41,9 @@ namespace {
 	FUNC(LongToString) {
 		char buf[32];
 
-		if ((unsigned)_snprintf(buf, sizeof buf, "%I64d", argv[0].asLong()) > 31)
+		if ((unsigned)sprintf_s(buf, "%I64d", argv[0].asLong()) > 31) {
 			buf[0] = 0;
+		}
 
 		argv[0] = isi->DupCString(buf);
 	}
@@ -49,8 +51,9 @@ namespace {
 	FUNC(DoubleToString) {
 		char buf[256];
 
-		if ((unsigned)_snprintf(buf, sizeof buf, "%g", argv[0].asDouble()) > 255)
+		if ((unsigned)sprintf_s(buf, "%g", argv[0].asDouble()) > 255) {
 			buf[0] = 0;
+		}
 
 		argv[0] = isi->DupCString(buf);
 	}

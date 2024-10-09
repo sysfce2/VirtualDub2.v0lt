@@ -430,7 +430,7 @@ bool VDCompilerLexer::SetError(const char *s) {
 	mErrorInfo.mLength = mTokenLength;
 
 	char buf[2048];
-	if (_snprintf(buf, 2047, "%s(%d,%d): Error! %s\r\n", mpContext, mLineNo, (int)(mpSrc - mpSrcLineStart) + 1, s) > 0) {
+	if (sprintf_s(buf, "%s(%d,%d): Error! %s\r\n", mpContext, mLineNo, (int)(mpSrc - mpSrcLineStart) + 1, s) > 0) {
 		buf[2047] = 0;
 		mpOutput->WriteLogOutput(buf);
 	}

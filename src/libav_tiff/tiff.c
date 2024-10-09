@@ -226,8 +226,9 @@ static char *get_geokey_val(int key, int val)
     }
 
     ap = av_malloc(14);
-    if (ap)
-        snprintf(ap, 14, "Unknown-%d", val);
+    if (ap) {
+        sprintf_s(ap, 14, "Unknown-%d", val);
+    }
     return ap;
 }
 
