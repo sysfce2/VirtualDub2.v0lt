@@ -107,7 +107,6 @@
       <PrecompiledHeaderOutputFile>.\../obj/Debug/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Debug/vdicmdrv/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -144,7 +143,6 @@
       <PrecompiledHeaderOutputFile>.\../obj/Debug/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../obj/Debug/vdicmdrv/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -177,7 +175,6 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\vdsvrlnk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VDICMDRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>.\../obj/Release/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
@@ -218,7 +215,6 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\vdsvrlnk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VDICMDRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>.\../obj/Release/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>

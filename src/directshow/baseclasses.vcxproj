@@ -106,13 +106,9 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;WIN32_LEAN_AND_MEAN;VC_EXTRALEAN;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader />
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>strmiids.lib</AdditionalDependencies>
@@ -122,12 +118,8 @@
     <ClCompile>
       <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;WIN32_LEAN_AND_MEAN;VC_EXTRALEAN;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader />
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>strmiids.lib</AdditionalDependencies>
@@ -141,13 +133,9 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;WIN32_LEAN_AND_MEAN;VC_EXTRALEAN;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader />
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,12 +145,8 @@
     <ClCompile>
       <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;WIN32_LEAN_AND_MEAN;VC_EXTRALEAN;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader />
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

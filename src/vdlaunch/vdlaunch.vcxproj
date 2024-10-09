@@ -103,7 +103,6 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <OmitDefaultLibName>true</OmitDefaultLibName>
     </ClCompile>
     <Link>
@@ -124,7 +123,6 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -141,7 +139,6 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <OmitDefaultLibName>true</OmitDefaultLibName>
     </ClCompile>
     <Link>
@@ -162,7 +159,6 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
