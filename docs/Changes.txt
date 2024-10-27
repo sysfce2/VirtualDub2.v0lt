@@ -3,6 +3,7 @@ VirtualDub2.1 change log
 2.1.2 dev
 ----------------------
 Fixed "Internal DV decoder".
+Fixed a crash when capturing video and saving as ProRes (but the captured image will be incorrect).
 
 Updated avlib-1.vdplugin to version 0.7.1.154.
     FFmpeg 7.1 is now supported.
