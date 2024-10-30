@@ -143,7 +143,7 @@ bool VDDisplayAdvancedCrashDialog(HWND hwndParent, HANDLE hThread, const EXCEPTI
 
 #ifdef _DEBUG
 
-void checkfpustack(const char *file, const int line) throw() {
+void checkfpustack(const char *file, const int line) noexcept {
 #ifndef _M_AMD64
 	static const char szFPUProblemCaption[]="FPU/MMX internal problem";
 	static const char szFPUProblemMessage[]="The FPU stack wasn't empty!  Tagword = %04x\nFile: %s, line %d";

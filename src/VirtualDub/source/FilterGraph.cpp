@@ -62,7 +62,7 @@ namespace {
 class VDFilterGraphControl : public IVDFilterGraphControl {
 public:
 	VDFilterGraphControl(HWND hwnd);
-	~VDFilterGraphControl() throw();
+	~VDFilterGraphControl() noexcept;
 
 	static VDFilterGraphControl *Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id);
 
@@ -211,7 +211,7 @@ VDFilterGraphControl::VDFilterGraphControl(HWND hwnd)
 {
 }
 
-VDFilterGraphControl::~VDFilterGraphControl() throw() {
+VDFilterGraphControl::~VDFilterGraphControl() noexcept {
 }
 
 VDFilterGraphControl *VDFilterGraphControl::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {

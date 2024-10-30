@@ -500,7 +500,7 @@ private:
 	int mnQuantValue;
 	const int *mpZigzagOrder;
 
-	void (VDMPEGDecoder::*mpBlockDecoder)(YCCSample *dst, long pitch, bool intra, int dc) throw();
+	void (VDMPEGDecoder::*mpBlockDecoder)(YCCSample *dst, long pitch, bool intra, int dc) noexcept;
 
 	int		mnForwardRSize;
 	int		mnForwardMask;
@@ -530,7 +530,7 @@ private:
 
 	long	mErrorState;
 
-	void (VDMPEGDecoder::*mpSliceDecoder)(int) throw();
+	void (VDMPEGDecoder::*mpSliceDecoder)(int) noexcept;
 
 	const VDMPEGPredictorSet	*mpPredictors;
 	const VDMPEGConverterSet	*mpConverters;
@@ -546,18 +546,18 @@ private:
 
 	void UpdateQuantizers();
 
-	void DecodeBlockPrescaled(YCCSample *dst, long pitch, bool intra, int dc) throw();
-	void DecodeBlockNonPrescaled(YCCSample *dst, long pitch, bool intra, int dc) throw();
+	void DecodeBlockPrescaled(YCCSample *dst, long pitch, bool intra, int dc) noexcept;
+	void DecodeBlockNonPrescaled(YCCSample *dst, long pitch, bool intra, int dc) noexcept;
 
-	void DecodeBlock_Y(YCCSample *dst, bool intra) throw();
-	void DecodeBlock_C(YCCSample *dst, int& dc, bool intra) throw();
+	void DecodeBlock_Y(YCCSample *dst, bool intra) noexcept;
+	void DecodeBlock_C(YCCSample *dst, int& dc, bool intra) noexcept;
 
-	int DecodeMotionVector(int rsize) throw();
-	int DecodeCodedBlockPattern() throw();
+	int DecodeMotionVector(int rsize) noexcept;
+	int DecodeCodedBlockPattern() noexcept;
 
-	void DecodeSlice_I(int) throw();
-	void DecodeSlice_P(int) throw();
-	void DecodeSlice_B(int) throw();
+	void DecodeSlice_I(int) noexcept;
+	void DecodeSlice_P(int) noexcept;
+	void DecodeSlice_B(int) noexcept;
 
 	void CopyPredictionForward(int posx, int posy, int dx, int dy);
 	void CopyPredictionBackward(int posx, int posy, int dx, int dy);
@@ -570,7 +570,7 @@ private:
 
 public:
 	VDMPEGDecoder();
-	~VDMPEGDecoder() throw();
+	~VDMPEGDecoder() noexcept;
 	
 	int AddRef() { return mRefCount.inc(); }
 	int Release() { int rc = mRefCount.dec(); if (!rc) delete this; return rc; }
@@ -1332,15 +1332,15 @@ int VDMPEGDecoder::DecodeFrame(const void *_src, long len, long frame, int dst, 
 //
 ///////////////////////////////////////////////////////////////////////////
 
-void VDMPEGDecoder::DecodeBlockPrescaled(YCCSample *dst, long pitch, bool intra, int dc) {
+void VDMPEGDecoder::DecodeBlockPrescaled(YCCSample *dst, long pitch, bool intra, int dc) noexcept {
 	DecodeBlock(dst, pitch, intra, dc, true, (int)0);
 }
 
-void VDMPEGDecoder::DecodeBlockNonPrescaled(YCCSample *dst, long pitch, bool intra, int dc) {
+void VDMPEGDecoder::DecodeBlockNonPrescaled(YCCSample *dst, long pitch, bool intra, int dc) noexcept {
 	DecodeBlock(dst, pitch, intra, dc, false, (short)0);
 }
 
-void VDMPEGDecoder::DecodeBlock_Y(YCCSample *dst, bool intra) {
+void VDMPEGDecoder::DecodeBlock_Y(YCCSample *dst, bool intra) noexcept {
 
 	// decode DCT size
 
@@ -1402,7 +1402,7 @@ void VDMPEGDecoder::DecodeBlock_Y(YCCSample *dst, bool intra) {
 	}
 }
 
-void VDMPEGDecoder::DecodeBlock_C(YCCSample *dst, int& dc, bool intra) {
+void VDMPEGDecoder::DecodeBlock_C(YCCSample *dst, int& dc, bool intra) noexcept {
 
 	// decode DCT size
 
@@ -1464,7 +1464,7 @@ static const unsigned char mb_short_lookup[14][2]={
 	{ 1, 2 }, { 1, 2 }, { 1, 2 }, { 1, 2 },		// 011 xxxx xxxx
 };
 
-void VDMPEGDecoder::DecodeSlice_I(int slice) {
+void VDMPEGDecoder::DecodeSlice_I(int slice) noexcept {
 	unsigned int pos_x = (unsigned int)-1;
 	unsigned int pos_y = slice-1;
 
@@ -1569,7 +1569,7 @@ void VDMPEGDecoder::DecodeSlice_I(int slice) {
 #define REPEAT8(v,b) {v,b},{v,b},{v,b},{v,b},{v,b},{v,b},{v,b},{v,b}
 #define REPEAT16(v,b) REPEAT8(v,b),REPEAT8(v,b)
 
-int VDMPEGDecoder::DecodeMotionVector(int rsize) {
+int VDMPEGDecoder::DecodeMotionVector(int rsize) noexcept {
 	if (bitheap_getflag())
 		return 0;
 
@@ -1619,7 +1619,7 @@ int VDMPEGDecoder::DecodeMotionVector(int rsize) {
 	return (v ^ inverter) - inverter;
 }
 
-int VDMPEGDecoder::DecodeCodedBlockPattern() {
+int VDMPEGDecoder::DecodeCodedBlockPattern() noexcept {
 	static const unsigned char cbp_short[52][2]={
 		REPEAT1(63,6),		// 001100
 		REPEAT1( 3,6),		// 001101
@@ -1713,7 +1713,7 @@ int VDMPEGDecoder::DecodeCodedBlockPattern() {
 //
 ///////////////////////////////////////////////////////////////////////////
 
-void VDMPEGDecoder::DecodeSlice_P(int slice) {
+void VDMPEGDecoder::DecodeSlice_P(int slice) noexcept {
 	unsigned int pos_x = (unsigned int)-1;
 	unsigned int pos_y = slice-1;
 	int forw_x = 0, forw_y = 0;
@@ -1907,7 +1907,7 @@ void VDMPEGDecoder::DecodeSlice_P(int slice) {
 //
 ///////////////////////////////////////////////////////////////////////////
 
-void VDMPEGDecoder::DecodeSlice_B(int slice) {
+void VDMPEGDecoder::DecodeSlice_B(int slice) noexcept {
 	unsigned int pos_x = (unsigned int)-1;
 	unsigned int pos_y = slice-1;
 	int forw_x = 0, forw_y = 0;

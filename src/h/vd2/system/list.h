@@ -149,13 +149,13 @@ public:
 
 	public:
 		iterator() {}
-		iterator(const iterator& src) throw() : node(src.node), next(src.next) {}
+		iterator(const iterator& src) noexcept : node(src.node), next(src.next) {}
 
-		bool operator!() const throw() { return 0 == next; }
-		T *operator->() const throw() { return (T *)node; }
-		operator bool() const throw() { return 0 != next; }
-		operator T *() const throw() { return (T *)node; }
-		T& operator *() const throw() { return *(T *)node; }
+		bool operator!() const noexcept { return 0 == next; }
+		T *operator->() const noexcept { return (T *)node; }
+		operator bool() const noexcept { return 0 != next; }
+		operator T *() const noexcept { return (T *)node; }
+		T& operator *() const noexcept { return *(T *)node; }
 	};
 
 	// fwit: forward iterator (SAFE if node disappears)
@@ -163,28 +163,28 @@ public:
 
 	class fwit : public iterator {
 	public:
-		fwit() throw() {}
-		fwit(const fwit& src) throw() : iterator(src) {}
-		fwit(ListNode2<T> *start) throw() {
+		fwit() noexcept {}
+		fwit(const fwit& src) noexcept : iterator(src) {}
+		fwit(ListNode2<T> *start) noexcept {
 			this->node = start;
 			this->next = start->NextFromHead();
 		}
 
-		const fwit& operator=(ListNode2<T> *start) throw() {
+		const fwit& operator=(ListNode2<T> *start) noexcept {
 			this->node = start;
 			this->next = start->NextFromHead();
 
 			return *this;
 		}
 
-		fwit& operator++() throw() {
+		fwit& operator++() noexcept {
 			this->node = this->next;
 			this->next = this->node->NextFromHead();
 
 			return *this;
 		}
 
-		const fwit& operator+=(int v) throw() {
+		const fwit& operator+=(int v) noexcept {
 			while(this->next && v--) {
 				this->node = this->next;
 				this->next = this->node->NextFromHead();
@@ -193,7 +193,7 @@ public:
 			return *this;
 		}
 
-		fwit operator+(int v) const throw() {
+		fwit operator+(int v) const noexcept {
 			fwit t(*this);
 
 			t += v;
@@ -203,35 +203,35 @@ public:
 
 		// This one's for my sanity.
 
-		void operator++(int) throw() {
+		void operator++(int) noexcept {
 			++*this;
 		}
 	};
 
 	class rvit : public iterator {
 	public:
-		rvit() throw() {}
+		rvit() noexcept {}
 
-		rvit(ListNode2<T> *start) throw() {
+		rvit(ListNode2<T> *start) noexcept {
 			this->node = start;
 			this->next = start->NextFromTail();
 		}
 
-		const rvit& operator=(ListNode2<T> *start) throw() {
+		const rvit& operator=(ListNode2<T> *start) noexcept {
 			this->node = start;
 			this->next = start->NextFromTail();
 
 			return *this;
 		}
 
-		rvit& operator--() throw() {
+		rvit& operator--() noexcept {
 			this->node = this->next;
 			this->next = this->node->NextFromTail();
 
 			return *this;
 		}
 
-		const rvit& operator-=(int v) throw() {
+		const rvit& operator-=(int v) noexcept {
 			while(this->next && v--) {
 				this->node = this->next;
 				this->next = this->node->NextFromTail();
@@ -240,7 +240,7 @@ public:
 			return *this;
 		}
 
-		rvit operator-(int v) const throw() {
+		rvit operator-(int v) const noexcept {
 			rvit t(*this);
 
 			t -= v;
@@ -250,7 +250,7 @@ public:
 
 		// This one's for my sanity.
 
-		void operator--(int) throw() {
+		void operator--(int) noexcept {
 			--*this;
 		}
 	};
