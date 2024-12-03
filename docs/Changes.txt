@@ -1,5 +1,16 @@
 VirtualDub2.1 change log
 
+2.1.3.667 - 2024-12-03
+----------------------
+Fixed recording of VirtualDub2 version into AVI files.
+
+Updated avlib-1.vdplugin to version 0.7.1.200.
+    Trying to get around incorrect keyframe seek for MP4 files.
+    Fixed the operation of x264 and x265 encoders.
+    Fixed the operation of Vorbis encoder.
+    Cosmetic changes to codec dialogs.
+
+
 2.1.2.663 - 2024-11-10
 ----------------------
 Fixed "Internal DV decoder".
