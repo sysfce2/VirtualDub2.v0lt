@@ -35,6 +35,7 @@
 #include "AVIOutputCLI.h"
 #include "ExternalEncoderProfile.h"
 #include "dub.h"
+#include "Version_num.h"
 
 ///////////////////////////////////////////
 
@@ -168,15 +169,17 @@ IVDMediaOutput *VDAVIOutputFileSystem::CreateSegment() {
 	pOutput->setBuffering(mBufferSize, mBufferSize >> 2);
 	pOutput->setInterleaved(mbAudioInterleaved);
 
-	char buf[80];
-
-	sprintf(buf, "VirtualDub2 build %d/%s", version_num,
-#ifdef _DEBUG
-		"debug"
+	char buf[80] = "VirtualDub2"
+#ifdef _M_AMD64
+		" x64"
 #else
-		"release"
+		" x86"
 #endif
-				);
+		" v" VERSION_STR;
+#ifdef _DEBUG
+		"/debug"
+#endif
+	;
 
 	pOutput->setHiddenTag(buf);
 

@@ -28,6 +28,7 @@
 #include <vd2/Dita/services.h>
 #include "ProgressDialog.h"
 #include "gui.h"
+#include "Version_num.h"
 
 extern "C" unsigned long version_num;
 extern const char g_szError[];
@@ -58,20 +59,24 @@ void CreateSparseAVI(const char *pszIn, const char *pszOut) {
 
 		// Generate header
 
-		char buf[4096]={0};
 		SparseAVIHeader spah;
 		sint64 insize = infile.size();
 		unsigned long ckidbuf[2][256];
 		int ckidcount = 0;
 		sint64 ckidpos = 0;
 
-		int l = sprintf(buf, "VirtualDub2 build %d/%s", version_num,
-#ifdef _DEBUG
-		"debug"
+		char buf[4096] = "VirtualDub2"
+#ifdef _M_AMD64
+			" x64"
 #else
-		"release"
+			" x86"
 #endif
-				);
+			" v" VERSION_STR;
+#ifdef _DEBUG
+			"/debug"
+#endif
+		;
+		int l = strlen(buf);
 
 		spah.ckid				= SparseAVIHeader::kChunkID;
 		spah.size				= SparseAVIHeader::kChunkSize;
