@@ -78,6 +78,24 @@
 #include <vd2/system/w32assist.h>
 #include <VersionHelpers.h>
 
+static VERSIONHELPERAPI
+IsWindowsVersionOrGreaterBuild(WORD wMajorVersion, WORD wMinorVersion, DWORD dwBuildNumber)
+{
+	OSVERSIONINFOEXW osvi = { sizeof(osvi), 0, 0, 0, 0, {0}, 0, 0 };
+	DWORDLONG        const dwlConditionMask = VerSetConditionMask(
+		VerSetConditionMask(
+			VerSetConditionMask(
+				0, VER_MAJORVERSION, VER_GREATER_EQUAL),
+			VER_MINORVERSION, VER_GREATER_EQUAL),
+		VER_BUILDNUMBER, VER_GREATER_EQUAL);
+
+	osvi.dwMajorVersion = wMajorVersion;
+	osvi.dwMinorVersion = wMinorVersion;
+	osvi.dwBuildNumber = dwBuildNumber;
+
+	return VerifyVersionInfoW(&osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_BUILDNUMBER, dwlConditionMask) != FALSE;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 
 #define CODE_WINDOW (256)
@@ -1885,7 +1903,10 @@ static bool DoSave(const char *pszFilename, const wchar_t *pwszFilename, HANDLE 
 
 		const char *version = "?";
 
-		if (IsWindows10OrGreater()) {
+		if (IsWindowsVersionOrGreaterBuild(HIBYTE(_WIN32_WINNT_WIN10), LOBYTE(_WIN32_WINNT_WIN10), 22000)) {
+			version = "11";
+		}
+		else if (IsWindows10OrGreater()) {
 			version = "10";
 		}
 		else if (IsWindows8Point1OrGreater()) {
