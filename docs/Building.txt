@@ -1,7 +1,7 @@
 1. Install Visual Studio 2019 Community Edition.
-2. Download YASM: http://yasm.tortall.net/Download.html
+2. Install DirectX End-User Runtimes (June 2010): https://www.microsoft.com/en-us/download/details.aspx?id=8109
+3. Download YASM: http://yasm.tortall.net/Download.html
    * Win64 .exe (for general use on 64-bit Windows)
    Rename to yasm.exe and put it somewhere in the PATH.
-3. Open VirtualDub.sln.
-4. Build Win32 variant FIRST.
-5. Build x64 variant.
+4. Open VirtualDub.sln.
+5. Build x64 or Win32 variant.
