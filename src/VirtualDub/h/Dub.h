@@ -68,10 +68,10 @@ public:
 
 	float	mVolume;		// 0 disables.
 
-	long preload;
-	long interval;
-	long new_rate;
-	long offset;
+	int  preload;
+	int  interval;
+	int  new_rate;
+	int  offset;
 	bool is_ms;
 	bool enabled;
 	bool fStartAudio, fEndAudio;
