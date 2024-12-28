@@ -110,7 +110,8 @@ VDRingBuffer<T, Allocator>::~VDRingBuffer() {
 template<class T, class Allocator>
 void VDRingBuffer<T, Allocator>::Init(int size) {
 	Shutdown();
-	pBuffer		= allocate(nSize = size, 0);
+	pBuffer		= std::allocator_traits<Allocator>::allocate(*this, size);
+	nSize		= size;
 	nLevel		= 0;
 	nReadPoint	= 0;
 	nWritePoint	= 0;
