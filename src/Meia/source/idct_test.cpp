@@ -167,7 +167,7 @@ namespace {
 			
 			/* accumulate error stats */
 			for (i = 0; i < 64; i++) {
-				register int err = testout[i] - refout[i];
+				int err = testout[i] - refout[i];
 				result.mMeanErrors[i] += err;
 				result.mSquaredErrors[i] += err * err;
 				if (err < 0) err = -err;
