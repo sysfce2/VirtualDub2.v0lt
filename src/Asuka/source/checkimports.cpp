@@ -62,11 +62,11 @@ HMODULE LoadPECOFF(const wchar_t *s) {
 		}
 		break;
 	default:		// reject PE32+
-		return false;
+		return FALSE;
 	}
 
 	if (imageSize < sizeof hdrpage)
-		return false;
+		return FALSE;
 
 	HMODULE hmod = (HMODULE)VirtualAlloc(NULL, imageSize, MEM_COMMIT, PAGE_READWRITE);
 	if (!hmod)
