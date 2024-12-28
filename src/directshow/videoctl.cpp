@@ -18,7 +18,7 @@
 LPTSTR WINAPI StringFromResource(__out_ecount(STR_MAX_LENGTH) LPTSTR pBuffer, int iResourceID)
 {
     if (LoadString(g_hInst,iResourceID,pBuffer,STR_MAX_LENGTH) == 0) {
-        return TEXT("");
+        return (LPTSTR)TEXT("");
     }
     return pBuffer;
 }
