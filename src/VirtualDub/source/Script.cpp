@@ -939,9 +939,9 @@ static void func_VDVideo_GetCompression(IVDScriptInterpreter *, VDScriptValue *a
 	if (g_Vcompression.dwFlags & ICMF_COMPVARS_VALID) {
 		switch(arglist[0].asInt()) {
 		case 0:	arglist[0] = VDScriptValue((int)g_Vcompression.fccHandler); return;
-		case 1: arglist[0] = VDScriptValue(g_Vcompression.lKey); return;
-		case 2: arglist[0] = VDScriptValue(g_Vcompression.lQ); return;
-		case 3: arglist[0] = VDScriptValue(g_Vcompression.lDataRate); return;
+		case 1: arglist[0] = VDScriptValue((int)g_Vcompression.lKey); return;
+		case 2: arglist[0] = VDScriptValue((int)g_Vcompression.lQ); return;
+		case 3: arglist[0] = VDScriptValue((int)g_Vcompression.lDataRate); return;
 		}
 	}
 

@@ -76,7 +76,7 @@ IVDPixmapExtraGen* VDPixmapCreateNormalizer(int format, FilterModPixmapInfo& out
 	case nsVDPixmap::kPixFormat_XRGB8888:
 		{
 			// skip normalization when codec is not going to use alpha (guessed by codec fourcc)
-			if (!useAlpha) return false;
+			if (!useAlpha) return 0;
 			ExtraGen_X8R8G8B8_Normalize* normalize = new ExtraGen_X8R8G8B8_Normalize;
 			return normalize;
 		}
