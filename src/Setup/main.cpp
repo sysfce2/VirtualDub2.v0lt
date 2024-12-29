@@ -139,7 +139,7 @@ LRESULT APIENTRY WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         case WM_COMMAND:
 			switch(LOWORD(wParam)) {
 			case IDC_EXECUTE:
-				if ((int)ShellExecute(hWnd, "open", "VirtualDub.exe", NULL, NULL, SW_SHOWNORMAL) <= 32)
+				if ((INT_PTR)ShellExecute(hWnd, "open", "VirtualDub.exe", NULL, NULL, SW_SHOWNORMAL) <= 32)
 					MessageBox(hWnd, "Couldn't launch VirtualDub.exe.", "Oops", MB_OK);
 				break;
 			case IDC_INSTALL:
