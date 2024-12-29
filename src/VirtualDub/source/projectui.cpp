@@ -4402,7 +4402,7 @@ LRESULT CALLBACK EditWndProc(HWND wnd,UINT msg,WPARAM wparam,LPARAM lparam)
 {
 	if(msg==WM_KILLFOCUS){
 		WPARAM id = GetWindowLong(wnd,GWL_ID);
-		SendMessage(GetParent(wnd),WM_EDIT_CHANGED,id,(LONG)wnd);
+		SendMessage(GetParent(wnd),WM_EDIT_CHANGED,id,(LPARAM)wnd);
 	}
 
 	WNDPROC p = (WNDPROC)GetWindowLongPtr(wnd,GWLP_USERDATA);
