@@ -729,9 +729,9 @@ const char * const g_szDubPriorities[]={
 INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
 
 	static struct DubStatusTabs {
-		LPTSTR	rsrc;
-		char	*name;
-		DLGPROC	dProc;
+		LPTSTR rsrc;
+		const char *name;
+		DLGPROC dProc;
 	} tabs[]={
 		{	MAKEINTRESOURCE(IDD_DUBBING_MAIN),	"Main",		StatusMainDlgProc	},
 		{	MAKEINTRESOURCE(IDD_DUBBING_VIDEO),	"Video",	StatusVideoDlgProc	},
@@ -770,7 +770,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 					TC_ITEM ti;
 
 					ti.mask		= TCIF_TEXT;
-					ti.pszText	= tabs[i].name;
+					ti.pszText	= (LPSTR)tabs[i].name;
 
 					TabCtrl_InsertItem(hwndItem, i, &ti);
 				}

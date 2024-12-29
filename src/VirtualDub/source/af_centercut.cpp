@@ -73,10 +73,10 @@ uint32 VDAudioFilterCenterCut::Prepare() {
 		)
 		return kVFAPrepare_BadFormat;
 
-	mpContext->mpInputs[0]->mGranularity	= kSubWindow;
-	mpContext->mpInputs[0]->mDelay			= (sint32)ceil((kSubWindow*3000000.0)/format0.mSamplingRate);
-	mpContext->mpOutputs[0]->mGranularity	= kSubWindow;
-	mpContext->mpOutputs[1]->mGranularity	= kSubWindow;
+	mpContext->mpInputs[0]->mGranularity  = kSubWindow;
+	mpContext->mpInputs[0]->mDelay        = (kSubWindow * 3000000u + format0.mSamplingRate - 1) / format0.mSamplingRate; // round up
+	mpContext->mpOutputs[0]->mGranularity = kSubWindow;
+	mpContext->mpOutputs[1]->mGranularity = kSubWindow;
 
 	VDXWaveFormat *pwf0, *pwf1;
 
@@ -113,7 +113,7 @@ void VDAudioFilterCenterCut::Start() {
 
 	VDCreateRaisedCosineWindow(mInputWindow, kWindowSize);
 	for(unsigned i=0; i<kWindowSize; ++i) {
-		mOutputWindow[i] = mInputWindow[i] * (mInputWindow[i]*kWindowSize) * 0.5f * (8.0f / 5.0f) * kWindowSize;
+		mOutputWindow[i] = mInputWindow[i] * (mInputWindow[i]*(unsigned)kWindowSize) * 0.5f * (8.0f / 5.0f) * (unsigned)kWindowSize;
 	}
 }
 

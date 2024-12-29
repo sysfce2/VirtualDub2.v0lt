@@ -8,7 +8,7 @@ void dump_tracedec(std::vector<char>& dst, const tRuleSystem& rulesys) {
 	long packed_bytes = 0;
 
 	dst.resize(72, 0);
-	dst.push_back(rulesys.size());
+	dst.push_back((char)rulesys.size());
 
 	iterate_forward(tRuleSystem, rulesys, it) {
 		const ruleset& rs = *it;
