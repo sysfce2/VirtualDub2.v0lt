@@ -758,7 +758,7 @@ void parse_parameters(tDialogScript& script) {
 
 				script.push_back(kBC_SetLinkExpr);
 				script.push_back(bytecode.size() & 255);
-				script.push_back(bytecode.size() >> 8);
+				script.push_back((unsigned char)(bytecode.size() >> 8));
 
 				script.insert(script.end(), bytecode.begin(), bytecode.end());
 
