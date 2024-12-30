@@ -812,7 +812,7 @@ void VDCaptureDriverVFW::InitMixerSupport() {
 		if (MMSYSERR_NOERROR == waveInOpen(&hwi, WAVE_MAPPER, &wfex, 0, 0, CALLBACK_NULL)) {
 			// create mixer based on device
 
-			if (MMSYSERR_NOERROR == mixerOpen(&mhMixer, (UINT)hwi, 0, 0, MIXER_OBJECTF_HWAVEIN)) {
+			if (MMSYSERR_NOERROR == mixerOpen(&mhMixer, (UINT)(UINT_PTR)hwi, 0, 0, MIXER_OBJECTF_HWAVEIN)) {
 				MIXERLINE mixerLine = {sizeof(MIXERLINE)};
 
 				mixerLine.dwComponentType = MIXERLINE_COMPONENTTYPE_DST_WAVEIN;

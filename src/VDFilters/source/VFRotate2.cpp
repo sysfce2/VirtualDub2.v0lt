@@ -810,7 +810,7 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 
 		case WM_CTLCOLORSTATIC:
 			if (GetWindowLong((HWND)lParam, GWL_ID) == IDC_COLOR)
-				return (BOOL)mfd->hbrColor;
+				return (INT_PTR)mfd->hbrColor;
 			break;
     }
     return FALSE;

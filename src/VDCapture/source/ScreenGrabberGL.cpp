@@ -1041,9 +1041,9 @@ void VDScreenGrabberGL::ConvertToYV12_GL_NV1x(int w, int h, float u, float v) {
 
 	if (mGL.EXT_pixel_buffer_object) {
 		mGL.glBindBufferARB(GL_PIXEL_PACK_BUFFER_ARB, mGLBuffers[0]);
-		mGL.glReadPixels(0, 0, w >> 2, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void *)0);
-		mGL.glReadPixels(w >> 2, 0, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void *)(w * h));
-		mGL.glReadPixels(w >> 2, h >> 1, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void *)(w * h * 5 / 4));
+		mGL.glReadPixels(0, 0, w >> 2, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*)0);
+		mGL.glReadPixels(w >> 2, 0, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*)(INT_PTR)(w * h));
+		mGL.glReadPixels(w >> 2, h >> 1, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*)(INT_PTR)(w * h * 5 / 4));
 	} else {
 		char *dst = (char *)mGLReadBuffer.data();
 		mGL.glReadPixels(0, 0, w >> 2, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, dst);
@@ -1182,9 +1182,9 @@ void VDScreenGrabberGL::ConvertToYV12_GL_NV2x(int w, int h, float u, float v) {
 
 	if (mGL.EXT_pixel_buffer_object) {
 		mGL.glBindBufferARB(GL_PIXEL_PACK_BUFFER_ARB, mGLBuffers[0]);
-		mGL.glReadPixels(0, 0, w >> 2, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void *)0);
-		mGL.glReadPixels(w >> 2, 0, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void *)(w * h));
-		mGL.glReadPixels(w >> 2, h >> 1, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void *)(w * h * 5 / 4));
+		mGL.glReadPixels(0, 0, w >> 2, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*)0);
+		mGL.glReadPixels(w >> 2, 0, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*)(INT_PTR)(w * h));
+		mGL.glReadPixels(w >> 2, h >> 1, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*)(INT_PTR)(w * h * 5 / 4));
 	} else {
 		char *dst = (char *)mGLReadBuffer.data();
 		mGL.glReadPixels(0, 0, w >> 2, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, dst);
@@ -1331,9 +1331,9 @@ void VDScreenGrabberGL::ConvertToYV12_GL_ATIFS(int w, int h, float u, float v) {
 
 	if (mGL.EXT_pixel_buffer_object) {
 		mGL.glBindBufferARB(GL_PIXEL_PACK_BUFFER_ARB, mGLBuffers[0]);
-		mGL.glReadPixels(0, 0, w >> 2, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void *)0);
-		mGL.glReadPixels(w >> 2, 0, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void *)(w * h));
-		mGL.glReadPixels(w >> 2, h >> 1, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void *)(w * h * 5 / 4));
+		mGL.glReadPixels(0, 0, w >> 2, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*)0);
+		mGL.glReadPixels(w >> 2, 0, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*)(INT_PTR)(w * h));
+		mGL.glReadPixels(w >> 2, h >> 1, w >> 3, h >> 1, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (void*)(INT_PTR)(w * h * 5 / 4));
 	} else {
 		char *dst = (char *)mGLReadBuffer.data();
 		mGL.glReadPixels(0, 0, w >> 2, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, dst);
