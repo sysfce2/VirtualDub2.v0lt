@@ -821,7 +821,7 @@ VDRTProfileDisplay2::~VDRTProfileDisplay2() {
 }
 
 VDRTProfileDisplay2 *VDRTProfileDisplay2::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
-	HWND hwnd = CreateWindow(MAKEINTATOM(sWndClass), "", WS_VISIBLE|WS_CHILD, x, y, cx, cy, hwndParent, (HMENU)id, g_hInst, NULL);
+	HWND hwnd = CreateWindow(MAKEINTATOM(sWndClass), "", WS_VISIBLE|WS_CHILD, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
 	if (hwnd)
 		return (VDRTProfileDisplay2 *)GetWindowLongPtr(hwnd, 0);

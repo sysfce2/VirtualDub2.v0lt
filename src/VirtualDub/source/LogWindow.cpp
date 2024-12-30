@@ -149,7 +149,7 @@ VDLogWindowControl::~VDLogWindowControl() {
 }
 
 VDLogWindowControl *VDLogWindowControl::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
-	HWND hwnd = CreateWindow(g_szLogWindowControlName, "", WS_VISIBLE|WS_CHILD|WS_VSCROLL, x, y, cx, cy, hwndParent, (HMENU)id, g_hInst, NULL);
+	HWND hwnd = CreateWindow(g_szLogWindowControlName, "", WS_VISIBLE|WS_CHILD|WS_VSCROLL, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
 	if (hwnd)
 		return (VDLogWindowControl *)GetWindowLongPtr(hwnd, 0);

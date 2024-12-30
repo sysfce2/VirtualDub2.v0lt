@@ -70,7 +70,7 @@ VDClippingControlOverlay::~VDClippingControlOverlay() {
 }
 
 VDClippingControlOverlay *VDClippingControlOverlay::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
-	HWND hwnd = CreateWindowEx(0, szClippingControlOverlayName, "", WS_VISIBLE|WS_CHILD|WS_CLIPSIBLINGS, x, y, cx, cy, hwndParent, (HMENU)id, g_hInst, NULL);
+	HWND hwnd = CreateWindowEx(0, szClippingControlOverlayName, "", WS_VISIBLE|WS_CHILD|WS_CLIPSIBLINGS, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
 	if (hwnd)
 		return (VDClippingControlOverlay *)GetWindowLongPtr(hwnd, 0);

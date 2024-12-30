@@ -215,7 +215,7 @@ VDFilterGraphControl::~VDFilterGraphControl() noexcept {
 }
 
 VDFilterGraphControl *VDFilterGraphControl::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
-	HWND hwnd = CreateWindowEx(WS_EX_TRANSPARENT, g_szFilterGraphControlName, "", WS_VISIBLE|WS_CHILD|WS_HSCROLL|WS_VSCROLL, x, y, cx, cy, hwndParent, (HMENU)id, g_hInst, NULL);
+	HWND hwnd = CreateWindowEx(WS_EX_TRANSPARENT, g_szFilterGraphControlName, "", WS_VISIBLE|WS_CHILD|WS_HSCROLL|WS_VSCROLL, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
 	if (hwnd)
 		return (VDFilterGraphControl *)GetWindowLongPtr(hwnd, 0);
