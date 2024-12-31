@@ -1366,12 +1366,18 @@ void VDJPEGEncoder::Encode(vdfastvector<char>& dst, const char *src, ptrdiff_t s
 		pHeap = mCoefficientHeap.data();
 	}
 
-	mStripPitch		= ((w + 15) & ~15) + 4;
+	mStripPitch		= ((w + 15) & ~15); // set the string length to be a multiple of 16
 	mStripHeight	= mcu_height << 3;
-	mStripBuffer.resize(mStripPitch * mStripHeight * 3 + 15, 0);
-
-	mpYBuffer	= &mStripBuffer[15];
-	mpYBuffer	-= (UINT_PTR)mpYBuffer & 15;
+#if (__STDCPP_DEFAULT_NEW_ALIGNMENT__ >= 16)
+	// x64
+	mStripBuffer.resize(mStripPitch * mStripHeight * 3);
+	mpYBuffer = &mStripBuffer[0];
+#else
+	// Win32
+	mStripBuffer.resize(mStripPitch * mStripHeight * 3 + 16);
+	mpYBuffer = &mStripBuffer[15];
+	mpYBuffer -= (UINT_PTR)mpYBuffer & 15;
+#endif
 	mpCbBuffer	= mpYBuffer + mStripPitch * mStripHeight;
 	mpCrBuffer	= mpCbBuffer + mStripPitch * mStripHeight;
 	memset(mpCbBuffer, 0x80, mStripPitch * mStripHeight);
