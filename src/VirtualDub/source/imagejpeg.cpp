@@ -278,7 +278,7 @@ protected:
 	uint32		mColorTables[5][256];
 
 	std::vector<uint8>	mStripBuffer;
-	int			mStripWidth;
+	int			mStripPitch;
 	int			mStripHeight;
 	uint8		*mpYBuffer;
 	uint8		*mpCbBuffer;
@@ -1366,16 +1366,16 @@ void VDJPEGEncoder::Encode(vdfastvector<char>& dst, const char *src, ptrdiff_t s
 		pHeap = mCoefficientHeap.data();
 	}
 
-	mStripWidth		= ((w + 15) & ~15) + 4;
+	mStripPitch		= ((w + 15) & ~15) + 4;
 	mStripHeight	= mcu_height << 3;
-	mStripBuffer.resize(mStripWidth * mStripHeight * 3 + 15, 0);
+	mStripBuffer.resize(mStripPitch * mStripHeight * 3 + 15, 0);
 
 	mpYBuffer	= &mStripBuffer[15];
-	mpYBuffer	-= (int)mpYBuffer & 15;
-	mpCbBuffer	= mpYBuffer + mStripWidth * mStripHeight;
-	mpCrBuffer	= mpCbBuffer + mStripWidth * mStripHeight;
-	memset(mpCbBuffer, 0x80, mStripWidth * mStripHeight);
-	memset(mpCrBuffer, 0x80, mStripWidth * mStripHeight);
+	mpYBuffer	-= (UINT_PTR)mpYBuffer & 15;
+	mpCbBuffer	= mpYBuffer + mStripPitch * mStripHeight;
+	mpCrBuffer	= mpCbBuffer + mStripPitch * mStripHeight;
+	memset(mpCbBuffer, 0x80, mStripPitch * mStripHeight);
+	memset(mpCrBuffer, 0x80, mStripPitch * mStripHeight);
 
 	for(int y=0; y<mcu_vert_count; ++y) {
 		int srch = mcu_height;
@@ -1385,13 +1385,13 @@ void VDJPEGEncoder::Encode(vdfastvector<char>& dst, const char *src, ptrdiff_t s
 
 		switch(format) {
 		case kFormatRGB15:
-			Transform_RGB15(mpYBuffer, mpCbBuffer, mpCrBuffer, mStripWidth, (const uint8 *)src, srcpitch, w, srch);
+			Transform_RGB15(mpYBuffer, mpCbBuffer, mpCrBuffer, mStripPitch, (const uint8 *)src, srcpitch, w, srch);
 			break;
 		case kFormatRGB24:
-			Transform_RGB24(mpYBuffer, mpCbBuffer, mpCrBuffer, mStripWidth, (const uint8 *)src, srcpitch, w, srch);
+			Transform_RGB24(mpYBuffer, mpCbBuffer, mpCrBuffer, mStripPitch, (const uint8 *)src, srcpitch, w, srch);
 			break;
 		case kFormatRGB32:
-			Transform_RGB32(mpYBuffer, mpCbBuffer, mpCrBuffer, mStripWidth, (const uint8 *)src, srcpitch, w, srch);
+			Transform_RGB32(mpYBuffer, mpCbBuffer, mpCrBuffer, mStripPitch, (const uint8 *)src, srcpitch, w, srch);
 			break;
 		}
 
@@ -1406,17 +1406,17 @@ void VDJPEGEncoder::Encode(vdfastvector<char>& dst, const char *src, ptrdiff_t s
 				memset(cbp, cbp[-1], (-(int)w) & 15);
 				memset(crp, crp[-1], (-(int)w) & 15);
 
-				yp += mStripWidth;
-				cbp += mStripWidth;
-				crp += mStripWidth;
+				yp  += mStripPitch;
+				cbp += mStripPitch;
+				crp += mStripPitch;
 			}
 		}
 
 		// replicate Y/C down
 		for(int ypad = srch; ypad < mcu_height; ++ypad) {
-			memcpy(mpYBuffer  + mStripWidth*ypad, mpYBuffer  + mStripWidth*(srch-1), mStripWidth);
-			memcpy(mpCbBuffer + mStripWidth*ypad, mpCbBuffer + mStripWidth*(srch-1), mStripWidth);
-			memcpy(mpCrBuffer + mStripWidth*ypad, mpCrBuffer + mStripWidth*(srch-1), mStripWidth);
+			memcpy(mpYBuffer  + mStripPitch*ypad, mpYBuffer  + mStripPitch*(srch-1), mStripPitch);
+			memcpy(mpCbBuffer + mStripPitch*ypad, mpCbBuffer + mStripPitch*(srch-1), mStripPitch);
+			memcpy(mpCrBuffer + mStripPitch*ypad, mpCrBuffer + mStripPitch*(srch-1), mStripPitch);
 		}
 
 		src += srch * srcpitch;
@@ -1425,12 +1425,12 @@ void VDJPEGEncoder::Encode(vdfastvector<char>& dst, const char *src, ptrdiff_t s
 			case kYCC444:
 				break;
 			case kYCC422:
-				Downsample_422(mpCbBuffer, mStripWidth, (w+1) >> 1, srch);
-				Downsample_422(mpCrBuffer, mStripWidth, (w+1) >> 1, srch);
+				Downsample_422(mpCbBuffer, mStripPitch, (w+1) >> 1, srch);
+				Downsample_422(mpCrBuffer, mStripPitch, (w+1) >> 1, srch);
 				break;
 			case kYCC420:
-				Downsample_420(mpCbBuffer, mStripWidth, (w+1) >> 1, (srch+1) >> 1);
-				Downsample_420(mpCrBuffer, mStripWidth, (w+1) >> 1, (srch+1) >> 1);
+				Downsample_420(mpCbBuffer, mStripPitch, (w+1) >> 1, (srch+1) >> 1);
+				Downsample_420(mpCrBuffer, mStripPitch, (w+1) >> 1, (srch+1) >> 1);
 				break;
 		}
 
@@ -1443,25 +1443,25 @@ void VDJPEGEncoder::Encode(vdfastvector<char>& dst, const char *src, ptrdiff_t s
 
 			switch(mChromaMode) {
 			case kYCC420:
-				fdct(dct_coeff[0], ysrc, mStripWidth);
-				fdct(dct_coeff[1], ysrc+8, mStripWidth);
-				fdct(dct_coeff[2], ysrc+(mStripWidth<<3), mStripWidth);
-				fdct(dct_coeff[3], ysrc+(mStripWidth<<3)+8, mStripWidth);
-				fdct(dct_coeff[4], cbsrc, mStripWidth*2);
-				fdct(dct_coeff[5], crsrc, mStripWidth*2);
+				fdct(dct_coeff[0], ysrc, mStripPitch);
+				fdct(dct_coeff[1], ysrc+8, mStripPitch);
+				fdct(dct_coeff[2], ysrc+(mStripPitch<<3), mStripPitch);
+				fdct(dct_coeff[3], ysrc+(mStripPitch<<3)+8, mStripPitch);
+				fdct(dct_coeff[4], cbsrc, mStripPitch*2);
+				fdct(dct_coeff[5], crsrc, mStripPitch*2);
 				ysrc += 16;
 				break;
 			case kYCC422:
-				fdct(dct_coeff[0], ysrc, mStripWidth);
-				fdct(dct_coeff[1], ysrc+8, mStripWidth);
-				fdct(dct_coeff[2], cbsrc, mStripWidth);
-				fdct(dct_coeff[3], crsrc, mStripWidth);
+				fdct(dct_coeff[0], ysrc, mStripPitch);
+				fdct(dct_coeff[1], ysrc+8, mStripPitch);
+				fdct(dct_coeff[2], cbsrc, mStripPitch);
+				fdct(dct_coeff[3], crsrc, mStripPitch);
 				ysrc += 16;
 				break;
 			case kYCC444:
-				fdct(dct_coeff[0], ysrc, mStripWidth);
-				fdct(dct_coeff[1], cbsrc, mStripWidth);
-				fdct(dct_coeff[2], crsrc, mStripWidth);
+				fdct(dct_coeff[0], ysrc, mStripPitch);
+				fdct(dct_coeff[1], cbsrc, mStripPitch);
+				fdct(dct_coeff[2], crsrc, mStripPitch);
 				ysrc += 8;
 				break;
 			}
