@@ -304,7 +304,13 @@ void VideoSequenceCompressor::internalStart(const void *outputFormat, uint32 out
 
 		memset(&icf, 0, sizeof icf);
 
-		icf.dwFlags		= (DWORD)&icf.lKeyRate;
+#if defined(VD_CPU_X86)
+		icf.dwFlags		= (DWORD)&icf.lKeyRate; // "Trashed with address of lKeyRate in tests."
+#else
+		icf.dwFlags		= 0xFFFFFF00; // "Something
+		// might be looking for a non-zero value here, so better
+		// set it."
+#endif
 		icf.lStartFrame = 0;
 		icf.lFrameCount = frameCount > 0xFFFFFFFF ? 0xFFFFFFFF : (uint32)frameCount;
 		icf.lQuality	= lQuality;
