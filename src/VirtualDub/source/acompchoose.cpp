@@ -234,7 +234,7 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 BOOL /*ACMDRIVERENUMCB*/ CALLBACK ACMDriverEnumerator(HACMDRIVERID hadid, DWORD_PTR dwInstance, DWORD fdwSupport) {
 	ACMEnumeratorData *pData = (ACMEnumeratorData *)dwInstance;
 
-	vdprotected1("enumerating audio codec ID %08x", unsigned, (unsigned)hadid) {
+	vdprotected1("enumerating audio codec ID %p", decltype(hadid), hadid) {
 		if (!acmDriverOpen(&pData->had, hadid, 0)) {
 			ACMDRIVERDETAILS add = { sizeof(ACMDRIVERDETAILS) };
 			acmDriverDetails(hadid, &add, 0);
