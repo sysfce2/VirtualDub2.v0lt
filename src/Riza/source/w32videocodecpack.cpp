@@ -850,7 +850,7 @@ crunch_complete:
 
 		{
 			VDExternalCodeBracket bracket(mDriverName.c_str(), __FILE__, __LINE__);
-			vdprotected4("decompressing frame %u from %08x to %08x using codec \"%ls\"", unsigned, lFrameDone, unsigned, (unsigned)dst, unsigned, (unsigned)pPrevBuffer, const wchar_t *, mCodecName.c_str()) {
+			vdprotected4("decompressing frame %u from %p to %p using codec \"%ls\"", unsigned, lFrameDone, decltype(dst), dst, decltype(pPrevBuffer), pPrevBuffer, const wchar_t *, mCodecName.c_str()) {
 				res = driver->decompress(dwFlagsOut & AVIIF_KEYFRAME ? 0 : ICDECOMPRESS_NOTKEYFRAME,
 						&*mOutputFormat,
 						dst,
@@ -903,7 +903,7 @@ void VDVideoCompressorVCM::PackFrameInternal(void *dst, DWORD frameSize, DWORD q
 	DWORD sizeImage = mOutputFormat->biSizeImage;
 
 	VDExternalCodeBracket bracket(mDriverName.c_str(), __FILE__, __LINE__);
-	vdprotected4("compressing frame %u from %08x to %08x using codec \"%ls\"", unsigned, lFrameSent, unsigned, (unsigned)src, unsigned, (unsigned)dst, const wchar_t *, mCodecName.c_str()) {
+	vdprotected4("compressing frame %u from %p to %p using codec \"%ls\"", unsigned, lFrameSent, decltype(src), src, decltype(dst), dst, const wchar_t *, mCodecName.c_str()) {
 		res = driver->compress(dwFlagsIn,
 				mOutputFormat.data(), dst,
 				mInputFormat.data(), (LPVOID)src,
