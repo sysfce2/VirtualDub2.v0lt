@@ -33,7 +33,7 @@ struct VDDisassemblyContext {
 	unsigned char	rex;
 	const char *pszSegmentOverride;
 
-	long	physToVirtOffset;
+	ptrdiff_t physToVirtOffset;
 
 	void	*pRawBlock;
 	char	*heap;

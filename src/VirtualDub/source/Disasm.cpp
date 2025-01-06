@@ -749,7 +749,7 @@ CodeDisassemblyWindow::CodeDisassemblyWindow(void *_code, long _length, void *_r
 
 	vdc.pRuleBase = NULL;
 	vdc.pSymLookup = NULL;
-	vdc.physToVirtOffset = -(long)_rbaseptr;
+	vdc.physToVirtOffset = -(ptrdiff_t)_rbaseptr;
 
 	SpliceProgramPath(buf, sizeof buf, "ia32.vdi");
 	if (!VDDisasmInit(&vdc, buf)) {
