@@ -98,7 +98,7 @@ IsWindowsVersionOrGreaterBuild(WORD wMajorVersion, WORD wMinorVersion, DWORD dwB
 
 ///////////////////////////////////////////////////////////////////////////
 
-#define CODE_WINDOW (256)
+#define CODE_WINDOW (256u)
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -189,7 +189,7 @@ extern "C" void *_ReturnAddress();
 #pragma intrinsic(_ReturnAddress)
 
 #ifdef VD_CPU_AMD64
-	#define ENCODED_RETURN_ADDRESS ((int)_ReturnAddress() - (int)&__ImageBase)
+	#define ENCODED_RETURN_ADDRESS (int((intptr_t)_ReturnAddress() - (intptr_t)&__ImageBase))
 #else
 	#define ENCODED_RETURN_ADDRESS ((int)_ReturnAddress())
 #endif
@@ -631,7 +631,7 @@ struct PE32PlusOptionalHeader {
 	ulong		export_size;			// 116
 };
 
-static const char *CrashLookupExport(HMODULE hmod, unsigned long addr, unsigned long &fnbase) {
+static const char *CrashLookupExport(HMODULE hmod, uintptr_t addr, unsigned long &fnbase) {
 	char *pBase = (char *)hmod;
 
 	// The PEheader offset is at hmod+0x3c.  Add the size of the optional header
@@ -709,7 +709,7 @@ static const char *CrashLookupExport(HMODULE hmod, unsigned long addr, unsigned 
 	ulong bestdelta = 0xFFFFFFFF;
 	int i;
 
-	addr -= (ulong)pBase;
+	addr -= (uintptr_t)pBase;
 
 	for(i=0; i<pExportDir->nametbl_cnt; i++) {
 		ulong fnaddr;
@@ -1116,11 +1116,11 @@ LONG __stdcall CrashHandler(EXCEPTION_POINTERS *pExc, bool allowForcedExit) {
 	static char buf[CODE_WINDOW+16];
 	HANDLE hprMe = GetCurrentProcess();
 	void *lpBaseAddress = pExc->ExceptionRecord->ExceptionAddress;
-	char *lpAddr = (char *)((uintptr)lpBaseAddress & -32);
+	char *lpAddr = (char *)((uintptr_t)lpBaseAddress & ~(uintptr_t)31);
 
 	memset(buf, 0, sizeof buf);
 
-	if ((unsigned long)lpAddr > CODE_WINDOW/2)
+	if ((uintptr_t)lpAddr > CODE_WINDOW/2)
 		lpAddr -= CODE_WINDOW/2;
 	else
 		lpAddr = NULL;
