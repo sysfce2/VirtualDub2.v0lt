@@ -145,7 +145,7 @@ LRESULT CCompRemote::DecompressBegin(BITMAPINFO *lpbiInput, BITMAPINFO *lpbiOutp
 
 	_RPT0(0,"Attempting to connect to frameserver...\n");
 
-	ivdac = g_ivdsl->FrameServerConnect("VCM");
+	ivdac = g_ivdsl->FrameServerConnect((char*)"VCM");
 
 	if (!ivdac) return ICERR_BADFORMAT;
 
