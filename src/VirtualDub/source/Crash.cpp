@@ -200,7 +200,7 @@ void *operator new(size_t bytes) {
 	return _malloc_dbg(bytes, _NORMAL_BLOCK, fname, ENCODED_RETURN_ADDRESS);
 }
 
-void *operator new(size_t bytes, const std::nothrow_t&) {
+void *operator new(size_t bytes, const std::nothrow_t&) noexcept {
 	static const char fname[]="stack trace";
 
 	return _malloc_dbg(bytes, _NORMAL_BLOCK, fname, ENCODED_RETURN_ADDRESS);
@@ -212,7 +212,7 @@ void *operator new[](size_t bytes) {
 	return _malloc_dbg(bytes, _NORMAL_BLOCK, fname, ENCODED_RETURN_ADDRESS);
 }
 
-void *operator new[](size_t bytes, const std::nothrow_t&) {
+void *operator new[](size_t bytes, const std::nothrow_t&) noexcept {
 	static const char fname[]="stack trace";
 
 	return _malloc_dbg(bytes, _NORMAL_BLOCK, fname, ENCODED_RETURN_ADDRESS);
@@ -1790,7 +1790,7 @@ static void VDDebugCrashDumpCallStack(VDDebugCrashTextOutput& out, HANDLE hThrea
 		MEMORY_BASIC_INFORMATION meminfo;
 
 		VirtualQuery((void *)data, &meminfo, sizeof meminfo);
-		
+
 		if (!IsExecutableProtection(meminfo.Protect) || meminfo.State!=MEM_COMMIT) {
 //				Report(hwnd, hFile, "Rejected: %08lx (%08lx)", data, meminfo.Protect);
 			fValid = false;
@@ -1806,7 +1806,7 @@ static void VDDebugCrashDumpCallStack(VDDebugCrashTextOutput& out, HANDLE hThrea
 
 			fValid &= VDIsValidCallX86(buf+7, len);
 		}
-		
+
 		if (fValid) {
 			if (VDDebugInfoLookupRVA(&g_debugInfo, data, buf, sizeof buf) >= 0) {
 				out.WriteF(PTR_08lx ": %s()\n", data, buf);
