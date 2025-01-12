@@ -16,13 +16,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -58,26 +56,26 @@ END
 // Dialog
 //
 
-IDD_MAINWINDOW DIALOGEX 0, 0, 341, 142
+IDD_MAINWINDOW DIALOGEX 0, 0, 341, 136
 STYLE DS_SETFONT | DS_3DLOOK | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "VirtualDub2 auxiliary setup"
 CLASS "VirtualDub Setup Class"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    PUSHBUTTON      "Enable LAA",IDC_4GB_ON,7,7,71,14
-    PUSHBUTTON      "Disable LAA",IDC_4GB_OFF,7,24,71,14
-    LTEXT           "Make VirtualDub.exe LARGEADDRESSAWARE.",IDC_STATIC,86,9,156,8
-    LTEXT           "Make VirtualDub.exe not LARGEADDRESSAWARE.",IDC_STATIC,86,26,168,8
-    PUSHBUTTON      "Install FS",IDC_INSTALL,7,48,71,14
-    PUSHBUTTON      "Uninstall FS",IDC_UNINSTALL,7,65,71,14
-    LTEXT           "Install DLLs necessary for Frame Server client support.",IDC_STATIC,86,50,172,8
-    LTEXT           "Uninstall Frame Server client support.",IDC_STATIC,86,68,118,8
-    PUSHBUTTON      "Cleanup",IDC_REMOVE,7,89,71,14
-    LTEXT           "Remove personalized VirtualDub settings for all users from the Registry.",IDC_STATIC,86,89,248,13,SS_CENTERIMAGE
-    PUSHBUTTON      "Exit",IDCANCEL,7,121,71,14
+    PUSHBUTTON      "Run VirtualDub2",IDC_EXECUTE,7,7,71,14
+    LTEXT           "Don't want any of this? Run the main program.",IDC_STATIC,86,9,156,8
+    PUSHBUTTON      "Install FS",IDC_INSTALL,7,32,71,14
+    PUSHBUTTON      "Uninstall FS",IDC_UNINSTALL,7,49,71,14
+    LTEXT           "Install DLLs necessary for Frame Server client support.",IDC_STATIC,86,34,172,8
+    LTEXT           "Uninstall Frame Server client support.",IDC_STATIC,86,52,118,8
+    PUSHBUTTON      "Cleanup",IDC_REMOVE,7,73,71,14
+    PUSHBUTTON      "About",IDC_ABOUT,7,98,71,14
+    LTEXT           "Found out more about this program.",IDC_STATIC,86,100,168,8
+    LTEXT           "Remove personalized VirtualDub settings for all users from the Registry.",IDC_STATIC,86,73,248,13,SS_CENTERIMAGE
+    PUSHBUTTON      "Exit",IDCANCEL,7,114,71,14
 END
 
-IDD_ATTEMPT DIALOG  0, 0, 300, 159
+IDD_ATTEMPT DIALOG 0, 0, 300, 159
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Kawaiikunee tomboy!"
 FONT 8, "MS Sans Serif"
@@ -88,7 +86,7 @@ BEGIN
     LISTBOX         IDC_ACTIONLIST,7,18,286,112,LBS_NOINTEGRALHEIGHT | LBS_NOSEL | WS_VSCROLL | WS_TABSTOP
 END
 
-IDD_ABOUT DIALOG  0, 0, 300, 92
+IDD_ABOUT DIALOG 0, 0, 300, 92
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About VirtualDub Setup..."
 FONT 8, "MS Sans Serif"
@@ -106,7 +104,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_MAINWINDOW, DIALOG
     BEGIN
@@ -115,7 +113,7 @@ BEGIN
         VERTGUIDE, 78
         VERTGUIDE, 86
         TOPMARGIN, 7
-        BOTTOMMARGIN, 135
+        BOTTOMMARGIN, 128
     END
 
     IDD_ATTEMPT, DIALOG
@@ -145,6 +143,7 @@ END
 
 IDI_MANIFEST            RT_MANIFEST             "manifest.xml"
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Icon
@@ -153,6 +152,7 @@ IDI_MANIFEST            RT_MANIFEST             "manifest.xml"
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_VIRTUALDUB          ICON                    "mod2.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -189,7 +189,7 @@ BEGIN
     END
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

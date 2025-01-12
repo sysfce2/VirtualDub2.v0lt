@@ -16,6 +16,12 @@
 
 #pragma comment(lib,"shlwapi.lib")
 
+#ifdef _WIN64
+#define VIRTUALDUB_EXE "VirtualDub64.exe"
+#else
+#define VIRTUALDUB_EXE "VirtualDub.exe"
+#endif
+
 HWND g_hwnd;
 HINSTANCE g_hInst; // current instance
 char szAppName[] = "VirtualDub Setup Class"; // The name of this application
@@ -43,8 +49,6 @@ LRESULT APIENTRY WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 BOOL APIENTRY InstallAVIFileDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 BOOL APIENTRY UninstallAVIFileDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 BOOL APIENTRY RemoveSettingsDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
-BOOL APIENTRY EnableLAADlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
-BOOL APIENTRY DisableLAADlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 BOOL APIENTRY AboutDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 ///////////
@@ -128,20 +132,48 @@ void PrintfWindowText(HWND hWnd, char *format, ...) {
 	SetWindowText(hWnd, buf);
 }
 
+bool FindVirtualDub(wchar_t* buf)
+{
+	if (!GetModuleFileNameW(g_hInst, buf, MAX_PATH)) {
+		return false;
+	}
+	if (!PathRemoveFileSpecW(buf)) {
+		return false;
+	}
+	wcscat(buf, L"\\" VIRTUALDUB_EXE);
+	if (GetFileAttributesW(buf) != INVALID_FILE_ATTRIBUTES) {
+		return true;
+	}
+	if (!PathRemoveFileSpecW(buf)) {
+		return false;
+	}
+	if (!PathRemoveFileSpecW(buf)) {
+		return false;
+	}
+	wcscat(buf, L"\\" VIRTUALDUB_EXE);
+	if (GetFileAttributesW(buf) != INVALID_FILE_ATTRIBUTES) {
+		return true;
+	}
+	return false;
+}
+
 LRESULT APIENTRY WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (message) { 
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
 
-        case WM_COMMAND:
+		case WM_COMMAND:
 			switch(LOWORD(wParam)) {
 			case IDC_EXECUTE:
-				if ((INT_PTR)ShellExecute(hWnd, "open", "VirtualDub.exe", NULL, NULL, SW_SHOWNORMAL) <= 32)
-					MessageBox(hWnd, "Couldn't launch VirtualDub.exe.", "Oops", MB_OK);
+			{
+				wchar_t vdpath[MAX_PATH];
+				if (!FindVirtualDub(vdpath) || (INT_PTR)ShellExecuteW(hWnd, L"open", vdpath, NULL, NULL, SW_SHOWNORMAL) <= 32) {
+					MessageBox(hWnd, "Couldn't launch" VIRTUALDUB_EXE ".", "Oops", MB_OK);
+				}
 				break;
+			}
 			case IDC_INSTALL:
 				DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ATTEMPT), hWnd, (DLGPROC)InstallAVIFileDlgProc);
 				break;
@@ -151,12 +183,6 @@ LRESULT APIENTRY WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case IDC_REMOVE:
 				DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ATTEMPT), hWnd, (DLGPROC)RemoveSettingsDlgProc);
 				break;
-			case IDC_4GB_ON:
-				DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ATTEMPT), hWnd, (DLGPROC)EnableLAADlgProc);
-				break;
-			case IDC_4GB_OFF:
-				DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ATTEMPT), hWnd, (DLGPROC)DisableLAADlgProc);
-				break;
 			case IDC_ABOUT:
 				DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUT), hWnd, (DLGPROC)AboutDlgProc);
 				break;
@@ -164,7 +190,7 @@ LRESULT APIENTRY WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				DestroyWindow(hWnd);
 				break;
 			}
-            break;
+			break;
 
 		default:
 			return DefWindowProc(hWnd,message,wParam,lParam);
@@ -563,179 +589,6 @@ BOOL APIENTRY RemoveSettingsDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 
 				SetWindowText(GetDlgItem(hDlg, IDOK), "Retry");
 				SetWindowText(GetDlgItem(hDlg, IDCANCEL), "Done");
-				return TRUE;
-			case IDCANCEL:
-				EndDialog(hDlg, FALSE);
-				return TRUE;
-			}
-	}
-	return FALSE;
-}
-
-bool FindVirtualDub(wchar_t* buf)
-{
-	if (!GetModuleFileNameW(g_hInst,buf,MAX_PATH)) return false;
-	if (!PathRemoveFileSpecW(buf)) return false;
-	wcscat(buf,L"\\VirtualDub.exe");
-	if (GetFileAttributesW(buf)!=INVALID_FILE_ATTRIBUTES) {
-		return true;
-	}
-	if (!PathRemoveFileSpecW(buf)) return false;
-	if (!PathRemoveFileSpecW(buf)) return false;
-	wcscat(buf,L"\\VirtualDub.exe");
-	if (GetFileAttributesW(buf)!=INVALID_FILE_ATTRIBUTES) {
-		return true;
-	}
-	return false;
-}
-
-int GetLAAFlag(wchar_t* path)
-{
-	const int size = 4096;
-	char buf[size];
-	HANDLE h = CreateFileW(path,GENERIC_READ,FILE_SHARE_READ|FILE_SHARE_WRITE,0,OPEN_EXISTING,0,0);
-	if(h==INVALID_HANDLE_VALUE) return -1;
-	DWORD rsize;
-	ReadFile(h,buf,size,&rsize,0);
-	CloseHandle(h);
-	if(rsize!=size) return -1;
-	IMAGE_DOS_HEADER* h0 = (IMAGE_DOS_HEADER*)buf;
-	IMAGE_NT_HEADERS* h1 = (IMAGE_NT_HEADERS*)(buf+h0->e_lfanew);
-	if (h1->FileHeader.Characteristics & IMAGE_FILE_LARGE_ADDRESS_AWARE) return 1;
-	return 0;
-}
-
-int SetLAAFlag(wchar_t* path, bool v)
-{
-	const int size = 4096;
-	char buf[size];
-	HANDLE h = CreateFileW(path,GENERIC_READ|GENERIC_WRITE,0,0,OPEN_EXISTING,0,0);
-	if(h==INVALID_HANDLE_VALUE) return -1;
-	DWORD rsize;
-	ReadFile(h,buf,size,&rsize,0);
-	if(rsize!=size){
-		CloseHandle(h);
-		return -1;
-	}
-	IMAGE_DOS_HEADER* h0 = (IMAGE_DOS_HEADER*)buf;
-	IMAGE_NT_HEADERS* h1 = (IMAGE_NT_HEADERS*)(buf+h0->e_lfanew);
-	if (v) h1->FileHeader.Characteristics |= IMAGE_FILE_LARGE_ADDRESS_AWARE;
-	else h1->FileHeader.Characteristics &= ~IMAGE_FILE_LARGE_ADDRESS_AWARE;
-
-	SetFilePointer(h,0,0,FILE_BEGIN);
-	WriteFile(h,buf,size,&rsize,0);
-	CloseHandle(h);
-	if(rsize!=size) return -1;
-	return 1;
-}
-
-BOOL APIENTRY EnableLAADlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
-	switch(msg) {
-		case WM_INITDIALOG:
-			{
-				HWND hwndListbox = GetDlgItem(hDlg, IDC_ACTIONLIST);
-
-				SetWindowText(hDlg, "Enable LARGEADDRESSAWARE for 32-bit VirtualDub");
-				wchar_t buf[MAX_PATH];
-				if (!FindVirtualDub(buf)) {
-					ListboxAddf(hwndListbox, "Error: VirtualDub.exe not found");
-					SetWindowText(GetDlgItem(hDlg, IDOK), "Retry");
-					SetWindowText(GetDlgItem(hDlg, IDCANCEL), "Done");
-					return TRUE;
-				}
-				int state = GetLAAFlag(buf);
-				if (state==-1) {
-					ListboxAddf(hwndListbox, "Error: can't get info");
-					SetWindowText(GetDlgItem(hDlg, IDOK), "Retry");
-					SetWindowText(GetDlgItem(hDlg, IDCANCEL), "Done");
-					return TRUE;
-				}
-				if (state==1) {
-					ListboxAddf(hwndListbox, "Already enabled");
-					SetWindowText(GetDlgItem(hDlg, IDOK), "Retry");
-					SetWindowText(GetDlgItem(hDlg, IDCANCEL), "Done");
-					return TRUE;
-				}
-
-				ListboxAddf(hwndListbox, "Patch VirtualDub.exe");
-			}
-			return TRUE;
-
-		case WM_COMMAND:
-			switch(LOWORD(wParam)) {
-			case IDOK:
-				{
-					SetWindowText(GetDlgItem(hDlg, IDC_ACTION), "Results:");
-					HWND hwndListbox = GetDlgItem(hDlg, IDC_ACTIONLIST);
-					SendMessage(hwndListbox, LB_RESETCONTENT, 0, 0);
-					wchar_t buf[MAX_PATH];
-					if (FindVirtualDub(buf) && SetLAAFlag(buf,true)!=-1) {
-						ListboxAddf(hwndListbox, "Done");
-					} else {
-						ListboxAddf(hwndListbox, "Failed");
-					}
-
-					SetWindowText(GetDlgItem(hDlg, IDOK), "Retry");
-					SetWindowText(GetDlgItem(hDlg, IDCANCEL), "Done");
-				}
-				return TRUE;
-			case IDCANCEL:
-				EndDialog(hDlg, FALSE);
-				return TRUE;
-			}
-	}
-	return FALSE;
-}
-
-BOOL APIENTRY DisableLAADlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
-	switch(msg) {
-		case WM_INITDIALOG:
-			{
-				HWND hwndListbox = GetDlgItem(hDlg, IDC_ACTIONLIST);
-
-				SetWindowText(hDlg, "Disable LARGEADDRESSAWARE for 32-bit VirtualDub");
-				wchar_t buf[MAX_PATH];
-				if (!FindVirtualDub(buf)) {
-					ListboxAddf(hwndListbox, "Error: VirtualDub.exe not found");
-					SetWindowText(GetDlgItem(hDlg, IDOK), "Retry");
-					SetWindowText(GetDlgItem(hDlg, IDCANCEL), "Done");
-					return TRUE;
-				}
-				int state = GetLAAFlag(buf);
-				if (state==-1) {
-					ListboxAddf(hwndListbox, "Error: can't get info");
-					SetWindowText(GetDlgItem(hDlg, IDOK), "Retry");
-					SetWindowText(GetDlgItem(hDlg, IDCANCEL), "Done");
-					return TRUE;
-				}
-				if (state==0) {
-					ListboxAddf(hwndListbox, "Already disabled");
-					SetWindowText(GetDlgItem(hDlg, IDOK), "Retry");
-					SetWindowText(GetDlgItem(hDlg, IDCANCEL), "Done");
-					return TRUE;
-				}
-
-				ListboxAddf(hwndListbox, "Patch VirtualDub.exe");
-			}
-			return TRUE;
-
-		case WM_COMMAND:
-			switch(LOWORD(wParam)) {
-			case IDOK:
-				{
-					SetWindowText(GetDlgItem(hDlg, IDC_ACTION), "Results:");
-					HWND hwndListbox = GetDlgItem(hDlg, IDC_ACTIONLIST);
-					SendMessage(hwndListbox, LB_RESETCONTENT, 0, 0);
-					wchar_t buf[MAX_PATH];
-					if (FindVirtualDub(buf) && SetLAAFlag(buf,false)!=-1) {
-						ListboxAddf(hwndListbox, "Done");
-					} else {
-						ListboxAddf(hwndListbox, "Failed");
-					}
-
-					SetWindowText(GetDlgItem(hDlg, IDOK), "Retry");
-					SetWindowText(GetDlgItem(hDlg, IDCANCEL), "Done");
-				}
 				return TRUE;
 			case IDCANCEL:
 				EndDialog(hDlg, FALSE);
