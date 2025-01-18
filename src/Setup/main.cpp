@@ -18,20 +18,22 @@
 
 #ifdef _WIN64
 #define VIRTUALDUB_EXE "VirtualDub64.exe"
+#define VDREMOTE_DLL   "vdremote64.dll"
+#define VDSRVLNK_DLL   "vdsvrlnk64.dll"
 #else
 #define VIRTUALDUB_EXE "VirtualDub.exe"
+#define VDREMOTE_DLL   "vdremote.dll"
+#define VDSRVLNK_DLL   "vdsvrlnk.dll"
 #endif
 
 HWND g_hwnd;
 HINSTANCE g_hInst; // current instance
 char szAppName[] = "VirtualDub Setup Class"; // The name of this application
 char szTitle[]   = ""; // The title bar text
-char g_szWinPath[MAX_PATH];
-char g_szSys32Path[MAX_PATH];
-char g_szSys64Path[MAX_PATH];
+
+char g_szSystemPath[MAX_PATH];
 char g_szProgPath[MAX_PATH];
 char g_szTempPath[MAX_PATH];
-BOOL is64;
 
 typedef BOOL WINAPI fntype_Wow64DisableWow64FsRedirection(PVOID *OldValue);
 typedef BOOL WINAPI fntype_Wow64RevertWow64FsRedirection(PVOID OldValue);
@@ -61,21 +63,20 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	///////////
 
-	IsWow64Process(GetCurrentProcess(),&is64);
-	if (!GetWindowsDirectory(g_szWinPath, sizeof g_szWinPath)) return FALSE;
-	if (is64) {
-		if (SHGetFolderPath(0,CSIDL_SYSTEMX86,0,0,g_szSys32Path)!=S_OK) return FALSE;
-		if (SHGetFolderPath(0,CSIDL_SYSTEM,0,0,g_szSys64Path)!=S_OK) return FALSE;
-	} else {
-		if (SHGetFolderPath(0,CSIDL_SYSTEM,0,0,g_szSys32Path)!=S_OK) return FALSE;
+	if (SHGetFolderPath(0, CSIDL_SYSTEM, 0, 0, g_szSystemPath) != S_OK) {
+		return FALSE;
 	}
-	if (!GetModuleFileName(NULL, g_szTempPath, sizeof g_szTempPath))
+	if (!GetModuleFileName(NULL, g_szTempPath, sizeof g_szTempPath)) {
 		return FALSE;
-	if (!GetFullPathName(g_szTempPath, sizeof g_szProgPath, g_szProgPath, &lpszFilePart))
+	}
+	if (!GetFullPathName(g_szTempPath, sizeof g_szProgPath, g_szProgPath, &lpszFilePart)) {
 		return FALSE;
+	}
 	*lpszFilePart=0;
 
-	if (!Init(hInstance, nCmdShow)) return FALSE;
+	if (!Init(hInstance, nCmdShow)) {
+		return FALSE;
+	}
 
 	// Main message loop.
 
@@ -376,15 +377,8 @@ BOOL APIENTRY InstallAVIFileDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 
 				SetWindowText(hDlg, "Install AVIFile frameclient");
 
-				if (is64) {
-					ListboxAddf(hwndListbox, "Copy VDREMOTE.DLL to %s\\VDREMOTE.DLL", g_szSys32Path);
-					ListboxAddf(hwndListbox, "Copy VDSRVLNK.DLL to %s\\VDSRVLNK.DLL", g_szSys32Path);
-					ListboxAddf(hwndListbox, "Copy VDREMOTE64.DLL to %s\\VDREMOTE64.DLL", g_szSys64Path);
-					ListboxAddf(hwndListbox, "Copy VDSRVLNK64.DLL to %s\\VDSRVLNK64.DLL", g_szSys64Path);
-				} else {
-					ListboxAddf(hwndListbox, "Copy VDREMOTE.DLL to %s\\VDREMOTE.DLL", g_szSys32Path);
-					ListboxAddf(hwndListbox, "Copy VDSRVLNK.DLL to %s\\VDSRVLNK.DLL", g_szSys32Path);
-				}
+				ListboxAddf(hwndListbox, "Copy " VDREMOTE_DLL " to %s\\" VDREMOTE_DLL, g_szSystemPath);
+				ListboxAddf(hwndListbox, "Copy " VDSRVLNK_DLL " to %s\\" VDSRVLNK_DLL, g_szSystemPath);
 
 				ListboxAddf(hwndListbox, "Add VDRemote class and AVIFile entries to Registry");
 			}
@@ -396,39 +390,21 @@ BOOL APIENTRY InstallAVIFileDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 
 				fSuccess = true;
 
-				if (is64) {
-					PVOID redir;
-					pfnWow64DisableWow64FsRedirection(&redir);
-					fSuccess &= InstallFile("vdremote.dll","%s\\vdremote.dll",g_szSys32Path);
-					fSuccess &= InstallFile("vdsvrlnk.dll","%s\\vdsvrlnk.dll",g_szSys32Path);
-					fSuccess &= InstallFile("vdremote64.dll","%s\\vdremote64.dll",g_szSys64Path);
-					fSuccess &= InstallFile("vdsvrlnk64.dll","%s\\vdsvrlnk64.dll",g_szSys64Path);
-					pfnWow64RevertWow64FsRedirection(&redir);
-				} else {
-					fSuccess &= InstallFile("vdremote.dll","%s\\vdremote.dll",g_szSys32Path);
-					fSuccess &= InstallFile("vdremote.dll","%s\\vdsvrlnk.dll",g_szSys32Path);
-				}
-
-				if (is64) {
-					fSuccess &= InstallRegStr64(HKEY_CLASSES_ROOT,"CLSID\\{894288e0-0948-11d2-8109-004845000eb5}",NULL,"VirtualDub link handler");
-					fSuccess &= InstallRegStr64(HKEY_CLASSES_ROOT,"CLSID\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32",NULL,"vdremote64.dll");
-					fSuccess &= InstallRegStr64(HKEY_CLASSES_ROOT,"CLSID\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32","ThreadingModel","Apartment");
-					fSuccess &= InstallRegStr64(HKEY_CLASSES_ROOT,"CLSID\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32\\AVIFile",NULL,"1");
-					fSuccess &= InstallRegStr64(HKEY_CLASSES_ROOT,"AVIFile\\Extensions\\VDR",NULL,"{894288e0-0948-11d2-8109-004845000eb5}");
-					fSuccess &= InstallRegStr64(HKEY_CLASSES_ROOT,"AVIFile\\RIFFHandlers\\VDRM",NULL,"{894288e0-0948-11d2-8109-004845000eb5}");
-				}
+				fSuccess &= InstallFile(VDREMOTE_DLL,"%s\\" VDREMOTE_DLL, g_szSystemPath);
+				fSuccess &= InstallFile(VDSRVLNK_DLL,"%s\\" VDSRVLNK_DLL, g_szSystemPath);
 
 				fSuccess &= InstallRegStr(HKEY_CLASSES_ROOT,"CLSID\\{894288e0-0948-11d2-8109-004845000eb5}",NULL,"VirtualDub link handler");
-				fSuccess &= InstallRegStr(HKEY_CLASSES_ROOT,"CLSID\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32",NULL,"vdremote.dll");
+				fSuccess &= InstallRegStr(HKEY_CLASSES_ROOT,"CLSID\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32",NULL, VDREMOTE_DLL);
 				fSuccess &= InstallRegStr(HKEY_CLASSES_ROOT,"CLSID\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32","ThreadingModel","Apartment");
 				fSuccess &= InstallRegStr(HKEY_CLASSES_ROOT,"CLSID\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32\\AVIFile",NULL,"1");
 				fSuccess &= InstallRegStr(HKEY_CLASSES_ROOT,"AVIFile\\Extensions\\VDR",NULL,"{894288e0-0948-11d2-8109-004845000eb5}");
 				fSuccess &= InstallRegStr(HKEY_CLASSES_ROOT,"AVIFile\\RIFFHandlers\\VDRM",NULL,"{894288e0-0948-11d2-8109-004845000eb5}");
 
-				if (fSuccess)
+				if (fSuccess) {
 					MessageBox(hDlg, "AVIFile frameclient install successful.", "VirtualDub Setup", MB_OK);
-				else
+				} else {
 					MessageBox(hDlg, "AVIFile frameclient install failed.", "VirtualDub Setup", MB_OK);
+				}
 
 				EndDialog(hDlg, TRUE);
 				return TRUE;
@@ -451,14 +427,8 @@ BOOL APIENTRY UninstallAVIFileDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM
 
 				SetWindowText(hDlg, "Uninstall AVIFile frameclient");
 
-				if (is64) {
-					ListboxAddf(hwndListbox, "Delete %s\\VDREMOTE.DLL", g_szSys32Path);
-					ListboxAddf(hwndListbox, "Delete %s\\VDSRVLNK.DLL", g_szSys32Path);
-					ListboxAddf(hwndListbox, "Delete %s\\VDREMOTE64.DLL", g_szSys64Path);
-					ListboxAddf(hwndListbox, "Delete %s\\VDSRVLNK64.DLL", g_szSys64Path);
-				}
-				ListboxAddf(hwndListbox, "Delete %s\\SYSTEM\\VDREMOTE.DLL", g_szWinPath);
-				ListboxAddf(hwndListbox, "Delete %s\\SYSTEM\\VDSRVLNK.DLL", g_szWinPath);
+				ListboxAddf(hwndListbox, "Delete %s\\" VDREMOTE_DLL, g_szSystemPath);
+				ListboxAddf(hwndListbox, "Delete %s\\" VDSRVLNK_DLL, g_szSystemPath);
 				ListboxAddf(hwndListbox, "Remove VDRemote class and AVIFile entries from Registry");
 			}
 			return TRUE;
@@ -467,28 +437,11 @@ BOOL APIENTRY UninstallAVIFileDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM
 			switch(LOWORD(wParam)) {
 			case IDOK:
 				fSuccess = true;
-				if (is64) {
-					PVOID redir;
-					pfnWow64DisableWow64FsRedirection(&redir);
-					fSuccess &= InstallDeleteFile("%s\\vdremote.dll",g_szSys32Path);
-					fSuccess &= InstallDeleteFile("%s\\vdsvrlnk.dll",g_szSys32Path);
-					fSuccess &= InstallDeleteFile("%s\\vdremote64.dll",g_szSys64Path);
-					fSuccess &= InstallDeleteFile("%s\\vdsvrlnk64.dll",g_szSys64Path);
-					pfnWow64RevertWow64FsRedirection(&redir);
-				}
 
-				fSuccess &= InstallDeleteFile("%s\\system\\vdremote.dll",g_szWinPath);
-				fSuccess &= InstallDeleteFile("%s\\system\\vdsvrlnk.dll",g_szWinPath);
+				fSuccess &= InstallDeleteFile("%s\\" VDREMOTE_DLL, g_szSystemPath);
+				fSuccess &= InstallDeleteFile("%s\\" VDSRVLNK_DLL, g_szSystemPath);
 
 				fRegSuccess = true;
-
-				if (is64) {
-					fRegSuccess &= InstallDeleteKey64(HKEY_CLASSES_ROOT,"Clsid\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32\\AVIFile");
-					fRegSuccess &= InstallDeleteKey64(HKEY_CLASSES_ROOT,"Clsid\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32");
-					fRegSuccess &= InstallDeleteKey64(HKEY_CLASSES_ROOT,"Clsid\\{894288e0-0948-11d2-8109-004845000eb5}");
-					fRegSuccess &= InstallDeleteKey64(HKEY_CLASSES_ROOT,"AVIFile\\Extensions\\VDR");
-					fRegSuccess &= InstallDeleteKey64(HKEY_CLASSES_ROOT,"AVIFile\\RIFFHandlers\\VDRM");
-				}
 
 				fRegSuccess &= InstallDeleteKey(HKEY_CLASSES_ROOT,"Clsid\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32\\AVIFile");
 				fRegSuccess &= InstallDeleteKey(HKEY_CLASSES_ROOT,"Clsid\\{894288e0-0948-11d2-8109-004845000eb5}\\InprocServer32");

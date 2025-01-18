@@ -51,7 +51,6 @@ COPY /Y /V "out\Release\VirtualDub.exe"         "%PCKG_DIR%\VirtualDub.exe"
 COPY /Y /V "out\Release\VirtualDub.vdi"         "%PCKG_DIR%\VirtualDub.vdi"
 COPY /Y /V "dist\VirtualDub.chm"                "%PCKG_DIR%\VirtualDub.chm"
 
-COPY /Y /V "dist\extra\."                       "%PCKG_DIR%\extra\."
 COPY /Y /V "out\Release\auxsetup.exe"           "%PCKG_DIR%\extra\auxsetup.exe"
 COPY /Y /V "out\Release\vdicmdrv.dll"           "%PCKG_DIR%\extra\vdicmdrv.dll"
 COPY /Y /V "out\Release\vdlaunch.exe"           "%PCKG_DIR%\extra\vdlaunch.exe"
