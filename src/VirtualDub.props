@@ -8,7 +8,6 @@
     <VDObjPath>$(VDBaseDir)\obj\$(VDDirTag)\$(ProjectName)</VDObjPath>
   </PropertyGroup>
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <IntDir>$(VDObjPath)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
