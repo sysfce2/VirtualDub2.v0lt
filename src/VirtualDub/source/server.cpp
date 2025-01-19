@@ -135,7 +135,7 @@ private:
 
 	HWND			hwndStatus;
 
-	typedef std::map<uint32, FrameserverSession *> tSessions;
+	typedef std::map<DWORD, FrameserverSession *> tSessions;
 	tSessions	mSessions;
 
 	char *lpszFsname;
@@ -178,9 +178,7 @@ Frameserver::Frameserver(IVDVideoSource *video, AudioSource *audio, HWND hwndPar
 }
 
 Frameserver::~Frameserver() {
-	for(tSessions::iterator it(mSessions.begin()), itEnd(mSessions.end()); it!=itEnd; ++it) {
-		FrameserverSession *pSession = (*it).second;
-
+	for (auto [id, pSession] : mSessions) {
 		delete pSession;
 	}
 
@@ -196,7 +194,7 @@ void Frameserver::Go(IVDubServerLink *ivdsl, char *name) {
 	int server_index = -1;
 
 	lpszFsname = name;
-	
+
 	// prepare the sources...
 	if (!vSrc->setTargetFormat(g_dubOpts.video.mInputFormat))
 		if (!vSrc->setTargetFormat(nsVDPixmap::kPixFormat_XRGB8888))
@@ -488,10 +486,8 @@ FrameserverSession *Frameserver::SessionLookup(LPARAM lParam) {
 }
 
 LRESULT Frameserver::SessionOpen(LPARAM mmapID, WPARAM arena_len) {
-	FrameserverSession *fs;
-
-	if (fs = new FrameserverSession()) {
-		DWORD id = fs->Init(arena_len, mmapID);
+	if (auto fs = new (std::nothrow) FrameserverSession()) {
+		auto id = fs->Init(arena_len, mmapID);
 		if (id) {
 			mSessions[id] = fs;
 			return id;
