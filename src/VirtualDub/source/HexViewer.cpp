@@ -402,14 +402,14 @@ void HexViewer::Init() {
 		TEXTMETRIC tm;
 		HGDIOBJ hfOld;
 
-		hfOld = SelectObject(hdc, GetStockObject(ANSI_FIXED_FONT));
+		hfOld = SelectObject(hdc, GetStockObject(SYSTEM_FIXED_FONT));
 
 		GetTextMetrics(hdc, &tm);
 
 		hfont = CreateFont(tm.tmHeight, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET,
 			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH|FF_DONTCARE, "Lucida Console");
 
-		SelectObject(hdc, hfont ? hfont : GetStockObject(ANSI_FIXED_FONT));
+		SelectObject(hdc, hfont ? hfont : GetStockObject(SYSTEM_FIXED_FONT));
 
 		GetTextMetrics(hdc, &tm);
 		nCharWidth	= tm.tmAveCharWidth;
@@ -818,7 +818,7 @@ LRESULT HexViewer::Handle_WM_PAINT(WPARAM wParam, LPARAM lParam) {
 
 			i64Offset = i64TopOffset + (y/nLineHeight)*16;
 
-			hfOld = SelectObject(hdc, hfont ? hfont : GetStockObject(ANSI_FIXED_FONT));
+			hfOld = SelectObject(hdc, hfont ? hfont : GetStockObject(SYSTEM_FIXED_FONT));
 
 			SetTextAlign(hdc, TA_TOP | TA_LEFT);
 			SetBkMode(hdc, OPAQUE);
@@ -1159,7 +1159,7 @@ void HexEditor::Init() {
 		TEXTMETRIC tm;
 		HGDIOBJ hfOld;
 
-		hfOld = SelectObject(hdc, GetStockObject(ANSI_FIXED_FONT));
+		hfOld = SelectObject(hdc, GetStockObject(SYSTEM_FIXED_FONT));
 
 		GetTextMetrics(hdc, &tm);
 

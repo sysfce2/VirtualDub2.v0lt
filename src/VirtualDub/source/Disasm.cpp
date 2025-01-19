@@ -787,8 +787,9 @@ CodeDisassemblyWindow::CodeDisassemblyWindow(void *_code, long _length, void *_r
 			"Lucida Console"
 			);
 
-	if (!hFontMono) hFontMono = (HFONT)GetStockObject(ANSI_FIXED_FONT);
-
+	if (!hFontMono) {
+		hFontMono = (HFONT)GetStockObject(SYSTEM_FIXED_FONT);
+	}
 }
 
 CodeDisassemblyWindow::~CodeDisassemblyWindow() {
