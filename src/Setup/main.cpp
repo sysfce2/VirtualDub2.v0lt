@@ -18,13 +18,12 @@
 
 #ifdef _WIN64
 #define VIRTUALDUB_EXE "VirtualDub64.exe"
-#define VDREMOTE_DLL   "vdremote64.dll"
-#define VDSRVLNK_DLL   "vdsvrlnk64.dll"
 #else
 #define VIRTUALDUB_EXE "VirtualDub.exe"
+#endif
 #define VDREMOTE_DLL   "vdremote.dll"
 #define VDSRVLNK_DLL   "vdsvrlnk.dll"
-#endif
+
 
 HWND g_hwnd;
 HINSTANCE g_hInst; // current instance

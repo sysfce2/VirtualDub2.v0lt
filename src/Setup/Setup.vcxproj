@@ -73,12 +73,7 @@
     <LinkIncremental Condition="'$(Configuration)'=='Release'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)'=='Debug'">true</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Platform)'=='Win32'">
     <TargetName>auxsetup</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Platform)'=='x64'">
-    <TargetName>auxsetup64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>

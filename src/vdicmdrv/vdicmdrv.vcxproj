@@ -80,9 +80,6 @@
     <EmbedManifest>false</EmbedManifest>
     <IgnoreImportLibrary Condition="'$(Configuration)'=='Debug'">true</IgnoreImportLibrary>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Platform)'=='x64'">
-    <TargetName>$(ProjectName)64</TargetName>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
