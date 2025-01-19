@@ -770,8 +770,11 @@ CodeDisassemblyWindow::CodeDisassemblyWindow(void *_code, long _length, void *_r
 
 	lbents = (lbent *)VirtualAlloc(NULL, sizeof(lbent)*MAX_INSTRUCTIONS, MEM_COMMIT, PAGE_READWRITE);
 
+	HDC hDC = GetDC(NULL);
+	const int nHeight = MulDiv(10, GetDeviceCaps(hDC, LOGPIXELSY), 96);
+
 	hFontMono = CreateFont(
-			10,				// nHeight
+			nHeight,		// nHeight
 			0,				// nWidth
 			0,				// nEscapement
 			0,				// nOrientation
@@ -901,11 +904,16 @@ void CodeDisassemblyWindow::DoInitListbox(HWND hwndList) {
 BOOL CodeDisassemblyWindow::DoMeasureItem(LPARAM lParam) {
 	LPMEASUREITEMSTRUCT pinfo = (LPMEASUREITEMSTRUCT)lParam;
 
-	if (pinfo->CtlType != ODT_LISTBOX) return FALSE;
+	if (pinfo->CtlType != ODT_LISTBOX) {
+		return FALSE;
+	}
 
 	lbent *pent = &lbents[pinfo->itemID];
 
-	pinfo->itemHeight = 11 * ((pent->len + 6)/7);
+	HDC hDC = GetDC(NULL);
+	const int h = MulDiv(11 * ((pent->len + 6) / 7), GetDeviceCaps(hDC, LOGPIXELSY), 96);
+
+	pinfo->itemHeight = h ;
 	return TRUE;
 }
 
