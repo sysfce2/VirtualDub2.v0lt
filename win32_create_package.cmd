@@ -46,7 +46,7 @@ MKDIR %PCKG_DIR%\plugins32
 COPY /Y /V "docs\Changes.txt"                   "%PCKG_DIR%\Changes.txt"
 COPY /Y /V "LICENSE.txt"                        "%PCKG_DIR%\LICENSE.txt"
 COPY /Y /V "Readme.md"                          "%PCKG_DIR%\Readme.md"
-COPY /Y /V "out\Release\vdub.exe"               "%PCKG_DIR%\vdub.exe"
+COPY /Y /V "out\Release\vdub2.exe"              "%PCKG_DIR%\vdub2.exe"
 COPY /Y /V "out\Release\VirtualDub2.exe"        "%PCKG_DIR%\VirtualDub2.exe"
 COPY /Y /V "out\Release\VirtualDub2.vdi"        "%PCKG_DIR%\VirtualDub2.vdi"
 COPY /Y /V "dist\VirtualDub.chm"                "%PCKG_DIR%\VirtualDub.chm"

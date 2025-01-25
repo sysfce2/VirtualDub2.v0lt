@@ -35,7 +35,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdremote", "src\vdremote\vd
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdsvrlnk", "src\vdsvrlnk\vdsvrlnk.vcxproj", "{89AF8B3E-6173-4778-9D7C-A41F0D3CAB9C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdub", "src\vdub\vdub.vcxproj", "{3039BD0D-620D-4C6C-93E4-DFD4EDC8042A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vdub2", "src\vdub\vdub2.vcxproj", "{3039BD0D-620D-4C6C-93E4-DFD4EDC8042A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dita", "src\Dita\Dita.vcxproj", "{308BF83F-B11C-48DC-AAF2-4A2003E8C377}"
 EndProject
