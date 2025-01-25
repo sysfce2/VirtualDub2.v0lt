@@ -20,7 +20,8 @@ struct VDLaunchIpcData {
 
 DWORD g_childProcessId;
 
-BOOL WINAPI CtrlHandler(DWORD dwCtrlType) {
+BOOL WINAPI CtrlHandler(DWORD dwCtrlType)
+{
 	if (dwCtrlType == CTRL_C_EVENT || dwCtrlType == CTRL_BREAK_EVENT) {
 		GenerateConsoleCtrlEvent(dwCtrlType, g_childProcessId);
 		return TRUE;
@@ -29,15 +30,13 @@ BOOL WINAPI CtrlHandler(DWORD dwCtrlType) {
 	return FALSE;
 }
 
-inline bool IsUnicodeAPIAvailable() {
-	return true;
-}
-int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-	TCHAR mappingName[32];
+int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+{
+	WCHAR mappingName[32];
 
-	wsprintf(mappingName, _T("vdlaunch-data-%08x"), GetCurrentProcessId());
+	wsprintfW(mappingName, L"vdlaunch-data-%08x", GetCurrentProcessId());
 
-	HANDLE hFileMapping = OpenFileMapping(GENERIC_READ | GENERIC_WRITE, FALSE, mappingName);
+	HANDLE hFileMapping = OpenFileMappingW(GENERIC_READ | GENERIC_WRITE, FALSE, mappingName);
 	if (!hFileMapping) {
 		const DWORD err = GetLastError();
 		return HRESULT_FROM_WIN32(err);
@@ -85,29 +84,16 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		return HRESULT_FROM_WIN32(err);
 	}
 
-	if (IsUnicodeAPIAvailable()) {
-		STARTUPINFOW siw = {sizeof(STARTUPINFOW)};
-		siw.wShowWindow	= SW_SHOWMINNOACTIVE;
-		siw.hStdInput	= hStdInput2;
-		siw.hStdOutput	= hStdOutput2;
-		siw.hStdError	= hStdError2;
-		siw.dwFlags		= STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+	STARTUPINFOW siw = {sizeof(STARTUPINFOW)};
+	siw.wShowWindow	= SW_SHOWMINNOACTIVE;
+	siw.hStdInput	= hStdInput2;
+	siw.hStdOutput	= hStdOutput2;
+	siw.hStdError	= hStdError2;
+	siw.dwFlags		= STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
 
-		const wchar_t *exepathW = ipcData->programOffsetW ? (const wchar_t *)((const char *)ipcData + ipcData->programOffsetW) : NULL;
-		const wchar_t *commandLineW = ipcData->commandLineOffsetW ? (const wchar_t *)((const char *)ipcData + ipcData->commandLineOffsetW) : NULL;
-		success = CreateProcessW(exepathW, (LPWSTR)commandLineW, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &siw, &pi);
-	} else {
-		STARTUPINFOA sia = {sizeof(STARTUPINFOA)};
-		sia.wShowWindow	= SW_SHOWMINNOACTIVE;
-		sia.hStdInput	= hStdInput2;
-		sia.hStdOutput	= hStdOutput2;
-		sia.hStdError	= hStdError2;
-		sia.dwFlags		= STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-
-		const char *exepathA = ipcData->programOffsetA ? (const char *)ipcData + ipcData->programOffsetA : NULL;
-		const char *commandLineA = ipcData->commandLineOffsetA ? (const char *)ipcData + ipcData->commandLineOffsetA : NULL;
-		success = CreateProcessA(exepathA, (LPSTR)commandLineA, NULL, NULL, TRUE, 0, NULL, NULL, &sia, &pi);
-	}
+	const wchar_t *exepathW = ipcData->programOffsetW ? (const wchar_t *)((const char *)ipcData + ipcData->programOffsetW) : NULL;
+	const wchar_t *commandLineW = ipcData->commandLineOffsetW ? (const wchar_t *)((const char *)ipcData + ipcData->commandLineOffsetW) : NULL;
+	success = CreateProcessW(exepathW, (LPWSTR)commandLineW, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &siw, &pi);
 
 	if (success) {
 		SetEvent(hLaunchEvent);
