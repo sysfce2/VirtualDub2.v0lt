@@ -27,11 +27,10 @@ BEGIN
       VALUE "FileVersion", VERSION_STR
       #ifdef _WIN64
       VALUE "FileDescription", "VirtualDub2 (x64)"
-      VALUE "OriginalFilename", "VirtualDub64.exe"
       #else
       VALUE "FileDescription", "VirtualDub2 (x86)"
-      VALUE "OriginalFilename", "VirtualDub.exe"
       #endif
+      VALUE "OriginalFilename", "VirtualDub2.exe"	  
       #if defined(_DEBUG)
       VALUE "SpecialBuild", "Debug build (i.e. big, fat, and slow)"
       #endif
