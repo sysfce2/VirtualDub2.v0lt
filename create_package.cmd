@@ -4,7 +4,7 @@ CD /D %~dp0
 
 REM -------------------------------------
 
-IF NOT EXIST "out\ReleaseAMD64\VirtualDub64.exe" (
+IF NOT EXIST "out\ReleaseAMD64\VirtualDub2.exe" (
   ECHO VirtualDub2 not compiled.
   GOTO :END
 )
@@ -47,8 +47,8 @@ COPY /Y /V "docs\Changes.txt"                   "%PCKG_DIR%\Changes.txt"
 COPY /Y /V "LICENSE.txt"                        "%PCKG_DIR%\LICENSE.txt"
 COPY /Y /V "Readme.md"                          "%PCKG_DIR%\Readme.md"
 COPY /Y /V "out\ReleaseAMD64\vdub64.exe"        "%PCKG_DIR%\vdub64.exe"
-COPY /Y /V "out\ReleaseAMD64\VirtualDub64.exe"  "%PCKG_DIR%\VirtualDub64.exe"
-COPY /Y /V "out\ReleaseAMD64\VirtualDub64.vdi"  "%PCKG_DIR%\VirtualDub64.vdi"
+COPY /Y /V "out\ReleaseAMD64\VirtualDub2.exe"   "%PCKG_DIR%\VirtualDub2.exe"
+COPY /Y /V "out\ReleaseAMD64\VirtualDub2.vdi"   "%PCKG_DIR%\VirtualDub2.vdi"
 COPY /Y /V "dist\VirtualDub.chm"                "%PCKG_DIR%\VirtualDub.chm"
 
 COPY /Y /V "out\ReleaseAMD64\auxsetup.exe"      "%PCKG_DIR%\extra\auxsetup.exe"
@@ -74,7 +74,7 @@ COPY /Y /V "..\scripted_vdplugin\history.txt"                                 "%
 
 REM -------------------------------------
 
-FOR /F "USEBACKQ" %%F IN (`powershell -NoLogo -NoProfile -Command ^(Get-Item "%PCKG_DIR%\VirtualDub64.exe"^).VersionInfo.FileVersion`) DO (SET FILE_VERSION=%%F)
+FOR /F "USEBACKQ" %%F IN (`powershell -NoLogo -NoProfile -Command ^(Get-Item "%PCKG_DIR%\VirtualDub2.exe"^).VersionInfo.FileVersion`) DO (SET FILE_VERSION=%%F)
 
 SET PCKG_NAME=VirtualDub2_v%FILE_VERSION%
 

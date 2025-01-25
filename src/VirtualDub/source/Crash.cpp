@@ -1146,20 +1146,8 @@ LONG __stdcall CrashHandler(EXCEPTION_POINTERS *pExc, bool allowForcedExit) {
 	if (cdw.vdc.pExtraData) {
 		bSuccess = VDDebugInfoInitFromMemory(&g_debugInfo, cdw.vdc.pExtraData);
 	} else {
-#ifdef __INTEL_COMPILER		// P4 build
-		SpliceProgramPath(buf, sizeof buf, "VirtualDubP4.vdi");
+		SpliceProgramPath(buf, sizeof buf, "VirtualDub2.vdi");
 		bSuccess = VDDebugInfoInitFromFile(&g_debugInfo, buf);
-#elif defined(_M_AMD64)
-		SpliceProgramPath(buf, sizeof buf, "VirtualDub64.vdi");
-		bSuccess = VDDebugInfoInitFromFile(&g_debugInfo, buf);
-#else						// General build
-		SpliceProgramPath(buf, sizeof buf, "VirtualDub.vdi");
-		bSuccess = VDDebugInfoInitFromFile(&g_debugInfo, buf);
-		if (!bSuccess) {
-			SpliceProgramPath(buf, sizeof buf, "VirtualD.vdi");
-			bSuccess = VDDebugInfoInitFromFile(&g_debugInfo, buf);
-		}
-#endif
 	}
 
 	cdw.vdc.pSymLookup = CrashSymLookup;
