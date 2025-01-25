@@ -1735,18 +1735,12 @@ static void VDDebugCrashDumpCallStack(VDDebugCrashTextOutput& out, HANDLE hThrea
 	char buf[512];
 
 	if (!g_debugInfo.pRVAHeap) {
-#ifdef __INTEL_COMPILER
-		out.Write("Could not open debug resource file (VirtualDubP4.vdi).\n");
-#elif defined(_M_AMD64)
-		out.Write("Could not open debug resource file (VirtualDub64.vdi).\n");
-#else
-		out.Write("Could not open debug resource file (VirtualDub.vdi).\n");
-#endif
+		out.Write("Could not open debug resource file (VirtualDu2.vdi).\n");
 		return;
 	}
 
 	if (g_debugInfo.nBuildNumber != (int)version_num) {
-		out.WriteF("Incorrect VirtualDub.vdi file (build %d) for this version of VirtualDub -- call stack unavailable.\n", g_debugInfo.nBuildNumber);
+		out.WriteF("Incorrect VirtualDub2.vdi file (build %d) for this version of VirtualDub -- call stack unavailable.\n", g_debugInfo.nBuildNumber);
 		return;
 	}
 

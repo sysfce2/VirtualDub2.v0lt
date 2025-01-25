@@ -751,22 +751,8 @@ CodeDisassemblyWindow::CodeDisassemblyWindow(void *_code, long _length, void *_r
 	vdc.pSymLookup = NULL;
 	vdc.physToVirtOffset = -(ptrdiff_t)_rbaseptr;
 
-	SpliceProgramPath(buf, sizeof buf, "ia32.vdi");
-	if (!VDDisasmInit(&vdc, buf)) {
-#ifdef __INTEL_COMPILER
-		SpliceProgramPath(buf, sizeof buf, "VirtualDubP4.vdi");
-		VDDisasmInit(&vdc, buf);
-#elif defined(_M_AMD64)
-		SpliceProgramPath(buf, sizeof buf, "VirtualDub64.vdi");
-		VDDisasmInit(&vdc, buf);
-#else
-		SpliceProgramPath(buf, sizeof buf, "VirtualDub.vdi");
-		if (!VDDisasmInit(&vdc, buf)) {
-			SpliceProgramPath(buf, sizeof buf, "VirtualD.vdi");
-			VDDisasmInit(&vdc, buf);
-		}
-#endif
-	}
+	SpliceProgramPath(buf, sizeof buf, "VirtualDub2.vdi");
+	VDDisasmInit(&vdc, buf);
 
 	lbents = (lbent *)VirtualAlloc(NULL, sizeof(lbent)*MAX_INSTRUCTIONS, MEM_COMMIT, PAGE_READWRITE);
 
