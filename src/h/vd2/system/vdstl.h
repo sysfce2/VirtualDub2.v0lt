@@ -45,11 +45,7 @@
 
 template<class Iterator, class T>
 struct vdreverse_iterator {
-#if defined(VD_COMPILER_MSVC) && (VD_COMPILER_MSVC < 1310 || (defined(VD_COMPILER_MSVC_VC8_PSDK) || defined(VD_COMPILER_MSVC_VC8_DDK)))
-	typedef std::reverse_iterator<Iterator, T> type;
-#else
 	typedef std::reverse_iterator<Iterator> type;
-#endif
 };
 
 ///////////////////////////////////////////////////////////////////////////

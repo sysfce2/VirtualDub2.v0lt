@@ -155,38 +155,7 @@ typedef	struct __VDGUIHandle *VDGUIHandle;
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#if defined(VD_COMPILER_MSVC) && (VD_COMPILER_MSVC < 1300 || (defined(VD_COMPILER_MSVC_VC8_PSDK) || defined(VD_COMPILER_MSVC_VC8_DDK)))
-#define new_nothrow new
-#else
 #define new_nothrow new(std::nothrow)
-#endif
-
-///////////////////////////////////////////////////////////////////////////
-//
-//	STL fixes
-//
-///////////////////////////////////////////////////////////////////////////
-
-#if defined(VD_COMPILER_MSVC_VC6) || defined(VD_COMPILER_MSVC_VC8_DDK) || defined(VD_COMPILER_MSVC_VC8_PSDK)
-	// The VC6 STL was deliberately borked to avoid conflicting with
-	// Windows min/max macros.  We work around this bogosity here.  Note
-	// that NOMINMAX must be defined for these to compile properly.  Also,
-	// there is a bug in the VC6 compiler that sometimes causes long
-	// lvalues to "promote" to int, causing ambiguous override errors.
-	// To avoid this, always explicitly declare which type you are using,
-	// i.e. min<int>(x,0).  None of this is a problem with VC7 or later.
-	namespace std {
-		template<class T>
-		inline const T& min(const T& x, const T& y) {
-			return _cpp_min(x, y);
-		}
-
-		template<class T>
-		inline const T& max(const T& x, const T& y) {
-			return _cpp_max(x, y);
-		}
-	};
-#endif
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -194,34 +163,7 @@ typedef	struct __VDGUIHandle *VDGUIHandle;
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#if defined(VD_COMPILER_MSVC) && (VD_COMPILER_MSVC < 1400 || (defined(VD_COMPILER_MSVC_VC8_PSDK) || defined(VD_COMPILER_MSVC_VC8_DDK)))
-	inline int vswprintf(wchar_t *dst, size_t bufsize, const wchar_t *format, va_list val) {
-		return _vsnwprintf(dst, bufsize, format, val);
-	}
-
-	inline int swprintf(wchar_t *dst, size_t bufsize, const wchar_t *format, ...) {
-		va_list val;
-
-		va_start(val, format);
-		int r = vswprintf(dst, bufsize, format, val);
-		va_end(val);
-
-		return r;
-	}
-
-	#define _strdup strdup
-	#define _stricmp stricmp
-	#define _strnicmp strnicmp
-	#define _wcsdup wcsdup
-	#define _wcsicmp wcsicmp
-	#define _wcsnicmp wcsnicmp
-#endif
-
-#if defined(VD_COMPILER_MSVC) && VD_COMPILER_MSVC < 1400
-	#define vdfor if(0);else for
-#else
-	#define vdfor for
-#endif
+#define vdfor for
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -429,10 +371,6 @@ extern void VDDebugPrint(const char *format, ...);
 // This avoids the conversion operator but unfortunately usually generates
 // an actual loop in the output.
 
-#if defined(VD_COMPILER_MSVC) && (VD_COMPILER_MSVC < 1400 || defined(VD_COMPILER_MSVC_VC8_DDK))
-#define vdobjectscope(object_def) if(object_def) VDNEVERHERE; else
-#else
 #define vdobjectscope(object_def) switch(object_def) case 0: default:
-#endif
 
 #endif
