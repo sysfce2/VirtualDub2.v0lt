@@ -3,11 +3,7 @@
 #include <tchar.h>
 #include <stdio.h>
 
-#ifdef _M_AMD64
-	#define APPNAME "VirtualDub64.exe"
-#else
-	#define APPNAME "VirtualDub.exe"
-#endif
+#define APPNAME "VirtualDub2.exe"
 
 struct CopyHandles {
 	CRITICAL_SECTION *pWriteLock;

@@ -16,11 +16,7 @@
 
 #pragma comment(lib,"shlwapi.lib")
 
-#ifdef _WIN64
-#define VIRTUALDUB_EXE "VirtualDub64.exe"
-#else
-#define VIRTUALDUB_EXE "VirtualDub.exe"
-#endif
+#define VIRTUALDUB_EXE "VirtualDub2.exe"
 #define VDREMOTE_DLL   "vdremote.dll"
 #define VDSRVLNK_DLL   "vdsvrlnk.dll"
 

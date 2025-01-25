@@ -54,11 +54,11 @@ uint32 VDGetBuildNumber();
 
 #if defined(_M_AMD64)
 	#define VD_PROGRAM_PLATFORM_NAMEW		L"x64"
-	#define VD_PROGRAM_EXEFILE_NAMEA		"VirtualDub64.exe"
+	#define VD_PROGRAM_EXEFILE_NAMEA		"VirtualDub2.exe"
 	#define VD_PROGRAM_CLIEXE_NAMEA			"vdub64.exe"
 #else
 	#define VD_PROGRAM_PLATFORM_NAMEW		L"x86"
-	#define VD_PROGRAM_EXEFILE_NAMEA		"VirtualDub.exe"
+	#define VD_PROGRAM_EXEFILE_NAMEA		"VirtualDub2.exe"
 	#define VD_PROGRAM_CLIEXE_NAMEA			"vdub.exe"
 #endif
 
