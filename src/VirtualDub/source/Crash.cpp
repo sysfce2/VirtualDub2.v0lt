@@ -1843,8 +1843,6 @@ static bool DoSave(const char *pszFilename, const wchar_t *pwszFilename, HANDLE 
 			"debug"
 #elif defined(_M_AMD64)
 			"release-AMD64"
-#elif defined(__INTEL_COMPILER)
-			"release-P4"
 #else
 			"release"
 #endif

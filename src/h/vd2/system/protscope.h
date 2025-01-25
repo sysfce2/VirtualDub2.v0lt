@@ -47,15 +47,6 @@ typedef void (*tpVDSetProtectedScopeLink)(VDProtectedAutoScope *);
 extern tpVDGetProtectedScopeLink g_pVDGetProtectedScopeLink;
 extern tpVDSetProtectedScopeLink g_pVDSetProtectedScopeLink;
 
-// The reason for this function is a bug in the Intel compiler regarding
-// construction optimization -- it stores VDProtectedAutoScope::'vtable'
-// in the vtable slot instead of VDProtectedAutoScope1<T>::'vtable', thus
-// killing the printf()s. "volatile" doesn't work to fix the problem, but
-// calling an opaque global function does.  Oh well.
-
-#ifdef __INTEL_COMPILER
-void VDProtectedAutoScopeICLWorkaround();
-#endif
 
 class IVDProtectedScopeOutput {
 public:
@@ -145,9 +136,6 @@ class VDProtectedAutoScope0 : public VDProtectedAutoScope {
 public:
 	VDProtectedAutoScope0(const VDProtectedAutoScopeData0& data) : VDProtectedAutoScope(data.mpFile, data.mLine, data.mpAction) {
 		g_pVDSetProtectedScopeLink(this);
-#ifdef __INTEL_COMPILER
-		VDProtectedAutoScopeICLWorkaround();
-#endif
 	}
 };
 
@@ -156,9 +144,6 @@ class VDProtectedAutoScope1 : public VDProtectedAutoScope {
 public:
 	VDProtectedAutoScope1(const VDProtectedAutoScopeData1<T1>& data) : VDProtectedAutoScope(data.mpFile, data.mLine, data.mpAction), mArg1(data.mArg1) {
 		g_pVDSetProtectedScopeLink(this);
-#ifdef __INTEL_COMPILER
-		VDProtectedAutoScopeICLWorkaround();
-#endif
 	}
 
 	virtual void Write(IVDProtectedScopeOutput& out) {
@@ -173,9 +158,6 @@ class VDProtectedAutoScope2 : public VDProtectedAutoScope {
 public:
 	VDProtectedAutoScope2(const VDProtectedAutoScopeData2<T1,T2>& data) : VDProtectedAutoScope(data.mpFile, data.mLine, data.mpAction), mArg1(data.mArg1), mArg2(data.mArg2) {
 		g_pVDSetProtectedScopeLink(this);
-#ifdef __INTEL_COMPILER
-		VDProtectedAutoScopeICLWorkaround();
-#endif
 	}
 
 	virtual void Write(IVDProtectedScopeOutput& out) {
@@ -191,9 +173,6 @@ class VDProtectedAutoScope3 : public VDProtectedAutoScope {
 public:
 	VDProtectedAutoScope3(const VDProtectedAutoScopeData3<T1,T2,T3>& data) : VDProtectedAutoScope(data.mpFile, data.mLine, data.mpAction), mArg1(data.mArg1), mArg2(data.mArg2), mArg3(data.mArg3) {
 		g_pVDSetProtectedScopeLink(this);
-#ifdef __INTEL_COMPILER
-		VDProtectedAutoScopeICLWorkaround();
-#endif
 	}
 
 	virtual void Write(IVDProtectedScopeOutput& out) {
@@ -210,9 +189,6 @@ class VDProtectedAutoScope4 : public VDProtectedAutoScope {
 public:
 	VDProtectedAutoScope4(const VDProtectedAutoScopeData4<T1,T2,T3,T4>& data) : VDProtectedAutoScope(data.mpFile, data.mLine, data.mpAction), mArg1(data.mArg1), mArg2(data.mArg2), mArg3(data.mArg3), mArg4(data.mArg4) {
 		g_pVDSetProtectedScopeLink(this);
-#ifdef __INTEL_COMPILER
-		VDProtectedAutoScopeICLWorkaround();
-#endif
 	}
 
 	virtual void Write(IVDProtectedScopeOutput& out) {

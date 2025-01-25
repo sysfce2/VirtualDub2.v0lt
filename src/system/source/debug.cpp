@@ -129,8 +129,6 @@ VDAssertResult VDAssertPtr(const char *exp, const char *file, int line) {
 
 #endif
 
-void VDProtectedAutoScopeICLWorkaround() {}
-
 void VDDebugPrint(const char *format, ...) {
 	char buf[4096];
 

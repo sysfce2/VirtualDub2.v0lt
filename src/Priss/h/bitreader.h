@@ -66,8 +66,6 @@ public:
 		};
 #if 0
 		unsigned v = (((mpSrc[0]<<16)+(mpSrc[1]<<8)+mpSrc[2]) >> (24-mBitOffset-bits)) & masks[bits];
-#elif defined(__INTEL_COMPILER)
-		unsigned v = (_bswap(*(const uint32 *)mpSrc) >> (32-mBitOffset-bits)) & masks[bits];
 #else
 		unsigned v = (bswap(*(const uint32 *)mpSrc) >> (32-mBitOffset-bits)) & masks[bits];
 #endif
