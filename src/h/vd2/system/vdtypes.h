@@ -52,21 +52,9 @@
 		#define VD_COMPILER_MSVC	_MSC_VER
 
 		#if _MSC_VER >= 1400
-			#define VD_COMPILER_MSVC_VC8		1
 			#define VD_COMPILER_MSVC_VC8_OR_LATER 1
-
-			#if _MSC_FULL_VER == 140040310
-				#define VD_COMPILER_MSVC_VC8_PSDK 1
-			#elif _MSC_FULL_VER == 14002207
-				#define VD_COMPILER_MSVC_VC8_DDK 1
-			#endif
-
-		#elif _MSC_VER >= 1310
-			#define VD_COMPILER_MSVC_VC71	1
-		#elif _MSC_VER >= 1300
-			#define VD_COMPILER_MSVC_VC7		1
-		#elif _MSC_VER >= 1200
-			#define VD_COMPILER_MSVC_VC6		1
+		#else
+			#error MSVC 14.00 (VC 8.0) compiler or newer required. 
 		#endif
 	#elif defined(__GNUC__)
 		#define VD_COMPILER_GCC
