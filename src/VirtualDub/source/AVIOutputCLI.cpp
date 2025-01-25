@@ -34,13 +34,7 @@
 #include "AVIOutputRawVideo.h"
 #include "AVIOutputCLI.h"
 
-#ifdef _M_AMD64
-	#define VD_LAUNCH_HELPER_NAMEA	"vdlaunch64.exe"
-	#define VD_LAUNCH_HELPER_NAMEW	L"extra\\vdlaunch64.exe"
-#else
-	#define VD_LAUNCH_HELPER_NAMEA	"vdlaunch.exe"
-	#define VD_LAUNCH_HELPER_NAMEW	L"extra\\vdlaunch.exe"
-#endif
+#define VD_LAUNCH_HELPER_EXE	"vdlaunch.exe"
 
 namespace {
 	enum { kVDST_Dub = 1 };
@@ -563,10 +557,10 @@ void VDCLIProcessW32::Run(const char *name, const wchar_t *cmdLine, const wchar_
 
 	const VDStringW programPath(VDGetProgramPath());
 
-	VDStringW launchCmdLine(VDMakePath(programPath.c_str(), VD_LAUNCH_HELPER_NAMEW));
+	VDStringW launchCmdLine(VDMakePath(programPath.c_str(), L"extra\\" _CRT_WIDE(VD_LAUNCH_HELPER_EXE)));
 
 	if (!VDDoesPathExist(launchCmdLine.c_str()))
-		throw MyError("CLI: Cannot launch external program. The program launch helper " VD_LAUNCH_HELPER_NAMEA " is missing.");
+		throw MyError("CLI: Cannot launch external program. The program launch helper " VD_LAUNCH_HELPER_EXE " is missing.");
 
 	VDSignal launchEvent;
 

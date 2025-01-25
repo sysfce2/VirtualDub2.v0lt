@@ -53,7 +53,7 @@ COPY /Y /V "dist\VirtualDub.chm"                "%PCKG_DIR%\VirtualDub.chm"
 
 COPY /Y /V "out\ReleaseAMD64\auxsetup.exe"      "%PCKG_DIR%\extra\auxsetup.exe"
 COPY /Y /V "out\ReleaseAMD64\vdicmdrv.dll"      "%PCKG_DIR%\extra\vdicmdrv.dll"
-COPY /Y /V "out\ReleaseAMD64\vdlaunch64.exe"    "%PCKG_DIR%\extra\vdlaunch64.exe"
+COPY /Y /V "out\ReleaseAMD64\vdlaunch.exe"      "%PCKG_DIR%\extra\vdlaunch.exe"
 COPY /Y /V "out\ReleaseAMD64\vdremote.dll"      "%PCKG_DIR%\extra\vdremote.dll"
 COPY /Y /V "out\ReleaseAMD64\vdsvrlnk.dll"      "%PCKG_DIR%\extra\vdsvrlnk.dll"
 COPY /Y /V "dist\plugins64\."                   "%PCKG_DIR%\plugins64\."
