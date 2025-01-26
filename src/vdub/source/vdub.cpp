@@ -1,7 +1,7 @@
 #include <windows.h>
 #include <malloc.h>
-#include <tchar.h>
-#include <stdio.h>
+
+#pragma comment(lib, "vcruntime.lib")
 
 #define APPNAME "VirtualDub2.exe"
 
