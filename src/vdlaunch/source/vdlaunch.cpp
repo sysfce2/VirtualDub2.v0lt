@@ -1,8 +1,6 @@
-#include <stdafx.h>
 #include <windows.h>
-#include <malloc.h>
-#include <tchar.h>
-#include <stdio.h>
+
+#pragma comment(lib, "vcruntime.lib")
 
 struct VDLaunchIpcData {
 	int version;
