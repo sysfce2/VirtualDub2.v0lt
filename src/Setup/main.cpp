@@ -1,13 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stddef.h>
-#include <stdarg.h>
-#include <malloc.h>
-#include <ctype.h>
-#include <crtdbg.h>
-
 #include <windows.h>
-#include <commctrl.h>
 #include <shlwapi.h>
 #include <shlobj.h>
 

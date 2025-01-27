@@ -93,7 +93,7 @@ FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDCANCEL,124,71,50,14
     ICON            IDI_VIRTUALDUB,IDC_STATIC,7,7,20,20
-    LTEXT           "VirtualDub Setup 1.0, Copyright (C) 1998 by Avery Lee, All Rights Reserved.\nCompiled with MS Visual C++ 6.0\n\nThis program is free software and may be distributed according to the terms of the GNU General Public License.",IDC_STATIC,41,7,252,41
+    LTEXT           "VirtualDub Setup 1.0\nCopyright (C) 1998 by Avery Lee, All Rights Reserved.\n\nThis program is free software and may be distributed according to the terms of the GNU General Public License.",IDC_STATIC,41,7,252,41
     LTEXT           "Build 0/release (bleh)",IDC_FINALS_SUCK,41,53,238,8
 END
 
