@@ -4,7 +4,7 @@
 HKEY OpenRegKey(HKEY hkBase, const char *szKeyName) {
 	HKEY hkey;
 
-	return RegOpenKeyEx(hkBase, szKeyName, 0, KEY_ALL_ACCESS, &hkey)==ERROR_SUCCESS
+	return RegOpenKeyExA(hkBase, szKeyName, 0, KEY_ALL_ACCESS, &hkey)==ERROR_SUCCESS
 			? hkey
 			: NULL;
 }
@@ -13,7 +13,7 @@ HKEY CreateRegKey(HKEY hkBase, const char *szKeyName) {
 	HKEY hkey;
 	DWORD dwDisposition;
 
-	return RegCreateKeyEx(hkBase, szKeyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hkey, &dwDisposition)==ERROR_SUCCESS
+	return RegCreateKeyExA(hkBase, szKeyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hkey, &dwDisposition)==ERROR_SUCCESS
 			? hkey
 			: NULL;
 }
@@ -22,7 +22,7 @@ HKEY CreateRegKey64(HKEY hkBase, const char *szKeyName) {
 	HKEY hkey;
 	DWORD dwDisposition;
 
-	return RegCreateKeyEx(hkBase, szKeyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS|KEY_WOW64_64KEY, NULL, &hkey, &dwDisposition)==ERROR_SUCCESS
+	return RegCreateKeyExA(hkBase, szKeyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS|KEY_WOW64_64KEY, NULL, &hkey, &dwDisposition)==ERROR_SUCCESS
 			? hkey
 			: NULL;
 }
@@ -34,7 +34,7 @@ BOOL DeleteRegValue(HKEY hkBase, const char *szKeyName, const char *szValueName)
 	if (!(hkey = OpenRegKey(hkBase, szKeyName)))
 		return FALSE;
 
-	success = (RegDeleteValue(hkey, szValueName) == ERROR_SUCCESS);
+	success = (RegDeleteValueA(hkey, szValueName) == ERROR_SUCCESS);
 
 	RegCloseKey(hkey);
 
@@ -49,7 +49,7 @@ BOOL QueryRegString(HKEY hkBase, const char *szKeyName, const char *szValueName,
 	if (!(hkey = OpenRegKey(hkBase, szKeyName)))
 		return FALSE;
 
-	success = (ERROR_SUCCESS == RegQueryValueEx(hkey, szValueName, 0, &type, (LPBYTE)lpBuffer, (LPDWORD)&cbBuffer));
+	success = (ERROR_SUCCESS == RegQueryValueExA(hkey, szValueName, 0, &type, (LPBYTE)lpBuffer, (LPDWORD)&cbBuffer));
 
 	RegCloseKey(hkey);
 
@@ -63,7 +63,7 @@ BOOL SetRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, c
 	if (!(hkey = CreateRegKey(hkBase, szKeyName)))
 		return FALSE;
 
-	success = (ERROR_SUCCESS == RegSetValueEx(hkey, szValueName, 0, REG_SZ, (LPBYTE)lpBuffer, strlen(lpBuffer)+1));
+	success = (ERROR_SUCCESS == RegSetValueExA(hkey, szValueName, 0, REG_SZ, (LPBYTE)lpBuffer, strlen(lpBuffer)+1));
 
 	RegCloseKey(hkey);
 
@@ -77,7 +77,7 @@ BOOL SetRegString64(HKEY hkBase, const char *szKeyName, const char *szValueName,
 	if (!(hkey = CreateRegKey64(hkBase, szKeyName)))
 		return FALSE;
 
-	success = (ERROR_SUCCESS == RegSetValueEx(hkey, szValueName, 0, REG_SZ, (LPBYTE)lpBuffer, strlen(lpBuffer)+1));
+	success = (ERROR_SUCCESS == RegSetValueExA(hkey, szValueName, 0, REG_SZ, (LPBYTE)lpBuffer, strlen(lpBuffer)+1));
 
 	RegCloseKey(hkey);
 
