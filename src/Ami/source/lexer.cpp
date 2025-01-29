@@ -114,8 +114,6 @@ static const struct {
 	{ L"addColumn",			"addColumn",			kTokenAddColumn },
 };
 
-enum { kKeywordCount = sizeof g_keywords / sizeof g_keywords[0] };
-
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -620,9 +618,11 @@ int lex() {
 
 					// Check keywords.
 
-					for(int i=0; i<kKeywordCount; ++i)
-						if (!_wcsicmp(g_identifier.c_str(), g_keywords[i].name))
-							return g_keywords[i].token;
+					for (const auto& keyword : g_keywords) {
+						if (!_wcsicmp(g_identifier.c_str(), keyword.name)) {
+							return keyword.token;
+						}
+					}
 
 					return kTokenIdentifier;
 				}
@@ -655,13 +655,14 @@ std::string lextokenname(int token, bool expand) {
 	case kTokenLogicalAnd:	return "'&&'";
 	case kTokenLogicalOr:	return "'||'";
 	default:
-		{
-			for(int i=0; i<kKeywordCount; ++i)
-				if (g_keywords[i].token == token)
-					return std::string("keyword '") + g_keywords[i].ansi_name + '\'';
+		for (const auto& keyword : g_keywords) {
+			if (g_keywords[i].token == token) {
+				return std::string("keyword '") + g_keywords[i].ansi_name + '\'';
+			}
 		}
-		if (token >= 255)
+		if (token >= 255) {
 			fatal_internal(__FILE__, __LINE__);
+		}
 
 		return std::string("'") + (char)token + '\'';
 	}
