@@ -656,8 +656,8 @@ std::string lextokenname(int token, bool expand) {
 	case kTokenLogicalOr:	return "'||'";
 	default:
 		for (const auto& keyword : g_keywords) {
-			if (g_keywords[i].token == token) {
-				return std::string("keyword '") + g_keywords[i].ansi_name + '\'';
+			if (keyword.token == token) {
+				return std::string("keyword '") + keyword.ansi_name + '\'';
 			}
 		}
 		if (token >= 255) {
