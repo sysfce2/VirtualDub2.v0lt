@@ -643,9 +643,9 @@ namespace {
 					case D3DXRS_INT4:
 					case D3DXRS_FLOAT4:
 						{
-							for(int index=0; index<sizeof(kParameterNames)/sizeof(kParameterNames[0]); ++index) {
+							for (uint32 index = 0; std::size(kParameterNames); ++index) {
 								if (!strcmp(kParameterNames[index], desc.Name)) {
-									switch(desc.RegisterSet) {
+									switch (desc.RegisterSet) {
 									case D3DXRS_BOOL:
 										states.push_back(baseOffset + 0x80000000 + (desc.RegisterIndex << 12) + index);
 										break;
@@ -667,7 +667,7 @@ param_found:
 						break;
 					case D3DXRS_SAMPLER:
 						if (!strncmp(desc.Name, "vd_", 3)) {
-							for(int index=0; index<sizeof(kTextureNames)/sizeof(kTextureNames[0]); ++index) {
+							for (uint32 index = 0; index < std::size(kTextureNames); ++index) {
 								if (!strcmp(kTextureNames[index], desc.Name)) {
 									UINT samplerIndex = pConstants->GetSamplerIndex(hConstant);
 									states.push_back(0x30000000 + (samplerIndex << 24) + index + 1);
@@ -736,10 +736,10 @@ void tool_fxc(const vdfastvector<const char *>& args, const vdfastvector<const c
 	D3DXEFFECT_DESC desc;
 	pEffect->GetDesc(&desc);
 
-	vdrefptr<DummyD3DBaseTexture> pDummyTextures[sizeof(kTextureNames) / sizeof(kTextureNames[0])];
+	vdrefptr<DummyD3DBaseTexture> pDummyTextures[std::size(kTextureNames)];
 
-	for(int i=0; i<sizeof(kTextureNames) / sizeof(kTextureNames[0]); ++i) {
-		pDummyTextures[i] = new DummyD3DBaseTexture(pDevice, i+1);
+	for (uint32 i = 0; i < std::size(kTextureNames); ++i) {
+		pDummyTextures[i] = new DummyD3DBaseTexture(pDevice, i + 1);
 
 		pEffect->SetTexture(kTextureNames[i], pDummyTextures[i]);
 	}
@@ -1017,9 +1017,9 @@ void tool_fxc(const vdfastvector<const char *>& args, const vdfastvector<const c
 			if (hBESAnno) {
 				LPCSTR s;
 				if (SUCCEEDED(pEffect->GetString(hBESAnno, &s))) {
-					for(int i=0; i<sizeof(kParameterNames)/sizeof(kParameterNames[0]); ++i) {
+					for (uint32 i = 0; i < std::size(kParameterNames); ++i) {
 						if (!strcmp(s, kParameterNames[i])) {
-							pi.mBumpEnvScale = i+1;
+							pi.mBumpEnvScale = i + 1;
 							break;
 						}
 					}
