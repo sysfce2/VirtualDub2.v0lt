@@ -207,11 +207,7 @@ extern VDAssertResult VDAssertPtr(const char *exp, const char *file, int line);
 extern void VDDebugPrint(const char *format, ...);
 
 #if defined(_MSC_VER)
-	#if _MSC_VER >= 1300
-		#define VDBREAK		__debugbreak()
-	#else
-		#define VDBREAK		__asm { int 3 }
-	#endif
+	#define VDBREAK		__debugbreak()
 #elif defined(__GNUC__)
 	#define VDBREAK		__asm__ volatile ("int3" : : )
 #else

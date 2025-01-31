@@ -73,7 +73,7 @@ EXECUTION_STATE VDSetThreadExecutionStateW32(EXECUTION_STATE esFlags);
 bool		VDSetFilePointerW32(HANDLE h, sint64 pos, DWORD dwMoveMethod);
 bool		VDGetFileSizeW32(HANDLE h, sint64& size);
 
-#if !defined(_MSC_VER) || _MSC_VER < 1300
+#if !defined(_MSC_VER)
 	HMODULE		VDGetLocalModuleHandleW32();
 #else
 	extern "C" IMAGE_DOS_HEADER __ImageBase;

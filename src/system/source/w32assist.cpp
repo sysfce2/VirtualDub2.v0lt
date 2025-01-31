@@ -283,7 +283,7 @@ bool VDGetFileSizeW32(HANDLE h, sint64& size) {
 	return true;
 }
 
-#if !defined(_MSC_VER) || _MSC_VER < 1300
+#if !defined(_MSC_VER)
 HMODULE VDGetLocalModuleHandleW32() {
 	MEMORY_BASIC_INFORMATION meminfo;
 	static HMODULE shmod = (VirtualQuery((HINSTANCE)&VDGetLocalModuleHandleW32, &meminfo, sizeof meminfo), (HMODULE)meminfo.AllocationBase);

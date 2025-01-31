@@ -172,10 +172,6 @@ public:
 
 	void			construct(pointer p, const T& val)	{ new((void *)p) T(val); }
 	void			destroy(pointer p)					{ ((T*)p)->~T(); }
-
-#if defined(_MSC_VER) && _MSC_VER < 1300
-	char *			_Charalloc(size_type n)				{ return (char *)allocate((n + sizeof(T) - 1) / sizeof(T)); }
-#endif
 };
 
 ///////////////////////////////////////////////////////////////////////////
