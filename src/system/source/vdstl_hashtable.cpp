@@ -66,10 +66,10 @@ vdhashtable_base::size_type vdhashtable_base::compute_bucket_count(size_type n) 
 		268435459, 536870923, 1073741827
 	};
 
-	int i = 0;
+	unsigned i = 0;
 	size_type buckets;
 
-	while(i < sizeof(kBucketSizes)/sizeof(kBucketSizes[0])) {
+	while(i < std::size(kBucketSizes)) {
 		buckets = kBucketSizes[i];
 
 		if (n <= buckets)

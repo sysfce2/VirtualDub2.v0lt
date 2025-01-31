@@ -436,18 +436,18 @@ VDStringW VDaswprintf(const wchar_t *format, int args, const void *const *argv) 
 					*pxf++ = 'h';
 					*pxf++ = format[-1];
 					*pxf = 0;
-					pbuf += vdswprintf(pbuf, sizeof buf / sizeof buf[0], xf, *(const short *)*argv++);
+					pbuf += vdswprintf(pbuf, std::size(buf), xf, *(const short *)*argv++);
 					break;
 				case kDefault:
 					*pxf++ = format[-1];
 					*pxf = 0;
-					pbuf += vdswprintf(pbuf, sizeof buf / sizeof buf[0], xf, *(const int *)*argv++);
+					pbuf += vdswprintf(pbuf, std::size(buf), xf, *(const int *)*argv++);
 					break;
 				case kLong:
 					*pxf++ = 'l';
 					*pxf++ = format[-1];
 					*pxf = 0;
-					pbuf += vdswprintf(pbuf, sizeof buf / sizeof buf[0], xf, *(const long *)*argv++);
+					pbuf += vdswprintf(pbuf, std::size(buf), xf, *(const long *)*argv++);
 					break;
 				case kLongLong:
 #if defined(_MSC_VER)
@@ -462,7 +462,7 @@ VDStringW VDaswprintf(const wchar_t *format, int args, const void *const *argv) 
 #endif
 					*pxf++ = format[-1];
 					*pxf = 0;
-					pbuf += vdswprintf(pbuf, sizeof buf / sizeof buf[0], xf, *(const int64 *)*argv++);
+					pbuf += vdswprintf(pbuf, std::size(buf), xf, *(const int64 *)*argv++);
 					break;
 				default:
 					VDNEVERHERE;
@@ -542,7 +542,7 @@ VDStringW VDaswprintf(const wchar_t *format, int args, const void *const *argv) 
 				*(int *)(*argv++) = out.size();
 				continue;
 			case L'p':	// no flags honored; precision ignored
-				pbuf += vdswprintf(pbuf, sizeof buf / sizeof buf[0], L"%p", *(void *const *)*argv++);
+				pbuf += vdswprintf(pbuf, std::size(buf), L"%p", *(void *const *)*argv++);
 				break;
 
 			case L'z':
@@ -568,16 +568,21 @@ VDStringW VDaswprintf(const wchar_t *format, int args, const void *const *argv) 
 						else if (flags.bPositiveBlank)
 							*pbuf++ = L' ';
 
-						if (value < (VD64(10) << 10))
-							pbuf += vdswprintf(pbuf, (buf + sizeof(buf) / sizeof(buf[0])) - pbuf, L"%d bytes", (int)value);
-						else if (value < (VD64(10) << 20))
-							pbuf += vdswprintf(pbuf, (buf + sizeof(buf) / sizeof(buf[0])) - pbuf, L"%d KB", (int)((sint32)value >> 10));
-						else if (value < (VD64(10) << 30))
-							pbuf += vdswprintf(pbuf, (buf + sizeof(buf) / sizeof(buf[0])) - pbuf, L"%d MB", (int)((sint32)value >> 20));
-						else if (value < (VD64(10) << 40))
-							pbuf += vdswprintf(pbuf, (buf + sizeof(buf) / sizeof(buf[0])) - pbuf, L"%d GB", (int)(value >> 30));
-						else
-							pbuf += vdswprintf(pbuf, (buf + sizeof(buf) / sizeof(buf[0])) - pbuf, L"%d TB", (int)(value >> 40));
+						if (value < (VD64(10) << 10)) {
+							pbuf += vdswprintf(pbuf, (buf + std::size(buf)) - pbuf, L"%d bytes", (int)value);
+						}
+						else if (value < (VD64(10) << 20)) {
+							pbuf += vdswprintf(pbuf, (buf + std::size(buf)) - pbuf, L"%d KB", (int)((sint32)value >> 10));
+						}
+						else if (value < (VD64(10) << 30)) {
+							pbuf += vdswprintf(pbuf, (buf + std::size(buf)) - pbuf, L"%d MB", (int)((sint32)value >> 20));
+						}
+						else if (value < (VD64(10) << 40)) {
+							pbuf += vdswprintf(pbuf, (buf + std::size(buf)) - pbuf, L"%d GB", (int)(value >> 30));
+						}
+						else {
+							pbuf += vdswprintf(pbuf, (buf + std::size(buf)) - pbuf, L"%d TB", (int)(value >> 40));
+						}
 					}
 
 					break;

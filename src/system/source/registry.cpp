@@ -259,7 +259,7 @@ void *VDRegistryProviderW32::EnumKeysBegin(void *key) {
 const char *VDRegistryProviderW32::EnumKeysNext(void *enumerator) {
 	KeyEnumerator *ke = (KeyEnumerator *)enumerator;
 
-	DWORD len = sizeof(ke->mName)/sizeof(ke->mName[0]);
+	DWORD len = std::size(ke->mName);
 	FILETIME ft;
 	LONG error = RegEnumKeyExA((HKEY)ke->mKey, ke->mIndex, ke->mName, &len, NULL, NULL, NULL, &ft);
 
@@ -286,7 +286,7 @@ void *VDRegistryProviderW32::EnumValuesBegin(void *key) {
 const char *VDRegistryProviderW32::EnumValuesNext(void *enumerator) {
 	ValueEnumerator *ve = (ValueEnumerator *)enumerator;
 
-	DWORD len = sizeof(ve->mName)/sizeof(ve->mName[0]);
+	DWORD len = std::size(ve->mName);
 	LONG error = RegEnumValueA((HKEY)ve->mKey, ve->mIndex, ve->mName, &len, NULL, NULL, NULL, NULL);
 
 	if (error)
