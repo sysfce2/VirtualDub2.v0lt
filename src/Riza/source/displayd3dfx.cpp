@@ -174,8 +174,6 @@ namespace {
 		{ "vd_time",		offsetof(StdParamData, time) },
 	};
 
-	enum { kStdParamCount = sizeof kStdParamInfo / sizeof kStdParamInfo[0] };
-
 	struct FormatInfo {
 		const char *mpName;
 		D3DFORMAT	mFormat;
@@ -392,7 +390,7 @@ protected:
 	D3DXHANDLE			mhTempTexture;
 	D3DXHANDLE			mhTempTexture2;
 	D3DXHANDLE			mhTechniques[kFilterModeCount - 1];
-	D3DXHANDLE			mhStdParamHandles[kStdParamCount];
+	D3DXHANDLE			mhStdParamHandles[std::size(kStdParamInfo)];
 
 	typedef vdfastvector<ParamBinding> ParamBindings;
 	ParamBindings mParamBindings;
@@ -605,8 +603,9 @@ bool VDVideoDisplayMinidriverD3DFX::Init(HWND hwnd, HMONITOR hmonitor, const VDV
 	}
 
 	// scan for standard parameter handles (ok for these to fail)
-	for(int i=0; i<sizeof kStdParamInfo/sizeof kStdParamInfo[0]; ++i)
+	for (unsigned i = 0; i < std::size(kStdParamInfo); ++i) {
 		mhStdParamHandles[i] = mpEffect->GetParameterByName(NULL, kStdParamInfo[i].name);
+	}
 
 	// scan for standard techniques
 	static const char *const kTechniqueNames[]={
@@ -615,7 +614,7 @@ bool VDVideoDisplayMinidriverD3DFX::Init(HWND hwnd, HMONITOR hmonitor, const VDV
 		"bicubic",
 	};
 
-	VDASSERTCT(sizeof kTechniqueNames / sizeof kTechniqueNames[0] == kFilterModeCount - 1);
+	VDASSERTCT(std::size(kTechniqueNames) == kFilterModeCount - 1);
 
 	D3DXHANDLE hTechniqueLastValid = NULL;
 
@@ -1442,9 +1441,7 @@ void VDVideoDisplayMinidriverD3DFX::PreprocessEffectParameters() {
 			};
 
 			binding.mpFn = NULL;
-			for(int i=0; i<sizeof(kParamInfo)/sizeof(kParamInfo[0]); ++i) {
-				const ParamInfo& pi = kParamInfo[i];
-
+			for (const auto& pi : kParamInfo) {
 				if (parmdesc.Class == pi.mClass && parmdesc.Type == pi.mType && parmdesc.Semantic && !_stricmp(parmdesc.Semantic, pi.mpSemantic)) {
 					binding.mpFn = pi.mpMethod;
 					break;
@@ -1592,11 +1589,12 @@ void VDVideoDisplayMinidriverD3DFX::UpdateEffectParameters(const D3DVIEWPORT9& v
 		data.t2vpcorrect2[3] = -1.0f - data.temp2size[3];
 	}
 
-	for(int i=0; i<kStdParamCount; ++i) {
+	for (unsigned i = 0; i < std::size(kStdParamInfo); ++i) {
 		D3DXHANDLE h = mhStdParamHandles[i];
 
-		if (h)
-			mpEffect->SetVector(h, (const D3DXVECTOR4 *)((const char *)&data + kStdParamInfo[i].offset));
+		if (h) {
+			mpEffect->SetVector(h, (const D3DXVECTOR4*)((const char*)&data + kStdParamInfo[i].offset));
+		}
 	}
 
 	ParamBindings::const_iterator it(mParamBindings.begin()), itEnd(mParamBindings.end());
@@ -1726,9 +1724,9 @@ void VDVideoDisplayMinidriverD3DFX::CreateCustomTextureBindings() {
 
 				hr = mpEffect->GetString(hAnnoFormat, &s);
 				if (SUCCEEDED(hr)) {
-					for(int fidx=0; fidx<sizeof(kFormats)/sizeof(kFormats[0]); ++fidx) {
-						if (!_stricmp(s, kFormats[fidx].mpName)) {
-							binding.mFormat = kFormats[fidx].mFormat;
+					for (const auto& kFormat : kFormats) {
+						if (!_stricmp(s, kFormat.mpName)) {
+							binding.mFormat = kFormat.mFormat;
 							break;
 						}
 					}

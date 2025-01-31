@@ -488,7 +488,7 @@ namespace {
 		
 		vdprotected1("attempting to open video codec with FOURCC '%.4s'", const char *, (const char *)&fccHandler) {
 			wchar_t buf[64];
-			vdswprintf(buf, sizeof buf / sizeof buf[0], L"A video codec with FOURCC '%.4S'", (const char *)&fccHandler);
+			vdswprintf(buf, std::size(buf), L"A video codec with FOURCC '%.4S'", (const char *)&fccHandler);
 			VDExternalCodeBracket bracket(buf, __FILE__, __LINE__);
 			hic = ICOpen(fccType, fccHandler, wMode);
 		}
@@ -660,12 +660,10 @@ IVDVideoDecompressor *VDFindVideoDecompressor(uint32 preferredHandler, const voi
 					'14PA'
 				};
 
-				enum { kMPEG4V3CloneCount = sizeof kMPEG4V3Clones / sizeof kMPEG4V3Clones[0] };
-
-				for(int i=0; i<kMPEG4V3CloneCount; ++i) {
+				for (unsigned i = 0; i < std::size(kMPEG4V3Clones); ++i) {
 					if (bmih->biCompression == kMPEG4V3Clones[i]) {
 						// clone
-						for(int j=0; j<kMPEG4V3CloneCount; ++j) {
+						for (unsigned j = 0; j < std::size(kMPEG4V3Clones); ++j) {
 							if (i == j)
 								continue;
 

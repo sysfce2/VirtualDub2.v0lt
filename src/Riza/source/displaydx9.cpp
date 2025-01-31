@@ -1784,8 +1784,6 @@ bool VDVideoDisplayDX9Manager::RunEffect(const EffectContext& ctx, const Techniq
 		data.t2vpcorrect2[3] = -1.0f - data.tempsize[3];
 	}
 
-	enum { kStdParamCount = sizeof kStdParamInfo / sizeof kStdParamInfo[0] };
-
 	uint32 nPasses = technique.mPassCount;
 	const PassInfo *pPasses = technique.mpPasses;
 	IDirect3DDevice9 *dev = mpManager->GetDevice();
@@ -1909,7 +1907,7 @@ bool VDVideoDisplayDX9Manager::RunEffect(const EffectContext& ctx, const Techniq
 					hr = dev->SetSamplerState((token >> 24)&15, (D3DSAMPLERSTATETYPE)tokenIndex, tokenValue);
 					break;
 				case 3:		// texture
-					VDASSERT(tokenValue < sizeof(textures)/sizeof(textures[0]));
+					VDASSERT(tokenValue < std::size(textures));
 					hr = dev->SetTexture(tokenIndex, textures[tokenValue]);
 					break;
 				case 8:		// vertex bool constant
@@ -3097,9 +3095,7 @@ bool VDVideoUploadContextD3D9::Update(const VDPixmap& source, int fieldMask) {
 			{	D3DRS_STENCILENABLE,	FALSE				},
 		};
 
-		for(int i=0; i<sizeof(kRenderStates)/sizeof(kRenderStates[0]); ++i) {
-			const uint32 (&rs)[2] = kRenderStates[i];
-
+		for (const auto& rs : kRenderStates) {
 			hr = dev->SetRenderState((D3DRENDERSTATETYPE)rs[0], rs[1]);
 			if (FAILED(hr))
 				return false;

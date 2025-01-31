@@ -274,15 +274,15 @@ bool VDOpenGLBinding::Init() {
 		return false;
 
 	// pull wgl functions
-	for(int i=0; i<sizeof(kWGLFunctions)/sizeof(kWGLFunctions[0]); ++i) {
-		void *p = (void *)GetProcAddress(mhmodOGL, kWGLFunctions[i]);
+	for (unsigned i = 0; i < std::size(kWGLFunctions); ++i) {
+		void* p = (void*)GetProcAddress(mhmodOGL, kWGLFunctions[i]);
 
 		if (!p) {
 			Shutdown();
 			return false;
 		}
 
-		((void **)static_cast<VDAPITableWGL *>(this))[i] = p;
+		((void**)static_cast<VDAPITableWGL*>(this))[i] = p;
 	}
 
 	return true;
@@ -333,21 +333,21 @@ bool VDOpenGLBinding::Attach(HDC hdc, int minColorBits, int minAlphaBits, int mi
 		return false;
 	}
 
-	for(int i=0; i<sizeof(kGLFunctions)/sizeof(kGLFunctions[0]); ++i) {
-		void *p = (void *)GetProcAddress(mhmodOGL, kGLFunctions[i]);
+	for (unsigned i = 0; i < std::size(kGLFunctions); ++i) {
+		void* p = (void*)GetProcAddress(mhmodOGL, kGLFunctions[i]);
 
 		if (!p) {
 			Detach();
 			return false;
 		}
 
-		((void **)static_cast<VDAPITableOpenGL *>(this))[i] = p;
+		((void**)static_cast<VDAPITableOpenGL*>(this))[i] = p;
 	}
 
-	for(int i=0; i<sizeof(kGLExtFunctions)/sizeof(kGLExtFunctions[0]); ++i) {
-		void *p = (void *)wglGetProcAddress(kGLExtFunctions[i]);
+	for (unsigned i = 0; i < std::size(kGLExtFunctions); ++i) {
+		void* p = (void*)wglGetProcAddress(kGLExtFunctions[i]);
 
-		((void **)static_cast<VDAPITableOpenGLEXT *>(this))[i] = p;
+		((void**)static_cast<VDAPITableOpenGLEXT*>(this))[i] = p;
 	}
 
 	const char *ext = (const char *)glGetString(GL_EXTENSIONS);
