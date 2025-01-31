@@ -106,7 +106,7 @@
 		typedef sint64 sintptr;
 		typedef uint64 uintptr;
 	#else
-		#if _MSC_VER >= 1310
+		#if _MSC_VER
 			typedef __w64 sint32 sintptr;
 			typedef __w64 uint32 uintptr;
 		#else

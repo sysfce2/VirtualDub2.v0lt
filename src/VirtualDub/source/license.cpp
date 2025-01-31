@@ -24,10 +24,8 @@
 // There are some truly lame people out there who would try to rip off
 // an open source program by hacking the binary!
 
-#if _MSC_VER >= 1400
+#if _MSC_VER
 	#pragma optimize("s", on)
-#else
-	#pragma optimize("as", on)
 #endif
 
 extern const unsigned char fht_tab[];

@@ -170,7 +170,7 @@ const char *VDGetStartupArgument(int index) {
 
 void VDterminate() {
 	vdprotected("processing call to terminate() (probably caused by exception within destructor)") {
-#if _MSC_VER >= 1300
+#if _MSC_VER
 		__debugbreak();
 #else
 		__asm int 3
@@ -180,7 +180,7 @@ void VDterminate() {
 
 extern "C" void _abort() {
 	vdprotected("processing call to abort()") {
-#if _MSC_VER >= 1300
+#if _MSC_VER
 		__debugbreak();
 #else
 		__asm int 3

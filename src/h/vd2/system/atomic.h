@@ -45,7 +45,7 @@
 	// Intrinsics available in VC7.1. Note that the compiler is smart enough to
 	// use straight LOCK AND/OR/XOR if the return value is not needed; otherwise
 	// it uses a LOCK CMPXCHG loop.
-	#if _MSC_VER >= 1310
+	#if _MSC_VER
 		extern "C" long __cdecl _InterlockedAnd(volatile long *p, long n);
 		extern "C" long __cdecl _InterlockedOr(volatile long *p, long n);
 		extern "C" long __cdecl _InterlockedXor(volatile long *p, long n);
@@ -182,7 +182,7 @@ public:
 	int operator+=(int v)	{ return staticAdd(&n, v); }
 	int operator-=(int v)	{ return staticAdd(&n, -v); }
 
-#if _MSC_VER >= 1310
+#if _MSC_VER
 
 	void operator&=(int v)	{ _InterlockedAnd((volatile long *)&n, v); }	///< Atomic bitwise AND.
 	void operator|=(int v)	{ _InterlockedOr((volatile long *)&n, v); }		///< Atomic bitwise OR.
