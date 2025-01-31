@@ -757,7 +757,7 @@ void MatchFilterFormat::next1() {
 		kPixFormat_XRGB64
 	};
 
-	while(backup<sizeof(kBackup)/sizeof(kBackup[0])) {
+	while (backup < (int)std::size(kBackup)) {
 		int i = kBackup[backup];
 		backup++;
 		if (formatMask.test(i)) {
@@ -1163,7 +1163,7 @@ void MatchFilterFormat::initMask() {
 
 namespace {
 	void check() {
-		VDASSERTCT(sizeof(g_vdPixmapFormats)/sizeof(g_vdPixmapFormats[0]) == nsVDPixmap::kPixFormat_Max_Standard);
+		VDASSERTCT(std::size(g_vdPixmapFormats) == nsVDPixmap::kPixFormat_Max_Standard);
 	}
 }
 

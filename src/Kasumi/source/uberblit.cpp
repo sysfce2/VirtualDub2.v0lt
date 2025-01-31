@@ -139,7 +139,7 @@ const VDPixmapSamplingInfo& VDPixmapGetSamplingInfo(uint32 samplingToken) {
 
 	uint32 index = (samplingToken & kVDPixSamp_Mask) >> kVDPixSamp_Bits;
 
-	return index >= sizeof(kPixmapSamplingInfo)/sizeof(kPixmapSamplingInfo[0]) ? kPixmapSamplingInfo[0] : kPixmapSamplingInfo[index];
+	return (index >= std::size(kPixmapSamplingInfo)) ? kPixmapSamplingInfo[0] : kPixmapSamplingInfo[index];
 }
 
 namespace {

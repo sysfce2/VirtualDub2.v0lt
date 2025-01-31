@@ -137,9 +137,7 @@ void VDPixmapGenResampleRow::Init(IVDPixmapGen *src, uint32 srcIndex, uint32 wid
 	long flags = CPUGetEnabledExtensions();
 	uint32 type = mpSrc->GetType(mSrcIndex) & kVDPixType_Mask;
 
-	for(int i=0; i<sizeof(kSpecialCaseSpanRoutines)/sizeof(kSpecialCaseSpanRoutines[0]); ++i) {
-		const SpecialCaseSpanRoutine& rout = kSpecialCaseSpanRoutines[i];
-
+	for (const auto& rout : kSpecialCaseSpanRoutines) {
 		if (rout.mType != type)
 			continue;
 
@@ -201,32 +199,30 @@ void VDPixmapGenResampleRow::Init(IVDPixmapGen *src, uint32 srcIndex, uint32 wid
 			{ kVDPixType_8,			false,	nsVDPixmap::kFilterPoint,		0,					RowFactory<VDResamplerRowStageSeparablePoint8> },
 			{ kVDPixType_8888,		false,	nsVDPixmap::kFilterPoint,		0,					RowFactory<VDResamplerRowStageSeparablePoint32> },
 			{ kVDPixType_16_LE,		false,	nsVDPixmap::kFilterPoint,		0,					RowFactory<VDResamplerRowStageSeparablePoint16> },
-			{ kVDPixType_16x4_LE,		false,	nsVDPixmap::kFilterPoint,	0,					RowFactory<VDResamplerRowStageSeparablePoint16x4> },
+			{ kVDPixType_16x4_LE,	false,	nsVDPixmap::kFilterPoint,		0,					RowFactory<VDResamplerRowStageSeparablePoint16x4> },
 			{ kVDPixType_8,			true,	nsVDPixmap::kFilterLinear,		0,					RowFactory<VDResamplerRowStageSeparableLinear8> },
 			{ kVDPixType_8888,		true,	nsVDPixmap::kFilterLinear,		0,					RowFactory<VDResamplerRowStageSeparableLinear32> },
 			{ kVDPixType_8,			false,	nsVDPixmap::kFilterLinear,		0,					RowFactoryLinear<VDResamplerRowStageSeparableTable8> },
 			{ kVDPixType_8888,		false,	nsVDPixmap::kFilterLinear,		0,					RowFactoryLinear<VDResamplerRowStageSeparableTable32> },
 			{ kVDPixType_16_LE,		false,	nsVDPixmap::kFilterLinear,		0,					RowFactoryLinear<VDResamplerRowStageSeparableTable16> },
-			{ kVDPixType_16x4_LE,		false,	nsVDPixmap::kFilterLinear,	0,					RowFactoryLinear<VDResamplerRowStageSeparableTable16x4> },
+			{ kVDPixType_16x4_LE,	false,	nsVDPixmap::kFilterLinear,		0,					RowFactoryLinear<VDResamplerRowStageSeparableTable16x4> },
 			{ kVDPixType_32F_LE,	false,	nsVDPixmap::kFilterLinear,		0,					RowFactoryLinear<VDResamplerRowStageSeparableTable32F> },
 			{ kVDPixType_32Fx4_LE,	false,	nsVDPixmap::kFilterLinear,		0,					RowFactoryLinear<VDResamplerRowStageSeparableTable32Fx4> },
 			{ kVDPixType_8,			false,	nsVDPixmap::kFilterCubic,		0,					RowFactoryCubic<VDResamplerRowStageSeparableTable8> },
 			{ kVDPixType_8888,		false,	nsVDPixmap::kFilterCubic,		0,					RowFactoryCubic<VDResamplerRowStageSeparableTable32> },
 			{ kVDPixType_16_LE,		false,	nsVDPixmap::kFilterCubic,		0,					RowFactoryCubic<VDResamplerRowStageSeparableTable16> },
-			{ kVDPixType_16x4_LE,		false,	nsVDPixmap::kFilterCubic,	0,					RowFactoryCubic<VDResamplerRowStageSeparableTable16x4> },
+			{ kVDPixType_16x4_LE,	false,	nsVDPixmap::kFilterCubic,		0,					RowFactoryCubic<VDResamplerRowStageSeparableTable16x4> },
 			{ kVDPixType_32F_LE,	false,	nsVDPixmap::kFilterCubic,		0,					RowFactoryCubic<VDResamplerRowStageSeparableTable32F> },
 			{ kVDPixType_32Fx4_LE,	false,	nsVDPixmap::kFilterCubic,		0,					RowFactoryCubic<VDResamplerRowStageSeparableTable32Fx4> },
 			{ kVDPixType_8,			false,	nsVDPixmap::kFilterLanczos3,	0,					RowFactoryLanczos3<VDResamplerRowStageSeparableTable8> },
 			{ kVDPixType_8888,		false,	nsVDPixmap::kFilterLanczos3,	0,					RowFactoryLanczos3<VDResamplerRowStageSeparableTable32> },
 			{ kVDPixType_16_LE,		false,	nsVDPixmap::kFilterLanczos3,	0,					RowFactoryLanczos3<VDResamplerRowStageSeparableTable16> },
-			{ kVDPixType_16x4_LE,		false,	nsVDPixmap::kFilterLanczos3,0,					RowFactoryLanczos3<VDResamplerRowStageSeparableTable16x4> },
+			{ kVDPixType_16x4_LE,	false,	nsVDPixmap::kFilterLanczos3,	0,					RowFactoryLanczos3<VDResamplerRowStageSeparableTable16x4> },
 			{ kVDPixType_32F_LE,	false,	nsVDPixmap::kFilterLanczos3,	0,					RowFactoryLanczos3<VDResamplerRowStageSeparableTable32F> },
 			{ kVDPixType_32Fx4_LE,	false,	nsVDPixmap::kFilterLanczos3,	0,					RowFactoryLanczos3<VDResamplerRowStageSeparableTable32Fx4> },
 		};
 
-		for(int i=0; i<sizeof(kSpanRoutines)/sizeof(kSpanRoutines[0]); ++i) {
-			const SpanRoutine& rout = kSpanRoutines[i];
-
+		for (const auto& rout : kSpanRoutines) {
 			if (rout.mType != type)
 				continue;
 
@@ -691,28 +687,27 @@ void VDPixmapGenResampleCol::Init(IVDPixmapGen *src, uint32 srcIndex, uint32 hei
 		{ kVDPixType_8,			false,	nsVDPixmap::kFilterLinear,		0,					ColFactoryLinear<VDResamplerColStageSeparableTable8> },
 		{ kVDPixType_8888,		false,	nsVDPixmap::kFilterLinear,		0,					ColFactoryLinear<VDResamplerColStageSeparableTable32> },
 		{ kVDPixType_16_LE,		false,	nsVDPixmap::kFilterLinear,		0,					ColFactoryLinear<VDResamplerColStageSeparableTable16> },
-		{ kVDPixType_16x4_LE,		false,	nsVDPixmap::kFilterLinear,	0,					ColFactoryLinear<VDResamplerColStageSeparableTable16x4> },
+		{ kVDPixType_16x4_LE,	false,	nsVDPixmap::kFilterLinear,		0,					ColFactoryLinear<VDResamplerColStageSeparableTable16x4> },
 		{ kVDPixType_32F_LE,	false,	nsVDPixmap::kFilterLinear,		0,					ColFactoryLinear<VDResamplerColStageSeparableTable32F> },
 		{ kVDPixType_32Fx4_LE,	false,	nsVDPixmap::kFilterLinear,		0,					ColFactoryLinear<VDResamplerColStageSeparableTable32Fx4> },
 		{ kVDPixType_8,			false,	nsVDPixmap::kFilterCubic,		0,					ColFactoryCubic<VDResamplerColStageSeparableTable8> },
 		{ kVDPixType_8888,		false,	nsVDPixmap::kFilterCubic,		0,					ColFactoryCubic<VDResamplerColStageSeparableTable32> },
 		{ kVDPixType_16_LE,		false,	nsVDPixmap::kFilterCubic,		0,					ColFactoryCubic<VDResamplerColStageSeparableTable16> },
-		{ kVDPixType_16x4_LE,		false,	nsVDPixmap::kFilterCubic,	0,					ColFactoryCubic<VDResamplerColStageSeparableTable16x4> },
+		{ kVDPixType_16x4_LE,	false,	nsVDPixmap::kFilterCubic,		0,					ColFactoryCubic<VDResamplerColStageSeparableTable16x4> },
 		{ kVDPixType_32F_LE,	false,	nsVDPixmap::kFilterCubic,		0,					ColFactoryCubic<VDResamplerColStageSeparableTable32F> },
 		{ kVDPixType_32Fx4_LE,	false,	nsVDPixmap::kFilterCubic,		0,					ColFactoryCubic<VDResamplerColStageSeparableTable32Fx4> },
 		{ kVDPixType_8,			false,	nsVDPixmap::kFilterLanczos3,	0,					ColFactoryLanczos3<VDResamplerColStageSeparableTable8> },
 		{ kVDPixType_8888,		false,	nsVDPixmap::kFilterLanczos3,	0,					ColFactoryLanczos3<VDResamplerColStageSeparableTable32> },
 		{ kVDPixType_16_LE,		false,	nsVDPixmap::kFilterLanczos3,	0,					ColFactoryLanczos3<VDResamplerColStageSeparableTable16> },
-		{ kVDPixType_16x4_LE,		false,	nsVDPixmap::kFilterLanczos3,0,					ColFactoryLanczos3<VDResamplerColStageSeparableTable16x4> },
+		{ kVDPixType_16x4_LE,	false,	nsVDPixmap::kFilterLanczos3,	0,					ColFactoryLanczos3<VDResamplerColStageSeparableTable16x4> },
 		{ kVDPixType_32F_LE,	false,	nsVDPixmap::kFilterLanczos3,	0,					ColFactoryLanczos3<VDResamplerColStageSeparableTable32F> },
 		{ kVDPixType_32Fx4_LE,	false,	nsVDPixmap::kFilterLanczos3,	0,					ColFactoryLanczos3<VDResamplerColStageSeparableTable32Fx4> },
 	};
 
 	long flags = CPUGetEnabledExtensions();
 	uint32 type = src->GetType(srcIndex) & kVDPixType_Mask;
-	for(int i=0; i<sizeof(kSpanRoutines)/sizeof(kSpanRoutines[0]); ++i) {
-		const SpanRoutine& rout = kSpanRoutines[i];
 
+	for (const auto& rout : kSpanRoutines) {
 		if (rout.mType != type)
 			continue;
 
