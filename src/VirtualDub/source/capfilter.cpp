@@ -1139,11 +1139,6 @@ bool VDCaptureFilterSystem::ProcessOut(VDPixmap& px, void*& outputData, uint32& 
 	return true;
 }
 
-#if _MSC_VER < 1400
-	// VC6 goofs up the clear() below when no-aliasing is set. Hmmmm.
-	#pragma optimize("a", off)
-#endif
-
 void VDCaptureFilterSystem::Shutdown() {
 	mbInitialized = false;
 
