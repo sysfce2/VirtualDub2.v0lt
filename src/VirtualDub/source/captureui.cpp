@@ -1184,9 +1184,10 @@ void VDCaptureProjectUI::LoadLocalSettings() {
 				// do not autostart the emulation driver
 				size_t namelen = wcslen(name);
 				static const wchar_t prefix[]=L" (Emulation)";
-				enum { kPrefixLen = sizeof prefix / sizeof prefix[0] - 1 };
-				if (namelen >= kPrefixLen && !_wcsicmp(name + namelen - kPrefixLen, prefix))
+				enum { kPrefixLen = std::size(prefix) - 1 };
+				if (namelen >= kPrefixLen && !_wcsicmp(name + namelen - kPrefixLen, prefix)) {
 					continue;
+				}
 
 				if (!_wcsicmp(name, preferredDriver.c_str())) {
 					mpProject->SelectDriver(i);
@@ -1447,7 +1448,7 @@ void VDCaptureProjectUI::LoadDeviceSettings() {
 		mpProject->SetTunerInputMode((nsVDCapture::TunerInputMode)mode);
 
 	// reload video proc amp
-	VDASSERTCT(sizeof(g_szCapVideoProcAmpItems)/sizeof(g_szCapVideoProcAmpItems[0]) == nsVDCapture::kPropCount);
+	VDASSERTCT(std::size(g_szCapVideoProcAmpItems) == nsVDCapture::kPropCount);
 	for(int i=0; i<nsVDCapture::kPropCount; ++i) {
 		if (mpProject->IsPropertySupported(i)) {
 			sint32 vals[2];
@@ -1814,8 +1815,9 @@ void VDCaptureProjectUI::UICaptureAudioDriverChanged(int idx) {
 		{ ID_AUDIO_CAPTUREPIN, kDialogAudioCapturePin },
 	};
 
-	for(int i=0; i<sizeof kIDToDialogMap / sizeof kIDToDialogMap[0]; ++i)
-		VDEnableMenuItemByCommandW32(hMenu, kIDToDialogMap[i].id, mpProject->IsDriverDialogSupported(kIDToDialogMap[i].dlg));
+	for (const auto& IDToDialog : kIDToDialogMap) {
+		VDEnableMenuItemByCommandW32(hMenu, IDToDialog.id, mpProject->IsDriverDialogSupported(IDToDialog.dlg));
+	}
 
 	HMENU hmenu = GetSubMenu(mhMenuCapture, kAudioDriverMenuPos);
 
@@ -1890,7 +1892,7 @@ void VDCaptureProjectUI::UICaptureAudioDriversUpdated() {
 			r = swprintf_s(buf, L"%d %ls", i, name);
 		}
 
-		if (r < sizeof buf / sizeof buf[0]) {
+		if (r < (int)std::size(buf)) {
 			VDAppendMenuW32(hmenu, MF_ENABLED, ID_AUDIO_CAPTURE_DRIVER+i, buf);
 			++driversFound;
 		}
@@ -2083,8 +2085,9 @@ void VDCaptureProjectUI::UICaptureDriverChanged(int driver) {
 		{ ID_VIDEO_TUNER, kDialogTVTuner }
 	};
 
-	for(int i=0; i<sizeof kIDToDialogMap / sizeof kIDToDialogMap[0]; ++i)
-		VDEnableMenuItemByCommandW32(hMenu, kIDToDialogMap[i].id, mpProject->IsDriverDialogSupported(kIDToDialogMap[i].dlg));
+	for (const auto& IDToDialog : kIDToDialogMap) {
+		VDEnableMenuItemByCommandW32(hMenu, IDToDialog.id, mpProject->IsDriverDialogSupported(IDToDialog.dlg));
+	}
 
 	VDEnableMenuItemByCommandW32(hMenu, ID_AUDIO_CHANNELS, mpProject->IsDriverConnected());
 
@@ -4041,9 +4044,11 @@ void VDCaptureProjectUI::GetPanelItems(VDCapturePreferences::InfoItems& items) {
 			kVDCaptureInfo_AudioCompressionRatio,
 			kVDCaptureInfo_AudioResamplingFactor,
 		};
-		for(int i=0; i<sizeof(list)/sizeof(int); i++){
-			VDCapturePreferences::InfoItems::iterator x = find(items.begin(),items.end(),list[i]);
-			if (x!=items.end()) items.erase(x);
+		for (const auto& val : list) {
+			VDCapturePreferences::InfoItems::iterator x = find(items.begin(), items.end(), val);
+			if (x != items.end()) {
+				items.erase(x);
+			}
 		}
 	}
 
@@ -4310,11 +4315,11 @@ void VDCaptureProjectUI::UpdatePanel(VDCaptureStatus& status) {
 				continue;
 
 			case kVDCaptureInfo_FramesCaptured:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%ld", status.mFramesCaptured);
+				swprintf(buf, std::size(buf), L"%ld", status.mFramesCaptured);
 				break;
 
 			case kVDCaptureInfo_TotalTime:
-				ticks_to_str(buf, sizeof buf / sizeof buf[0], status.mElapsedTimeMS);
+				ticks_to_str(buf, std::size(buf), status.mElapsedTimeMS);
 				break;
 
 			case kVDCaptureInfo_TimeLeft:
@@ -4323,30 +4328,30 @@ void VDCaptureProjectUI::UpdatePanel(VDCaptureStatus& status) {
 					if (diskSpace < 0)
 						diskSpace = 0;
 
-					ticks_to_str(buf, sizeof buf / sizeof buf[0], (long)(diskSpace * 1000 / (video_rate + audio_rate)));
+					ticks_to_str(buf, std::size(buf), (long)(diskSpace * 1000 / (video_rate + audio_rate)));
 				}
 				break;
 
 			case kVDCaptureInfo_TotalFileSize:
-				size_to_str(buf, sizeof buf / sizeof buf[0], 4096 + status.mTotalVideoSize + status.mTotalAudioSize);
+				size_to_str(buf, std::size(buf), 4096 + status.mTotalVideoSize + status.mTotalAudioSize);
 				break;
 
 			case kVDCaptureInfo_DiskSpaceFree:
 				if (status.mDiskFreeSpace >= 0)
-					size_to_str(buf, sizeof buf / sizeof buf[0], status.mDiskFreeSpace);
+					size_to_str(buf, std::size(buf), status.mDiskFreeSpace);
 				break;
 
 			case kVDCaptureInfo_CPUUsage:
 				{
 					if (vd >= 0)
-						swprintf(buf, sizeof buf / sizeof buf[0], L"%d%%", vd);
+						swprintf(buf, std::size(buf), L"%d%%", vd);
 				}
 				break;
 
 			case kVDCaptureInfo_CPUUsage2:
 				{
 					if (sys >= 0)
-						swprintf(buf, sizeof buf / sizeof buf[0], L"%d%%", sys);
+						swprintf(buf, std::size(buf), L"%d%%", sys);
 				}
 				break;
 
@@ -4359,76 +4364,76 @@ void VDCaptureProjectUI::UpdatePanel(VDCaptureStatus& status) {
 						PowerReadACValueIndex(NULL, pActiveScheme, &GUID_PROCESSOR_SETTINGS_SUBGROUP, &GUID_PROCESSOR_THROTTLE_MAXIMUM, &max);
 						LocalFree(pActiveScheme);
 						if (min==100 && max==100)
-							swprintf(buf, sizeof buf / sizeof buf[0], L"100%%");
+							swprintf(buf, std::size(buf), L"100%%");
 						else
-							swprintf(buf, sizeof buf / sizeof buf[0], L"%d%% - %d%%", min, max);
+							swprintf(buf, std::size(buf), L"%d%% - %d%%", min, max);
 					} else {
-						swprintf(buf, sizeof buf / sizeof buf[0], L"error");
+						swprintf(buf, std::size(buf), L"error");
 					}
 				}
 				break;
 
 			case kVDCaptureInfo_SpillStatus:
 				if (status.mCurrentAudioSegment < status.mCurrentVideoSegment)
-					swprintf(buf, sizeof buf / sizeof buf[0], L"pending audio #%u", status.mCurrentAudioSegment + 1);
+					swprintf(buf, std::size(buf), L"pending audio #%u", status.mCurrentAudioSegment + 1);
 				else if (status.mCurrentVideoSegment < status.mCurrentAudioSegment)
-					swprintf(buf, sizeof buf / sizeof buf[0], L"pending video #%u", status.mCurrentVideoSegment + 1);
+					swprintf(buf, std::size(buf), L"pending video #%u", status.mCurrentVideoSegment + 1);
 				else
-					swprintf(buf, sizeof buf / sizeof buf[0], L"writing #%u", status.mCurrentVideoSegment + 1);
+					swprintf(buf, std::size(buf), L"writing #%u", status.mCurrentVideoSegment + 1);
 				break;
 
 			case kVDCaptureInfo_VideoSize:
-				size_to_str(buf, sizeof buf / sizeof buf[0], status.mTotalVideoSize);
+				size_to_str(buf, std::size(buf), status.mTotalVideoSize);
 				break;
 
 			case kVDCaptureInfo_VideoAverageRate:
 				if (video_time_diff >= 1000 && status.mFramesCaptured >= 2)
-					swprintf(buf, sizeof buf / sizeof buf[0], L"%.05f fps", (status.mFramesCaptured-1) * 1000.0 / (double)video_time_diff);
+					swprintf(buf, std::size(buf), L"%.05f fps", (status.mFramesCaptured-1) * 1000.0 / (double)video_time_diff);
 				break;
 
 			case kVDCaptureInfo_VideoDataRate:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%ldKB/s", (video_rate+1023) >> 10);
+				swprintf(buf, std::size(buf), L"%ldKB/s", (video_rate+1023) >> 10);
 				break;
 
 			case kVDCaptureInfo_VideoCompressionRatio:
 				if (status.mTotalVideoSize && status.mFramesCaptured >= 2) {
 					double ratio = (double)mVideoUncompressedSize * (status.mFramesCaptured-1) / (double)status.mTotalVideoSize;
 
-					swprintf(buf, sizeof buf / sizeof buf[0], L"%.1f:1", ratio);
+					swprintf(buf, std::size(buf), L"%.1f:1", ratio);
 				}
 				break;
 
 			case kVDCaptureInfo_VideoAverageFrameSize:
 				if (status.mTotalVideoSize && status.mFramesCaptured >= 2)
-					swprintf(buf, sizeof buf / sizeof buf[0], L"%ld", (long)(status.mTotalVideoSize / (status.mFramesCaptured-1)) - 24);
+					swprintf(buf, std::size(buf), L"%ld", (long)(status.mTotalVideoSize / (status.mFramesCaptured-1)) - 24);
 				break;
 
 			case kVDCaptureInfo_VideoFramesDropped:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%d", status.mFramesDropped);
+				swprintf(buf, std::size(buf), L"%d", status.mFramesDropped);
 				break;
 
 			case kVDCaptureInfo_VideoFramesInserted:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%d", status.mFramesInserted);
+				swprintf(buf, std::size(buf), L"%d", status.mFramesInserted);
 				break;
 
 			case kVDCaptureInfo_VideoResamplingFactor:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%.5fx", status.mVideoResamplingRate);
+				swprintf(buf, std::size(buf), L"%.5fx", status.mVideoResamplingRate);
 				break;
 
 			case kVDCaptureInfo_AudioSize:
-				size_to_str(buf, sizeof buf / sizeof buf[0], status.mTotalAudioSize);
+				size_to_str(buf, std::size(buf), status.mTotalAudioSize);
 				break;
 
 			case kVDCaptureInfo_AudioAverageRate:
 				if (status.mActualAudioHz > 0)
-					swprintf(buf, sizeof buf / sizeof buf[0], L"%.2fHz", status.mActualAudioHz);
+					swprintf(buf, std::size(buf), L"%.2fHz", status.mActualAudioHz);
 				break;
 			case kVDCaptureInfo_AudioRelativeRate:
 				if (status.mRelativeAudioHz > 0)
-					swprintf(buf, sizeof buf / sizeof buf[0], L"%.2fHz", status.mRelativeAudioHz);
+					swprintf(buf, std::size(buf), L"%.2fHz", status.mRelativeAudioHz);
 				break;
 			case kVDCaptureInfo_AudioDataRate:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%ldKB/s", (audio_rate+1023)/1024);
+				swprintf(buf, std::size(buf), L"%ldKB/s", (audio_rate+1023)/1024);
 				break;
 			case kVDCaptureInfo_AudioCompressionRatio:
 				if (status.mAudioLastFrameTimeMS >= 1000) {
@@ -4439,21 +4444,21 @@ void VDCaptureProjectUI::UpdatePanel(VDCaptureStatus& status) {
 						double sizeDelta = (double)(status.mTotalAudioDataSize - status.mAudioFirstSize);
 						double ratio = (timeDelta / sizeDelta) * mAudioUncompressedRate;
 
-						swprintf(buf, sizeof buf / sizeof buf[0], L"%.1f", ratio);
+						swprintf(buf, std::size(buf), L"%.1f", ratio);
 					}
 				}
 				break;
 			case kVDCaptureInfo_AudioResamplingFactor:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%+.3f s.t.", log(status.mAudioResamplingRate) * 17.312340490667560888319096172023);
+				swprintf(buf, std::size(buf), L"%+.3f s.t.", log(status.mAudioResamplingRate) * 17.312340490667560888319096172023);
 				break;
 			case kVDCaptureInfo_SyncVideoTimingAdjust:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%+ld ms", status.mVideoTimingAdjustMS);
+				swprintf(buf, std::size(buf), L"%+ld ms", status.mVideoTimingAdjustMS);
 				break;
 			case kVDCaptureInfo_SyncRelativeLatency:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%.0f ms", status.mAudioRelativeLatency/1000.0f);
+				swprintf(buf, std::size(buf), L"%.0f ms", status.mAudioRelativeLatency/1000.0f);
 				break;
 			case kVDCaptureInfo_SyncCurrentLatency:
-				swprintf(buf, sizeof buf / sizeof buf[0], L"%.0f ms", status.mAudioCurrentLatency/1000.0f);
+				swprintf(buf, std::size(buf), L"%.0f ms", status.mAudioCurrentLatency/1000.0f);
 				break;
 			default:
 				continue;
@@ -4634,23 +4639,25 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			}
 
 			hwndItem = GetDlgItem(hdlg, IDC_FRAME_WIDTH);
-			for(i=0; i<sizeof s_widths/sizeof s_widths[0]; i++) {
+			for (i = 0; i < std::size(s_widths); i++) {
 				sprintf(buf, "%d", s_widths[i]);
 				ind = SendMessage(hwndItem, LB_ADDSTRING, 0, (LPARAM)buf);
 				SendMessage(hwndItem, LB_SETITEMDATA, ind, i);
 
-				if (s_widths[i] == w)
+				if (s_widths[i] == w) {
 					found_w = i;
+				}
 			}
 
 			hwndItem = GetDlgItem(hdlg, IDC_FRAME_HEIGHT);
-			for(i=0; i<sizeof s_heights/sizeof s_heights[0]; i++) {
+			for (i = 0; i < std::size(s_heights ); i++) {
 				sprintf(buf, "%d", s_heights[i]);
 				ind = SendMessage(hwndItem, LB_ADDSTRING, 0, (LPARAM)buf);
 				SendMessage(hwndItem, LB_SETITEMDATA, ind, i);
 
-				if (s_heights[i] == h)
+				if (s_heights[i] == h) {
 					found_h = i;
+				}
 			}
 
 			hwndItem = GetDlgItem(hdlg, IDC_FORMATS);
@@ -4661,12 +4668,13 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 				SendMessage(hwndItem, LB_SETTABSTOPS, 1, (LPARAM)&tabw);
 			}
 
-			for(i=0; i<sizeof s_formats/sizeof s_formats[0]; i++) {
+			for (i = 0; i < std::size(s_formats ); i++) {
 				ind = SendMessage(hwndItem, LB_ADDSTRING, 0, (LPARAM)s_formats[i].name);
-				SendMessage(hwndItem, LB_SETITEMDATA, ind, i+1);
+				SendMessage(hwndItem, LB_SETITEMDATA, ind, i + 1);
 
-				if (s_formats[i].fcc == s_fcc && s_formats[i].bpp == s_bpp)
+				if (s_formats[i].fcc == s_fcc && s_formats[i].bpp == s_bpp) {
 					found_f = i;
+				}
 			}
 
 			if (found_f >= 0) {
@@ -4733,13 +4741,13 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 					int widthIdx = SendDlgItemMessage(hdlg, IDC_FRAME_WIDTH, LB_GETCURSEL, 0, 0);
 					int heightIdx = SendDlgItemMessage(hdlg, IDC_FRAME_HEIGHT, LB_GETCURSEL, 0, 0);
 
-					if ((unsigned)widthIdx >= sizeof s_widths / sizeof s_widths[0]) {
+					if ((unsigned)widthIdx >= std::size(s_widths)) {
 						MessageBeep(MB_ICONEXCLAMATION);
 						SetFocus(GetDlgItem(hdlg, IDC_FRAME_WIDTH));
 						return TRUE;
 					}
 
-					if ((unsigned)heightIdx >= sizeof s_heights / sizeof s_heights[0]) {
+					if ((unsigned)heightIdx >= std::size(s_heights)) {
 						MessageBeep(MB_ICONEXCLAMATION);
 						SetFocus(GetDlgItem(hdlg, IDC_FRAME_HEIGHT));
 						return TRUE;

@@ -289,9 +289,9 @@ bool VDVideoSourceTest::setTargetFormat(VDPixmapFormatEx format) {
 
 	const FormatInfo *finfo = NULL;
 
-	for(int i=0; i<(int)sizeof(kFormatInfo)/sizeof(kFormatInfo[0]); ++i) {
-		if (kFormatInfo[i].mFormat == format) {
-			finfo = &kFormatInfo[i];
+	for (const auto& formatInfo : kFormatInfo) {
+		if (formatInfo.mFormat == format) {
+			finfo = &formatInfo;
 			break;
 		}
 	}
@@ -932,7 +932,7 @@ const void *VDVideoSourceTest::streamGetFrame(const void *inputBuffer, uint32 da
 	}
 
 	// draw text
-	const char* mode_name = mMode<sizeof(kModeNames)/sizeof(char*) ? kModeNames[mMode] : "Unknown mode";
+	const char* mode_name = mMode < (int)std::size(kModeNames) ? kModeNames[mMode] : "Unknown mode";
 
 	VDStringA buf;
 	buf.sprintf("%s - frame %d (%s)", mode_name, (int)frame_num, mpFormatInfo->mpName);

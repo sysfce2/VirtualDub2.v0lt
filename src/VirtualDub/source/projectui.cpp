@@ -423,7 +423,7 @@ namespace {
 
 void ResetCommandList() {
 	kCommandList.clear();
-	kCommandList.insert(kCommandList.begin(),&kCommandList_init[0],&kCommandList_init[sizeof(kCommandList_init)/sizeof(kCommandList_init[0])]);
+	kCommandList.insert(kCommandList.begin(), &kCommandList_init[0], &kCommandList_init[std::size(kCommandList_init)]);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -943,7 +943,7 @@ void VDProjectUI::UpdateAccelPreview() {
 
 	HACCEL haccel = LoadAccelerators(g_hInst, MAKEINTRESOURCE(IDR_PREVIEW_KEYS));
 	VDAccelTableDefinition def;
-	VDUIMergeAcceleratorTableW32(def, haccel, merge_list, sizeof(merge_list)/sizeof(merge_list[0]), mAccelTableDef);
+	VDUIMergeAcceleratorTableW32(def, haccel, merge_list, std::size(merge_list), mAccelTableDef);
 	mhAccelPreview = VDUIBuildAcceleratorTableW32(def);
 }
 
@@ -991,7 +991,7 @@ void VDProjectUI::UpdateAccelDub() {
 
 	HACCEL haccel = LoadAccelerators(g_hInst, MAKEINTRESOURCE(IDR_DUB_KEYS));
 	VDAccelTableDefinition def;
-	VDUIMergeAcceleratorTableW32(def, haccel, merge_list, sizeof(merge_list)/sizeof(merge_list[0]), mAccelTableDef);
+	VDUIMergeAcceleratorTableW32(def, haccel, merge_list, std::size(merge_list), mAccelTableDef);
 	mhAccelDub = VDUIBuildAcceleratorTableW32(def);
 }
 
@@ -1588,9 +1588,7 @@ VDUIDialogSaveRawVideoFormat::VDUIDialogSaveRawVideoFormat(VDAVIOutputRawVideoFo
 }
 
 bool VDUIDialogSaveRawVideoFormat::OnLoaded() {
-	for(size_t i=0; i<sizeof(kFormats)/sizeof(kFormats[0]); ++i) {
-		int format = kFormats[i];
-
+	for (const auto& format : kFormats) {
 		CBAddString(IDC_OUTPUT_FORMAT, VDLoadString(0, kVDST_RawVideoFormats, format));
 	}
 
@@ -1612,11 +1610,12 @@ void VDUIDialogSaveRawVideoFormat::OnDataExchange(bool write) {
 		mFormat.mbSwapChromaPlanes = IsButtonChecked(IDC_PLANEORDER_CRCB);
 		mFormat.mbBottomUp = IsButtonChecked(IDC_VORIENT_BOTTOMUP);
 	} else {
-		const int *p = std::find(kFormats, kFormats + sizeof(kFormats)/sizeof(kFormats[0]), mFormat.mOutputFormat);
-		if (p == kFormats + sizeof(kFormats)/sizeof(kFormats[0]))
+		const int *p = std::find(kFormats, kFormats + std::size(kFormats), mFormat.mOutputFormat);
+		if (p == kFormats + std::size(kFormats)) {
 			CBSetSelectedIndex(IDC_OUTPUT_FORMAT, 0);
-		else
+		} else {
 			CBSetSelectedIndex(IDC_OUTPUT_FORMAT, p - kFormats);
+		}
 
 		CheckButton(IDC_PLANEORDER_CBCR, !mFormat.mbSwapChromaPlanes);
 		CheckButton(IDC_PLANEORDER_CRCB, mFormat.mbSwapChromaPlanes);
@@ -3677,7 +3676,7 @@ void VDProjectUI::HandleDragDrop(HDROP hdrop) {
 
 	for(UINT i=0; i<fileCount; ++i) {
 		wchar_t szNameW[MAX_PATH];
-		if (DragQueryFileW(hdrop, i, szNameW, sizeof szNameW / sizeof szNameW[0])) {
+		if (DragQueryFileW(hdrop, i, szNameW, std::size(szNameW))) {
 			if (szNameW[0]) {
 				filenames.push_back_as(szNameW);
 			}

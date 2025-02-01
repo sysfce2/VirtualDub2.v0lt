@@ -546,8 +546,8 @@ void VDDialogSelectVideoFormatW32::RebuildList() {
 		nsVDPixmap::kPixFormat_YUV420ib_Planar,
 	};
 
-	mFormatItems.resize(sizeof(kFormats)/sizeof(kFormats[0]));
-	for(uint32 i=0; i<sizeof(kFormats)/sizeof(kFormats[0]); ++i) {
+	mFormatItems.resize(std::size(kFormats));
+	for (uint32 i = 0; i < std::size(kFormats); ++i) {
 		const int format = kFormats[i];
 
 		mFormatItems[i].Init(format);
@@ -566,7 +566,7 @@ void VDDialogSelectVideoFormatW32::RebuildList() {
 
 	mListView.Clear();
 	int selIdx = 0;
-	for(uint32 i=0; i<sizeof(kFormats)/sizeof(kFormats[0]); ++i) {
+	for (uint32 i = 0; i < std::size(kFormats); ++i) {
 		mListView.InsertVirtualItem(i, &mFormatItems[i]);
 
 		if (mFormatItems[i].mFormat == mFormat)
@@ -1003,10 +1003,10 @@ bool VDDialogVideoDepthW32::OnLoaded() {
 	}
 	if (mLockFormat!=-1) {
 		EnableControl(IDC_INPUT_OTHER,false);
-		for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-			const FormatButtonMapping& fbm = kFormatButtonMappings[i];
-			if (fbm.mFormat != mLockFormat)
-				EnableControl(fbm.mInputButton,false);
+		for (const auto& fbm : kFormatButtonMappings) {
+			if (fbm.mFormat != mLockFormat) {
+				EnableControl(fbm.mInputButton, false);
+			}
 		}
 	}
 	if (mType==DepthDialog_cap_output) {
@@ -1115,8 +1115,7 @@ bool VDDialogVideoDepthW32::OnCommand(uint32 id, uint32 extcode) {
 			}
 		}
 
-		for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-			const FormatButtonMapping& fbm = kFormatButtonMappings[i];
+		for (const auto& fbm : kFormatButtonMappings) {
 			if (fbm.mInputButton == id) {
 				mInputFormat.format = fbm.mFormat;
 				ApplyChanges();
@@ -1235,9 +1234,7 @@ void VDDialogVideoDepthW32::InitFinalFormat() {
 
 void VDDialogVideoDepthW32::InitFocus() {
 	int format = mLockFormat!=-1 ? mLockFormat : mInputFormat;
-	for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-		const FormatButtonMapping& fbm = kFormatButtonMappings[i];
-
+	for (const auto& fbm : kFormatButtonMappings) {
 		if (fbm.mFormat == format) {
 			SetFocusToControl(fbm.mInputButton);
 			return;
@@ -1257,11 +1254,10 @@ void VDDialogVideoDepthW32::SyncControls() {
 	EnableControl(IDC_INPUT_AUTOSELECT,enableDefault);
 
 	uint32 inputButton = 0;
-	for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-		const FormatButtonMapping& fbm = kFormatButtonMappings[i];
-
-		if (fbm.mFormat == format)
+	for (const auto& fbm : kFormatButtonMappings) {
+		if (fbm.mFormat == format) {
 			inputButton = fbm.mInputButton;
+		}
 
 		CheckButton(fbm.mInputButton, fbm.mFormat == format);
 	}
@@ -1429,8 +1425,6 @@ static const long audioBufferSizeArray[]={
 	64
 };
 
-#define ELEMENTS(x) (sizeof (x)/sizeof(x)[0])
-
 class VDDialogPerformanceOptions : public VDDialogFrameW32 {
 public:
 	VDDialogPerformanceOptions() : VDDialogFrameW32(IDD_PERFORMANCE) {}
@@ -1506,20 +1500,20 @@ void VDDialogPerformanceOptions::OnDataExchange(bool write) {
 
 		VDSavePreferences();
 	} else {
-		TBSetRange(IDC_OUTPUT_BUFFER, 0, sizeof outputBufferSizeArray / sizeof outputBufferSizeArray[0] - 1);
-		TBSetValue(IDC_OUTPUT_BUFFER, NearestLongValue(VDPreferencesGetRenderOutputBufferSize(), outputBufferSizeArray, ELEMENTS(outputBufferSizeArray)));
+		TBSetRange(IDC_OUTPUT_BUFFER, 0, std::size(outputBufferSizeArray) - 1);
+		TBSetValue(IDC_OUTPUT_BUFFER, NearestLongValue(VDPreferencesGetRenderOutputBufferSize(), outputBufferSizeArray, std::size(outputBufferSizeArray)));
 		OnHScroll(IDC_OUTPUT_BUFFER, 0);
 
-		TBSetRange(IDC_WAVE_INPUT_BUFFER, 0, sizeof waveBufferSizeArray / sizeof waveBufferSizeArray[0] - 1);
-		TBSetValue(IDC_WAVE_INPUT_BUFFER, NearestLongValue(VDPreferencesGetRenderWaveBufferSize(), waveBufferSizeArray, ELEMENTS(waveBufferSizeArray)));
+		TBSetRange(IDC_WAVE_INPUT_BUFFER, 0, std::size(waveBufferSizeArray) - 1);
+		TBSetValue(IDC_WAVE_INPUT_BUFFER, NearestLongValue(VDPreferencesGetRenderWaveBufferSize(), waveBufferSizeArray, std::size(waveBufferSizeArray)));
 		OnHScroll(IDC_WAVE_INPUT_BUFFER, 0);
 
-		TBSetRange(IDC_VIDEO_BUFFERS, 0, sizeof pipeBufferCountArray / sizeof pipeBufferCountArray[0] - 1);
-		TBSetValue(IDC_VIDEO_BUFFERS, NearestLongValue(VDPreferencesGetRenderVideoBufferCount(), pipeBufferCountArray, ELEMENTS(pipeBufferCountArray)));
+		TBSetRange(IDC_VIDEO_BUFFERS, 0, std::size(pipeBufferCountArray) - 1);
+		TBSetValue(IDC_VIDEO_BUFFERS, NearestLongValue(VDPreferencesGetRenderVideoBufferCount(), pipeBufferCountArray, std::size(pipeBufferCountArray)));
 		OnHScroll(IDC_VIDEO_BUFFERS, 0);
 
-		TBSetRange(IDC_AUDIO_BUFFER, 0, sizeof audioBufferSizeArray / sizeof audioBufferSizeArray[0] - 1);
-		TBSetValue(IDC_AUDIO_BUFFER, NearestLongValue(VDPreferencesGetRenderAudioBufferSeconds(), audioBufferSizeArray, ELEMENTS(audioBufferSizeArray)));
+		TBSetRange(IDC_AUDIO_BUFFER, 0, std::size(audioBufferSizeArray) - 1);
+		TBSetValue(IDC_AUDIO_BUFFER, NearestLongValue(VDPreferencesGetRenderAudioBufferSeconds(), audioBufferSizeArray, std::size(audioBufferSizeArray)));
 		OnHScroll(IDC_AUDIO_BUFFER, 0);
 	}
 }
@@ -2630,7 +2624,7 @@ void VDDialogFileTextInfoW32::ReinitDialog() {
 		SendMessageW(hwndList, LVM_INSERTCOLUMNW, 0, (LPARAM)&lvc.w);
 	}
 
-	for(int i=0; i<sizeof kFields / sizeof kFields[0]; ++i) {
+	for (unsigned i = 0; i < std::size(kFields); ++i) {
 		union {
 			LVITEMA a;
 			LVITEMW w;

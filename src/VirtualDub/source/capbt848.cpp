@@ -350,9 +350,11 @@ void CaptureDisplayBT848Tweaker(HWND hwndParent) {
 
 		FARPROC *ppEntries = (FARPROC *)&g_dTVDriver;
 
-		for(int i=0; i<(sizeof g_dtvEntryPts / sizeof g_dtvEntryPts[0]); ++i)
-			if (!(ppEntries[i] = GetProcAddress(g_hmodDTV, g_dtvEntryPts[i])))
+		for (unsigned i = 0; i < std::size(g_dtvEntryPts); ++i) {
+			if (!(ppEntries[i] = GetProcAddress(g_hmodDTV, g_dtvEntryPts[i]))) {
 				throw MyError("Cannot load DScaler driver: entry point \"%s\" is missing!", g_dtvEntryPts[i]);
+			}
+		}
 
 		// Map the registers.
 

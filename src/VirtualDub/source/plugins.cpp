@@ -575,8 +575,8 @@ void VDLoadPlugins(const VDStringW& path, int& succeeded, int& failed) {
 
 	succeeded = failed = 0;
 
-	for(int i=0; i<sizeof(kExtensions)/sizeof(kExtensions[0]); ++i) {
-		VDDirectoryIterator it(VDMakePath(path.c_str(), kExtensions[i]).c_str());
+	for(const auto& extension : kExtensions) {
+		VDDirectoryIterator it(VDMakePath(path.c_str(), extension).c_str());
 
 		while(it.Next()) {
 			VDDEBUG("Plugins: Attempting to load \"%ls\"\n", it.GetFullPath().c_str());

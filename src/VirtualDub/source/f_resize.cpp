@@ -588,7 +588,7 @@ uint32 VDVideoFilterResize::GetParams() {
 					6,
 				};
 
-				VDASSERTCT(sizeof(kBaseSizePerMode)/sizeof(kBaseSizePerMode[0]) == VDResizeFilterData::FILTER_COUNT);
+				VDASSERTCT(std::size(kBaseSizePerMode) == VDResizeFilterData::FILTER_COUNT);
 
 				if (mConfig.mFilterMode < VDResizeFilterData::FILTER_TABLEBILINEAR) {
 					mVDXAHorizFactor = 1.0f;

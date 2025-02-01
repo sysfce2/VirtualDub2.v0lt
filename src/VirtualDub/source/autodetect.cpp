@@ -65,19 +65,21 @@ const struct CodecEntry {
 
 #undef R
 
-const char *LookupVideoCodec(uint32 fccType) {
-	int i;
+const char *LookupVideoCodec(uint32 fccType)
+{
+	for (int i = 0; i < 3; i++) {
+		int c = (int)((fccType >> (8 * i)) & 255);
 
-	for(i=0; i<3; i++) {
-		int c = (int)((fccType>>(8*i)) & 255);
-
-		if (isalpha(c))
-			fccType = (fccType & ~(FOURCC)(0xff << (i*8))) | (toupper(c) << (i*8));
+		if (isalpha(c)) {
+			fccType = (fccType & ~(FOURCC)(0xff << (i * 8))) | (toupper(c) << (i * 8));
+		}
 	}
 
-	for(i=0; i<sizeof codec_entries/sizeof codec_entries[0]; i++)
-		if (codec_entries[i].fcc == fccType)
-			return codec_entries[i].name;
+	for (const auto& codec_entry : codec_entries) {
+		if (codec_entry.fcc == fccType) {
+			return codec_entry.name;
+		}
+	}
 
 	return NULL;
 }

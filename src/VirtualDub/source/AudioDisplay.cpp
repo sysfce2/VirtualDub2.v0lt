@@ -2399,9 +2399,10 @@ namespace {
 			100000000, 200000000, 500000000, 1000000000, 2000000000
 		};
 
-		for(uint32 i=0; i<sizeof(kScaleValues)/sizeof(kScaleValues[0]); ++i) {
-			if (kScaleValues[i] >= v)
-				return kScaleValues[i];
+		for (const auto& scaleValue : kScaleValues) {
+			if (scaleValue >= v) {
+				return scaleValue;
+			}
 		}
 
 		return v;

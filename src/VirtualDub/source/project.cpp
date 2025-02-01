@@ -1826,7 +1826,7 @@ void VDProject::OpenWAV(const wchar_t *szFile, IVDInputDriver *pSelectedDriver, 
 
 	pNewAudio->setDecodeErrorMode(g_audioErrorMode);
 
-	vdwcslcpy(g_szInputWAVFile, szFile, sizeof(g_szInputWAVFile)/sizeof(g_szInputWAVFile[0]));
+	vdwcslcpy(g_szInputWAVFile, szFile, std::size(g_szInputWAVFile));
 
 	mAudioSourceMode = kVDAudioSourceMode_External;
 	inputAudio = mpInputAudioExt = pNewAudio;
@@ -2198,7 +2198,7 @@ void VDProject::StartServer(const char *serverName) {
 	VDGUIHandle hwnd = mhwnd;
 
 	if (serverName)
-		vdstrlcpy(g_serverName, serverName, sizeof(g_serverName)/sizeof(g_serverName[0]));
+		vdstrlcpy(g_serverName, serverName, std::size(g_serverName));
 	else
 		g_serverName[0] = 0;
 

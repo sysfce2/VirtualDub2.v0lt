@@ -1183,7 +1183,7 @@ INT_PTR APIENTRY VDInputFileAPNG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM 
 					const sint64 length = pvs->getLength();
 					s = buf + sprintf(buf, "%I64d frames (", length);
 					DWORD ticks = VDRoundToInt(1000.0*length/pvs->getRate().asDouble());
-					ticks_to_str(s, (buf + sizeof(buf)/sizeof(buf[0])) - s, ticks);
+					ticks_to_str(s, (buf + std::size(buf)) - s, ticks);
 					sprintf(s+strlen(s),".%02d)", (ticks/10)%100);
 					SetDlgItemText(hDlg, IDC_VIDEO_NUMFRAMES, buf);
 

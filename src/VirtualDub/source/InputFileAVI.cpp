@@ -866,7 +866,7 @@ bool VDAVIFileInfoDialog::OnLoaded() {
 		DWORD ticks = VDRoundToInt(1000.0*length/pvs->getRate().asDouble());
 
 		wchar_t tmp[128];
-		ticks_to_str(tmp, sizeof(tmp)/sizeof(tmp[0]), ticks);
+		ticks_to_str(tmp, std::size(tmp), ticks);
 		tmp[127] = 0;
 		buf += tmp;
 
@@ -950,7 +950,7 @@ bool VDAVIFileInfoDialog::OnLoaded() {
 		uint32 ticks = VDRoundToInt32(1000.0 * len * pAS->getRate().AsInverseDouble());
 
 		wchar_t tmp[128];
-		ticks_to_str(tmp, sizeof(tmp)/sizeof(tmp[0]), ticks);
+		ticks_to_str(tmp, std::size(tmp), ticks);
 		tmp[127] = 0;
 		buf += tmp;
 
@@ -1068,7 +1068,7 @@ bool VDAVIFileInfoDialog::OnCommand(uint32 id, uint32 extcode) {
 		VDStringW buf;
 		for(int pass=0; pass<2; ++pass) {
 			const uint32 *ids = pass ? kAudioIds : kVideoIds;
-			const uint32 idcount = pass ? sizeof(kAudioIds)/sizeof(kAudioIds[0]) : sizeof(kVideoIds)/sizeof(kVideoIds[0]);
+			const uint32 idcount = pass ? std::size(kAudioIds) : std::size(kVideoIds);
 
 			if (pass == 0) {
 				buf = L"Video:\r\n";

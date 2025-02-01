@@ -541,7 +541,7 @@ const AudioSourceDV::CacheLine *AudioSourceDV::LoadSet(VDPosition setpos) {
 zero_fill:
 				uint32 n = mSamplesPerSet / 10;
 
-				if (cline.mRawSamples+n >= sizeof cline.mRawData / sizeof cline.mRawData[0]) {
+				if (cline.mRawSamples + n >= std::size(cline.mRawData)) {
 					VDDEBUG("AudioSourceDV: Sample count overflow!\n");
 					VDASSERT(false);
 					break;
@@ -589,7 +589,7 @@ zero_fill:
 
 				const uint32 n = minimumFrameSize + (pAAUX[1] & 0x3f);
 
-				if (cline.mRawSamples+n >= sizeof cline.mRawData / sizeof cline.mRawData[0]) {
+				if (cline.mRawSamples + n >= std::size(cline.mRawData)) {
 					VDDEBUG("AudioSourceDV: Sample count overflow!\n");
 					VDASSERT(false);
 					break;

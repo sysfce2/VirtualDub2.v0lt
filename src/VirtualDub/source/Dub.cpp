@@ -1370,19 +1370,18 @@ void Dubber::InitDirectDraw() {
 			nsVDPixmap::kPixFormat_YUV422_YUYV
 		};
 
-		for(int i=0; i<sizeof(kFormats)/sizeof(kFormats[0]); ++i) {
-			const int format = kFormats[i];
-
+		for (const auto& format : kFormats) {
 			VideoSources::const_iterator it(mVideoSources.begin()), itEnd(mVideoSources.end());
-			for(; it!=itEnd; ++it) {
-				IVDVideoSource *vs = *it;
+			for (; it != itEnd; ++it) {
+				IVDVideoSource* vs = *it;
 
-				if (!vs->setTargetFormat(format))
+				if (!vs->setTargetFormat(format)) {
 					break;
+				}
 			}
 
 			if (it == itEnd) {
-				if (mpInputDisplay->SetSource(false, mVideoSources.front()->getTargetFormat(), 0, 0, false, mOptions.video.previewFieldMode>0)) {
+				if (mpInputDisplay->SetSource(false, mVideoSources.front()->getTargetFormat(), 0, 0, false, mOptions.video.previewFieldMode > 0)) {
 					mbInputDisplayInitialized = true;
 					break;
 				}

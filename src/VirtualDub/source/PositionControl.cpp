@@ -700,9 +700,10 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 
 			SendMessage(lphdr->hdr.hwndFrom, TTM_SETMAXTIPWIDTH, 0, 5000);
 
-			for(int i=0; i<sizeof g_posctltips/sizeof g_posctltips[0]; ++i) {
-				if (id == g_posctltips[i].id)
-					lphdr->lpszText = const_cast<char *>(g_posctltips[i].tip);
+			for(const auto& posctltip : g_posctltips) {
+				if (id == posctltip.id) {
+					lphdr->lpszText = const_cast<char*>(posctltip.tip);
+				}
 			}
 
 			return TRUE;
@@ -1207,11 +1208,12 @@ void VDPositionControlW32::OnCreate() {
 		ti.hwnd			= mhwnd;
 		ti.lpszText		= LPSTR_TEXTCALLBACK;
 
-		for(int i=0; i<sizeof g_posctltips/sizeof g_posctltips[0]; ++i) {
-			ti.uId			= (WPARAM)GetDlgItem(mhwnd, g_posctltips[i].id);
+		for (const auto& posctltip : g_posctltips) {
+			ti.uId = (WPARAM)GetDlgItem(mhwnd, posctltip.id);
 
-			if (ti.uId)
+			if (ti.uId) {
 				SendMessage(hwndTT, TTM_ADDTOOL, 0, (LPARAM)&ti);
+			}
 		}
 	}
 }
@@ -1226,7 +1228,7 @@ void VDPositionControlW32::UpdateString(VDPosition pos) {
 
 	bool success = false;
 	if (mpCB)
-		success = mpCB->GetFrameString(buf, sizeof buf / sizeof buf[0], pos);
+		success = mpCB->GetFrameString(buf, std::size(buf), pos);
 
 	if (!success) {
 		if (mFrameRate.getLo()) {
@@ -1237,9 +1239,9 @@ void VDPositionControlW32::UpdateString(VDPosition pos) {
 			sec	= ticks %  60; ticks /=  60;
 			min	= ticks %  60; ticks /=  60;
 
-			success = (unsigned)swprintf(buf, sizeof buf / sizeof buf[0], L" Frame %I64d (%d:%02d:%02d.%03d)", (sint64)pos, ticks, min, sec, ms) < sizeof buf / sizeof buf[0];
+			success = (unsigned)swprintf(buf, std::size(buf), L" Frame %I64d (%d:%02d:%02d.%03d)", (sint64)pos, ticks, min, sec, ms) < std::size(buf);
 		} else
-			success = (unsigned)swprintf(buf, sizeof buf / sizeof buf[0], L" Frame %I64d", (sint64)pos) < sizeof buf / sizeof buf[0];
+			success = (unsigned)swprintf(buf, std::size(buf), L" Frame %I64d", (sint64)pos) < std::size(buf);
 	}
 
 	if (success) {

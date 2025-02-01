@@ -203,7 +203,7 @@ bool VDUIDialogExtEncMain::OnCommand(uint32 id, uint32 extcode) {
 
 		int idx = ActivateMenuButton(IDC_CMDLINE_ARG, kMenuItems);
 
-		if ((unsigned)idx < sizeof(kMenuItems)/sizeof(kMenuItems[0]) - 1) {
+		if ((unsigned)idx < std::size(kMenuItems) - 1) {
 			const wchar_t *s = kMenuItems[idx];
 			const wchar_t *t = wcschr(s, '\t');
 

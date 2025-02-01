@@ -1892,7 +1892,7 @@ int AudioSourceMPEG::_read(VDPosition lStart64, uint32 lCount, void *lpBuffer, u
 			long badpacket = lCurrentPacket;
 
 			uint32 ticks = (uint32)(0.5 + (badpacket * 1000.0 * mSamplesPerFrame) / getWaveFormat()->mSamplingRate);
-			ticks_to_str(buf, sizeof buf / sizeof buf[0], ticks);
+			ticks_to_str(buf, std::size(buf), ticks);
 
 			lCurrentPacket = -1;
 
@@ -3291,7 +3291,7 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 				SetDlgItemText(hDlg, IDC_VIDEO_FORMAT, buf);
 
 				s = buf + sprintf(buf, "%lu (", (unsigned)pVSS->getLength());
-				ticks_to_str(s, (buf + sizeof(buf)/sizeof(buf[0])) - s, VDRoundToLong(1000.0*pVSS->getLength()/pVSS->getRate().asDouble()));
+				ticks_to_str(s, (buf + std::size(buf)) - s, VDRoundToLong(1000.0*pVSS->getLength()/pVSS->getRate().asDouble()));
 				strcat(s,")");
 				SetDlgItemText(hDlg, IDC_VIDEO_NUMFRAMES, buf);
 			}

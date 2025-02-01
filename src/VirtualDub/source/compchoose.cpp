@@ -779,11 +779,6 @@ static const wchar_t* g_depths_id[]={
 	L"Y416"
 };
 
-
-#define		NWIDTHS		(sizeof g_xres / sizeof g_xres[0])
-#define		NHEIGHTS	(sizeof g_yres / sizeof g_yres[0])
-#define		NDEPTHS		(sizeof g_depths / sizeof g_depths[0])
-
 void set_depth(BITMAPINFO& bi, int k) {
 	int d = g_depths[k];
 	int w = bi.bmiHeader.biWidth;
@@ -892,21 +887,22 @@ void VDUIDialogChooseVideoCompressorW32::SelectCompressor(CodecInfo *pii) {
 
 	int codec_format = mhCodec->queryInputFormat(0);
 	
-	for(int i=0; i<NWIDTHS; i++) {
+	for (int i = 0; i < std::size(g_xres); i++) {
 		w = g_xres[i];
 		bi.bmiHeader.biWidth = w;
 
-		for(int j=0; j<NHEIGHTS; j++) {
+		for (int j = 0; j < std::size(g_yres); j++) {
 			h = g_yres[j];
 			bi.bmiHeader.biHeight = h;
-			VDPixmapCreateLinearLayout(layout,codec_format,bi.bmiHeader.biWidth,bi.bmiHeader.biHeight,16);
+			VDPixmapCreateLinearLayout(layout, codec_format, bi.bmiHeader.biWidth, bi.bmiHeader.biHeight, 16);
 
-			for(int k=0; k<NDEPTHS; k++) {
-				set_depth(bi,k);
+			for (int k = 0; k < std::size(g_depths); k++) {
+				set_depth(bi, k);
 				kd = k;
 
-				if (ICERR_OK==mhCodec->compressQuery(&bi.bmiHeader, NULL, &layout))
+				if (ICERR_OK == mhCodec->compressQuery(&bi.bmiHeader, NULL, &layout)) {
 					goto pass;
+				}
 			}
 		}
 	}
@@ -924,11 +920,12 @@ pass:
 
 	// Check all the depths; see if they work
 
-	for(int k=0; k<NDEPTHS; k++) {
-		set_depth(bi,k);
+	for (int k = 0; k < std::size(g_depths); k++) {
+		set_depth(bi, k);
 
-		if (ICERR_OK==mhCodec->compressQuery(&bi.bmiHeader, NULL))
-			depth_bits |= (1<<k);
+		if (ICERR_OK == mhCodec->compressQuery(&bi.bmiHeader, NULL)) {
+			depth_bits |= (1 << k);
+		}
 	}
 
 	VDStringW s;
@@ -993,9 +990,11 @@ pass:
 	if (depth_bits) {
 		s = L"Valid pixel formats:";
 
-		for(k=0; k<NDEPTHS; k++)
-			if (depth_bits & (1<<k))
+		for (k = 0; k < std::size(g_depths); k++) {
+			if (depth_bits & (1 << k)) {
 				s.append_sprintf(L" %s", g_depths_id[k]);
+			}
+		}
 
 		LBAddString(IDC_SIZE_RESTRICTIONS, s.c_str());
 	}

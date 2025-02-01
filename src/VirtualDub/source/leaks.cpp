@@ -81,7 +81,7 @@ VDDbgHelpDynamicLoaderW32::VDDbgHelpDynamicLoaderW32()
 		"SymGetModuleInfo",
 		"UnDecorateSymbolName",
 	};
-	enum { kFuncs = sizeof(sFuncTbl)/sizeof(sFuncTbl[0]) };
+	enum { kFuncs = std::size(sFuncTbl) };
 
 	if (hmodDbgHelp) {
 		int i;

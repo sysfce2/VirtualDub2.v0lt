@@ -104,13 +104,13 @@ INT_PTR VDDialogCaptureDiskIO::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch(msg) {
 	case WM_INITDIALOG:
 		{
-			int i;
 			HWND hwndItem;
 
 			hwndItem = GetDlgItem(mhdlg, IDC_CHUNKSIZE);
-			for(i=0; i<sizeof sizes/sizeof sizes[0]; i++)
+			for (unsigned i = 0; i < std::size(sizes); i++) {
 				SendMessage(hwndItem, CB_ADDSTRING, 0, (LPARAM)size_names[i]);
-			SendMessage(hwndItem, CB_SETCURSEL, NearestLongValue(mDiskSettings.mDiskChunkSize, sizes, sizeof sizes/sizeof sizes[0]), 0);
+			}
+			SendMessage(hwndItem, CB_SETCURSEL, NearestLongValue(mDiskSettings.mDiskChunkSize, sizes, std::size(sizes)), 0);
 
 			SendDlgItemMessage(mhdlg, IDC_CHUNKS_UPDOWN, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhdlg, IDC_CHUNKS), 0);
 			SendDlgItemMessage(mhdlg, IDC_CHUNKS_UPDOWN, UDM_SETRANGE, 0, MAKELONG(256, 1));
@@ -620,11 +620,12 @@ public:
 				if (pListView) {
 					pListView->AddColumn(L"Item", 0, 1);
 
-					for(int i=0; i<sizeof kItems / sizeof kItems[0]; ++i) {
-						const wchar_t *itemLabel = VDLoadString(0, kVDST_CaptureUI, kVDMBase_CapInfoLabels + kItems[i]);
-						int idx = pList->AddItem(itemLabel, kItems[i]);
-						if (idx >= 0)
-							pListView->SetItemChecked(idx, std::find(mPrefs.mInfoItems.begin(), mPrefs.mInfoItems.end(), kItems[i]) != mPrefs.mInfoItems.end());
+					for (const auto& kItem : kItems) {
+						const wchar_t* itemLabel = VDLoadString(0, kVDST_CaptureUI, kVDMBase_CapInfoLabels + kItem);
+						int idx = pList->AddItem(itemLabel, kItem);
+						if (idx >= 0) {
+							pListView->SetItemChecked(idx, std::find(mPrefs.mInfoItems.begin(), mPrefs.mInfoItems.end(), kItem) != mPrefs.mInfoItems.end());
+						}
 					}
 				}
 			}
@@ -638,7 +639,7 @@ public:
 				IVDUIList *pList = vdpoly_cast<IVDUIList *>(pBase->GetControl(100));
 				IVDUIListView *pListView = vdpoly_cast<IVDUIListView *>(pList);
 
-				for(int i=0; i<sizeof kItems / sizeof kItems[0]; ++i) {
+				for (uint32 i = 0; i < std::size(kItems); ++i) {
 					if (pListView->IsItemChecked(i))
 						mPrefs.mInfoItems.push_back(i);
 				}
@@ -768,7 +769,7 @@ void VDCaptureLoadPreferences(VDCapturePreferences& prefs) {
 			kVDCaptureInfo_SyncCurrentLatency
 		};
 
-		prefs.mInfoItems.assign(kDefaultInfoItems, kDefaultInfoItems + sizeof kDefaultInfoItems / sizeof kDefaultInfoItems[0]);
+		prefs.mInfoItems.assign(kDefaultInfoItems, kDefaultInfoItems + std::size(kDefaultInfoItems));
 	}
 
 	prefs.mHotKeyStart = key.getInt("Capture: Start hotkey", 0);

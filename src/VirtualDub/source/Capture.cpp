@@ -3158,7 +3158,7 @@ void VDCaptureData::CreateNewFile() {
 		// edit the filename up
 
 		wchar_t *ext = const_cast<wchar_t *>(VDFileSplitExt(fname));
-		swprintf(ext, (fname + sizeof(fname)/sizeof(fname[0])) - ext, L".%02d.avi", mSegmentIndex+1);
+		swprintf(ext, (fname + std::size(fname)) - ext, L".%02d.avi", mSegmentIndex+1);
 
 		// init the file
 

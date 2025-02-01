@@ -341,7 +341,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 	sprintf(buf, "%I64d/%I64d", curASample, totalASamples);
 	SetDlgItemText(hWnd, IDC_CURRENT_ASAMPLE, buf);
  
-	size_to_str(buf, sizeof buf / sizeof buf[0], pvinfo->total_size);
+	size_to_str(buf, std::size(buf), pvinfo->total_size);
 
 	if (pvinfo->processed) {
 		s = buf;
@@ -357,7 +357,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 
 	SetDlgItemText(hWnd, IDC_CURRENT_VSIZE, buf);
 
-	size_to_str(buf, sizeof buf / sizeof buf[0], painfo->total_size);
+	size_to_str(buf, std::size(buf), painfo->total_size);
 	SetDlgItemText(hWnd, IDC_CURRENT_ASIZE, buf);
 
 	nProjSize = 0;
@@ -388,11 +388,11 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 	}
 
 	uint32 dwTicks = VDGetCurrentTick() - mStartTime;
-	ticks_to_str(buf, sizeof buf / sizeof buf[0], dwTicks);
+	ticks_to_str(buf, std::size(buf), dwTicks);
 	SetDlgItemText(hWnd, IDC_TIME_ELAPSED, buf);
 
 	if (nProgress > 16) {
-		ticks_to_str(buf, sizeof buf / sizeof buf[0], MulDiv(dwTicks,8192,nProgress));
+		ticks_to_str(buf, std::size(buf), MulDiv(dwTicks,8192,nProgress));
 		SetDlgItemText(hWnd, IDC_TIME_REMAINING, buf);
 	}
 
@@ -742,7 +742,6 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 	DubStatus *thisPtr = (DubStatus *)GetWindowLongPtr(hdlg, DWLP_USER);
 	HWND hwndItem;
 	RECT r, r2;
-	int i;
 
 #define MYWM_NULL (WM_APP + 0)
 
@@ -766,11 +765,11 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 
 				hwndItem = GetDlgItem(hdlg, IDC_TABS);
 
-				for(i=0; i<(sizeof tabs/sizeof tabs[0]); i++) {
+				for (unsigned i = 0; i < std::size(tabs); i++) {
 					TC_ITEM ti;
 
-					ti.mask		= TCIF_TEXT;
-					ti.pszText	= (LPSTR)tabs[i].name;
+					ti.mask    = TCIF_TEXT;
+					ti.pszText = (LPSTR)tabs[i].name;
 
 					TabCtrl_InsertItem(hwndItem, i, &ti);
 				}
@@ -834,8 +833,9 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 
 				hwndItem = GetDlgItem(hdlg, IDC_PRIORITY);
 				SendMessage(hwndItem, CB_RESETCONTENT,0,0);
-				for(i=0; i<8; i++)
+				for (unsigned i = 0; i < 8u; i++) {
 					SendMessage(hwndItem, CB_ADDSTRING, 0, (LPARAM)g_szDubPriorities[i]);
+				}
 
 				SendMessage(hwndItem, CB_SETCURSEL, thisPtr->iPriority-1, 0);
 

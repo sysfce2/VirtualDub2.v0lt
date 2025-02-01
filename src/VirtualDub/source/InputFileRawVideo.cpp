@@ -198,11 +198,9 @@ VDInputFileRawVideoOptionsDialog::VDInputFileRawVideoOptionsDialog(VDInputFileRa
 }
 
 bool VDInputFileRawVideoOptionsDialog::OnLoaded() {
-	for(size_t i=0; i<sizeof(kFormats)/sizeof(kFormats[0]); ++i) {
-		int format = kFormats[i];
-
+	for (const auto& format : kFormats) {
 		CBAddString(IDC_INPUT_FORMAT, VDLoadString(0, kVDST_RawVideoFormats, format));
-	}	
+	}
 
 	OnDataExchange(false);
 
@@ -241,7 +239,7 @@ void VDInputFileRawVideoOptionsDialog::OnDataExchange(bool write) {
 			FailValidation(IDC_ALIGNMENT);
 
 		int idx = CBGetSelectedIndex(IDC_INPUT_FORMAT);
-		if ((unsigned)idx >= sizeof(kFormats)/sizeof(kFormats[0])) {
+		if ((unsigned)idx >= std::size(kFormats)) {
 			FailValidation(IDC_INPUT_FORMAT);
 			return;
 		}
@@ -254,9 +252,8 @@ void VDInputFileRawVideoOptionsDialog::OnDataExchange(bool write) {
 		mOptions.mbUpsideDown = IsButtonChecked(IDC_VORIENT_BOTTOMUP);
 		mOptions.mbSwapChromaPlanes = IsButtonChecked(IDC_PLANEORDER_CRCB);
 	} else {
-		for(size_t i=0; i<sizeof(kFormats)/sizeof(kFormats[0]); ++i) {
-			int format = kFormats[i];
-
+		for (size_t i = 0; i < std::size(kFormats); ++i) {
+			const int format = kFormats[i];
 			if (format == mOptions.mFormat) {
 				CBSetSelectedIndex(IDC_INPUT_FORMAT, i);
 				break;
