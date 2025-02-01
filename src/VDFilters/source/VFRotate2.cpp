@@ -714,12 +714,11 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 	VDRotate2FilterData *mfd = (struct VDRotate2FilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
 	HWND hwndItem;
 
-    switch (message)
-    {
-        case WM_INITDIALOG:
+	switch (message)
+	{
+		case WM_INITDIALOG:
 			{
 				char buf[32];
-				int i;
 
 				mfd = (struct VDRotate2FilterData *)lParam;
 				SetWindowLongPtr(hDlg, DWLP_USER, lParam);
@@ -742,19 +741,19 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 				mfd->ifp->InitButton((VDXHWND)GetDlgItem(hDlg, IDC_PREVIEW));
 
 			}
-            return (TRUE);
+			return (TRUE);
 
-        case WM_COMMAND:     
+		case WM_COMMAND:
 			switch(LOWORD(wParam)) {
-            case IDOK:
+			case IDOK:
 				mfd->ifp->Close();
 				EndDialog(hDlg, 0);
 				return TRUE;
 
 			case IDCANCEL:
 				mfd->ifp->Close();
-                EndDialog(hDlg, 1);
-                return TRUE;
+				EndDialog(hDlg, 1);
+				return TRUE;
 
 			case IDC_PREVIEW:
 				mfd->ifp->Toggle((VDXHWND)hDlg);
@@ -806,15 +805,15 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 				}
 				mfd->ifp->RedoSystem();
 				break;
-            }
-            break;
+			}
+			break;
 
 		case WM_CTLCOLORSTATIC:
 			if (GetWindowLong((HWND)lParam, GWL_ID) == IDC_COLOR)
 				return (INT_PTR)mfd->hbrColor;
 			break;
-    }
-    return FALSE;
+	}
+	return FALSE;
 }
 
 static int rotate2_config(VDXFilterActivation *fa, const VDXFilterFunctions *ff, VDXHWND hWnd) {
