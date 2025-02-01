@@ -95,8 +95,6 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VDICMDRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeaderOutputFile>.\../obj/Debug/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\../obj/Debug/vdicmdrv/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
     <ResourceCompile>
@@ -130,8 +128,6 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VDICMDRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeaderOutputFile>.\../obj/Debug/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\../obj/Debug/vdicmdrv/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
     <ResourceCompile>
@@ -166,8 +162,6 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VDICMDRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeaderOutputFile>.\../obj/Release/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\../obj/Release/vdicmdrv/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
     <ResourceCompile>
@@ -205,8 +199,6 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VDICMDRV_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeaderOutputFile>.\../obj/Release/vdicmdrv/vdicmdrv.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\../obj/Release/vdicmdrv/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
     <ResourceCompile>
@@ -240,12 +232,7 @@
     </CustomBuildStep>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="vdicmdrv.rc">
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ResourceCompile>
+    <ResourceCompile Include="vdicmdrv.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCompRemote.h" />
