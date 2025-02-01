@@ -206,8 +206,8 @@ DWORD DfscInstance::GetInfo(ICINFO* icinfo, DWORD dwSize) {
 
   icinfo->dwVersion = VERSION;
   icinfo->dwVersionICM = ICVERSION;
-  MultiByteToWideChar(CP_ACP, 0, szName, -1, icinfo->szName, sizeof(icinfo->szName) / sizeof(WCHAR));
-  MultiByteToWideChar(CP_ACP, 0, szDescription, -1, icinfo->szDescription, sizeof(icinfo->szDescription) / sizeof(WCHAR));
+  MultiByteToWideChar(CP_ACP, 0, szName, -1, icinfo->szName, std::size(icinfo->szName));
+  MultiByteToWideChar(CP_ACP, 0, szDescription, -1, icinfo->szDescription, std::size(icinfo->szDescription));
 
   return sizeof(ICINFO);
 }
