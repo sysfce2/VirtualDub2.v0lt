@@ -269,7 +269,7 @@ DEFINE_TEST(Uberblit) {
 		0x00ffffff,
 	};
 
-	const int kColorCount = sizeof(kColors)/sizeof(kColors[0]);
+	const int kColorCount = std::size(kColors);
 	const int size = 8;
 
 	VDPixmapBuffer ref[kColorCount];

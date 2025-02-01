@@ -79,7 +79,7 @@ DEFINE_TEST_NONAUTO(UberblitPerf) {
 		kSrcStart = 9,
 		kDstStart = 7,
 #endif
-		kFormatCount = sizeof(kFormats)/sizeof(kFormats[0])
+		kFormatCount = std::size(kFormats)
 	};
 
 	static const int kSize = 512;

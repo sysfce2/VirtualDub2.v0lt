@@ -17,11 +17,10 @@ DEFINE_TEST(Resampler) {
 
 	uint32 availModes = CPUCheckForExtensions();
 
-	for(int cpumode=0; cpumode<sizeof(kCPUModes)/sizeof(kCPUModes[0]); ++cpumode) {
-		uint32 desiredModes = kCPUModes[cpumode];
-
-		if (desiredModes & ~availModes)
+	for(const auto& desiredModes : kCPUModes) {
+		if (desiredModes & ~availModes) {
 			continue;
+		}
 
 		CPUEnableExtensions(desiredModes);
 
@@ -42,9 +41,7 @@ DEFINE_TEST(Resampler) {
 			IVDPixmapResampler::kFilterLanczos3,
 		};
 
-		for(int fmodei = 0; fmodei < sizeof(kFilterModes)/sizeof(kFilterModes[0]); ++fmodei) {
-			IVDPixmapResampler::FilterMode filterMode = kFilterModes[fmodei];
-
+		for(const auto& filterMode : kFilterModes) {
 			pxdst.h = 16;
 			pxsrc.h = 16;
 			for(int dalign = 0; dalign < 4; ++dalign) {
