@@ -622,7 +622,7 @@ void VDSetLastLoadSavePath(long nKey, const wchar_t *path) {
 
 		FilespecEntry& fsent = (*it).second;
 
-		wcsncpyz(fsent.szFile, path, sizeof fsent.szFile / sizeof fsent.szFile[0]);
+		wcsncpyz(fsent.szFile, path, std::size(fsent.szFile));
 	}
 }
 
@@ -663,7 +663,7 @@ void VDSetLastLoadSaveFileName(long nKey, const wchar_t *fileName) {
 
 		VDStringW newPath(VDMakePath(VDFileSplitPathLeft(VDStringW(fsent.szFile)).c_str(), fileName));
 
-		wcsncpyz(fsent.szFile, newPath.c_str(), sizeof fsent.szFile / sizeof fsent.szFile[0]);
+		wcsncpyz(fsent.szFile, newPath.c_str(), std::size(fsent.szFile));
 	}
 }
 
