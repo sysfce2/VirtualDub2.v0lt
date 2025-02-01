@@ -172,9 +172,11 @@ struct DriveMessageTranslation {
 const char *TranslateDriverMessage(UINT msg) {
 	static char buf[12];
 
-	for(int i=0; i<(sizeof driverMessages/sizeof driverMessages[0]); i++)
-		if (driverMessages[i].msg == msg)
-			return driverMessages[i].name;
+	for (const auto& driverMessage : driverMessages) {
+		if (driverMessage.msg == msg) {
+			return driverMessage.name;
+		}
+	}
 
 	wsprintf(buf, "%08lx", msg);
 
