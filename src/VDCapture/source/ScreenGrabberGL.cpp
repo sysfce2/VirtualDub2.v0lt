@@ -254,7 +254,7 @@ bool VDScreenGrabberGL::InitCapture(uint32 srcw, uint32 srch, uint32 dstw, uint3
 		mGL.glGenOcclusionQueriesNV(2, mGLOcclusionQueries);
 
 	// initialize shaders
-	mGLShaderBase = mGL.InitTechniques(g_techniques, sizeof g_techniques / sizeof g_techniques[0]);
+	mGLShaderBase = mGL.InitTechniques(g_techniques, std::size(g_techniques));
 
 	VDASSERT(!mGL.glGetError());
 
@@ -312,7 +312,7 @@ void VDScreenGrabberGL::ShutdownCapture() {
 			ReleaseDC(mhwndGL, hdc);
 		}
 
-		mGL.glDeleteLists(mGLShaderBase, sizeof g_techniques / sizeof g_techniques[0]);
+		mGL.glDeleteLists(mGLShaderBase, std::size(g_techniques));
 
 		if (mGLTextures[0]) {
 			mGL.glDeleteTextures(2, mGLTextures);
@@ -852,8 +852,9 @@ void VDScreenGrabberGL::FlushFrameQueue() {
 		}
 	}
 
-	for(int i=0; i<sizeof(mTimestampQueue)/sizeof(mTimestampQueue[0]); ++i)
+	for (unsigned i = 0; i < std::size(mTimestampQueue); ++i) {
 		mTimestampQueue[i] = -1;
+	}
 
 	mbFrameValid[0] = mbFrameValid[1] = false;
 	mbGLOcclusionValid[0] = mbGLOcclusionValid[1] = false;

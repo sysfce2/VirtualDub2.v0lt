@@ -652,10 +652,10 @@ void VDCaptureDriverScreen::GetAvailableAudioFormats(std::list<vdstructex<WAVEFO
 		16
 	};
 
-	for(int sridx=0; sridx < sizeof kSamplingRates / sizeof kSamplingRates[0]; ++sridx)
-		for(int chidx=0; chidx < sizeof kChannelCounts / sizeof kChannelCounts[0]; ++chidx)
-			for(int sdidx=0; sdidx < sizeof kSampleDepths / sizeof kSampleDepths[0]; ++sdidx) {
-				WAVEFORMATEX wfex={
+	for (unsigned sridx = 0; sridx < std::size(kSamplingRates); ++sridx) {
+		for (unsigned chidx = 0; chidx < std::size(kChannelCounts); ++chidx) {
+			for (unsigned sdidx = 0; sdidx < std::size(kSampleDepths); ++sdidx) {
+				WAVEFORMATEX wfex = {
 					WAVE_FORMAT_PCM,
 					kChannelCounts[chidx],
 					kSamplingRates[sridx],
@@ -668,10 +668,12 @@ void VDCaptureDriverScreen::GetAvailableAudioFormats(std::list<vdstructex<WAVEFO
 				wfex.nBlockAlign = wfex.nChannels * (wfex.wBitsPerSample >> 3);
 				wfex.nAvgBytesPerSec = wfex.nBlockAlign * wfex.nSamplesPerSec;
 
-				if (MMSYSERR_NOERROR ==waveInOpen(NULL, WAVE_MAPPER, &wfex, 0, 0, WAVE_FORMAT_QUERY | WAVE_FORMAT_DIRECT)) {
+				if (MMSYSERR_NOERROR == waveInOpen(NULL, WAVE_MAPPER, &wfex, 0, 0, WAVE_FORMAT_QUERY | WAVE_FORMAT_DIRECT)) {
 					aformats.push_back(vdstructex<WAVEFORMATEX>(&wfex, sizeof wfex));
 				}
 			}
+		}
+	}
 
 	 GetExtraFormats(aformats);
 }
@@ -693,10 +695,10 @@ void VDCaptureDriverScreen::GetExtraFormats(std::list<vdstructex<WAVEFORMATEX> >
 		16
 	};
 
-	for(int sridx=0; sridx < sizeof kSamplingRates / sizeof kSamplingRates[0]; ++sridx)
-		for(int chidx=0; chidx < sizeof kChannelCounts / sizeof kChannelCounts[0]; ++chidx)
-			for(int sdidx=0; sdidx < sizeof kSampleDepths / sizeof kSampleDepths[0]; ++sdidx) {
-				WAVEFORMATEXTENSIBLE wfex={
+	for (unsigned sridx = 0; sridx < std::size(kSamplingRates); ++sridx) {
+		for (unsigned chidx = 0; chidx < std::size(kChannelCounts); ++chidx) {
+			for (unsigned sdidx = 0; sdidx < std::size(kSampleDepths); ++sdidx) {
+				WAVEFORMATEXTENSIBLE wfex = {
 					WAVE_FORMAT_EXTENSIBLE,
 					kChannelCounts[chidx],
 					kSamplingRates[sridx],
@@ -710,15 +712,17 @@ void VDCaptureDriverScreen::GetExtraFormats(std::list<vdstructex<WAVEFORMATEX> >
 				wfex.Format.nAvgBytesPerSec = wfex.Format.nBlockAlign * wfex.Format.nSamplesPerSec;
 				wfex.Samples.wValidBitsPerSample = wfex.Format.wBitsPerSample;
 				wfex.SubFormat = KSDATAFORMAT_SUBTYPE_PCM;
-				wfex.Format.cbSize = sizeof(WAVEFORMATEXTENSIBLE)-sizeof(WAVEFORMATEX);
+				wfex.Format.cbSize = sizeof(WAVEFORMATEXTENSIBLE) - sizeof(WAVEFORMATEX);
 
 				int r1 = WAVERR_BADFORMAT;
 				int r = waveInOpen(NULL, WAVE_MAPPER, (WAVEFORMATEX*)&wfex, 0, 0, WAVE_FORMAT_QUERY | WAVE_FORMAT_DIRECT);
 
-				if (r==MMSYSERR_NOERROR) {
+				if (r == MMSYSERR_NOERROR) {
 					aformats.push_back(vdstructex<WAVEFORMATEX>((WAVEFORMATEX*)&wfex, sizeof wfex));
 				}
 			}
+		}
+	}
 }
 
 bool VDCaptureDriverScreen::GetAudioFormat(vdstructex<WAVEFORMATEX>& aformat) {

@@ -3355,7 +3355,7 @@ void VDCaptureDriverDS::DisplayDriverDialog(nsVDCapture::DriverDialog dlg) {
 					{ 0x05ea6f6b, 0x3b1e, 0x4958, 0xa6, 0x8d, 0xa3, 0x7f, 0x0b, 0x6a, 0x29, 0x95 }
 				};
 
-				DisplayPropertyPages(mpRealCapturePin, mhwndParent, kInvalidVideoCapturePinGuids, sizeof(kInvalidVideoCapturePinGuids)/sizeof(kInvalidVideoCapturePinGuids[0]));
+				DisplayPropertyPages(mpRealCapturePin, mhwndParent, kInvalidVideoCapturePinGuids, std::size(kInvalidVideoCapturePinGuids));
 			}
 			break;
 		case kDialogVideoPreviewPin:

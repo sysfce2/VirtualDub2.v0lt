@@ -620,10 +620,10 @@ void VDCaptureDriverVFW::GetAvailableAudioFormats(std::list<vdstructex<WAVEFORMA
 		16
 	};
 
-	for(int sridx=0; sridx < sizeof kSamplingRates / sizeof kSamplingRates[0]; ++sridx)
-		for(int chidx=0; chidx < sizeof kChannelCounts / sizeof kChannelCounts[0]; ++chidx)
-			for(int sdidx=0; sdidx < sizeof kSampleDepths / sizeof kSampleDepths[0]; ++sdidx) {
-				WAVEFORMATEX wfex={
+	for (unsigned sridx = 0; sridx < std::size(kSamplingRates); ++sridx) {
+		for (unsigned chidx = 0; chidx < std::size(kChannelCounts); ++chidx) {
+			for (unsigned sdidx = 0; sdidx < std::size(kSampleDepths); ++sdidx) {
+				WAVEFORMATEX wfex = {
 					WAVE_FORMAT_PCM,
 					kChannelCounts[chidx],
 					kSamplingRates[sridx],
@@ -636,10 +636,12 @@ void VDCaptureDriverVFW::GetAvailableAudioFormats(std::list<vdstructex<WAVEFORMA
 				wfex.nBlockAlign = wfex.nChannels * (wfex.wBitsPerSample >> 3);
 				wfex.nAvgBytesPerSec = wfex.nBlockAlign * wfex.nSamplesPerSec;
 
-				if (MMSYSERR_NOERROR ==waveInOpen(NULL, WAVE_MAPPER, &wfex, 0, 0, WAVE_FORMAT_QUERY | WAVE_FORMAT_DIRECT)) {
+				if (MMSYSERR_NOERROR == waveInOpen(NULL, WAVE_MAPPER, &wfex, 0, 0, WAVE_FORMAT_QUERY | WAVE_FORMAT_DIRECT)) {
 					aformats.push_back(vdstructex<WAVEFORMATEX>(&wfex, sizeof wfex));
 				}
 			}
+		}
+	}
 }
 
 bool VDCaptureDriverVFW::GetAudioFormat(vdstructex<WAVEFORMATEX>& aformat) {
@@ -989,18 +991,18 @@ LRESULT CALLBACK VDCaptureDriverVFW::ErrorCallback(HWND hwnd, int nID, LPCSTR lp
 	};
 
 	char buf[1024];
-	int i;
 
 	if (!nID) return 0;
 
-	for(i=0; i<sizeof g_betterCaptureErrors/sizeof g_betterCaptureErrors[0]; i++)
+	for (unsigned i = 0; i < std::size(g_betterCaptureErrors); i++) {
 		if (g_betterCaptureErrors[i].id == nID) {
 			MessageBox(GetParent(hWnd), g_betterCaptureErrors[i].szError, "VirtualDub capture error", MB_OK);
 			return 0;
 		}
+	}
 
 	buf[0] = 0;
-	_snprintf(buf, sizeof buf / sizeof buf[0], "Error %d: %s", nID, lpsz);
+	_snprintf(buf, std::size(buf), "Error %d: %s", nID, lpsz);
 	MessageBox(GetParent(hWnd), buf, "VirtualDub capture error", MB_OK);
 	VDDEBUG("%s\n",buf);
 #endif
@@ -1043,7 +1045,7 @@ LRESULT CALLBACK VDCaptureDriverVFW::StatusCallback(HWND hwnd, int nID, LPCSTR l
 
 	if (nID) {
 		buf[0] = 0;
-		_snprintf(buf, sizeof buf / sizeof buf[0], "Status %d: %s", nID, lpsz);
+		_snprintf(buf, std::size(buf), "Status %d: %s", nID, lpsz);
 		SendMessage(GetDlgItem(GetParent(hWnd), IDC_STATUS_WINDOW), SB_SETTEXT, 0, (LPARAM)buf);
 		VDDEBUG("%s\n",buf);
 	} else {
