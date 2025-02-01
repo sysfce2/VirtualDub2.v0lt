@@ -119,11 +119,8 @@
     <ClCompile Include="source\Job.cpp" />
     <ClCompile Include="source\ParameterCurve.cpp" />
     <ClCompile Include="source\PortableRegistry.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    <ClCompile Include="source\stdafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\UIProxies.cpp" />
     <ClCompile Include="source\win32\DebugOutputFilter.cpp" />
@@ -136,7 +133,7 @@
     <None Include="h\fft_sse.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="h\stdafx.h" />
     <ClInclude Include="..\h\vd2\VDLib\Dialog.h" />
     <ClInclude Include="..\h\vd2\VDLib\fft.h" />
     <ClInclude Include="..\h\vd2\VDLib\Job.h" />

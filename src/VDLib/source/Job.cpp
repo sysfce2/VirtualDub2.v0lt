@@ -141,7 +141,7 @@ bool VDJob::Merge(const VDJob& src) {
 			0
 		};
 
-		VDASSERTCT(sizeof(kPriority)/sizeof(kPriority[0]) == VDJob::kStateCount);
+		VDASSERTCT(std::size(kPriority) == VDJob::kStateCount);
 
 		int pri1 = kPriority[mState];
 		int pri2 = kPriority[src.mState];
@@ -188,7 +188,7 @@ VDStringA VDJob::ToString() const {
 		"Starting",
 	};
 
-	VDASSERTCT(sizeof(kStateNames) / sizeof(kStateNames[0]) == kStateCount);
+	VDASSERTCT(std::size(kStateNames) == kStateCount);
 
 	s.sprintf("%s | %s | %-11s (%s:%d)", mInputFile.c_str(), mOutputFile.c_str(), kStateNames[mState], mRunnerName.c_str(), (uint32)mRunnerId);
 	return s;
