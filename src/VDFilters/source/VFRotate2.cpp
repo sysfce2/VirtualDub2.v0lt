@@ -729,8 +729,9 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 
 				hwndItem = GetDlgItem(hDlg, IDC_FILTERMODE);
 
-				for(i=0; i<sizeof szModes/sizeof szModes[0]; i++)
-					SendMessage(hwndItem, CB_ADDSTRING, 0, (LPARAM)szModes[i]);
+				for (const auto& szMode : szModes) {
+					SendMessage(hwndItem, CB_ADDSTRING, 0, (LPARAM)szMode);
+				}
 
 				SendMessage(hwndItem, CB_SETCURSEL, mfd->filtmode, 0);
 

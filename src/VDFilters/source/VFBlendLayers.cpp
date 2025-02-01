@@ -122,10 +122,11 @@ bool VDVFBlendLayersDialog::OnLoaded() {
 	if (mifp2)
 		mifp2->InitButton((VDXHWND)GetControl(IDC_PREVIEW));
 
-	for(size_t i = 0; i < sizeof(kBlendModes)/sizeof(kBlendModes[0]); ++i)
+	for (size_t i = 0; i < std::size(kBlendModes); ++i) {
 		mListBox.AddItem(kBlendModes[i], i);
+	}
 
-	VDASSERTCT(sizeof(kBlendModes)/sizeof(kBlendModes[0]) == VDVFBlendLayersConfig::kModeCount);
+	VDASSERTCT(std::size(kBlendModes) == VDVFBlendLayersConfig::kModeCount);
 
 	TBSetRange(IDC_AMOUNT, 0, 100);
 

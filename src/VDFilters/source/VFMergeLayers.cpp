@@ -87,10 +87,11 @@ bool VDVFMergeLayersDialog::OnLoaded() {
 	if (mifp2)
 		mifp2->InitButton((VDXHWND)GetControl(IDC_PREVIEW));
 
-	for(size_t i = 0; i < sizeof(kBlendModes)/sizeof(kBlendModes[0]); ++i)
+	for (size_t i = 0; i < std::size(kBlendModes); ++i) {
 		mListBox.AddItem(kBlendModes[i], i);
+	}
 
-	VDASSERTCT(sizeof(kBlendModes)/sizeof(kBlendModes[0]) == VDVFMergeLayersConfig::kModeCount);
+	VDASSERTCT(std::size(kBlendModes) == VDVFMergeLayersConfig::kModeCount);
 
 	OnDataExchange(false);
 	SetFocusToControl(IDC_BLEND_MODE);

@@ -129,8 +129,7 @@ bool VDVFilterConvertFormatConfigDialog::OnCommand(uint32 id, uint32 extcode) {
 				return TRUE;
 		}
 
-		for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-			const FormatButtonMapping& fbm = kFormatButtonMappings[i];
+		for (const auto& fbm : kFormatButtonMappings) {
 			if (fbm.mInputButton == id) {
 				mFormat.format = fbm.mFormat;
 				SyncInputColor();
@@ -143,18 +142,15 @@ bool VDVFilterConvertFormatConfigDialog::OnCommand(uint32 id, uint32 extcode) {
 }
 
 void VDVFilterConvertFormatConfigDialog::InitFocus() {
-	for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-		const FormatButtonMapping& fbm = kFormatButtonMappings[i];
-
-		if (fbm.mFormat == mFormat)
+	for(const auto& fbm : kFormatButtonMappings) {
+		if (fbm.mFormat == mFormat) {
 			SetFocusToControl(fbm.mInputButton);
+		}
 	}
 }
 
 void VDVFilterConvertFormatConfigDialog::SyncControls() {
-	for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-		const FormatButtonMapping& fbm = kFormatButtonMappings[i];
-
+	for (const auto& fbm : kFormatButtonMappings) {
 		CheckButton(fbm.mInputButton, fbm.mFormat == mFormat);
 	}
 
@@ -270,8 +266,7 @@ bool VDVFilterConvertGrayConfigDialog::OnCommand(uint32 id, uint32 extcode) {
 				return TRUE;
 		}
 
-		for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-			const FormatButtonMapping& fbm = kFormatButtonMappings[i];
+		for (const auto& fbm : kFormatButtonMappings) {
 			if (fbm.mInputButton == id) {
 				mFormat.format = fbm.mFormat;
 				SyncInputColor();
@@ -284,18 +279,14 @@ bool VDVFilterConvertGrayConfigDialog::OnCommand(uint32 id, uint32 extcode) {
 }
 
 void VDVFilterConvertGrayConfigDialog::InitFocus() {
-	for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-		const FormatButtonMapping& fbm = kFormatButtonMappings[i];
-
+	for (const auto& fbm : kFormatButtonMappings) {
 		if (fbm.mFormat == mFormat)
 			SetFocusToControl(fbm.mInputButton);
 	}
 }
 
 void VDVFilterConvertGrayConfigDialog::SyncControls() {
-	for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-		const FormatButtonMapping& fbm = kFormatButtonMappings[i];
-
+	for (const auto& fbm : kFormatButtonMappings) {
 		if (fbm.mFormat == mFormat)
 			CheckButton(fbm.mInputButton, true);
 	}
@@ -373,8 +364,7 @@ bool VDVFilterConvertFloatConfigDialog::OnCommand(uint32 id, uint32 extcode) {
 				return TRUE;
 		}
 
-		for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-			const FormatButtonMapping& fbm = kFormatButtonMappings[i];
+		for (const auto& fbm : kFormatButtonMappings) {
 			if (fbm.mInputButton == id) {
 				mFormat.format = fbm.mFormat;
 				redo();
@@ -386,20 +376,18 @@ bool VDVFilterConvertFloatConfigDialog::OnCommand(uint32 id, uint32 extcode) {
 }
 
 void VDVFilterConvertFloatConfigDialog::InitFocus() {
-	for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-		const FormatButtonMapping& fbm = kFormatButtonMappings[i];
-
-		if (fbm.mFormat == mFormat)
+	for (const auto& fbm : kFormatButtonMappings) {
+		if (fbm.mFormat == mFormat) {
 			SetFocusToControl(fbm.mInputButton);
+		}
 	}
 }
 
 void VDVFilterConvertFloatConfigDialog::SyncControls() {
-	for(int i=0; i<(int)sizeof(kFormatButtonMappings)/sizeof(kFormatButtonMappings[0]); ++i) {
-		const FormatButtonMapping& fbm = kFormatButtonMappings[i];
-
-		if (fbm.mFormat == mFormat)
+	for (const auto& fbm : kFormatButtonMappings) {
+		if (fbm.mFormat == mFormat) {
 			CheckButton(fbm.mInputButton, true);
+		}
 	}
 }
 

@@ -233,8 +233,9 @@ namespace {
 					CheckDlgButton(mhdlg, IDC_UNPROJECT, mfd->unproject);
 
 					HWND hwndCombo = GetDlgItem(mhdlg, IDC_FILTER);
-					for(int i=0; i<sizeof g_filterModes / sizeof g_filterModes[0]; ++i)
-						SendMessage(hwndCombo, CB_ADDSTRING, 0, (LPARAM)g_filterModes[i]);
+					for (const auto& filterMode : g_filterModes) {
+						SendMessage(hwndCombo, CB_ADDSTRING, 0, (LPARAM)filterMode);
+					}
 
 					SendMessage(hwndCombo, CB_SETCURSEL, mfd->filtermode, 0);
 
