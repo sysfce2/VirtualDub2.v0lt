@@ -44,7 +44,7 @@ long CPUCheckForExtensions() {
 }
 #else
 
-#if defined(_MSC_VER) && (_MSC_FULL_VER >= 160040219)
+#if defined(_MSC_VER)
 unsigned __int64 get_xcr0(){
 	return _xgetbv(0);  // VS2010 SP1 required.
 }

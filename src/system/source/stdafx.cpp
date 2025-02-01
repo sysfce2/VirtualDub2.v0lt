@@ -32,7 +32,7 @@
 // compiler/setup checks
 
 #if defined(_MSC_VER)
-	#if _MSC_VER < 1400
-		#error MSVC 14.00 (VC 8.0) compiler or newer required. 
+	#if _MSC_VER < 1900
+		#error MSVC 19.00 (Visual Studio 2015 v14.0) compiler or newer required. 
 	#endif
 #endif

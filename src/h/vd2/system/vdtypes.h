@@ -51,10 +51,10 @@
 	#if defined(_MSC_VER)
 		#define VD_COMPILER_MSVC	_MSC_VER
 
-		#if _MSC_VER >= 1400
-			#define VD_COMPILER_MSVC_VC8_OR_LATER 1
+		#if _MSC_VER >= 1900
+			#define VD_COMPILER_MSVC_1900_OR_LATER 1
 		#else
-			#error MSVC 14.00 (VC 8.0) compiler or newer required. 
+			#error MSVC 19.00 (Visual Studio 2015 v14.0) compiler or newer required. 
 		#endif
 	#elif defined(__GNUC__)
 		#define VD_COMPILER_GCC
