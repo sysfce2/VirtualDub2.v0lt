@@ -90,7 +90,6 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeaderOutputFile>.\..\obj\Debug\Lina/Lina.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\..\obj\Debug\Lina/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
@@ -120,7 +119,6 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeaderOutputFile>.\..\obj\Debug\Lina/Lina.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\..\obj\Debug\Lina/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
@@ -150,7 +148,6 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeaderOutputFile>.\..\obj\Release\Lina/Lina.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\..\obj\Release\Lina/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
@@ -181,7 +178,6 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeaderOutputFile>.\..\obj\Release\Lina/Lina.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\..\obj\Release\Lina/</AssemblerListingLocation>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
@@ -201,12 +197,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\document.cpp" />
-    <ClCompile Include="source\main.cpp">
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
+    <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\parser.cpp" />
   </ItemGroup>
   <ItemGroup>
