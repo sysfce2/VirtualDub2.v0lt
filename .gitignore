@@ -1,6 +1,6 @@
-lib
-obj
-out
+_lib
+_obj
+_out
 .vs
 *.user
 *.ncb

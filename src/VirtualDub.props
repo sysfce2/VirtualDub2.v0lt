@@ -3,9 +3,9 @@
   <PropertyGroup Label="UserMacros">
     <VDBaseDir>..\..</VDBaseDir>
     <VDDirTag>$(VDConfigDirTag)$(VDPlatformDirTag)</VDDirTag>
-    <VDLibPath>$(VDBaseDir)\lib\$(VDDirTag)</VDLibPath>
-    <VDOutputPath>$(VDBaseDir)\out\$(VDDirTag)</VDOutputPath>
-    <VDObjPath>$(VDBaseDir)\obj\$(VDDirTag)\$(ProjectName)</VDObjPath>
+    <VDLibPath>$(VDBaseDir)\_lib\$(VDDirTag)</VDLibPath>
+    <VDOutputPath>$(VDBaseDir)\_out\$(VDDirTag)</VDOutputPath>
+    <VDObjPath>$(VDBaseDir)\_obj\$(VDDirTag)\$(ProjectName)</VDObjPath>
   </PropertyGroup>
   <PropertyGroup>
     <IntDir>$(VDObjPath)\</IntDir>
