@@ -82,6 +82,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>.\vdremote.def</ModuleDefinitionFile>
       <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(VDLibPath)\$(ProjectName).lib</ImportLibrary>
     </Link>  
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
