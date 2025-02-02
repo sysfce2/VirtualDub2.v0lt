@@ -4,7 +4,7 @@ CD /D %~dp0
 
 REM -------------------------------------
 
-IF NOT EXIST "out\ReleaseAMD64\VirtualDub2.exe" (
+IF NOT EXIST "_out\ReleaseAMD64\VirtualDub2.exe" (
   ECHO VirtualDub2 not compiled.
   GOTO :END
 )
@@ -78,7 +78,7 @@ FOR /F "USEBACKQ" %%F IN (`powershell -NoLogo -NoProfile -Command ^(Get-Item "%P
 
 SET PCKG_NAME=VirtualDub2_v%FILE_VERSION%
 
-"%SEVENZIP%" a -m0=lzma -mx9 -ms=on "out\%PCKG_NAME%.7z" ".\%PCKG_DIR%"
+"%SEVENZIP%" a -m0=lzma -mx9 -ms=on "_out\%PCKG_NAME%.7z" ".\%PCKG_DIR%"
 
 :END
 ENDLOCAL
