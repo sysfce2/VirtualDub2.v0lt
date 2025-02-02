@@ -1,6 +1,6 @@
 VirtualDub2.1 change log
 
-2.1.3.x dev
+2.2.0.x dev
 ----------------------
 The auxsetup utility now has two versions: for win32 and x64.
 Removed "64" prefixes for exe and dll files.
