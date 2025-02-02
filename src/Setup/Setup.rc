@@ -58,7 +58,11 @@ END
 
 IDD_MAINWINDOW DIALOGEX 0, 0, 341, 136
 STYLE DS_SETFONT | DS_3DLOOK | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
-CAPTION "VirtualDub2 auxiliary setup"
+#ifdef _WIN64
+CAPTION "VirtualDub2 x64 auxiliary setup"
+#else
+CAPTION "VirtualDub2 x86 auxiliary setup"
+#endif
 CLASS "VirtualDub Setup Class"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
