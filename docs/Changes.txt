@@ -1,12 +1,22 @@
 VirtualDub2.1 change log
 
-2.2.0.x dev
+2.2.0.755 - 2024-01-03
 ----------------------
 The auxsetup utility now has two versions: for win32 and x64.
 Removed "64" prefixes for exe and dll files.
 Improved HiDPI support.
 Fixed output of system messages in vdub2.exe.
 Code refactoring for modern compilers.
+
+Updated avlib-1.vdplugin to version 0.7.1.220.
+    Video files with incorrect (or unrecognized) frame rates are not supported. This fixes the plugin crash.
+    Code refactoring for modern compilers.
+
+Updated scripted.vdplugin to version 0.2.1.92.
+    Fixed script saving.
+    Now uses Avisynth+ header files. Minimum supported version of Avisynth is 2.6.
+    Code refactoring for modern compilers.
+
 
 2.1.3.667 - 2024-12-03
 ----------------------
