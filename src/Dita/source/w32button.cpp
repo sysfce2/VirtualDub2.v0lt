@@ -36,7 +36,7 @@ public:
 extern IVDUIWindow *VDCreateUIButton() { return new VDUIButtonW32; }
 
 bool VDUIButtonW32::Create(IVDUIParameters *pParams) {
-	return CreateW32(pParams, "BUTTON", WS_TABSTOP);
+	return CreateW32(pParams, L"BUTTON", WS_TABSTOP);
 }
 
 void VDUIButtonW32::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) {
@@ -79,7 +79,7 @@ public:
 extern IVDUIWindow *VDCreateUICheckbox() { return new VDUICheckboxW32; }
 
 bool VDUICheckboxW32::Create(IVDUIParameters *pParams) {
-	return CreateW32(pParams, "BUTTON", BS_AUTOCHECKBOX|BS_TOP|BS_MULTILINE|WS_TABSTOP);
+	return CreateW32(pParams, L"BUTTON", BS_AUTOCHECKBOX|BS_TOP|BS_MULTILINE|WS_TABSTOP);
 }
 
 void VDUICheckboxW32::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) {
@@ -178,7 +178,7 @@ bool VDUIOptionW32::Create(IVDUIParameters *pParams) {
 		}
 	}
 
-	if (CreateW32(pParams, "BUTTON", mpBaseOption	? (BS_AUTORADIOBUTTON|BS_TOP|BS_MULTILINE|WS_TABSTOP)
+	if (CreateW32(pParams, L"BUTTON", mpBaseOption	? (BS_AUTORADIOBUTTON|BS_TOP|BS_MULTILINE|WS_TABSTOP)
 													: (BS_AUTORADIOBUTTON|BS_TOP|BS_MULTILINE|WS_GROUP)))
 	{
 		if (mpBaseOption)

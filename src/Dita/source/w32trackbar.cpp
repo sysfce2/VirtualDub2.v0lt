@@ -58,7 +58,7 @@ void *VDUITrackbarW32::AsInterface(uint32 id) {
 bool VDUITrackbarW32::Create(IVDUIParameters *pParams) {
 	mValue = 0;
 	mStep = 1;
-	return CreateW32(pParams, TRACKBAR_CLASS, TBS_HORZ|TBS_BOTH|TBS_NOTICKS);
+	return CreateW32(pParams, TRACKBAR_CLASSW, TBS_HORZ|TBS_BOTH|TBS_NOTICKS);
 }
 
 void VDUITrackbarW32::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) {

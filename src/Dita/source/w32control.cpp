@@ -23,7 +23,7 @@ VDUIControlW32::~VDUIControlW32() {
 	Destroy();
 }
 
-bool VDUIControlW32::CreateW32(IVDUIParameters *pParms, const char *pClass, DWORD flags) {
+bool VDUIControlW32::CreateW32(IVDUIParameters *pParms, const wchar_t *pClass, DWORD flags) {
 	if (!VDUIPeerW32::Create(pParms))
 		return false;
 
@@ -45,7 +45,7 @@ bool VDUIControlW32::CreateW32(IVDUIParameters *pParms, const char *pClass, DWOR
 
 	const UINT id = mpBase->GetNextNativeID();
 
-	mhwnd = CreateWindowExW(exflags, VDTextAToW(pClass).c_str(), mCaption.c_str(), flags, 0, 0, 0, 0, hwndParent, (HMENU)(UINT_PTR)id, GetModuleHandle(NULL), NULL);
+	mhwnd = CreateWindowExW(exflags, pClass, mCaption.c_str(), flags, 0, 0, 0, 0, hwndParent, (HMENU)(UINT_PTR)id, GetModuleHandle(NULL), NULL);
 
 	if (!mhwnd)
 		return false;

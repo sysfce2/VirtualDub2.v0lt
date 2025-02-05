@@ -8,7 +8,7 @@ public:
 	~VDUIControlW32();
 
 protected:
-	bool CreateW32(IVDUIParameters *pParms, const char *pClass, DWORD style);
+	bool CreateW32(IVDUIParameters *pParms, const wchar_t *pClass, DWORD style);
 	void Destroy();
 
 	virtual void PreLayoutBase(const VDUILayoutSpecs&);

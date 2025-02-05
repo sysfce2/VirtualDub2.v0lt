@@ -28,7 +28,7 @@ public:
 extern IVDUIWindow *VDCreateUIGroup() { return new VDUIGroupW32; }
 
 bool VDUIGroupW32::Create(IVDUIParameters *pParameters) {
-	return CreateW32(pParameters, "BUTTON", BS_GROUPBOX);
+	return CreateW32(pParameters, L"BUTTON", BS_GROUPBOX);
 }
 
 void VDUIGroupW32::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) {

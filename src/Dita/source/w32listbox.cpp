@@ -61,7 +61,7 @@ void *VDUIListBoxW32::AsInterface(uint32 id) {
 }
 
 bool VDUIListBoxW32::Create(IVDUIParameters *pParameters) {
-	return CreateW32(pParameters, "LISTBOX", LBS_NOTIFY|LBS_NOINTEGRALHEIGHT|WS_TABSTOP|WS_VSCROLL);
+	return CreateW32(pParameters, L"LISTBOX", LBS_NOTIFY|LBS_NOINTEGRALHEIGHT|WS_TABSTOP|WS_VSCROLL);
 }
 
 void VDUIListBoxW32::PreLayoutBaseW32(const VDUILayoutSpecs& parentConstraints) {
@@ -163,7 +163,7 @@ void *VDUIComboBoxW32::AsInterface(uint32 id) {
 }
 
 bool VDUIComboBoxW32::Create(IVDUIParameters *pParameters) {
-	if (!CreateW32(pParameters, "COMBOBOX", CBS_DROPDOWNLIST|WS_TABSTOP|WS_VSCROLL))
+	if (!CreateW32(pParameters, L"COMBOBOX", CBS_DROPDOWNLIST|WS_TABSTOP|WS_VSCROLL))
 		return false;
 
 	RECT r;

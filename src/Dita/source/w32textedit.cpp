@@ -40,7 +40,7 @@ public:
 extern IVDUIWindow *VDCreateUITextEdit() { return new VDUITextEditW32; }
 
 bool VDUITextEditW32::Create(IVDUIParameters *pParameters) {
-	return CreateW32(pParameters, "EDIT", ES_AUTOHSCROLL|WS_TABSTOP);
+	return CreateW32(pParameters, L"EDIT", ES_AUTOHSCROLL|WS_TABSTOP);
 }
 
 void VDUITextEditW32::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) {
@@ -88,7 +88,7 @@ bool VDUITextAreaW32::Create(IVDUIParameters *pParameters) {
 		dwStyle &= ~WS_TABSTOP;
 	}
 
-	if (!CreateW32(pParameters, "RichEdit", dwStyle))
+	if (!CreateW32(pParameters, L"RichEdit", dwStyle))
 		return false;
 
 	if (dwStyle & ES_READONLY)

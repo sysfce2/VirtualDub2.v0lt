@@ -102,7 +102,7 @@ bool VDUIListViewW32::Create(IVDUIParameters *pParameters) {
 	if (pParameters->GetB(nsVDUI::kUIParam_NoHeader, false))
 		dwFlags |= LVS_NOCOLUMNHEADER;
 
-	if (!CreateW32(pParameters, WC_LISTVIEW, dwFlags))
+	if (!CreateW32(pParameters, WC_LISTVIEWW, dwFlags))
 		return false;
 
 	ListView_SetExtendedListViewStyle(mhwnd, LVS_EX_FULLROWSELECT | ListView_GetExtendedListViewStyle(mhwnd));

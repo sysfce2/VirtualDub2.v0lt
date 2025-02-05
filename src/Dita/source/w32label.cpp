@@ -27,7 +27,7 @@ public:
 extern IVDUIWindow *VDCreateUILabel() { return new VDUILabelW32; }
 
 bool VDUILabelW32::Create(IVDUIParameters *pParameters) {
-	return CreateW32(pParameters, "STATIC", pParameters->GetB(nsVDUI::kUIParam_Multiline, false) ? SS_LEFT : SS_CENTERIMAGE|SS_LEFT);
+	return CreateW32(pParameters, L"STATIC", pParameters->GetB(nsVDUI::kUIParam_Multiline, false) ? SS_LEFT : SS_CENTERIMAGE|SS_LEFT);
 }
 
 void VDUILabelW32::PreLayoutBaseW32(const VDUILayoutSpecs& parentConstraints) {

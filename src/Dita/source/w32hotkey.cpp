@@ -44,7 +44,7 @@ protected:
 extern IVDUIWindow *VDCreateUIHotkey() { return new VDUIHotkeyW32; }
 
 bool VDUIHotkeyW32::Create(IVDUIParameters *pParams) {
-	if (!CreateW32(pParams, HOTKEY_CLASS, WS_TABSTOP))
+	if (!CreateW32(pParams, HOTKEY_CLASSW, WS_TABSTOP))
 		return false;
 
 	mValue = 0;
