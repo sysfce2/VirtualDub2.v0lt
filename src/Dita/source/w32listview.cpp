@@ -119,7 +119,7 @@ bool VDUIListViewW32::Create(IVDUIParameters *pParameters) {
 					RECT r = { 0, 0, cx, cy };
 
 					SetBkColor(hdc, PALETTEINDEX(0));
-					ExtTextOut(hdc, 0, 0, ETO_OPAQUE, &r, "", 0, NULL);
+					ExtTextOutA(hdc, 0, 0, ETO_OPAQUE, &r, "", 0, NULL);
 					DrawFrameControl(hdc, &r, DFC_BUTTON, DFCS_BUTTONCHECK|DFCS_CHECKED);
 
 					SelectObject(hdc, hbmOld);

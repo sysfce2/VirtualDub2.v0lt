@@ -761,7 +761,7 @@ const VDStringW VDGetDirectory(long nKey, VDGUIHandle ctxParent, const wchar_t *
 					pFileOpen->SetTitle(pszTitle);
 
 					if (fsent.szFile[0]) {
-						HMODULE hmod = GetModuleHandle("shell32.dll");
+						HMODULE hmod = GetModuleHandleA("shell32.dll");
 						typedef HRESULT (APIENTRY *tpSHCreateItemFromParsingName)(PCWSTR pszPath, IBindCtx *pbc, REFIID riid, void **ppv);
 						tpSHCreateItemFromParsingName pSHCreateItemFromParsingName = (tpSHCreateItemFromParsingName)GetProcAddress(hmod, "SHCreateItemFromParsingName");
 

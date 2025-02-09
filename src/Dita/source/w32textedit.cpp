@@ -79,7 +79,7 @@ void *VDUITextAreaW32::AsInterface(uint32 id) {
 
 bool VDUITextAreaW32::Create(IVDUIParameters *pParameters) {
 	if (!shmodRichEdit)
-		shmodRichEdit = LoadLibrary("riched32");
+		shmodRichEdit = LoadLibraryA("riched32");
 
 	DWORD dwStyle = ES_MULTILINE|ES_AUTOVSCROLL|WS_TABSTOP;
 

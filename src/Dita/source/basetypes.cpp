@@ -82,12 +82,12 @@ namespace {
 
 		HDC hdc = GetDC(NULL);
 		HGDIOBJ hOldFont = SelectObject(hdc, GetStockObject(DEFAULT_GUI_FONT));
-		TEXTMETRIC tm = {sizeof(TEXTMETRIC)};
+		TEXTMETRICA tm = {sizeof(TEXTMETRICA)};
 
-		if (GetTextMetrics(hdc, &tm)) {
+		if (GetTextMetricsA(hdc, &tm)) {
 			// the WINE guys figured this out, not me
 			SIZE s;
-			GetTextExtentPoint32(hdc, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 52, &s);
+			GetTextExtentPoint32A(hdc, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 52, &s);
 //			f.w = tm.tmAveCharWidth << 2;
 			f.w = s.cx/13;
 			f.h = tm.tmHeight << 1;
