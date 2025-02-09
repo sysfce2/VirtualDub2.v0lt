@@ -709,10 +709,14 @@ bool VDVFLogo::Configure(VDXHWND hwnd) {
 }
 
 void VDVFLogo::GetSettingString(char *buf, int maxlen) {
-	if (mConfig.bEnableAlphaBlending && mConfig.bEnableSecondaryAlpha)
-		SafePrintf(buf, maxlen, " (logo:\"%s\", alpha:\"%s\")", VDFileSplitPath(mConfig.szLogoPath), VDFileSplitPath(mConfig.szAlphaPath));
-	else
-		SafePrintf(buf, maxlen, " (logo:\"%s\", alpha:%s)", VDFileSplitPath(mConfig.szLogoPath), mConfig.bEnableAlphaBlending ? "on" : "off");
+	VDStringA logoFilenameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szLogoPath), -1);
+
+	if (mConfig.bEnableAlphaBlending && mConfig.bEnableSecondaryAlpha) {
+		VDStringA alphaFilenameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szAlphaPath), -1);
+		SafePrintf(buf, maxlen, " (logo:\"%s\", alpha:\"%s\")", logoFilenameU8.c_str(), alphaFilenameU8.c_str());
+	} else {
+		SafePrintf(buf, maxlen, " (logo:\"%s\", alpha:%s)", logoFilenameU8.c_str(), mConfig.bEnableAlphaBlending ? "on" : "off");
+	}
 }
 
 void VDVFLogo::ScriptConfig(IVDXScriptInterpreter *, const VDXScriptValue *argv, int argc) {

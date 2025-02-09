@@ -1996,10 +1996,11 @@ void VDVideoFiltersDialog::FilterListItem::GetText(int subItem, VDStringW& s) co
 
 			blurb += fi->GetName();
 
-			if (fi->GetSettingsString(settings))
+			if (fi->GetSettingsString(settings)) {
 				blurb += settings;
+			}
 
-			s = VDTextAToW(blurb);
+			s = VDTextU8ToW(blurb);
 		}
 		break;
 	}
