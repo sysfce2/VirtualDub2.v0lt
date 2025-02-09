@@ -613,12 +613,12 @@ void VDVFilterDrawText::ScriptConfig(IVDXScriptInterpreter *, const VDXScriptVal
 	param.align = flags & 3;
 	param.italic = (flags & 4)!=0;
 
-	VDString face_s(*argv[10].asString());
+	VDStringA face_s(*argv[10].asString());
 	param.face = VDTextU8ToW(face_s);
 
 	if (argc==12) {
 		if (argv[11].isString()) {
-			VDString text_s(*argv[11].asString());
+			VDStringA text_s(*argv[11].asString());
 			param.text = VDTextU8ToW(text_s);
 			param.time_format = 0;
 		} else {
@@ -630,7 +630,7 @@ void VDVFilterDrawText::ScriptConfig(IVDXScriptInterpreter *, const VDXScriptVal
 		size_t len;
 		fma->fmproject->GetData(0,&len,L"text.txt");
 		if (len) {
-			VDString s;
+			VDStringA s;
 			s.resize(len);
 			fma->fmproject->GetData(&s[0],&len,L"text.txt");
 			if (s.length()>3 && s.subspan(0,3)=="\xEF\xBB\xBF") {
@@ -650,14 +650,14 @@ void VDVFilterDrawText::ScriptConfig(IVDXScriptInterpreter *, const VDXScriptVal
 }
 
 void VDVFilterDrawText::GetScriptString(char *buf, int maxlen) {
-	VDString face_s = VDEncodeScriptString(VDTextWToU8(param.face));
-	VDString text_s = VDEncodeScriptString(VDTextWToU8(param.text));
+	VDStringA face_s = VDEncodeScriptString(VDTextWToU8(param.face));
+	VDStringA text_s = VDEncodeScriptString(VDTextWToU8(param.text));
 	int flags = param.align;
 	if(param.italic) flags |= 4;
 	int color1 = param.color & 0xFFFFFF;
 	int color0 = param.shadow_color & 0xFFFFFF;
 
-	VDString s;
+	VDStringA s;
 	if (param.time_format)
 		s.sprintf("Config(%g,%g,%g,%g, 0x%06lx, 0x%06lx, %g,%g,%d,%d,\"%s\",%d)", param.x0, param.y0, param.x1, param.y1, color1, color0, param.shadow_width,param.size,param.weight, flags, face_s.c_str(), param.time_format);
 	else
