@@ -1919,14 +1919,14 @@ void HexEditor::Extract() {
 	sint64 v1 = mpView->GetPosition(), v2=0x1000;
 
 	if (AskForValues("Extract file segment", "Address (hex):", "Length (hex):", v1, v2, &HexEditor::ExtractVerifier)) {
-		char szName[MAX_PATH];
-		OPENFILENAME ofn;
+		wchar_t szName[MAX_PATH];
+		OPENFILENAMEW ofn;
 
 		szName[0] = 0;
 
 		ofn.lStructSize			= OPENFILENAME_SIZE_VERSION_400;
 		ofn.hwndOwner			= hwnd;
-		ofn.lpstrFilter			= "All files (*.*)\0*.*\0";
+		ofn.lpstrFilter			= L"All files (*.*)\0*.*\0";
 		ofn.lpstrCustomFilter	= NULL;
 		ofn.nFilterIndex		= 1;
 		ofn.lpstrFile			= szName;
@@ -1937,7 +1937,7 @@ void HexEditor::Extract() {
 		ofn.Flags				= OFN_EXPLORER | OFN_ENABLESIZING | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
 		ofn.lpstrDefExt			= NULL;
 
-		if (GetSaveFileName(&ofn)) {
+		if (GetSaveFileNameW(&ofn)) {
 			VDFile mFile2;
 			char *pBuf = NULL;
 
