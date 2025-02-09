@@ -709,13 +709,14 @@ bool VDVFLogo::Configure(VDXHWND hwnd) {
 }
 
 void VDVFLogo::GetSettingString(char *buf, int maxlen) {
-	VDStringA logoFilenameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szLogoPath), -1);
+	VDStringA logoFnameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szLogoPath), -1);
 
 	if (mConfig.bEnableAlphaBlending && mConfig.bEnableSecondaryAlpha) {
-		VDStringA alphaFilenameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szAlphaPath), -1);
-		SafePrintf(buf, maxlen, " (logo:\"%s\", alpha:\"%s\")", logoFilenameU8.c_str(), alphaFilenameU8.c_str());
+		VDStringA alphaFnameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szAlphaPath), -1);
+
+		SafePrintf(buf, maxlen, " (logo:\"%s\", alpha:\"%s\")", logoFnameU8.c_str(), alphaFnameU8.c_str());
 	} else {
-		SafePrintf(buf, maxlen, " (logo:\"%s\", alpha:%s)", logoFilenameU8.c_str(), mConfig.bEnableAlphaBlending ? "on" : "off");
+		SafePrintf(buf, maxlen, " (logo:\"%s\", alpha:%s)", logoFnameU8.c_str(), mConfig.bEnableAlphaBlending ? "on" : "off");
 	}
 }
 
@@ -764,13 +765,17 @@ VDXVF_BEGIN_SCRIPT_METHODS(VDVFLogo)
 VDXVF_END_SCRIPT_METHODS()
 
 void VDVFLogo::GetScriptString(char *buf, int buflen) {
-	VDStringA name = VDEncodeScriptString(mConfig.szLogoPath);
-	VDStringA aname = VDEncodeScriptString(mConfig.szAlphaPath);
+	VDStringA logoPath = VDEncodeScriptString(VDTextWToU8(mConfig.szLogoPath, -1));
 
-	if (mConfig.bEnableAlphaBlending && mConfig.bEnableSecondaryAlpha)
-		SafePrintf(buf, buflen, "Config(\"%s\", %d, %d, \"%s\", %d, %d, %d, %d)", name.c_str(), mConfig.pos_x, mConfig.pos_y, aname.c_str(), mConfig.bNonPremultAlpha, mConfig.justify_x, mConfig.justify_y, mConfig.opacity);
-	else
-		SafePrintf(buf, buflen, "Config(\"%s\", %d, %d, %d, %d, %d, %d, %d)", name.c_str(), mConfig.pos_x, mConfig.pos_y, mConfig.bEnableAlphaBlending, mConfig.bNonPremultAlpha, mConfig.justify_x, mConfig.justify_y, mConfig.opacity);
+	if (mConfig.bEnableAlphaBlending && mConfig.bEnableSecondaryAlpha) {
+		VDStringA alphaPath = VDEncodeScriptString(VDTextWToU8(mConfig.szAlphaPath, -1));
+
+		SafePrintf(buf, buflen, "Config(\"%s\", %d, %d, \"%s\", %d, %d, %d, %d)",
+			logoPath.c_str(), mConfig.pos_x, mConfig.pos_y, alphaPath.c_str(), mConfig.bNonPremultAlpha, mConfig.justify_x, mConfig.justify_y, mConfig.opacity);
+	} else {
+		SafePrintf(buf, buflen, "Config(\"%s\", %d, %d, %d, %d, %d, %d, %d)",
+			logoPath.c_str(), mConfig.pos_x, mConfig.pos_y, mConfig.bEnableAlphaBlending, mConfig.bNonPremultAlpha, mConfig.justify_x, mConfig.justify_y, mConfig.opacity);
+	}
 }
 
 bool VDVFLogo::OnInvalidateCaches() {
