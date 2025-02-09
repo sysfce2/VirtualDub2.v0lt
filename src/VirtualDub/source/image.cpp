@@ -494,14 +494,15 @@ void DecodeImage(const void *pBuffer, long cbBuffer, VDPixmapBuffer& vb, int des
 	}
 }
 
-void DecodeImage(const char *pszFile, VDPixmapBuffer& buf, int desired_format, bool& bHasAlpha) {
+void DecodeImage(const wchar_t* pszFile, VDPixmapBuffer& buf, int desired_format, bool& bHasAlpha) {
 	VDFile f;
 
 	f.open(pszFile);
 
 	sint64 flen = f.size();
-	if (flen > 0x7FFFFFFF)
+	if (flen > 0x7FFFFFFF) {
 		throw MyError("Image file \"%s\" is too large to read (>2GB!).\n");
+	}
 
 	vdblock<uint8> buffer;
 	buffer.resize((uint32)flen);

@@ -43,8 +43,8 @@ extern HINSTANCE g_hInst;
 ///////////////////////////////////////////////////////////////////////////
 
 struct VDVFLogoConfig {
-	char	szLogoPath[MAX_PATH];
-	char	szAlphaPath[MAX_PATH];
+	wchar_t	szLogoPath[MAX_PATH];
+	wchar_t	szAlphaPath[MAX_PATH];
 
 	int		pos_x, pos_y;
 	int		justify_x, justify_y;
@@ -73,21 +73,22 @@ struct VDVFLogoConfig {
 	}
 };
 
-static const char *logoOpenImage(HWND hwnd, const char *oldfn) {
-	OPENFILENAME ofn;
-	static char szFile[MAX_PATH];
-	char szFileTitle[MAX_PATH];
+static const wchar_t* logoOpenImage(HWND hwnd, const wchar_t* oldfn) {
+	OPENFILENAMEW ofn;
+	static wchar_t szFile[MAX_PATH];
+	wchar_t szFileTitle[MAX_PATH];
 
 	///////////////
 
-	if (oldfn)
-		strcpy(szFile, oldfn);
+	if (oldfn) {
+		wcscpy(szFile, oldfn);
+	}
 
 	szFileTitle[0]=0;
 
 	ofn.lStructSize			= OPENFILENAME_SIZE_VERSION_400;
 	ofn.hwndOwner			= hwnd;
-	ofn.lpstrFilter			= "Image file (*.bmp,*.tga,*.jpg,*.jpeg,*.png)\0*.bmp;*.tga;*.jpg;*.jpeg;*.png\0All files (*.*)\0*.*\0";
+	ofn.lpstrFilter			= L"Image file (*.bmp,*.tga,*.jpg,*.jpeg,*.png)\0*.bmp;*.tga;*.jpg;*.jpeg;*.png\0All files (*.*)\0*.*\0";
 	ofn.lpstrCustomFilter	= NULL;
 	ofn.nFilterIndex		= 1;
 	ofn.lpstrFile			= szFile;
@@ -95,12 +96,13 @@ static const char *logoOpenImage(HWND hwnd, const char *oldfn) {
 	ofn.lpstrFileTitle		= szFileTitle;
 	ofn.nMaxFileTitle		= sizeof szFileTitle;
 	ofn.lpstrInitialDir		= NULL;
-	ofn.lpstrTitle			= "Select image";
+	ofn.lpstrTitle			= L"Select image";
 	ofn.Flags				= OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY | OFN_ENABLESIZING;
 	ofn.lpstrDefExt			= NULL;
 
-	if (GetOpenFileName(&ofn))
+	if (GetOpenFileNameW(&ofn)) {
 		return szFile;
+	}
 
 	return NULL;
 }
@@ -132,8 +134,8 @@ VDVFLogoDialog::VDVFLogoDialog(VDVFLogoConfig& config, IVDXFilterPreview2 *ifp2)
 }
 
 bool VDVFLogoDialog::OnLoaded() {
-	SetControlText(IDC_LOGOFILE, VDTextAToW(mConfig.szLogoPath).c_str());
-	SetControlText(IDC_ALPHAFILE, VDTextAToW(mConfig.szAlphaPath).c_str());
+	SetControlText(IDC_LOGOFILE, mConfig.szLogoPath);
+	SetControlText(IDC_ALPHAFILE, mConfig.szAlphaPath);
 	CheckButton(IDC_ALPHABLEND, mConfig.bEnableAlphaBlending);
 	CheckButton(IDC_SECONDARYALPHA, mConfig.bEnableSecondaryAlpha);
 	CheckButton(IDC_PREMULTALPHA, !mConfig.bNonPremultAlpha);
@@ -201,8 +203,9 @@ bool VDVFLogoDialog::OnCommand(uint32 id, uint32 extcode) {
 			if (extcode == EN_KILLFOCUS) {
 				VDStringW s;
 
-				if (GetControlText(IDC_LOGOFILE, s))
-					vdstrlcpy(mConfig.szLogoPath, VDTextWToA(s).c_str(), sizeof mConfig.szLogoPath);
+				if (GetControlText(IDC_LOGOFILE, s)) {
+					vdwcslcpy(mConfig.szLogoPath, s.c_str(), std::size(mConfig.szLogoPath));
+				}
 
 				mifp2->UndoSystem();
 				mifp2->RedoSystem();
@@ -213,8 +216,9 @@ bool VDVFLogoDialog::OnCommand(uint32 id, uint32 extcode) {
 			if (extcode == EN_KILLFOCUS) {
 				VDStringW s;
 
-				if (GetControlText(IDC_ALPHAFILE, s))
-					vdstrlcpy(mConfig.szAlphaPath, VDTextWToA(s).c_str(), sizeof mConfig.szAlphaPath);
+				if (GetControlText(IDC_ALPHAFILE, s)) {
+					vdwcslcpy(mConfig.szAlphaPath, s.c_str(), std::size(mConfig.szAlphaPath));
+				}
 
 				mifp2->UndoSystem();
 				mifp2->RedoSystem();
@@ -222,18 +226,18 @@ bool VDVFLogoDialog::OnCommand(uint32 id, uint32 extcode) {
 			return true;
 
 		case IDC_LOGOFILE_BROWSE:
-			if (const char *fn = logoOpenImage(mhdlg, mConfig.szLogoPath)) {
-				SetControlText(IDC_LOGOFILE, VDTextAToW(fn).c_str());
-				strcpy(mConfig.szLogoPath, fn);
+			if (const wchar_t* fn = logoOpenImage(mhdlg, mConfig.szLogoPath)) {
+				SetControlText(IDC_LOGOFILE, fn);
+				wcscpy(mConfig.szLogoPath, fn);
 				mifp2->UndoSystem();
 				mifp2->RedoSystem();
 			}
 			return true;
 
 		case IDC_ALPHAFILE_BROWSE:
-			if (const char *fn = logoOpenImage(mhdlg, mConfig.szAlphaPath)) {
-				SetControlText(IDC_ALPHAFILE, VDTextAToW(fn).c_str());
-				strcpy(mConfig.szAlphaPath, fn);
+			if (const wchar_t* fn = logoOpenImage(mhdlg, mConfig.szAlphaPath)) {
+				SetControlText(IDC_ALPHAFILE, fn);
+				wcscpy(mConfig.szAlphaPath, fn);
 				mifp2->UndoSystem();
 				mifp2->RedoSystem();
 			}
@@ -721,12 +725,12 @@ void VDVFLogo::ScriptConfig(IVDXScriptInterpreter *, const VDXScriptValue *argv,
 
 	mConfig.bEnableSecondaryAlpha = false;
 
-	strncpy(mConfig.szLogoPath, *argv[0].asString(), sizeof mConfig.szLogoPath);
-	mConfig.szLogoPath[sizeof mConfig.szLogoPath - 1] = 0;
+	wcsncpy(mConfig.szLogoPath, VDTextU8ToW(*argv[0].asString(), -1).c_str(), std::size(mConfig.szLogoPath));
+	mConfig.szLogoPath[std::size(mConfig.szLogoPath) - 1] = 0;
 
 	if (argv[3].isString()) {
-		strncpy(mConfig.szAlphaPath, *argv[3].asString(), sizeof mConfig.szAlphaPath);
-		mConfig.szAlphaPath[sizeof mConfig.szAlphaPath - 1] = 0;
+		wcsncpy(mConfig.szAlphaPath, VDTextU8ToW(*argv[3].asString(), -1).c_str(), std::size(mConfig.szAlphaPath));
+		mConfig.szAlphaPath[std::size(mConfig.szAlphaPath) - 1] = 0;
 		mConfig.bEnableAlphaBlending = true;
 		mConfig.bEnableSecondaryAlpha = true;
 	} else {
