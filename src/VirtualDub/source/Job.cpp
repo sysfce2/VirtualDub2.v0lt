@@ -982,7 +982,7 @@ void JobAddBatchDirectory(const wchar_t *lpszSrc, const wchar_t *lpszDst) {
 	// Scan source directory
 
 	HANDLE				h;
-	WIN32_FIND_DATA		wfd;
+	WIN32_FIND_DATAW	wfd;
 	wchar_t *s, *t;
 	wchar_t szSourceDir[MAX_PATH], szDestDir[MAX_PATH];
 
@@ -1018,7 +1018,7 @@ void JobAddBatchDirectory(const wchar_t *lpszSrc, const wchar_t *lpszDst) {
 
 	wcscpy(s, L"*.*");
 
-	h = FindFirstFile(VDTextWToA(szSourceDir).c_str(),&wfd);
+	h = FindFirstFileW(szSourceDir, &wfd);
 
 	if (INVALID_HANDLE_VALUE != h) {
 		JobRequestVideo req;
@@ -1029,8 +1029,8 @@ void JobAddBatchDirectory(const wchar_t *lpszSrc, const wchar_t *lpszDst) {
 			if (!(wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
 				wchar_t *t2, *dot = NULL;
 
-				VDTextAToW(s, (szSourceDir+MAX_PATH) - s, wfd.cFileName, -1);
-				VDTextAToW(t, (szDestDir+MAX_PATH) - t, wfd.cFileName, -1);
+				wcscpy_s(s, (szSourceDir+MAX_PATH) - s, wfd.cFileName);
+				wcscpy_s(t, (szDestDir+MAX_PATH) - t, wfd.cFileName);
 
 				// Replace extension with .avi
 
@@ -1048,7 +1048,7 @@ void JobAddBatchDirectory(const wchar_t *lpszSrc, const wchar_t *lpszDst) {
 
 				JobAddConfiguration(req);
 			}
-		} while(FindNextFile(h,&wfd));
+		} while(FindNextFileW(h,&wfd));
 		FindClose(h);
 	}
 }
