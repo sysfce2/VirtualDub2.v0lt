@@ -219,7 +219,7 @@ void VDUICaptureGraphW32::OnPaint() {
 					RECT rText = { r.left+32, y, r.left + 200, y + tm.tmHeight };
 					FillRect(hdc, &rBlock, hbr);
 
-					ExtTextOut(hdc, rText.left, rText.top, ETO_CLIPPED, &rText, ch.mName, strlen(ch.mName), NULL);
+					ExtTextOutA(hdc, rText.left, rText.top, ETO_CLIPPED, &rText, ch.mName, strlen(ch.mName), NULL);
 
 					y += tm.tmHeight;
 				}

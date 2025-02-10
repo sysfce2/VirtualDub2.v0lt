@@ -954,7 +954,7 @@ BOOL CodeDisassemblyWindow::DoDrawItem(LPARAM lParam) {
 		int x = lpdis->rcItem.left;
 		int y = lpdis->rcItem.top;
 
-		ExtTextOut(lpdis->hDC, x, y, 0, NULL, buf, strlen(buf), NULL);
+		ExtTextOutA(lpdis->hDC, x, y, 0, NULL, buf, strlen(buf), NULL);
 
 		while(left>0) {
 			dst = buf+sprintf(buf, "          ");
@@ -965,7 +965,7 @@ BOOL CodeDisassemblyWindow::DoDrawItem(LPARAM lParam) {
 			}
 
 			y += 11;
-			ExtTextOut(lpdis->hDC, x, y, 0, NULL, buf, dst-buf, NULL);
+			ExtTextOutA(lpdis->hDC, x, y, 0, NULL, buf, dst-buf, NULL);
 		}
 	}
 

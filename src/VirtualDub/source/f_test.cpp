@@ -117,11 +117,11 @@
 					if (i == 4)
 						continue;
 
-					::TextOut((HDC)dst.hdc, 10 + (i % 3), 10 + (i / 3), kGDIText, sizeof kGDIText - 1);
+					::TextOutA((HDC)dst.hdc, 10 + (i % 3), 10 + (i / 3), kGDIText, sizeof kGDIText - 1);
 				}
 
 				::SetTextColor((HDC)dst.hdc, RGB(255, 0, 255));
-				::TextOut((HDC)dst.hdc, 11, 11, kGDIText, sizeof kGDIText - 1);
+				::TextOutA((HDC)dst.hdc, 11, 11, kGDIText, sizeof kGDIText - 1);
 				::RestoreDC((HDC)dst.hdc, sdc);
 			}
 		}

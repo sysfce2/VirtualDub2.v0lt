@@ -692,7 +692,7 @@ void VDParameterCurveControlW32::OnPaint() {
 					SetBkColor(hdc, RGB(255, 100, 100));
 
 				if (!selected)
-					ExtTextOut(hdc, x, y, ETO_OPAQUE, &rPt, "", 0, NULL);
+					ExtTextOutA(hdc, x, y, ETO_OPAQUE, &rPt, "", 0, NULL);
 
 				VDParameterCurve::PointList::const_iterator itNext(it1);
 				++itNext;
@@ -743,7 +743,7 @@ void VDParameterCurveControlW32::OnPaint() {
 				int y = CurveToScreenY(pt.mY);
 				RECT rPt = { x-2, y-2, x+3, y+3 };
 				SetBkColor(hdc, RGB(0, 0, 0));
-				ExtTextOut(hdc, x, y, ETO_OPAQUE, &rPt, "", 0, NULL);
+				ExtTextOutA(hdc, x, y, ETO_OPAQUE, &rPt, "", 0, NULL);
 			}
 		}
 

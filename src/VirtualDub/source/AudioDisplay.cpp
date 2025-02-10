@@ -194,7 +194,7 @@ void VDUIDrawContextGDI::DrawTextLine(int x, int y, const char *text) {
 
 vduisize VDUIDrawContextGDI::MeasureText(const char *text) {
 	SIZE siz = {0,0};
-	GetTextExtentPoint32(mhdc, text, strlen(text), &siz);
+	GetTextExtentPoint32A(mhdc, text, strlen(text), &siz);
 
 	return vduisize(siz.cx, siz.cy);
 }
@@ -839,8 +839,9 @@ VDAudioDisplayControl::VDAudioDisplayControl(HWND hwnd)
 			mFontHeight = tm.tmHeight;
 
 			SIZE siz;
-			if (GetTextExtentPoint32(hdc, "0123456789", 10, &siz))
+			if (GetTextExtentPoint32A(hdc, "0123456789", 10, &siz)) {
 				mFontDigitWidth = (siz.cx + 9) / 10;
+			}
 		}
 		ReleaseDC(hwnd, hdc);
 	}
@@ -1969,7 +1970,7 @@ void VDAudioDisplayControl::OnPaint2(HDC hdc, const PAINTSTRUCT& ps) {
 			FastFill(hdc, x, mChanHeight*mChanCount, x+1, ps.rcPaint.bottom, RGB(64, 64, 64));
 			char buf[64];
 			sprintf(buf, "%I64d", marker*mMarkerMinorStep);
-			TextOut(hdc, x+VDFloorToInt(mMarkerMinorRate/2*mPixelsPerSample), mHeight - 4, buf, strlen(buf));
+			TextOutA(hdc, x+VDFloorToInt(mMarkerMinorRate/2*mPixelsPerSample), mHeight - 4, buf, strlen(buf));
 		}
 	}}
 
@@ -2042,18 +2043,18 @@ void VDAudioDisplayControl::OnPaint2(HDC hdc, const PAINTSTRUCT& ps) {
 			SetTextAlign(hdc, TA_BOTTOM | TA_LEFT);
 			for(double d=0; d<divlimit; d += divunits) {
 				sprintf(buf, "%.0f Hz", (44100.0 / 8192.0 * 256.0 / 1.0) * d);
-				TextOut(hdc, 4, ybase + VDRoundToInt(mChanHeight*(1.0 - d/1.0)), buf, strlen(buf));
+				TextOutA(hdc, 4, ybase + VDRoundToInt(mChanHeight*(1.0 - d/1.0)), buf, strlen(buf));
 				SIZE tsize;
-				GetTextExtentPoint32(hdc, buf, strlen(buf), &tsize);
+				GetTextExtentPoint32A(hdc, buf, strlen(buf), &tsize);
 				tsize.cx += 8;
 				if (tsize.cx>mTextWidth) mTextWidth = tsize.cx;
 			}
 
 			SetTextAlign(hdc, TA_TOP | TA_LEFT);
 			sprintf(buf, "%.0f Hz", range);
-			TextOut(hdc, 4, ybase + 4, buf, strlen(buf));
+			TextOutA(hdc, 4, ybase + 4, buf, strlen(buf));
 			SIZE tsize;
-			GetTextExtentPoint32(hdc, buf, strlen(buf), &tsize);
+			GetTextExtentPoint32A(hdc, buf, strlen(buf), &tsize);
 			tsize.cx += 8;
 			if (tsize.cx>mTextWidth) mTextWidth = tsize.cx;
 			ybase += mChanHeight;
@@ -2388,7 +2389,7 @@ void VDAudioDisplayControl::FastFill(HDC hdc, int x1, int y1, int x2, int y2, DW
 	RECT r = {x1,y1,x2,y2};
 
 	SetBkColor(hdc, c);
-	ExtTextOut(hdc, 0, 0, ETO_OPAQUE, &r, (LPCSTR)&r, 0, NULL);
+	ExtTextOutA(hdc, 0, 0, ETO_OPAQUE, &r, (LPCSTR)&r, 0, NULL);
 }
 
 namespace {

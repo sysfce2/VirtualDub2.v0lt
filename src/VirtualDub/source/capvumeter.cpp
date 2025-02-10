@@ -269,15 +269,15 @@ void VDUICaptureVumeterW32::OnPaint() {
 			// draw db text
 			SetBkMode(hdc, TRANSPARENT);
 			SetTextAlign(hdc, TA_LEFT | TA_BOTTOM);
-			TextOut(hdc, 0, r.bottom, "-40 dB", 6);
+			TextOutA(hdc, 0, r.bottom, "-40 dB", 6);
 			SetTextAlign(hdc, TA_CENTER | TA_BOTTOM);
-			TextOut(hdc, x_30db, r.bottom, "-30 dB", 6);
-			TextOut(hdc, x_20db, r.bottom, "-20 dB", 6);
-			TextOut(hdc, x_10db, r.bottom, "-10 dB", 6);
-			TextOut(hdc, x_6db, r.bottom, "-6 dB", 5);
-			TextOut(hdc, x_3db, r.bottom, "-3 dB", 5);
+			TextOutA(hdc, x_30db, r.bottom, "-30 dB", 6);
+			TextOutA(hdc, x_20db, r.bottom, "-20 dB", 6);
+			TextOutA(hdc, x_10db, r.bottom, "-10 dB", 6);
+			TextOutA(hdc, x_6db, r.bottom, "-6 dB", 5);
+			TextOutA(hdc, x_3db, r.bottom, "-3 dB", 5);
 			SetTextAlign(hdc, TA_RIGHT | TA_BOTTOM);
-			TextOut(hdc, r.right, r.bottom, "0 dB", 4);
+			TextOutA(hdc, r.right, r.bottom, "0 dB", 4);
 			SelectObject(hdc, hOldFont);
 		}
 

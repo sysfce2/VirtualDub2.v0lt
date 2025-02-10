@@ -1756,7 +1756,7 @@ void VDRTProfileDisplay2::OnSetFont(HFONT hfont, bool bRedraw) {
 		}
 
 		SIZE sz;
-		if (GetTextExtentPoint32(hdc, "00000000", 8, &sz))
+		if (GetTextExtentPoint32A(hdc, "00000000", 8, &sz))
 			mMajorScaleMinWidth = sz.cx + 10;
 
 		if (hOldFont)

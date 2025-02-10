@@ -213,7 +213,7 @@ void VDRTProfileDisplay::OnPaint() {
 					continue;
 
 				SIZE siz;
-				GetTextExtentPoint32(hdc, chan.mpName, strlen(chan.mpName), &siz);
+				GetTextExtentPoint32A(hdc, chan.mpName, strlen(chan.mpName), &siz);
 				if (siz.cx > maxwidth)
 					maxwidth = siz.cx;
 			}
@@ -232,8 +232,8 @@ void VDRTProfileDisplay::OnPaint() {
 
 				sprintf(buf, "%d ms", i * (100 << mDisplayResolution) / 64);
 
-				ExtTextOut(hdc, 0, 0, ETO_CLIPPED|ETO_OPAQUE, &rMarker, "", 0, NULL);
-				ExtTextOut(hdc, x + 4, nTextYOffset, 0, NULL, buf, strlen(buf), NULL);
+				ExtTextOutA(hdc, 0, 0, ETO_CLIPPED|ETO_OPAQUE, &rMarker, "", 0, NULL);
+				ExtTextOutA(hdc, x + 4, nTextYOffset, 0, NULL, buf, strlen(buf), NULL);
 			}
 
 			SetTextAlign(hdc, TA_TOP | TA_LEFT);
@@ -249,7 +249,7 @@ void VDRTProfileDisplay::OnPaint() {
 
 				RECT rText = { 0, y, maxwidth, y + nChannelHt};
 
-				ExtTextOut(hdc, 0, y + nTextYOffset, ETO_CLIPPED, &rText, chan.mpName, strlen(chan.mpName), NULL);
+				ExtTextOutA(hdc, 0, y + nTextYOffset, ETO_CLIPPED, &rText, chan.mpName, strlen(chan.mpName), NULL);
 
 				for(vdfastvector<Event>::const_iterator it(chan.mEventList.begin()), itEnd(chan.mEventList.end()); it!=itEnd; ++it) {
 					const Event& ev = *it;
@@ -263,7 +263,7 @@ void VDRTProfileDisplay::OnPaint() {
 					SetBkColor(hdc, ev.mColor);
 
 					RECT rBack = { x1, y, x2, y+nChannelHt };
-					ExtTextOut(hdc, x1, y + nTextYOffset, ETO_OPAQUE | ETO_CLIPPED, &rBack, ev.mpName, strlen(ev.mpName), NULL);
+					ExtTextOutA(hdc, x1, y + nTextYOffset, ETO_OPAQUE | ETO_CLIPPED, &rBack, ev.mpName, strlen(ev.mpName), NULL);
 				}
 
 				y += nChannelHt;
@@ -275,7 +275,7 @@ void VDRTProfileDisplay::OnPaint() {
 
 			int xbreak = rClient.right * 2 / 3;
 			for(uint32 i=0; i<counterCount; ++i, ++ctr) {
-				ExtTextOut(hdc, 0, y, 0, NULL, ctr->mpName, strlen(ctr->mpName), NULL);
+				ExtTextOutA(hdc, 0, y, 0, NULL, ctr->mpName, strlen(ctr->mpName), NULL);
 
 				switch(ctr->mType) {
 					case VDRTProfiler::kCounterTypeUint32:
@@ -288,7 +288,7 @@ void VDRTProfileDisplay::OnPaint() {
 						buf[0] = 0;
 				}
 
-				ExtTextOut(hdc, xbreak, y, 0, NULL, buf, strlen(buf), NULL);
+				ExtTextOutA(hdc, xbreak, y, 0, NULL, buf, strlen(buf), NULL);
 
 				y += mFontHeight;
 			}
