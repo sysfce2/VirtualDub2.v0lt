@@ -1,5 +1,5 @@
-OUTDIR = ..\..\out\Helpfile
-LINA = ..\..\out\$(BUILD)\Lina
+OUTDIR = ..\..\_out\Helpfile
+LINA = ..\..\_out\$(BUILD)\Lina
 HHC = "C:\Program Files\HTML Help Workshop\hhc.exe"
 HHC2 = "C:\Program Files (x86)\HTML Help Workshop\hhc.exe"
 

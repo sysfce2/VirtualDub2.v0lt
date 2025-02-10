@@ -1,8 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set _vdub=..\out\release\vdub.exe
-set _outdir=..\out\testmasters
+set _vdub=..\_out\release\vdub.exe
+set _outdir=..\_out\testmasters
 
 :argloop
 if {%1}=={} goto :argloopexit
