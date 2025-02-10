@@ -1004,7 +1004,7 @@ public:
 		if(mix[i]==1) s="left";
 		if(mix[i]==2) s="right";
 		if(mix[i]==3) s="L+R";
-		SetWindowText(c0,s);
+		SetWindowTextA(c0,s);
 	}
 
 	INT_PTR DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {

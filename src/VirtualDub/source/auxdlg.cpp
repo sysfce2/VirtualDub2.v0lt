@@ -639,7 +639,7 @@ namespace {
 
 		while(*s!='\r') ++s;
 
-		SetWindowText(hdlg, VDString(title, s-title).c_str());
+		SetWindowTextA(hdlg, VDStringA(title, s-title).c_str());
 		s+=2;
 
 		tTextStream rtf;

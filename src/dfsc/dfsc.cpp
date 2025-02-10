@@ -280,13 +280,13 @@ DWORD DfscInstance::DecompressQuery(LPBITMAPINFOHEADER lpbiIn, LPBITMAPINFOHEADE
         lpbiIn->biWidth != lpbiOut->biWidth ||
         lpbiIn->biPlanes != lpbiOut->biPlanes) {
       sprintf(st, "0x%X - 0x%X\n", lpbiIn->biBitCount, lpbiOut->biBitCount);
-      OutputDebugString(st);
+      OutputDebugStringA(st);
       sprintf(st, "0x%X - 0x%X\n", lpbiIn->biHeight, lpbiOut->biHeight);
-      OutputDebugString(st);
+      OutputDebugStringA(st);
       sprintf(st, "0x%X - 0x%X\n", lpbiIn->biWidth, lpbiOut->biWidth);
-      OutputDebugString(st);
+      OutputDebugStringA(st);
       sprintf(st, "0x%X - 0x%X\n", lpbiIn->biPlanes, lpbiOut->biPlanes);
-      OutputDebugString(st);
+      OutputDebugStringA(st);
       return ICERR_BADFORMAT;
     }
   }
