@@ -3084,7 +3084,7 @@ INT_PTR CALLBACK InputFileMPEG::ParseDialogProc(HWND hDlg, UINT uMsg, WPARAM wPa
 		thisPtr = (InputFileMPEG *)lParam;
 
 		SendMessage(hDlg, WM_SETTEXT, 0, (LPARAM)"MPEG Import Filter");
-		SetDlgItemText(hDlg, IDC_STATIC_MESSAGE,
+		SetDlgItemTextA(hDlg, IDC_STATIC_MESSAGE,
 			thisPtr->fIsVCD
 				? "Parsing VideoCD stream"
 				: thisPtr->fInterleaved ? "Parsing interleaved MPEG file" : "Parsing MPEG video file");
@@ -3288,12 +3288,12 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 							thisPtr->height,
 							pVSS->getRate().asDouble(),
 							VDRoundToLong(1000000.0 / pVSS->getRate().asDouble()));
-				SetDlgItemText(hDlg, IDC_VIDEO_FORMAT, buf);
+				SetDlgItemTextA(hDlg, IDC_VIDEO_FORMAT, buf);
 
 				s = buf + sprintf(buf, "%lu (", (unsigned)pVSS->getLength());
 				ticks_to_str(s, (buf + std::size(buf)) - s, VDRoundToLong(1000.0*pVSS->getLength()/pVSS->getRate().asDouble()));
 				strcat(s,")");
-				SetDlgItemText(hDlg, IDC_VIDEO_NUMFRAMES, buf);
+				SetDlgItemTextA(hDlg, IDC_VIDEO_NUMFRAMES, buf);
 			}
 
 			if (pInfo->mpAudio) {
@@ -3301,10 +3301,10 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 				char buf[128];
 
 				sprintf(buf, "%ldHz, %s", fmt->mSamplingRate, fmt->mChannels>1 ? "Stereo" : "Mono");
-				SetDlgItemText(hDlg, IDC_AUDIO_FORMAT, buf);
+				SetDlgItemTextA(hDlg, IDC_AUDIO_FORMAT, buf);
 
 				sprintf(buf, "%ld", thisPtr->aframes);
-				SetDlgItemText(hDlg, IDC_AUDIO_NUMFRAMES, buf);
+				SetDlgItemTextA(hDlg, IDC_AUDIO_NUMFRAMES, buf);
 			}
 
 			_beginthread(_InfoDlgThread, 10000, pInfo);
@@ -3331,10 +3331,10 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 				char buf[128];
 
 				sprintf(buf, "%ld", pInfo->lFrames);
-				SetDlgItemText(hDlg, IDC_VIDEO_NUMKEYFRAMES, buf);
+				SetDlgItemTextA(hDlg, IDC_VIDEO_NUMKEYFRAMES, buf);
 
 				sprintf(buf, "%ld / %ld / %ld", pInfo->lFrameCnt[0], pInfo->lFrameCnt[1], pInfo->lFrameCnt[2]);
-				SetDlgItemText(hDlg, IDC_VIDEO_FRAMETYPECNT, buf);
+				SetDlgItemTextA(hDlg, IDC_VIDEO_FRAMETYPECNT, buf);
 
 				int i;
 
@@ -3351,7 +3351,7 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 					else
 						sprintf(buf,"(no %c-frames)", "IPB"[i]);
 
-					SetDlgItemText(hDlg, uiCtlIds[i], buf);
+					SetDlgItemTextA(hDlg, uiCtlIds[i], buf);
 				}
 
 				if (pInfo->lTotalSize) {
@@ -3362,7 +3362,7 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 					lBytesPerSec = VDRoundToLong((pInfo->lTotalSize * pInfo->mpVideo->asStream()->getRate().asDouble()) / pInfo->lFrames);
 
 					sprintf(buf, "%ld Kbps (%ldKB/s)", (lBytesPerSec+124)/125, (lBytesPerSec+1023)/1024);
-					SetDlgItemText(hDlg, IDC_VIDEO_AVGBITRATE, buf);
+					SetDlgItemTextA(hDlg, IDC_VIDEO_AVGBITRATE, buf);
 				}
 
 				if (pInfo->lpszAudioMode && pInfo->mpAudio) {
@@ -3370,10 +3370,10 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 					const VDWaveFormat *fmt = pInfo->mpAudio->getWaveFormat();
 
 					sprintf(buf, "%ldKHz %s, %ldKbps layer %s", fmt->mSamplingRate/1000, pInfo->lpszAudioMode, pInfo->lAudioAvgBitrate, szLayers[3-((thisPtr->audio_first_header>>9)&3)]);
-					SetDlgItemText(hDlg, IDC_AUDIO_FORMAT, buf);
+					SetDlgItemTextA(hDlg, IDC_AUDIO_FORMAT, buf);
 
 					sprintf(buf, "%ldK", (pInfo->lAudioSize + 1023) / 1024);
-					SetDlgItemText(hDlg, IDC_AUDIO_SIZE, buf);
+					SetDlgItemTextA(hDlg, IDC_AUDIO_SIZE, buf);
 				}
 			}
 

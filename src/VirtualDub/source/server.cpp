@@ -451,11 +451,11 @@ INT_PTR CALLBACK Frameserver::StatusDlgProc2( HWND hWnd, UINT message, WPARAM wP
 			}
 
 			if (fAVIFile && fVCM)
-				SetDlgItemText(hWnd, IDC_STATIC_FCINSTALLED, "AVIFile and VCM");
+				SetDlgItemTextA(hWnd, IDC_STATIC_FCINSTALLED, "AVIFile and VCM");
 			else if (fAVIFile)
-				SetDlgItemText(hWnd, IDC_STATIC_FCINSTALLED, "AVIFile only");
+				SetDlgItemTextA(hWnd, IDC_STATIC_FCINSTALLED, "AVIFile only");
 			else if (fVCM)
-				SetDlgItemText(hWnd, IDC_STATIC_FCINSTALLED, "VCM only");
+				SetDlgItemTextA(hWnd, IDC_STATIC_FCINSTALLED, "VCM only");
 		}
 		return TRUE;
 	case WM_COMMAND:

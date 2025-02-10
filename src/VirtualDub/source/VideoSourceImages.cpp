@@ -101,20 +101,20 @@ INT_PTR APIENTRY VDInputFileImages::_InfoDlgProc( HWND hDlg, UINT message, WPARA
 							pvs->getImageFormat()->biHeight,
 							pvs->getRate().asDouble(),
 							VDRoundToLong(1000000.0 / pvs->getRate().asDouble()));
-				SetDlgItemText(hDlg, IDC_VIDEO_FORMAT, buf);
+				SetDlgItemTextA(hDlg, IDC_VIDEO_FORMAT, buf);
 
 				const sint64 length = pvs->getLength();
 				s = buf + sprintf(buf, "%I64d frames (", length);
 				DWORD ticks = VDRoundToInt(1000.0*length/pvs->getRate().asDouble());
 				ticks_to_str(s, (buf + std::size(buf)) - s, ticks);
 				sprintf(s+strlen(s),".%02d)", (ticks/10)%100);
-				SetDlgItemText(hDlg, IDC_VIDEO_NUMFRAMES, buf);
+				SetDlgItemTextA(hDlg, IDC_VIDEO_NUMFRAMES, buf);
 				
 				const VDPixmapFormatInfo& info = VDPixmapGetInfo(pvs->getInitFormat());
 
 				s = buf + sprintf(buf, pvs->getInitAlpha() ? "%s with alpha" : "%s", info.name);
 				
-				SetDlgItemText(hDlg, IDC_VIDEO_COMPRESSION, buf);
+				SetDlgItemTextA(hDlg, IDC_VIDEO_COMPRESSION, buf);
 			}
 
 			return (TRUE);

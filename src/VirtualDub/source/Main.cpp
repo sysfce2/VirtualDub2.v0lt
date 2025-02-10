@@ -466,7 +466,7 @@ void VDOpenVideoDialogW32::ChangeDriver() {
 	bool extOpen = (driver && (driver->GetFlags() & IVDInputDriver::kF_SupportsOpts));
 	EnableWindow(GetDlgItem(mhdlg,IDC_DRIVER_OPTIONS), extOpen && !filename.empty() && !append_mode);
 	EnableWindow(GetDlgItem(mhdlg,IDC_DRIVER_INFO), driver && !filename.empty());
-	SetDlgItemText(mhdlg,IDC_INFO_MSG,0);
+	SetDlgItemTextA(mhdlg,IDC_INFO_MSG,0);
 
 	if (driver && !filename.empty()) try {
 		VDXMediaInfo info;
@@ -474,7 +474,7 @@ void VDOpenVideoDialogW32::ChangeDriver() {
 		IVDInputDriver::DetectionConfidence result = VDTestInputDriverForFile(info,filename.c_str(),driver);
 		this->info = info;
 		if (result==IVDInputDriver::kDC_None)
-			SetDlgItemText(mhdlg,IDC_INFO_MSG,"Not detected");
+			SetDlgItemTextA(mhdlg,IDC_INFO_MSG,"Not detected");
 		else
 			ChangeInfo();
 	} catch (const MyError&) {

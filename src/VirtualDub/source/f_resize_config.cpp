@@ -709,7 +709,7 @@ namespace {
 		char buf[512];
 
 		sprintf(buf, "%g", v);
-		SetDlgItemText(hdlg, id, buf);
+		SetDlgItemTextA(hdlg, id, buf);
 	}
 
 	double VDGetDlgItemFloatW32(HWND hdlg, UINT id, BOOL *success) {

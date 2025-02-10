@@ -2077,7 +2077,7 @@ void VDDialogAudioVolumeW32::UpdateVolumeText() {
 
 	float factor = SliderPositionToFactor(pos);
 	sprintf(buf, "%+.1fdB (%.1f%%)", (float)(pos - 300) * 0.1f, 100.0f*factor);
-	SetDlgItemText(mhdlg, IDC_STATIC_VOLUME, buf);
+	SetDlgItemTextA(mhdlg, IDC_STATIC_VOLUME, buf);
 }
 
 void VDDialogAudioVolumeW32::UpdateEnables() {
@@ -2349,7 +2349,7 @@ void VDDialogJumpToPositionW32::ReinitEdit() {
 		sprintf(buf, "%3.2f ms", ticks);
 	}
 
-	SetDlgItemText(mhdlg, IDC_FRAMETIME, buf);
+	SetDlgItemTextA(mhdlg, IDC_FRAMETIME, buf);
 }
 
 void VDDialogJumpToPositionW32::ReinitDialog() {

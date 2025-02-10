@@ -43,7 +43,7 @@ public:
 		switch(msg) {
 		case WM_INITDIALOG:
 			sprintf(buf, "%.4f", mConfig.ratio);
-			SetDlgItemText(mhdlg, IDC_FACTOR, buf);
+			SetDlgItemTextA(mhdlg, IDC_FACTOR, buf);
 			return TRUE;
 		case WM_COMMAND:
 			switch(LOWORD(wParam)) {
@@ -51,7 +51,7 @@ public:
 				{
 					double v;
 
-					if (!GetDlgItemText(mhdlg, IDC_FACTOR, buf, sizeof buf) || (v=atof(buf))<-8.0 || (v>8.0)) {
+					if (!GetDlgItemTextA(mhdlg, IDC_FACTOR, buf, std::size(buf)) || (v=atof(buf))<-8.0 || (v>8.0)) {
 						MessageBeep(MB_ICONEXCLAMATION);
 						SetFocus(GetDlgItem(mhdlg, IDC_FACTOR));
 						return TRUE;

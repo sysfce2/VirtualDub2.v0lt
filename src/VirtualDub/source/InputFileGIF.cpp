@@ -829,19 +829,19 @@ INT_PTR APIENTRY VDInputFileGIF::_InfoDlgProc( HWND hDlg, UINT message, WPARAM w
 								pvs->getImageFormat()->biHeight,
 								pvs->getRate().asDouble(),
 								VDRoundToLong(1000000.0 / pvs->getRate().asDouble()));
-					SetDlgItemText(hDlg, IDC_VIDEO_FORMAT, buf);
+					SetDlgItemTextA(hDlg, IDC_VIDEO_FORMAT, buf);
 
 					const sint64 length = pvs->getLength();
 					s = buf + sprintf(buf, "%I64d frames (", length);
 					DWORD ticks = VDRoundToInt(1000.0*length/pvs->getRate().asDouble());
 					ticks_to_str(s, (buf + std::size(buf)) - s, ticks);
 					sprintf(s+strlen(s),".%02d)", (ticks/10)%100);
-					SetDlgItemText(hDlg, IDC_VIDEO_NUMFRAMES, buf);
+					SetDlgItemTextA(hDlg, IDC_VIDEO_NUMFRAMES, buf);
 
 					s = buf + sprintf(buf, "%d bpp", pvs->getPixelDepth());
 					uint32 col = pvs->getColors();
 					if (col > 0) s = s + sprintf(s, " (%d colors palette)", col);
-					SetDlgItemText(hDlg, IDC_VIDEO_COMPRESSION, buf);
+					SetDlgItemTextA(hDlg, IDC_VIDEO_COMPRESSION, buf);
 				}
 			}
 

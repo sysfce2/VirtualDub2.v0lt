@@ -169,9 +169,9 @@ INT_PTR VDDialogCaptureDiskIO::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 					cs = SendDlgItemMessage(mhdlg, IDC_CHUNKSIZE, CB_GETCURSEL, 0, 0);
 
 					sprintf(buf, "Total buffer: %ldK", sizes[cs] * chunks);
-					SetDlgItemText(mhdlg, IDC_STATIC_BUFFERSIZE, buf);
+					SetDlgItemTextA(mhdlg, IDC_STATIC_BUFFERSIZE, buf);
 				} else
-					SetDlgItemText(mhdlg, IDC_STATIC_BUFFERSIZE, "Total buffer: ---");
+					SetDlgItemTextA(mhdlg, IDC_STATIC_BUFFERSIZE, "Total buffer: ---");
 			}
 			return TRUE;
 		}
@@ -330,7 +330,7 @@ INT_PTR VDDialogCaptureSettings::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 					// Man, the LifeView driver really sucks...
 
 					sprintf(buf, "%.4lf", floor(10000000.0 / floor(1000.0 / dFrameRate + .5))/10000.0);
-					SetDlgItemText(mhdlg, IDC_CAPTURE_FRAMERATE, buf);
+					SetDlgItemTextA(mhdlg, IDC_CAPTURE_FRAMERATE, buf);
 				}
 				return TRUE;
 			case IDOK:
@@ -400,12 +400,12 @@ INT_PTR VDDialogCaptureAllocate::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 			{
 				sint64 client_free = VDGetDiskFreeSpace(VDFileSplitPathLeft(mPath).c_str());
 
-				SetDlgItemText(mhdlg, IDC_STATIC_DISK_FREE_SPACE, "Free disk space:");
+				SetDlgItemTextA(mhdlg, IDC_STATIC_DISK_FREE_SPACE, "Free disk space:");
 
 				if (client_free>=0) {
 					char pb[64];
-					wsprintf(pb, "%ld MB ", (long)(client_free>>20));
-					SetDlgItemText(mhdlg, IDC_DISK_FREE_SPACE, pb);
+					wsprintfA(pb, "%ld MB ", (long)(client_free>>20));
+					SetDlgItemTextA(mhdlg, IDC_DISK_FREE_SPACE, pb);
 				}
 
 				SetFocus(GetDlgItem(mhdlg, IDC_DISK_SPACE_ALLOCATE));

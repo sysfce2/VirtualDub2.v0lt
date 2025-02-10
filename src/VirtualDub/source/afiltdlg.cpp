@@ -175,7 +175,7 @@ void VDDialogAddAudioFilterW32::UpdateDescription() {
 	mpSelectedFilter = NULL;
 	if (sel >= 0)
 		if (const VDPluginDescription *pb = (const VDPluginDescription *)SendMessage(hwndList, LB_GETITEMDATA, sel, 0)) {
-			SetDlgItemText(mhdlg, IDC_FILTER_INFO, VDTextWToA(pb->mDescription).c_str());
+			SetDlgItemTextW(mhdlg, IDC_FILTER_INFO, pb->mDescription.c_str());
 			mpSelectedFilter = pb;
 		}
 }

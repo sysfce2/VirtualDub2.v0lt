@@ -42,7 +42,7 @@ public:
 		switch(msg) {
 		case WM_INITDIALOG:
 			sprintf(buf, "%lu", mConfig.newfreq);
-			SetDlgItemText(mhdlg, IDC_FREQ, buf);
+			SetDlgItemTextA(mhdlg, IDC_FREQ, buf);
 			return TRUE;
 		case WM_COMMAND:
 			switch(LOWORD(wParam)) {

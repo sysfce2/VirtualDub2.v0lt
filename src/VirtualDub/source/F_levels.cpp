@@ -1022,7 +1022,7 @@ static INT_PTR APIENTRY levelsDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 						}
 
 						sprintf(buf, "%.3f", mfd->rGammaCorr);
-						SetDlgItemText(hDlg, IDC_INPUTGAMMA, buf);
+						SetDlgItemTextA(hDlg, IDC_INPUTGAMMA, buf);
 						UpdateWindow(GetDlgItem(hDlg, IDC_INPUTGAMMA));
 						break;
 					case 2:

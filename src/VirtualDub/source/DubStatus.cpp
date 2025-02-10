@@ -332,14 +332,14 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 	if (!totalASamples || !totalVSamples || pvinfo->fAudioOnly) nProgress *= 2;
 
 	if (bPreloading) {
-		SetDlgItemText(hWnd, IDC_CURRENT_VFRAME, "Preloading...");
+		SetDlgItemTextA(hWnd, IDC_CURRENT_VFRAME, "Preloading...");
 	} else {
 		sprintf(buf, "%I64d/%I64d", curVSample, totalVSamples);
-		SetDlgItemText(hWnd, IDC_CURRENT_VFRAME, buf);
+		SetDlgItemTextA(hWnd, IDC_CURRENT_VFRAME, buf);
 	}
 
 	sprintf(buf, "%I64d/%I64d", curASample, totalASamples);
-	SetDlgItemText(hWnd, IDC_CURRENT_ASAMPLE, buf);
+	SetDlgItemTextA(hWnd, IDC_CURRENT_ASAMPLE, buf);
  
 	size_to_str(buf, std::size(buf), pvinfo->total_size);
 
@@ -358,7 +358,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 	SetDlgItemText(hWnd, IDC_CURRENT_VSIZE, buf);
 
 	size_to_str(buf, std::size(buf), painfo->total_size);
-	SetDlgItemText(hWnd, IDC_CURRENT_ASIZE, buf);
+	SetDlgItemTextA(hWnd, IDC_CURRENT_ASIZE, buf);
 
 	nProjSize = 0;
 	if (totalVSamples && curVSample) {
@@ -377,23 +377,23 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 		sint64 kilobytes = (nProjSize+1023)>>10;
 
 		if (kilobytes < 65536)
-			wsprintf(buf, "%ldK", kilobytes);
+			wsprintfA(buf, "%ldK", kilobytes);
 		else {
 			kilobytes = (nProjSize*100) >> 20;
-			wsprintf(buf, "%ld.%02dMB", (LONG)(kilobytes/100), (LONG)(kilobytes%100));
+			wsprintfA(buf, "%ld.%02dMB", (LONG)(kilobytes/100), (LONG)(kilobytes%100));
 		}
-		SetDlgItemText(hWnd, IDC_PROJECTED_FSIZE, buf);
+		SetDlgItemTextA(hWnd, IDC_PROJECTED_FSIZE, buf);
 	} else {
-		SetDlgItemText(hWnd, IDC_PROJECTED_FSIZE, "unknown");
+		SetDlgItemTextA(hWnd, IDC_PROJECTED_FSIZE, "unknown");
 	}
 
 	uint32 dwTicks = VDGetCurrentTick() - mStartTime;
 	ticks_to_str(buf, std::size(buf), dwTicks);
-	SetDlgItemText(hWnd, IDC_TIME_ELAPSED, buf);
+	SetDlgItemTextA(hWnd, IDC_TIME_ELAPSED, buf);
 
 	if (nProgress > 16) {
 		ticks_to_str(buf, std::size(buf), MulDiv(dwTicks,8192,nProgress));
-		SetDlgItemText(hWnd, IDC_TIME_REMAINING, buf);
+		SetDlgItemTextA(hWnd, IDC_TIME_REMAINING, buf);
 	}
 
 	sint32 fps100 = 0;
@@ -430,8 +430,8 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 		}
 	}
 
-	wsprintf(buf, "%u.%02u fps", fps100/100, fps100%100);
-	SetDlgItemText(hWnd, IDC_FPS, buf);
+	wsprintfA(buf, "%u.%02u fps", fps100/100, fps100%100);
+	SetDlgItemTextA(hWnd, IDC_FPS, buf);
 
 	if (GetWindowLong(g_hWnd, GWL_STYLE) & WS_MINIMIZE) {
 		long lNewProgress = (nProgress*25)/2048;
@@ -550,24 +550,24 @@ INT_PTR CALLBACK DubStatus::StatusVideoDlgProc( HWND hdlg, UINT message, WPARAM 
 						thisPtr->lFrameHibound = hi;
 
 						if (lo >= 0x40000000)
-							wsprintf(buf, "%dGB", lo>>30);
+							wsprintfA(buf, "%dGB", lo>>30);
 						else if (lo >= 0x100000)
-							wsprintf(buf, "%dMB", lo>>20);
+							wsprintfA(buf, "%dMB", lo>>20);
 						else if (lo >= 0x400)
-							wsprintf(buf, "%dK", lo>>10);
+							wsprintfA(buf, "%dK", lo>>10);
 						else
-							wsprintf(buf, "%d", lo);
-						SetDlgItemText(hdlg, IDC_STATIC_LOBOUND, buf);
+							wsprintfA(buf, "%d", lo);
+						SetDlgItemTextA(hdlg, IDC_STATIC_LOBOUND, buf);
 
 						if (hi >= 0x40000000)
-							wsprintf(buf, "%dGB", hi>>30);
+							wsprintfA(buf, "%dGB", hi>>30);
 						else if (hi >= 0x100000)
-							wsprintf(buf, "%dMB", hi>>20);
+							wsprintfA(buf, "%dMB", hi>>20);
 						else if (hi >= 0x400)
-							wsprintf(buf, "%dK", hi>>10);
+							wsprintfA(buf, "%dK", hi>>10);
 						else
-							wsprintf(buf, "%d", hi);
-						SetDlgItemText(hdlg, IDC_STATIC_HIBOUND, buf);
+							wsprintfA(buf, "%d", hi);
+						SetDlgItemTextA(hdlg, IDC_STATIC_HIBOUND, buf);
 
 						InvalidateRect(hdlg, &r, FALSE);
 					} else if (hdc = GetDC(hdlg)) {

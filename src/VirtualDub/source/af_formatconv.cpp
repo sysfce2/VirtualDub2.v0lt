@@ -46,7 +46,7 @@ public:
 		switch(msg) {
 		case WM_INITDIALOG:
 			sprintf(buf, "%d", mConfig.precision);
-			SetDlgItemText(mhdlg, IDC_PRECISION, buf);
+			SetDlgItemTextA(mhdlg, IDC_PRECISION, buf);
 			return TRUE;
 		case WM_COMMAND:
 			switch(LOWORD(wParam)) {
