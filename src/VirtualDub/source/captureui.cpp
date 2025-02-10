@@ -3942,8 +3942,8 @@ void VDCaptureProjectUI::OnUpdateStatus() {
 			hgoOld = SelectObject(hdc, mhClockFont);
 			SetTextAlign(hdc, TA_BASELINE | TA_LEFT);
 			SetBkColor(hdc, GetSysColor(COLOR_3DFACE));
-			wsprintf(buf, "%d:%02d", tm/60, tm%60);
-			TextOut(hdc, 50, y - 50, buf, strlen(buf));
+			wsprintfA(buf, "%d:%02d", tm/60, tm%60);
+			TextOutA(hdc, 50, y - 50, buf, strlen(buf));
 			SelectObject(hdc, hgoOld);
 
 			ReleaseDC((HWND)mhwnd, hdc);

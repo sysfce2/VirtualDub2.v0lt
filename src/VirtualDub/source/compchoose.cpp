@@ -1038,7 +1038,7 @@ void VDUIDialogChooseVideoCompressorW32::UpdateFormat() {
 		format = 0;
 	}
 
-	VDString s;
+	VDStringA s;
 	VDPixmapFormatEx src;
 	bool codec_failed = false;
 	bool uncommon_raw = false;
@@ -1129,7 +1129,7 @@ void VDUIDialogChooseVideoCompressorW32::UpdateFormat() {
 		}
 	}
 
-	SetDlgItemText(mhdlg,IDC_ACTIVEFORMAT,s.c_str());
+	SetDlgItemTextA(mhdlg,IDC_ACTIVEFORMAT,s.c_str());
 	SetDlgItemTextW(mhdlg,IDC_FORMAT_INFO,msg.c_str());
 }
 

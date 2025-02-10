@@ -920,7 +920,7 @@ void VDSaveVideoDialogW32::InitCodec() {
 		make.combine();
 		make.combineComp();
 
-		VDString s;
+		VDStringA s;
 		if (!make.error.empty())
 			s += "Format not accepted";
 		else if (make.mode == DubVideoOptions::M_FASTREPACK)
@@ -928,7 +928,7 @@ void VDSaveVideoDialogW32::InitCodec() {
 		else
 			s += VDPixmapFormatPrintSpec(make.out);
 
-		SetDlgItemText(mhdlg,IDC_COMPRESSION2,s.c_str());
+		SetDlgItemTextA(mhdlg,IDC_COMPRESSION2,s.c_str());
 	}
 
 	if (inputAudio) {
@@ -989,10 +989,10 @@ void VDSaveVideoDialogW32::InitDubber() {
 			s.sprintf("%d Hz float %d ch", fmt->mSamplingRate, fmt->mChannels);
 		else
 			s.sprintf("%d Hz %d-bit %d ch", fmt->mSamplingRate, fmt->mSampleBits, fmt->mChannels);
-		SetDlgItemText(mhdlg,IDC_AUDIO_INFO,s.c_str());
+		SetDlgItemTextA(mhdlg,IDC_AUDIO_INFO,s.c_str());
 
 	} catch(const MyError& e) {
-		SetDlgItemText(mhdlg,IDC_AUDIO_INFO,e.c_str());
+		SetDlgItemTextA(mhdlg,IDC_AUDIO_INFO,e.c_str());
 		removeAudio = true;
 		inputAudio = 0;
 	}
@@ -1027,7 +1027,7 @@ INT_PTR VDSaveVideoDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 		ShowWindow(GetDlgItem(mhdlg,IDC_SAVE_TEST),SW_HIDE);
 		CheckDlgButton(mhdlg,IDC_SAVE_DONOW, addJob ? BST_UNCHECKED:BST_CHECKED);
 		CheckDlgButton(mhdlg,IDC_SAVE_MAKEJOB, addJob ? BST_CHECKED:BST_UNCHECKED);
-		SetDlgItemText(mhdlg,IDC_AUDIO_INFO,"");
+		SetDlgItemTextA(mhdlg,IDC_AUDIO_INFO,"");
 
 		InitDubber();
 		InitCodec();

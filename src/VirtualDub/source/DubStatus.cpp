@@ -355,7 +355,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 		sprintf(s, " (%3ldKB/s)", VDRoundToInt(kbPerFrame * framesPerSecond));
 	}
 
-	SetDlgItemText(hWnd, IDC_CURRENT_VSIZE, buf);
+	SetDlgItemTextA(hWnd, IDC_CURRENT_VSIZE, buf);
 
 	size_to_str(buf, std::size(buf), painfo->total_size);
 	SetDlgItemTextA(hWnd, IDC_CURRENT_ASIZE, buf);

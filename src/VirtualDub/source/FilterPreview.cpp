@@ -1053,14 +1053,14 @@ void FilterPreview::OnPaint() {
 		buf[1023] = 0;
 
 		RECT r2 = r;
-		DrawText(hdc, buf, -1, &r2, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX|DT_CALCRECT);
+		DrawTextA(hdc, buf, -1, &r2, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX|DT_CALCRECT);
 
 		int text_h = r2.bottom - r2.top;
 		int space_h = r.bottom - r.top;
 		if (text_h < space_h)
 			r.top += (space_h - text_h) >> 1;
 
-		DrawText(hdc, buf, -1, &r, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX);
+		DrawTextA(hdc, buf, -1, &r, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX);
 		SelectObject(hdc, hgoFont);
 	}
 

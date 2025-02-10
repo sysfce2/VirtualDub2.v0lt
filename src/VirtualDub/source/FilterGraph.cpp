@@ -454,9 +454,7 @@ void VDFilterGraphControl::OnPaint() {
 					SetBkColor(hdc, GetSysColor(COLOR_3DFACE));
 					SetTextAlign(hdc, TA_LEFT | TA_BASELINE);
 
-					VDStringA label(VDTextWToA(conn.mFormat));
-
-					TextOut(hdc, rs.right, y1, label.data(), label.size());
+					TextOutW(hdc, rs.right, y1, conn.mFormat.data(), conn.mFormat.size());
 				}
 			}
 		}
@@ -1018,7 +1016,7 @@ void VDFilterGraphControl::RenderFilter(HDC hdc, Filter& f, bool bSelected) {
 	InflateRect(&rt, -dx, -dy);
 	DrawEdge(hdc, &rt, EDGE_SUNKEN, BF_ADJUST|BF_RECT);
 	SetBkMode(hdc, TRANSPARENT);
-	DrawText(hdc, VDTextWToA(f.name).c_str(), -1, &rt, DT_VCENTER|DT_CENTER|DT_SINGLELINE);
+	DrawTextW(hdc, f.name.c_str(), -1, &rt, DT_VCENTER|DT_CENTER|DT_SINGLELINE);
 
 	// draw filter tabs
 	for(int i=0; i<f.inputs; ++i) {

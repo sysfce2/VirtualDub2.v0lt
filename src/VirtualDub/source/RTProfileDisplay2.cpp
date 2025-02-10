@@ -1330,7 +1330,7 @@ void VDRTProfileDisplay2::OnPaint() {
 			char buf[64];
 			sprintf(buf, "%.*fs", mMajorScaleDecimalPlaces, (double)majorTick / 1000000.0);
 
-			::TextOut(hdc, x + 2, mHeight - 2, buf, strlen(buf));
+			::TextOutA(hdc, x + 2, mHeight - 2, buf, strlen(buf));
 			majorTick += mMajorScaleInterval;
 		}
 
@@ -1410,9 +1410,9 @@ void VDRTProfileDisplay2::OnPaint() {
 
 						if (ev.mAncillaryData) {
 							mTempStr.sprintf("%s (%u)", s, ev.mAncillaryData);
-							DrawText(hdc, mTempStr.data(), mTempStr.size(), &inside, DT_LEFT | DT_VCENTER | DT_NOPREFIX | DT_SINGLELINE);
+							DrawTextA(hdc, mTempStr.data(), mTempStr.size(), &inside, DT_LEFT | DT_VCENTER | DT_NOPREFIX | DT_SINGLELINE);
 						} else {
-							DrawText(hdc, s, strlen(s), &inside, DT_LEFT | DT_VCENTER | DT_NOPREFIX | DT_SINGLELINE);
+							DrawTextA(hdc, s, strlen(s), &inside, DT_LEFT | DT_VCENTER | DT_NOPREFIX | DT_SINGLELINE);
 						}
 					}
 				}

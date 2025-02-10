@@ -151,11 +151,11 @@ void VDDialogAudioConversionW32::RecomputeBandwidth() {
 
 	char buf[128];
 	if (bps)
-		wsprintf(buf, "Bandwidth required: %ldKB/s", (bps+1023)>>10);
+		wsprintfA(buf, "Bandwidth required: %ldKB/s", (bps+1023)>>10);
 	else
 		strcpy(buf,"Bandwidth required: (unknown)");
 
-	SetDlgItemText(mhdlg, IDC_BANDWIDTH_REQD, buf);
+	SetDlgItemTextA(mhdlg, IDC_BANDWIDTH_REQD, buf);
 }
 
 INT_PTR VDDialogAudioConversionW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam)
@@ -251,22 +251,22 @@ void VDDialogAudioConversionW32::ReinitDialog() {
 		char buf[128];
 
 		const VDWaveFormat *pwfex = mpSource->getWaveFormat();
-		wsprintf(buf, "No change (%ldHz)", pwfex->mSamplingRate);
-		SetDlgItemText(mhdlg, IDC_SAMPLINGRATE_NOCHANGE, buf);
+		wsprintfA(buf, "No change (%ldHz)", pwfex->mSamplingRate);
+		SetDlgItemTextA(mhdlg, IDC_SAMPLINGRATE_NOCHANGE, buf);
 
 		if (!mbSourcePrecisionKnown)
 			strcpy(buf, "No change");
 		else if (mbSourceFloat)
 			strcpy(buf, "No change (float)");
 		else
-			wsprintf(buf, "No change (%ld-bit)", mbSource16Bit ? 16 : 8);
-		SetDlgItemText(mhdlg, IDC_PRECISION_NOCHANGE, buf);
+			wsprintfA(buf, "No change (%ld-bit)", mbSource16Bit ? 16 : 8);
+		SetDlgItemTextA(mhdlg, IDC_PRECISION_NOCHANGE, buf);
 
 		if (sourceChannels > 2)
-			wsprintf(buf, "No change (%dch.)", sourceChannels);
+			wsprintfA(buf, "No change (%dch.)", sourceChannels);
 		else
-			wsprintf(buf, "No change (%s)", sourceChannels>1 ? "stereo" : "mono");
-		SetDlgItemText(mhdlg, IDC_CHANNELS_NOCHANGE, buf);
+			wsprintfA(buf, "No change (%s)", sourceChannels>1 ? "stereo" : "mono");
+		SetDlgItemTextA(mhdlg, IDC_CHANNELS_NOCHANGE, buf);
 	}
 
 	switch(mOpts.audio.new_rate) {
@@ -1171,10 +1171,10 @@ void VDDialogVideoDepthW32::InitFinalFormat() {
 		} else {
 			format = mInputFormat;
 		}
-		VDString s;
+		VDStringA s;
 		s += " ";
 		s += VDPixmapFormatPrintSpec(format);
-		SetDlgItemText(mhdlg,IDC_ACTIVEFORMAT,s.c_str());
+		SetDlgItemTextA(mhdlg,IDC_ACTIVEFORMAT,s.c_str());
 		ShowControl(IDC_DEFAULT, isDefault);
 	}
 	if (mType==DepthDialog_output) {
@@ -1190,18 +1190,18 @@ void VDDialogVideoDepthW32::InitFinalFormat() {
 		if (make.w==0){ make.w = 320; make.h = 240; }
 		make.combineComp();
 
-		VDString s;
+		VDStringA s;
 		s = " ";
 		s += VDPixmapFormatPrintSpec(make.dec);
-		SetDlgItemText(mhdlg,IDC_DECFORMAT,s.c_str());
+		SetDlgItemTextA(mhdlg,IDC_DECFORMAT,s.c_str());
 
 		s = " ";
 		s += VDPixmapFormatPrintSpec(make.flt);
-		SetDlgItemText(mhdlg,IDC_FLTFORMAT,s.c_str());
+		SetDlgItemTextA(mhdlg,IDC_FLTFORMAT,s.c_str());
 
 		s = " ";
 		s += VDPixmapFormatPrintSpec(make.out);
-		SetDlgItemText(mhdlg,IDC_OUTFORMAT,s.c_str());
+		SetDlgItemTextA(mhdlg,IDC_OUTFORMAT,s.c_str());
 
 		ShowControl(IDC_OUT_MSG, !make.error.empty());
 	}
@@ -1215,18 +1215,18 @@ void VDDialogVideoDepthW32::InitFinalFormat() {
 		if (!make.option) make.out = make.dec;
 		make.combineComp();
 
-		VDString s;
+		VDStringA s;
 		s = " ";
 		s += VDPixmapFormatPrintSpec(make.dec);
-		SetDlgItemText(mhdlg,IDC_DECFORMAT,s.c_str());
+		SetDlgItemTextA(mhdlg,IDC_DECFORMAT,s.c_str());
 
 		s = " ";
 		s += VDPixmapFormatPrintSpec(make.dec);
-		SetDlgItemText(mhdlg,IDC_FLTFORMAT,s.c_str());
+		SetDlgItemTextA(mhdlg,IDC_FLTFORMAT,s.c_str());
 
 		s = " ";
 		s += VDPixmapFormatPrintSpec(make.out);
-		SetDlgItemText(mhdlg,IDC_OUTFORMAT,s.c_str());
+		SetDlgItemTextA(mhdlg,IDC_OUTFORMAT,s.c_str());
 
 		ShowControl(IDC_OUT_MSG, !make.error.empty());
 	}
@@ -1737,18 +1737,18 @@ void VDDialogVideoFrameRateW32::ReinitDialog() {
 	if (mOpts.video.frameRateTargetLo) {
 		VDFraction fr(mOpts.video.frameRateTargetHi, mOpts.video.frameRateTargetLo);
 		print_fr(buf,fr);
-		SetDlgItemText(mhdlg, IDC_FRAMERATE_TARGET, buf);
+		SetDlgItemTextA(mhdlg, IDC_FRAMERATE_TARGET, buf);
 	}
 
 	if (mpVideo) {
 		IVDStreamSource *pVSS = mpVideo->asStream();
 		sprintf(buf, "No change (current: %.3f fps)", pVSS->getRate().asDouble());
-		SetDlgItemText(mhdlg, IDC_FRAMERATE_NOCHANGE, buf);
+		SetDlgItemTextA(mhdlg, IDC_FRAMERATE_NOCHANGE, buf);
 
 		if (mpAudio && mpAudio->getLength()) {
 			VDFraction framerate = VDFraction((double)pVSS->getLength() * mpAudio->getRate().asDouble() / mpAudio->getLength());
 			sprintf(buf, "(%.3f fps)", framerate.asDouble());
-			SetDlgItemText(mhdlg, IDC_FRAMERATE_SAMELENGTH_VALUE, buf);
+			SetDlgItemTextA(mhdlg, IDC_FRAMERATE_SAMELENGTH_VALUE, buf);
 		} else
 			EnableWindow(GetDlgItem(mhdlg, IDC_FRAMERATE_SAMELENGTH), FALSE);
 	}
@@ -1756,7 +1756,7 @@ void VDDialogVideoFrameRateW32::ReinitDialog() {
 	if (mOpts.video.mFrameRateAdjustLo) {
 		VDFraction fr(mOpts.video.mFrameRateAdjustHi, mOpts.video.mFrameRateAdjustLo);
 		print_fr(buf,fr);
-		SetDlgItemText(mhdlg, IDC_FRAMERATE, buf);
+		SetDlgItemTextA(mhdlg, IDC_FRAMERATE, buf);
 		CheckDlgButton(mhdlg, IDC_FRAMERATE_CHANGE, TRUE);
 	} else if (mOpts.video.mFrameRateAdjustHi == DubVideoOptions::kFrameRateAdjustSameLength) {
 		if (!mpAudio)

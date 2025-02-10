@@ -4750,7 +4750,7 @@ void VDProjectUI::CurveLoadSelected() {
 		double y = pc->Points()[pt].mY;
 		char buf[20];
 		sprintf(buf,"%1.3lg",y);
-		SetWindowText(e,buf);
+		SetWindowTextA(e,buf);
 	}
 }
 

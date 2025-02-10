@@ -432,7 +432,7 @@ INT_PTR CALLBACK Frameserver::StatusDlgProc2( HWND hWnd, UINT message, WPARAM wP
     switch (message) {
 	case WM_INITDIALOG:
 		SetWindowLongPtr(hWnd, DWLP_USER, lParam);
-		SetDlgItemText(hWnd, IDC_STATIC_FSNAME, ((Frameserver *)lParam)->lpszFsname);
+		SetDlgItemTextA(hWnd, IDC_STATIC_FSNAME, ((Frameserver *)lParam)->lpszFsname);
 		SetTimer(hWnd,1,1000,NULL);
 
 		{
@@ -790,9 +790,9 @@ INT_PTR CALLBACK FrameServerSetupDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPA
 			ivdsl->GetComputerName(buf);
 			strcat(buf,"/");
 
-			SetDlgItemText(hDlg, IDC_COMPUTER_NAME, buf);
+			SetDlgItemTextA(hDlg, IDC_COMPUTER_NAME, buf);
 		}
-		SetDlgItemText(hDlg, IDC_FSNAME, VDTextWToA(VDFileSplitPath(g_szInputAVIFile)).c_str());
+		SetDlgItemTextW(hDlg, IDC_FSNAME,VDFileSplitPath(g_szInputAVIFile));
 		SetWindowLongPtr(hDlg, DWLP_USER, lParam);
 		return TRUE;
 	case WM_COMMAND:

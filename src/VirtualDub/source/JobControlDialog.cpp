@@ -90,7 +90,7 @@ bool VDUIJobErrorDialog::OnLoaded() {
 
 	*dst = 0;
 
-	SetDlgItemText(mhdlg, IDC_ERROR, buf2.data());
+	SetDlgItemTextA(mhdlg, IDC_ERROR, buf2.data());
 
 	return VDDialogFrameW32::OnLoaded();
 }

@@ -265,26 +265,26 @@ static void AudioChooseDisplaySpecs(HWND hdlg, WAVEFORMATEX *pwfex) {
 		else if (is_audio_float((VDWaveFormat*)pwfex))
 			strcpy(buf, "PCM float");
 		else
-			wsprintf(buf, "0x%04x", pwfex->wFormatTag);
+			wsprintfA(buf, "0x%04x", pwfex->wFormatTag);
 	} else
 		buf[0] = 0;
-	SetDlgItemText(hdlg, IDC_STATIC_FORMATID, buf);
+	SetDlgItemTextA(hdlg, IDC_STATIC_FORMATID, buf);
 
-	if (pwfex) wsprintf(buf, "%ld bytes", pwfex->nBlockAlign);
-	SetDlgItemText(hdlg, IDC_STATIC_BYTESPERBLOCK, buf);
+	if (pwfex) wsprintfA(buf, "%ld bytes", pwfex->nBlockAlign);
+	SetDlgItemTextA(hdlg, IDC_STATIC_BYTESPERBLOCK, buf);
 
-	if (pwfex) wsprintf(buf, "%ld bytes/sec", pwfex->nAvgBytesPerSec);
-	SetDlgItemText(hdlg, IDC_STATIC_DATARATE, buf);
+	if (pwfex) wsprintfA(buf, "%ld bytes/sec", pwfex->nAvgBytesPerSec);
+	SetDlgItemTextA(hdlg, IDC_STATIC_DATARATE, buf);
 
 	if (pwfex) {
 		if (pwfex->nAvgBytesPerSec && pwfex->nBlockAlign) {
 			blps = MulDiv(pwfex->nAvgBytesPerSec, 10, pwfex->nBlockAlign);
-			wsprintf(buf, "%ld.%c blocks/sec", blps/10, (blps%10)+'0');
+			wsprintfA(buf, "%ld.%c blocks/sec", blps/10, (blps%10)+'0');
 		} else {
 			strcpy(buf, "");
 		}
 	}
-	SetDlgItemText(hdlg, IDC_STATIC_GRANULARITY, buf);
+	SetDlgItemTextA(hdlg, IDC_STATIC_GRANULARITY, buf);
 }
 
 static void AudioChooseShowFormats(HWND hdlg, ACMTagEntry *pTag, bool fShowCompatibleOnly) {
