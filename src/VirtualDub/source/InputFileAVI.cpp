@@ -921,7 +921,7 @@ bool VDAVIFileInfoDialog::OnLoaded() {
 		WAVEFORMATEX *pwfxTemp;
 		HACMSTREAM has;
 		HACMDRIVERID hadid;
-		ACMDRIVERDETAILS add;
+		ACMDRIVERDETAILSW add;
 		bool fSuccessful = false;
 
 		SetControlTextF(IDC_AUDIO_SAMPLINGRATE, L"%ldHz", fmt->mSamplingRate);
@@ -1001,8 +1001,8 @@ bool VDAVIFileInfoDialog::OnLoaded() {
 
 							add.cbStruct = sizeof add;
 
-							if (!acmDriverDetails(hadid, &add, 0)) {
-								buf = VDTextAToW(add.szLongName);
+							if (!acmDriverDetailsW(hadid, &add, 0)) {
+								buf = add.szLongName;
 								if (buf.size() > 30) {
 									buf.resize(27);
 									buf += L"...";

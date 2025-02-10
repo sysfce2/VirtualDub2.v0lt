@@ -557,31 +557,32 @@ VDZINT_PTR VDUIJobControlDialog::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARA
 			NMHDR *nm = (NMHDR *)lParam;
 
 			if (nm->idFrom == IDC_JOBS) {
-				NMLVDISPINFO *nldi = (NMLVDISPINFO *)nm;
+				NMLVDISPINFOA* nldiA = (NMLVDISPINFOA*)nm;
+				NMLVDISPINFOW* nldiW = (NMLVDISPINFOW*)nm;
 				NMLISTVIEW *nmlv;
 				VDJob *vdj;
 
 				switch(nm->code) {
 				case LVN_GETDISPINFOA:
-					GetJobListDispInfoA(nldi);
+					GetJobListDispInfoA(nldiA);
 					return TRUE;
 				case LVN_GETDISPINFOW:
-					GetJobListDispInfoW((NMLVDISPINFOW *)nldi);
+					GetJobListDispInfoW(nldiW);
 					return TRUE;
 				case LVN_ENDLABELEDITA:
 					SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, TRUE);
-					vdj = g_VDJobQueue.ListGet(nldi->item.iItem);
+					vdj = g_VDJobQueue.ListGet(nldiA->item.iItem);
 
-					if (vdj && nldi->item.pszText)
-						vdj->SetName(nldi->item.pszText);
-
+					if (vdj && nldiA->item.pszText) {
+						vdj->SetName(nldiA->item.pszText);
+					}
 					return TRUE;
 				case LVN_ENDLABELEDITW:
 					SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, TRUE);
-					vdj = g_VDJobQueue.ListGet(nldi->item.iItem);
+					vdj = g_VDJobQueue.ListGet(nldiW->item.iItem);
 
-					if (vdj && nldi->item.pszText)
-						vdj->SetName(VDTextWToA(((NMLVDISPINFOW *)nldi)->item.pszText).c_str());
+					if (vdj && nldiW->item.pszText)
+						vdj->SetName(VDTextWToA(nldiW->item.pszText).c_str());
 
 					return TRUE;
 				case LVN_ITEMCHANGED:
