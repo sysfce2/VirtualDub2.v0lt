@@ -798,7 +798,7 @@ INT_PTR VDVF1ResizeDlg::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 				SetFocus(GetDlgItem(mhdlg, badid));
 				MessageBeep(MB_ICONERROR);
 			} else if (const char *err = mNewConfig.Validate()) {
-				MessageBox(mhdlg, err, g_szError, MB_ICONERROR | MB_OK);
+				MessageBoxA(mhdlg, err, g_szError, MB_ICONERROR | MB_OK);
 			} else {
 				mifp->Close();
 				mConfig = mNewConfig;
@@ -816,7 +816,7 @@ INT_PTR VDVF1ResizeDlg::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 				SetFocus(GetDlgItem(mhdlg, badid));
 				MessageBeep(MB_ICONERROR);
 			} else if (const char *err = mNewConfig.Validate())
-				MessageBox(mhdlg, err, g_szError, MB_ICONERROR | MB_OK);
+				MessageBoxA(mhdlg, err, g_szError, MB_ICONERROR | MB_OK);
 			else
 				mNewConfig.ExchangeWithRegistry(true);
 			return TRUE;
@@ -1161,7 +1161,7 @@ INT_PTR VDVFCanvasDlg::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 				SetFocus(GetDlgItem(mhdlg, badid));
 				MessageBeep(MB_ICONERROR);
 			} else if (const char *err = mNewConfig.Validate()) {
-				MessageBox(mhdlg, err, g_szError, MB_ICONERROR | MB_OK);
+				MessageBoxA(mhdlg, err, g_szError, MB_ICONERROR | MB_OK);
 			} else {
 				mifp->Close();
 				mConfig = mNewConfig;

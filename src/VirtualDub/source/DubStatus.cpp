@@ -959,7 +959,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				extern bool VDPreferencesIsRenderAbortConfirmEnabled();
 
 				if (thisPtr->pDubber->IsPreviewing() || !VDPreferencesIsRenderAbortConfirmEnabled() ||
-					IDOK == MessageBox(hdlg, "Stop the operation at this point?", "VirtualDub Warning", MB_ICONEXCLAMATION|MB_OKCANCEL))
+					IDOK == MessageBoxA(hdlg, "Stop the operation at this point?", "VirtualDub Warning", MB_ICONEXCLAMATION|MB_OKCANCEL))
 				{
 					SendMessage(hdlg, WM_SETTEXT, 0, (LPARAM)"Aborting...");
 					EnableWindow((HWND)lParam, FALSE);

@@ -2489,7 +2489,7 @@ bool VDCaptureProjectUI::UICapturePreroll() {
 		return true;
 
 	// Don't have an option to flip this yet.
-	return IDOK == MessageBox((HWND)mhwnd, "Select OK to begin capture.", "VirtualDub notice", MB_OKCANCEL);
+	return IDOK == MessageBoxA((HWND)mhwnd, "Select OK to begin capture.", "VirtualDub notice", MB_OKCANCEL);
 }
 
 void VDCaptureProjectUI::UICaptureStatusUpdated(VDCaptureStatus& status) {
@@ -3803,7 +3803,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 			} else if (id >= ID_AUDIO_CAPTURE_SOURCE && id < ID_AUDIO_CAPTURE_SOURCE+50) {
 
 				if (mbSwitchSourcesTogether) {
-					DWORD result = MessageBox((HWND)mhwnd,
+					DWORD result = MessageBoxA((HWND)mhwnd,
 							"The audio source setting is currently being auto-set to match the video source. "
 							"This will be disabled if you manually switch the audio source. Proceed?\n"
 							"\n"
@@ -4785,7 +4785,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 				pbih->biClrImportant	= 0;
 
 				if (!pProject->SetVideoFormat(*pbih, pbih.size())) {
-					MessageBox(NULL, "The capture device does not support the selected video format.", g_szError, MB_OK|MB_ICONEXCLAMATION);
+					MessageBoxA(NULL, "The capture device does not support the selected video format.", g_szError, MB_OK|MB_ICONEXCLAMATION);
 					return TRUE;
 				}
 			} while(false);

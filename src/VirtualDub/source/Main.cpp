@@ -1141,7 +1141,7 @@ public:
 
 void SaveAVI(HWND hWnd, bool fUseCompatibility, bool queueAsJob) {
 	if (!inputVideo) {
-		MessageBox(hWnd, "No input video stream to process.", g_szError, MB_OK);
+		MessageBoxA(hWnd, "No input video stream to process.", g_szError, MB_OK);
 		return;
 	}
 
@@ -1288,7 +1288,7 @@ public:
 
 void SaveAudio(HWND hWnd, bool queueAsJob) {
 	if (!inputAudio) {
-		MessageBox(hWnd, "No input audio stream to extract.", g_szError, MB_OK);
+		MessageBoxA(hWnd, "No input audio stream to extract.", g_szError, MB_OK);
 		return;
 	}
 
@@ -1437,7 +1437,7 @@ static const char g_szRegKeySegmentDigitCount[]="Segment digit count";
 
 void SaveSegmentedAVI(HWND hWnd, bool queueAsJob) {
 	if (!inputVideo) {
-		MessageBox(hWnd, "No input video stream to process.", g_szError, MB_OK);
+		MessageBoxA(hWnd, "No input video stream to process.", g_szError, MB_OK);
 		return;
 	}
 
@@ -1921,7 +1921,7 @@ void SaveImageSeq(HWND hwnd, bool queueAsJob) {
 	dlg.addJob = queueAsJob;
 
 	if (!inputVideo) {
-		MessageBox(hwnd, "No input video stream to process.", g_szError, MB_OK);
+		MessageBoxA(hwnd, "No input video stream to process.", g_szError, MB_OK);
 		return;
 	}
 

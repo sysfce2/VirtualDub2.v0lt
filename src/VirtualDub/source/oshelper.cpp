@@ -71,7 +71,7 @@ void VDShowHelp(HWND hwnd, const wchar_t *filename) {
 			VDStringW helpFileADS(helpFile);
 			helpFileADS += L":Zone.Identifier";
 			if (VDDoesPathExist(helpFileADS.c_str())) {
-				int rv = MessageBox(hwnd, "VirtualDub has detected that its help file, VirtualDub.chm, has an Internet Explorer download location marker on it. This may prevent the help file from being displayed properly, resulting in \"Action canceled\" errors being displayed. Would you like to remove it?", "VirtualDub warning", MB_YESNO|MB_ICONEXCLAMATION);
+				int rv = MessageBoxA(hwnd, "VirtualDub has detected that its help file, VirtualDub.chm, has an Internet Explorer download location marker on it. This may prevent the help file from being displayed properly, resulting in \"Action canceled\" errors being displayed. Would you like to remove it?", "VirtualDub warning", MB_YESNO|MB_ICONEXCLAMATION);
 
 				if (rv == IDYES)
 					DeleteFileW(helpFileADS.c_str());

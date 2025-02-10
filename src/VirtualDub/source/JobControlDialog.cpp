@@ -360,7 +360,7 @@ bool VDUIJobControlDialog::OnCommand(uint32 id, uint32 extcode) {
 				return TRUE;
 
 			if (!vdj->IsReloadMarkerPresent())
-				MessageBox(mhdlg, "This job was created with an older version of VirtualDub and cannot be reloaded.", g_szError, MB_ICONERROR|MB_OK);
+				MessageBoxA(mhdlg, "This job was created with an older version of VirtualDub and cannot be reloaded.", g_szError, MB_ICONERROR|MB_OK);
 			else
 				vdj->Reload();
 
@@ -404,14 +404,14 @@ bool VDUIJobControlDialog::OnMenuHit(uint32 id) {
 
 			case ID_FILE_USELOCALJOBQUEUE:
 				if (g_VDJobQueue.IsRunInProgress())
-					MessageBox(mhdlg, "Cannot switch job queues while a job is in progress.", g_szError, MB_ICONERROR | MB_OK);
+					MessageBoxA(mhdlg, "Cannot switch job queues while a job is in progress.", g_szError, MB_ICONERROR | MB_OK);
 				else
 					g_VDJobQueue.SetJobFilePath(NULL, false, false);
 				break;
 
 			case ID_FILE_USEREMOTEJOBQUEUE:
 				if (g_VDJobQueue.IsRunInProgress())
-					MessageBox(mhdlg, "Cannot switch job queues while a job is in progress.", g_szError, MB_ICONERROR | MB_OK);
+					MessageBoxA(mhdlg, "Cannot switch job queues while a job is in progress.", g_szError, MB_ICONERROR | MB_OK);
 				else {
 					const VDFileDialogOption opts[]={
 						{ VDFileDialogOption::kConfirmFile, 0, NULL, 0, 0},
@@ -424,7 +424,7 @@ bool VDUIJobControlDialog::OnMenuHit(uint32 id) {
 
 					if (!filename.empty()) {
 						if (!_wcsicmp(filename.c_str(), g_VDJobQueue.GetDefaultJobFilePath())) {
-							DWORD res = MessageBox(mhdlg,
+							DWORD res = MessageBoxA(mhdlg,
 								"Using the same job file that is normally used for local job queue operation is not recommended as "
 								"it can cause job queue corruption.\n"
 								"\n"
@@ -442,7 +442,7 @@ bool VDUIJobControlDialog::OnMenuHit(uint32 id) {
 				break;
 
 			case ID_EDIT_CLEARLIST:
-				if (IDOK != MessageBox(mhdlg, "Really clear job list?", "VirtualDub job system", MB_OKCANCEL | MB_ICONEXCLAMATION))
+				if (IDOK != MessageBoxA(mhdlg, "Really clear job list?", "VirtualDub job system", MB_OKCANCEL | MB_ICONEXCLAMATION))
 					break;
 
 				g_VDJobQueue.ListClear(false);
@@ -648,7 +648,7 @@ VDZINT_PTR VDUIJobControlDialog::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARA
 								VDStringA msg;
 
 								msg.sprintf("This job may be running on a different instance of VirtualDub on the machine named %hs. Are you sure you want to reset it to Waiting status?", vdj->GetRunnerName());
-								if (IDOK == MessageBox(mhdlg, msg.c_str(), "VirtualDub Warning", MB_ICONEXCLAMATION | MB_OKCANCEL)) {
+								if (IDOK == MessageBoxA(mhdlg, msg.c_str(), "VirtualDub Warning", MB_ICONEXCLAMATION | MB_OKCANCEL)) {
 									vdj->SetState(VDJob::kStateWaiting);
 									vdj->Refresh();
 								}

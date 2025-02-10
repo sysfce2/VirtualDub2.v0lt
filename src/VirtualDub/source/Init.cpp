@@ -449,7 +449,7 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine) {
 				VDStringA message;
 
 				message.sprintf("There was an error loading the settings file:\n\n%s\n\nDo you want to continue? If so, settings will be reset to defaults and may not be saved.", err.c_str());
-				if (IDYES != MessageBox(NULL, message.c_str(), "VirtualDub Warning", MB_YESNO | MB_ICONWARNING))
+				if (IDYES != MessageBoxA(NULL, message.c_str(), "VirtualDub Warning", MB_YESNO | MB_ICONWARNING))
 					return false;
 			}
 		}
@@ -835,7 +835,7 @@ int ProcessCommandLine::showHelp() {
 		VDLog(kVDLogError, VDTextAToW(msg));
 		return 5;
 	} else {
-		MessageBox(g_hWnd, msg, "Command-line flags:", MB_OK | MB_SETFOREGROUND);
+		MessageBoxA(g_hWnd, msg, "Command-line flags:", MB_OK | MB_SETFOREGROUND);
 		return -1;
 	}
 }

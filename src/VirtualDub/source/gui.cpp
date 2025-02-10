@@ -871,7 +871,7 @@ void guiEndDeferWindowPos(HDWP hdwp) {
 		EndDeferWindowPos(hdwp);
 }
 
-int guiMessageBoxF(HWND hwnd, LPCTSTR lpCaption, UINT uType, const char *format, ...) {
+int guiMessageBoxF(HWND hwnd, LPCSTR lpCaption, UINT uType, const char *format, ...) {
 	char buf[1024];
 	va_list val;
 
@@ -879,7 +879,7 @@ int guiMessageBoxF(HWND hwnd, LPCTSTR lpCaption, UINT uType, const char *format,
 	vsprintf_s(buf, format, val);
 	va_end(val);
 
-	return MessageBox(hwnd, buf, lpCaption, uType);
+	return MessageBoxA(hwnd, buf, lpCaption, uType);
 }
 
 ///////////////////////////////////////////////////////////////////////////

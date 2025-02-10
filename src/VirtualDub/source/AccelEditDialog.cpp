@@ -265,8 +265,9 @@ bool VDDialogEditAccelerators::OnCommand(uint32 id, uint32 extcode) {
 						VDStringA msg;
 						msg.sprintf("The key %ls is already bound to %hs. Rebind it to %hs?", keyName.c_str(), obc->mpCommand, ace->mpName);
 
-						if (IDOK != MessageBox(mhdlg, msg.c_str(), g_szWarning, MB_OKCANCEL | MB_ICONEXCLAMATION))
+						if (IDOK != MessageBoxA(mhdlg, msg.c_str(), g_szWarning, MB_OKCANCEL | MB_ICONEXCLAMATION)) {
 							return true;
+						}
 
 						mBoundCommands.erase(it);
 						obc->Release();
@@ -312,8 +313,9 @@ bool VDDialogEditAccelerators::OnCommand(uint32 id, uint32 extcode) {
 
 		return true;
 	} else if (id == IDC_RESET) {
-		if (IDOK == MessageBox(mhdlg, "Really reset?", g_szWarning, MB_OKCANCEL | MB_ICONEXCLAMATION))
+		if (IDOK == MessageBoxA(mhdlg, "Really reset?", g_szWarning, MB_OKCANCEL | MB_ICONEXCLAMATION)) {
 			LoadTable(mBoundCommandsDefault);
+		}
 
 		return true;
 	}

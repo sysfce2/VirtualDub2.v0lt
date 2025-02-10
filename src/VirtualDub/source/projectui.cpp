@@ -3464,7 +3464,7 @@ LRESULT VDProjectUI::MainWndProc( UINT msg, WPARAM wParam, LPARAM lParam) {
 
 	case WM_CLOSE:
 		if (VDPreferencesGetConfirmExit()) {
-			if (IDOK != MessageBox((HWND)mhwnd, "Are you sure you want to exit?", "VirtualDub warning", MB_ICONQUESTION | MB_OKCANCEL))
+			if (IDOK != MessageBoxA((HWND)mhwnd, "Are you sure you want to exit?", "VirtualDub warning", MB_ICONQUESTION | MB_OKCANCEL))
 				return 0;
 		}
 		break;
@@ -3542,7 +3542,7 @@ LRESULT VDProjectUI::DubWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_CLOSE:
 		if (VDPreferencesGetConfirmExit()) {
-			if (IDOK != MessageBox((HWND)mhwnd, "Are you sure you want to exit?", "VirtualDub warning", MB_ICONQUESTION | MB_OKCANCEL))
+			if (IDOK != MessageBoxA((HWND)mhwnd, "Are you sure you want to exit?", "VirtualDub warning", MB_ICONQUESTION | MB_OKCANCEL))
 				return 0;
 		}
 
@@ -3553,7 +3553,7 @@ LRESULT VDProjectUI::DubWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 			if (mpDubStatus && !mpDubStatus->isVisible())
 				mpDubStatus->ToggleStatus();
 
-			if (IDYES == MessageBox((HWND)mhwnd,
+			if (IDYES == MessageBoxA((HWND)mhwnd,
 					"A dub operation is currently in progress. Forcing VirtualDub to abort "
 					"will leave the output file unusable and may have undesirable side effects. "
 					"Do you really want to do this?"

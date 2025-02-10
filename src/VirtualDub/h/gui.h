@@ -105,7 +105,7 @@ void guiReposResize(HWND hwnd, struct ReposItem *lpri, POINT *lppt);
 
 HDWP guiDeferWindowPos(HDWP hdwp, HWND hwnd, HWND hwndInsertAfter, int x, int y, int dx, int dy, UINT flags);
 void guiEndDeferWindowPos(HDWP hdwp);
-int guiMessageBoxF(HWND hwnd, LPCTSTR lpCaption, UINT uType, const char *format, ...);
+int guiMessageBoxF(HWND hwnd, LPCSTR lpCaption, UINT uType, const char *format, ...);
 
 void ticks_to_str(char *dst, size_t bufsize, uint32 ticks);
 void ticks_to_str(wchar_t *dst, size_t bufsize, uint32 ticks);

@@ -50,7 +50,7 @@ void CaptureWarnCheckDriver(HWND hwnd, const char *s) {
 
 	if (!(g_capwarnFlags & CWF_PINNACLE) && (strstr(s, "Pinnacle") || strstr(s, "miroVIDEO"))) {
 
-		if (IDYES == MessageBox(hwnd,
+		if (IDYES == MessageBoxA(hwnd,
 			"You may experience slow GUI performance while this driver "
 			"is active, depending on your video card.  Do you want to "
 			"know more about this problem?"
@@ -92,7 +92,7 @@ void CaptureWarnCheckDrivers(HWND hwnd) {
 			
 			CaptureWarnInit();
 
-			if (IDYES == MessageBox(hwnd,
+			if (IDYES == MessageBoxA(hwnd,
 				"You may experience difficulty getting exact framerates "
 				"with your capture card, resulting in dropped frames.  Do "
 				"you want to know more about this problem?"
@@ -128,7 +128,7 @@ void CaptureWarnCheckDrivers(HWND hwnd) {
 			
 			CaptureWarnInit();
 
-			if (IDYES == MessageBox(hwnd,
+			if (IDYES == MessageBoxA(hwnd,
 				"You may have difficulty capturing above 320x240 with this card.  Do "
 				"you want to know more about this problem?"
 				,

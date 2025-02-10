@@ -99,7 +99,7 @@ InputFileOptions *InputFile::createOptions(const void *buf, uint32 len) {
 }
 
 void InputFile::InfoDialog(VDGUIHandle hwndParent) {
-	MessageBox((HWND)hwndParent, "No file information is available for the current video file.", g_szError, MB_OK);
+	MessageBoxA((HWND)hwndParent, "No file information is available for the current video file.", g_szError, MB_OK);
 }
 
 void InputFile::GetTextInfo(tFileTextInfo& info) {

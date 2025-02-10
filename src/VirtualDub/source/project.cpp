@@ -1705,7 +1705,7 @@ void VDProject::InnerReopen() {
 
 					VDStringA msg(VDTextWToA(VDswprintf(VDLoadString(0, kVDST_Project, kVDM_ReopenChangesImminent), 2, &newCount, &oldCount)));
 
-					if (IDCANCEL == MessageBox((HWND)mhwnd, msg.c_str(), g_szError, MB_OKCANCEL))
+					if (IDCANCEL == MessageBoxA((HWND)mhwnd, msg.c_str(), g_szError, MB_OKCANCEL))
 						return;
 
 					break;
@@ -2738,7 +2738,7 @@ void VDProject::ResetTimeline() {
 
 void VDProject::ResetTimelineWithConfirmation() {
 	if (inputAVI) {
-		if (IDOK == MessageBox((HWND)mhwnd, "Discard edits and reset timeline?", g_szWarning, MB_OKCANCEL|MB_TASKMODAL|MB_SETFOREGROUND|MB_ICONEXCLAMATION)) {
+		if (IDOK == MessageBoxA((HWND)mhwnd, "Discard edits and reset timeline?", g_szWarning, MB_OKCANCEL|MB_TASKMODAL|MB_SETFOREGROUND|MB_ICONEXCLAMATION)) {
 			ResetTimeline();
 		}
 	}

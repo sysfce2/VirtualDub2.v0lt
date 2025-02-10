@@ -1865,7 +1865,7 @@ bool VDCaptureProject::SelectDriver(int nDriver) {
 
 	if (!mpDriver || !mpDriver->Init(mhwnd)) {
 		mpDriver = NULL;
-		MessageBox((HWND)mhwnd, "VirtualDub cannot connect to the desired capture driver.", g_szError, MB_OK);
+		MessageBoxA((HWND)mhwnd, "VirtualDub cannot connect to the desired capture driver.", g_szError, MB_OK);
 		if (mpCB)
 			mpCB->UICaptureDriverChanged(-1);
 		return false;

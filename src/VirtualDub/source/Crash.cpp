@@ -2022,7 +2022,7 @@ protected:
 
 	void DoSave() {
 		if (!g_debugInfo.pRVAHeap)
-			if (IDOK != MessageBox(mhdlg,
+			if (IDOK != MessageBoxA(mhdlg,
 				"VirtualDub cannot load its crash resource file, and thus the crash dump will be "
 				"missing the most important part, the call stack. Crash dumps are much less useful "
 				"to the author without the call stack.",
@@ -2033,9 +2033,9 @@ protected:
 			char buf[1024];
 
 			sprintf(buf, "Save successful to: %.512s.\n", g_VDCrashDumpPathA.c_str());
-			MessageBox(mhdlg, buf, "VirtualDub Notice", MB_OK | MB_ICONINFORMATION);
+			MessageBoxA(mhdlg, buf, "VirtualDub Notice", MB_OK | MB_ICONINFORMATION);
 		} else
-			MessageBox(mhdlg, "Save failed.", "VirtualDub Error", MB_OK | MB_ICONERROR);
+			MessageBoxA(mhdlg, "Save failed.", "VirtualDub Error", MB_OK | MB_ICONERROR);
 	}
 
 	static void DoHelp(HWND hwnd) {

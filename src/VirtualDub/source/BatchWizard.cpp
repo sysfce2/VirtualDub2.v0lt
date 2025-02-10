@@ -468,7 +468,7 @@ bool VDUIBatchWizard::OnCommand(uint32 id, uint32 extcode) {
 				if (failed)
 					message.append_sprintf("\n\n%u file(s) could not be renamed and have been left in the list.", failed);
 
-				MessageBox(mhdlg, message.c_str(), "VirtualDub notice", (failed ? MB_ICONWARNING : MB_ICONINFORMATION)|MB_OK);
+				MessageBoxA(mhdlg, message.c_str(), "VirtualDub notice", (failed ? MB_ICONWARNING : MB_ICONINFORMATION)|MB_OK);
 			}
 			return true;
 
@@ -722,7 +722,7 @@ bool VDUIBatchWizard::CheckAndConfirmConflicts() {
 	if (conflicts) {
 		VDStringA message;
 		message.sprintf("%u file(s) have conflicting output names and will attempt to overwrite the results of other entries. Proceed anyway?", conflicts);
-		return IDOK == MessageBox(mhdlg, message.c_str(), g_szWarning, MB_ICONWARNING | MB_OKCANCEL);
+		return IDOK == MessageBoxA(mhdlg, message.c_str(), g_szWarning, MB_ICONWARNING | MB_OKCANCEL);
 	}
 
 	return true;

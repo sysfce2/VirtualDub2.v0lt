@@ -367,7 +367,7 @@ void CreateExtractSparseAVI(HWND hwndParent, bool bExtract) {
 					ExpandSparseAVI(hwndParent, infileA.c_str(), outfileA.c_str());
 				else
 					CreateSparseAVI(infileA.c_str(), outfileA.c_str());
-				MessageBox(hwndParent, bExtract ? "Sparse AVI expansion complete." : "Sparse AVI creation complete.", "VirtualDub notice", MB_ICONINFORMATION);
+				MessageBoxA(hwndParent, bExtract ? "Sparse AVI expansion complete." : "Sparse AVI creation complete.", "VirtualDub notice", MB_ICONINFORMATION);
 			} catch(const MyError& e) {
 				e.post(hwndParent, g_szError);
 			}

@@ -401,7 +401,7 @@ INT_PTR VDDialogAudioFiltersW32::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 				mpGraphControl->ConfigureSelection();
 				return TRUE;
 			case IDC_CLEAR:
-				if (MessageBox(mhdlg, "Clear filter graph?", g_szWarning, MB_ICONEXCLAMATION|MB_OKCANCEL)==IDOK){
+				if (MessageBoxA(mhdlg, "Clear filter graph?", g_szWarning, MB_ICONEXCLAMATION|MB_OKCANCEL)==IDOK){
 					mpGraphControl->SetFilterGraph(std::vector<VDFilterGraphNode>(), std::vector<VDFilterGraphConnection>());
 				}
 				return TRUE;

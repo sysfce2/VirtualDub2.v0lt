@@ -1981,7 +1981,7 @@ void Dubber::Stop() {
 		}
 
 		if (currentTime - startTime > 10000) {
-			if (IDOK == MessageBox(g_hWnd, "Something appears to be stuck while trying to stop (thread deadlock). Abort operation and exit program?", "VirtualDub Internal Error", MB_ICONEXCLAMATION|MB_OKCANCEL)) {
+			if (IDOK == MessageBoxA(g_hWnd, "Something appears to be stuck while trying to stop (thread deadlock). Abort operation and exit program?", "VirtualDub Internal Error", MB_ICONEXCLAMATION|MB_OKCANCEL)) {
 				vdprotected("aborting process due to a thread deadlock") {
 					ExitProcess(0);
 				}
