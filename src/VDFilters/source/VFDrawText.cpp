@@ -11,7 +11,7 @@
 #include "resource.h"
 
 extern bool guiChooseColor(HWND hwnd, COLORREF& rgbOld);
-extern VDStringA VDEncodeScriptString(const VDStringSpanA& sa);
+extern VDStringA VDEncodeScriptString(const VDStringW& sw);
 
 COLORREF argb_to_colorref(uint32 color) {
 	int r = (color & 0xFF0000) >> 16;
@@ -650,8 +650,8 @@ void VDVFilterDrawText::ScriptConfig(IVDXScriptInterpreter *, const VDXScriptVal
 }
 
 void VDVFilterDrawText::GetScriptString(char *buf, int maxlen) {
-	VDStringA face_s = VDEncodeScriptString(VDTextWToU8(param.face));
-	VDStringA text_s = VDEncodeScriptString(VDTextWToU8(param.text));
+	VDStringA face_s = VDEncodeScriptString(param.face);
+	VDStringA text_s = VDEncodeScriptString(param.text);
 	int flags = param.align;
 	if(param.italic) flags |= 4;
 	int color1 = param.color & 0xFFFFFF;

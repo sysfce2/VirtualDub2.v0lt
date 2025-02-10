@@ -191,7 +191,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 			VDStringW s(g_szInputWAVFile);
 			if (project_relative) s = g_project->BuildProjectPath(g_szInputWAVFile);
 			const VDStringA& encodedFileName = VDEncodeScriptString(s);
-			const VDStringA& encodedDriverName = VDEncodeScriptString(VDTextWToU8(g_project->GetAudioSourceDriverName(), -1));
+			const VDStringA& encodedDriverName = VDEncodeScriptString(g_project->GetAudioSourceDriverName());
 
 			// check if we have options to write out
 			const InputFileOptions *opts = g_project->GetAudioSourceOptions();

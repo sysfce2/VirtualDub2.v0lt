@@ -765,10 +765,10 @@ VDXVF_BEGIN_SCRIPT_METHODS(VDVFLogo)
 VDXVF_END_SCRIPT_METHODS()
 
 void VDVFLogo::GetScriptString(char *buf, int buflen) {
-	VDStringA logoPath = VDEncodeScriptString(VDTextWToU8(mConfig.szLogoPath, -1));
+	VDStringA logoPath = VDEncodeScriptString(mConfig.szLogoPath);
 
 	if (mConfig.bEnableAlphaBlending && mConfig.bEnableSecondaryAlpha) {
-		VDStringA alphaPath = VDEncodeScriptString(VDTextWToU8(mConfig.szAlphaPath, -1));
+		VDStringA alphaPath = VDEncodeScriptString(mConfig.szAlphaPath);
 
 		SafePrintf(buf, buflen, "Config(\"%s\", %d, %d, \"%s\", %d, %d, %d, %d)",
 			logoPath.c_str(), mConfig.pos_x, mConfig.pos_y, alphaPath.c_str(), mConfig.bNonPremultAlpha, mConfig.justify_x, mConfig.justify_y, mConfig.opacity);

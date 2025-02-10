@@ -49,6 +49,6 @@ FOURCC toupperFOURCC(FOURCC fcc);
 VDStringA VDEncodeScriptString(const VDStringSpanA& sa);
 VDStringA VDEncodeScriptString(const VDStringW& sw);
 inline VDStringA VDEncodeScriptString(const char* sa) { return VDEncodeScriptString(VDStringSpanA(sa)); }
-inline VDStringA VDEncodeScriptString(const wchar_t* sw) { return VDEncodeScriptString(VDStringSpanW(sw)); }
+inline VDStringA VDEncodeScriptString(const wchar_t* sw) { return VDEncodeScriptString(VDStringW(sw)); }
 
 #endif
