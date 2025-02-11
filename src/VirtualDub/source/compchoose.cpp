@@ -200,7 +200,7 @@ bool VDUIDialogChooseVideoCompressorW32::OnLoaded() {
 
 		EnableControl(IDC_SHOW_FILTERED, enable_all);
 		EnableControl(IDC_SHOW_ALL, enable_all);
-		VDString s;
+		VDStringA s;
 		if (filter_format) s = VDPixmapFormatPrintSpec(filter_format);
 		else s = print_fourcc(mpSrcFormat->biCompression);
 		SetControlTextF(IDC_SHOW_FILTERED, L"Similar to source: %hs", s.c_str());
@@ -627,7 +627,7 @@ void VDUIDialogChooseVideoCompressorW32::RebuildCodecList() {
 	if (mpSrcFormat && !VDBitmapFormatToPixmapFormat((VDAVIBitmapInfoHeader&)*mpSrcFormat)) allow_convert = false;
 
 	if (!allow_convert) {
-		VDString fcc = print_fourcc(mpSrcFormat->biCompression);
+		VDStringA fcc = print_fourcc(mpSrcFormat->biCompression);
 		mCurrentCompression.sprintf(L"(No recompression: %hs)", fcc.c_str());
 	} else
 		mCurrentCompression = L"(Uncompressed RGB/YCbCr)";
@@ -1114,7 +1114,7 @@ void VDUIDialogChooseVideoCompressorW32::UpdateFormat() {
 				if (src.fullEqual(format)){
 					msg = VDStringW(L"No conversion required on output");
 				} else {
-					VDString conv = VDPixmapFormatPrintSpec(src) + " -> " + VDPixmapFormatPrintSpec(format);
+					VDStringA conv = VDPixmapFormatPrintSpec(src) + " -> " + VDPixmapFormatPrintSpec(format);
 					msg = VDStringW(L"Using conversion: ") + VDTextAToW(conv);
 				}
 			}

@@ -59,8 +59,8 @@ static inline wchar_t *VDFileSplitPath(wchar_t *s) {
 	return const_cast<wchar_t *>(VDFileSplitPath(const_cast<const wchar_t *>(s)));
 }
 
-VDString VDFileSplitPathLeft(const VDString&);
-VDString VDFileSplitPathRight(const VDString&);
+VDStringA VDFileSplitPathLeft(const VDStringA&);
+VDStringA VDFileSplitPathRight(const VDStringA&);
 VDStringW VDFileSplitPathLeft(const VDStringW&);
 VDStringW VDFileSplitPathRight(const VDStringW&);
 
@@ -78,7 +78,7 @@ static inline wchar_t *VDFileSplitRoot(wchar_t *s) {
 	return const_cast<wchar_t *>(VDFileSplitRoot(const_cast<const wchar_t *>(s)));
 }
 
-VDString VDFileSplitRoot(const VDString&);
+VDStringA VDFileSplitRoot(const VDStringA&);
 VDStringW VDFileSplitRoot(const VDStringW&);
 
 // VDSplitExtension returns a pointer to the extension, including the period.
@@ -95,9 +95,9 @@ static inline wchar_t *VDFileSplitExt(wchar_t *s) {
 	return const_cast<wchar_t *>(VDFileSplitExt(const_cast<const wchar_t *>(s)));
 }
 
-VDString VDFileSplitExtLeft(const VDString&);
+VDStringA VDFileSplitExtLeft(const VDStringA&);
 VDStringW VDFileSplitExtLeft(const VDStringW&);
-VDString VDFileSplitExtRight(const VDString&);
+VDStringA VDFileSplitExtRight(const VDStringA&);
 VDStringW VDFileSplitExtRight(const VDStringW&);
 
 /////////////////////////////////////////////////////////////////////////////

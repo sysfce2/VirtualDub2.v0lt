@@ -90,9 +90,9 @@ const wchar_t *VDFileSplitPath(const wchar_t *s) {
 	return lastsep;
 }
 
-VDString  VDFileSplitPathLeft (const VDString&  s) { return splitimpL(s, VDFileSplitPath(s.c_str())); }
+VDStringA VDFileSplitPathLeft (const VDStringA& s) { return splitimpL(s, VDFileSplitPath(s.c_str())); }
 VDStringW VDFileSplitPathLeft (const VDStringW& s) { return splitimpL(s, VDFileSplitPath(s.c_str())); }
-VDString  VDFileSplitPathRight(const VDString&  s) { return splitimpR(s, VDFileSplitPath(s.c_str())); }
+VDStringA VDFileSplitPathRight(const VDStringA& s) { return splitimpR(s, VDFileSplitPath(s.c_str())); }
 VDStringW VDFileSplitPathRight(const VDStringW& s) { return splitimpR(s, VDFileSplitPath(s.c_str())); }
 
 const char *VDFileSplitRoot(const char *s) {
@@ -163,7 +163,7 @@ const wchar_t *VDFileSplitRoot(const wchar_t *s) {
 	}
 }
 
-VDString  VDFileSplitRoot(const VDString&  s) { return splitimpL(s, VDFileSplitRoot(s.c_str())); }
+VDStringA VDFileSplitRoot(const VDStringA& s) { return splitimpL(s, VDFileSplitRoot(s.c_str())); }
 VDStringW VDFileSplitRoot(const VDStringW& s) { return splitimpL(s, VDFileSplitRoot(s.c_str())); }
 
 const char *VDFileSplitExt(const char *s) {
@@ -208,9 +208,9 @@ const wchar_t *VDFileSplitExt(const wchar_t *s) {
 	return end;
 }
 
-VDString  VDFileSplitExtLeft (const VDString&  s) { return splitimpL(s, VDFileSplitExt(s.c_str())); }
+VDStringA VDFileSplitExtLeft (const VDStringA& s) { return splitimpL(s, VDFileSplitExt(s.c_str())); }
 VDStringW VDFileSplitExtLeft (const VDStringW& s) { return splitimpL(s, VDFileSplitExt(s.c_str())); }
-VDString  VDFileSplitExtRight(const VDString&  s) { return splitimpR(s, VDFileSplitExt(s.c_str())); }
+VDStringA VDFileSplitExtRight(const VDStringA& s) { return splitimpR(s, VDFileSplitExt(s.c_str())); }
 VDStringW VDFileSplitExtRight(const VDStringW& s) { return splitimpR(s, VDFileSplitExt(s.c_str())); }
 
 /////////////////////////////////////////////////////////////////////////////

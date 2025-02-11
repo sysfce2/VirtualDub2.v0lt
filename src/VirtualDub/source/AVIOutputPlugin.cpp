@@ -95,7 +95,7 @@ private:
 	typedef std::map<uint32, VDStringA> tTextInfo;
 	tTextInfo	mTextInfo;
 	vdrefptr<IVDOutputDriver> driver;
-	VDString format;
+	VDStringA format;
 
 public:
 	AVIOutputPlugin(IVDOutputDriver* driver, const char* format);

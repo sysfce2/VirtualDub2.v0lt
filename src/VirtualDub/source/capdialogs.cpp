@@ -1349,8 +1349,6 @@ public:
 				L"Zoom",
 			};
 
-			//VDString buf;
-
 			int propcount = 0;
 			for(int prop = 0; prop < nsVDCapture::kPropCount; ++prop) {
 				if (mpProject->IsPropertySupported(prop)) {

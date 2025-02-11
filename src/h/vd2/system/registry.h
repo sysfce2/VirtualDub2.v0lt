@@ -145,7 +145,7 @@ protected:
 
 class VDRegistryAppKey : public VDRegistryKey {
 private:
-	static VDString s_appbase;
+	static VDStringA s_appbase;
 
 public:
 	VDRegistryAppKey(IVDRegistryProvider *provider=0);

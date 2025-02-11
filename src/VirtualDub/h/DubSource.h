@@ -112,7 +112,7 @@ protected:
 	virtual ~DubSource();
 
 public:
-	VDString profile_comment;
+	VDStringA profile_comment;
 
 	virtual const char* GetProfileComment() const { return profile_comment.empty() ? 0:profile_comment.c_str(); }
 	virtual void SetProfileComment(const char* s) { profile_comment = s; }

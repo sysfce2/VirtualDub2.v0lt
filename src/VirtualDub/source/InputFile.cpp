@@ -531,7 +531,7 @@ IVDInputDriver *VDAutoselectInputDriverForFile(const wchar_t *fn, uint32 flags) 
 		VDGetInputDriverForFile(flags,list);
 
 		VDStringW force_driver;
-		VDString format_id = VDString("*")+VDTextWToA(VDFileSplitExt(fn));
+		VDStringA format_id = VDStringA("*")+VDTextWToA(VDFileSplitExt(fn));
 		VDRegistryAppKey key(flags==IVDInputDriver::kF_Audio ? "File formats (audio)" : "File formats");
 		key.getString(format_id.c_str(), force_driver);
 
@@ -550,7 +550,7 @@ IVDInputDriver *VDAutoselectInputDriverForFile(const wchar_t *fn, uint32 flags) 
 	VDXMediaInfo info;
 	wcsncpy(info.format_name,driver->GetFilenamePattern(),100);
 	VDTestInputDriverForFile(info,fn,driver);
-	VDString format_id = VDTextWToA(info.format_name);
+	VDStringA format_id = VDTextWToA(info.format_name);
 
 	if (!format_id.empty()) {
 		VDStringW force_driver;

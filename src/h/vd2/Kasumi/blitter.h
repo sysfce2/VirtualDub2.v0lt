@@ -12,7 +12,7 @@ class IVDPixmapExtraGen;
 
 class IVDPixmapBlitter {
 public:
-	VDString profiler_comment;
+	VDStringA profiler_comment;
 
 	virtual ~IVDPixmapBlitter() {}
 	virtual void Blit(const VDPixmap& dst, const VDPixmap& src) = 0;
@@ -29,7 +29,7 @@ class VDPixmapCachedBlitter {
 	VDPixmapCachedBlitter(const VDPixmapCachedBlitter&);
 	VDPixmapCachedBlitter& operator=(const VDPixmapCachedBlitter&);
 public:
-	VDString profiler_comment;
+	VDStringA profiler_comment;
 
 	VDPixmapCachedBlitter();
 	~VDPixmapCachedBlitter();

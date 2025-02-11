@@ -1460,7 +1460,7 @@ bool VideoSourceAVI::_construct(int streamIndex) {
 
 	if (!mpDecompressor) {
 		const char *s = LookupVideoCodec(bmih->biCompression);
-		VDString fcc = print_fourcc(bmih->biCompression);
+		VDStringA fcc = print_fourcc(bmih->biCompression);
 
 		throw MyError("Couldn't locate decompressor for format '%s' (%s)\n"
 						"\n"

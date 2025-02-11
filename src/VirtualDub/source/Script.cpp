@@ -2177,7 +2177,7 @@ static void func_VirtualDub_SaveAVI(IVDScriptInterpreter *, VDScriptValue *argli
 
 	IVDOutputDriver *driver = VDGetOutputDriverByName(g_FileOutDriver.c_str());
 	if (!driver) {
-		VDString drv = VDTextWToA(g_FileOutDriver);
+		VDStringA drv = VDTextWToA(g_FileOutDriver);
 		throw MyError("Cannot save video with '%s': no such driver loaded", drv.c_str());
 	}
 	for(int i=0; ; i++){
@@ -2185,7 +2185,7 @@ static void func_VirtualDub_SaveAVI(IVDScriptInterpreter *, VDScriptValue *argli
 		wchar_t ext[128];
 		char name[128];
 		if (!driver->GetDriver()->EnumFormats(i,filter,ext,name)) {
-			VDString drv = VDTextWToA(g_FileOutDriver);
+			VDStringA drv = VDTextWToA(g_FileOutDriver);
 			throw MyError("Cannot save video with '%s / %s': no such format supported by driver", drv.c_str(), g_FileOutFormat.c_str());
 		}
 
@@ -2314,7 +2314,7 @@ static void func_VirtualDub_SaveAudio(IVDScriptInterpreter *, VDScriptValue *arg
 
 	IVDOutputDriver *driver = VDGetOutputDriverByName(g_AudioOutDriver.c_str());
 	if (!driver) {
-		VDString drv = VDTextWToA(g_AudioOutDriver);
+		VDStringA drv = VDTextWToA(g_AudioOutDriver);
 		throw MyError("Cannot save audio with '%s': no such driver loaded", drv.c_str());
 	}
 	for(int i=0; ; i++){
@@ -2322,7 +2322,7 @@ static void func_VirtualDub_SaveAudio(IVDScriptInterpreter *, VDScriptValue *arg
 		wchar_t ext[128];
 		char name[128];
 		if (!driver->GetDriver()->EnumFormats(i,filter,ext,name)) {
-			VDString drv = VDTextWToA(g_AudioOutDriver);
+			VDStringA drv = VDTextWToA(g_AudioOutDriver);
 			throw MyError("Cannot save audio with '%s / %s': no such format supported by driver", drv.c_str(), g_AudioOutFormat.c_str());
 		}
 

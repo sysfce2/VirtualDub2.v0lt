@@ -63,10 +63,10 @@ uint32 fourcc_toupper(uint32 a) {
 	return a;
 }
 
-VDString print_fourcc(uint32 a) {
+VDStringA print_fourcc(uint32 a) {
 	uint8 fcc[4];
 	*(uint32 *)fcc = a;
-	VDString buf;
+	VDStringA buf;
 	for(int i=0; i<4; ++i) {
 		uint8 c = fcc[i];
 		if (isalpha(c) || isdigit(c))

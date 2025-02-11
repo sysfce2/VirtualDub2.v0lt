@@ -1402,7 +1402,7 @@ bool Dubber::NegotiateFastFormat(const BITMAPINFOHEADER& bih) {
 	const BITMAPINFOHEADER *pbih = (const BITMAPINFOHEADER *)mVideoSources.front()->getDecompressedFormat();
 
 	if (mpVideoCompressor->Query(pbih)) {
-		VDString buf;
+		VDStringA buf;
 
 		if (pbih->biCompression > VDAVIBitmapInfoHeader::kCompressionBitfields)
 			buf = print_fourcc(pbih->biCompression);
@@ -1432,7 +1432,7 @@ bool Dubber::NegotiateFastFormat(int format) {
 	if (!pbih) return false;
 
 	if (mpVideoCompressor->Query(pbih)) {
-		VDString buf;
+		VDStringA buf;
 
 		if (pbih->biCompression > VDAVIBitmapInfoHeader::kCompressionBitfields)
 			buf = print_fourcc(pbih->biCompression);
@@ -1448,7 +1448,7 @@ bool Dubber::NegotiateFastFormat(int format) {
 	VDPixmapLayout layout;
 	if (VDGetPixmapLayoutForBitmapFormat((const VDAVIBitmapInfoHeader&)*pbih,bih_size,layout)) {
 		if (mpVideoCompressor->Query(&layout)) {
-			VDString buf = VDPixmapFormatPrintSpec(layout.formatEx);
+			VDStringA buf = VDPixmapFormatPrintSpec(layout.formatEx);
 			const char *s = buf.c_str();
 			VDLogAppMessage(kVDLogInfo, kVDST_Dub, kVDM_FastRecompressUsingFormat, 1, &s);
 			return true;

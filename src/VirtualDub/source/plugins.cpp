@@ -169,7 +169,7 @@ namespace {
 		VDXAudioEncDefinition	mDefinition;
 
 		VDStringW				mDriverName;
-		VDString				mDriverTagName;
+		VDStringA				mDriverTagName;
 	};
 }
 

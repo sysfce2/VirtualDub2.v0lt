@@ -188,7 +188,7 @@ private:
 	typedef std::list<std::pair<uint32, VDStringA> > tTextInfo;
 	tTextInfo	mTextInfo;
 	IVDOutputDriver* driver;
-	VDString format;
+	VDStringA format;
 };
 
 class VDAVIOutputRawSystem : public VDDubberOutputSystem {

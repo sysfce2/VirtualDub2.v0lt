@@ -18,8 +18,8 @@ namespace {
 	};
 }
 
-static VDString format_hide_key(const FilterBlurb& fb) {
-	VDString s;
+static VDStringA format_hide_key(const FilterBlurb& fb) {
+	VDStringA s;
 	s.sprintf("%s @ %s", fb.name.c_str(), fb.author.c_str());
 	return s;
 }
@@ -262,7 +262,7 @@ void VDDialogFilterListW32::RebuildList() {
 	mSortedFilters.clear();
 	for(std::list<FilterBlurb>::iterator it(mFilterList.begin()), itEnd(mFilterList.end()); it!=itEnd; ++it) {
 		FilterBlurb& item = *it;
-		VDString s = format_hide_key(item);
+		VDStringA s = format_hide_key(item);
 		item.hide = key.getBool(s.c_str());
 		VDStringW module = item.module;
 		item.module = VDFileSplitPathRight(module);
@@ -322,7 +322,7 @@ void VDDialogFilterListW32::OnItemCheckedChanged(VDUIProxyListView *sender, int 
 	uintptr listIdx = item->filter;
 	bool enabled = mListView.IsItemChecked(index);
 	VDRegistryAppKey key("Hide Video Filters");
-	VDString s = format_hide_key(*mSortedFilters[listIdx]);
+	VDStringA s = format_hide_key(*mSortedFilters[listIdx]);
 	key.setBool(s.c_str(),!enabled);
 }
 

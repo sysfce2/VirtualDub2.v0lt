@@ -63,13 +63,13 @@ void VDPixmapGenerateFast(void *dst, ptrdiff_t pitch, sint32 height, IVDPixmapGe
 
 IVDPixmapBlitter *VDCreatePixmapUberBlitterDirectCopy(const VDPixmap& dst, const VDPixmap& src) {
 	IVDPixmapBlitter* r = new VDPixmapUberBlitterDirectCopy;
-	r->profiler_comment = VDString("copy ") + VDPixmapFormatPrintSpec(src.format);
+	r->profiler_comment = VDStringA("copy ") + VDPixmapFormatPrintSpec(src.format);
 	return r;
 }
 
 IVDPixmapBlitter *VDCreatePixmapUberBlitterDirectCopy(const VDPixmapLayout& dst, const VDPixmapLayout& src) {
 	IVDPixmapBlitter* r = new VDPixmapUberBlitterDirectCopy;
-	r->profiler_comment = VDString("copy ") + VDPixmapFormatPrintSpec(src.format);
+	r->profiler_comment = VDStringA("copy ") + VDPixmapFormatPrintSpec(src.format);
 	return r;
 }
 
@@ -671,12 +671,12 @@ VDPixmapUberBlitterGenerator::~VDPixmapUberBlitterGenerator() {
 }
 
 void VDPixmapUberBlitterGenerator::debug_dump() {
-	VDString r = dump();
+	VDStringA r = dump();
 	OutputDebugString(r.c_str());
 }
 
-VDString VDPixmapUberBlitterGenerator::dump() {
-	VDString r;
+VDStringA VDPixmapUberBlitterGenerator::dump() {
+	VDStringA r;
 	{for(int i=0; i<(int)mStack.size(); i++){
 		StackEntry& s = mStack[i];
 		r.append_sprintf("[entry %d]:%d<-",i,s.mSrcIndex);
@@ -686,8 +686,8 @@ VDString VDPixmapUberBlitterGenerator::dump() {
 	return r;
 }
 
-VDString VDPixmapUberBlitterGenerator::dump_gen(IVDPixmapGen* src) {
-	VDString r;
+VDStringA VDPixmapUberBlitterGenerator::dump_gen(IVDPixmapGen* src) {
+	VDStringA r;
 	while (src) {
 		IVDPixmapGen** px = std::find(mGenerators.begin(),mGenerators.end(),src);
 		int x = px-mGenerators.begin();

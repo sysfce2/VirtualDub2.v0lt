@@ -151,7 +151,7 @@ extern IVDPositionControlCallback *VDGetPositionControlCallbackTEMP() {
 extern char PositionFrameTypeCallback(HWND hwnd, void *pvData, long pos);
 
 extern void ChooseCompressor(HWND hwndParent, COMPVARS2 *lpCompVars);
-extern WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *, WAVEFORMATEX *, VDString& shortNameHint, vdblock<char>& config, bool enable_plugin=true);
+extern WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *, WAVEFORMATEX *, VDStringA& shortNameHint, vdblock<char>& config, bool enable_plugin=true);
 extern void VDDisplayLicense(HWND hwndParent, bool conditional);
 
 extern void OpenInput(bool append=false, bool audio=false, const wchar_t* filename=0, MyError* err=0);
@@ -2821,7 +2821,7 @@ bool VDProjectUI::MenuHit(UINT id) {
 				inputAVI = pDriver->CreateInputFile(0);
 				InputFileOptions* opt = inputAVI->promptForOptions(mhwnd);
 				if (opt) {
-					VDString data;
+					VDStringA data;
 					int len = opt->write(0,0);
 					data.resize(len);
 					opt->write(&data[0],len);

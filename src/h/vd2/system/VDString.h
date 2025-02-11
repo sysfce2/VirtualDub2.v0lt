@@ -1243,8 +1243,6 @@ inline VDStringW operator+(const VDStringW& str, wchar_t c) {
 
 ///////////////////////////////////////////////////////////////////////////
 
-typedef VDStringA				VDString;
-
 template<> VDStringA *vdmove_forward(VDStringA *src1, VDStringA *src2, VDStringA *dst);
 template<> VDStringW *vdmove_forward(VDStringW *src1, VDStringW *src2, VDStringW *dst);
 template<> VDStringA *vdmove_backward(VDStringA *src1, VDStringA *src2, VDStringA *dst);

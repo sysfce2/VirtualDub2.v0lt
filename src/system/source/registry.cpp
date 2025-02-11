@@ -461,7 +461,7 @@ const char *VDRegistryKeyIterator::Next() {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-VDString VDRegistryAppKey::s_appbase;
+VDStringA VDRegistryAppKey::s_appbase;
 
 VDRegistryAppKey::VDRegistryAppKey(IVDRegistryProvider *provider) : VDRegistryKey(provider, s_appbase.c_str()) {
 }

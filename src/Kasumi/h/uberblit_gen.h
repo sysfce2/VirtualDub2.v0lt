@@ -206,8 +206,8 @@ public:
 	void lanczos3(float xoffset, float xfactor, uint32 w, float yoffset, float yfactor, uint32 h);
 
 	IVDPixmapBlitter *create();
-	VDString dump();
-	VDString dump_gen(IVDPixmapGen* src);
+	VDStringA dump();
+	VDStringA dump_gen(IVDPixmapGen* src);
 	void debug_dump();
 
 protected:

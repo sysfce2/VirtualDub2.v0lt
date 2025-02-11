@@ -1961,7 +1961,7 @@ void VDVideoFiltersDialog::FilterListItem::GetText(int subItem, VDStringW& s) co
 						s += L" (YUV)";
 					else {
 						//const VDPixmapFormatInfo& info = VDPixmapGetInfo(format);
-						VDString name = VDPixmapFormatPrintSpec(format);
+						VDStringA name = VDPixmapFormatPrintSpec(format);
 						s.append_sprintf(L" (%hs)", name.c_str());
 					}
 				}

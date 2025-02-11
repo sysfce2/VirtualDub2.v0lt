@@ -305,11 +305,11 @@ public:
 	HWND mhdlg;
 	MyError* init_error;
 	vdrefptr<IVDInputDriver> driver;
-	VDString driver_options;
+	VDStringA driver_options;
 	VDStringW filename;
 	VDStringW init_driver;
-	VDString format_id;
-	VDString last_override_format;
+	VDStringA format_id;
+	VDStringA last_override_format;
 	VDStringW last_override_driver;
 	VDXMediaInfo info;
 	tVDInputDrivers inputDrivers;
@@ -387,7 +387,7 @@ void VDOpenVideoDialogW32::ChangeFilename() {
 				change_driver = true;
 
 				VDStringW force_driver(L"Raw video input driver (internal)");
-				format_id = VDString("*")+VDTextWToA(VDFileSplitExtRight(filename));
+				format_id = VDStringA("*")+VDTextWToA(VDFileSplitExtRight(filename));
 
 				if (!init_driver.empty()) {
 					force_driver = init_driver;
@@ -984,7 +984,7 @@ void VDSaveVideoDialogW32::InitDubber() {
 		dubber->InitAudio(&asrc,1);
 		AudioStream* as = dubber->GetAudioBeforeCompressor();
 		VDWaveFormat* fmt = as->GetFormat();
-		VDString s;
+		VDStringA s;
 		if (is_audio_float(fmt))
 			s.sprintf("%d Hz float %d ch", fmt->mSamplingRate, fmt->mChannels);
 		else

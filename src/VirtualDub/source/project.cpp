@@ -1635,7 +1635,7 @@ void VDProject::InnerReopen() {
 	// attempt to determine input file type
 
 	VDStringW filename(VDGetFullPath(g_szInputAVIFile));
-	VDString options;
+	VDStringA options;
 
 	IVDInputDriver *pSelectedDriver;
 	if (mInputDriverName.empty()) {

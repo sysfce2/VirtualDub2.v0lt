@@ -192,7 +192,7 @@ protected:
 class VDZipArchive {
 public:
 	struct FileInfo {
-		VDString	mFileName;
+		VDStringA	mFileName;
 		uint32		mCompressedSize;
 		uint32		mUncompressedSize;
 		uint32		mCRC32;
