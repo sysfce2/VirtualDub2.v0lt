@@ -150,7 +150,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// check if we have anything worthy after the command line; if so, don't do
 	// the pause-when-run-from-Explorer, as we may have been launched from a batch
 	// file or something else with an empty screen
-	LPCTSTR tailEnd = cmdLine;
+	LPCWSTR tailEnd = cmdLine;
 	while (const WCHAR c = *tailEnd) {
 		if (c != ' ' && c != '\t') {
 			break;
@@ -185,7 +185,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	SetErrorMode(dwOldErrorMode | SEM_FAILCRITICALERRORS);
 
 	// launch main VirtualDub exe
-	STARTUPINFO si = { sizeof(STARTUPINFO) };
+	STARTUPINFOW si = { sizeof(STARTUPINFOW) };
 	si.wShowWindow = SW_SHOWMINNOACTIVE;
 	si.hStdInput   = CreateFileW(L"nul", GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	si.hStdOutput  = hOutputPipeWrite;

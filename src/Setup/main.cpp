@@ -80,7 +80,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 BOOL Init(HINSTANCE hInstance, int nCmdShow)
 {
-	WNDCLASSW  wc;
+	WNDCLASSW wc;
 
 	// Register the window class for my window.
 	wc.style         = 0;                // Class style.
@@ -89,7 +89,7 @@ BOOL Init(HINSTANCE hInstance, int nCmdShow)
 	wc.cbWndExtra    = DLGWINDOWEXTRA;   // No per-window extra data.
 	wc.hInstance     = hInstance;        // Application that owns the class.
 	wc.hIcon         = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_VIRTUALDUB));
-	wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
+	wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)(COLOR_3DFACE + 1);
 	wc.lpszMenuName  = NULL;             // Name of menu resource in .RC file. 
 	wc.lpszClassName = szAppName;        // Name used in call to CreateWindow.
