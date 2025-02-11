@@ -178,7 +178,7 @@ const char *TranslateDriverMessage(UINT msg) {
 		}
 	}
 
-	wsprintf(buf, "%08lx", msg);
+	wsprintfA(buf, "%08lx", msg);
 
 	return buf;
 }

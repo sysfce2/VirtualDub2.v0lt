@@ -225,7 +225,7 @@ INT_PTR CALLBACK ProjectSetupDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 		case WM_INITDIALOG:
 			SetWindowLongPtr(hwnd, DWLP_USER, lParam);
 			ps = (ProjectSetup *)lParam;
-			SetDlgItemText(hwnd, IDC_COUNTER_TAG, ps->mCounterTag.c_str());
+			SetDlgItemTextA(hwnd, IDC_COUNTER_TAG, ps->mCounterTag.c_str());
 			return TRUE;
 
 		case WM_COMMAND:
@@ -235,7 +235,7 @@ INT_PTR CALLBACK ProjectSetupDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 					ps = (ProjectSetup *)GetWindowLongPtr(hwnd, DWLP_USER);
 					if (ps) {
 						char buf[256];
-						GetDlgItemText(hwnd, IDC_COUNTER_TAG, buf, 256);
+						GetDlgItemTextA(hwnd, IDC_COUNTER_TAG, buf, 256);
 						ps->mCounterTag = buf;
 					}
 					EndDialog(hwnd, 0);

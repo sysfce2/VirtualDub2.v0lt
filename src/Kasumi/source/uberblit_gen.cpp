@@ -672,7 +672,7 @@ VDPixmapUberBlitterGenerator::~VDPixmapUberBlitterGenerator() {
 
 void VDPixmapUberBlitterGenerator::debug_dump() {
 	VDStringA r = dump();
-	OutputDebugString(r.c_str());
+	OutputDebugStringA(r.c_str());
 }
 
 VDStringA VDPixmapUberBlitterGenerator::dump() {

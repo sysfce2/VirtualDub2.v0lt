@@ -13,10 +13,10 @@ namespace {
 
 		while(argc--) {
 			if (argv->isInt()) {
-				wsprintf(lbuf, "%ld", argv->asInt());
-				OutputDebugString(lbuf);
+				wsprintfA(lbuf, "%ld", argv->asInt());
+				OutputDebugStringA(lbuf);
 			} else if (argv->isString()) {
-				OutputDebugString(*argv->asString());
+				OutputDebugStringA(*argv->asString());
 			} else
 				SCRIPT_ERROR(TYPE_INT_REQUIRED);
 
@@ -25,7 +25,7 @@ namespace {
 	}
 
 	FUNC(messagebox) {
-		MessageBox(NULL, *argv[0].asString(), *argv[1].asString(), MB_OK);
+		MessageBoxA(NULL, *argv[0].asString(), *argv[1].asString(), MB_OK);
 	}
 
 	FUNC(IntToString) {

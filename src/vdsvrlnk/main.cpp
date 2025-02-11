@@ -113,7 +113,7 @@ static void InitComputerAlias() {
 
 	// Ugh.
 
-	wsprintf(heap->comp_name, "Anon%08lx", GetTickCount());
+	wsprintfA(heap->comp_name, "Anon%08lx", GetTickCount());
 }
 
 static BOOL InitSharedSpace() {
@@ -258,7 +258,7 @@ BOOL CVDubAnimConnection::init() {
 	// create a name for us
 
 	ranko();
-	wsprintf(buf, "VDUBF%08lx", mmapID = heap->next_mmapID++);
+	wsprintfA(buf, "VDUBF%08lx", mmapID = heap->next_mmapID++);
 	ranma();
 
 	// create a shared arena and map a window for us
@@ -380,7 +380,7 @@ public:
 static CVDubServerLink i_dubserver;
 
 void CVDubServerLink::GetComputerName(char *buf) {
-	lstrcpy(buf, heap->comp_name);
+	lstrcpyA(buf, heap->comp_name);
 }
 
 IVDubAnimConnection *CVDubServerLink::FrameServerConnect(char *fs_name) {

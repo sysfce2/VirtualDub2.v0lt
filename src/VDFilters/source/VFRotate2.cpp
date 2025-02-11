@@ -724,7 +724,7 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 				SetWindowLongPtr(hDlg, DWLP_USER, lParam);
 
 				sprintf(buf, "%.3f", (double)mfd->angle * (360.0 / 4294967296.0));
-				SetDlgItemText(hDlg, IDC_ANGLE, buf);
+				SetDlgItemTextA(hDlg, IDC_ANGLE, buf);
 
 				hwndItem = GetDlgItem(hDlg, IDC_FILTERMODE);
 
@@ -764,7 +764,7 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 					char buf[32];
 					double ang;
 
-					if (!GetDlgItemText(hDlg, IDC_ANGLE, buf, sizeof buf)
+					if (!GetDlgItemTextA(hDlg, IDC_ANGLE, buf, sizeof buf)
 						|| 1!=sscanf(buf, "%lf", &ang)) {
 
 						MessageBeep(MB_ICONEXCLAMATION);

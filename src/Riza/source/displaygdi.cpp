@@ -712,7 +712,7 @@ bool VDVideoDisplayMinidriverGDI::Update(UpdateMode mode) {
 				VDStringA s;
 				s.sprintf("GDI minidriver - %s", desc.c_str());
 
-				TextOut(mhdc, 10, source.h - 10, s.data(), s.size());
+				TextOutA(mhdc, 10, source.h - 10, s.data(), s.size());
 				RestoreDC(mhdc, saveIndex);
 			}
 		}
@@ -743,7 +743,7 @@ bool VDVideoDisplayMinidriverGDI::Paint(HDC hdc, const RECT& rClient, UpdateMode
 		for(int i=0; i<mBorderRectCount; ++i) {
 			const vdrect32& rFill = mBorderRects[i];
 			RECT rFill2 = { rFill.left, rFill.top, rFill.right, rFill.bottom };
-			ExtTextOut(hdc, 0, 0, ETO_OPAQUE, &rFill2, "", 0, NULL);
+			ExtTextOutA(hdc, 0, 0, ETO_OPAQUE, &rFill2, "", 0, NULL);
 		}
 	}
 
@@ -802,7 +802,7 @@ void VDVideoDisplayMinidriverGDI::InternalRefresh(HDC hdc, const RECT& rClient, 
 	if (mColorOverride) {
 		SetBkColor(hdcComp, VDSwizzleU32(mColorOverride) >> 8);
 		SetBkMode(hdcComp, OPAQUE);
-		ExtTextOut(hdcComp, 0, 0, ETO_OPAQUE, &rDstComp, "", 0, NULL);
+		ExtTextOutA(hdcComp, 0, 0, ETO_OPAQUE, &rDstComp, "", 0, NULL);
 	} else if (mSource.bInterlaced) {
 		const int w = rDstComp.right - rDstComp.left;
 		const int h = rDstComp.bottom - rDstComp.top;

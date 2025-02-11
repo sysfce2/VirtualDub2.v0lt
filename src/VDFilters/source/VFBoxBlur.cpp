@@ -693,9 +693,9 @@ INT_PTR CALLBACK boxConfigDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPa
 					mfd->filter_power = new_power;
 
 					sprintf(buf, "radius %d", mfd->filter_width + mfd->filter_power - 1);
-					SetDlgItemText(hdlg, IDC_STATIC_WIDTH, buf);
+					SetDlgItemTextA(hdlg, IDC_STATIC_WIDTH, buf);
 
-					SetDlgItemText(hdlg, IDC_STATIC_POWER, szPowers[new_power-1]);
+					SetDlgItemTextA(hdlg, IDC_STATIC_POWER, szPowers[new_power-1]);
 
 					mfd->ifp->RedoFrame();
 				}

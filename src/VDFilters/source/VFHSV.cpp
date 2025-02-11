@@ -1510,7 +1510,7 @@ static INT_PTR CALLBACK hsvDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPAR
 				switch(GetWindowLong(hwndSlider, GWL_ID)) {
 				case IDC_HUE:
 					sprintf(buf, "%+.1f%s", (val-0x800) * (360.0 / 4096.0), VDTextWToA(L"\u00B0").c_str());
-					SetDlgItemText(hDlg, IDC_STATIC_HUE, buf);
+					SetDlgItemTextA(hDlg, IDC_STATIC_HUE, buf);
 					newval = ((val+0x800)<<4) & 0xfff0;
 					if (newval != mfd->hue)
 						redo = true;
@@ -1518,7 +1518,7 @@ static INT_PTR CALLBACK hsvDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPAR
 					break;
 				case IDC_SATURATION:
 					sprintf(buf, "x%.1f%%", val * (100.0 / 4096.0));
-					SetDlgItemText(hDlg, IDC_STATIC_SATURATION, buf);
+					SetDlgItemTextA(hDlg, IDC_STATIC_SATURATION, buf);
 					if (val != mfd->sat) {
 						mfd->sat = val << 4;
 						redo = true;
@@ -1526,7 +1526,7 @@ static INT_PTR CALLBACK hsvDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPAR
 					break;
 				case IDC_VALUE:
 					sprintf(buf, "%+.1f%%", val * (100. / 4096.0) - 100.0);
-					SetDlgItemText(hDlg, IDC_STATIC_VALUE, buf);
+					SetDlgItemTextA(hDlg, IDC_STATIC_VALUE, buf);
 					newval = (val<<4) - 65536;
 					if (newval != mfd->val) {
 						mfd->val = newval;
