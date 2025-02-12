@@ -106,6 +106,12 @@ BOOL Init(HINSTANCE hInstance, int nCmdShow)
 		return (FALSE);
 	}
 
+#ifdef _WIN64
+	SetWindowTextW(g_hwnd, L"VirtualDub2 x64 auxiliary setup");
+#else
+	SetWindowTextW(g_hwnd, L"VirtualDub2 x86 auxiliary setup");
+#endif
+
 	ShowWindow(g_hwnd, nCmdShow);
 	UpdateWindow(g_hwnd);
 
