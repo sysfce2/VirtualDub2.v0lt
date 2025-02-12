@@ -412,7 +412,7 @@ void guiSetStatus(const char *format, int nPart, ...) {
 	va_list val;
 
 	va_start(val, nPart);
-	if ((unsigned)vsprintf_s(buf, format, val) >= sizeof buf)
+	if ((unsigned)vsprintf_s(buf, format, val) >= std::size(buf))
 		buf[0] = 0;
 	va_end(val);
 
@@ -433,13 +433,13 @@ void guiSetTitle(HWND hWnd, UINT uID, ...) {
 	char buf1[256],buf2[256];
 	va_list val;
 
-	LoadString(g_hInst, uID, buf1, sizeof buf1);
+	LoadStringA(g_hInst, uID, buf1, sizeof buf1);
 
 	va_start(val, uID);
 	vsprintf_s(buf2, buf1, val);
 	va_end(val);
 
-	SetWindowText(hWnd, buf2);
+	SetWindowTextA(hWnd, buf2);
 }
 
 void guiSetTitleW(HWND hWnd, UINT uID, ...) {

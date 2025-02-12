@@ -851,7 +851,7 @@ long CodeDisassemblyWindow::getInstruction(char *buf, long val) {
 
 	for(int i=0; i<7; ++i) {
 		if (--left >= 0) {
-			buf += wsprintf(buf, "%02x", (unsigned char)ip[subIndex*7+i]);
+			buf += wsprintfA(buf, "%02x", (unsigned char)ip[subIndex*7+i]);
 		} else {
 			*buf++ = ' ';
 			*buf++ = ' ';

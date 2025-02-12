@@ -1791,12 +1791,12 @@ INT_PTR CALLBACK HexEditor::AskForValuesDlgProc(HWND hdlg, UINT msg, WPARAM wPar
 
 		SetWindowText(hdlg, pData->title);
 		sprintf(buf, "%I64X", pData->v1);
-		SetDlgItemText(hdlg, IDC_EDIT_ADDRESS1, buf);
+		SetDlgItemTextA(hdlg, IDC_EDIT_ADDRESS1, buf);
 		SendDlgItemMessage(hdlg, IDC_EDIT_ADDRESS1, EM_LIMITTEXT, 16, 0);
 		SetDlgItemText(hdlg, IDC_STATIC_ADDRESS1, pData->name1);
 		if (pData->name2) {
 			sprintf(buf, "%I64X", pData->v2);
-			SetDlgItemText(hdlg, IDC_EDIT_ADDRESS2, buf);
+			SetDlgItemTextA(hdlg, IDC_EDIT_ADDRESS2, buf);
 			SendDlgItemMessage(hdlg, IDC_EDIT_ADDRESS1, EM_LIMITTEXT, 16, 0);
 			SetDlgItemText(hdlg, IDC_STATIC_ADDRESS2, pData->name2);
 		} else {
@@ -1821,7 +1821,7 @@ INT_PTR CALLBACK HexEditor::AskForValuesDlgProc(HWND hdlg, UINT msg, WPARAM wPar
 				char c;
 				int i;
 
-				GetDlgItemText(hdlg, IDC_EDIT_ADDRESS1, buf, sizeof buf);
+				GetDlgItemTextA(hdlg, IDC_EDIT_ADDRESS1, buf, std::size(buf));
 
 				s = buf;
 				while(c=*s++) {
@@ -1835,7 +1835,7 @@ INT_PTR CALLBACK HexEditor::AskForValuesDlgProc(HWND hdlg, UINT msg, WPARAM wPar
 				}
 
 				if (pData->name2) {
-					GetDlgItemText(hdlg, IDC_EDIT_ADDRESS2, buf, sizeof buf);
+					GetDlgItemTextA(hdlg, IDC_EDIT_ADDRESS2, buf, std::size(buf));
 
 					s = buf;
 					while(c=*s++) {

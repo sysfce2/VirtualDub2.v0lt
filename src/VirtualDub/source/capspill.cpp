@@ -411,7 +411,7 @@ static void LVDestroyEdit(bool write, bool sort) {
 			char buf[32];
 			long lv;
 
-			GetWindowText(g_hwndEdit, buf, sizeof buf);
+			GetWindowTextA(g_hwndEdit, buf, std::size(buf));
 
 			if (1 == sscanf(buf, "%ld", &lv)) {
 				if (!g_csdItem) {
@@ -531,11 +531,11 @@ static void LVBeginEdit(HWND hwndLV, int index, int subitem) {
 		switch(subitem) {
 		case 0:
 			sprintf(buf, "%d", pcsd->priority);
-			SetWindowText(g_hwndEdit, buf);
+			SetWindowTextA(g_hwndEdit, buf);
 			break;
 		case 1:
 			sprintf(buf, "%d", pcsd->threshold);
-			SetWindowText(g_hwndEdit, buf);
+			SetWindowTextA(g_hwndEdit, buf);
 			break;
 		case 2:
 			VDSetWindowTextW32(g_hwndEdit, pcsd->path.c_str());

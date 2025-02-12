@@ -968,7 +968,7 @@ void VDCaptureProjectUI::SetStatusF(const char *format, ...) {
 	va_list val;
 
 	va_start(val, format);
-	if ((unsigned)vsprintf_s(buf, format, val) < sizeof buf) {
+	if ((unsigned)vsprintf_s(buf, format, val) < std::size(buf)) {
 		SendMessage(mhwndStatus, SB_SETTEXT, 0, (LPARAM)buf);
 	}
 	va_end(val);
@@ -979,7 +979,7 @@ void VDCaptureProjectUI::SetStatusImmediateF(const char *format, ...) {
 	va_list val;
 
 	va_start(val, format);
-	if ((unsigned)vsprintf_s(buf, format, val) < sizeof buf) {
+	if ((unsigned)vsprintf_s(buf, format, val) < std::size(buf)) {
 		SetStatusImmediate(buf);
 	}
 	va_end(val);
@@ -2233,9 +2233,9 @@ void VDCaptureProjectUI::UICaptureParmsUpdated() {
 	if (framePeriod) {
 		double fps = 10000000.0f / (double)framePeriod;
 		sprintf(bufv, "%.02f fps", fps);
-		SendMessage(mhwndStatus, SB_SETTEXT, 2 | SBT_POPOUT, (LPARAM)bufv);
+		SendMessageA(mhwndStatus, SB_SETTEXT, 2 | SBT_POPOUT, (LPARAM)bufv);
 	} else {
-		SendMessage(mhwndStatus, SB_SETTEXT, 2 | SBT_POPOUT, (LPARAM)"VFR");
+		SendMessageA(mhwndStatus, SB_SETTEXT, 2 | SBT_POPOUT, (LPARAM)"VFR");
 	}
 
 	vdstructex<VDAVIBitmapInfoHeader> bih;
@@ -2260,8 +2260,8 @@ void VDCaptureProjectUI::UICaptureParmsUpdated() {
 			bandwidth += 8 + wf->mDataRate;
 	}
 
-	wsprintf(bufv, "%ldKB/s", (bandwidth+1023)>>10);
-	SendMessage(mhwndStatus, SB_SETTEXT, 4, (LPARAM)bufv);
+	wsprintfA(bufv, "%ldKB/s", (bandwidth+1023)>>10);
+	SendMessageA(mhwndStatus, SB_SETTEXT, 4, (LPARAM)bufv);
 }
 
 bool VDCaptureProjectUI::UICaptureAnalyzeBegin(const VDPixmap& px) {
@@ -2851,11 +2851,11 @@ void VDCaptureProjectUI::OnTimer() {
 
 	if (!fc || fc < mLastPreviewFrameCount) {
 		if (mLastPreviewFrameCount)
-			SendMessage(mhwndStatus, SB_SETTEXT, 3, (LPARAM)L"");
+			SendMessageA(mhwndStatus, SB_SETTEXT, 3, (LPARAM)"");
 	} else {
 		char buf[64];
-		wsprintf(buf, "%u fps", fc - mLastPreviewFrameCount);
-		SendMessage(mhwndStatus, SB_SETTEXT, 3, (LPARAM)buf);
+		wsprintfA(buf, "%u fps", fc - mLastPreviewFrameCount);
+		SendMessageA(mhwndStatus, SB_SETTEXT, 3, (LPARAM)buf);
 	}
 
 	mLastPreviewFrameCount = fc;

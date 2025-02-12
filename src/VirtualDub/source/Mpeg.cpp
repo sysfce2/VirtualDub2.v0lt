@@ -3102,9 +3102,9 @@ INT_PTR CALLBACK InputFileMPEG::ParseDialogProc(HWND hDlg, UINT uMsg, WPARAM wPa
 			SendMessage(GetDlgItem(hDlg, IDC_PROGRESS), PBM_SETPOS, (WPARAM)((thisPtr->file_cpos*16384) / thisPtr->file_len), 0);
 
 			if (thisPtr->fIsVCD)
-				wsprintf(buf, "%ld of %ld sectors", (long)(thisPtr->file_cpos/2352), (long)(thisPtr->file_len/2352));
+				wsprintfA(buf, "%ld of %ld sectors", (long)(thisPtr->file_cpos/2352), (long)(thisPtr->file_len/2352));
 			else
-				wsprintf(buf, "%ldK of %ldK", (long)(thisPtr->file_cpos>>10), (long)((thisPtr->file_len+1023)>>10));
+				wsprintfA(buf, "%ldK of %ldK", (long)(thisPtr->file_cpos>>10), (long)((thisPtr->file_len+1023)>>10));
 
 			SendDlgItemMessage(hDlg, IDC_CURRENT_VALUE, WM_SETTEXT, 0, (LPARAM)buf);
 		}

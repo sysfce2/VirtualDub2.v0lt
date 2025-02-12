@@ -90,7 +90,7 @@ FrameserverSession::FrameserverSession() {
 DWORD FrameserverSession::Init(LONG arena_size, DWORD session_id) {
 	char buf[16];
 
-	wsprintf(buf, "VDUBF%08lx", session_id);
+	wsprintfA(buf, "VDUBF%08lx", session_id);
 
 	if (INVALID_HANDLE_VALUE == (hArena = OpenFileMapping(FILE_MAP_WRITE, FALSE, buf)))
 		return NULL;

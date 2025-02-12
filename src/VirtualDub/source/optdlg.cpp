@@ -1652,7 +1652,7 @@ INT_PTR VDDialogVideoFrameRateW32::DlgProc(UINT message, WPARAM wParam, LPARAM l
 					if (IsDlgButtonChecked(mhdlg, IDC_DECIMATE_TARGET)) {
 						char buf[128];
 
-						GetDlgItemText(mhdlg, IDC_FRAMERATE_TARGET, buf, sizeof buf);
+						GetDlgItemTextA(mhdlg, IDC_FRAMERATE_TARGET, buf, std::size(buf));
 
 						if (!scan_fr(buf,newTarget)) {
 							SetFocus(GetDlgItem(mhdlg, IDC_FRAMERATE_TARGET));
@@ -1682,7 +1682,7 @@ INT_PTR VDDialogVideoFrameRateW32::DlgProc(UINT message, WPARAM wParam, LPARAM l
 						char buf[128];
 
 						buf[0] = 0;
-						GetDlgItemText(mhdlg, IDC_FRAMERATE, buf, sizeof buf);
+						GetDlgItemTextA(mhdlg, IDC_FRAMERATE, buf, std::size(buf));
 
 						VDFraction fr;
 						if (!scan_fr(buf,fr)) {
@@ -2161,7 +2161,7 @@ INT_PTR VDDialogJumpToPositionW32::DlgProc(UINT msg, WPARAM wParam, LPARAM lPara
 		case IDOK:
 			if (IsDlgButtonChecked(mhdlg, IDC_JUMPTOFRAME)) {
 
-				GetDlgItemText(mhdlg, IDC_FRAMENUMBER, buf1, sizeof buf1);
+				GetDlgItemTextA(mhdlg, IDC_FRAMENUMBER, buf1, std::size(buf1));
 				char* buf = buf1;
 				VDPosition uiFrame;
 				int delta = 0;
@@ -2192,7 +2192,7 @@ INT_PTR VDDialogJumpToPositionW32::DlgProc(UINT msg, WPARAM wParam, LPARAM lPara
 
 				End(true);
 			} else {
-				GetDlgItemText(mhdlg, IDC_FRAMETIME, buf1, sizeof buf1);
+				GetDlgItemTextA(mhdlg, IDC_FRAMETIME, buf1, std::size(buf1));
 				char* buf = buf1;
 				VDPosition d = mFrame;
 				int delta = 0;
@@ -2327,9 +2327,9 @@ void VDDialogJumpToPositionW32::ReinitEdit() {
 		min	= ticks %  60; ticks /=  60;
 
 		if (ticks)
-			wsprintf(buf, "%d:%02d:%02d.%03d", ticks, min, sec, ms);
+			wsprintfA(buf, "%d:%02d:%02d.%03d", ticks, min, sec, ms);
 		else
-			wsprintf(buf, "%d:%02d.%03d", min, sec, ms);
+			wsprintfA(buf, "%d:%02d.%03d", min, sec, ms);
 	}
 	if (timeFormat==pref_time_m || timeFormat==pref_time_m_r) {
 		timeFormat = pref_time_m;

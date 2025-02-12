@@ -296,7 +296,7 @@ void VDDumpMemoryLeaksVC() {
 
 				char buf[1024], *s = buf;
 
-				s += wsprintf(buf, "    #%-5d %p (%8ld bytes)", pHdr->reqnum, pHdr->data, (long)pHdr->size);
+				s += wsprintfA(buf, "    #%-5d %p (%8ld bytes)", pHdr->reqnum, pHdr->data, (long)pHdr->size);
 
 				if (pHdr->pFilename && !strcmp(pHdr->pFilename, "stack trace")) {
 #ifdef VD_CPU_AMD64
@@ -314,9 +314,9 @@ void VDDumpMemoryLeaksVC() {
 					sym.hdr.MaxNameLength = 512;
 
 					if (dbghelp.pSymGetSymFromAddr(hProc, (DWORD)pRet, 0, &sym.hdr)) {
-						s += wsprintf(s, "  Allocator: %p [%s]", pRet, sym.hdr.Name);
+						s += wsprintfA(s, "  Allocator: %p [%s]", pRet, sym.hdr.Name);
 					} else
-						s += wsprintf(s, "  Allocator: %p", pRet);
+						s += wsprintfA(s, "  Allocator: %p", pRet);
 				}
 
 				if (pHdr->size >= sizeof(void *)) {
@@ -335,7 +335,7 @@ void VDDumpMemoryLeaksVC() {
 
 						if (dbghelp.pSymGetSymFromAddr(hProc, (DWORD)vtbl, 0, &sym.hdr) && (t = strstr(sym.hdr.Name, "::`vftable'"))) {
 							*t = 0;
-							s += wsprintf(s, " [Type: %s]", sym.hdr.Name);
+							s += wsprintfA(s, " [Type: %s]", sym.hdr.Name);
 						}
 					}
 				}

@@ -795,7 +795,7 @@ static INT_PTR APIENTRY levelsDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 				if (HIWORD(wParam) == EN_CHANGE) {
 					double rv;
 
-					if (GetWindowText((HWND)lParam, buf, sizeof buf))
+					if (GetWindowTextA((HWND)lParam, buf, std::size(buf)))
 						if (1 == sscanf(buf, "%lg", &rv)) {
 							// pt^(1/rv) = 0.5
 							// pt = 0.5^-(1/rv)
@@ -818,7 +818,7 @@ static INT_PTR APIENTRY levelsDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 						}
 				} else if (HIWORD(wParam) == EN_KILLFOCUS) {
 					sprintf(buf, "%.3f", mfd->rGammaCorr);
-					SetWindowText((HWND)lParam, buf);
+					SetWindowTextA((HWND)lParam, buf);
 				}
 				mfd->fInhibitUpdate = false;
 				return TRUE;

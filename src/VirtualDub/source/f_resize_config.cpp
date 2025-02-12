@@ -717,7 +717,7 @@ namespace {
 
 		*success = FALSE;
 
-		if (GetDlgItemText(hdlg, id, buf, sizeof buf)) {
+		if (GetDlgItemTextA(hdlg, id, buf, std::size(buf))) {
 			double v;
 			if (1 == sscanf(buf, " %lg", &v)) {
 				*success = TRUE;

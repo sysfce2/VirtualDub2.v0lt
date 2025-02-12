@@ -468,7 +468,7 @@ BOOL CALLBACK max_enum_proc(HWND hwnd, LPARAM lParam)
 	HWND w1 = GetWindow(hwnd,GW_OWNER);
 	if(w1==g_hWnd && hwnd!=data->max){
 		char buf[1024];
-		GetWindowText(hwnd,buf,1024);
+		GetWindowTextA(hwnd,buf, std::size(buf));
 		data->list.insert(data->list.begin(),hwnd);
 	}
 	return TRUE;
@@ -4463,7 +4463,7 @@ INT_PTR CALLBACK CurveProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			VDProjectUI* project = (VDProjectUI*)GetWindowLongPtr(wnd,DWLP_USER);
 			char buf[512];
-			if (GetDlgItemText(wnd, IDC_CURVE_VALUE, buf, sizeof buf)) {
+			if (GetDlgItemTextA(wnd, IDC_CURVE_VALUE, buf, std::size(buf))) {
 				double v;
 				if (sscanf(buf, " %lg", &v)==1) {
 					project->CurveSetValue(v);

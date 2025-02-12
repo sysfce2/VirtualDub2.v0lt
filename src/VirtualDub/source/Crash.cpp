@@ -178,8 +178,8 @@ void checkfpustack(const char *file, const int line) noexcept {
 	tagword = *(unsigned short *)(buf + 8);
 
 	if (tagword != 0xffff) {
-		wsprintf(buf, szFPUProblemMessage, tagword, file, line);
-		MessageBox(NULL, buf, szFPUProblemCaption, MB_OK);
+		wsprintfA(buf, szFPUProblemMessage, tagword, file, line);
+		MessageBoxA(NULL, buf, szFPUProblemCaption, MB_OK);
 		seenmsg=true;
 	}
 #endif
@@ -730,7 +730,7 @@ static const char *CrashLookupExport(HMODULE hmod, uintptr_t addr, unsigned long
 				else {
 					static char buf[8];
 
-					wsprintf(buf, "ord%d", pOrdTbl[i]);
+					wsprintfA(buf, "ord%d", pOrdTbl[i]);
 					pszName = buf;
 				}
 
@@ -957,7 +957,7 @@ public:
 		char buf[1024];
 		va_list val;
 		va_start(val, s);
-		wvsprintf(buf, s, val);
+		wvsprintfA(buf, s, val);
 		va_end(val);
 		write(buf);
 	}
@@ -1212,7 +1212,7 @@ public:
 		va_list val;
 
 		va_start(val, format);
-		wvsprintf(buf, format, val);
+		wvsprintfA(buf, format, val);
 		va_end(val);
 
 		Write(buf);
@@ -1300,7 +1300,7 @@ protected:
 	void Flush() {
 		if (mNext) {
 			mBuffer[mNext] = 0;
-			SetWindowText(mhwnd, mBuffer);
+			SetWindowTextA(mhwnd, mBuffer);
 			mNext = 0;
 		}
 	}
@@ -2142,10 +2142,10 @@ protected:
 		HWND hwndInfo = GetDlgItem(mhdlg, IDC_CRASH_DETAILS);
 
 		if (hwndInfo)
-			SetWindowText(hwndInfo, mpszScopeInfo);
+			SetWindowTextA(hwndInfo, mpszScopeInfo);
 
 		if (!mbAllowForcedExit)
-			SetWindowText(GetDlgItem(mhdlg, IDOK), "OK");
+			SetWindowTextA(GetDlgItem(mhdlg, IDOK), "OK");
 	}
 
 	BOOL DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {

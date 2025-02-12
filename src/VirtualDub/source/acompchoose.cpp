@@ -324,7 +324,7 @@ static void AudioChooseShowFormats(HWND hdlg, ACMTagEntry *pTag, bool fShowCompa
 		if (!fShowCompatibleOnly || pFormat->fCompatible) {
 			if (pFormat->pwfex->nAvgBytesPerSec) {
 				band = (pFormat->pwfex->nAvgBytesPerSec+1023)/1024;
-				wsprintf(buf, "%s\t%dKB/s", pFormat->afd.szFormat, band);
+				wsprintfA(buf, "%s\t%dKB/s", pFormat->afd.szFormat, band);
 			} else {
 				strcpy(buf, pFormat->afd.szFormat);
 			}

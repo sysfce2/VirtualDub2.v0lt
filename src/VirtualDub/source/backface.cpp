@@ -558,13 +558,13 @@ LRESULT VDBackfaceConsole::OnNotify(NMHDR *pHdr) {
 
 			if (mf.msg == WM_CHAR) {
 				if (mf.wParam == '\r') {
-					int len = GetWindowTextLength(mhwndEdit);
+					int len = GetWindowTextLengthA(mhwndEdit);
 					if (len) {
 						char *buf = (char *)_alloca(len+1);
 						buf[0] = 0;
 
-						if (GetWindowText(mhwndEdit, buf, len+1)) {
-							SetWindowText(mhwndEdit, "");
+						if (GetWindowTextA(mhwndEdit, buf, len+1)) {
+							SetWindowTextA(mhwndEdit, "");
 							g_VDBackfaceService.Execute(*this, buf);
 						}
 					}

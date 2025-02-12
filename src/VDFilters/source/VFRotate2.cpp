@@ -764,7 +764,7 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 					char buf[32];
 					double ang;
 
-					if (!GetDlgItemTextA(hDlg, IDC_ANGLE, buf, sizeof buf)
+					if (!GetDlgItemTextA(hDlg, IDC_ANGLE, buf, std::size(buf))
 						|| 1!=sscanf(buf, "%lf", &ang)) {
 
 						MessageBeep(MB_ICONEXCLAMATION);
