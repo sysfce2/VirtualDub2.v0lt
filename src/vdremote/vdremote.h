@@ -31,39 +31,38 @@ public:
 	CAVIFileRemote(const CLSID& rclsid);
 	~CAVIFileRemote();
 
-	////////////
-
 	static HRESULT Create(const CLSID& rclsid, const IID& riid, void **ppv);
-	STDMETHODIMP QueryInterface(const IID& iid, void **ppv);
-	STDMETHODIMP_(ULONG) AddRef();
-	STDMETHODIMP_(ULONG) Release();
 
-	////////////
+	// IUnknown
+	STDMETHODIMP QueryInterface(const IID& iid, void **ppv) override;
+	STDMETHODIMP_(ULONG) AddRef() override;
+	STDMETHODIMP_(ULONG) Release() override;
 
-	STDMETHODIMP CreateInstance (LPUNKNOWN pUnkOuter, REFIID riid,  void * * ppvObj) ;
-	STDMETHODIMP LockServer (BOOL fLock) ;
+	// IClassFactory
+	STDMETHODIMP CreateInstance (LPUNKNOWN pUnkOuter, REFIID riid,  void * * ppvObj) override;
+	STDMETHODIMP LockServer (BOOL fLock) override;
 
-	////////////
+	// IPersist
+	STDMETHODIMP GetClassID(LPCLSID lpClassID) override;
 
-	STDMETHODIMP GetClassID(LPCLSID lpClassID);
-
+	// IPersistFile
 	STDMETHODIMP IsDirty();
-	STDMETHODIMP Load(LPCOLESTR lpszFileName, DWORD grfMode);
-	STDMETHODIMP Save(LPCOLESTR lpszFileName, BOOL fRemember);
-	STDMETHODIMP SaveCompleted(LPCOLESTR lpszFileName);
-	STDMETHODIMP GetCurFile(LPOLESTR *lplpszFileName);
+	STDMETHODIMP Load(LPCOLESTR lpszFileName, DWORD grfMode) override;
+	STDMETHODIMP Save(LPCOLESTR lpszFileName, BOOL fRemember) override;
+	STDMETHODIMP SaveCompleted(LPCOLESTR lpszFileName) override;
+	STDMETHODIMP GetCurFile(LPOLESTR *lplpszFileName) override;
 
-	////////////
+	// IAVIFile
+	STDMETHODIMP CreateStream(PAVISTREAM *ppStream, AVISTREAMINFOW *psi) override;
+	STDMETHODIMP EndRecord() override;
+	STDMETHODIMP GetStream(PAVISTREAM *ppStream, DWORD fccType, LONG lParam) override;
+	STDMETHODIMP Info(AVIFILEINFOW *psi, LONG lSize) override;
+	STDMETHODIMP ReadData(DWORD fcc, LPVOID lp, LONG *lpcb) override;
+	STDMETHODIMP WriteData(DWORD fcc, LPVOID lpBuffer, LONG cbBuffer) override;
 
-	STDMETHODIMP CreateStream(PAVISTREAM *ppStream, AVISTREAMINFOW *psi);
-	STDMETHODIMP EndRecord();
-	STDMETHODIMP GetStream(PAVISTREAM *ppStream, DWORD fccType, LONG lParam);
-	STDMETHODIMP Info(AVIFILEINFOW *psi, LONG lSize);
 	STDMETHODIMP Open(LPCSTR szFile, UINT mode, LPCOLESTR lpszFileName);
-    STDMETHODIMP Save(LPCSTR szFile, AVICOMPRESSOPTIONS FAR *lpOptions,
+	STDMETHODIMP Save(LPCSTR szFile, AVICOMPRESSOPTIONS FAR *lpOptions,
 				AVISAVECALLBACK lpfnCallback);
-	STDMETHODIMP ReadData(DWORD fcc, LPVOID lp, LONG *lpcb);
-	STDMETHODIMP WriteData(DWORD fcc, LPVOID lpBuffer, LONG cbBuffer);
 	STDMETHODIMP DeleteStream(DWORD fccType, LONG lParam);
 
 	void LockPort();

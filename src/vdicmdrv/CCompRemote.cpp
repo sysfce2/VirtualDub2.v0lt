@@ -17,7 +17,7 @@ CCompRemoteDriver::~CCompRemoteDriver() {
 }
 
 BOOL CCompRemoteDriver::Load(HDRVR hDriver) {
-	if (g_hInstVDSVRLNK = LoadLibrary("vdsvrlnk.dll")) {
+	if (g_hInstVDSVRLNK = LoadLibraryW(L"vdsvrlnk.dll")) {
 		if (g_fpGetDubServerInterface = GetProcAddress(g_hInstVDSVRLNK, "GetDubServerInterface")) {
 			g_ivdsl = ((IVDubServerLink *(__cdecl *)())g_fpGetDubServerInterface)();
 

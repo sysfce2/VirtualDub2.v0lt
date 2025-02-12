@@ -433,7 +433,7 @@ STDMETHODIMP CAVIFileRemote::Open(LPCSTR szFile, UINT mode, LPCOLESTR lpszFileNa
 		return hr;
 	}
 
-	if (!(hmmio = mmioOpen((char *)szFile, NULL, MMIO_READ)))
+	if (!(hmmio = mmioOpenA((char *)szFile, NULL, MMIO_READ)))
 		return E_FAIL;
 
 	_RPT0(0,"File opened.\n");

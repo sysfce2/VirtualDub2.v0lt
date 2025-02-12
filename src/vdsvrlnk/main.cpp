@@ -89,7 +89,7 @@ static void InitComputerAlias() {
 
 	// Okay, that didn't work -- try Windows NT/2000.
 
-	if (!fpNetServerGetInfo && (hDll = LoadLibrary("netapi32.dll"))) {
+	if (!fpNetServerGetInfo && (hDll = LoadLibraryW(L"netapi32.dll"))) {
 		SERVER_INFO_100 *psi100;
 
 		fpNetServerGetInfo = GetProcAddress(hDll, "NetServerGetInfo");
@@ -121,12 +121,13 @@ static BOOL InitSharedSpace() {
 
 	//////////
 
-	hHeap = CreateFileMapping(	INVALID_HANDLE_VALUE,
-								NULL,
-								PAGE_READWRITE,
-								0,
-								sizeof(VDubSharedHeap),
-								"VirtualDub Server System Window");
+	hHeap = CreateFileMappingW(
+		INVALID_HANDLE_VALUE,
+		NULL,
+		PAGE_READWRITE,
+		0,
+		sizeof(VDubSharedHeap),
+		L"VirtualDub Server System Window");
 
 	if (hHeap == NULL) return FALSE;
 
@@ -148,7 +149,7 @@ static BOOL InitSharedSpace() {
 
 	_RPT0(0,"heap mapped into subspace... preparing to go to warp.\n");
 
-	if (!(hMutex = CreateMutex(NULL, FALSE, "VirtualDub Server System Mutex")))
+	if (!(hMutex = CreateMutexW(NULL, FALSE, L"VirtualDub Server System Mutex")))
 		return FALSE;
 
 	_RPT0(0,"mutex obtained\n");
@@ -246,7 +247,7 @@ CVDubAnimConnection::~CVDubAnimConnection() {
 
 BOOL CVDubAnimConnection::init() {
 	LONG lArenaSize;
-	char buf[16];
+	wchar_t buf[16];
 	DWORD mmapID;
 
 	// find out how big of an arena we need
@@ -258,18 +259,18 @@ BOOL CVDubAnimConnection::init() {
 	// create a name for us
 
 	ranko();
-	wsprintfA(buf, "VDUBF%08lx", mmapID = heap->next_mmapID++);
+	wsprintfW(buf, L"VDUBF%08lx", mmapID = heap->next_mmapID++);
 	ranma();
 
 	// create a shared arena and map a window for us
 
-	hArena = CreateFileMapping(
-			INVALID_HANDLE_VALUE,
-			NULL,
-			PAGE_READWRITE,
-			0,
-			lArenaSize,
-			buf);
+	hArena = CreateFileMappingW(
+		INVALID_HANDLE_VALUE,
+		NULL,
+		PAGE_READWRITE,
+		0,
+		lArenaSize,
+		buf);
 
 	if (!hArena) return FALSE;
 
