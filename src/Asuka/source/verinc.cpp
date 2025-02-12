@@ -22,10 +22,8 @@
 
 #include "utils.h"
 
-using namespace std;
-
 void tool_verinc(bool amd64) {
-	string machine_name(get_name());
+	std::string machine_name(get_name());
 
 	time_t systime;
 	time(&systime);
@@ -33,7 +31,7 @@ void tool_verinc(bool amd64) {
 
 	const int build = get_version();
 
-	string build_time(asctime(ts));
+	std::string build_time(asctime(ts));
 
 	build_time.erase(build_time.size()-1);		// kill terminating newline
 

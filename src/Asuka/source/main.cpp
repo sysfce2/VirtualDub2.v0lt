@@ -34,8 +34,6 @@
 
 #include "utils.h"
 
-using namespace std;
-
 void tool_verinc(bool amd64);
 void tool_lookup(const vdfastvector<const char *>& args, const vdfastvector<const char *>& switches, bool amd64);
 void tool_mapconv(const vdfastvector<const char *>& args, const vdfastvector<const char *>& switches, bool amd64);

@@ -15,8 +15,6 @@
 #include <vd2/Meia/MPEGFile.h>
 #include "MPEGCache.h"
 
-using namespace std;
-
 #define printf sizeof
 
 ///////////////////////////////////////////////////////////////////////////
@@ -107,8 +105,8 @@ private:
 	unsigned long master_header;
 	VDAtomicInt refCount;
 
-	typedef pair<unsigned long, int64> tFrameLocation;	// offset:size, packet_offset
-	typedef map<long, tFrameLocation> tFrameMap;
+	typedef std::pair<unsigned long, int64> tFrameLocation;	// offset:size, packet_offset
+	typedef std::map<long, tFrameLocation> tFrameMap;
 	tFrameMap mFrameMap;
 
 	long		mFrameSize;		// frame size in samples -- 576 for MPEG-2, 1152 for MPEG-1
@@ -412,7 +410,7 @@ private:
 		long	frame_count;	// -1 means not yet scanned
 	};
 
-	typedef map<int64, GOPInfo> GOPMap;
+	typedef std::map<int64, GOPInfo> GOPMap;
 
 	struct FrameInfo {
 		int64		first_packet;
@@ -430,8 +428,8 @@ private:
 		FrameType	type;
 	};
 
-	typedef map<long, FrameInfo> FrameMap;
-	typedef list<TentativeFrameInfo> FrameList;
+	typedef std::map<long, FrameInfo> FrameMap;
+	typedef std::list<TentativeFrameInfo> FrameList;
 
 	////////////
 
@@ -1270,7 +1268,7 @@ private:
 		ginfo.first_frame		= mGOPStartFrame;
 		ginfo.frame_count		= bframeno;
 
-		pair<GOPMap::iterator,bool> insresult = mGOPTable.insert(GOPMap::value_type(mposGOP, ginfo));
+		std::pair<GOPMap::iterator,bool> insresult = mGOPTable.insert(GOPMap::value_type(mposGOP, ginfo));
 
 		if (!insresult.second) {
 			// Is it incomplete?

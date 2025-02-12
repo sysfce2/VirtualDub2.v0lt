@@ -28,12 +28,10 @@
 #include "utils.h"
 #include "resource.h"
 
-using namespace std;
-
-typedef map<string, uint32> tVersionMap;
+typedef std::map<std::string, uint32> tVersionMap;
 tVersionMap		g_versionMap;
 int				g_version;
-string		g_machineName;
+std::string		g_machineName;
 
 
 
@@ -77,12 +75,12 @@ void fail(const char *format, ...) {
 
 
 
-void canonicalize_name(string& name) {
-	string::iterator it(name.begin());
+void canonicalize_name(std::string& name) {
+	std::string::iterator it(name.begin());
 
 	*it = toupper(*it);
 	++it;
-	transform(it, name.end(), it, name.find('-') != string::npos ? toupper : tolower);
+	transform(it, name.end(), it, name.find('-') != std::string::npos ? toupper : tolower);
 }
 
 void canonicalize_name(VDStringA& name) {
@@ -90,17 +88,17 @@ void canonicalize_name(VDStringA& name) {
 
 	*it = toupper(*it);
 	++it;
-	transform(it, name.end(), it, name.find('-') != VDStringA::npos ? toupper : tolower);
+	std::transform(it, name.end(), it, name.find('-') != VDStringA::npos ? toupper : tolower);
 }
 
-string get_name() {
+std::string get_name() {
 	char buf[256];
 	DWORD siz = sizeof buf;
 
 	if (!GetComputerName(buf, &siz))		// hostname would probably work on a Unix platform
 		buf[0] = 0;
 
-	string name(buf);
+	std::string name(buf);
 
 	if (name.empty())
 		name = "Anonymous";
@@ -131,7 +129,7 @@ bool read_version() {
 	while(fgets(linebuf, sizeof linebuf, f)) {
 		int local_builds, local_name_start, local_name_end;
 		if (1==sscanf(linebuf, "host: \"%n%*[^\"]%n\" builds: %d", &local_name_start, &local_name_end, &local_builds)) {
-			string name(linebuf+local_name_start, local_name_end - local_name_start);
+			std::string name(linebuf+local_name_start, local_name_end - local_name_start);
 
 			canonicalize_name(name);
 
@@ -148,7 +146,7 @@ bool read_version() {
 
 void inc_version(const char *tag = NULL) {
 	++g_version;
-	++g_versionMap[tag ? string(tag) : g_machineName];
+	++g_versionMap[tag ? std::string(tag) : g_machineName];
 }
 
 INT_PTR CALLBACK VerincErrorDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {
