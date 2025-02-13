@@ -119,13 +119,8 @@ STDMETHODIMP CAVIFileRemote::IsDirty()
 
 STDMETHODIMP CAVIFileRemote::Load(LPCOLESTR lpszFileName, DWORD grfMode)
 {
-	char filename[MAX_PATH];
-
 	_RPT1(0, "%p->CAVIFileRemote::Load()\n", this);
-
-	WideCharToMultiByte(AreFileApisANSI() ? CP_ACP : CP_OEMCP, 0, lpszFileName, -1, filename, sizeof filename, NULL, NULL);
-
-	return Open(filename, grfMode, lpszFileName);
+	return Open(lpszFileName, grfMode);
 }
 
 STDMETHODIMP CAVIFileRemote::Save(LPCOLESTR lpszFileName, BOOL fRemember)
@@ -165,7 +160,7 @@ HRESULT CAVIFileRemote::Create(const CLSID& rclsid, const IID& riid, void** ppv)
 
 	hresult = pAVIFileRemote->QueryInterface(riid, ppv);
 	pAVIFileRemote->Release();
-	if (FAILED(GetScode(hresult))) {
+	if (FAILED(hresult)) {
 		_RPT0(0, "failed!\n");
 	}
 
@@ -291,7 +286,7 @@ HRESULT CAVIStreamRemote::Create(const CLSID& rclsid, const IID& riid, void** pp
 
 	hresult = pUnknown->QueryInterface(riid, ppv);
 	pAVIStreamRemote->Release();
-	if (FAILED(GetScode(hresult))) {
+	if (FAILED(hresult)) {
 		_RPT0(0, "Failed!\n");
 	}
 
@@ -447,14 +442,9 @@ CAVIFileRemote::~CAVIFileRemote()
 	}
 }
 
-STDMETHODIMP CAVIFileRemote::Open(LPCSTR szFile, UINT mode, LPCOLESTR lpszFileName)
+STDMETHODIMP CAVIFileRemote::Open(LPCOLESTR lpszFileName, UINT mode)
 {
-	HMMIO hmmio = NULL;
-	MMCKINFO mmiriff, mmi;
-	MMRESULT mmerr;
-	HRESULT final = S_OK;
-
-	_RPT2(0, "CAVIFileRemote::Open(\"%s\", %08lx)\n", szFile, mode);
+	_RPTW2(0, L"CAVIFileRemote::Open(\"%s\", %08lx)\n", lpszFileName, mode);
 
 	if (pafTunnel) {
 		pafTunnel->Release();
@@ -479,13 +469,21 @@ STDMETHODIMP CAVIFileRemote::Open(LPCSTR szFile, UINT mode, LPCOLESTR lpszFileNa
 		return hr;
 	}
 
-	if (!(hmmio = mmioOpenA((char*)szFile, NULL, MMIO_READ))) {
+	wchar_t szFile[MAX_PATH];
+	wcscpy_s(szFile, lpszFileName);
+
+	HMMIO hmmio = mmioOpenW(szFile, nullptr, MMIO_READ);
+	if (!hmmio) {
 		return E_FAIL;
 	}
 
 	_RPT0(0, "File opened.\n");
 
 	// RIFF <size> VDRM { PATH <remote-path> }
+
+	MMCKINFO mmiriff, mmi;
+	MMRESULT mmerr;
+	HRESULT final = S_OK;
 
 	try {
 		char buf[16];
@@ -531,7 +529,7 @@ STDMETHODIMP CAVIFileRemote::Open(LPCSTR szFile, UINT mode, LPCOLESTR lpszFileNa
 
 		_RPT0(0, "Attempting to find 'VDRM'...\n");
 
-		mmiriff.fccType = 'MRDV';
+		mmiriff.fccType = mmioFOURCC('V', 'D', 'R', 'M');
 		mmerr = mmioDescend(hmmio, &mmiriff, NULL, MMIO_FINDRIFF);
 		if (mmerr == MMIOERR_CHUNKNOTFOUND) {
 			IPersistFile* ppf;
@@ -566,7 +564,7 @@ STDMETHODIMP CAVIFileRemote::Open(LPCSTR szFile, UINT mode, LPCOLESTR lpszFileNa
 		}
 
 		_RPT0(0, "Attempting to find 'PATH'...\n");
-		mmi.ckid = 'HTAP';
+		mmi.ckid = mmioFOURCC('P', 'A', 'T', 'H');
 		mmerr = mmioDescend(hmmio, &mmi, &mmiriff, MMIO_FINDCHUNK);
 		if (mmerr == MMIOERR_CHUNKNOTFOUND) {
 			throw E_FAIL;
@@ -834,7 +832,7 @@ CAVIStreamRemote::CAVIStreamRemote(const CLSID& rclsid, void** pUnknown) : iclas
 	AddRef();
 }
 
-CAVIStreamRemote::CAVIStreamRemote(CAVIFileRemote* parentPtr, BOOL isAudio, AVISTREAMINFO* asi, void* format, long format_len, long sample_first, long sample_last)
+CAVIStreamRemote::CAVIStreamRemote(CAVIFileRemote* parentPtr, BOOL isAudio, AVISTREAMINFOW* asi, void* format, long format_len, long sample_first, long sample_last)
 	: iclassfactory(this)
 {
 	_RPT2(0, "%p->CAVIStreamRemote(%s)\n", this, isAudio ? "audio" : "video");
@@ -867,7 +865,7 @@ STDMETHODIMP_(LONG) CAVIStreamRemote::Info(AVISTREAMINFOW* psi, LONG lSize)
 
 	_RPT1(0, "stream length: %ld\n", streamInfo->dwLength);
 	memset(psi, 0, lSize);
-	memcpy(&asiw, streamInfo, sizeof(AVISTREAMINFO));
+	memcpy(&asiw, streamInfo, sizeof(AVISTREAMINFOW));
 	wcscpy(asiw.szName, fAudio ? L"VDub remote audio #1" : L"VDub remote video #1");
 	if (lSize < sizeof(AVISTREAMINFOW)) {
 		memcpy(psi, &asiw, lSize);

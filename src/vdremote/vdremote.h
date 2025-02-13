@@ -61,9 +61,11 @@ public:
 	STDMETHODIMP WriteData(DWORD fcc, LPVOID lpBuffer, LONG cbBuffer) override;
 	STDMETHODIMP DeleteStream(DWORD fccType, LONG lParam) override;
 
-	STDMETHODIMP Open(LPCSTR szFile, UINT mode, LPCOLESTR lpszFileName);
-	STDMETHODIMP Save(LPCSTR szFile, AVICOMPRESSOPTIONS FAR* lpOptions, AVISAVECALLBACK lpfnCallback);
+private:
+	STDMETHODIMP Open(LPCOLESTR lpszFileName, UINT mode);
+	STDMETHODIMP Save(LPCSTR szFile, AVICOMPRESSOPTIONS FAR* lpOptions, AVISAVECALLBACK lpfnCallback); // not used
 
+public:
 	void LockPort();
 	void UnlockPort();
 };
@@ -96,7 +98,7 @@ private:
 	long m_refs;
 
 	CAVIFileRemote* parent = nullptr;
-	AVISTREAMINFO* streamInfo = nullptr;
+	AVISTREAMINFOW* streamInfo = nullptr;
 	WAVEFORMATEX* wfexFormat = nullptr;
 	BITMAPINFOHEADER* bmihFormat = nullptr;
 	LONG lFormatLen, lSampleFirst, lSampleLast;
@@ -113,7 +115,7 @@ public:
 	STDMETHODIMP_(ULONG) Release() override;
 
 	CAVIStreamRemote(const CLSID& rclsid, void** pUnknown);
-	CAVIStreamRemote(CAVIFileRemote* parentPtr, BOOL isAudio, AVISTREAMINFO* asi, void* format, long format_len, long sample_first, long sample_last);
+	CAVIStreamRemote(CAVIFileRemote* parentPtr, BOOL isAudio, AVISTREAMINFOW* asi, void* format, long format_len, long sample_first, long sample_last);
 	~CAVIStreamRemote();
 
 	// IAVIStream
