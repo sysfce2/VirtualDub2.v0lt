@@ -13,23 +13,22 @@
 class IVDubAnimConnection {
 public:
 	virtual BOOL hasAudio() = 0;
-	virtual BOOL readStreamInfo(AVISTREAMINFO *lpsi, BOOL fAudio, long *lpFirst, long *lpLast) = 0;
-	virtual int readFormat(void *ptr, BOOL fAudio) = 0;
-	virtual int readVideo(long lSample, void *lpBuffer) = 0;
-	virtual int readAudio(long lSample, long lCount, void *lpBuffer, long cbBuffer, long *lplBytes, long *lplSamples) = 0;	
+	virtual BOOL readStreamInfo(AVISTREAMINFO* lpsi, BOOL fAudio, long* lpFirst, long* lpLast) = 0;
+	virtual int readFormat(void* ptr, BOOL fAudio) = 0;
+	virtual int readVideo(long lSample, void* lpBuffer) = 0;
+	virtual int readAudio(long lSample, long lCount, void* lpBuffer, long cbBuffer, long* lplBytes, long* lplSamples) = 0;
 };
 
 class IVDubServerLink {
 public:
-	virtual void GetComputerName(char *buf) = 0;
-	virtual IVDubAnimConnection *FrameServerConnect(char *fs_name) = 0;
-	virtual void FrameServerDisconnect(IVDubAnimConnection *) = 0;
-	virtual int CreateFrameServer(char *name, HWND hwndServer) = 0;
+	virtual void GetComputerName(char* buf) = 0;
+	virtual IVDubAnimConnection* FrameServerConnect(char* fs_name) = 0;
+	virtual void FrameServerDisconnect(IVDubAnimConnection*) = 0;
+	virtual int CreateFrameServer(char* name, HWND hwndServer) = 0;
 	virtual void DestroyFrameServer(int handle) = 0;
 };
 
-DLLFUNC IVDubServerLink * __cdecl GetDubServerInterface();
-
+DLLFUNC IVDubServerLink* __cdecl GetDubServerInterface();
 
 enum {
 	VDSRVM_BIGGEST			= 0x7f00,
