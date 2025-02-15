@@ -326,8 +326,8 @@ bool VDAudioCodecW32::Init(const WAVEFORMATEX *pSrcFormat, const WAVEFORMATEX *p
 	if (!acmDriverID((HACMOBJ)mhStream, &hDriverID, 0)) {
 		ACMDRIVERDETAILS add = { sizeof(ACMDRIVERDETAILS) };
 		if (!acmDriverDetails(hDriverID, &add, 0)) {
-			strncpyz(mDriverName, add.szLongName, sizeof mDriverName);
-			strncpyz(mDriverFilename, add.szShortName, sizeof mDriverFilename);
+			strncpyz(mDriverName, add.szLongName, std::size(mDriverName));
+			strncpyz(mDriverFilename, add.szShortName, std::size(mDriverFilename));
 		}
 	}
 

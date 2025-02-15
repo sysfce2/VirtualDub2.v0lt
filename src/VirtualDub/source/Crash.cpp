@@ -320,7 +320,7 @@ static const char *CrashGetModuleBaseName(HMODULE hmod, char *pszBaseName) {
 		DWORD dw;
 		char *pszFile, *period = NULL;
 
-		if (!GetModuleFileName(hmod, szPath1, sizeof szPath1))
+		if (!GetModuleFileName(hmod, szPath1, std::size(szPath1)))
 			return NULL;
 
 		dw = GetFullPathName(szPath1, sizeof szPath2, szPath2, &pszFile);
@@ -923,7 +923,7 @@ static void SpliceProgramPath(char *buf, int bufsiz, const char *fn) {
 	char tbuf[MAX_PATH];
 	char *pszFile;
 
-	GetModuleFileName(NULL, tbuf, sizeof tbuf);
+	GetModuleFileName(NULL, tbuf, std::size(tbuf));
 	GetFullPathName(tbuf, bufsiz, buf, &pszFile);
 	strcpy(pszFile, fn);
 }

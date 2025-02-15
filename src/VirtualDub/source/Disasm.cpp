@@ -731,7 +731,7 @@ static void SpliceProgramPath(char *buf, int bufsiz, const char *fn) {
 	char tbuf[MAX_PATH];
 	char *pszFile;
 
-	GetModuleFileName(NULL, tbuf, sizeof tbuf);
+	GetModuleFileName(NULL, tbuf, std::size(tbuf));
 	GetFullPathName(tbuf, bufsiz, buf, &pszFile);
 	strcpy(pszFile, fn);
 }

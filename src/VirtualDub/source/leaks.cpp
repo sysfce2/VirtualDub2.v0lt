@@ -216,7 +216,7 @@ void VDDumpMemoryLeaksVC() {
 	dbghelp.pSymInitialize(hProc, NULL, FALSE);
 
 	char filename[MAX_PATH], path[MAX_PATH];
-	GetModuleFileName(NULL, filename, sizeof filename);
+	GetModuleFileName(NULL, filename, std::size(filename));
 
 	strcpy(path, filename);
 	*VDFileSplitPath(path) = 0;
