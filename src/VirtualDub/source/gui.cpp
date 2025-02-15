@@ -929,7 +929,7 @@ void size_to_str(char *dst, size_t bufsize, sint64 bytes) {
 		_snprintf(dst, bufsize, "%.2fGB", (double)bytes * (1.0f / 1073741824.0));
 }
 
-void size_to_str(wchar_t *dst, size_t bufsize, __int64 bytes) {
+void size_to_str(wchar_t *dst, size_t bufsize, sint64 bytes) {
 	if (bytes < 65536)
 		swprintf(dst, bufsize, L"%lu bytes", (unsigned long)bytes);
 	else if (bytes < (1L<<24))
@@ -942,19 +942,22 @@ void size_to_str(wchar_t *dst, size_t bufsize, __int64 bytes) {
 
 
 
-int guiListboxInsertSortedString(HWND hwnd, const char *pszStr) {
-	int idx, cnt;
+int guiListboxInsertSortedString(HWND hwnd, const char* pszStr)
+{
 	char buf[2048];
-	char *activebuf = buf, *activebufalloc = NULL;
-	int activebuflen = sizeof buf;
+	char* activebuf = buf;
+	char* activebufalloc = nullptr;
+	int activebuflen = std::size(buf);
 
-	cnt = SendMessage(hwnd, LB_GETCOUNT, 0, 0);
+	int cnt = SendMessageA(hwnd, LB_GETCOUNT, 0, 0);
 
-	if (cnt==LB_ERR)
+	if (cnt == LB_ERR) {
 		return -1;
+	}
 
-	for(idx=0; idx<cnt; idx++) {
-		int len = SendMessage(hwnd, LB_GETTEXTLEN, idx, 0);
+	int idx = 0;
+	for (; idx < cnt; idx++) {
+		int len = SendMessageA(hwnd, LB_GETTEXTLEN, idx, 0);
 
 		if (len < 0) {
 			freemem(activebufalloc);
@@ -962,7 +965,7 @@ int guiListboxInsertSortedString(HWND hwnd, const char *pszStr) {
 		}
 
 		if (++len > activebuflen) {
-			activebuf = (char *)reallocmem(activebufalloc, len);
+			activebuf = (char*)reallocmem(activebufalloc, len * sizeof(char));
 
 			if (!activebuf) {
 				freemem(activebufalloc);
@@ -973,16 +976,66 @@ int guiListboxInsertSortedString(HWND hwnd, const char *pszStr) {
 			activebuflen = len;
 		}
 
-		SendMessage(hwnd, LB_GETTEXT, idx, (LPARAM)activebuf);
+		SendMessageA(hwnd, LB_GETTEXT, idx, (LPARAM)activebuf);
 
-		if (_stricmp(pszStr, activebuf) < 0)
+		if (_stricmp(pszStr, activebuf) < 0) {
 			break;
+		}
 	}
 
-	if (idx >= cnt)
+	if (idx >= cnt) {
 		idx = -1;
+	}
 
-	return SendMessage(hwnd, LB_INSERTSTRING, idx, (LPARAM)pszStr);
+	return SendMessageA(hwnd, LB_INSERTSTRING, idx, (LPARAM)pszStr);
+}
+
+int guiListboxInsertSortedString(HWND hwnd, const wchar_t* pszStr)
+{
+	wchar_t buf[2048];
+	wchar_t* activebuf = buf;
+	wchar_t* activebufalloc = nullptr;
+	int activebuflen = std::size(buf);
+
+	int cnt = SendMessageW(hwnd, LB_GETCOUNT, 0, 0);
+
+	if (cnt == LB_ERR) {
+		return -1;
+	}
+
+	int idx = 0;
+	for (; idx < cnt; idx++) {
+		int len = SendMessageW(hwnd, LB_GETTEXTLEN, idx, 0);
+
+		if (len < 0) {
+			freemem(activebufalloc);
+			return -1;
+		}
+
+		if (++len > activebuflen) {
+			activebuf = (wchar_t*)reallocmem(activebufalloc, len * sizeof(wchar_t));
+
+			if (!activebuf) {
+				freemem(activebufalloc);
+				return -1;
+			}
+
+			activebufalloc = activebuf;
+			activebuflen = len;
+		}
+
+		SendMessageW(hwnd, LB_GETTEXT, idx, (LPARAM)activebuf);
+
+		if (_wcsicmp(pszStr, activebuf) < 0) {
+			break;
+		}
+	}
+
+	if (idx >= cnt) {
+		idx = -1;
+	}
+
+	return SendMessageW(hwnd, LB_INSERTSTRING, idx, (LPARAM)pszStr);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

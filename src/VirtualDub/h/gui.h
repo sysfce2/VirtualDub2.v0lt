@@ -31,13 +31,13 @@ class VDTimeline;
 
 class ModelessDlgNode : public ListNode2<ModelessDlgNode> {
 public:
-	HWND hdlg;
-	HACCEL	mhAccel;
-	bool hook;
-	bool edit_thunk;
+	HWND hdlg       = NULL;
+	HACCEL mhAccel  = NULL;
+	bool hook       = false;
+	bool edit_thunk = false;
 
-	ModelessDlgNode() { hook=false; edit_thunk=false; }
-	ModelessDlgNode(HWND _hdlg, HACCEL hAccel = NULL) : hdlg(_hdlg), mhAccel(hAccel) { hook=false; edit_thunk=false; }
+	ModelessDlgNode() = default;
+	ModelessDlgNode(HWND _hdlg, HACCEL hAccel = NULL) : hdlg(_hdlg), mhAccel(hAccel) {}
 };
 
 void guiOpenDebug();
@@ -112,7 +112,8 @@ void ticks_to_str(wchar_t *dst, size_t bufsize, uint32 ticks);
 void size_to_str(char *dst, size_t bufsize, sint64 bytes);
 void size_to_str(wchar_t *dst, size_t bufsize, sint64 bytes);
 
-int guiListboxInsertSortedString(HWND, const char *);
+int guiListboxInsertSortedString(HWND, const char*);
+int guiListboxInsertSortedString(HWND, const wchar_t*);
 
 ///////////////////////////////////////////////////////////////////////////////
 
