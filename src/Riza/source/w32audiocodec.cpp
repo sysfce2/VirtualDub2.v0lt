@@ -129,9 +129,9 @@ namespace {
 			// If we have a hint, check if the driver matches. If so, push it at the front of
 			// the list instead of the back.
 			if (pThis->mpHint) {
-				ACMDRIVERDETAILS add = {sizeof(ACMDRIVERDETAILS)};
+				ACMDRIVERDETAILSA add = {sizeof(ACMDRIVERDETAILSA)};
 
-				if (!acmDriverDetails(hadid, &add, 0) && !_stricmp(add.szShortName, pThis->mpHint)) {
+				if (!acmDriverDetailsA(hadid, &add, 0) && !_stricmp(add.szShortName, pThis->mpHint)) {
 					pThis->mDriverIds.insert(pThis->mDriverIds.begin(), hadid);
 					pThis->mpHint = NULL;
 					return TRUE;
@@ -324,8 +324,8 @@ bool VDAudioCodecW32::Init(const WAVEFORMATEX *pSrcFormat, const WAVEFORMATEX *p
 
 	HACMDRIVERID hDriverID;
 	if (!acmDriverID((HACMOBJ)mhStream, &hDriverID, 0)) {
-		ACMDRIVERDETAILS add = { sizeof(ACMDRIVERDETAILS) };
-		if (!acmDriverDetails(hDriverID, &add, 0)) {
+		ACMDRIVERDETAILSA add = { sizeof(ACMDRIVERDETAILSA) };
+		if (!acmDriverDetailsA(hDriverID, &add, 0)) {
 			strncpyz(mDriverName, add.szLongName, std::size(mDriverName));
 			strncpyz(mDriverFilename, add.szShortName, std::size(mDriverFilename));
 		}

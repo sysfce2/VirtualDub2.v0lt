@@ -49,7 +49,7 @@ class ACMTagEntry;
 
 class ACMFormatEntry : public ListNode2<ACMFormatEntry> {
 public:
-	ACMFORMATDETAILS afd;
+	ACMFORMATDETAILSA afd;
 	ACMTagEntry *pFormatTag;
 	WAVEFORMATEX *pwfex;
 	bool fCompatible;
@@ -64,8 +64,8 @@ ACMFormatEntry::~ACMFormatEntry() {
 class ACMTagEntry {
 public:
 	List2<ACMFormatEntry> formats;
-	ACMFORMATTAGDETAILS aftd;
-	ACMDRIVERDETAILS add;
+	ACMFORMATTAGDETAILSA aftd;
+	ACMDRIVERDETAILSA add;
 	HACMDRIVERID hadid;
 	IVDAudioEnc* driver;
 	bool mbSupportsAbout;
@@ -124,7 +124,7 @@ struct ACMChooserData {
 
 ///////////////////////////////////////////////////////////////////////////
 
-BOOL CALLBACK ACMFormatEnumerator(HACMDRIVERID hadid, LPACMFORMATDETAILS pafd, DWORD_PTR dwInstance, DWORD fdwSupport) {
+BOOL CALLBACK ACMFormatEnumerator(HACMDRIVERID hadid, LPACMFORMATDETAILSA pafd, DWORD_PTR dwInstance, DWORD fdwSupport) {
 	ACMEnumeratorData *pData = (ACMEnumeratorData *)dwInstance;
 	ACMFormatEntry *pafe = new ACMFormatEntry();
 
@@ -171,7 +171,7 @@ BOOL CALLBACK ACMFormatEnumerator(HACMDRIVERID hadid, LPACMFORMATDETAILS pafd, D
 	return TRUE;
 }
 
-BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, LPACMFORMATTAGDETAILS paftd, DWORD_PTR dwInstance, DWORD fdwSupport) {
+BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, LPACMFORMATTAGDETAILSA paftd, DWORD_PTR dwInstance, DWORD fdwSupport) {
 	ACMEnumeratorData *pData = (ACMEnumeratorData *)dwInstance;
 
 	if (paftd->dwFormatTag != WAVE_FORMAT_PCM) {
@@ -181,7 +181,7 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 
 		if (index != LB_ERR) {
 			ACMTagEntry *pate = new ACMTagEntry();
-			ACMFORMATDETAILS afd;
+			ACMFORMATDETAILSA afd;
 
 			pate->hadid = hadid;
 			pate->aftd = *paftd;
@@ -192,7 +192,7 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 			pData->pate = pate;
 			pData->mbCurrentFormatTagMatchesHint = false;
 
-			if (acmDriverDetails(hadid, &pate->add, 0))
+			if (acmDriverDetailsA(hadid, &pate->add, 0))
 				pate->add.cbStruct = 0;
 			else {
 				if (pData->pHintSelect && !_stricmp(pData->pHintSelect, pate->add.szShortName))
@@ -207,7 +207,7 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 			pData->pwfex->wFormatTag = (WORD)paftd->dwFormatTag;
 
 			pData->fAttemptedWeird = false;
-			acmFormatEnum(pData->had, &afd, ACMFormatEnumerator, dwInstance, ACM_FORMATENUMF_WFORMATTAG);
+			acmFormatEnumA(pData->had, &afd, ACMFormatEnumerator, dwInstance, ACM_FORMATENUMF_WFORMATTAG);
 
 			if (!pData->fAttemptedWeird && pData->pwfexSrc) {
 
@@ -219,7 +219,7 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 					afd.dwFormatIndex = 0;
 					afd.fdwSupport = 0;
 
-					if (!acmFormatDetails(pData->had, &afd, ACM_FORMATDETAILSF_FORMAT))
+					if (!acmFormatDetailsA(pData->had, &afd, ACM_FORMATDETAILSF_FORMAT))
 						ACMFormatEnumerator(hadid, &afd, dwInstance, 0);
 				}
 			}
@@ -236,16 +236,16 @@ BOOL /*ACMDRIVERENUMCB*/ CALLBACK ACMDriverEnumerator(HACMDRIVERID hadid, DWORD_
 
 	vdprotected1("enumerating audio codec ID %p", decltype(hadid), hadid) {
 		if (!acmDriverOpen(&pData->had, hadid, 0)) {
-			ACMDRIVERDETAILS add = { sizeof(ACMDRIVERDETAILS) };
-			acmDriverDetails(hadid, &add, 0);
+			ACMDRIVERDETAILSA add = { sizeof(ACMDRIVERDETAILSA) };
+			acmDriverDetailsA(hadid, &add, 0);
 
 			vdprotected1("enumerating formats for audio codec \"%.64s\"", const char *, add.szLongName) {
-				ACMFORMATTAGDETAILS aftd;
+				ACMFORMATTAGDETAILSA aftd;
 
 				memset(&aftd, 0, sizeof aftd);
 				aftd.cbStruct = sizeof aftd;
 
-				acmFormatTagEnum(pData->had, &aftd, ACMFormatTagEnumerator, dwInstance, 0);
+				acmFormatTagEnumA(pData->had, &aftd, ACMFormatTagEnumerator, dwInstance, 0);
 
 				acmDriverClose(pData->had, 0);
 			}
@@ -352,11 +352,11 @@ void PluginReloadFormat(IVDXAudioEnc* plugin, ACMChooserData* thisPtr, ACMTagEnt
 		memcpy(f1->pwfex, plugin->GetOutputFormat(), dst_format_len);
 
 		if (f1->pwfex->nChannels==1)
-			wsprintf(f1->afd.szFormat, "%d Hz, Mono", f1->pwfex->nSamplesPerSec);
+			wsprintfA(f1->afd.szFormat, "%d Hz, Mono", f1->pwfex->nSamplesPerSec);
 		if (f1->pwfex->nChannels==2)
-			wsprintf(f1->afd.szFormat, "%d Hz, Stereo", f1->pwfex->nSamplesPerSec);
+			wsprintfA(f1->afd.szFormat, "%d Hz, Stereo", f1->pwfex->nSamplesPerSec);
 		if (f1->pwfex->nChannels>2)
-			wsprintf(f1->afd.szFormat, "%d Hz, %d ch", f1->pwfex->nSamplesPerSec, f1->pwfex->nChannels);
+			wsprintfA(f1->afd.szFormat, "%d Hz, %d ch", f1->pwfex->nSamplesPerSec, f1->pwfex->nChannels);
 
 		entry->formats.AddTail(f1);
 	}
