@@ -70,7 +70,7 @@ void VDSetDialogDefaultIcons(HWND hdlg);
 
 void guiSetStatus(const char *format, int nPart, ...);
 void guiSetStatusW(const wchar_t *text, int nPart);
-void guiSetTitle(HWND hWnd, UINT uID, ...);
+void guiSetTitleA(HWND hWnd, UINT uID, ...);
 void guiSetTitleW(HWND hWnd, UINT uID, ...);
 void guiMenuHelp(HWND hwnd, WPARAM wParam, WPARAM part, const UINT *iTranslator);
 void guiOffsetDlgItem(HWND hdlg, UINT id, LONG xDelta, LONG yDelta);

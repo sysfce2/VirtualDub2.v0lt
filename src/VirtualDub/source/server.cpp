@@ -273,7 +273,7 @@ void Frameserver::Go(IVDubServerLink *ivdsl, char *name) {
 	mpUIFrame = pFrame;
 	pFrame->Attach(this);
 
-	guiSetTitle(hwnd, IDS_TITLE_FRAMESERVER);
+	guiSetTitleA(hwnd, IDS_TITLE_FRAMESERVER);
 
 	// create dialog box
 

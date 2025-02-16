@@ -429,8 +429,8 @@ void guiSetStatusW(const wchar_t *text, int nPart) {
 	SendMessageW(GetDlgItem(g_hWnd, IDC_STATUS_WINDOW), SB_SETTEXTW, nPart, (LPARAM)text);
 }
 
-void guiSetTitle(HWND hWnd, UINT uID, ...) {
-	char buf1[256],buf2[256];
+void guiSetTitleA(HWND hWnd, UINT uID, ...) {
+	char buf1[256], buf2[256];
 	va_list val;
 
 	LoadStringA(g_hInst, uID, buf1, sizeof buf1);
