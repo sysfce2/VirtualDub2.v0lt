@@ -871,15 +871,26 @@ void guiEndDeferWindowPos(HDWP hdwp) {
 		EndDeferWindowPos(hdwp);
 }
 
-int guiMessageBoxF(HWND hwnd, LPCSTR lpCaption, UINT uType, const char *format, ...) {
+int guiMessageBoxF(HWND hwnd, LPCSTR lpCaption, UINT uType, const char* format, ...) {
 	char buf[1024];
 	va_list val;
 
-	va_start(val,format);
+	va_start(val, format);
 	vsprintf_s(buf, format, val);
 	va_end(val);
 
 	return MessageBoxA(hwnd, buf, lpCaption, uType);
+}
+
+int guiMessageBoxF(HWND hwnd, LPCWSTR lpCaption, UINT uType, const wchar_t* format, ...) {
+	wchar_t buf[1024];
+	va_list val;
+
+	va_start(val, format);
+	vswprintf_s(buf, format, val);
+	va_end(val);
+
+	return MessageBoxW(hwnd, buf, lpCaption, uType);
 }
 
 ///////////////////////////////////////////////////////////////////////////
