@@ -1484,86 +1484,92 @@ void SaveSegmentedAVI(HWND hWnd, bool queueAsJob) {
 
 		key.setInt(g_szRegKeySegmentDigitCount, digits);
 
-		char szFile[MAX_PATH];
+		wchar_t szFile[MAX_PATH];
 
-		strcpy(szFile, VDTextWToA(fname).c_str());
+		wcscpy(szFile, fname.c_str());
 
 		{
-			char szPrefixBuffer[MAX_PATH], szPattern[MAX_PATH*2], *t, *t2, c;
-			const char *s;
+			wchar_t szPrefixBuffer[MAX_PATH], szPattern[MAX_PATH * 2];
+			wchar_t* t, * t2;
+			wchar_t c;
+			const wchar_t* s;
 			int nMatchCount = 0;
 
 			t = VDFileSplitPath(szFile);
 			t2 = VDFileSplitExt(t);
 
-			if (!_stricmp(t2, ".avi")) {
-				while(t2>t && isdigit((unsigned)t2[-1]))
+			if (!_wcsicmp(t2, L".avi")) {
+				while (t2 > t && iswdigit(t2[-1])) {
 					--t2;
-
-				if (t2>t && t2[-1]=='.')
-					strcpy(t2, "avi");
+				}
+				if (t2 > t && t2[-1] == '.') {
+					wcscpy(t2, L"avi");
+				}
 			}
 
-			strcpy(szPrefixBuffer, szFile);
+			wcscpy(szPrefixBuffer, szFile);
 			VDFileSplitExt(szPrefixBuffer)[0] = 0;
 
 			s = VDFileSplitPath(szPrefixBuffer);
 			t = szPattern;
 
-			while(*t++ = *s++)
-				if (s[-1]=='%')
+			while (*t++ = *s++) {
+				if (s[-1] == '%') {
 					*t++ = '%';
+				}
+			}
 
 			t = szPrefixBuffer;
-			while(*t)
+			while (*t) {
 				++t;
+			}
 
-			strcpy(t, ".*.avi");
+			wcscpy(t, L".*.avi");
 
-			WIN32_FIND_DATA wfd;
+			WIN32_FIND_DATAW wfd;
 			HANDLE h;
 
-			h = FindFirstFile(szPrefixBuffer, &wfd);
+			h = FindFirstFileW(szPrefixBuffer, &wfd);
 			if (h != INVALID_HANDLE_VALUE) {
-				strcat(szPattern, ".%d.av%c");
+				wcscat(szPattern, L".%d.av%c");
 
 				do {
 					int n;
-
-					if (2 == sscanf(wfd.cFileName, szPattern, &n, &c) && tolower(c)=='i')
+					if (2 == swscanf(wfd.cFileName, szPattern, &n, &c) && tolower(c) == 'i') {
 						++nMatchCount;
+					}
 					
-				} while(FindNextFile(h, &wfd));
+				} while(FindNextFileW(h, &wfd));
 				FindClose(h);
 			}
 
 			if (nMatchCount) {
-				if (IDOK != guiMessageBoxF(g_hWnd, g_szWarning, MB_OKCANCEL|MB_ICONEXCLAMATION,
-					"There %s %d existing file%s which match%s the filename pattern \"%s\". These files "
-					"will be erased if you continue, to prevent confusion with the new files."
-					,nMatchCount==1 ? "is" : "are"
+				if (IDOK != guiMessageBoxF(g_hWnd, g_szWarningW, MB_OKCANCEL|MB_ICONEXCLAMATION,
+					L"There %s %d existing file%s which match%s the filename pattern \"%s\". These files "
+					L"will be erased if you continue, to prevent confusion with the new files."
+					,nMatchCount==1 ? L"is" : L"are"
 					,nMatchCount
-					,nMatchCount==1 ? "" : "s"
-					,nMatchCount==1 ? "es" : ""
+					,nMatchCount==1 ? L"" : L"s"
+					,nMatchCount==1 ? L"es" : L""
 					,VDFileSplitPath(szPrefixBuffer)))
 					return;
 
-				h = FindFirstFile(szPrefixBuffer, &wfd);
+				h = FindFirstFileW(szPrefixBuffer, &wfd);
 				if (h != INVALID_HANDLE_VALUE) {
-					strcat(szPattern, ".%d.av%c");
+					wcscat(szPattern, L".%d.av%c");
 
 					t = VDFileSplitPath(szPrefixBuffer);
 
 					do {
 						int n;
 
-						if (2 == sscanf(wfd.cFileName, szPattern, &n, &c) && tolower(c)=='i') {
-							strcpy(t, wfd.cFileName);
-							DeleteFile(t);
+						if (2 == swscanf(wfd.cFileName, szPattern, &n, &c) && tolower(c)=='i') {
+							wcscpy(t, wfd.cFileName);
+							DeleteFileW(t);
 						}
 							
 						
-					} while(FindNextFile(h, &wfd));
+					} while(FindNextFileW(h, &wfd));
 					FindClose(h);
 				}
 			}
