@@ -1110,7 +1110,7 @@ void VDPositionControlW32::OnCreate() {
 				mFrameNumberHeight = tm.tmHeight + tm.tmInternalLeading;
 
 			SIZE siz;
-			if (GetTextExtentPoint32(hdc, "0123456789", 10, &siz))
+			if (GetTextExtentPoint32A(hdc, "0123456789", 10, &siz))
 				mFrameNumberWidth = (siz.cx + 9) / 10;
 
 			SelectObject(hdc, hgoFont);
@@ -1380,7 +1380,7 @@ void VDPositionControlW32::OnPaint() {
 
 		if (bDrawLabels) {
 			sprintf(buf, "%I64d", frame);
-			TextOut(hdc, x, mTrackArea.bottom, buf, strlen(buf));
+			TextOutA(hdc, x, mTrackArea.bottom, buf, strlen(buf));
 		}
 
 		frame += framesPerLabel;
@@ -1391,7 +1391,7 @@ void VDPositionControlW32::OnPaint() {
 
 	if (bDrawLabels) {
 		sprintf(buf, "%I64d", mRangeEnd);
-		TextOut(hdc, trackRight, mTrackArea.bottom, buf, strlen(buf));
+		TextOutA(hdc, trackRight, mTrackArea.bottom, buf, strlen(buf));
 	}
 
 	// Fill the track.  We draw the track borders later so they're always on top.

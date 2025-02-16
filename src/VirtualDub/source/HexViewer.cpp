@@ -887,29 +887,29 @@ LRESULT HexViewer::Handle_WM_PAINT(WPARAM wParam, LPARAM lParam) {
 					// Draw metahighlighted areas.
 
 					SetBkColor(hdc, 0xe0ffc0);
-					TextOut(hdc, nCharWidth*pos3, y, buf + pos3, pos4 - pos3);
-					TextOut(hdc, nCharWidth*pos7, y, buf + pos7, pos8 - pos7);
+					TextOutA(hdc, nCharWidth*pos3, y, buf + pos3, pos4 - pos3);
+					TextOutA(hdc, nCharWidth*pos7, y, buf + pos7, pos8 - pos7);
 
 					// Draw highlighted areas.
 
 					SetBkColor(hdc, 0xc0e0ff);
-					TextOut(hdc, nCharWidth*pos2, y, buf + pos2, pos3 - pos2);
-					TextOut(hdc, nCharWidth*pos4, y, buf + pos4, pos5 - pos4);
-					TextOut(hdc, nCharWidth*pos6, y, buf + pos6, pos7 - pos6);
-					TextOut(hdc, nCharWidth*pos8, y, buf + pos8, pos9 - pos8);
+					TextOutA(hdc, nCharWidth*pos2, y, buf + pos2, pos3 - pos2);
+					TextOutA(hdc, nCharWidth*pos4, y, buf + pos4, pos5 - pos4);
+					TextOutA(hdc, nCharWidth*pos6, y, buf + pos6, pos7 - pos6);
+					TextOutA(hdc, nCharWidth*pos8, y, buf + pos8, pos9 - pos8);
 
 					// Draw non-highlighted areas.
 
 					SetBkColor(hdc, 0xffffff);
-					TextOut(hdc, nCharWidth*pos1, y, buf + pos1, pos2 - pos1);
-					TextOut(hdc, nCharWidth*pos5, y, buf + pos5, pos6 - pos5);
-					TextOut(hdc, nCharWidth*pos9, y, buf + pos9, pos10 - pos9);
+					TextOutA(hdc, nCharWidth*pos1, y, buf + pos1, pos2 - pos1);
+					TextOutA(hdc, nCharWidth*pos5, y, buf + pos5, pos6 - pos5);
+					TextOutA(hdc, nCharWidth*pos9, y, buf + pos9, pos10 - pos9);
 				} else {
 
 					// Not highlighting, draw single line of text.
 
 					SetBkColor(hdc, 0xffffff);
-					TextOut(hdc, 0, y, buf, s - buf);
+					TextOutA(hdc, 0, y, buf, s - buf);
 				}
 
 				// Draw modified constants in blue.
@@ -928,8 +928,8 @@ LRESULT HexViewer::Handle_WM_PAINT(WPARAM wParam, LPARAM lParam) {
 
 					SetBkMode(hdc, TRANSPARENT);
 
-					TextOut(hdc, nCharWidth*14, y, buf+14, 16*3-1);
-					TextOut(hdc, nCharWidth*63, y, buf+63, 16);
+					TextOutA(hdc, nCharWidth*14, y, buf+14, 16*3-1);
+					TextOutA(hdc, nCharWidth*63, y, buf+63, 16);
 
 					SetBkMode(hdc, OPAQUE);
 
@@ -1231,7 +1231,7 @@ void HexEditor::Open(const wchar_t *pszFile, bool bRW) {
 
 	_snprintf(buf, 512, "VirtualDub2 Hex Editor - [%ls]%s", pszFile, bRW ? "" : " (read only)");
 	buf[511] = 0;
-	SetWindowText(hwnd, buf);
+	SetWindowTextA(hwnd, buf);
 
 	i64RowCacheAddr	= -1;
 	i64FileCacheAddr	= -1;
@@ -1269,7 +1269,7 @@ void HexEditor::Close() {
 	if (hwndTree)
 		DestroyWindow(hwndTree);
 
-	SetWindowText(hwnd, "VirtualDub2 Hex Editor");
+	SetWindowTextA(hwnd, "VirtualDub2 Hex Editor");
 	SetStatus("");
 }
 
@@ -1587,7 +1587,7 @@ void HexEditor::SetStatus(const char *format, ...) {
 	vsprintf_s(buf, format, val);
 	va_end(val);
 
-	SetWindowText(hwndStatus, buf);
+	SetWindowTextA(hwndStatus, buf);
 }
 
 LRESULT HexEditor::Handle_WM_COMMAND(WPARAM wParam, LPARAM lParam) {
@@ -1605,7 +1605,7 @@ LRESULT HexEditor::Handle_WM_COMMAND(WPARAM wParam, LPARAM lParam) {
 		Commit();
 		break;
 	case ID_FILE_REVERT:
-		if (IDOK==MessageBox(hwnd, "Discard all changes?", g_szHexWarning, MB_OKCANCEL)) {
+		if (IDOK==MessageBoxA(hwnd, "Discard all changes?", g_szHexWarning, MB_OKCANCEL)) {
 			HVModifiedLine *pLine;
 
 			while(pLine = listMods.RemoveHead())
@@ -1675,7 +1675,7 @@ LRESULT HexEditor::Handle_WM_COMMAND(WPARAM wParam, LPARAM lParam) {
 		break;
 
 	case ID_HELP_WHY:
-		MessageBox(hwnd,
+		MessageBoxA(hwnd,
 			"I need a quick way for people to send me parts of files that don't load properly "
 			"in VirtualDub, and this is a handy way to do it. Well, that, and it's annoying to "
 			"check 3GB AVI files if your hex editor tries to load the file into memory.",
@@ -1684,7 +1684,7 @@ LRESULT HexEditor::Handle_WM_COMMAND(WPARAM wParam, LPARAM lParam) {
 		break;
 
 	case ID_HELP_KEYS:
-		MessageBox(hwnd,
+		MessageBoxA(hwnd,
 			"arrow keys/PgUp/PgDn: navigation\n"
 			"TAB: switch between ASCII/Hex\n"
 			"Backspace: undo",
@@ -1789,16 +1789,16 @@ INT_PTR CALLBACK HexEditor::AskForValuesDlgProc(HWND hdlg, UINT msg, WPARAM wPar
 		pData = (HexEditorAskData *)lParam;
 		SetWindowLongPtr(hdlg, DWLP_USER, lParam);
 
-		SetWindowText(hdlg, pData->title);
+		SetWindowTextA(hdlg, pData->title);
 		sprintf(buf, "%I64X", pData->v1);
 		SetDlgItemTextA(hdlg, IDC_EDIT_ADDRESS1, buf);
 		SendDlgItemMessage(hdlg, IDC_EDIT_ADDRESS1, EM_LIMITTEXT, 16, 0);
-		SetDlgItemText(hdlg, IDC_STATIC_ADDRESS1, pData->name1);
+		SetDlgItemTextA(hdlg, IDC_STATIC_ADDRESS1, pData->name1);
 		if (pData->name2) {
 			sprintf(buf, "%I64X", pData->v2);
 			SetDlgItemTextA(hdlg, IDC_EDIT_ADDRESS2, buf);
 			SendDlgItemMessage(hdlg, IDC_EDIT_ADDRESS1, EM_LIMITTEXT, 16, 0);
-			SetDlgItemText(hdlg, IDC_STATIC_ADDRESS2, pData->name2);
+			SetDlgItemTextA(hdlg, IDC_STATIC_ADDRESS2, pData->name2);
 		} else {
 			ShowWindow(GetDlgItem(hdlg, IDC_EDIT_ADDRESS2), SW_HIDE);
 			ShowWindow(GetDlgItem(hdlg, IDC_STATIC_ADDRESS2), SW_HIDE);
@@ -1908,9 +1908,9 @@ int HexEditor::TruncateVerifier(HWND hdlg, sint64 v1, sint64 v2) {
 	int r = IDYES;
 
 	if (v1 < i64FileSize)
-		r = MessageBox(hdlg, "You will lose all data past the specified address. Are you sure you want to truncate the file?", "Warning", MB_ICONEXCLAMATION|MB_YESNO);
+		r = MessageBoxA(hdlg, "You will lose all data past the specified address. Are you sure you want to truncate the file?", "Warning", MB_ICONEXCLAMATION|MB_YESNO);
 	else if (v1 > i64FileSize)
-		r = MessageBox(hdlg, "You have specified an address past the end of the file. Extend file to specified address?", "Warning", MB_ICONEXCLAMATION|MB_YESNO);
+		r = MessageBoxA(hdlg, "You have specified an address past the end of the file. Extend file to specified address?", "Warning", MB_ICONEXCLAMATION|MB_YESNO);
 
 	return r==IDYES ? 0 : -1;
 }
@@ -2198,7 +2198,7 @@ void HexEditor::Find(HWND hwndParent) {
 
 		pd.close();
 
-		MessageBox(hwndParent, "Search string not found", "Find", MB_OK);
+		MessageBoxA(hwndParent, "Search string not found", "Find", MB_OK);
 xit:
 		;
 	} catch(MyUserAbortError) {
@@ -2310,11 +2310,11 @@ INT_PTR CALLBACK HexEditor::FindDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 					}
 					text[i*3-1] = 0;
 
-					SetDlgItemText(hwnd, IDC_STRING, text);
+					SetDlgItemTextA(hwnd, IDC_STRING, text);
 				}
 				CheckDlgButton(hwnd, IDC_HEX, BST_CHECKED);
 			} else {
-				SetDlgItemText(hwnd, IDC_STRING, pcd->pszFindString);
+				SetDlgItemTextA(hwnd, IDC_STRING, pcd->pszFindString);
 			}
 
 			if (pcd->bFindCaseInsensitive)
@@ -2348,7 +2348,7 @@ INT_PTR CALLBACK HexEditor::FindDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 				if (l) {
 					char *text = new char[l+1];
 
-					if (GetWindowText(hwndEdit, text, l+1)) {
+					if (GetWindowTextA(hwndEdit, text, l+1)) {
 						if (IsDlgButtonChecked(hwnd, IDC_HEX)) {
 							char *s = text, *s2;
 							char *t = text;

@@ -479,7 +479,7 @@ void VDVFilterDrawText::Start() {
 void VDVFilterDrawText::FormatString(const VDStringW& text) {
 	const VDXPixmapLayout& pxsrc = *fa->src.mpPixmapLayout;
 
-	HDC hdc = CreateDC("DISPLAY", 0, 0, 0);
+	HDC hdc = CreateDCW(L"DISPLAY", 0, 0, 0);
 
 	LOGFONTW f = {0,0, 0,0, param.weight, 0,0,0, ANSI_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH,};
 	f.lfHeight = -LONG(param.size*96/72*64);

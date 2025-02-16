@@ -64,7 +64,7 @@ static long VDFilterCallbackGetCPUFlags() {
 static long VDFilterCallbackGetHostVersionInfo(char *buf, int len) {
 	char tbuf[256];
 
-	LoadString(g_hInst, IDS_TITLE_INITIAL, tbuf, sizeof tbuf);
+	LoadStringA(g_hInst, IDS_TITLE_INITIAL, tbuf, sizeof tbuf);
 	_snprintf(buf, len, tbuf, version_num,
 #ifdef _DEBUG
 		"debug"

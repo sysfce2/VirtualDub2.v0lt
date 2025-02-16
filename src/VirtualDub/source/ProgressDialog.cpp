@@ -57,7 +57,7 @@ void ProgressDialog::setCaption(const char *sz) {
 	lpszCaption = sz;
 
 	if (hwndDialog)
-		SetDlgItemText(hwndDialog, IDC_STATIC_MESSAGE, sz);
+		SetDlgItemTextA(hwndDialog, IDC_STATIC_MESSAGE, sz);
 }
 
 void ProgressDialog::setValueFormat(const char *sz) {
@@ -129,8 +129,8 @@ INT_PTR CALLBACK ProgressDialog::ProgressDlgProc(HWND hDlg, UINT msg, WPARAM wPa
 			if (!thisPtr->fAbortEnabled)
 				EnableWindow(GetDlgItem(hDlg, IDCANCEL), FALSE);
 
-			SetWindowText(hDlg, thisPtr->lpszTitle);
-			SetDlgItemText(hDlg, IDC_STATIC_MESSAGE, thisPtr->lpszCaption);
+			SetWindowTextA(hDlg, thisPtr->lpszTitle);
+			SetDlgItemTextA(hDlg, IDC_STATIC_MESSAGE, thisPtr->lpszCaption);
 
 			thisPtr->hwndDialog = hDlg;
 
@@ -169,8 +169,8 @@ INT_PTR CALLBACK ProgressDialog::ProgressDlgProc(HWND hDlg, UINT msg, WPARAM wPa
 			if (thisPtr->lpszValueFormat) {
 				char szTemp[128];
 
-				wsprintf(szTemp, thisPtr->lpszValueFormat, thisPtr->newval, thisPtr->maxval);
-				SendMessage(thisPtr->hwndValue, WM_SETTEXT, 0, (LPARAM)szTemp);
+				wsprintfA(szTemp, thisPtr->lpszValueFormat, thisPtr->newval, thisPtr->maxval);
+				SendMessageA(thisPtr->hwndValue, WM_SETTEXT, 0, (LPARAM)szTemp);
 			}
 			return TRUE;
 
