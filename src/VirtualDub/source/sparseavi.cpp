@@ -52,7 +52,7 @@ struct SparseAVIHeader {
 
 };
 
-void CreateSparseAVI(const char *pszIn, const char *pszOut) {	
+void CreateSparseAVI(const wchar_t* pszIn, const wchar_t* pszOut) {
 	try {
 		VDFile infile(pszIn);
 		VDFile outfile(pszOut, nsVDFile::kWrite | nsVDFile::kCreateAlways);
@@ -216,7 +216,7 @@ void CreateSparseAVI(const char *pszIn, const char *pszOut) {
 	}
 }
 
-void ExpandSparseAVI(HWND hwndParent, const char *pszIn, const char *pszOut) {
+void ExpandSparseAVI(HWND hwndParent, const wchar_t* pszIn, const wchar_t* pszOut) {
 	try {
 		VDFile infile(pszIn);
 		VDFile outfile(pszOut, nsVDFile::kWrite | nsVDFile::kCreateAlways);
@@ -359,14 +359,12 @@ void CreateExtractSparseAVI(HWND hwndParent, bool bExtract) {
 		const VDStringW outfile(VDGetSaveFileName(VDFSPECKEY_LOADVIDEOFILE, (VDGUIHandle)hwndParent, L"Select filename for output", bExtract ? avifilter : sparsefilter, bExtract ? L"avi" : L"sparse"));
 
 		if (!outfile.empty()) {
-			VDStringA infileA(VDTextWToA(infile));
-			VDStringA outfileA(VDTextWToA(outfile));
-
 			try {
-				if (bExtract)
-					ExpandSparseAVI(hwndParent, infileA.c_str(), outfileA.c_str());
-				else
-					CreateSparseAVI(infileA.c_str(), outfileA.c_str());
+				if (bExtract) {
+					ExpandSparseAVI(hwndParent, infile.c_str(), outfile.c_str());
+				} else {
+					CreateSparseAVI(infile.c_str(), outfile.c_str());
+				}
 				MessageBoxA(hwndParent, bExtract ? "Sparse AVI expansion complete." : "Sparse AVI creation complete.", "VirtualDub notice", MB_ICONINFORMATION);
 			} catch(const MyError& e) {
 				e.post(hwndParent, g_szError);
