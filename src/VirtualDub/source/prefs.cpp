@@ -84,7 +84,6 @@ namespace {
 		bool			mbRenderShowFrames;
 
 		VDStringW		mD3DFXFile;
-		uint32			mFileAsyncDefaultMode;
 		uint32			mAVISuperindexLimit;
 		uint32			mAVISubindexLimit;
 
@@ -519,44 +518,10 @@ public:
 		case kEventAttach:
 			mpBase = pBase;
 			pBase->ExecuteAllLinks();
-			switch(mPrefs.mFileAsyncDefaultMode) {
-				case IVDFileAsync::kModeBuffered:
-					SetValue(100, 0);
-					break;
-
-				case IVDFileAsync::kModeSynchronous:
-					SetValue(100, 1);
-					break;
-
-				case IVDFileAsync::kModeThreaded:
-					SetValue(100, 2);
-					break;
-
-				case IVDFileAsync::kModeAsynchronous:
-				default:
-					SetValue(100, 3);
-					break;
-			}
+			SetValue(100, 3);
 			return true;
 		case kEventDetach:
 		case kEventSync:
-			switch(GetValue(100)) {
-				case 0:
-					mPrefs.mFileAsyncDefaultMode = IVDFileAsync::kModeBuffered;
-					break;
-
-				case 1:
-					mPrefs.mFileAsyncDefaultMode = IVDFileAsync::kModeSynchronous;
-					break;
-
-				case 2:
-					mPrefs.mFileAsyncDefaultMode = IVDFileAsync::kModeThreaded;
-					break;
-
-				case 3:
-					mPrefs.mFileAsyncDefaultMode = IVDFileAsync::kModeAsynchronous;
-					break;
-			}
 			return true;
 		}
 		return false;
@@ -1025,7 +990,6 @@ void LoadPreferences() {
 	g_prefs2.mbRenderInhibitSystemSleep = key.getBool("Render: Inhibit system sleep", true);
 	g_prefs2.mbRenderBackgroundPriority = key.getBool("Render: Use background priority", false);
 	g_prefs2.mbRenderShowFrames = key.getBool("Render: Show frames", true);
-	g_prefs2.mFileAsyncDefaultMode = std::min<uint32>(IVDFileAsync::kModeCount-1, key.getInt("File: Async mode", IVDFileAsync::kModeAsynchronous));
 	g_prefs2.mAVISuperindexLimit = key.getInt("AVI: Superindex entry limit", 256);
 	g_prefs2.mAVISubindexLimit = key.getInt("AVI: Subindex entry limit", 8192);
 
@@ -1114,7 +1078,6 @@ void VDSavePreferences(VDPreferences2& prefs) {
 	key.setBool("Render: Inhibit system sleep", prefs.mbRenderInhibitSystemSleep);
 	key.setBool("Render: Use background priority", prefs.mbRenderBackgroundPriority);
 	key.setBool("Render: Show frames", prefs.mbRenderShowFrames);
-	key.setInt("File: Async mode", prefs.mFileAsyncDefaultMode);
 	key.setInt("AVI: Superindex entry limit", prefs.mAVISuperindexLimit);
 	key.setInt("AVI: Subindex entry limit", prefs.mAVISubindexLimit);
 
@@ -1272,10 +1235,6 @@ uint32& VDPreferencesGetRenderAudioBufferSeconds() {
 
 uint32 VDPreferencesGetRenderThrottlePercent() {
 	return g_prefs2.mRenderThrottlePercent;
-}
-
-uint32 VDPreferencesGetFileAsyncDefaultMode() {
-	return g_prefs2.mFileAsyncDefaultMode;
 }
 
 const VDFraction& VDPreferencesGetImageSequenceFrameRate() {

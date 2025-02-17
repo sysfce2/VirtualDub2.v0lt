@@ -27,7 +27,6 @@
 #include "AVIOutput.h"
 #include "AVIOutputFLM.h"
 
-extern uint32 VDPreferencesGetFileAsyncDefaultMode();
 extern uint32& VDPreferencesGetRenderOutputBufferSize();
 
 ////////////////////////////////////
@@ -177,7 +176,7 @@ void AVIVideoFLMOutputStream::partialWriteEnd() {
 //////////////////////////////////
 
 AVIOutputFLM::AVIOutputFLM()
-: mpAsync(VDCreateFileAsync((IVDFileAsync::Mode)VDPreferencesGetFileAsyncDefaultMode()))
+: mpAsync(VDCreateFileAsync())
 {
 }
 

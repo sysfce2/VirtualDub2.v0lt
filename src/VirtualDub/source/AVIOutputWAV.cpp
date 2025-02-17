@@ -25,8 +25,6 @@
 
 #include "AVIOutputWAV.h"
 
-extern uint32 VDPreferencesGetFileAsyncDefaultMode();
-
 namespace
 {
 	static const uint8 kGuidRIFF[16]={
@@ -123,7 +121,7 @@ IVDMediaOutputStream *AVIOutputWAV::createAudioStream() {
 bool AVIOutputWAV::init(const wchar_t *pwszFile) {
 	if (!audioOut) return false;
 
-	mpFileAsync = VDCreateFileAsync((IVDFileAsync::Mode)VDPreferencesGetFileAsyncDefaultMode());
+	mpFileAsync = VDCreateFileAsync();
 	mpFileAsync->Open(pwszFile, 2, mBufferSize >> 1);
 
 	WriteHeader(true);
@@ -139,7 +137,7 @@ bool AVIOutputWAV::init(const wchar_t *pwszFile) {
 bool AVIOutputWAV::init(VDFileHandle h, bool pipeMode) {
 	if (!audioOut) return false;
 
-	mpFileAsync = VDCreateFileAsync((IVDFileAsync::Mode)VDPreferencesGetFileAsyncDefaultMode());
+	mpFileAsync = VDCreateFileAsync();
 	mpFileAsync->OpenPipe(h, 2, mBufferSize >> 1);
 
 	mbPipeMode = pipeMode;

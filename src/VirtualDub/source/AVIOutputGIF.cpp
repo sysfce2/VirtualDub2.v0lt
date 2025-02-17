@@ -27,7 +27,6 @@
 #include "AVIOutput.h"
 #include "AVIOutputGIF.h"
 
-extern uint32 VDPreferencesGetFileAsyncDefaultMode();
 extern uint32& VDPreferencesGetRenderOutputBufferSize();
 
 ////////////////////////////////////
@@ -926,7 +925,7 @@ protected:
 IVDAVIOutputGIF *VDCreateAVIOutputGIF() { return new AVIOutputGIF; }
 
 AVIOutputGIF::AVIOutputGIF()
-	: mpAsync(VDCreateFileAsync((IVDFileAsync::Mode)VDPreferencesGetFileAsyncDefaultMode()))
+	: mpAsync(VDCreateFileAsync())
 	, mLoopCount(0)
 {
 }

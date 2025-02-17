@@ -24,8 +24,6 @@
 
 #include "AVIOutputRawAudio.h"
 
-extern uint32 VDPreferencesGetFileAsyncDefaultMode();
-
 //////////////////////////////////////////////////////////////////////
 //
 // AVIAudioOutputStreamRaw
@@ -89,7 +87,7 @@ IVDMediaOutputStream *AVIOutputRawAudio::createAudioStream() {
 }
 
 bool AVIOutputRawAudio::init(const wchar_t *pwszFile) {
-	mpFileAsync = VDCreateFileAsync((IVDFileAsync::Mode)VDPreferencesGetFileAsyncDefaultMode());
+	mpFileAsync = VDCreateFileAsync();
 	mpFileAsync->Open(pwszFile, 2, mBufferSize >> 1);
 	mbPipeMode = false;
 
@@ -98,7 +96,7 @@ bool AVIOutputRawAudio::init(const wchar_t *pwszFile) {
 }
 
 bool AVIOutputRawAudio::init(VDFileHandle h, bool pipeMode) {
-	mpFileAsync = VDCreateFileAsync((IVDFileAsync::Mode)VDPreferencesGetFileAsyncDefaultMode());
+	mpFileAsync = VDCreateFileAsync();
 	mpFileAsync->OpenPipe(h, 2, mBufferSize >> 1);
 	mbPipeMode = pipeMode;
 
