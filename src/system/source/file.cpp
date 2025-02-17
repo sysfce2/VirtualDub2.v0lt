@@ -65,11 +65,10 @@ VDFile::VDFile(const wchar_t *pwszFileName, uint32 flags)
 VDFile::VDFile(HANDLE h)
 	: mhFile(h)
 {
-	LONG lo, hi = 0;
+	LARGE_INTEGER filepos = { 0, 0 };
+	BOOL result = SetFilePointerEx(h, filepos, &filepos, FILE_CURRENT);
 
-	lo = SetFilePointer(h, 0, &hi, FILE_CURRENT);
-
-	mFilePosition = (uint32)lo + ((uint64)(uint32)hi << 32);
+	mFilePosition = filepos.QuadPart;
 }
 
 VDFile::~VDFile()
@@ -325,18 +324,15 @@ bool VDFile::seekNT(sint64 newPos, eSeekMode mode)
 		return false;
 	}
 
-	union {
-		sint64 pos;
-		LONG l[2];
-	} u = { newPos };
+	LARGE_INTEGER filepos;
+	filepos.QuadPart = newPos;
+	BOOL result = SetFilePointerEx(mhFile, filepos, &filepos, dwMode);
 
-	u.l[0] = SetFilePointer(mhFile, u.l[0], &u.l[1], dwMode);
-
-	if (u.l[0] == -1 && GetLastError() != NO_ERROR) {
+	if (!result) {
 		return false;
 	}
 
-	mFilePosition = u.pos;
+	mFilePosition = filepos.QuadPart;
 	return true;
 }
 

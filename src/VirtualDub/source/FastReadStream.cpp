@@ -224,16 +224,21 @@ int FastReadStream::_Commit(int stream, __int64 i64BlockNo) {
 			pHeaders[iCacheBlock].lBytes = iActual;
 
 		} else {
-			LONG lLow = (LONG)i64BlockNo*lBlockSize;
-			LONG lHigh = (LONG)((i64BlockNo*lBlockSize) >> 32);
-			DWORD err, dwActual;
+			LARGE_INTEGER filepos;
+			filepos.QuadPart = i64BlockNo * lBlockSize;
+			BOOL result = SetFilePointerEx(hFile, filepos, &filepos, FILE_BEGIN);
 
-			if (0xFFFFFFFF == SetFilePointer(hFile, lLow, &lHigh, FILE_BEGIN))
-				if ((err = GetLastError()) != NO_ERROR)
-					throw MyWin32Error("FastRead seek error: %%s", GetLastError());
+			if (!result) {
+				DWORD err = GetLastError();
+				throw MyWin32Error("FastRead seek error: %%s", err);
+			}
 
-			if (!ReadFile(hFile, (char *)pBuffer + iCacheBlock * lBlockSize, lBlockSize, &dwActual, NULL))
-				throw MyWin32Error("FastRead read error: %%s", GetLastError());
+			DWORD dwActual = 0;
+			result = ReadFile(hFile, (char*)pBuffer + iCacheBlock * lBlockSize, lBlockSize, &dwActual, NULL);
+			if (!result) {
+				DWORD err = GetLastError();
+				throw MyWin32Error("FastRead read error: %%s", err);
+			}
 
 			pHeaders[iCacheBlock].lBytes = dwActual;
 		}

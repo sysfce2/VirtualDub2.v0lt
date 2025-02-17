@@ -260,16 +260,13 @@ EXECUTION_STATE VDSetThreadExecutionStateW32(EXECUTION_STATE esFlags) {
 	return es;
 }
 
-bool VDSetFilePointerW32(HANDLE h, sint64 pos, DWORD dwMoveMethod) {
-	LONG posHi = (LONG)(pos >> 32);
-	DWORD result = SetFilePointer(h, (LONG)pos, &posHi, dwMoveMethod);
+bool VDSetFilePointerW32(HANDLE h, sint64 pos, DWORD dwMoveMethod)
+{
+	LARGE_INTEGER filepos;
+	filepos.QuadPart = pos;
+	BOOL result = SetFilePointerEx(h, filepos, &filepos, dwMoveMethod);
 
-	if (result != INVALID_SET_FILE_POINTER)
-		return true;
-
-	DWORD dwError = GetLastError();
-
-	return (dwError == NO_ERROR);
+	return !!result;
 }
 
 bool VDGetFileSizeW32(HANDLE h, sint64& size)

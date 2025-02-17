@@ -350,21 +350,21 @@ void VDFileAsyncNT::Seek(sint64 pos) {
 		throw MyWin32Error("I/O error on file \"%s\": %%s", GetLastError(), mFilename.c_str());
 }
 
-bool VDFileAsyncNT::SeekNT(sint64 pos) {
-	if (mClientSlowPointer == pos)
+bool VDFileAsyncNT::SeekNT(sint64 pos)
+{
+	if (mClientSlowPointer == pos) {
 		return true;
-
-	LONG posHi = (LONG)(pos >> 32);
-	DWORD result = SetFilePointer(mhFileSlow, (LONG)pos, &posHi, FILE_BEGIN);
-
-	if (result == INVALID_SET_FILE_POINTER) {
-		DWORD dwError = GetLastError();
-
-		if (dwError != NO_ERROR)
-			return false;
 	}
 
-	mClientSlowPointer = pos;
+	LARGE_INTEGER filepos;
+	filepos.QuadPart = pos;
+	BOOL result = SetFilePointerEx(mhFileSlow, filepos, &filepos, FILE_BEGIN);
+
+	if (!result) {
+		return false;
+	}
+
+	mClientSlowPointer = filepos.QuadPart;
 	return true;
 }
 
