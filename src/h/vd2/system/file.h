@@ -42,7 +42,8 @@
 	#error No operating system target declared??
 #endif
 
-namespace nsVDFile {
+namespace nsVDFile
+{
 	enum eSeekMode {
 		kSeekStart=0, kSeekCur, kSeekEnd
 	};
@@ -145,7 +146,7 @@ public:
 	static void FreeUnbuffer(void *p);
 
 protected:
-	bool	open_internal(const char *pszFilename, const wchar_t *pwszFilename, uint32 flags, bool throwOnError);
+	bool	open_internal(const wchar_t *pwszFilename, uint32 flags, bool throwOnError);
 };
 
 ///////////////////////////////////////////////////////////////////////////

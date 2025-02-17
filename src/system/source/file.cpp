@@ -32,7 +32,8 @@
 #include <vd2/system/file.h>
 
 namespace {
-	bool IsHardDrivePath(const wchar_t *path) {
+	bool IsHardDrivePath(const wchar_t *path)
+	{
 		const VDStringW rootPath(VDFileGetRootPath(path));
 
 		UINT type = GetDriveTypeW(rootPath.c_str());
@@ -52,13 +53,13 @@ using namespace nsVDFile;
 VDFile::VDFile(const char *pszFileName, uint32 flags)
 	: mhFile(NULL)
 {
-	open_internal(pszFileName, NULL, flags, true);
+	open_internal(VDTextAToW(pszFileName).c_str(), flags, true);
 }
 
 VDFile::VDFile(const wchar_t *pwszFileName, uint32 flags)
 	: mhFile(NULL)
 {
-	open_internal(NULL, pwszFileName, flags, true);
+	open_internal(pwszFileName, flags, true);
 }
 
 VDFile::VDFile(HANDLE h)
@@ -71,29 +72,35 @@ VDFile::VDFile(HANDLE h)
 	mFilePosition = (uint32)lo + ((uint64)(uint32)hi << 32);
 }
 
-VDFile::~VDFile() {
+VDFile::~VDFile()
+{
 	closeNT();
 }
 
-void VDFile::open(const char *pszFilename, uint32 flags) {
-	open_internal(pszFilename, NULL, flags, true);
+void VDFile::open(const char *pszFileName, uint32 flags)
+{
+	open_internal(VDTextAToW(pszFileName).c_str(), flags, true);
 }
 
-void VDFile::open(const wchar_t *pwszFilename, uint32 flags) {
-	open_internal(NULL, pwszFilename, flags, true);
+void VDFile::open(const wchar_t *pwszFilename, uint32 flags)
+{
+	open_internal(pwszFilename, flags, true);
 }
 
-bool VDFile::openNT(const wchar_t *pwszFilename, uint32 flags) {
-	return open_internal(NULL, pwszFilename, flags, false);
+bool VDFile::openNT(const wchar_t *pwszFilename, uint32 flags)
+{
+	return open_internal(pwszFilename, flags, false);
 }
 
-bool VDFile::open_internal(const char *pszFilename, const wchar_t *pwszFilename, uint32 flags, bool throwOnError) {
+bool VDFile::open_internal(const wchar_t *pwszFilename, uint32 flags, bool throwOnError)
+{
 	close();
 
-	mpFilename = _wcsdup(VDFileSplitPath(pszFilename ? VDTextAToW(pszFilename).c_str() : pwszFilename));
+	mpFilename = _wcsdup(VDFileSplitPath(pwszFilename));
 	if (!mpFilename) {
-		if (!throwOnError)
+		if (!throwOnError) {
 			return false;
+		}
 		throw MyMemoryError();
 	}
 
@@ -108,8 +115,12 @@ bool VDFile::open_internal(const char *pszFilename, const wchar_t *pwszFilename,
 	// Win32 docs are screwed here -- FILE_SHARE_xxx is the inverse of a deny flag.
 
 	DWORD dwShareMode = FILE_SHARE_READ | FILE_SHARE_WRITE;
-	if (flags & kDenyRead)	dwShareMode = FILE_SHARE_WRITE;
-	if (flags & kDenyWrite) dwShareMode &= ~FILE_SHARE_WRITE;
+	if (flags & kDenyRead) {
+		dwShareMode = FILE_SHARE_WRITE;
+	}
+	if (flags & kDenyWrite) {
+		dwShareMode &= ~FILE_SHARE_WRITE;
+	}
 
 	// One of the creation flags must be set.
 	VDASSERT(flags & kCreationMask);
@@ -119,11 +130,11 @@ bool VDFile::open_internal(const char *pszFilename, const wchar_t *pwszFilename,
 	uint32 creationType = flags & kCreationMask;
 
 	switch(creationType) {
-	case kOpenExisting:		dwCreationDisposition = OPEN_EXISTING; break;
-	case kOpenAlways:		dwCreationDisposition = OPEN_ALWAYS; break;
-	case kCreateAlways:		dwCreationDisposition = CREATE_ALWAYS; break;
-	case kCreateNew:		dwCreationDisposition = CREATE_NEW; break;
-	case kTruncateExisting:	dwCreationDisposition = TRUNCATE_EXISTING; break;
+	case kOpenExisting:     dwCreationDisposition = OPEN_EXISTING;     break;
+	case kOpenAlways:       dwCreationDisposition = OPEN_ALWAYS;       break;
+	case kCreateAlways:     dwCreationDisposition = CREATE_ALWAYS;     break;
+	case kCreateNew:        dwCreationDisposition = CREATE_NEW;        break;
+	case kTruncateExisting: dwCreationDisposition = TRUNCATE_EXISTING; break;
 	default:
 		VDNEVERHERE;
 		return false;
@@ -133,31 +144,16 @@ bool VDFile::open_internal(const char *pszFilename, const wchar_t *pwszFilename,
 
 	DWORD dwAttributes = FILE_ATTRIBUTE_NORMAL;
 
-	if (flags & kSequential)	dwAttributes |= FILE_FLAG_SEQUENTIAL_SCAN;
-	if (flags & kRandomAccess)	dwAttributes |= FILE_FLAG_RANDOM_ACCESS;
-	if (flags & kWriteThrough)	dwAttributes |= FILE_FLAG_WRITE_THROUGH;
-	if (flags & kUnbuffered)	dwAttributes |= FILE_FLAG_NO_BUFFERING;
+	if (flags & kSequential)    dwAttributes |= FILE_FLAG_SEQUENTIAL_SCAN;
+	if (flags & kRandomAccess)  dwAttributes |= FILE_FLAG_RANDOM_ACCESS;
+	if (flags & kWriteThrough)  dwAttributes |= FILE_FLAG_WRITE_THROUGH;
+	if (flags & kUnbuffered)    dwAttributes |= FILE_FLAG_NO_BUFFERING;
 
-	VDStringA tempFilenameA;
-	VDStringW tempFilenameW;
-
-	{
-		if (pszFilename) {
-			tempFilenameW = VDTextAToW(pszFilename);
-			pwszFilename = tempFilenameW.c_str();
-			pszFilename = NULL;
-		}
+	if (!IsHardDrivePath(pwszFilename)) {
+		flags &= ~FILE_FLAG_NO_BUFFERING;
 	}
 
-	if (pszFilename)
-		mhFile = CreateFileA(pszFilename, dwDesiredAccess, dwShareMode, NULL, dwCreationDisposition, dwAttributes, NULL);
-	else {
-		if (!IsHardDrivePath(pwszFilename))
-			flags &= ~FILE_FLAG_NO_BUFFERING;
-
-		mhFile = CreateFileW(pwszFilename, dwDesiredAccess, dwShareMode, NULL, dwCreationDisposition, dwAttributes, NULL);
-	}
-
+	mhFile = CreateFileW(pwszFilename, dwDesiredAccess, dwShareMode, NULL, dwCreationDisposition, dwAttributes, NULL);
 	DWORD err = GetLastError();
 
 	// If we failed and FILE_FLAG_NO_BUFFERING was set, strip it and try again.
@@ -167,11 +163,7 @@ bool VDFile::open_internal(const char *pszFilename, const wchar_t *pwszFilename,
 			dwAttributes &= ~FILE_FLAG_NO_BUFFERING;
 			dwAttributes |= FILE_FLAG_WRITE_THROUGH;
 
-			if (pszFilename)
-				mhFile = CreateFileA(pszFilename, dwDesiredAccess, dwShareMode, NULL, dwCreationDisposition, dwAttributes, NULL);
-			else
-				mhFile = CreateFileW(pwszFilename, dwDesiredAccess, dwShareMode, NULL, dwCreationDisposition, dwAttributes, NULL);
-
+			mhFile = CreateFileW(pwszFilename, dwDesiredAccess, dwShareMode, NULL, dwCreationDisposition, dwAttributes, NULL);
 			err = GetLastError();
 		}
 	}
@@ -181,8 +173,9 @@ bool VDFile::open_internal(const char *pszFilename, const wchar_t *pwszFilename,
 	if (mhFile == INVALID_HANDLE_VALUE) {
 		mhFile = NULL;
 
-		if (!throwOnError)
+		if (!throwOnError) {
 			return false;
+		}
 
 		throw MyWin32Error("Cannot open file \"%ls\":\n%%s", err, mpFilename.get());
 	}
@@ -191,43 +184,52 @@ bool VDFile::open_internal(const char *pszFilename, const wchar_t *pwszFilename,
 	return true;
 }
 
-bool VDFile::closeNT() {
+bool VDFile::closeNT()
+{
 	if (mhFile) {
 		HANDLE h = mhFile;
 		mhFile = NULL;
-		if (!CloseHandle(h))
+		if (!CloseHandle(h)) {
 			return false;
+		}
 	}
 
 	return true;
 }
 
-void VDFile::close() {
-	if (!closeNT())
+void VDFile::close()
+{
+	if (!closeNT()) {
 		throw MyWin32Error("Cannot complete file \"%ls\": %%s", GetLastError(), mpFilename.get());
+	}
 }
 
-bool VDFile::truncateNT() {
+bool VDFile::truncateNT()
+{
 	return 0 != SetEndOfFile(mhFile);
 }
 
-void VDFile::truncate() {
-	if (!truncateNT())
+void VDFile::truncate()
+{
+	if (!truncateNT()) {
 		throw MyWin32Error("Cannot truncate file \"%ls\": %%s", GetLastError(), mpFilename.get());
+	}
 }
 
-bool VDFile::extendValidNT(sint64 pos) {
-	// The SetFileValidData() API is only available on XP and Server 2003.
-
+bool VDFile::extendValidNT(sint64 pos)
+{
 	return 0 != SetFileValidData(mhFile, pos);
 }
 
-void VDFile::extendValid(sint64 pos) {
-	if (!extendValidNT(pos))
+void VDFile::extendValid(sint64 pos)
+{
+	if (!extendValidNT(pos)) {
 		throw MyWin32Error("Cannot extend file \"%ls\": %%s", GetLastError(), mpFilename.get());
+	}
 }
 
-bool VDFile::enableExtendValid() {
+bool VDFile::enableExtendValid()
+{
 	// SetFileValidData() requires the SE_MANAGE_VOLUME_NAME privilege, so we must enable it
 	// on the process token. We don't attempt to strip the privilege afterward as that would
 	// introduce race conditions.
@@ -246,58 +248,66 @@ bool VDFile::enableExtendValid() {
 			tp.Privileges[0].Luid = luid;
 			tp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
 
-			if (AdjustTokenPrivileges(h, FALSE, &tp, 0, NULL, NULL))
+			if (AdjustTokenPrivileges(h, FALSE, &tp, 0, NULL, NULL)) {
 				bSuccessful = true;
-			else
+			} else {
 				err = GetLastError();
+			}
 		}
 
 		CloseHandle(h);
 	}
 
-	if (!bSuccessful && err)
+	if (!bSuccessful && err) {
 		SetLastError(err);
+	}
 
 	return bSuccessful;
 }
 
-long VDFile::readData(void *buffer, long length) {
+long VDFile::readData(void *buffer, long length)
+{
 	DWORD dwActual;
 
-	if (!ReadFile(mhFile, buffer, (DWORD)length, &dwActual, NULL))
+	if (!ReadFile(mhFile, buffer, (DWORD)length, &dwActual, NULL)) {
 		throw MyWin32Error("Cannot read from file \"%ls\": %%s", GetLastError(), mpFilename.get());
+	}
 
 	mFilePosition += dwActual;
 
 	return dwActual;
 }
 
-void VDFile::read(void *buffer, long length) {
-	if (length != readData(buffer, length))
+void VDFile::read(void *buffer, long length)
+{
+	if (length != readData(buffer, length)) {
 		throw MyWin32Error("Cannot read from file \"%ls\": Premature end of file.", GetLastError(), mpFilename.get());
+	}
 }
 
-long VDFile::writeData(const void *buffer, long length) {
+long VDFile::writeData(const void *buffer, long length)
+{
 	DWORD dwActual;
 	bool success = false;
 
-	if (!WriteFile(mhFile, buffer, (DWORD)length, &dwActual, NULL) || dwActual != (DWORD)length)
-		goto found_error;
+	if (!WriteFile(mhFile, buffer, (DWORD)length, &dwActual, NULL) || dwActual != (DWORD)length) {
+		throw MyWin32Error("Cannot write to file \"%ls\": %%s", GetLastError(), mpFilename.get());
+	}
 
 	mFilePosition += dwActual;
 
 	return dwActual;
-
-found_error:
-	throw MyWin32Error("Cannot write to file \"%ls\": %%s", GetLastError(), mpFilename.get());
 }
 
-void VDFile::write(const void *buffer, long length) {
-	if (length != writeData(buffer, length))
+void VDFile::write(const void *buffer, long length)
+{
+	if (length != writeData(buffer, length)) {
 		throw MyWin32Error("Cannot write to file \"%ls\": Unable to write all data.", GetLastError(), mpFilename.get());
+	}
 }
 
-bool VDFile::seekNT(sint64 newPos, eSeekMode mode) {
+bool VDFile::seekNT(sint64 newPos, eSeekMode mode)
+{
 	DWORD dwMode;
 
 	switch(mode) {
@@ -322,44 +332,55 @@ bool VDFile::seekNT(sint64 newPos, eSeekMode mode) {
 
 	u.l[0] = SetFilePointer(mhFile, u.l[0], &u.l[1], dwMode);
 
-	if (u.l[0] == -1 && GetLastError() != NO_ERROR)
+	if (u.l[0] == -1 && GetLastError() != NO_ERROR) {
 		return false;
+	}
 
 	mFilePosition = u.pos;
 	return true;
 }
 
-void VDFile::seek(sint64 newPos, eSeekMode mode) {
-	if (!seekNT(newPos, mode))
+void VDFile::seek(sint64 newPos, eSeekMode mode)
+{
+	if (!seekNT(newPos, mode)) {
 		throw MyWin32Error("Cannot seek within file \"%ls\": %%s", GetLastError(), mpFilename.get());
+	}
 }
 
-bool VDFile::skipNT(sint64 delta) {
-	if (!delta)
+bool VDFile::skipNT(sint64 delta)
+{
+	if (!delta) {
 		return true;
+	}
 
 	char buf[1024];
 
 	if (delta <= sizeof buf) {
 		return (long)delta == readData(buf, (long)delta);
-	} else
+	} else {
 		return seekNT(delta, kSeekCur);
+	}
 }
 
-void VDFile::skip(sint64 delta) {
-	if (!delta)
+void VDFile::skip(sint64 delta)
+{
+	if (!delta) {
 		return;
+	}
 
 	char buf[1024];
 
 	if (delta > 0 && delta <= sizeof buf) {
-		if ((long)delta != readData(buf, (long)delta))
+		if ((long)delta != readData(buf, (long)delta)) {
 			throw MyWin32Error("Cannot seek within file \"%ls\": %%s", GetLastError(), mpFilename.get());
-	} else
+		}
+	} else {
 		seek(delta, kSeekCur);
+	}
 }
 
-sint64 VDFile::size() {
+sint64 VDFile::size()
+{
 	union {
 		uint64 siz;
 		DWORD l[2];
@@ -369,37 +390,46 @@ sint64 VDFile::size() {
 
 	DWORD err;
 
-	if (u.l[0] == (DWORD)-1L && (err = GetLastError()) != NO_ERROR)
+	if (u.l[0] == (DWORD)-1L && (err = GetLastError()) != NO_ERROR) {
 		throw MyWin32Error("Cannot retrieve size of file \"%ls\": %%s", GetLastError(), mpFilename.get());
+	}
 
 	return (sint64)u.siz;
 }
 
-sint64 VDFile::tell() {
+sint64 VDFile::tell()
+{
 	return mFilePosition;
 }
 
-bool VDFile::flushNT() {
+bool VDFile::flushNT()
+{
 	return 0 != FlushFileBuffers(mhFile);
 }
 
-void VDFile::flush() {
-	if (!flushNT())
+void VDFile::flush()
+{
+	if (!flushNT()) {
 		throw MyWin32Error("Cannot flush file \"%ls\": %%s", GetLastError(), mpFilename.get());
+	}
 }
 
-bool VDFile::isOpen() {
+bool VDFile::isOpen()
+{
 	return mhFile != 0;
 }
 
-VDFileHandle VDFile::getRawHandle() {
+VDFileHandle VDFile::getRawHandle()
+{
 	return mhFile;
 }
 
-void *VDFile::AllocUnbuffer(size_t nBytes) {
+void *VDFile::AllocUnbuffer(size_t nBytes)
+{
 	return VirtualAlloc(NULL, nBytes, MEM_COMMIT, PAGE_READWRITE);
 }
 
-void VDFile::FreeUnbuffer(void *p) {
+void VDFile::FreeUnbuffer(void *p)
+{
 	VirtualFree(p, 0, MEM_RELEASE);
 }
