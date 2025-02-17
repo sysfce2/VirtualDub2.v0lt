@@ -508,26 +508,6 @@ public:
 	}
 };
 
-class VDDialogPreferencesDiskIO : public VDDialogBase {
-public:
-	VDPreferences2& mPrefs;
-	VDDialogPreferencesDiskIO(VDPreferences2& p) : mPrefs(p) {}
-
-	bool HandleUIEvent(IVDUIBase *pBase, IVDUIWindow *pWin, uint32 id, eEventType type, int item) {
-		switch(type) {
-		case kEventAttach:
-			mpBase = pBase;
-			pBase->ExecuteAllLinks();
-			SetValue(100, 3);
-			return true;
-		case kEventDetach:
-		case kEventSync:
-			return true;
-		}
-		return false;
-	}
-};
-
 class VDDialogPreferencesImages : public VDDialogBase {
 public:
 	VDPreferences2& mPrefs;
@@ -851,22 +831,21 @@ public:
 			if (pSubDialog) {
 				g_prefsPage = item;
 				switch(item) {
-				case 0:	pSubDialog->SetCallback(new VDDialogPreferencesGeneral(mPrefs), true); break;
-				case 1:	pSubDialog->SetCallback(new VDDialogPreferencesDisplay(mPrefs), true); break;
-				case 2:	pSubDialog->SetCallback(new VDDialogPreferencesScene(mPrefs), true); break;
-				case 3:	pSubDialog->SetCallback(new VDDialogPreferencesCPU(mPrefs), true); break;
-				case 4:	pSubDialog->SetCallback(new VDDialogPreferencesAVI(mPrefs), true); break;
-				case 5:	pSubDialog->SetCallback(new VDDialogPreferencesTimeline(mPrefs), true); break;
-				case 6:	pSubDialog->SetCallback(new VDDialogPreferencesDub(mPrefs), true); break;
-				case 7:	pSubDialog->SetCallback(new VDDialogPreferencesDiskIO(mPrefs), true); break;
-				case 8:	pSubDialog->SetCallback(new VDDialogPreferencesImages(mPrefs), true); break;
-				case 9:	pSubDialog->SetCallback(new VDDialogPreferencesThreading(mPrefs), true); break;
-				case 10:	pSubDialog->SetCallback(new VDDialogPreferencesPlayback(mPrefs), true); break;
-				//deprecated:	pSubDialog->SetCallback(new VDDialogPreferencesAccel(mPrefs), true); break;
-				case 11:	pSubDialog->SetCallback(new VDDialogPreferencesBatch(mPrefs), true); break;
-				case 12:	pSubDialog->SetCallback(new VDDialogPreferencesAutoRecover(mPrefs), true); break;
-				case 13:	pSubDialog->SetCallback(new VDDialogPreferencesStartup(mPrefs), true); break;
-				case 14:	pSubDialog->SetCallback(new VDDialogPreferencesHistory(mPrefs), true); break;
+				case 0:  pSubDialog->SetCallback(new VDDialogPreferencesGeneral(mPrefs), true); break;
+				case 1:  pSubDialog->SetCallback(new VDDialogPreferencesDisplay(mPrefs), true); break;
+				case 2:  pSubDialog->SetCallback(new VDDialogPreferencesScene(mPrefs), true); break;
+				case 3:  pSubDialog->SetCallback(new VDDialogPreferencesCPU(mPrefs), true); break;
+				case 4:  pSubDialog->SetCallback(new VDDialogPreferencesAVI(mPrefs), true); break;
+				case 5:  pSubDialog->SetCallback(new VDDialogPreferencesTimeline(mPrefs), true); break;
+				case 6:  pSubDialog->SetCallback(new VDDialogPreferencesDub(mPrefs), true); break;
+				case 7:  pSubDialog->SetCallback(new VDDialogPreferencesImages(mPrefs), true); break;
+				case 8:  pSubDialog->SetCallback(new VDDialogPreferencesThreading(mPrefs), true); break;
+				case 9:  pSubDialog->SetCallback(new VDDialogPreferencesPlayback(mPrefs), true); break;
+				//deprecated: pSubDialog->SetCallback(new VDDialogPreferencesAccel(mPrefs), true); break;
+				case 10: pSubDialog->SetCallback(new VDDialogPreferencesBatch(mPrefs), true); break;
+				case 11: pSubDialog->SetCallback(new VDDialogPreferencesAutoRecover(mPrefs), true); break;
+				case 12: pSubDialog->SetCallback(new VDDialogPreferencesStartup(mPrefs), true); break;
+				case 13: pSubDialog->SetCallback(new VDDialogPreferencesHistory(mPrefs), true); break;
 				}
 			}
 		} else if (type == kEventSelect) {

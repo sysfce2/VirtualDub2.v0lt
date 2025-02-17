@@ -252,7 +252,6 @@ dialog 1000, "Preferences" : minw=350, maxw=350, aspect=140, valign=top+expand {
 				listitem "AVI";
 				listitem "Timeline";
 				listitem "Render";
-				listitem "Disk I/O";
 				listitem "Images";
 				listitem "Threading";
 				listitem "Playback";
@@ -532,23 +531,6 @@ dialog 1016, "" : fill, child {
 dialog 1017, "" : fill, child {
 	now align=fill;
 	set 0: vertical {
-		group 0, "Turbo I/O" {
-			set 0: vertical {
-				label 0, "Disk I/O write mode:" : marginb=5;
-				set 0: marginl=10, vertical {
-					option 100, "Buffered - slowest";
-					option 101, "Write through - slower";
-					option 102, "Unbuffered - faster";
-					option 103, "Asynchronous unbuffered - fastest";
-				}
-			}
-		}
-	}
-}
-
-dialog 1018, "" : fill, child {
-	now align=fill;
-	set 0: vertical {
 		group 0, "Image sequence defaults" {
 			grid 0 : spacing=2, fill {
 				now valign = center;
@@ -559,7 +541,7 @@ dialog 1018, "" : fill, child {
 	}
 }
 
-dialog 1019, "" : fill, child {
+dialog 1018, "" : fill, child {
 	now align=fill;
 	set 0: vertical {
 		grid 0 : spacing=2, align=fill, valign=top {
@@ -652,7 +634,7 @@ dialog 1019, "" : fill, child {
 	}
 }
 
-dialog 1020, "" : fill, child {
+dialog 1019, "" : fill, child {
 	now align=fill;
 	set 0: vertical {
 		label 0, "&Preferred audio playback device";
@@ -660,7 +642,7 @@ dialog 1020, "" : fill, child {
 	}
 }
 
-dialog 1021, "" : fill, child {
+dialog 1020, "" : fill, child {
 	now align=fill;
 	set 0: vertical {
 		group 0, "3D hardware acceleration options" {
@@ -669,7 +651,7 @@ dialog 1021, "" : fill, child {
 	}
 }
 
-dialog 1022, "" : fill, child {
+dialog 1021, "" : fill, child {
 	now align=fill;
 	set 0: vertical {
 		group 0, "Batch mode options" {
@@ -678,7 +660,7 @@ dialog 1022, "" : fill, child {
 	}
 }
 
-dialog 1023, "" : fill, child {
+dialog 1022, "" : fill, child {
 	now align=fill;
 	set 0: vertical {
 		group 0, "Auto-recover options" {
@@ -690,7 +672,7 @@ dialog 1023, "" : fill, child {
 	}
 }
 
-dialog 1024, "" : fill, child {
+dialog 1023, "" : fill, child {
 	now align=fill;
 	set 0: vertical {
 		group 0, "Startup options" {
@@ -705,7 +687,7 @@ dialog 1024, "" : fill, child {
 	}
 }
 
-dialog 1025, "" : fill, child {
+dialog 1024, "" : fill, child {
 	now align=fill;
 	set 0: vertical {
 		group 0, "History options" {
