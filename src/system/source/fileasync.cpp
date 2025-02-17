@@ -332,14 +332,17 @@ void VDFileAsyncNT::SafeTruncateAndClose(sint64 pos) {
 	}
 }
 
-sint64 VDFileAsyncNT::GetSize() {
-	DWORD dwSizeHigh;
-	DWORD dwSizeLow = GetFileSize(mhFileSlow, &dwSizeHigh);
+sint64 VDFileAsyncNT::GetSize()
+{
+	LARGE_INTEGER filesize;
+	BOOL result = GetFileSizeEx(mhFileSlow, &filesize);
 
-	if (dwSizeLow == (DWORD)-1 && GetLastError() != NO_ERROR)
-		throw MyWin32Error("I/O error on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+	if (!result) {
+		DWORD err = GetLastError();
+		throw MyWin32Error("I/O error on file \"%s\": %%s", err, mFilename.c_str());
+	}
 
-	return dwSizeLow + ((sint64)dwSizeHigh << 32);
+	return filesize.QuadPart;
 }
 
 void VDFileAsyncNT::Seek(sint64 pos) {

@@ -381,20 +381,15 @@ void VDFile::skip(sint64 delta)
 
 sint64 VDFile::size()
 {
-	union {
-		uint64 siz;
-		DWORD l[2];
-	} u;
+	LARGE_INTEGER filesize;
+	BOOL result = GetFileSizeEx(mhFile, &filesize);
 
-	u.l[0] = GetFileSize(mhFile, &u.l[1]);
-
-	DWORD err;
-
-	if (u.l[0] == (DWORD)-1L && (err = GetLastError()) != NO_ERROR) {
-		throw MyWin32Error("Cannot retrieve size of file \"%ls\": %%s", GetLastError(), mpFilename.get());
+	if (!result) {
+		DWORD err = GetLastError();
+		throw MyWin32Error("Cannot retrieve size of file \"%ls\": %%s", err, mpFilename.get());
 	}
 
-	return (sint64)u.siz;
+	return filesize.QuadPart;
 }
 
 sint64 VDFile::tell()

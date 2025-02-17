@@ -272,14 +272,16 @@ bool VDSetFilePointerW32(HANDLE h, sint64 pos, DWORD dwMoveMethod) {
 	return (dwError == NO_ERROR);
 }
 
-bool VDGetFileSizeW32(HANDLE h, sint64& size) {
-	DWORD dwSizeHigh;
-	DWORD dwSizeLow = GetFileSize(h, &dwSizeHigh);
+bool VDGetFileSizeW32(HANDLE h, sint64& size)
+{
+	LARGE_INTEGER filesize;
+	BOOL result = GetFileSizeEx(h, &filesize);
 
-	if (dwSizeLow == (DWORD)-1 && GetLastError() != NO_ERROR)
+	if (!result) {
 		return false;
+	}
 
-	size = dwSizeLow + ((sint64)dwSizeHigh << 32);
+	size = filesize.QuadPart;
 	return true;
 }
 
