@@ -9,7 +9,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-std::string ANSIify(const std::wstring& unicode) {
+std::string ANSIify(const std::wstring& unicode)
+{
 	std::string ansi;
 
 	// ugh
@@ -36,33 +37,62 @@ std::string ANSIify(const std::wstring& unicode) {
 //
 ///////////////////////////////////////////////////////////////////////////
 
-void warning(const char *format, ...) {
+void warning(const char *format, ...)
+{
 	va_list val;
 
-	printf("%s(%d) : warning: ", lexfilename(), lexlineno());
+	wprintf(L"%s(%d) : warning: ", lexfilename(), lexlineno());
 	va_start(val, format);
 	vprintf(format, val);
 	va_end(val);
-	putchar('\n');
+	putwchar('\n');
 }
 
-void fatal(const char *format, ...) {
+void warning(const wchar_t* format, ...)
+{
 	va_list val;
 
-	printf("%s(%d): error: ", lexfilename(), lexlineno());
+	wprintf(L"%s(%d) : warning: ", lexfilename(), lexlineno());
+	va_start(val, format);
+	vwprintf(format, val);
+	va_end(val);
+	putwchar('\n');
+}
+
+void fatal(const char *format, ...)
+{
+	va_list val;
+
+	wprintf(L"%s(%d): error: ", lexfilename(), lexlineno());
 	va_start(val, format);
 	vprintf(format, val);
 	va_end(val);
-	putchar('\n');
+	putwchar('\n');
+
+	exit(10);
+}
+
+void fatal(const wchar_t* format, ...)
+{
+	va_list val;
+
+	wprintf(L"%s(%d): error: ", lexfilename(), lexlineno());
+	va_start(val, format);
+	vwprintf(format, val);
+	va_end(val);
+	putwchar('\n');
 
 	exit(10);
 }
 
 // :)
 
-void fatal_internal(const char *fname, const int line) {
-	fatal("INTERNAL COMPILER ERROR\n"
-		"        (compiler file '%s', line %d)\n", fname, line);
+void fatal_internal(const char *fname, const int line)
+{
+	fatal(
+		"INTERNAL COMPILER ERROR\n"
+		"        (compiler file '%s', line %d)\n",
+		fname, line);
 }
 
 
@@ -90,7 +120,8 @@ namespace nsSCSU {
 // instead of wchar_t to head off possible wraparound issues when choosing
 // a window.
 
-std::basic_string<unsigned char> ConvertToSCSU(const std::wstring& s) {
+std::basic_string<unsigned char> ConvertToSCSU(const std::wstring& s)
+{
 	using namespace nsSCSU;
 
 	std::wstring::const_iterator it = s.begin(), itEnd = s.end();

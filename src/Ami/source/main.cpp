@@ -1,6 +1,8 @@
 #pragma warning(disable: 4786)		// shut up
 
 #include <stdio.h>
+#include <io.h>
+#include <fcntl.h>
 #include <stdarg.h>
 #include <ctype.h>
 #include <string>
@@ -81,7 +83,8 @@ void parse_pop_scope() {
 
 int parse_expression();
 
-int *parse_lvalue_expression() {
+int *parse_lvalue_expression()
+{
 	int t = lex();
 
 	if (t != kTokenIdentifier) {
@@ -100,7 +103,7 @@ int *parse_lvalue_expression() {
 		}
 	}
 
-	fatal("Undeclared identifier '%s'", ANSIify(ident).c_str());
+	fatal(L"Undeclared identifier '%s'", ident.c_str());
 }
 
 int parse_prefix_expression() {
@@ -263,7 +266,8 @@ void parse_let() {
 	varlist[name] = v;
 }
 
-void parse_declare() {
+void parse_declare()
+{
 	std::wstring name;
 
 	expect(kTokenIdentifier);
@@ -278,8 +282,9 @@ void parse_declare() {
 	// only err if the second declaration is different
 
 	if (it != varlist.end()) {
-		if ((*it).second != v)
-			fatal("Variable %s already declared with value %d", ANSIify(name).c_str(), (*it).second);
+		if ((*it).second != v) {
+			fatal(L"Variable %s already declared with value %d", name.c_str(), (*it).second);
+		}
 
 		return;
 	}
@@ -287,7 +292,8 @@ void parse_declare() {
 	varlist[name] = v;
 }
 
-void parse_enum() {
+void parse_enum()
+{
 	int eval = 0;
 	int t = lex();
 
@@ -315,8 +321,9 @@ void parse_enum() {
 		tVarList::iterator it = varlist.find(name);
 
 		if (it != varlist.end()) {
-			if ((*it).second != v)
-				fatal("Variable %s already declared with value %d", ANSIify(name).c_str(), (*it).second);
+			if ((*it).second != v) {
+				fatal(L"Variable %s already declared with value %d", name.c_str(), (*it).second);
+			}
 		}
 		
 		varlist[name] = v;
@@ -1141,7 +1148,7 @@ void parse() {
 		case kTokenInclude:
 			{
 				expect(kTokenString);
-				std::string filename(ANSIify(lexident()));
+				std::wstring filename(lexident());
 				expect(';');
 
 				lexinclude(filename);
@@ -1310,12 +1317,15 @@ int writeout(FILE *f) {
 //
 ///////////////////////////////////////////////////////////////////////////
 
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t* argv[])
+{
+	_setmode(_fileno(stdout), _O_U16TEXT);
+
 	if (argc < 3) {
-		printf(
-			"Ami - Language resource compiler for VirtualDub, version 1.0\n"
-			"\n"
-			"Usage: ami <input-file.ami> <output-file.vlr>\n"
+		wprintf(
+			L"Ami - Language resource compiler for VirtualDub, version 1.1\n"
+			L"\n"
+			L"Usage: ami <input-file.ami> <output-file.vlr>\n"
 			);
 		return 5;
 	}
@@ -1323,24 +1333,25 @@ int main(int argc, char **argv) {
 	// open input file
 
 	lexopen(argv[1]);
-	printf("Ami: Compiling %s (%s) -> %s\n", argv[1], lexisunicode() ? "Unicode" : "ANSI", argv[2]);
+	wprintf(L"Ami: Compiling %s (%s) -> %s\n", argv[1], lexisunicode() ? L"Unicode" : L"ANSI", argv[2]);
 
 	// process
 
 	parse();
 
 	FILE *f = nullptr;
-	errno_t err = fopen_s(&f, argv[2], "wb");
+	errno_t err = _wfopen_s(&f, argv[2], L"wb");
 	if (err) {
 		fatal("Cannot open output file");
 	}
 
 	int bytes = writeout(f);
 
-	if (ferror(f) || fclose(f))
+	if (ferror(f) || fclose(f)) {
 		fatal("Write error creating output file");
+	}
 
-	printf("Ami: Compile successful -- %zu string tables, %d bytes\n", g_stringResource.size(), bytes);
+	wprintf(L"Ami: Compile successful -- %zu string tables, %d bytes\n", g_stringResource.size(), bytes);
 
 	return 0;
 }

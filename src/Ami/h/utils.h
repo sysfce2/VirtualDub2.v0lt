@@ -4,9 +4,11 @@
 #include <string>
 
 std::string ANSIify(const std::wstring& unicode);
-void warning(const char *format, ...);
-void __declspec(noreturn) fatal(const char *format, ...);
-void __declspec(noreturn) fatal_internal(const char *fname, const int line);
+void warning(const char* format, ...);
+void warning(const wchar_t* format, ...);
+void __declspec(noreturn) fatal(const char* format, ...);
+void __declspec(noreturn) fatal(const wchar_t* format, ...);
+void __declspec(noreturn) fatal_internal(const char* fname, const int line);
 
 std::basic_string<unsigned char> ConvertToSCSU(const std::wstring& s);
 

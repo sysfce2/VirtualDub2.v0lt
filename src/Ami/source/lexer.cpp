@@ -7,7 +7,7 @@
 
 FILE *g_file;
 bool g_bUnicode;
-std::string g_filename;
+std::wstring g_filename;
 int g_lineno;
 int g_commentlineno;
 bool g_bInComment;
@@ -18,7 +18,7 @@ std::wstring g_identifier;
 
 struct IncludeEntry {
 	FILE *f;
-	std::string filename;
+	std::wstring filename;
 	int lineno;
 	bool bUnicode;
 };
@@ -129,7 +129,8 @@ int lexint() {
 	return g_intVal;
 }
 
-const char *lexfilename() {
+const wchar_t* lexfilename()
+{
 	return g_filename.c_str();
 }
 
@@ -159,21 +160,23 @@ void lextestunicode() {
 		lexungetc(c);
 }
 
-void lexopen(const char *fn) {
+void lexopen(const wchar_t*fn)
+{
 	g_filename = fn;
-	errno_t err = fopen_s(&g_file, fn, "rb");
+	errno_t err = _wfopen_s(&g_file, fn, L"rb");
 	if (err) {
-		fatal("cannot open input file %s", g_filename.c_str());
+		fatal(L"Cannot open input file %s", g_filename.c_str());
 	}
 	g_lineno = 1;
 	lextestunicode();
 }
 
-void lexinclude(const std::string& filename) {
+void lexinclude(const std::wstring& filename)
+{
 	FILE* f = nullptr;
-	errno_t err = fopen_s(&f, filename.c_str(), "rb");
+	errno_t err = _wfopen_s(&f, filename.c_str(), L"rb");
 	if (err) {
-		fatal("Cannot open include file \"%s\"", filename.c_str());
+		fatal(L"Cannot open include file \"%s\"", filename.c_str());
 	}
 
 	g_includeStack.push_front(IncludeEntry());
@@ -188,7 +191,7 @@ void lexinclude(const std::string& filename) {
 
 	lextestunicode();
 
-	printf("Ami: Including file \"%s\" (%s)\n", g_filename.c_str(), g_bUnicode ? "Unicode" : "ANSI");
+	wprintf(L"Ami: Including file \"%s\" (%s)\n", g_filename.c_str(), g_bUnicode ? L"Unicode" : L"ANSI");
 }
 
 wint_t lexrawgetc() {
@@ -667,4 +670,3 @@ std::string lextokenname(int token, bool expand) {
 		return std::string("'") + (char)token + '\'';
 	}
 }
-

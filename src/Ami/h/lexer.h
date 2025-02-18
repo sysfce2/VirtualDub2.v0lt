@@ -109,12 +109,12 @@ enum {
 
 const std::wstring& lexident();
 int lexint();
-const char *lexfilename();
+const wchar_t* lexfilename();
 int lexlineno();
-void lexopen(const char *fn);
+void lexopen(const wchar_t* fn);
 bool lexisunicode();
 void lextestunicode();
-void lexinclude(const std::string& filename);
+void lexinclude(const std::wstring& filename);
 wint_t lexrawgetc();
 void lexungetc(wint_t c);
 wint_t lexgetc();
