@@ -730,13 +730,13 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 
 	static struct DubStatusTabs {
 		LPTSTR rsrc;
-		const char *name;
+		const wchar_t *name;
 		DLGPROC dProc;
 	} tabs[]={
-		{	MAKEINTRESOURCE(IDD_DUBBING_MAIN),	"Main",		StatusMainDlgProc	},
-		{	MAKEINTRESOURCE(IDD_DUBBING_VIDEO),	"Video",	StatusVideoDlgProc	},
-		{	MAKEINTRESOURCE(IDD_DUBBING_PERF),	"Perf",		StatusPerfDlgProc	},
-		{	MAKEINTRESOURCE(IDD_DUBBING_LOG),	"Log",		StatusLogDlgProc	},
+		{	MAKEINTRESOURCE(IDD_DUBBING_MAIN),	L"Main",		StatusMainDlgProc	},
+		{	MAKEINTRESOURCE(IDD_DUBBING_VIDEO),	L"Video",	StatusVideoDlgProc	},
+		{	MAKEINTRESOURCE(IDD_DUBBING_PERF),	L"Perf",		StatusPerfDlgProc	},
+		{	MAKEINTRESOURCE(IDD_DUBBING_LOG),	L"Log",		StatusLogDlgProc	},
 	};
 
 	DubStatus *thisPtr = (DubStatus *)GetWindowLongPtr(hdlg, DWLP_USER);
@@ -766,10 +766,10 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				hwndItem = GetDlgItem(hdlg, IDC_TABS);
 
 				for (unsigned i = 0; i < std::size(tabs); i++) {
-					TC_ITEM ti;
+					TC_ITEMW ti;
 
 					ti.mask    = TCIF_TEXT;
-					ti.pszText = (LPSTR)tabs[i].name;
+					ti.pszText = (LPWSTR)tabs[i].name;
 
 					TabCtrl_InsertItem(hwndItem, i, &ti);
 				}
@@ -961,7 +961,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				if (thisPtr->pDubber->IsPreviewing() || !VDPreferencesIsRenderAbortConfirmEnabled() ||
 					IDOK == MessageBoxA(hdlg, "Stop the operation at this point?", "VirtualDub Warning", MB_ICONEXCLAMATION|MB_OKCANCEL))
 				{
-					SendMessage(hdlg, WM_SETTEXT, 0, (LPARAM)"Aborting...");
+					SendMessageA(hdlg, WM_SETTEXT, 0, (LPARAM)"Aborting...");
 					EnableWindow((HWND)lParam, FALSE);
 					thisPtr->pDubber->Abort();
 					thisPtr->hwndStatus = NULL;
@@ -1082,7 +1082,7 @@ namespace {
 }
 
 void VDShowDebugText(HWND parent, const char* s) {
-	DialogBoxParamA(g_hInst, MAKEINTRESOURCE(IDD_DUMPSTATUS), parent, DumpStatusDlgProc, (LPARAM)s);
+	DialogBoxParamA(g_hInst, MAKEINTRESOURCEA(IDD_DUMPSTATUS), parent, DumpStatusDlgProc, (LPARAM)s);
 }
 
 void DubStatus::DumpStatus() {
@@ -1157,8 +1157,8 @@ void DubStatus::Freeze(bool failed, bool completed) {
 		EnableWindow(GetDlgItem(hwndStatus,IDC_DRAW_INPUT),false);
 		EnableWindow(GetDlgItem(hwndStatus,IDC_BACKGROUND),false);
 		EnableWindow(GetDlgItem(hwndStatus,IDC_LIMIT),false);
-		if (failed) SendMessage(hwndStatus, WM_SETTEXT, 0, (LPARAM)"Error...");
-		SendMessage(GetDlgItem(hwndStatus,IDC_ABORT), WM_SETTEXT, 0, (LPARAM)"Close");
+		if (failed) SendMessageA(hwndStatus, WM_SETTEXT, 0, (LPARAM)"Error...");
+		SendMessageA(GetDlgItem(hwndStatus,IDC_ABORT), WM_SETTEXT, 0, (LPARAM)"Close");
 	}
 }
 

@@ -1089,7 +1089,7 @@ void VDVF1ResizeDlg::MarkDirty() {
 bool VDFilterResizeActivateConfigDialog(VDResizeFilterData& mfd, IVDXFilterPreview2 *ifp2, uint32 w, uint32 h, VDGUIHandle hParent) {
 	VDVF1ResizeDlg dlg(mfd, ifp2, w, h);
 
-	return dlg.ActivateDialogDual(hParent) != 0;
+	return dlg.ActivateDialog(hParent) != 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1392,5 +1392,5 @@ void VDVFCanvasDlg::MarkDirty() {
 bool VDFilterCanvasActivateConfigDialog(VDCanvasFilterData& mfd, IVDXFilterPreview2 *ifp2, uint32 w, uint32 h, VDGUIHandle hParent) {
 	VDVFCanvasDlg dlg(mfd, ifp2, w, h);
 
-	return dlg.ActivateDialogDual(hParent) != 0;
+	return dlg.ActivateDialog(hParent) != 0;
 }

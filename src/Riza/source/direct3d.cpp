@@ -433,7 +433,7 @@ bool VDD3D9Manager::Init() {
 	HINSTANCE hInst = VDGetLocalModuleHandleW32();
 
 	if (!mDevWndClass) {
-		WNDCLASS wc;
+		WNDCLASSW wc;
 
 		wc.cbClsExtra		= 0;
 		wc.cbWndExtra		= 0;
@@ -443,20 +443,21 @@ bool VDD3D9Manager::Init() {
 		wc.hInstance		= hInst;
 		wc.lpfnWndProc		= StaticDeviceWndProc;
 
-		char buf[64];
-		sprintf(buf, "RizaD3DDeviceWindow_%p", this);
+		wchar_t buf[64];
+		swprintf_s(buf, L"RizaD3DDeviceWindow_%p", this);
 		wc.lpszClassName	= buf;
 		wc.lpszMenuName		= NULL;
 		wc.style			= 0;
 
-		mDevWndClass = RegisterClass(&wc);
-		if (!mDevWndClass)
+		mDevWndClass = RegisterClassW(&wc);
+		if (!mDevWndClass) {
 			return false;
+		}
 	}
 
 	mThreadID = VDGetCurrentThreadID();
 
-	mhwndDevice = CreateWindow(MAKEINTATOM(mDevWndClass), "", WS_POPUP, 0, 0, 0, 0, NULL, NULL, hInst, NULL);
+	mhwndDevice = CreateWindowW(MAKEINTATOM(mDevWndClass), L"", WS_POPUP, 0, 0, 0, 0, NULL, NULL, hInst, NULL);
 	if (!mhwndDevice) {
 		Shutdown();
 		return false;

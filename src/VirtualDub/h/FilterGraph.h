@@ -8,7 +8,7 @@
 #define FILTERGRAPHCONTROLCLASS (g_szFilterGraphControlName)
 
 #ifndef f_FILTERGRAPH_CPP
-extern const char g_szFilterGraphControlName[];
+extern const wchar_t g_szFilterGraphControlName[];
 #endif
 
 ATOM RegisterFilterGraphControl();

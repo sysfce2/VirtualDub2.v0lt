@@ -477,7 +477,7 @@ bool VDVideoDisplayMinidriverD3DFX::Init(HWND hwnd, HMONITOR hmonitor, const VDV
 	mLastFrameTime = VDGetPreciseTick();
 
 	// attempt to load d3dx9_25.dll
-	mhmodD3DX = LoadLibrary("d3dx9_25.dll");
+	mhmodD3DX = LoadLibraryW(L"d3dx9_25.dll");
 
 	if (!mhmodD3DX) {
 		mError = L"Cannot initialize the Direct3D FX system: Unable to load d3dx9_25.dll.";

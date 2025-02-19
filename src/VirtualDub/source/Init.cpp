@@ -319,7 +319,7 @@ static void crash() {
 #endif
 
 void VDInitAppResources() {
-	HRSRC hResource = FindResource(NULL, MAKEINTRESOURCE(IDR_RESOURCES), "STUFF");
+	HRSRC hResource = FindResourceW(NULL, MAKEINTRESOURCEW(IDR_RESOURCES), L"STUFF");
 
 	if (!hResource)
 		return;
@@ -340,7 +340,7 @@ void VDInitAppResources() {
 #endif
 
 void VDEnableExceptionsFromUserCallbacksW32() {
-	HMODULE hmodKernel32 = GetModuleHandle("kernel32");
+	HMODULE hmodKernel32 = GetModuleHandleW(L"kernel32");
 
 	// SetProcessUserModeExceptionPolicy() is available in Windows 7 SP1 and in Vista/WS2008/Win7
 	// systems with the hotfix (274454 for Vista, 299104 for WS2008/Win7).
@@ -455,7 +455,7 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine) {
 		}
 	} else {
 		if (resetAll)
-			SHDeleteKey(HKEY_CURRENT_USER, "Software\\VirtualDub.org\\VirtualDub");
+			SHDeleteKeyA(HKEY_CURRENT_USER, "Software\\VirtualDub.org\\VirtualDub");
 	}
 
 	VDRegistryAppKey::setDefaultKey("Software\\VirtualDub.org\\VirtualDub\\");

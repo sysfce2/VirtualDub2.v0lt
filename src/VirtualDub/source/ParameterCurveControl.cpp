@@ -33,7 +33,7 @@ extern HINSTANCE g_hInst;
 
 ////////////////////////////
 
-extern const char g_VDParameterCurveControlClass[]="phaeronParameterCurveControl";
+extern const wchar_t g_VDParameterCurveControlClass[]=L"phaeronParameterCurveControl";
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -150,7 +150,7 @@ protected:
 };
 
 bool VDRegisterParameterCurveControl() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc	= VDParameterCurveControlW32::StaticWndProc;
@@ -163,7 +163,7 @@ bool VDRegisterParameterCurveControl() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= g_VDParameterCurveControlClass;
 
-	return !!RegisterClass(&wc);
+	return !!RegisterClassW(&wc);
 }
 
 IVDUIParameterCurveControl *VDGetIUIParameterCurveControl(VDGUIHandle h) {

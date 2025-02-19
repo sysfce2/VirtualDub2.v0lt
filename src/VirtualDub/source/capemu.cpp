@@ -212,7 +212,7 @@ void VDCaptureDriverEmulation::SetCallback(IVDCaptureDriverCallback *pCB) {
 
 bool VDCaptureDriverEmulation::Init(VDGUIHandle hParent) {
 	if (!sMsgWndClass) {
-		WNDCLASS wc;
+		WNDCLASSW wc;
 
 		wc.style			= 0;
 		wc.lpfnWndProc		= StaticMessageWndProc;
@@ -223,16 +223,16 @@ bool VDCaptureDriverEmulation::Init(VDGUIHandle hParent) {
 		wc.hCursor			= NULL;
 		wc.hbrBackground	= NULL;
 		wc.lpszMenuName		= NULL;
-		wc.lpszClassName	= "RizaAudioEmulator";
+		wc.lpszClassName	= L"RizaAudioEmulator";
 
-		sMsgWndClass = RegisterClass(&wc);
+		sMsgWndClass = RegisterClassW(&wc);
 		if (!sMsgWndClass)
 			return false;
 	}
 
 	mhwndParent = (HWND)hParent;
 
-	mhwndMessages = CreateWindowEx(0, (LPCTSTR)sMsgWndClass, "", WS_POPUP, 0, 0, 0, 0, NULL, NULL, g_hInst, NULL);
+	mhwndMessages = CreateWindowExW(0, (LPCTSTR)sMsgWndClass, L"", WS_POPUP, 0, 0, 0, 0, NULL, NULL, g_hInst, NULL);
 	if (!mhwndMessages)
 		return false;
 

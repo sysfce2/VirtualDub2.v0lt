@@ -127,7 +127,7 @@ bool VDUIDialogExtEncMain::OnLoaded() {
 		if (hfontDlg) {
 			LOGFONT lf = {0};
 			if (GetObject(hfontDlg, sizeof lf, &lf)) {
-				mhFontMarlett = CreateFont(lf.lfHeight, 0, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Marlett");
+				mhFontMarlett = CreateFontW(lf.lfHeight, 0, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Marlett");
 			}
 		}
 	}
@@ -309,9 +309,9 @@ VDUIDialogExtEncVideo::VDUIDialogExtEncVideo(VDExtEncProfile& profile)
 	: VDDialogFrameW32(IDD_EXTENC_EDIT_VIDEO)
 	, mProfile(profile)
 {
-	LOGFONT f = {14,0, 0,0, FW_NORMAL, 0,0,0, ANSI_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH,};
-	strcpy(f.lfFaceName,"courier new");
-	fixed_font = CreateFontIndirect(&f);
+	LOGFONTW f = {14,0, 0,0, FW_NORMAL, 0,0,0, ANSI_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH,};
+	wcscpy(f.lfFaceName,L"courier new");
+	fixed_font = CreateFontIndirectW(&f);
 }
 
 VDUIDialogExtEncVideo::~VDUIDialogExtEncVideo() {

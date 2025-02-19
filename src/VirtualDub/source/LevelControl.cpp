@@ -33,7 +33,7 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 ////////////////////////////
 
-extern const char g_szLevelControlName[]="birdyLevelControl";
+extern const wchar_t g_szLevelControlName[]=L"birdyLevelControl";
 
 #define		MAX_TABS		(8)
 
@@ -56,7 +56,7 @@ typedef struct LevelControlData {
 ////////////////////////////
 
 ATOM RegisterLevelControl() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= 0;
 	wc.lpfnWndProc	= LevelControlWndProc;

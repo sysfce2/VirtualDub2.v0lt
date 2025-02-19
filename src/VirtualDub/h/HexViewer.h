@@ -23,7 +23,7 @@
 #define HEXEDITORCLASS (szHexEditorClassName)
 
 #ifndef f_HEXVIEWER_CPP
-extern const char szHexEditorClassName[];
+extern const wchar_t szHexEditorClassName[];
 #endif
 
 ATOM RegisterHexEditor();

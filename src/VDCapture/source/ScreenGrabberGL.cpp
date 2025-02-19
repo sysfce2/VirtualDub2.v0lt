@@ -93,13 +93,13 @@ bool VDScreenGrabberGL::Init(IVDScreenGrabberCallback *cb) {
 	const HINSTANCE hInst = VDGetLocalModuleHandleW32();
 
 	if (!mWndClassGL) {
-		VDStringA className;
+		VDStringW className;
 
-		className.sprintf("VDScreenGrabberGL[%p]", this);
+		className.sprintf(L"VDScreenGrabberGL[%p]", this);
 
-		WNDCLASS wcgl = { CS_OWNDC, StaticWndProcGL, 0, sizeof(VDScreenGrabberGL *), hInst, NULL, NULL, NULL, NULL, className.c_str() };
+		WNDCLASSW wcgl = { CS_OWNDC, StaticWndProcGL, 0, sizeof(VDScreenGrabberGL *), hInst, NULL, NULL, NULL, NULL, className.c_str() };
 
-		mWndClassGL = RegisterClass(&wcgl);
+		mWndClassGL = RegisterClassW(&wcgl);
 
 		if (!mWndClassGL) {
 			Shutdown();
@@ -115,7 +115,7 @@ void VDScreenGrabberGL::Shutdown() {
 	ShutdownCapture();
 
 	if (mWndClassGL) {
-		UnregisterClassA((LPCTSTR)mWndClassGL, VDGetLocalModuleHandleW32());
+		UnregisterClassW((LPCWSTR)mWndClassGL, VDGetLocalModuleHandleW32());
 		mWndClassGL = NULL;
 	}
 }
@@ -161,7 +161,7 @@ bool VDScreenGrabberGL::InitCapture(uint32 srcw, uint32 srch, uint32 dstw, uint3
 
 	const HINSTANCE hInst = VDGetLocalModuleHandleW32();
 
-	if (!(mhwndGL = CreateWindow((LPCTSTR)mWndClassGL, _T(""), WS_POPUP, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), NULL, NULL, hInst, this)))
+	if (!(mhwndGL = CreateWindowW((LPCWSTR)mWndClassGL, L"", WS_POPUP, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), NULL, NULL, hInst, this)))
 		return false;
 
 	HDC hdc = GetDC(mhwndGL);
@@ -800,7 +800,7 @@ bool VDScreenGrabberGL::InitDisplay(HWND hwndParent, bool preview) {
 
 	DWORD dwFlags = mbVisible ? WS_CHILD | WS_VISIBLE : WS_CHILD;
 
-	if (!(mhwndGLDraw = CreateWindow((LPCTSTR)mWndClassGL, _T(""), dwFlags, mDisplayArea.left, mDisplayArea.top, mDisplayArea.width(), mDisplayArea.height(), hwndParent, NULL, VDGetLocalModuleHandleW32(), this))) {
+	if (!(mhwndGLDraw = CreateWindowW((LPCWSTR)mWndClassGL, L"", dwFlags, mDisplayArea.left, mDisplayArea.top, mDisplayArea.width(), mDisplayArea.height(), hwndParent, NULL, VDGetLocalModuleHandleW32(), this))) {
 		ShutdownDisplay();
 		return false;
 	}

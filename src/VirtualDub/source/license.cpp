@@ -45,7 +45,7 @@ public:
 void Licensor::depack(HWND hDlg) {
 	unsigned char depackbuf[15073], textbuf[18317];
 
-	HRSRC hRSRC = FindResource(NULL, MAKEINTRESOURCE(IDR_LICENSE), "STUFF");
+	HRSRC hRSRC = FindResourceW(NULL, MAKEINTRESOURCEW(IDR_LICENSE), L"STUFF");
 	if (hRSRC) {
 		HGLOBAL hGlobal = LoadResource(NULL, hRSRC);
 		if (hGlobal) {
@@ -100,7 +100,7 @@ void Licensor::depack(HWND hDlg) {
 				*t = 0;
 
 				SendMessage(GetDlgItem(hDlg, IDC_LICENSE), WM_SETFONT, (WPARAM)GetStockObject(SYSTEM_FIXED_FONT), MAKELPARAM(TRUE, 0));
-				SendMessage(GetDlgItem(hDlg, IDC_LICENSE), WM_SETTEXT, 0, (LPARAM)textbuf);
+				SendMessageA(GetDlgItem(hDlg, IDC_LICENSE), WM_SETTEXT, 0, (LPARAM)textbuf);
 				FreeResource(hGlobal);
 				return;
 			}

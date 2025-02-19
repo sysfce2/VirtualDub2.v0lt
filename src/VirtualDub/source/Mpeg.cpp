@@ -3083,7 +3083,7 @@ INT_PTR CALLBACK InputFileMPEG::ParseDialogProc(HWND hDlg, UINT uMsg, WPARAM wPa
 		SetWindowLongPtr(hDlg, DWLP_USER, lParam);
 		thisPtr = (InputFileMPEG *)lParam;
 
-		SendMessage(hDlg, WM_SETTEXT, 0, (LPARAM)"MPEG Import Filter");
+		SendMessageA(hDlg, WM_SETTEXT, 0, (LPARAM)"MPEG Import Filter");
 		SetDlgItemTextA(hDlg, IDC_STATIC_MESSAGE,
 			thisPtr->fIsVCD
 				? "Parsing VideoCD stream"
@@ -3106,7 +3106,7 @@ INT_PTR CALLBACK InputFileMPEG::ParseDialogProc(HWND hDlg, UINT uMsg, WPARAM wPa
 			else
 				wsprintfA(buf, "%ldK of %ldK", (long)(thisPtr->file_cpos>>10), (long)((thisPtr->file_len+1023)>>10));
 
-			SendDlgItemMessage(hDlg, IDC_CURRENT_VALUE, WM_SETTEXT, 0, (LPARAM)buf);
+			SendDlgItemMessageA(hDlg, IDC_CURRENT_VALUE, WM_SETTEXT, 0, (LPARAM)buf);
 		}
 		return TRUE;
 

@@ -33,7 +33,7 @@
 extern HINSTANCE g_hInst;
 extern const char g_szError[];
 
-extern const char g_szFilterGraphControlName[]="phaeronFilterGraphControl";
+extern const wchar_t g_szFilterGraphControlName[]=L"phaeronFilterGraphControl";
 
 #define vdforeach(type, cont) if(0);else for(type::iterator it((cont).begin()), itEnd((cont).end()); it!=itEnd; ++it)
 
@@ -215,16 +215,16 @@ VDFilterGraphControl::~VDFilterGraphControl() noexcept {
 }
 
 VDFilterGraphControl *VDFilterGraphControl::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
-	HWND hwnd = CreateWindowEx(WS_EX_TRANSPARENT, g_szFilterGraphControlName, "", WS_VISIBLE|WS_CHILD|WS_HSCROLL|WS_VSCROLL, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
+	HWND hwnd = CreateWindowExW(WS_EX_TRANSPARENT, g_szFilterGraphControlName, L"", WS_VISIBLE|WS_CHILD|WS_HSCROLL|WS_VSCROLL, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
 	if (hwnd)
-		return (VDFilterGraphControl *)GetWindowLongPtr(hwnd, 0);
+		return (VDFilterGraphControl *)GetWindowLongPtrW(hwnd, 0);
 
 	return NULL;
 }
 
 ATOM RegisterFilterGraphControl() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= CS_DBLCLKS;
 	wc.lpfnWndProc	= VDFilterGraphControl::StaticWndProc;
@@ -237,7 +237,7 @@ ATOM RegisterFilterGraphControl() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= g_szFilterGraphControlName;
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 IVDFilterGraphControl *VDGetIFilterGraphControl(HWND hwnd) {

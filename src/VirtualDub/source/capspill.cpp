@@ -234,7 +234,7 @@ INT_PTR CALLBACK CaptureSpillDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM 
 	case WM_INITDIALOG:
 		{
 			HWND hwndItem;
-			LVCOLUMN lvc;
+			LVCOLUMNW lvc;
 			RECT r;
 			CapSpillDrive *pcsd, *pcsd_next;
 
@@ -246,15 +246,15 @@ INT_PTR CALLBACK CaptureSpillDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM 
 			lvc.mask	= LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
 			lvc.fmt		= LVCFMT_LEFT;
 			lvc.cx		= 50;
-			lvc.pszText	= "Priority";
+			lvc.pszText	= L"Priority";
 
 			ListView_InsertColumn(hwndItem, 0, &lvc);
 
-			lvc.pszText	= "Threshold";
+			lvc.pszText	= L"Threshold";
 			lvc.cx		= 100;
 			ListView_InsertColumn(hwndItem, 1, &lvc);
 
-			lvc.pszText	= "Path";
+			lvc.pszText	= L"Path";
 			lvc.cx		= r.right - r.left - 150;
 			ListView_InsertColumn(hwndItem, 2, &lvc);
 
@@ -341,7 +341,7 @@ INT_PTR CALLBACK CaptureSpillDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM 
 
 	case WM_NOTIFY:
 		if (((NMHDR *)lParam)->idFrom == IDC_SPILL_DRIVES) {
-			NMLVDISPINFO *pnldi = (NMLVDISPINFO *)lParam;
+			NMLVDISPINFO *pnldi = (NMLVDISPINFO*)lParam;
 
 			if (pnldi->hdr.code == LVN_GETDISPINFO) {
 				CapSpillDrive *pcsd;
@@ -358,13 +358,13 @@ INT_PTR CALLBACK CaptureSpillDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM 
 
 				switch(pnldi->item.iSubItem) {
 				case 0:
-					_snprintf(pnldi->item.pszText, pnldi->item.cchTextMax, "%+d", pcsd->priority);
+					_snwprintf(pnldi->item.pszText, pnldi->item.cchTextMax, L"%+d", pcsd->priority);
 					break;
 				case 1:
-					_snprintf(pnldi->item.pszText, pnldi->item.cchTextMax, "%ldMB", pcsd->threshold);
+					_snwprintf(pnldi->item.pszText, pnldi->item.cchTextMax, L"%ldMB", pcsd->threshold);
 					break;
 				case 2:
-					pnldi->item.pszText = (TCHAR *)pcsd->pathA.c_str();
+					pnldi->item.pszText = (WCHAR*)pcsd->path.c_str();
 					break;
 				default:
 					pnldi->item.pszText[0] = 0;
@@ -499,7 +499,7 @@ static void LVBeginEdit(HWND hwndLV, int index, int subitem) {
 	SendMessage(hwndLV, LVM_GETITEMRECT, index, (LPARAM)&r);
 
 	g_hwndBox = hwndLV;
-	g_hwndEdit = CreateWindow("EDIT",
+	g_hwndEdit = CreateWindowW(L"EDIT",
 			NULL,
 			WS_VISIBLE|WS_CHILD|WS_BORDER | ES_WANTRETURN|ES_AUTOHSCROLL,
 			w2-w - 1,

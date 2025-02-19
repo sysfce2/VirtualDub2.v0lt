@@ -26,7 +26,7 @@
 #define POSITIONCONTROLCLASS (szPositionControlName)
 
 #ifndef f_POSITIONCONTROL_CPP
-extern const char szPositionControlName[];
+extern const wchar_t szPositionControlName[];
 #endif
 
 typedef char (*PosCtlFTCallback)(HWND hwnd, void *data, long pos);

@@ -40,7 +40,7 @@
 #define VDDEBUG_DISP (void)sizeof printf
 //#define VDDEBUG_DISP VDDEBUG
 
-extern const char g_szVideoDisplayControlName[] = "phaeronVideoDisplay";
+extern const wchar_t g_szVideoDisplayControlName[] = L"phaeronVideoDisplay";
 
 extern void VDMemcpyRect(void *dst, ptrdiff_t dststride, const void *src, ptrdiff_t srcstride, size_t w, size_t h);
 
@@ -323,7 +323,7 @@ void VDVideoDisplaySetDDrawEnabled(bool enable) {
 ///////////////////////////////////////////////////////////////////////////
 
 ATOM VDVideoDisplayWindow::Register() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 	HMODULE hInst = VDGetLocalModuleHandleW32();
 
 	if (!sChildWindowClass) {
@@ -336,9 +336,9 @@ ATOM VDVideoDisplayWindow::Register() {
 		wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
 		wc.hbrBackground	= (HBRUSH)(BLACK_BRUSH + 1);
 		wc.lpszMenuName		= 0;
-		wc.lpszClassName	= "phaeronVideoDisplayChild";
+		wc.lpszClassName	= L"phaeronVideoDisplayChild";
 
-		sChildWindowClass = RegisterClass(&wc);
+		sChildWindowClass = RegisterClassW(&wc);
 		if (!sChildWindowClass)
 			return NULL;
 	}
@@ -354,7 +354,7 @@ ATOM VDVideoDisplayWindow::Register() {
 	wc.lpszMenuName		= 0;
 	wc.lpszClassName	= g_szVideoDisplayControlName;
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 IVDVideoDisplay *VDGetIVideoDisplay(VDGUIHandle hwnd) {
@@ -1434,7 +1434,7 @@ bool VDVideoDisplayWindow::InitMiniDriver() {
 
 	RECT r;
 	GetClientRect(mhwnd, &r);
-	mhwndChild = CreateWindowEx(WS_EX_NOPARENTNOTIFY, (LPCTSTR)sChildWindowClass, "", WS_CHILD|WS_VISIBLE|WS_CLIPSIBLINGS, 0, 0, r.right, r.bottom, mhwnd, NULL, VDGetLocalModuleHandleW32(), this);
+	mhwndChild = CreateWindowExW(WS_EX_NOPARENTNOTIFY, (LPCTSTR)sChildWindowClass, L"", WS_CHILD|WS_VISIBLE|WS_CLIPSIBLINGS, 0, 0, r.right, r.bottom, mhwnd, NULL, VDGetLocalModuleHandleW32(), this);
 	if (!mhwndChild)
 		return false;
 
@@ -1614,7 +1614,7 @@ VDGUIHandle VDCreateDisplayWindowW32(uint32 dwExFlags, uint32 dwFlags, int x, in
 
 		static void Dispatch(void *p0) {
 			RemoteCreateCall *p = (RemoteCreateCall *)p0;
-			p->hwndResult = CreateWindowEx(p->dwExFlags, g_szVideoDisplayControlName, "", p->dwFlags, p->x, p->y, p->width, p->height, p->hwndParent, NULL, VDGetLocalModuleHandleW32(), p->vdm);
+			p->hwndResult = CreateWindowExW(p->dwExFlags, g_szVideoDisplayControlName, L"", p->dwFlags, p->x, p->y, p->width, p->height, p->hwndParent, NULL, VDGetLocalModuleHandleW32(), p->vdm);
 		}
 	} rmc = {dwExFlags, dwFlags | WS_CLIPCHILDREN, x, y, width, height, (HWND)hwndParent, vdm};
 

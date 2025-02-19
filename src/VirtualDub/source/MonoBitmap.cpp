@@ -22,7 +22,7 @@ MonoBitmap::MonoBitmap(HDC hdcRef, int width, int height, COLORREF crFore, COLOR
 	HDC hdcDisplay = NULL;
 
 	if (!hdcRef)
-		hdcRef = hdcDisplay = CreateDC("DISPLAY", NULL, NULL, NULL);
+		hdcRef = hdcDisplay = CreateDCW(L"DISPLAY", NULL, NULL, NULL);
 
 	hdcCompat = CreateCompatibleDC(hdcRef);
 

@@ -46,8 +46,8 @@ extern HINSTANCE g_hInst;
 
 //////////////////////////////////////////////////////////////////////////////
 
-extern const char szHexEditorClassName[]="birdyHexEditor";
-extern const char szHexViewerClassName[]="birdyHexViewer";
+extern const wchar_t szHexEditorClassName[]=L"birdyHexEditor";
+extern const wchar_t szHexViewerClassName[]=L"birdyHexViewer";
 static const char g_szHexWarning[]="Hex editor warning";
 
 static const char hexdig[16]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
@@ -182,7 +182,7 @@ namespace {
 		TreeNode *mpNext;
 		TreeNode *mpChildren;
 		const char *mpName;
-		sint64	mPos;
+		sint64 mPos;
 
 		TreeNode(const char *s, sint64 pos);
 	};
@@ -406,8 +406,8 @@ void HexViewer::Init() {
 
 		GetTextMetrics(hdc, &tm);
 
-		hfont = CreateFont(tm.tmHeight, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET,
-			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH|FF_DONTCARE, "Lucida Console");
+		hfont = CreateFontW(tm.tmHeight, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET,
+			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH|FF_DONTCARE, L"Lucida Console");
 
 		SelectObject(hdc, hfont ? hfont : GetStockObject(SYSTEM_FIXED_FONT));
 
@@ -1163,19 +1163,19 @@ void HexEditor::Init() {
 
 		GetTextMetrics(hdc, &tm);
 
-		hfont = CreateFont(tm.tmHeight, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET,
-			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH|FF_DONTCARE, "Lucida Console");
+		hfont = CreateFontW(tm.tmHeight, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET,
+			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH|FF_DONTCARE, L"Lucida Console");
 
 		SelectObject(hdc, hfOld);
 		ReleaseDC(hwnd, hdc);
 	}
 
-	hwndStatus = CreateStatusWindow(WS_CHILD|WS_VISIBLE, "", hwnd, 500);
+	hwndStatus = CreateStatusWindowW(WS_CHILD|WS_VISIBLE, L"", hwnd, 500);
 
-	hwndView = CreateWindowEx(
+	hwndView = CreateWindowExW(
 		WS_EX_CLIENTEDGE,
 		szHexViewerClassName,
-		"",
+		L"",
 		WS_VISIBLE|WS_CHILD|WS_VSCROLL,
 		0,0,0,0,
 		hwnd,
@@ -2623,11 +2623,12 @@ INT_PTR CALLBACK HexEditor::TreeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPAR
 				if (ntv.action & TVE_COLLAPSE)
 					TreeView_Expand(pcd->mhwndTreeView, ntv.itemNew.hItem, TVE_COLLAPSE | TVE_COLLAPSERESET);
 			} else if (pnmh->code == TVN_GETDISPINFO) {
-				NMTVDISPINFO& ndi = *(NMTVDISPINFO *)lParam;
+				NMTVDISPINFO& ndi = *(NMTVDISPINFO*)lParam;
 				const TreeNode *ptn = (const TreeNode *)ndi.item.lParam;
 
-				if (ndi.item.mask & TVIF_TEXT)
-					strncpyz(ndi.item.pszText, ptn->mpName, ndi.item.cchTextMax);
+				if (ndi.item.mask & TVIF_TEXT) {
+					wcsncpyz(ndi.item.pszText, VDTextAToW(ptn->mpName).c_str(), ndi.item.cchTextMax);
+				}
 
 				if (ndi.item.mask & TVIF_CHILDREN)
 					ndi.item.cChildren = ptn->mpChildren != NULL;
@@ -2648,7 +2649,7 @@ INT_PTR CALLBACK HexEditor::TreeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPAR
 ///////////////////////////////////////////////////////////////////////////
 
 ATOM RegisterHexEditor() {
-	WNDCLASS wc1, wc2;
+	WNDCLASSW wc1, wc2;
 
 	wc1.style			= 0;
 	wc1.lpfnWndProc		= HexEditor::HexEditorWndProc;
@@ -2672,13 +2673,13 @@ ATOM RegisterHexEditor() {
 	wc2.lpszMenuName	= NULL;
 	wc2.lpszClassName	= szHexViewerClassName;
 
-	return RegisterClass(&wc1) && RegisterClass(&wc2);
+	return RegisterClassW(&wc1) && RegisterClassW(&wc2);
 
 }
 void HexEdit(HWND hwndParent, const wchar_t *filename, bool readonly) {
-	HWND hwndEdit = CreateWindow(
+	HWND hwndEdit = CreateWindowW(
 		HEXEDITORCLASS,
-		"VirtualDub2 Hex Editor",
+		L"VirtualDub2 Hex Editor",
 		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

@@ -1959,7 +1959,7 @@ void SaveImageSeq(HWND hwnd, bool queueAsJob) {
 	else if (dlg.mQuality > 100)
 		dlg.mQuality = 100;
 
-	if (dlg.ActivateDialogDual((VDGUIHandle)hwnd)) {
+	if (dlg.ActivateDialog((VDGUIHandle)hwnd)) {
 		key.setInt(g_szRegKeyImageSequenceFormat, dlg.mFormat);
 		key.setInt(g_szRegKeyImageSequenceQuality, dlg.mQuality);
 		key.setInt(g_szRegKeyImageSequenceMinDigits, dlg.digits);

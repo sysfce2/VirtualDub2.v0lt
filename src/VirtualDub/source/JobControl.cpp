@@ -66,7 +66,7 @@ VDJobQueue::VDJobQueue()
 
 	mRunnerId = (uint32)GetCurrentProcessId();
 	mBaseSignature = (uint64)mRunnerId << 32;
-	if (GetComputerName(name, &len)) {
+	if (GetComputerNameA(name, &len)) {
 		mComputerName = name;
 
 		uint64 computerHash = (uint64)VDHashString32(name) << 32;

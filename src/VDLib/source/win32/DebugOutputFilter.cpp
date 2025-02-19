@@ -118,7 +118,7 @@ bool VDDebugOutputFilterW32::Init(const char *filter) {
 		return false;
 	}
 
-	HMODULE kernel32 = GetModuleHandle("kernel32");
+	HMODULE kernel32 = GetModuleHandleW(L"kernel32");
 
 	VDPatchModuleExportTableW32(kernel32, "OutputDebugStringA", NULL, mpThunkA, (void *volatile *)&mpOldODSA);
 	VDPatchModuleExportTableW32(kernel32, "OutputDebugStringW", NULL, mpThunkW, (void *volatile *)&mpOldODSW);

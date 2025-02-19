@@ -38,7 +38,7 @@
 
 extern HINSTANCE g_hInst;
 
-extern const char g_szAudioDisplayControlName[]="birdyAudioDisplayControl";
+extern const wchar_t g_szAudioDisplayControlName[]=L"birdyAudioDisplayControl";
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -747,7 +747,7 @@ protected:
 };
 
 ATOM RegisterAudioDisplayControl() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= CS_VREDRAW | CS_HREDRAW | CS_DBLCLKS;
 	wc.lpfnWndProc	= VDUISpriteBasedControlW32::StaticWndProc<VDAudioDisplayControl>;
@@ -760,7 +760,7 @@ ATOM RegisterAudioDisplayControl() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= AUDIODISPLAYCONTROLCLASS;
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 IVDUIAudioDisplayControl *VDGetIUIAudioDisplayControl(VDGUIHandle h) {

@@ -321,7 +321,7 @@ uint32 VDCreateAutoSaveSignature() {
 ///////////////////////////////////////////////////////////////////////////
 
 void LaunchURL(const char *pURL) {
-	ShellExecute(NULL, "open", pURL, NULL, NULL, SW_SHOWNORMAL);
+	ShellExecuteA(NULL, "open", pURL, NULL, NULL, SW_SHOWNORMAL);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -332,7 +332,7 @@ namespace {
 		if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES|TOKEN_QUERY, &h)) {
 			LUID luid;
 
-			if (LookupPrivilegeValue(NULL, "SeShutdownPrivilege", &luid)) {
+			if (LookupPrivilegeValueW(NULL, L"SeShutdownPrivilege", &luid)) {
 				TOKEN_PRIVILEGES tp;
 				tp.PrivilegeCount = 1;
 				tp.Privileges[0].Luid = luid;
@@ -416,16 +416,16 @@ bool VDEnableCPUTracking() {
 
 	bool fSuccess = true;
 
-    if ( (rc = RegOpenKeyEx(HKEY_DYN_DATA,"PerfStats\\StartStat", 0,
+    if ( (rc = RegOpenKeyExA(HKEY_DYN_DATA,"PerfStats\\StartStat", 0,
 					KEY_READ, &hOpen)) == ERROR_SUCCESS) {
 
 		// query to get data size
-		if ( (rc = RegQueryValueEx(hOpen,"KERNEL\\CPUUsage",NULL,&dwType,
+		if ( (rc = RegQueryValueExA(hOpen,"KERNEL\\CPUUsage",NULL,&dwType,
 				NULL, &cbData )) == ERROR_SUCCESS) {
 
 			pByte = (LPBYTE)allocmem(cbData);
 
-			rc = RegQueryValueEx(hOpen,"KERNEL\\CPUUsage",NULL,&dwType, pByte,
+			rc = RegQueryValueExA(hOpen,"KERNEL\\CPUUsage",NULL,&dwType, pByte,
                               &cbData );
 
 			freemem(pByte);
@@ -448,16 +448,16 @@ bool VDDisableCPUTracking() {
 
 	bool fSuccess = true;
 
-    if ( (rc = RegOpenKeyEx(HKEY_DYN_DATA,"PerfStats\\StopStat", 0,
+    if ( (rc = RegOpenKeyExA(HKEY_DYN_DATA,"PerfStats\\StopStat", 0,
 					KEY_READ, &hOpen)) == ERROR_SUCCESS) {
 
 		// query to get data size
-		if ( (rc = RegQueryValueEx(hOpen,"KERNEL\\CPUUsage",NULL,&dwType,
+		if ( (rc = RegQueryValueExA(hOpen,"KERNEL\\CPUUsage",NULL,&dwType,
 				NULL, &cbData )) == ERROR_SUCCESS) {
 
 			pByte = (LPBYTE)allocmem(cbData);
 
-			rc = RegQueryValueEx(hOpen,"KERNEL\\CPUUsage",NULL,&dwType, pByte,
+			rc = RegQueryValueExA(hOpen,"KERNEL\\CPUUsage",NULL,&dwType, pByte,
                               &cbData );
 
 			freemem(pByte);
@@ -501,7 +501,7 @@ void VDCPUUsageReader::Init() {
 
 		if (VDEnableCPUTracking()) {
 
-			if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_DYN_DATA, "PerfStats\\StatData", 0, KEY_READ, &hkey)) {
+			if (ERROR_SUCCESS == RegOpenKeyExA(HKEY_DYN_DATA, "PerfStats\\StatData", 0, KEY_READ, &hkey)) {
 				hkeyKernelCPU = hkey;
 			} else
 				VDDisableCPUTracking();
@@ -523,7 +523,7 @@ void VDCPUUsageReader::read(int& vd, int& sys) {
 		DWORD dwUsage;
 		DWORD size = sizeof dwUsage;
 
-		if (ERROR_SUCCESS == RegQueryValueEx(hkeyKernelCPU, "KERNEL\\CPUUsage", 0, &type, (LPBYTE)&dwUsage, (LPDWORD)&size)) {
+		if (ERROR_SUCCESS == RegQueryValueExA(hkeyKernelCPU, "KERNEL\\CPUUsage", 0, &type, (LPBYTE)&dwUsage, (LPDWORD)&size)) {
 			sys = (int)dwUsage;
 			vd = -1;
 			return;

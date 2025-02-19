@@ -176,14 +176,14 @@ bool VDUIJobControlDialog::OnLoaded() {
 
 	mStandardCaption = VDGetWindowTextW32(mhdlg);
 
-	static const char *const szColumnNames[]={ "Name","Source","Dest","Start","End","Status" };
+	static const wchar_t*const szColumnNames[]={ L"Name",L"Source",L"Dest",L"Start",L"End",L"Status" };
 	HWND hwndItem = GetDlgItem(mhdlg, IDC_JOBS);
 	for (int i=0; i<6; i++) {
-		LV_COLUMN lvc;
+		LV_COLUMNW lvc;
 		lvc.mask = LVCF_FMT | LVCF_SUBITEM | LVCF_TEXT | LVCF_WIDTH;
 		lvc.fmt = LVCFMT_LEFT;
 		lvc.cx = 1;
-		lvc.pszText = (LPSTR)szColumnNames[i];
+		lvc.pszText = (LPWSTR)szColumnNames[i];
 
 		ListView_InsertColumn(hwndItem, i, &lvc);
 	}

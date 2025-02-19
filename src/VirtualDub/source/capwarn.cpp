@@ -67,22 +67,22 @@ void CaptureWarnCheckDriver(HWND hwnd, const char *s) {
 
 void CaptureWarnCheckDrivers(HWND hwnd) {
 	HANDLE hFind;
-	WIN32_FIND_DATA wfd;
-	char szPath[MAX_PATH], *s;
+	WIN32_FIND_DATAW wfd;
+	wchar_t szPath[MAX_PATH], *s;
 
 	if (!(g_capwarnFlags & CWF_ZORAN)) {
-		GetWindowsDirectory(szPath, sizeof szPath);
+		GetWindowsDirectoryW(szPath, sizeof szPath);
 		s = szPath;
 		while(*s) ++s;
 		if (s[-1] != '\\')
 			*s++ = '\\';
 
-		strcpy(s, "system\\h20capt.dll");
+		wcscpy(s, L"system\\h20capt.dll");
 
 		hFind = FindFirstFile(szPath, &wfd);
 
 		if (hFind == INVALID_HANDLE_VALUE) {
-			strcpy(s, "system\\h22capt.dll");
+			wcscpy(s, L"system\\h22capt.dll");
 
 			hFind = FindFirstFile(szPath, &wfd);
 		}
@@ -107,20 +107,20 @@ void CaptureWarnCheckDrivers(HWND hwnd) {
 	}
 
 	if (!(g_capwarnFlags & CWF_BROOKTREE)) {
-		GetWindowsDirectory(szPath, sizeof szPath);
+		GetWindowsDirectoryW(szPath, sizeof szPath);
 		s = szPath;
 		while(*s) ++s;
 		if (s[-1] != '\\')
 			*s++ = '\\';
 
-		strcpy(s, "system\\bt848_32.dll");
+		wcscpy(s, L"system\\bt848_32.dll");
 
-		hFind = FindFirstFile(szPath, &wfd);
+		hFind = FindFirstFileW(szPath, &wfd);
 
 		if (hFind == INVALID_HANDLE_VALUE) {
-			strcpy(s, "system32\\bt848_32.dll");
+			wcscpy(s, L"system32\\bt848_32.dll");
 
-			hFind = FindFirstFile(szPath, &wfd);
+			hFind = FindFirstFileW(szPath, &wfd);
 		}
 
 		if (hFind != INVALID_HANDLE_VALUE) {

@@ -23,7 +23,7 @@
 #define VIDEOLEVELCONTROLCLASS (g_szLevelControlName)
 
 #ifndef f_LEVELCONTROL_CPP
-extern const char g_szLevelControlName[];
+extern const wchar_t g_szLevelControlName[];
 #endif
 
 #define VLCM_SETTABCOUNT		(WM_USER+0x100)

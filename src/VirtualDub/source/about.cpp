@@ -334,7 +334,7 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 				AboutSetCompilerBuild(GetDlgItem(hDlg, IDC_STATIC_VERSION));
 
-				HRSRC hrsrc = FindResource(NULL, MAKEINTRESOURCE(IDR_CREDITS), "STUFF");
+				HRSRC hrsrc = FindResourceW(NULL, MAKEINTRESOURCE(IDR_CREDITS), L"STUFF");
 				if (hrsrc) {
 					HGLOBAL hGlobal = LoadResource(NULL, hrsrc);
 					if (hGlobal) {

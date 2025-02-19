@@ -307,7 +307,7 @@ void VDFilterAccelEngine::InitCallback(VDFilterAccelEngineDispatchQueue *queue, 
 bool VDFilterAccelEngine::InitCallback2(bool visibleDebugWindow) {
 	mbVisualDebugEnabled = visibleDebugWindow;
 
-	WNDCLASS wc;
+	WNDCLASSW wc;
     wc.style			= 0;
     wc.lpfnWndProc		= StaticWndProc;
     wc.cbClsExtra		= 0;
@@ -318,11 +318,11 @@ bool VDFilterAccelEngine::InitCallback2(bool visibleDebugWindow) {
     wc.hbrBackground	= NULL;
     wc.lpszMenuName		= NULL;
 
-	char buf[64];
-	sprintf(buf, "VDFilterAccelEngine[%08p]", this);
+	wchar_t buf[64];
+	swprintf_s(buf, L"VDFilterAccelEngine[%08p]", this);
     wc.lpszClassName	= buf;
 
-	mWndClass = RegisterClass(&wc);
+	mWndClass = RegisterClassW(&wc);
 
 	int dispw = 16;
 	int disph = 16;
@@ -336,12 +336,12 @@ bool VDFilterAccelEngine::InitCallback2(bool visibleDebugWindow) {
 
 		AdjustWindowRect(&r, dwStyle, FALSE);
 
-		mhwnd = CreateWindow(MAKEINTATOM(mWndClass), "VirtualDub 3D filter acceleration debug window", dwStyle, CW_USEDEFAULT, CW_USEDEFAULT, r.right - r.left, r.bottom - r.top, NULL, NULL, wc.hInstance, this);
+		mhwnd = CreateWindowW(MAKEINTATOM(mWndClass), L"VirtualDub 3D filter acceleration debug window", dwStyle, CW_USEDEFAULT, CW_USEDEFAULT, r.right - r.left, r.bottom - r.top, NULL, NULL, wc.hInstance, this);
 
 		if (mhwnd)
 			ShowWindow(mhwnd, SW_SHOWNOACTIVATE);
 	} else {
-		mhwnd = CreateWindow(MAKEINTATOM(mWndClass), "", WS_POPUP, 0, 0, 0, 0, NULL, NULL, wc.hInstance, this);
+		mhwnd = CreateWindowW(MAKEINTATOM(mWndClass), L"", WS_POPUP, 0, 0, 0, 0, NULL, NULL, wc.hInstance, this);
 	}
 
 	if (!VDTCreateContextD3D9(dispw, disph, 0, false, false, mhwnd, &mpTC)) {

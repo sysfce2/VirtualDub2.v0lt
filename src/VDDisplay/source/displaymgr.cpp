@@ -117,7 +117,7 @@ bool VDVideoDisplayManager::Init() {
 			return false;
 		}
 
-		mhwnd = CreateWindowEx(WS_EX_NOPARENTNOTIFY, (LPCTSTR)mWndClass, "", WS_OVERLAPPEDWINDOW, 0, 0, 0, 0, NULL, NULL, VDGetLocalModuleHandleW32(), this);
+		mhwnd = CreateWindowExW(WS_EX_NOPARENTNOTIFY, (LPCWSTR)mWndClass, L"", WS_OVERLAPPEDWINDOW, 0, 0, 0, 0, NULL, NULL, VDGetLocalModuleHandleW32(), this);
 		if (!mhwnd) {
 			Shutdown();
 			return false;
@@ -266,7 +266,7 @@ void VDVideoDisplayManager::ThreadRun() {
 
 void VDVideoDisplayManager::ThreadRunFullRemote() {
 	if (RegisterWindowClass()) {
-		mhwnd = CreateWindowEx(WS_EX_NOPARENTNOTIFY, (LPCTSTR)mWndClass, "", WS_OVERLAPPEDWINDOW, 0, 0, 0, 0, NULL, NULL, VDGetLocalModuleHandleW32(), this);
+		mhwnd = CreateWindowExW(WS_EX_NOPARENTNOTIFY, (LPCWSTR)mWndClass, L"", WS_OVERLAPPEDWINDOW, 0, 0, 0, 0, NULL, NULL, VDGetLocalModuleHandleW32(), this);
 
 		if (mhwnd) {
 			MSG msg;
@@ -430,7 +430,7 @@ void VDVideoDisplayManager::ReaffirmPreciseMode() {
 ///////////////////////////////////////////////////////////////////////////////
 
 bool VDVideoDisplayManager::RegisterWindowClass() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 	HMODULE hInst = VDGetLocalModuleHandleW32();
 
 	wc.style			= 0;
@@ -443,11 +443,11 @@ bool VDVideoDisplayManager::RegisterWindowClass() {
 	wc.hbrBackground	= 0;
 	wc.lpszMenuName		= 0;
 
-	char buf[64];
-	sprintf(buf, "VDVideoDisplayManager(%p)", this);
+	wchar_t buf[64];
+	swprintf_s(buf, L"VDVideoDisplayManager(%p)", this);
 	wc.lpszClassName	= buf;
 
-	mWndClass = RegisterClass(&wc);
+	mWndClass = RegisterClassW(&wc);
 
 	return mWndClass != NULL;
 }

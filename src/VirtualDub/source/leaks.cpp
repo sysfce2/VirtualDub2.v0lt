@@ -64,12 +64,12 @@ public:
 VDDbgHelpDynamicLoaderW32::VDDbgHelpDynamicLoaderW32()
 {
 	// XP DbgHelp doesn't pick up some VC8 symbols -- need DbgHelp 6.2+ for that
-	hmodDbgHelp = LoadLibrary("c:\\program files\\debugging tools for windows\\dbghelp");
+	hmodDbgHelp = LoadLibraryW(L"c:\\program files\\debugging tools for windows\\dbghelp");
 	if (!hmodDbgHelp) {
-		hmodDbgHelp = LoadLibrary("c:\\program files (x86)\\debugging tools for windows\\dbghelp");
+		hmodDbgHelp = LoadLibraryW(L"c:\\program files (x86)\\debugging tools for windows\\dbghelp");
 
 		if (!hmodDbgHelp)
-			hmodDbgHelp = LoadLibrary("dbghelp");
+			hmodDbgHelp = LoadLibraryW(L"dbghelp");
 	}
 
 	static const char *const sFuncTbl[]={
@@ -216,13 +216,13 @@ void VDDumpMemoryLeaksVC() {
 	dbghelp.pSymInitialize(hProc, NULL, FALSE);
 
 	char filename[MAX_PATH], path[MAX_PATH];
-	GetModuleFileName(NULL, filename, std::size(filename));
+	GetModuleFileNameA(NULL, filename, std::size(filename));
 
 	strcpy(path, filename);
 	*VDFileSplitPath(path) = 0;
 
 	dbghelp.pSymSetSearchPath(hProc, path);
-	SetCurrentDirectory(path);
+	SetCurrentDirectoryA(path);
 	DWORD dwAddr = dbghelp.pSymLoadModule(hProc, NULL, filename, NULL, 0, 0);
 
 	IMAGEHLP_MODULE modinfo = {sizeof(IMAGEHLP_MODULE)};

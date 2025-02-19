@@ -2582,7 +2582,7 @@ VDDialogFileTextInfoW32::VDDialogFileTextInfoW32(tRawTextInfo& info)
 }
 
 void VDDialogFileTextInfoW32::Activate(VDGUIHandle hParent) {
-	ActivateDialogDual(hParent);
+	ActivateDialog(hParent);
 }
 
 void VDDialogFileTextInfoW32::Read() {

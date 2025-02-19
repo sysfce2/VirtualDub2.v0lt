@@ -269,9 +269,10 @@ VDOpenGLBinding::~VDOpenGLBinding() {
 }
 
 bool VDOpenGLBinding::Init() {
-	mhmodOGL = LoadLibrary("opengl32");
-	if (!mhmodOGL)
+	mhmodOGL = LoadLibraryW(L"opengl32");
+	if (!mhmodOGL) {
 		return false;
+	}
 
 	// pull wgl functions
 	for (unsigned i = 0; i < std::size(kWGLFunctions); ++i) {

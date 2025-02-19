@@ -186,29 +186,24 @@ void VDUIFrame::DestroyAll() {
 	}
 }
 
-ATOM VDUIFrame::Register() {
-	union {
-		WNDCLASSA a;
-		WNDCLASSW w;
-	} wc;
+ATOM VDUIFrame::Register()
+{
+	WNDCLASSW wc;
 
-    wc.a.style			= 0;
-    wc.a.lpfnWndProc	= VDUIFrame::StaticWndProc;
-    wc.a.cbClsExtra		= 0;
-    wc.a.cbWndExtra		= sizeof(void *)*2;
-    wc.a.hInstance		= g_hInst;
-    wc.a.hIcon			= LoadIcon(g_hInst, MAKEINTRESOURCE(IDI_VIRTUALDUB));
-    wc.a.hCursor		= LoadCursor(NULL, IDC_ARROW);
-    wc.a.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1); //GetStockObject(LTGRAY_BRUSH); 
+    wc.style			= 0;
+    wc.lpfnWndProc		= VDUIFrame::StaticWndProc;
+    wc.cbClsExtra		= 0;
+    wc.cbWndExtra		= sizeof(void *)*2;
+    wc.hInstance		= g_hInst;
+    wc.hIcon			= LoadIcon(g_hInst, MAKEINTRESOURCE(IDI_VIRTUALDUB));
+    wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
+    wc.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1); //GetStockObject(LTGRAY_BRUSH); 
+	wc.lpszMenuName		= MAKEINTRESOURCEW(IDR_MAIN_MENU);
+	wc.lpszClassName	= szAppNameW;
 
-	{
-	    wc.w.lpszMenuName	= MAKEINTRESOURCEW(IDR_MAIN_MENU);
-		wc.w.lpszClassName	= szAppNameW;
+	sClass = RegisterClassW(&wc);
 
-		sClass = RegisterClassW(&wc.w);
-	}
-
-	return !!sClass;
+	return sClass;
 }
 
 bool VDUIFrame::TranslateAcceleratorMessage(MSG& msg) {

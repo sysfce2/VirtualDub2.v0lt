@@ -629,9 +629,10 @@ bool VDVideoDisplayMinidriverOpenGL::Init(HWND hwnd, HMONITOR hmonitor, const VD
 	// If we use the main window instead then the app will bomb the moment we unload
 	// OpenGL.
 
-	mhwndOGL = CreateWindowEx(WS_EX_TRANSPARENT, (LPCSTR)wndClass, "", WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN|WS_CLIPSIBLINGS, 0, 0, r.right, r.bottom, mhwnd, NULL, VDGetLocalModuleHandleW32(), this);
-	if (!mhwndOGL)
+	mhwndOGL = CreateWindowExW(WS_EX_TRANSPARENT, (LPCWSTR)wndClass, L"", WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN|WS_CLIPSIBLINGS, 0, 0, r.right, r.bottom, mhwnd, NULL, VDGetLocalModuleHandleW32(), this);
+	if (!mhwndOGL) {
 		return false;
+	}
 
 	if (!SendMessage(mhwndOGL, MYWM_OGLINIT, 0, 0)) {
 		DestroyWindow(mhwndOGL);
@@ -824,20 +825,20 @@ void VDVideoDisplayMinidriverOpenGL::Upload(const VDPixmap& source, VDVideoTextu
 ///////////////////////////////////////////////////////////////////////////
 
 ATOM VDVideoDisplayMinidriverOpenGL::Register() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style			= CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc		= StaticWndProc;
 	wc.cbClsExtra		= 0;
-	wc.cbWndExtra		= sizeof(VDVideoDisplayMinidriverOpenGL *);
+	wc.cbWndExtra		= sizeof(VDVideoDisplayMinidriverOpenGL*);
 	wc.hInstance		= VDGetLocalModuleHandleW32();
 	wc.hIcon			= 0;
 	wc.hCursor			= 0;
 	wc.hbrBackground	= 0;
 	wc.lpszMenuName		= 0;
-	wc.lpszClassName	= "phaeronOpenGLVideoDisplay";
+	wc.lpszClassName	= L"phaeronOpenGLVideoDisplay";
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 LRESULT CALLBACK VDVideoDisplayMinidriverOpenGL::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {

@@ -320,10 +320,10 @@ static const char *CrashGetModuleBaseName(HMODULE hmod, char *pszBaseName) {
 		DWORD dw;
 		char *pszFile, *period = NULL;
 
-		if (!GetModuleFileName(hmod, szPath1, std::size(szPath1)))
+		if (!GetModuleFileNameA(hmod, szPath1, std::size(szPath1)))
 			return NULL;
 
-		dw = GetFullPathName(szPath1, sizeof szPath2, szPath2, &pszFile);
+		dw = GetFullPathNameA(szPath1, sizeof szPath2, szPath2, &pszFile);
 
 		if (!dw || dw>sizeof szPath2)
 			return NULL;
@@ -361,7 +361,7 @@ struct Win32ModuleInfo {
 };
 
 typedef BOOL (__stdcall *PENUMPROCESSMODULES)(HANDLE, HMODULE *, DWORD, LPDWORD);
-typedef DWORD (__stdcall *PGETMODULEBASENAME)(HANDLE, HMODULE, LPTSTR, DWORD);
+typedef DWORD (__stdcall *PGETMODULEBASENAMEA)(HANDLE, HMODULE, LPSTR, DWORD);
 typedef BOOL (__stdcall *PGETMODULEINFORMATION)(HANDLE, HMODULE, Win32ModuleInfo *, DWORD);
 
 #ifndef _M_AMD64
@@ -383,19 +383,20 @@ static ModuleInfo *CrashGetModules(void *&ptr) {
 	// use PSAPI.DLL.  With Windows 2000, we can use both (but prefer
 	// PSAPI.DLL).
 
-	HMODULE hmodPSAPI = LoadLibrary("psapi.dll");
+	HMODULE hmodPSAPI = LoadLibraryW(L"psapi.dll");
 
 	if (hmodPSAPI) {
 		// Using PSAPI.DLL.  Call EnumProcessModules(), then GetModuleFileNameEx()
 		// and GetModuleInformation().
 
 		PENUMPROCESSMODULES pEnumProcessModules = (PENUMPROCESSMODULES)GetProcAddress(hmodPSAPI, "EnumProcessModules");
-		PGETMODULEBASENAME pGetModuleBaseName = (PGETMODULEBASENAME)GetProcAddress(hmodPSAPI, "GetModuleBaseNameA");
+		PGETMODULEBASENAMEA pGetModuleBaseNameA = (PGETMODULEBASENAMEA)GetProcAddress(hmodPSAPI, "GetModuleBaseNameA");
+
 		PGETMODULEINFORMATION pGetModuleInformation = (PGETMODULEINFORMATION)GetProcAddress(hmodPSAPI, "GetModuleInformation");
 		HMODULE *pModules, *pModules0 = (HMODULE *)((char *)pMem + 0xF000);
 		DWORD cbNeeded;
 
-		if (pEnumProcessModules && pGetModuleBaseName && pGetModuleInformation
+		if (pEnumProcessModules && pGetModuleBaseNameA && pGetModuleInformation
 			&& pEnumProcessModules(GetCurrentProcess(), pModules0, 0x1000, &cbNeeded)) {
 
 			ModuleInfo *pMod, *pMod0;
@@ -413,7 +414,7 @@ static ModuleInfo *CrashGetModules(void *&ptr) {
 				HMODULE hCurMod = *pModules++;
 				Win32ModuleInfo mi;
 
-				if (pGetModuleBaseName(GetCurrentProcess(), hCurMod, pszHeap, pszHeapLimit - pszHeap)
+				if (pGetModuleBaseNameA(GetCurrentProcess(), hCurMod, pszHeap, pszHeapLimit - pszHeap)
 					&& pGetModuleInformation(GetCurrentProcess(), hCurMod, &mi, sizeof mi)) {
 
 					char *period = NULL;
@@ -448,7 +449,7 @@ static ModuleInfo *CrashGetModules(void *&ptr) {
 	else {
 		// No PSAPI.  Use the ToolHelp functions in KERNEL.
 
-		HMODULE hmodKERNEL32 = LoadLibrary("kernel32.dll");
+		HMODULE hmodKERNEL32 = LoadLibraryW(L"kernel32.dll");
 
 		PCREATETOOLHELP32SNAPSHOT pCreateToolhelp32Snapshot = (PCREATETOOLHELP32SNAPSHOT)GetProcAddress(hmodKERNEL32, "CreateToolhelp32Snapshot");
 		PMODULE32FIRST pModule32First = (PMODULE32FIRST)GetProcAddress(hmodKERNEL32, "Module32First");
@@ -468,10 +469,12 @@ static ModuleInfo *CrashGetModules(void *&ptr) {
 
 				if (pModule32First(hSnap, &me))
 					do {
-						if (pszHeap+strlen(me.szModule) >= (char *)(pModInfo - 1))
+						VDStringA modulename = VDTextWToA(me.szModule);
+						if (pszHeap + modulename.length() >= (char*)(pModInfo - 1)) {
 							break;
+						}
 
-						strcpy(pszHeap, me.szModule);
+						strcpy(pszHeap, modulename.c_str());
 
 						--pModInfo;
 						pModInfo->name = pszHeap;
@@ -923,8 +926,8 @@ static void SpliceProgramPath(char *buf, int bufsiz, const char *fn) {
 	char tbuf[MAX_PATH];
 	char *pszFile;
 
-	GetModuleFileName(NULL, tbuf, std::size(tbuf));
-	GetFullPathName(tbuf, bufsiz, buf, &pszFile);
+	GetModuleFileNameA(NULL, tbuf, std::size(tbuf));
+	GetFullPathNameA(tbuf, bufsiz, buf, &pszFile);
 	strcpy(pszFile, fn);
 }
 
@@ -1575,7 +1578,7 @@ bool VDDebugInfoInitFromFile(VDDebugInfoContext *pctx, const char *pszFilename) 
 	pctx->pRawBlock = NULL;
 	pctx->pRVAHeap = NULL;
 
-	HANDLE h = CreateFile(pszFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE h = CreateFileA(pszFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == h) {
 		return false;
@@ -1678,7 +1681,7 @@ long VDDebugInfoLookupRVA(VDDebugInfoContext *pctx, unsigned rva, char *buf, int
 		}
 
 		// ehh... where's my wsnprintf?  _snprintf() might allocate memory or locks....
-		return wsprintf(buf, "%s%s%s%s", class_name?class_name:"", class_name?"::":"", prefix, fn_name) >= 0
+		return wsprintfA(buf, "%s%s%s%s", class_name?class_name:"", class_name?"::":"", prefix, fn_name) >= 0
 				? rva
 				: -1;
 	}
@@ -1707,7 +1710,7 @@ long VDDebugInfoLookupRVA(VDDebugInfoContext *pctx, unsigned rva, char *buf, int
 	NT_TIB *VDGetThreadTibW32(HANDLE hThread, const CONTEXT *pContext) {
 		typedef NTSTATUS (WINAPI *tpNtQueryInformationThread)(HANDLE ThreadHandle, int ThreadInformationClass, PVOID ThreadInformation, ULONG ThreadInformationLength, PULONG ReturnLength);
 
-		const tpNtQueryInformationThread pNtQueryInformationThread = (tpNtQueryInformationThread)GetProcAddress(GetModuleHandle("ntdll"), "NtQueryInformationThread");
+		const tpNtQueryInformationThread pNtQueryInformationThread = (tpNtQueryInformationThread)GetProcAddress(GetModuleHandleW(L"ntdll"), "NtQueryInformationThread");
 		const int ThreadBasicInformation = 0;
 
 		VDASSERTCT(sizeof(THREAD_BASIC_INFORMATION) == 0x30);
@@ -1862,7 +1865,7 @@ static bool DoSave(const char *pszFilename, const wchar_t *pwszFilename, HANDLE 
 	// Detect operating system.
 
 #ifndef _M_AMD64
-	HMODULE hmodKernel32 = GetModuleHandle("kernel32");
+	HMODULE hmodKernel32 = GetModuleHandleW(L"kernel32");
 #endif
 
 	{
@@ -2137,7 +2140,7 @@ protected:
 				"help you pinpoint the problem. If a third party driver is implicated, "
 				"try using another driver and see if the problem goes away.";
 
-		SendDlgItemMessage(mhdlg, IDC_CRASH_HELP, WM_SETTEXT, 0, (LPARAM)sszHelpText);
+		SendDlgItemMessageA(mhdlg, IDC_CRASH_HELP, WM_SETTEXT, 0, (LPARAM)sszHelpText);
 
 		HWND hwndInfo = GetDlgItem(mhdlg, IDC_CRASH_DETAILS);
 

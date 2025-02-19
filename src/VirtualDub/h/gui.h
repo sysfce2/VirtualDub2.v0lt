@@ -166,7 +166,6 @@ public:
 	HWND	GetHandle() const { return mhdlg; }
 
 	LRESULT ActivateDialog(VDGUIHandle hParent);
-	LRESULT ActivateDialogDual(VDGUIHandle hParent);
 	bool CreateModeless(VDGUIHandle hParent);
 	void DestroyModeless();
 protected:
@@ -180,7 +179,7 @@ protected:
 	virtual bool PreNCDestroy() { return false; }
 
 	HWND		mhdlg;
-	LPCTSTR		mpszDialogName;
+	LPCWSTR		mpszDialogName;
 };
 
 #endif

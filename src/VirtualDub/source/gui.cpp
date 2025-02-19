@@ -464,8 +464,8 @@ void guiMenuHelp(HWND hwnd, WPARAM wParam, WPARAM part, const UINT *iTranslator)
 
 		while(idPtr[0]) {
 			if (idPtr[0] == LOWORD(wParam)) {
-				if (LoadString(g_hInst, idPtr[1], msgbuf, sizeof msgbuf)) {
-					SendMessage(hwndStatus, SB_SETTEXT, part, (LPARAM)msgbuf);
+				if (LoadStringA(g_hInst, idPtr[1], msgbuf, sizeof msgbuf)) {
+					SendMessageA(hwndStatus, SB_SETTEXT, part, (LPARAM)msgbuf);
 					return;
 				}
 			}
@@ -1095,7 +1095,7 @@ INT_PTR CALLBACK VDAutoLogDisplay::DlgProc(HWND hdlg, UINT msg, WPARAM wParam, L
 ////////////////////////////////////////////////////////////////////////////////
 
 VDDialogBaseW32::VDDialogBaseW32(UINT dlgid)
-: mpszDialogName(MAKEINTRESOURCE(dlgid))
+: mpszDialogName(MAKEINTRESOURCEW(dlgid))
 , mhdlg(NULL)
 {
 }
@@ -1130,11 +1130,7 @@ INT_PTR CALLBACK VDDialogBaseW32::StaticDlgProc(HWND hwnd, UINT msg, WPARAM wPar
 }
 
 LRESULT VDDialogBaseW32::ActivateDialog(VDGUIHandle hParent) {
-	return DialogBoxParam(g_hInst, mpszDialogName, (HWND)hParent, StaticDlgProc, (LPARAM)this);
-}
-
-LRESULT VDDialogBaseW32::ActivateDialogDual(VDGUIHandle hParent) {
-	return DialogBoxParamW(g_hInst, IS_INTRESOURCE(mpszDialogName) ? (LPCWSTR)mpszDialogName : VDTextAToW(mpszDialogName).c_str(), (HWND)hParent, StaticDlgProc, (LPARAM)this);
+	return DialogBoxParamW(g_hInst, mpszDialogName, (HWND)hParent, StaticDlgProc, (LPARAM)this);
 }
 
 void VDDialogBaseW32::End(LRESULT res) {
@@ -1144,7 +1140,7 @@ void VDDialogBaseW32::End(LRESULT res) {
 
 bool VDDialogBaseW32::CreateModeless(VDGUIHandle hParent) {
 	VDASSERT(!mhdlg);
-	return !!CreateDialogParam(g_hInst, mpszDialogName, (HWND)hParent, StaticDlgProc, (LPARAM)this);
+	return !!CreateDialogParamW(g_hInst, mpszDialogName, (HWND)hParent, StaticDlgProc, (LPARAM)this);
 }
 
 void VDDialogBaseW32::DestroyModeless() {

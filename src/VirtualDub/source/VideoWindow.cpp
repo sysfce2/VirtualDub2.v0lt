@@ -39,7 +39,7 @@ extern bool VDPreferencesIsDisplay3DEnabled();
 
 ////////////////////////////
 
-const char g_szVideoWindowClass[]="VDVideoWindow";
+const wchar_t g_szVideoWindowClass[]=L"VDVideoWindow";
 
 ////////////////////////////
 
@@ -200,7 +200,7 @@ VDVideoWindow::~VDVideoWindow() {
 }
 
 ATOM VDVideoWindow::RegisterControl() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
 	wc.lpfnWndProc		= VDVideoWindow::WndProcStatic;

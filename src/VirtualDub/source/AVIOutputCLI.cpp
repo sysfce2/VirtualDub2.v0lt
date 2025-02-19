@@ -388,8 +388,8 @@ void VDLaunchIpcDataW32::Init(uint32 pid, const wchar_t *programName, const wcha
 
 	size_t size = sizeof(VDLaunchIpcRawDataW32) + programNameA.size() + cmdLineA.size() + 2 + (programNameLen + commandLineLen + 2) * sizeof(wchar_t);
 
-	VDStringA mappingName;
-	mappingName.sprintf("vdlaunch-data-%08x", pid);
+	VDStringW mappingName;
+	mappingName.sprintf(L"vdlaunch-data-%08x", pid);
 	HANDLE h = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, size, mappingName.c_str());
 
 	if (!h)

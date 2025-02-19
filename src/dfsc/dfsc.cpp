@@ -148,8 +148,8 @@ const wchar_t *VDVideoDecompressorDFSC::GetName() {
 
 // ------------ Defines ---------------------------
 
-TCHAR szDescription[] = TEXT("DebugMode FSVFWC (internal use)");
-TCHAR szName[] = TEXT("DebugMode FSVFWC (internal use)");
+WCHAR szDescription[] = L"DebugMode FSVFWC (internal use)";
+WCHAR szName[] = L"DebugMode FSVFWC (internal use)";
 
 #define VERSION         0x00010000   // 1.0
 
@@ -206,8 +206,8 @@ DWORD DfscInstance::GetInfo(ICINFO* icinfo, DWORD dwSize) {
 
   icinfo->dwVersion = VERSION;
   icinfo->dwVersionICM = ICVERSION;
-  MultiByteToWideChar(CP_ACP, 0, szName, -1, icinfo->szName, std::size(icinfo->szName));
-  MultiByteToWideChar(CP_ACP, 0, szDescription, -1, icinfo->szDescription, std::size(icinfo->szDescription));
+  wcscpy_s(icinfo->szName, szName);
+  wcscpy_s(icinfo->szDescription, szDescription);
 
   return sizeof(ICINFO);
 }
@@ -345,7 +345,7 @@ DWORD DfscInstance::Decompress(ICDECOMPRESS* icinfo, DWORD dwSize) {
     }
 
     if (!vars) {
-      varFile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(DfscData), "DfscNetData");
+      varFile = CreateFileMappingW(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(DfscData), L"DfscNetData");
       if (GetLastError() != ERROR_ALREADY_EXISTS) {
         CloseHandle(varFile);
         varFile = NULL;
@@ -354,7 +354,7 @@ DWORD DfscInstance::Decompress(ICDECOMPRESS* icinfo, DWORD dwSize) {
         DWORD stream = ((DWORD*)icinfo->lpInput)[1];
         char str[64] = "DfscData";
         _ultoa(stream, str + strlen(str), 10);
-        varFile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(DfscData), str);
+        varFile = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(DfscData), str);
         if (GetLastError() != ERROR_ALREADY_EXISTS) {
           CloseHandle(varFile);
           varFile = NULL;
@@ -367,9 +367,9 @@ DWORD DfscInstance::Decompress(ICDECOMPRESS* icinfo, DWORD dwSize) {
       if (!vars)
         return ICERR_BADFORMAT;
 
-      videoEncSem = CreateSemaphore(NULL, 1, 1, vars->videoEncSemName);
-      videoEncEvent = CreateEvent(NULL, FALSE, FALSE, vars->videoEncEventName);
-      videoDecEvent = CreateEvent(NULL, FALSE, FALSE, vars->videoDecEventName);
+      videoEncSem = CreateSemaphoreA(NULL, 1, 1, vars->videoEncSemName);
+      videoEncEvent = CreateEventA(NULL, FALSE, FALSE, vars->videoEncEventName);
+      videoDecEvent = CreateEventA(NULL, FALSE, FALSE, vars->videoDecEventName);
     }
 
     WaitForSingleObject(videoEncSem, 10000);

@@ -23,7 +23,7 @@
 
 #define VDPARAMETERCURVECONTROLCLASS (g_VDParameterCurveControlClass)
 
-extern const char g_VDParameterCurveControlClass[];
+extern const wchar_t g_VDParameterCurveControlClass[];
 
 class VDParameterCurve;
 

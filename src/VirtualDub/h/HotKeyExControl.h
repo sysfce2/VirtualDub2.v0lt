@@ -7,7 +7,7 @@
 struct VDUIAccelerator;
 class IVDUIHotKeyExControl;
 
-#define VDUIHOTKEYEXCLASS "VDHotKeyEx"
+#define VDUIHOTKEYEXCLASS L"VDHotKeyEx"
 
 bool VDUIRegisterHotKeyExControl();
 IVDUIHotKeyExControl *VDGetUIHotKeyExControl(VDGUIHandle h);

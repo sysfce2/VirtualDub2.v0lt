@@ -711,7 +711,7 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 	UpdateAccelDub();
 	UpdateAccelPreview();
 
-	mhwndStatus = CreateStatusWindow(WS_CHILD|WS_VISIBLE, "", (HWND)mhwnd, IDC_STATUS_WINDOW);
+	mhwndStatus = CreateStatusWindowW(WS_CHILD|WS_VISIBLE, L"", (HWND)mhwnd, IDC_STATUS_WINDOW);
 	if (!mhwndStatus) {
 		Detach();
 		return false;
@@ -734,8 +734,8 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 	}
 
 	// Create video windows.
-	mhwndInputFrame = CreateWindow(VIDEOWINDOWCLASS, "", WS_CHILD|WS_CLIPSIBLINGS|WS_CLIPCHILDREN, 0, 0, 64, 64, (HWND)mhwnd, (HMENU)1, g_hInst, NULL);
-	mhwndOutputFrame = CreateWindow(VIDEOWINDOWCLASS, "", WS_CHILD|WS_CLIPSIBLINGS|WS_CLIPCHILDREN, 0, 0, 64, 64, (HWND)mhwnd, (HMENU)2, g_hInst, NULL);
+	mhwndInputFrame = CreateWindowW(VIDEOWINDOWCLASS, L"", WS_CHILD|WS_CLIPSIBLINGS|WS_CLIPCHILDREN, 0, 0, 64, 64, (HWND)mhwnd, (HMENU)1, g_hInst, NULL);
+	mhwndOutputFrame = CreateWindowW(VIDEOWINDOWCLASS, L"", WS_CHILD|WS_CLIPSIBLINGS|WS_CLIPCHILDREN, 0, 0, 64, 64, (HWND)mhwnd, (HMENU)2, g_hInst, NULL);
 
 	if (!mhwndInputFrame || !mhwndOutputFrame) {
 		Detach();
@@ -850,7 +850,7 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 }
 
 void VDProjectUI::CreatePositionControl() {
-	mhwndPosition = CreateWindowEx(0, POSITIONCONTROLCLASS, "", WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | PCS_PLAYBACK | PCS_MARK | PCS_SCENE, 0, 0, 200, 64, (HWND)mhwnd, (HMENU)IDC_POSITION, g_hInst, NULL);
+	mhwndPosition = CreateWindowExW(0, POSITIONCONTROLCLASS, L"", WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | PCS_PLAYBACK | PCS_MARK | PCS_SCENE, 0, 0, 200, 64, (HWND)mhwnd, (HMENU)IDC_POSITION, g_hInst, NULL);
 	if (!mhwndPosition) return;
 	mpPosition = VDGetIPositionControl((VDGUIHandle)mhwndPosition);
 
@@ -3032,7 +3032,7 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 		info.cbSize = sizeof(info);
 		info.fMask = MIIM_SUBMENU;
 		info.hSubMenu = hmenuExport;
-		SetMenuItemInfo(hmenuFile,ID_FILE_EXPORT,false,&info);
+		SetMenuItemInfoA(hmenuFile,ID_FILE_EXPORT,false,&info);
 
 		RemoveMenu(hmenuExport, ID_EXPORT_DRIVERTOOL0, MF_BYCOMMAND);
 		RemoveMenu(hmenuExport, ID_EXPORT_DRIVERTOOL1, MF_BYCOMMAND);
@@ -3042,7 +3042,7 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 		int pos = 0;
 		while (1) {
 			info.fMask = MIIM_ID;
-			if (!GetMenuItemInfo(hmenuExport, pos, TRUE, &info)) break;
+			if (!GetMenuItemInfoA(hmenuExport, pos, TRUE, &info)) break;
 			pos++;
 		}
 
@@ -3075,7 +3075,7 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 		info.cbSize = sizeof(info);
 		info.fMask = MIIM_SUBMENU;
 		info.hSubMenu = GetSubMenu(mhMenuExport, 0);
-		SetMenuItemInfo(hmenuFile,ID_FILE_EXPORT,false,&info);
+		SetMenuItemInfoA(hmenuFile,ID_FILE_EXPORT,false,&info);
 	}
 
 	{
@@ -3100,7 +3100,7 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 		info.cbSize = sizeof(info);
 		info.fMask = MIIM_SUBMENU;
 		info.hSubMenu = hmenuTools;
-		SetMenuItemInfo(hMenu,ID_TOOLS,false,&info);
+		SetMenuItemInfoA(hMenu,ID_TOOLS,false,&info);
 	}
 
 	VDEnableMenuItemW32(hMenu, ID_QUEUEBATCHOPERATION_SAVEASAVI				, bSourceFileExists);
@@ -4164,7 +4164,7 @@ void VDProjectUI::OpenAudioDisplay() {
 	mpUIAudioSplitBar->Create(&parms);
 
 	HWND hwndParent = vdpoly_cast<IVDUIWindowW32 *>(mpUIBase)->GetHandleW32();
-	mhwndAudioDisplay = CreateWindowEx(WS_EX_STATICEDGE, g_szAudioDisplayControlName, "", WS_CHILD|WS_VISIBLE, 0, 0, 0, 0, (HWND)hwndParent, NULL, GetModuleHandle(NULL), NULL);
+	mhwndAudioDisplay = CreateWindowExW(WS_EX_STATICEDGE, g_szAudioDisplayControlName, L"", WS_CHILD|WS_VISIBLE, 0, 0, 0, 0, (HWND)hwndParent, NULL, GetModuleHandle(NULL), NULL);
 	mpUIAudioDisplay = VDUICreatePeer((VDGUIHandle)mhwndAudioDisplay);
 	mpUIAudioDisplay->SetAlignment(nsVDUI::kFill, nsVDUI::kFill);
 	mpUISplitSet->AddChild(mpUIAudioDisplay);
@@ -4508,7 +4508,7 @@ void VDProjectUI::OpenCurveEditor() {
 	mpUICurveCtl->SetMinimumSize(vduisize(0,r.bottom-r.top));
 	mpUICurveSet->AddChild(mpUICurveCtl);
 
-	mhwndCurveEditor = CreateWindowEx(WS_EX_STATICEDGE, g_VDParameterCurveControlClass, "", WS_CHILD|WS_VISIBLE, 0, 0, 0, 0, (HWND)hwndParent, NULL, GetModuleHandle(NULL), NULL);
+	mhwndCurveEditor = CreateWindowExW(WS_EX_STATICEDGE, g_VDParameterCurveControlClass, L"", WS_CHILD|WS_VISIBLE, 0, 0, 0, 0, (HWND)hwndParent, NULL, GetModuleHandle(NULL), NULL);
 	mpUICurveEditor = VDUICreatePeer((VDGUIHandle)mhwndCurveEditor);
 	mpUICurveEditor->SetAlignment(nsVDUI::kFill, nsVDUI::kFill);
 	mpUICurveSet->AddChild(mpUICurveEditor);

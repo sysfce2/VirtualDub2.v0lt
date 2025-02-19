@@ -3,7 +3,7 @@
 
 #include <windows.h>
 
-extern const char g_szVideoWindowClass[];
+extern const wchar_t g_szVideoWindowClass[];
 
 #define VIDEOWINDOWCLASS (g_szVideoWindowClass)
 

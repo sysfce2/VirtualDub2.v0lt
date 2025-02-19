@@ -429,11 +429,11 @@ int VDBackfaceConsole::Release() {
 void VDBackfaceConsole::Init() {
 	static ATOM a = RegisterWindowClass();
 
-	CreateWindow((LPCTSTR)a, "Backface", WS_OVERLAPPEDWINDOW|WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, g_hInst, this);
+	CreateWindowW((LPCWSTR)a, L"Backface", WS_OVERLAPPEDWINDOW|WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, g_hInst, this);
 }
 
 ATOM VDBackfaceConsole::RegisterWindowClass() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 	wc.style			= 0;
 	wc.lpfnWndProc		= StaticWndProc;
 	wc.cbClsExtra		= 0;
@@ -443,8 +443,8 @@ ATOM VDBackfaceConsole::RegisterWindowClass() {
 	wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground	= NULL;
 	wc.lpszMenuName		= NULL;
-	wc.lpszClassName	= "Backface";
-	return RegisterClass(&wc);
+	wc.lpszClassName	= L"Backface";
+	return RegisterClassW(&wc);
 }
 
 LRESULT CALLBACK VDBackfaceConsole::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -495,21 +495,21 @@ LRESULT VDBackfaceConsole::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 }
 
 bool VDBackfaceConsole::OnCreate() {
-	mhmodRichEdit = LoadLibrary("riched32");
+	mhmodRichEdit = LoadLibraryW(L"riched32");
 
 	if (!mFont) {
-		mFont = CreateFont(-10, 0, 0, 0, 0, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_CHARACTER_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Lucida Console");
+		mFont = CreateFontW(-10, 0, 0, 0, 0, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_CHARACTER_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Lucida Console");
 		if (!mFont)
 			return false;
 	}
 
-	mhwndLog = CreateWindowEx(WS_EX_CLIENTEDGE, "RICHEDIT", "", ES_READONLY|ES_MULTILINE|ES_AUTOVSCROLL|WS_VSCROLL|WS_VISIBLE|WS_CHILD, 0, 0, 0, 0, mhwnd, (HMENU)100, g_hInst, NULL);
+	mhwndLog = CreateWindowExW(WS_EX_CLIENTEDGE, L"RICHEDIT", L"", ES_READONLY|ES_MULTILINE|ES_AUTOVSCROLL|WS_VSCROLL|WS_VISIBLE|WS_CHILD, 0, 0, 0, 0, mhwnd, (HMENU)100, g_hInst, NULL);
 	if (!mhwndLog)
 		return false;
 
 	SendMessage(mhwndLog, WM_SETFONT, (WPARAM)mFont, NULL);
 
-	mhwndEdit = CreateWindowEx(WS_EX_CLIENTEDGE, "RICHEDIT", "", WS_VISIBLE|WS_CHILD, 0, 0, 0, 0, mhwnd, (HMENU)100, g_hInst, NULL);
+	mhwndEdit = CreateWindowExW(WS_EX_CLIENTEDGE, L"RICHEDIT", L"", WS_VISIBLE|WS_CHILD, 0, 0, 0, 0, mhwnd, (HMENU)100, g_hInst, NULL);
 	if (!mhwndEdit)
 		return false;
 

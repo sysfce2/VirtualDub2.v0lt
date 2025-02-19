@@ -23,7 +23,7 @@
 
 #define AUDIODISPLAYCONTROLCLASS (g_szAudioDisplayControlName)
 
-extern const char g_szAudioDisplayControlName[];
+extern const wchar_t g_szAudioDisplayControlName[];
 
 struct VDWaveFormat;
 

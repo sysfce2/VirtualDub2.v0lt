@@ -305,7 +305,7 @@ INT_PTR VDDialogCaptureSettings::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 				char buf[32];
 
 				sprintf(buf, "%.4f", 10000000.0 / mParms.mFramePeriod);
-				SendMessage(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_SETTEXT, 0, (LPARAM)buf);
+				SendMessageA(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_SETTEXT, 0, (LPARAM)buf);
 
 				CheckDlgButton(mhdlg, IDC_CAPTURE_ON_OK, mParms.mbDisplayPrerollDialog ? 1 : 0);
 				CheckDlgButton(mhdlg, IDC_CAPTURE_CPU_POWER, mParms.mbMaxPower && mParms.mbEnablePower ? 1 : 0);
@@ -320,7 +320,7 @@ INT_PTR VDDialogCaptureSettings::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 					double dFrameRate;
 					char buf[32]={0};
 
-					SendMessage(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_GETTEXT, sizeof buf - 1, (LPARAM)buf);
+					SendMessageA(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_GETTEXT, sizeof buf - 1, (LPARAM)buf);
 					if (1!=sscanf(buf, " %lg ", &dFrameRate) || dFrameRate<=0.01 || dFrameRate>1000.0) {
 						MessageBeep(MB_ICONQUESTION);
 						SetFocus(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE));
@@ -338,7 +338,7 @@ INT_PTR VDDialogCaptureSettings::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 					double dFrameRate;
 					char buf[32];
 
-					SendMessage(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_GETTEXT, sizeof buf, (LPARAM)buf);
+					SendMessageA(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_GETTEXT, sizeof buf, (LPARAM)buf);
 					if (1!=sscanf(buf, " %lg ", &dFrameRate) || dFrameRate<=0.01 || dFrameRate>1000.0) {
 						MessageBeep(MB_ICONQUESTION);
 						SetFocus(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE));

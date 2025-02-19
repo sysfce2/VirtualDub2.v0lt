@@ -661,7 +661,7 @@ bool VDDisasmInit(VDDisassemblyContext *pvdc, const char *pszFilename) {
 	pvdc->pRawBlock = NULL;
 	pvdc->pExtraData = NULL;
 
-	h = CreateFile(pszFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	h = CreateFileA(pszFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (h == INVALID_HANDLE_VALUE)
 		return false;
@@ -731,8 +731,8 @@ static void SpliceProgramPath(char *buf, int bufsiz, const char *fn) {
 	char tbuf[MAX_PATH];
 	char *pszFile;
 
-	GetModuleFileName(NULL, tbuf, std::size(tbuf));
-	GetFullPathName(tbuf, bufsiz, buf, &pszFile);
+	GetModuleFileNameA(NULL, tbuf, std::size(tbuf));
+	GetFullPathNameA(tbuf, bufsiz, buf, &pszFile);
 	strcpy(pszFile, fn);
 }
 
@@ -759,7 +759,7 @@ CodeDisassemblyWindow::CodeDisassemblyWindow(void *_code, long _length, void *_r
 	HDC hDC = GetDC(NULL);
 	const int nHeight = MulDiv(10, GetDeviceCaps(hDC, LOGPIXELSY), 96);
 
-	hFontMono = CreateFont(
+	hFontMono = CreateFontW(
 			nHeight,		// nHeight
 			0,				// nWidth
 			0,				// nEscapement
@@ -773,7 +773,7 @@ CodeDisassemblyWindow::CodeDisassemblyWindow(void *_code, long _length, void *_r
 			CLIP_DEFAULT_PRECIS,	// fdwClipPrecision
 			DEFAULT_QUALITY,		// fdwQuality
 			DEFAULT_PITCH | FF_DONTCARE,	// fdwPitchAndFamily
-			"Lucida Console"
+			L"Lucida Console"
 			);
 
 	if (!hFontMono) {

@@ -40,7 +40,7 @@ enum {
 extern HINSTANCE g_hInst;
 extern const char g_szError[];
 
-const char g_szLogWindowControlName[]="phaeronLogWindowControl";
+const wchar_t g_szLogWindowControlName[]=L"phaeronLogWindowControl";
 
 class VDLogWindowControl : public IVDLogWindowControl {
 public:
@@ -149,7 +149,7 @@ VDLogWindowControl::~VDLogWindowControl() {
 }
 
 VDLogWindowControl *VDLogWindowControl::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
-	HWND hwnd = CreateWindow(g_szLogWindowControlName, "", WS_VISIBLE|WS_CHILD|WS_VSCROLL, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
+	HWND hwnd = CreateWindowW(g_szLogWindowControlName, L"", WS_VISIBLE|WS_CHILD|WS_VSCROLL, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
 	if (hwnd)
 		return (VDLogWindowControl *)GetWindowLongPtr(hwnd, 0);
@@ -158,7 +158,7 @@ VDLogWindowControl *VDLogWindowControl::Create(HWND hwndParent, int x, int y, in
 }
 
 ATOM RegisterLogWindowControl() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= 0;
 	wc.lpfnWndProc	= VDLogWindowControl::StaticWndProc;
@@ -171,7 +171,7 @@ ATOM RegisterLogWindowControl() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= g_szLogWindowControlName;
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 IVDLogWindowControl *VDGetILogWindowControl(HWND hwnd) {

@@ -338,7 +338,7 @@ void CaptureDisplayBT848Tweaker(HWND hwndParent) {
 
 	// Attempt to load dTV driver
 
-	g_hmodDTV = LoadLibrary("dTVdrv.dll");
+	g_hmodDTV = LoadLibraryW(L"dTVdrv.dll");
 
 	try {
 

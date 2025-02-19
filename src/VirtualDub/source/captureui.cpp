@@ -707,7 +707,7 @@ bool VDCaptureProjectUI::Attach(VDGUIHandle hwnd, IVDCaptureProject *pProject) {
 	// setup the status window
 	static const INT kStatusPartWidths[]={ 50, 100, 150, 200, 250, -1 };
 
-	mhwndStatus = CreateStatusWindow(WS_CHILD, "", (HWND)mhwnd, IDC_STATUS_WINDOW);
+	mhwndStatus = CreateStatusWindowW(WS_CHILD, L"", (HWND)mhwnd, IDC_STATUS_WINDOW);
 	if (!mhwndStatus) {
 		Detach();
 		return false;
@@ -2431,7 +2431,7 @@ void VDCaptureProjectUI::UICaptureStart(bool test) {
 		mAudioUncompressedRate = wfex->mSamplingRate * wfex->mChannels * 2;
 
 	if (mbDisplayLargeTimer)
-		mhClockFont = CreateFont(200, 0,
+		mhClockFont = CreateFontW(200, 0,
 								0, 0, 0,
 								FALSE, FALSE, FALSE,
 								ANSI_CHARSET,
@@ -2439,7 +2439,7 @@ void VDCaptureProjectUI::UICaptureStart(bool test) {
 								CLIP_DEFAULT_PRECIS,
 								DEFAULT_QUALITY,
 								FF_DONTCARE|DEFAULT_PITCH,
-								"Arial");
+								L"Arial");
 
 	if (mbHideOnCapture) {
 		mpProject->SetDisplayVisibility(false);
@@ -3457,7 +3457,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 			}
 			break;
 		case ID_AUDIO_WINMIXER:
-			ShellExecute((HWND)mhwnd, NULL, "rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1", NULL, SW_SHOWNORMAL);
+			ShellExecuteW((HWND)mhwnd, NULL, L"rundll32.exe", L"shell32.dll,Control_RunDLL mmsys.cpl,,1", NULL, SW_SHOWNORMAL);
 			break;
 		case ID_VIDEO_NODISPLAY:
 			SetDisplayMode(kDisplayNone);

@@ -1945,9 +1945,9 @@ bool VDCaptureDriverDS::Init(VDGUIHandle hParent) {
 	HRESULT hr;
 
 	if (!sMsgSinkClass) {
-		WNDCLASS wc = { 0, StaticMessageSinkWndProc, 0, sizeof(void *), g_hInst, NULL, NULL, NULL, NULL, "Riza DirectShow event sink" };
+		WNDCLASSW wc = { 0, StaticMessageSinkWndProc, 0, sizeof(void *), g_hInst, NULL, NULL, NULL, NULL, L"Riza DirectShow event sink" };
 
-		sMsgSinkClass = RegisterClass(&wc);
+		sMsgSinkClass = RegisterClassW(&wc);
 
 		if (!sMsgSinkClass)
 			return false;
@@ -1955,7 +1955,7 @@ bool VDCaptureDriverDS::Init(VDGUIHandle hParent) {
 
 	// Create message sink.
 
-	if (!(mhwndEventSink = CreateWindow((LPCTSTR)sMsgSinkClass, "", WS_POPUP, 0, 0, 0, 0, mhwndParent, NULL, g_hInst, this)))
+	if (!(mhwndEventSink = CreateWindowW((LPCTSTR)sMsgSinkClass, L"", WS_POPUP, 0, 0, 0, 0, mhwndParent, NULL, g_hInst, this)))
 		return false;
 
 	// Create a filter graph manager.

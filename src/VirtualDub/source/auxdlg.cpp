@@ -336,7 +336,7 @@ INT_PTR CALLBACK ShowTextDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM
     switch (message)
     {
         case WM_INITDIALOG:
-			if (hRSRC = FindResource(NULL, (LPSTR)lParam, "STUFF")) {
+			if (hRSRC = FindResourceA(NULL, (LPSTR)lParam, "STUFF")) { ///Hmm
 				HGLOBAL hGlobal = LoadResource(NULL, hRSRC);
 				if (hGlobal) {
 					LPVOID lpData = LockResource(hGlobal);
@@ -353,7 +353,7 @@ INT_PTR CALLBACK ShowTextDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM
 						}
 						s+=2;
 						SendMessage(GetDlgItem(hDlg, IDC_CHANGES), WM_SETFONT, (WPARAM)GetStockObject(SYSTEM_FIXED_FONT), MAKELPARAM(TRUE, 0));
-						SendMessage(GetDlgItem(hDlg, IDC_CHANGES), WM_SETTEXT, 0, (LPARAM)s);
+						SendMessageA(GetDlgItem(hDlg, IDC_CHANGES), WM_SETTEXT, 0, (LPARAM)s);
 						FreeResource(hGlobal);
 						return TRUE;
 					}
@@ -485,10 +485,10 @@ INT_PTR CALLBACK DivXWarningDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPA
     switch (message)
     {
 		case WM_INITDIALOG:
-			s = (const char *)lParam;
-			SetWindowText(hdlg, s);
+			s = (const char *)lParam; ///Hmm
+			SetWindowTextA(hdlg, s);
 			while(*s++);
-			SendDlgItemMessage(hdlg, IDC_WARNING, WM_SETTEXT, 0, (LPARAM)s);
+			SendDlgItemMessageA(hdlg, IDC_WARNING, WM_SETTEXT, 0, (LPARAM)s);
 			return TRUE;
 
         case WM_COMMAND:
@@ -621,7 +621,7 @@ namespace {
 	}
 
 	void TextToRichTextControl(LPCTSTR resName, HWND hdlg, HWND hwndText) {
-		HRSRC hResource = FindResource(NULL, resName, "STUFF");
+		HRSRC hResource = FindResourceW(NULL, resName, L"STUFF");
 
 		if (!hResource)
 			return;
@@ -768,7 +768,7 @@ void VDShowReleaseNotes(VDGUIHandle hParent) {
 }
 
 void VDDumpChangeLog() {
-	HRSRC hResource = FindResource(NULL, MAKEINTRESOURCE(IDR_CHANGES), "STUFF");
+	HRSRC hResource = FindResourceW(NULL, MAKEINTRESOURCE(IDR_CHANGES), L"STUFF");
 
 	if (!hResource)
 		return;

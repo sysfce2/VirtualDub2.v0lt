@@ -45,7 +45,7 @@ protected:
 };
 
 bool VDUIRegisterHotKeyExControl() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= CS_VREDRAW | CS_HREDRAW;
 	wc.lpfnWndProc	= VDUIHotKeyExControlW32::StaticWndProc;

@@ -239,9 +239,9 @@ bool VDCaptureDriverVFW::Init(VDGUIHandle hParent) {
 	mhwndParent = (HWND)hParent;
 
 	if (!sMsgSinkClass) {
-		WNDCLASS wc = { 0, StaticMessageSinkWndProc, 0, sizeof(VDCaptureDriverVFW *), g_hInst, NULL, NULL, NULL, NULL, "Riza VFW event sink" };
+		WNDCLASSW wc = { 0, StaticMessageSinkWndProc, 0, sizeof(VDCaptureDriverVFW *), g_hInst, NULL, NULL, NULL, NULL, L"Riza VFW event sink" };
 
-		sMsgSinkClass = RegisterClass(&wc);
+		sMsgSinkClass = RegisterClassW(&wc);
 
 		if (!sMsgSinkClass)
 			return false;
@@ -254,7 +254,7 @@ bool VDCaptureDriverVFW::Init(VDGUIHandle hParent) {
 	InitMixerSupport();
 
 	// Create message sink.
-	if (!(mhwndEventSink = CreateWindow((LPCTSTR)sMsgSinkClass, "", WS_POPUP, 0, 0, 0, 0, mhwndParent, NULL, g_hInst, this))) {
+	if (!(mhwndEventSink = CreateWindowW((LPCWSTR)sMsgSinkClass, L"", WS_POPUP, 0, 0, 0, 0, mhwndParent, NULL, g_hInst, this))) {
 		Shutdown();
 		return false;
 	}
@@ -853,7 +853,7 @@ void VDCaptureDriverVFW::InitMixerSupport() {
 						mhMixer = NULL;
 					} else {
 						// Enumerate control inputs and populate the name array
-						vdblock<MIXERCONTROLDETAILS_LISTTEXT> names(mMixerInputControl.cMultipleItems);
+						vdblock<MIXERCONTROLDETAILS_LISTTEXTW> names(mMixerInputControl.cMultipleItems);
 
 						MIXERCONTROLDETAILS details = {sizeof(MIXERCONTROLDETAILS)};
 
@@ -865,11 +865,12 @@ void VDCaptureDriverVFW::InitMixerSupport() {
 
 						mMixerInput = -1;
 
-						if (MMSYSERR_NOERROR == mixerGetControlDetails((HMIXEROBJ)mhMixer, &details, MIXER_GETCONTROLDETAILSF_LISTTEXT)) {
+						if (MMSYSERR_NOERROR == mixerGetControlDetailsW((HMIXEROBJ)mhMixer, &details, MIXER_GETCONTROLDETAILSF_LISTTEXT)) {
 							mMixerInputs.reserve(details.cMultipleItems);
 
-							for(unsigned i=0; i<details.cMultipleItems; ++i)
-								mMixerInputs.push_back(MixerInputs::value_type(VDTextAToW(names[i].szName)));
+							for (unsigned i = 0; i < details.cMultipleItems; ++i) {
+								mMixerInputs.push_back(MixerInputs::value_type(names[i].szName));
+							}
 
 							vdblock<MIXERCONTROLDETAILS_BOOLEAN> vals(mMixerInputControl.cMultipleItems);
 

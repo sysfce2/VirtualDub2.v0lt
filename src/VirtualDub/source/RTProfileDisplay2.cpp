@@ -31,7 +31,7 @@
 
 extern HINSTANCE g_hInst;
 
-const char g_szRTProfileDisplayControl2Name[]="VDRTProfileDisplay2";
+const wchar_t g_szRTProfileDisplayControl2Name[]=L"VDRTProfileDisplay2";
 
 bool RegisterRTProfileDisplayControl2();
 extern sint32 VDPreferencesGetFilterThreadCount();
@@ -821,7 +821,7 @@ VDRTProfileDisplay2::~VDRTProfileDisplay2() {
 }
 
 VDRTProfileDisplay2 *VDRTProfileDisplay2::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
-	HWND hwnd = CreateWindow(MAKEINTATOM(sWndClass), "", WS_VISIBLE|WS_CHILD, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
+	HWND hwnd = CreateWindowW(MAKEINTATOM(sWndClass), L"", WS_VISIBLE|WS_CHILD, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
 	if (hwnd)
 		return (VDRTProfileDisplay2 *)GetWindowLongPtr(hwnd, 0);

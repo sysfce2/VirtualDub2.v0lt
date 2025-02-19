@@ -31,7 +31,7 @@
 extern HINSTANCE g_hInst;
 extern const char g_szError[];
 
-const char g_szRTProfileDisplayControlName[]="phaeronRTProfileDisplay";
+const wchar_t g_szRTProfileDisplayControlName[]=L"phaeronRTProfileDisplay";
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -86,7 +86,7 @@ VDRTProfileDisplay::~VDRTProfileDisplay() {
 }
 
 VDRTProfileDisplay *VDRTProfileDisplay::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
-	HWND hwnd = CreateWindow(g_szRTProfileDisplayControlName, "", WS_VISIBLE|WS_CHILD, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
+	HWND hwnd = CreateWindowW(g_szRTProfileDisplayControlName, L"", WS_VISIBLE|WS_CHILD, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
 	if (hwnd)
 		return (VDRTProfileDisplay *)GetWindowLongPtr(hwnd, 0);
@@ -95,7 +95,7 @@ VDRTProfileDisplay *VDRTProfileDisplay::Create(HWND hwndParent, int x, int y, in
 }
 
 ATOM RegisterRTProfileDisplayControl() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= 0;
 	wc.lpfnWndProc	= VDRTProfileDisplay::StaticWndProc;
@@ -108,7 +108,7 @@ ATOM RegisterRTProfileDisplayControl() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= g_szRTProfileDisplayControlName;
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 IVDRTProfileDisplay *VDGetIRTProfileDisplayControl(HWND hwnd) {

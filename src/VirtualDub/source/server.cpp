@@ -88,15 +88,19 @@ FrameserverSession::FrameserverSession() {
 }
 
 DWORD FrameserverSession::Init(LONG arena_size, DWORD session_id) {
-	char buf[16];
+	wchar_t buf[16];
 
-	wsprintfA(buf, "VDUBF%08lx", session_id);
+	wsprintfW(buf, L"VDUBF%08lx", session_id);
 
-	if (INVALID_HANDLE_VALUE == (hArena = OpenFileMapping(FILE_MAP_WRITE, FALSE, buf)))
+	hArena = OpenFileMappingW(FILE_MAP_WRITE, FALSE, buf);
+	if (INVALID_HANDLE_VALUE == hArena) {
 		return NULL;
+	}
 
-	if (!(arena = (char *)MapViewOfFile(hArena, FILE_MAP_WRITE, 0, 0, arena_size)))
+	arena = (char*)MapViewOfFile(hArena, FILE_MAP_WRITE, 0, 0, arena_size);
+	if (!arena) {
 		return NULL;
+	}
 
 	this->id = (DWORD)this;
 	this->arena_size = arena_size;
@@ -439,7 +443,7 @@ INT_PTR CALLBACK Frameserver::StatusDlgProc2( HWND hWnd, UINT message, WPARAM wP
 			HKEY hkey;
 			BOOL fAVIFile = FALSE, fVCM = FALSE;
 
-			if (RegOpenKeyEx(HKEY_CLASSES_ROOT, "CLSID\\{894288E0-0948-11D2-8109-004845000EB5}\\InProcServer32\\AVIFile", 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS) {
+			if (RegOpenKeyExA(HKEY_CLASSES_ROOT, "CLSID\\{894288E0-0948-11D2-8109-004845000EB5}\\InProcServer32\\AVIFile", 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS) {
 				RegCloseKey(hkey);
 				fAVIFile = TRUE;
 			}
@@ -763,7 +767,7 @@ static IVDubServerLink *ivdsl;
 
 static BOOL InitServerDLL()
 {
-	hmodServer = LoadLibrary("vdsvrlnk.dll");
+	hmodServer = LoadLibraryW(L"vdsvrlnk.dll");
 
 	VDDEBUG("VDSVRLNK handle: %p\n", hmodServer);
 
