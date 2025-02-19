@@ -2912,7 +2912,7 @@ void VDProjectUI::ShowMenuHelp(WPARAM wParam) {
 		VDStringW name;
 
 		if ((HIWORD(wParam) & MF_POPUP) || (HIWORD(wParam) & MF_SYSMENU)) {
-			SendMessage(hwndStatus, SB_SETTEXT, 0, (LPARAM)"");
+			SendMessage(hwndStatus, SB_SETTEXTA, 0, (LPARAM)"");
 			return;
 		}
 
@@ -2924,13 +2924,13 @@ void VDProjectUI::ShowMenuHelp(WPARAM wParam) {
 			name += filename;
 			SendMessage(hwndStatus, SB_SETTEXTW, 255, (LPARAM)name.c_str());
 		} else
-			SendMessage(hwndStatus, SB_SETTEXT, 255, (LPARAM)"");
+			SendMessage(hwndStatus, SB_SETTEXTA, 255, (LPARAM)"");
 	} else if (LOWORD(wParam) >= ID_MRU_FILE0 && LOWORD(wParam) <= (ID_MRU_FILE0+99)) {
 		HWND hwndStatus = GetDlgItem((HWND)mhwnd, IDC_STATUS_WINDOW);
 		VDStringW name;
 
 		if ((HIWORD(wParam) & MF_POPUP) || (HIWORD(wParam) & MF_SYSMENU)) {
-			SendMessage(hwndStatus, SB_SETTEXT, 0, (LPARAM)"");
+			SendMessage(hwndStatus, SB_SETTEXTA, 0, (LPARAM)"");
 			return;
 		}
 
@@ -2942,7 +2942,7 @@ void VDProjectUI::ShowMenuHelp(WPARAM wParam) {
 			name += filename;
 			SendMessage(hwndStatus, SB_SETTEXTW, 255, (LPARAM)name.c_str());
 		} else
-			SendMessage(hwndStatus, SB_SETTEXT, 255, (LPARAM)"");
+			SendMessage(hwndStatus, SB_SETTEXTA, 255, (LPARAM)"");
 	} else
 		guiMenuHelp((HWND)mhwnd, wParam, 255, iMainMenuHelpTranslator);
 }

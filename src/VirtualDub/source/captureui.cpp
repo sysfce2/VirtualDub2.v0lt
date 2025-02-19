@@ -714,7 +714,7 @@ bool VDCaptureProjectUI::Attach(VDGUIHandle hwnd, IVDCaptureProject *pProject) {
 	}
 	SendMessage(mhwndStatus, SB_SIMPLE, (WPARAM)FALSE, 0);
 	SendMessage(mhwndStatus, SB_SETPARTS, (WPARAM)6, (LPARAM)(LPINT)kStatusPartWidths);
-	SendMessage(mhwndStatus, SB_SETTEXT, 6 | SBT_NOBORDERS, (LPARAM)"");
+	SendMessage(mhwndStatus, SB_SETTEXTA, 6 | SBT_NOBORDERS, (LPARAM)"");
 
 	// subclass the status window
 	mStatusWndProc = (WNDPROC)GetWindowLongPtr(mhwndStatus, GWLP_WNDPROC);
@@ -959,7 +959,7 @@ void VDCaptureProjectUI::SetPCMAudioFormat(sint32 sampling_rate, bool is_16bit, 
 }
 
 void VDCaptureProjectUI::SetStatusImmediate(const char *s) {
-	SendMessage(mhwndStatus, SB_SETTEXT, 0, (LPARAM)s);
+	SendMessage(mhwndStatus, SB_SETTEXTA, 0, (LPARAM)s);
 	RedrawWindow(mhwndStatus, NULL, NULL, RDW_INVALIDATE|RDW_UPDATENOW);
 }
 
@@ -969,7 +969,7 @@ void VDCaptureProjectUI::SetStatusF(const char *format, ...) {
 
 	va_start(val, format);
 	if ((unsigned)vsprintf_s(buf, format, val) < std::size(buf)) {
-		SendMessage(mhwndStatus, SB_SETTEXT, 0, (LPARAM)buf);
+		SendMessage(mhwndStatus, SB_SETTEXTA, 0, (LPARAM)buf);
 	}
 	va_end(val);
 }
@@ -2202,7 +2202,7 @@ void VDCaptureProjectUI::UICaptureAudioFormatUpdated() {
 		}
 	}
 
-	SendMessage(mhwndStatus, SB_SETTEXT, 1 | SBT_POPOUT, (LPARAM)bufa);
+	SendMessage(mhwndStatus, SB_SETTEXTA, 1 | SBT_POPOUT, (LPARAM)bufa);
 
 	RebuildPanel();
 }
@@ -2233,9 +2233,9 @@ void VDCaptureProjectUI::UICaptureParmsUpdated() {
 	if (framePeriod) {
 		double fps = 10000000.0f / (double)framePeriod;
 		sprintf(bufv, "%.02f fps", fps);
-		SendMessageA(mhwndStatus, SB_SETTEXT, 2 | SBT_POPOUT, (LPARAM)bufv);
+		SendMessageA(mhwndStatus, SB_SETTEXTA, 2 | SBT_POPOUT, (LPARAM)bufv);
 	} else {
-		SendMessageA(mhwndStatus, SB_SETTEXT, 2 | SBT_POPOUT, (LPARAM)"VFR");
+		SendMessageA(mhwndStatus, SB_SETTEXTA, 2 | SBT_POPOUT, (LPARAM)"VFR");
 	}
 
 	vdstructex<VDAVIBitmapInfoHeader> bih;
@@ -2261,7 +2261,7 @@ void VDCaptureProjectUI::UICaptureParmsUpdated() {
 	}
 
 	wsprintfA(bufv, "%ldKB/s", (bandwidth+1023)>>10);
-	SendMessageA(mhwndStatus, SB_SETTEXT, 4, (LPARAM)bufv);
+	SendMessageA(mhwndStatus, SB_SETTEXTA, 4, (LPARAM)bufv);
 }
 
 bool VDCaptureProjectUI::UICaptureAnalyzeBegin(const VDPixmap& px) {
@@ -2473,7 +2473,7 @@ void VDCaptureProjectUI::UICaptureStart(bool test) {
 	}
 
 	// reset preview rate status
-	SendMessage(mhwndStatus, SB_SETTEXT, 3, (LPARAM)L"");
+	SendMessage(mhwndStatus, SB_SETTEXTA, 3, (LPARAM)"");
 
 	if (test) {
 		VDLog(kVDLogInfo, VDStringW(L"Starting test capture."));
@@ -2566,12 +2566,12 @@ LRESULT VDCaptureProjectUI::StatusWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 					if (PtInRect(&r2, pt)) {
 						MapWindowPoints(hwnd, NULL, (LPPOINT)&r2, 2);
 
-						unsigned len = LOWORD(SendMessage(hwnd, SB_GETTEXTLENGTH, i+1, 0));
+						unsigned len = LOWORD(SendMessage(hwnd, SB_GETTEXTLENGTHA, i+1, 0));
 
 						vdfastvector<char> str(len+1, 0);
 
-						SendMessage(hwnd, SB_GETTEXT, i+1, (LPARAM)str.data());
-						SendMessage(hwnd, SB_SETTEXT, (i+1), (LPARAM)str.data());
+						SendMessage(hwnd, SB_GETTEXTA, i+1, (LPARAM)str.data());
+						SendMessage(hwnd, SB_SETTEXTA, (i+1), (LPARAM)str.data());
 
 						bool enabled = true;
 						if (i==0) {
@@ -2589,7 +2589,7 @@ LRESULT VDCaptureProjectUI::StatusWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 									0, (HWND)mhwnd, NULL);
 						}
 
-						SendMessage(hwnd, SB_SETTEXT, (i+1) | SBT_POPOUT, (LPARAM)str.data());
+						SendMessage(hwnd, SB_SETTEXTA, (i+1) | SBT_POPOUT, (LPARAM)str.data());
 						PostMessage((HWND)mhwnd, WM_NULL, 0, 0);
 						break;
 					}
@@ -2851,11 +2851,11 @@ void VDCaptureProjectUI::OnTimer() {
 
 	if (!fc || fc < mLastPreviewFrameCount) {
 		if (mLastPreviewFrameCount)
-			SendMessageA(mhwndStatus, SB_SETTEXT, 3, (LPARAM)"");
+			SendMessageA(mhwndStatus, SB_SETTEXTA, 3, (LPARAM)"");
 	} else {
 		char buf[64];
 		wsprintfA(buf, "%u fps", fc - mLastPreviewFrameCount);
-		SendMessageA(mhwndStatus, SB_SETTEXT, 3, (LPARAM)buf);
+		SendMessageA(mhwndStatus, SB_SETTEXTA, 3, (LPARAM)buf);
 	}
 
 	mLastPreviewFrameCount = fc;

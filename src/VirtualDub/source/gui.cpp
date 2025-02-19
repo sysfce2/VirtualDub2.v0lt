@@ -422,7 +422,7 @@ void guiSetStatus(const char *format, int nPart, ...) {
 		*s++ = ' ';
 	}
 
-	SendMessage(GetDlgItem(g_hWnd, IDC_STATUS_WINDOW), SB_SETTEXT, nPart, (LPARAM)buf);
+	SendMessage(GetDlgItem(g_hWnd, IDC_STATUS_WINDOW), SB_SETTEXTA, nPart, (LPARAM)buf);
 }
 
 void guiSetStatusW(const wchar_t *text, int nPart) {
@@ -465,7 +465,7 @@ void guiMenuHelp(HWND hwnd, WPARAM wParam, WPARAM part, const UINT *iTranslator)
 		while(idPtr[0]) {
 			if (idPtr[0] == LOWORD(wParam)) {
 				if (LoadStringA(g_hInst, idPtr[1], msgbuf, sizeof msgbuf)) {
-					SendMessageA(hwndStatus, SB_SETTEXT, part, (LPARAM)msgbuf);
+					SendMessageA(hwndStatus, SB_SETTEXTA, part, (LPARAM)msgbuf);
 					return;
 				}
 			}
@@ -473,7 +473,7 @@ void guiMenuHelp(HWND hwnd, WPARAM wParam, WPARAM part, const UINT *iTranslator)
 		}
 	}
 
-	SendMessage(hwndStatus, SB_SETTEXT, part, (LPARAM)"");
+	SendMessage(hwndStatus, SB_SETTEXTA, part, (LPARAM)"");
 }
 
 void guiOffsetDlgItem(HWND hdlg, UINT id, LONG xDelta, LONG yDelta) {

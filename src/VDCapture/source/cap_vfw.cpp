@@ -1047,10 +1047,10 @@ LRESULT CALLBACK VDCaptureDriverVFW::StatusCallback(HWND hwnd, int nID, LPCSTR l
 	if (nID) {
 		buf[0] = 0;
 		_snprintf(buf, std::size(buf), "Status %d: %s", nID, lpsz);
-		SendMessage(GetDlgItem(GetParent(hWnd), IDC_STATUS_WINDOW), SB_SETTEXT, 0, (LPARAM)buf);
+		SendMessage(GetDlgItem(GetParent(hWnd), IDC_STATUS_WINDOW), SB_SETTEXTA, 0, (LPARAM)buf);
 		VDDEBUG("%s\n",buf);
 	} else {
-		SendMessage(GetDlgItem(GetParent(hWnd), IDC_STATUS_WINDOW), SB_SETTEXT, 0, (LPARAM)"");
+		SendMessage(GetDlgItem(GetParent(hWnd), IDC_STATUS_WINDOW), SB_SETTEXTA, 0, (LPARAM)"");
 	}
 
 	return 0;
