@@ -108,7 +108,7 @@ INT_PTR VDDialogCaptureDiskIO::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 			hwndItem = GetDlgItem(mhdlg, IDC_CHUNKSIZE);
 			for (unsigned i = 0; i < std::size(sizes); i++) {
-				SendMessage(hwndItem, CB_ADDSTRING, 0, (LPARAM)size_names[i]);
+				SendMessageA(hwndItem, CB_ADDSTRING, 0, (LPARAM)size_names[i]);
 			}
 			SendMessage(hwndItem, CB_SETCURSEL, NearestLongValue(mDiskSettings.mDiskChunkSize, sizes, std::size(sizes)), 0);
 

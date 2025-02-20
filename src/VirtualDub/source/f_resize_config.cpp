@@ -923,7 +923,7 @@ INT_PTR VDVF1ResizeDlg::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 void VDVF1ResizeDlg::InitDialog() {
 	HWND hwndItem = GetDlgItem(mhdlg, IDC_FILTER_MODE);
 	for(int i=0; i<VDResizeFilterData::FILTER_COUNT; i++)
-		SendMessage(hwndItem, CB_ADDSTRING, 0, (LPARAM)VDResizeFilterData::kFilterNames[i]);
+		SendMessageA(hwndItem, CB_ADDSTRING, 0, (LPARAM)VDResizeFilterData::kFilterNames[i]);
 
 	if (mWidth && mHeight)
 		mConfig.UpdateInformativeFields(mWidth, mHeight, true);

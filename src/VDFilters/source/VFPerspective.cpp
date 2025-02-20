@@ -234,7 +234,7 @@ namespace {
 
 					HWND hwndCombo = GetDlgItem(mhdlg, IDC_FILTER);
 					for (const auto& filterMode : g_filterModes) {
-						SendMessage(hwndCombo, CB_ADDSTRING, 0, (LPARAM)filterMode);
+						SendMessageA(hwndCombo, CB_ADDSTRING, 0, (LPARAM)filterMode);
 					}
 
 					SendMessage(hwndCombo, CB_SETCURSEL, mfd->filtermode, 0);

@@ -834,7 +834,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				hwndItem = GetDlgItem(hdlg, IDC_PRIORITY);
 				SendMessage(hwndItem, CB_RESETCONTENT,0,0);
 				for (unsigned i = 0; i < 8u; i++) {
-					SendMessage(hwndItem, CB_ADDSTRING, 0, (LPARAM)g_szDubPriorities[i]);
+					SendMessageA(hwndItem, CB_ADDSTRING, 0, (LPARAM)g_szDubPriorities[i]);
 				}
 
 				SendMessage(hwndItem, CB_SETCURSEL, thisPtr->iPriority-1, 0);

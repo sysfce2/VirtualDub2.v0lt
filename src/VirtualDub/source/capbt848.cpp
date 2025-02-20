@@ -190,7 +190,7 @@ INT_PTR CALLBACK CaptureBT848TweakerDlgProc(HWND hdlg, UINT msg, WPARAM wParam, 
 			g_dTVDriver.memoryReadBYTE(0x44)&0x3f);
 
 		for(i=0; i<4; ++i)
-			SendDlgItemMessage(hdlg, IDC_WHITE_POINT, CB_ADDSTRING, 0, (LPARAM)s_whitept_types[i]);
+			SendDlgItemMessageA(hdlg, IDC_WHITE_POINT, CB_ADDSTRING, 0, (LPARAM)s_whitept_types[i]);
 
 		SendDlgItemMessage(hdlg, IDC_WHITE_POINT, CB_SETCURSEL, g_dTVDriver.memoryReadBYTE(0x44)>>6, 0);
 
