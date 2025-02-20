@@ -1340,7 +1340,7 @@ protected:
 	void Flush() {
 		if (mNext) {
 			mBuffer[mNext] = 0;
-			SendMessage(mhwnd, LB_ADDSTRING, 0, (LPARAM)mBuffer);
+			SendMessageA(mhwnd, LB_ADDSTRING, 0, (LPARAM)mBuffer);
 			mNext = 0;
 		}
 	}

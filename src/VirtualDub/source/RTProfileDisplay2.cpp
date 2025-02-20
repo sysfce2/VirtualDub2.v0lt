@@ -1504,7 +1504,7 @@ void VDRTProfileDisplay2::UpdateSummary() {
 	SendMessage(wnd, LB_RESETCONTENT, 0, 0);
 	int tabs[] = {30,80,130,180};
 	SendMessage(wnd, LB_SETTABSTOPS, 4, (LPARAM)tabs);
-	SendMessage(wnd, LB_ADDSTRING, 0, (LPARAM)"num\t min\t average\t rms\t id");
+	SendMessageA(wnd, LB_ADDSTRING, 0, (LPARAM)"num\t min\t average\t rms\t id");
 
 	std::vector<uint32> scope_comment;
 
@@ -1540,17 +1540,17 @@ void VDRTProfileDisplay2::UpdateSummary() {
 			mTempStr.sprintf("%d \t %5.1fms \t %5.1fms \t %5.1fms \t %s%s", n, d0, da/n, sqrt(ds/n), s, s1);
 		else
 			mTempStr.sprintf("- \t - \t - \t - \t %s%s", s, s1);
-		SendMessage(wnd, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
+		SendMessageA(wnd, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
 
 		if (mScopes[id].comment) scope_comment.push_back(id);
 	}
 
 	if (use_range_start && use_range_end) {
-		SendMessage(wnd, LB_ADDSTRING, 0, (LPARAM)"");
+		SendMessageA(wnd, LB_ADDSTRING, 0, (LPARAM)"");
 
 		double d = (double)(range_end-range_start) * msPerTick;
 		mTempStr.sprintf("  \t \t %5.1fms \t \t %s", d, "Benchmark total");
-		SendMessage(wnd, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
+		SendMessageA(wnd, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
 
 		uint64 sw = 0;
 		uint64 sm = 0;
@@ -1567,17 +1567,17 @@ void VDRTProfileDisplay2::UpdateSummary() {
 		}}
 
 		mTempStr.sprintf("  \t \t %d%% \t \t %s", int(sm/sw), "CPU usage");
-		SendMessage(wnd, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
+		SendMessageA(wnd, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
 	}
 
 	if (scope_comment.size()) {
-		SendMessage(wnd, LB_ADDSTRING, 0, (LPARAM)"");
+		SendMessageA(wnd, LB_ADDSTRING, 0, (LPARAM)"");
 		for(size_t i=0; i<scope_comment.size(); i++) {
 			uint32 id = scope_comment[i];
 
 			const char *s = mScopes[id].name;
 			mTempStr.sprintf("* %s: %s", s, mScopes[id].comment);
-			SendMessage(wnd, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
+			SendMessageA(wnd, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
 		}
 	}
 }
@@ -1651,11 +1651,11 @@ void VDRTProfileDisplay2::UpdateList() {
 			}
 		}
 
-		SendMessage(mhwndList, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
+		SendMessageA(mhwndList, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
 	}
 
 	if (mSortedList.size()>=list_max)
-		SendMessage(mhwndList, LB_ADDSTRING, 0, (LPARAM)"\t\t\t truncated...");
+		SendMessageA(mhwndList, LB_ADDSTRING, 0, (LPARAM)"\t\t\t truncated...");
 
 	SendMessage(mhwndList, WM_SETREDRAW, true, 0);
 	InvalidateRect(mhwndList,0,true);

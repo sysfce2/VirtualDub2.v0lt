@@ -329,7 +329,7 @@ static void AudioChooseShowFormats(HWND hdlg, ACMTagEntry *pTag, bool fShowCompa
 				strcpy(buf, pFormat->afd.szFormat);
 			}
 
-			idx = SendMessage(hwndListFormats, LB_ADDSTRING, 0, (LPARAM)buf);
+			idx = SendMessageA(hwndListFormats, LB_ADDSTRING, 0, (LPARAM)buf);
 			if (idx != LB_ERR)
 				SendMessage(hwndListFormats, LB_SETITEMDATA, idx, (LPARAM)pFormat);
 		}
@@ -431,7 +431,7 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 			// This has to go last, because some version of DivX audio come up
 			// with a blank name. #*$&@*#$^)&@*#^@$
 
-			int idx = SendDlgItemMessage(hdlg, IDC_FORMATTAG, LB_INSERTSTRING, 0, (LPARAM)"<No compression (PCM)>");
+			int idx = SendDlgItemMessageA(hdlg, IDC_FORMATTAG, LB_INSERTSTRING, 0, (LPARAM)"<No compression (PCM)>");
 
 			if (idx >= 0)
 				SendDlgItemMessage(hdlg, IDC_FORMATTAG, LB_SETITEMDATA, idx, NULL);

@@ -4641,7 +4641,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			hwndItem = GetDlgItem(hdlg, IDC_FRAME_WIDTH);
 			for (i = 0; i < std::size(s_widths); i++) {
 				sprintf(buf, "%d", s_widths[i]);
-				ind = SendMessage(hwndItem, LB_ADDSTRING, 0, (LPARAM)buf);
+				ind = SendMessageA(hwndItem, LB_ADDSTRING, 0, (LPARAM)buf);
 				SendMessage(hwndItem, LB_SETITEMDATA, ind, i);
 
 				if (s_widths[i] == w) {
@@ -4652,7 +4652,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			hwndItem = GetDlgItem(hdlg, IDC_FRAME_HEIGHT);
 			for (i = 0; i < std::size(s_heights ); i++) {
 				sprintf(buf, "%d", s_heights[i]);
-				ind = SendMessage(hwndItem, LB_ADDSTRING, 0, (LPARAM)buf);
+				ind = SendMessageA(hwndItem, LB_ADDSTRING, 0, (LPARAM)buf);
 				SendMessage(hwndItem, LB_SETITEMDATA, ind, i);
 
 				if (s_heights[i] == h) {
@@ -4669,7 +4669,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			}
 
 			for (i = 0; i < std::size(s_formats ); i++) {
-				ind = SendMessage(hwndItem, LB_ADDSTRING, 0, (LPARAM)s_formats[i].name);
+				ind = SendMessageA(hwndItem, LB_ADDSTRING, 0, (LPARAM)s_formats[i].name);
 				SendMessage(hwndItem, LB_SETITEMDATA, ind, i + 1);
 
 				if (s_formats[i].fcc == s_fcc && s_formats[i].bpp == s_bpp) {
@@ -4690,7 +4690,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 
 				sprintf(buf, "[Current: %s, %d bits per pixel]", fccbuf, s_bpp);
 
-				ind = SendMessage(hwndItem, LB_INSERTSTRING, 0, (LPARAM)buf);
+				ind = SendMessageA(hwndItem, LB_INSERTSTRING, 0, (LPARAM)buf);
 				SendMessage(hwndItem, LB_SETITEMDATA, ind, 0);
 				SendMessage(hwndItem, LB_SETCURSEL, 0, 0);
 			}

@@ -142,13 +142,13 @@ bool VDDialogAddAudioFilterW32::OnLoaded() {
 		const VDPluginDescription& b = **it;
 
 		if (b.mName[0] != '*') {
-			char buf[1024];
+			wchar_t buf[1024];
 
-			sprintf(buf, "%ls\t%ls", b.mName.c_str(), b.mAuthor.c_str());
-			int idx = SendMessage(hwndList, LB_ADDSTRING, 0, (LPARAM)buf);
+			swprintf_s(buf, L"%s\t%s", b.mName.c_str(), b.mAuthor.c_str());
+			int idx = SendMessageW(hwndList, LB_ADDSTRING, 0, (LPARAM)buf);
 
 			if (idx != LB_ERR)
-				SendMessage(hwndList, LB_SETITEMDATA, idx, (LPARAM)&b);
+				SendMessageW(hwndList, LB_SETITEMDATA, idx, (LPARAM)&b);
 		}
 	}
 
