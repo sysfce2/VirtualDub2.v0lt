@@ -1239,8 +1239,8 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, bool execute) {
 					if (execute) SetPriorityClass(GetCurrentProcess(), priority);
 
 				}
-				else if (!wcscmp(token, L"queryVersion")) {
-					rc = version_num;
+				else if (!wcscmp(token, L"queryVersion")) { // "Return build number"
+					rc = REV_NUM;
 					break;
 				}
 				else if (!wcscmp(token, L"r")) {
