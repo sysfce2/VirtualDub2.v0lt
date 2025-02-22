@@ -1,5 +1,5 @@
 <root>
-	<lina:set-option name="output-dir" target="../../out/Helpfile"/>
+	<lina:set-option name="output-dir" target="../../_out/Helpfile"/>
 	<lina:set-option name="link-truncate" baseurl="" notruncate/>
 
 	<lina:fireball src="source/layout.css" dst="layout.css"/>
