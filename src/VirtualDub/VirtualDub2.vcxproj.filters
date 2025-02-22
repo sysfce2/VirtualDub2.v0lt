@@ -400,9 +400,6 @@
     <ClCompile Include="source\VBitmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\version.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\VideoSequenceCompressor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

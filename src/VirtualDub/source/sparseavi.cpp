@@ -30,7 +30,6 @@
 #include "gui.h"
 #include "Version_num.h"
 
-extern "C" unsigned long version_num;
 extern const char g_szError[];
 
 struct SparseAVIHeader {

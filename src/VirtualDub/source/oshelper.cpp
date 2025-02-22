@@ -190,10 +190,6 @@ void VDSubstituteStrings(VDStringW& s) {
 
 		wchar_t c = s[pos+1];
 		switch(c) {
-			case L'b':
-				t.append_sprintf(L"%d", version_num);
-				break;
-
 			case L'n':
 				t.append(VD_PROGRAM_NAMEW);
 				break;

@@ -2429,8 +2429,6 @@ static void func_VirtualDub_SetPreferencesString(IVDScriptInterpreter *, VDScrip
 	VDSetPreferencesString(*arglist[0].asString(), *arglist[1].asString());
 }
 
-extern "C" unsigned long version_num;
-
 static VDScriptValue obj_VirtualDub_lookup(IVDScriptInterpreter *isi, const VDScriptObject *obj, void *lpVoid, char *szName) {
 	if (!strcmp(szName, "version")) {
 		const VDStringA& s = VDTextWToA(VDLoadStringW32(IDS_TITLE_INITIAL, true));

@@ -28,10 +28,6 @@
 
 #include "../h/Version_num.h"
 
-extern "C" unsigned long version_num;
-
-uint32 VDGetBuildNumber();
-
 #define VD_WIDE_STRING_CONST2(name) L ## name
 #define VD_WIDE_STRING_CONST(name) VD_WIDE_STRING_CONST2(name)
 

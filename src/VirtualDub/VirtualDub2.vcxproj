@@ -404,7 +404,6 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
     <ClCompile Include="source\tool.cpp" />
     <ClCompile Include="source\uiframe.cpp" />
     <ClCompile Include="source\VBitmap.cpp" />
-    <ClCompile Include="source\version.cpp" />
     <ClCompile Include="source\VideoSequenceCompressor.cpp" />
     <ClCompile Include="source\capbt848.cpp" />
     <ClCompile Include="source\capclip.cpp" />

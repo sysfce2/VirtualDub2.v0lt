@@ -39,7 +39,6 @@
 
 ///////////////////////////////////////////
 
-extern "C" unsigned long version_num;
 extern uint32 VDPreferencesGetAVIAlignmentThreshold();
 extern void VDPreferencesGetAVIIndexingLimits(uint32& superindex, uint32& subindex);
 

@@ -410,8 +410,10 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine) {
 		VDAttachLogger(&g_VDConsoleLogger, false, true);
 
 		// announce startup
-		VDStringW s(L"VirtualDub CLI Video Processor Version $v$s (build $b/$c) for $p");
+		VDStringW s(L"VirtualDub CLI Video Processor Version $v$s ($c) for $p");
 		VDSubstituteStrings(s);
+
+		const unsigned long version_num = REV_NUM;
 
 		VDLog(kVDLogInfo, s);
 		VDLog(kVDLogInfo, VDswprintf(

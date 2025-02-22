@@ -31,7 +31,6 @@
 
 #include "../h/Version_num.h"
 
-extern "C" unsigned long version_num;
 extern "C" char version_time[];
 
 extern HINSTANCE g_hInst;
