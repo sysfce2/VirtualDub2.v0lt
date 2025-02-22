@@ -22,7 +22,7 @@
 #define MAKE_STR(x)    DO_MAKE_STR(x)
 
 #define VER_MAJOR      2
-#define VER_MINOR      2
+#define VER_MINOR      3
 #define VER_BUILD      0
 
 #define VERSION_NUM    VER_MAJOR,VER_MINOR,VER_BUILD,REV_NUM
