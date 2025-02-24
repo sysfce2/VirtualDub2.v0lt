@@ -163,9 +163,7 @@ VDStringW VDLoadStringW32(uint32 uID, bool doSubstitutions) {
 
 				str.assign(pTable+1, (UINT)*pTable);
 			}
-			// UnlockResource() is a NOP in Win32.
 		}
-		// FreeResource() is a NOP in Win32.
 	}
 
 	if (doSubstitutions)

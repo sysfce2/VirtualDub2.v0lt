@@ -354,10 +354,8 @@ INT_PTR CALLBACK ShowTextDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM
 						s+=2;
 						SendMessage(GetDlgItem(hDlg, IDC_CHANGES), WM_SETFONT, (WPARAM)GetStockObject(SYSTEM_FIXED_FONT), MAKELPARAM(TRUE, 0));
 						SendMessageA(GetDlgItem(hDlg, IDC_CHANGES), WM_SETTEXT, 0, (LPARAM)s);
-						FreeResource(hGlobal);
 						return TRUE;
 					}
-					FreeResource(hGlobal);
 				}
 			}
             return FALSE;

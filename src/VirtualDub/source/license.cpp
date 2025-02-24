@@ -101,10 +101,8 @@ void Licensor::depack(HWND hDlg) {
 
 				SendMessage(GetDlgItem(hDlg, IDC_LICENSE), WM_SETFONT, (WPARAM)GetStockObject(SYSTEM_FIXED_FONT), MAKELPARAM(TRUE, 0));
 				SendMessageA(GetDlgItem(hDlg, IDC_LICENSE), WM_SETTEXT, 0, (LPARAM)textbuf);
-				FreeResource(hGlobal);
 				return;
 			}
-			FreeResource(hGlobal);
 		}
 	}
 	EndDialog(hDlg, 0);
