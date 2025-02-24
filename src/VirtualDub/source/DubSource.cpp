@@ -19,17 +19,23 @@
 #include "DubSource.h"
 
 DubSource::DubSource() {
-	format = NULL;
 }
 
 DubSource::~DubSource() {
-	if (format) delete format;
+	if (format) {
+		delete[] format;
+	}
 }
 
 void *DubSource::allocFormat(int format_len) {
-	if (format) delete format;
+	if (format) {
+		delete[] format;
+	}
 
-	return format = (void *)new char[this->format_len = format_len];
+	this->format_len = format_len;
+	format = new char[format_len];
+
+	return (void *)format;
 }
 
 bool DubSource::isStreaming() {

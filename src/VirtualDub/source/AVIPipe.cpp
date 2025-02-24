@@ -48,7 +48,7 @@ AVIPipe::~AVIPipe() {
 				VirtualFree(buf, 0, MEM_RELEASE);
 		}
 
-		delete[] (void *)pBuffers;
+		delete[] pBuffers;
 	}
 }
 

@@ -81,8 +81,8 @@ extern IVDVideoCodecBugTrap *g_pVDVideoCodecBugTrap;
 //////////////////////////////////////////////////////////////////////////////
 
 VideoSequenceCompressor::VideoSequenceCompressor() {
-	pPrevBuffer		= NULL;
-	pConfigData		= NULL;
+	pPrevBuffer		= nullptr;
+	pConfigData		= nullptr;
 	fCompressionStarted = false;
 	mbCompressionRestarted = false;
 }
@@ -93,7 +93,7 @@ VideoSequenceCompressor::~VideoSequenceCompressor() {
 	if (mbOwnHandle)
 		delete driver;
 
-	delete pConfigData;
+	delete[] pConfigData;
 	delete pPrevBuffer;
 }
 
@@ -204,9 +204,10 @@ void VideoSequenceCompressor::internalStart(const void *outputFormat, uint32 out
 	if (info.dwFlags & (VIDCF_TEMPORAL | VIDCF_FASTTEMPORALC)) {
 		if (!(info.dwFlags & VIDCF_FASTTEMPORALC)) {
 			// Allocate backbuffer
-
-			if (!(pPrevBuffer = new char[mInputFormat->biSizeImage]))
+			pPrevBuffer = new(std::nothrow) char[mInputFormat->biSizeImage];
+			if (!pPrevBuffer) {
 				throw MyMemoryError();
+			}
 		}
 	}
 
@@ -260,8 +261,10 @@ void VideoSequenceCompressor::internalStart(const void *outputFormat, uint32 out
 	}
 
 	if (cbConfigData > 0) {
-		if (!(pConfigData = new char[cbConfigData]))
+		pConfigData = new(std::nothrow) char[cbConfigData];
+		if (!pConfigData) {
 			throw MyMemoryError();
+		}
 
 		{
 			VDExternalCodeBracket bracket(mDriverName.c_str(), __FILE__, __LINE__);

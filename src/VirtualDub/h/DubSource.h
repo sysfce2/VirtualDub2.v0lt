@@ -98,8 +98,8 @@ public:
 
 class DubSource : public vdrefcounted<IVDStreamSource> {
 private:
-	void *	format;
-	int		format_len;
+	char*	format = nullptr;
+	int		format_len = 0;
 
 protected:
 	void *allocFormat(int format_len);

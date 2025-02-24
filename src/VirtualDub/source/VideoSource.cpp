@@ -1539,7 +1539,7 @@ void VideoSourceAVI::redoKeyFlags(vdfastvector<uint32>& newFlags) {
 	long lMaxFrame=0;
 	uint32 lActualBytes, lActualSamples;
 	int err;
-	void *lpInputBuffer = NULL;
+	char* lpInputBuffer = nullptr;
 	bool fStreamBegun = false;
 	long *pFrameSums;
 
@@ -1565,10 +1565,13 @@ void VideoSourceAVI::redoKeyFlags(vdfastvector<uint32>& newFlags) {
 				if (!setDecompressedFormat(8))
 					throw MyError("Video decompressor is incapable of decompressing to an RGB format.");
 
-	if (!(lpInputBuffer = new char[((lMaxFrame+7)&-8) + lMaxFrame]))
+	lpInputBuffer = new(std::nothrow) char[((lMaxFrame + 7) & -8) + lMaxFrame];
+	if (!lpInputBuffer) {
 		throw MyMemoryError();
+	}
 
-	if (!(pFrameSums = new long[(size_t)(mSampleLast - mSampleFirst)])) {
+	pFrameSums = new long[(size_t)(mSampleLast - mSampleFirst)];
+	if (!pFrameSums) {
 		delete[] lpInputBuffer;
 		throw MyMemoryError();
 	}

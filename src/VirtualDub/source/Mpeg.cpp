@@ -1669,7 +1669,7 @@ class AudioSourceMPEG : public AudioSource, IVDMPEGAudioBitsource {
 private:
 	vdrefptr<InputFileMPEG> parentPtr;
 	IVDMPEGAudioDecoder *mpDecoder;
-	void *pkt_buffer;
+	char* pkt_buffer = nullptr;
 	short sample_buffer[1152*2][2];
 	char *pDecoderPoint;
 	char *pDecoderLimit;
@@ -1708,12 +1708,14 @@ AudioSourceMPEG::AudioSourceMPEG(InputFileMPEG *pp)
 {
 	parentPtr = pp;
 
-	if (!(pkt_buffer = new char[8192]))
+	pkt_buffer = new(std::nothrow) char[8192];
+	if (!pkt_buffer) {
 		throw MyMemoryError();
+	}
 
 	mpDecoder = VDCreateMPEGAudioDecoder();
 	if (!mpDecoder) {
-		delete pkt_buffer;
+		delete[] pkt_buffer;
 		throw MyMemoryError();
 	}
 
@@ -1721,7 +1723,7 @@ AudioSourceMPEG::AudioSourceMPEG(InputFileMPEG *pp)
 }
 
 AudioSourceMPEG::~AudioSourceMPEG() {
-	delete pkt_buffer;
+	delete[] pkt_buffer;
 	delete mpDecoder;
 }
 
@@ -1858,8 +1860,8 @@ int AudioSourceMPEG::_read(VDPosition lStart64, uint32 lCount, void *lpBuffer, u
 
 				parentPtr->ReadStream(pkt_buffer, msi->stream_pos, len, TRUE);
 
-				pDecoderPoint = (char *)pkt_buffer;
-				pDecoderLimit = (char *)pkt_buffer + len;
+				pDecoderPoint = pkt_buffer;
+				pDecoderLimit = pkt_buffer + len;
 
 				if ((unsigned char)pDecoderPoint[0] != 0xff || ((unsigned char)pDecoderPoint[1]&0xe0)!=0xe0)
 					throw MyInternalError("MPEG audio header in sample list has bad sync mark.\n(%s:%d)", __FILE__, __LINE__);

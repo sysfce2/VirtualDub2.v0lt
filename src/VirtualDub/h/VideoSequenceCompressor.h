@@ -96,7 +96,7 @@ private:
 	sint32		mQualityLast;
 	sint32		mQualityHi;
 
-	void		*pConfigData;
+	char		*pConfigData;
 	int			cbConfigData;
 
 	VDStringW	mCodecName;
