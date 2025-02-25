@@ -1,6 +1,6 @@
-﻿# VirtualDub2 version 2.1
+﻿# VirtualDub2 version 2.2
 
-VirtualDub2 v2.1 is a video capture/processing utility for Windows.
+VirtualDub2 is a video capture/processing utility for Windows.
 
 ## Minimum system requirements
 
@@ -15,7 +15,7 @@ VirtualDub2 v2.1 can work on Windows 7 if you replace the FFmpeg DLL files with 
 
 ## Source code
 
-* [VirtualDub2 version 2.1](https://github.com/v0lt/VirtualDub2)
+* [VirtualDub2 version 2.2](https://github.com/v0lt/VirtualDub2)
 * [avlib_vdplugin         ](https://github.com/v0lt/avlib_vdplugin)
 * [scripted_vdplugin      ](https://github.com/v0lt/scripted_vdplugin)
 
