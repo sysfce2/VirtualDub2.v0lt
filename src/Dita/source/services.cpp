@@ -416,29 +416,26 @@ static const VDStringW VDGetFileName(bool bSaveAs, long nKey, VDGUIHandle ctxPar
 		fsent = (*it).second;
 	}
 
-	VDASSERTCT(sizeof(OPENFILENAMEA) == sizeof(OPENFILENAMEW));
-	union {
-		OPENFILENAMEA a;
-		OPENFILENAMEW w;
-	} ofn={0};
+	OPENFILENAMEW ofn = {};
 
 	// Slight annoyance: If we want to use custom templates and still keep the places
 	// bar, the lStructSize parameter must be greater than OPENFILENAME_SIZE_VERSION_400.
 	// But if sizeof(OPENFILENAME) is used under Windows 95/98, the open call fails.
 	// Argh.
 
-	ofn.w.lStructSize		= sizeof(OPENFILENAME);
-	ofn.w.hwndOwner			= (HWND)ctxParent;
-	ofn.w.lpstrCustomFilter	= NULL;
-	ofn.w.nFilterIndex		= 0;
-	ofn.w.lpstrFileTitle	= NULL;
-	ofn.w.lpstrInitialDir	= NULL;
-	ofn.w.Flags				= OFN_PATHMUSTEXIST|OFN_ENABLESIZING|OFN_EXPLORER|OFN_OVERWRITEPROMPT|OFN_HIDEREADONLY;
+	ofn.lStructSize			= sizeof(OPENFILENAME);
+	ofn.hwndOwner			= (HWND)ctxParent;
+	ofn.lpstrCustomFilter	= NULL;
+	ofn.nFilterIndex		= 0;
+	ofn.lpstrFileTitle		= NULL;
+	ofn.lpstrInitialDir		= NULL;
+	ofn.Flags				= OFN_PATHMUSTEXIST|OFN_ENABLESIZING|OFN_EXPLORER|OFN_OVERWRITEPROMPT|OFN_HIDEREADONLY;
 
-	if (bSaveAs)
-		ofn.w.Flags |= OFN_OVERWRITEPROMPT;
-	else
-		ofn.w.Flags |= OFN_FILEMUSTEXIST;
+	if (bSaveAs) {
+		ofn.Flags |= OFN_OVERWRITEPROMPT;
+	} else {
+		ofn.Flags |= OFN_FILEMUSTEXIST;
+	}
 
 	DialogTemplateBuilder builder;
 	VDGetFileNameHook hook = { pOptions, pOptVals };
@@ -474,20 +471,20 @@ static const VDStringW VDGetFileName(bool bSaveAs, long nKey, VDGUIHandle ctxPar
 			case VDFileDialogOption::kReadOnly:
 				VDASSERT(nReadOnlyIndex < 0);
 				nReadOnlyIndex = opt.mDstIdx;
-				ofn.w.Flags &= ~OFN_HIDEREADONLY;
+				ofn.Flags &= ~OFN_HIDEREADONLY;
 				if (pOptVals[nReadOnlyIndex])
-					ofn.w.Flags |= OFN_READONLY;
+					ofn.Flags |= OFN_READONLY;
 				break;
 			case VDFileDialogOption::kSelectedFilter_always:
 				selectedFilterAlways = true;
 			case VDFileDialogOption::kSelectedFilter:
 				VDASSERT(nSelectedFilterIndex < 0);
 				nSelectedFilterIndex = opt.mDstIdx;
-				ofn.w.nFilterIndex = pOptVals[opt.mDstIdx];
+				ofn.nFilterIndex = pOptVals[opt.mDstIdx];
 				break;
 			case VDFileDialogOption::kConfirmFile:
 				if (!pOptVals[opt.mDstIdx])
-					ofn.w.Flags &= ~OFN_OVERWRITEPROMPT;
+					ofn.Flags &= ~OFN_OVERWRITEPROMPT;
 				break;
 			case VDFileDialogOption::kForceTemplate:
 				force_template = pOptVals[opt.mDstIdx]!=0;
@@ -496,21 +493,21 @@ static const VDStringW VDGetFileName(bool bSaveAs, long nKey, VDGUIHandle ctxPar
 		}
 
 		if (y > 0 || force_template) {
-			ofn.w.Flags		|= OFN_ENABLETEMPLATEHANDLE | OFN_ENABLEHOOK;
-			ofn.w.hInstance = (HINSTANCE)&builder.data.front();
-			ofn.w.lpfnHook	= VDGetFileNameHook::HookFn;
-			ofn.w.lCustData	= (LPARAM)&hook;
+			ofn.Flags		|= OFN_ENABLETEMPLATEHANDLE | OFN_ENABLEHOOK;
+			ofn.hInstance	= (HINSTANCE)&builder.data.front();
+			ofn.lpfnHook	= VDGetFileNameHook::HookFn;
+			ofn.lCustData	= (LPARAM)&hook;
 		}
 	}
 
 	VDStringW init_filename(fsent.szFile);
 
 	if (hookOptions) {
-		ofn.w.Flags		|= hookOptions->Flags;
-		ofn.w.hInstance = hookOptions->hInstance;
-		ofn.w.lpTemplateName = hookOptions->lpTemplateName;
-		ofn.w.lpfnHook	= hookOptions->lpfnHook;
-		ofn.w.lCustData	= hookOptions->lCustData;
+		ofn.Flags			|= hookOptions->Flags;
+		ofn.hInstance		= hookOptions->hInstance;
+		ofn.lpTemplateName	= hookOptions->lpTemplateName;
+		ofn.lpfnHook		= hookOptions->lpfnHook;
+		ofn.lCustData		= hookOptions->lCustData;
 
 		if (hookOptions->lpstrFile)
 			init_filename = hookOptions->lpstrFile;
@@ -552,22 +549,22 @@ static const VDStringW VDGetFileName(bool bSaveAs, long nKey, VDGUIHandle ctxPar
 		else
 			wszFile[0] = 0;
 
-		ofn.w.lpstrFilter		= pszFilters;
-		ofn.w.lpstrFile			= wszFile;
-		ofn.w.nMaxFile			= MAX_PATH;
-		ofn.w.lpstrTitle		= pszTitle;
-		ofn.w.lpstrDefExt		= pszExt;
-		ofn.w.lpstrInitialDir	= existingFileName ? NULL : init_filename.c_str();
+		ofn.lpstrFilter		= pszFilters;
+		ofn.lpstrFile		= wszFile;
+		ofn.nMaxFile		= MAX_PATH;
+		ofn.lpstrTitle		= pszTitle;
+		ofn.lpstrDefExt		= pszExt;
+		ofn.lpstrInitialDir	= existingFileName ? NULL : init_filename.c_str();
 
 		BOOL (WINAPI *pfn)(OPENFILENAMEW *) = (bSaveAs ? GetSaveFileNameW : GetOpenFileNameW);
-		BOOL result = pfn(&ofn.w);
+		BOOL result = pfn(&ofn);
 
 		// If the last path is no longer valid the dialog may fail to initialize, so if it's not
 		// a cancel we retry with no preset filename.
 		if (!result && CommDlgExtendedError()) {
 			wszFile[0] = 0;
-			ofn.w.lpstrInitialDir = NULL;
-			result = pfn(&ofn.w);
+			ofn.lpstrInitialDir = NULL;
+			result = pfn(&ofn);
 		}
 
 		if (result) {
@@ -578,14 +575,14 @@ static const VDStringW VDGetFileName(bool bSaveAs, long nKey, VDGUIHandle ctxPar
 
 	if (bSuccess) {
 		if (nReadOnlyIndex >= 0)
-			pOptVals[nReadOnlyIndex] = !!(ofn.w.Flags & OFN_READONLY);
+			pOptVals[nReadOnlyIndex] = !!(ofn.Flags & OFN_READONLY);
 
 		strFilename = fsent.szFile;
 	}
 
 	if (bSuccess || selectedFilterAlways) {
 		if (nSelectedFilterIndex >= 0)
-			pOptVals[nSelectedFilterIndex] = ofn.w.nFilterIndex;
+			pOptVals[nSelectedFilterIndex] = ofn.nFilterIndex;
 	}
 
 	if (bSuccess) {
