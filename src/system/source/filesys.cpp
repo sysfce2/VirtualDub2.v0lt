@@ -659,18 +659,15 @@ VDStringW VDFileGetRootPath(const wchar_t *path) {
 }
 
 VDStringW VDGetFullPath(const wchar_t *partialPath) {
-	union {
-		char		a[MAX_PATH];
-		wchar_t		w[MAX_PATH];
-	} tmpBuf;
+	wchar_t tmpBuf[MAX_PATH];
 
 	LPWSTR p;
 
-	tmpBuf.w[0] = 0;
-	DWORD count = GetFullPathNameW(partialPath, MAX_PATH, tmpBuf.w, &p);
+	tmpBuf[0] = 0;
+	DWORD count = GetFullPathNameW(partialPath, MAX_PATH, tmpBuf, &p);
 
 	if (count < MAX_PATH)
-		return VDStringW(tmpBuf.w);
+		return VDStringW(tmpBuf);
 
 	VDStringW tmp(count);
 
@@ -812,18 +809,15 @@ void VDFileFixDirPath(VDStringW& path) {
 
 namespace {
 	VDStringW VDGetModulePathW32(HINSTANCE hInst) {
-		union {
-			wchar_t w[MAX_PATH];
-			char a[MAX_PATH];
-		} buf;
+		wchar_t buf[MAX_PATH];
 
 		VDStringW wstr;
 
 		{
-			wcscpy_s(buf.w, L".");
-			if (GetModuleFileNameW(hInst, buf.w, MAX_PATH))
-				*VDFileSplitPath(buf.w) = 0;
-			wstr = buf.w;
+			wcscpy_s(buf, L".");
+			if (GetModuleFileNameW(hInst, buf, MAX_PATH))
+				*VDFileSplitPath(buf) = 0;
+			wstr = buf;
 		}
 
 		VDStringW wstr2(VDGetFullPath(wstr.c_str()));
@@ -841,18 +835,15 @@ VDStringW VDGetProgramPath() {
 }
 
 VDStringW VDGetProgramFilePath() {
-	union {
-		wchar_t w[MAX_PATH];
-		char a[MAX_PATH];
-	} buf;
+	wchar_t buf[MAX_PATH];
 
 	VDStringW wstr;
 
 	{
-		if (!GetModuleFileNameW(NULL, buf.w, MAX_PATH))
+		if (!GetModuleFileNameW(NULL, buf, MAX_PATH))
 			throw MyWin32Error("Unable to get program path: %%s", GetLastError());
 
-		wstr = buf.w;
+		wstr = buf;
 	}
 
 	return wstr;
@@ -881,15 +872,12 @@ VDStringW VDGetSystemPath() {
 }
 
 void VDGetRootPaths(vdvector<VDStringW>& paths) {
-	union {
-		WCHAR w[512];
-		CHAR a[1024];
-	} buf;
+	WCHAR buf[512];
 
 	{
 		vdfastvector<WCHAR> heapbufw;
-		WCHAR *pw = buf.w;
-		DWORD wlen = vdcountof(buf.w);
+		WCHAR *pw = buf;
+		DWORD wlen = vdcountof(buf);
 
 		for(;;) {
 			*pw = 0;
@@ -915,18 +903,15 @@ void VDGetRootPaths(vdvector<VDStringW>& paths) {
 }
 
 VDStringW VDGetRootVolumeLabel(const wchar_t *rootPath) {
-	union {
-		char a[MAX_PATH * 2];
-		wchar_t w[MAX_PATH];
-	} buf;
+	wchar_t buf[MAX_PATH];
 
 	DWORD maxComponentLength;
 	DWORD fsFlags;
 	VDStringW name;
 
 	{
-		if (GetVolumeInformationW(rootPath, buf.w, vdcountof(buf.w), NULL, &maxComponentLength, &fsFlags, NULL, 0))
-			name = buf.w;
+		if (GetVolumeInformationW(rootPath, buf, vdcountof(buf), NULL, &maxComponentLength, &fsFlags, NULL, 0))
+			name = buf;
 	}
 
 	return name;
@@ -1024,29 +1009,26 @@ bool VDDirectoryIterator::Next() {
 	if (mbSearchComplete)
 		return false;
 
-	union {
-		WIN32_FIND_DATAA a;
-		WIN32_FIND_DATAW w;
-	} wfd;
+	WIN32_FIND_DATAW wfd;
 
 	uint32 attribs;
 
 	{
 		if (mpHandle)
-			mbSearchComplete = !FindNextFileW((HANDLE)mpHandle, &wfd.w);
+			mbSearchComplete = !FindNextFileW((HANDLE)mpHandle, &wfd);
 		else {
-			mpHandle = FindFirstFileW(mSearchPath.c_str(), &wfd.w);
+			mpHandle = FindFirstFileW(mSearchPath.c_str(), &wfd);
 			mbSearchComplete = (INVALID_HANDLE_VALUE == mpHandle);
 		}
 		if (mbSearchComplete)
 			return false;
 
-		mbDirectory = (wfd.w.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
-		mFilename = wfd.w.cFileName;
-		mFileSize = wfd.w.nFileSizeLow + ((sint64)wfd.w.nFileSizeHigh << 32);
-		mLastWriteDate.mTicks = wfd.w.ftLastWriteTime.dwLowDateTime + ((uint64)wfd.w.ftLastWriteTime.dwHighDateTime << 32);
+		mbDirectory = (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
+		mFilename = wfd.cFileName;
+		mFileSize = wfd.nFileSizeLow + ((sint64)wfd.nFileSizeHigh << 32);
+		mLastWriteDate.mTicks = wfd.ftLastWriteTime.dwLowDateTime + ((uint64)wfd.ftLastWriteTime.dwHighDateTime << 32);
 
-		attribs = wfd.w.dwFileAttributes;
+		attribs = wfd.dwFileAttributes;
 	}
 
 	mAttributes = VDFileGetAttributesFromNativeW32(attribs);
