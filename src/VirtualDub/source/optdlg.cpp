@@ -2606,39 +2606,33 @@ void VDDialogFileTextInfoW32::ReinitDialog() {
 
 	SetWindowLong(mhwndList, GWL_STYLE, GetWindowLong(mhwndList, GWL_STYLE) | WS_CLIPCHILDREN);
 
-	union {
-		LVCOLUMNA a;
-		LVCOLUMNW w;
-	} lvc;
+	LVCOLUMNW lvc;
 
 	{
 		SendMessageW(hwndList, LVM_SETEXTENDEDLISTVIEWSTYLE, LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT);
 
-		lvc.w.mask = LVCF_TEXT | LVCF_WIDTH;
-		lvc.w.pszText = L"Field";
-		lvc.w.cx = 50;
-		SendMessageW(hwndList, LVM_INSERTCOLUMNW, 0, (LPARAM)&lvc.w);
+		lvc.mask = LVCF_TEXT | LVCF_WIDTH;
+		lvc.pszText = L"Field";
+		lvc.cx = 50;
+		SendMessageW(hwndList, LVM_INSERTCOLUMNW, 0, (LPARAM)&lvc);
 
-		lvc.w.pszText = L"Text";
-		lvc.w.cx = 100;
-		SendMessageW(hwndList, LVM_INSERTCOLUMNW, 0, (LPARAM)&lvc.w);
+		lvc.pszText = L"Text";
+		lvc.cx = 100;
+		SendMessageW(hwndList, LVM_INSERTCOLUMNW, 0, (LPARAM)&lvc);
 	}
 
 	for (unsigned i = 0; i < std::size(kFields); ++i) {
-		union {
-			LVITEMA a;
-			LVITEMW w;
-		} lvi;
+		LVITEMW lvi;
 
 		{
 			VDStringW wtext(VDTextAToW(kFields[i].desc));
-			lvi.w.mask = LVIF_TEXT | LVIF_PARAM;
-			lvi.w.pszText = (LPWSTR)wtext.c_str();
-			lvi.w.iItem = i;
-			lvi.w.iSubItem = 0;
-			lvi.w.lParam = (LPARAM)kFields[i].fcc;
+			lvi.mask = LVIF_TEXT | LVIF_PARAM;
+			lvi.pszText = (LPWSTR)wtext.c_str();
+			lvi.iItem = i;
+			lvi.iSubItem = 0;
+			lvi.lParam = (LPARAM)kFields[i].fcc;
 
-			SendMessageW(hwndList, LVM_INSERTITEMW, 0, (LPARAM)&lvi.w);
+			SendMessageW(hwndList, LVM_INSERTITEMW, 0, (LPARAM)&lvi);
 		}
 
 		UpdateRow(i);
