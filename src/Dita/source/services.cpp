@@ -309,7 +309,7 @@ struct VDGetFileNameHook {
 
 		switch(uiMsg) {
 		case WM_INITDIALOG:
-			pThis = (VDGetFileNameHook *)(((const OPENFILENAMEA *)lParam)->lCustData);
+			pThis = (VDGetFileNameHook *)(((const OPENFILENAMEW*)lParam)->lCustData);
 			SetWindowLongPtr(hdlg, DWLP_USER, (LONG_PTR)pThis);
 			pThis->Init(hdlg);
 			return 0;
@@ -423,7 +423,7 @@ static const VDStringW VDGetFileName(bool bSaveAs, long nKey, VDGUIHandle ctxPar
 	// But if sizeof(OPENFILENAME) is used under Windows 95/98, the open call fails.
 	// Argh.
 
-	ofn.lStructSize			= sizeof(OPENFILENAME);
+	ofn.lStructSize			= sizeof(OPENFILENAMEW);
 	ofn.hwndOwner			= (HWND)ctxParent;
 	ofn.lpstrCustomFilter	= NULL;
 	ofn.nFilterIndex		= 0;
