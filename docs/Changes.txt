@@ -2,7 +2,7 @@ VirtualDub2.1 change log
 
 2.3.0.x dev
 ----------------------
-VirtualDub is now a Unicode application.
+VirtualDub2 is now a Unicode application.
 Improved support for file paths with Unicode characters.
 Removed obsolete "Disk I/O write mode" setting.
 
