@@ -2733,19 +2733,16 @@ void VDDialogFileTextInfoW32::EndEdit(bool write) {
 }
 
 void VDDialogFileTextInfoW32::UpdateRow(int index) {
-	union {
-		LVITEMA a;
-		LVITEMW w;
-	} lvi;
+	LVITEMW lvi;
 
 	uint32 id;
 
 	{
-		lvi.w.mask = LVIF_PARAM;
-		lvi.w.iItem = index;
-		lvi.w.iSubItem = 0;
-		SendMessageW(mhwndList, LVM_GETITEMW, 0, (LPARAM)&lvi.w);
-		id = lvi.w.lParam;
+		lvi.mask = LVIF_PARAM;
+		lvi.iItem = index;
+		lvi.iSubItem = 0;
+		SendMessageW(mhwndList, LVM_GETITEMW, 0, (LPARAM)&lvi);
+		id = lvi.lParam;
 	}
 
 	const wchar_t *text = L"";
@@ -2755,11 +2752,11 @@ void VDDialogFileTextInfoW32::UpdateRow(int index) {
 		text = (*it).second.c_str();
 
 	{
-		lvi.w.mask = LVIF_TEXT;
-		lvi.w.iSubItem = 1;
-		lvi.w.pszText = (LPWSTR)text;
-		SendMessageW(mhwndList, LVM_SETITEMW, 0, (LPARAM)&lvi.w);
-		id = lvi.w.lParam;
+		lvi.mask = LVIF_TEXT;
+		lvi.iSubItem = 1;
+		lvi.pszText = (LPWSTR)text;
+		SendMessageW(mhwndList, LVM_SETITEMW, 0, (LPARAM)&lvi);
+		id = lvi.lParam;
 	}
 }
 
