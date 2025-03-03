@@ -828,7 +828,7 @@ int ProcessCommandLine::showHelp() {
 	"  /slave <file>             Join shared job queue in autostart mode\n"
 	"  /portable                 Switch to portable settings mode\n"
 	"  /priority <pri>           Start in low, belowNormal, normal, aboveNormal, high, or realtime priority\n"
-	"  /queryVersion             Return build number\n"
+	"  /queryVersion             Deprecated. Previously returned the build number. Now returns 50000.\n"
 	"  /safecpu                  Do not use CPU extensions on startup\n"
 	"  /min                      Start minimized\n"
 	"  /max                      Start maximized\n"
@@ -1245,8 +1245,9 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, bool execute) {
 					if (execute) SetPriorityClass(GetCurrentProcess(), priority);
 
 				}
-				else if (!wcscmp(token, L"queryVersion")) { // "Return build number"
-					rc = REV_NUM;
+				else if (!wcscmp(token, L"queryVersion")) {
+					// Deprecated. Previously returned the build number. Now returns 50000.
+					rc = 50000;
 					break;
 				}
 				else if (!wcscmp(token, L"r")) {
