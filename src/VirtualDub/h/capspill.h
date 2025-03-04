@@ -25,7 +25,6 @@ public:
 	int threshold;
 	int priority;
 	VDStringW	path;
-	VDStringA	pathA;
 
 	CapSpillDrive();
 	~CapSpillDrive();

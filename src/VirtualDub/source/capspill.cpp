@@ -38,7 +38,6 @@ CapSpillDrive::~CapSpillDrive() {
 
 void CapSpillDrive::setPath(const wchar_t *s) {
 	path = s;
-	pathA = VDTextWToA(s);
 }
 
 wchar_t *CapSpillDrive::makePath(wchar_t *buf, const wchar_t *fn) const {

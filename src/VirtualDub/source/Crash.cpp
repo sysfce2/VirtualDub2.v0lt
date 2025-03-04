@@ -134,14 +134,12 @@ struct VDDebugInfoContext {
 
 static VDDebugInfoContext g_debugInfo;
 
-VDStringW	g_VDCrashDumpPathW;
-VDStringA	g_VDCrashDumpPathA;
+VDStringW	g_VDCrashDumpPath;
 
 ///////////////////////////////////////////////////////////////////////////
 
 void VDSetCrashDumpPath(const wchar_t *s) {
-	g_VDCrashDumpPathW = VDMakePath(s, L"crashinfo.txt");
-	g_VDCrashDumpPathA = VDTextWToA(g_VDCrashDumpPathW);
+	g_VDCrashDumpPath = VDMakePath(s, L"crashinfo.txt");
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -1224,7 +1222,7 @@ public:
 
 class VDDebugCrashTextOutputFile : public VDDebugCrashTextOutput {
 public:
-	VDDebugCrashTextOutputFile(const char *pszFilename, const wchar_t *pwszFilename)
+	VDDebugCrashTextOutputFile(const wchar_t *pwszFilename)
 		: mhFile(CreateFileW(pwszFilename, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL))
 		, mNext(0)
 		, mbError(mhFile == INVALID_HANDLE_VALUE)
@@ -1837,8 +1835,8 @@ void VDDebugCrashDumpDisassembly(VDDebugCrashTextOutput& out) {
 	}
 }
 
-static bool DoSave(const char *pszFilename, const wchar_t *pwszFilename, HANDLE hThread, const EXCEPTION_POINTERS *pExc, const char *pszScopeInfo) {
-	VDDebugCrashTextOutputFile out(pszFilename, pwszFilename);
+static bool DoSave(const wchar_t *pwszFilename, HANDLE hThread, const EXCEPTION_POINTERS *pExc, const char *pszScopeInfo) {
+	VDDebugCrashTextOutputFile out(pwszFilename);
 
 	out.WriteF(
 			"VirtualDub2 crash report -- build %d ("
@@ -2032,13 +2030,14 @@ protected:
 				"VirtualDub warning", MB_OK|MB_ICONEXCLAMATION))
 				return;
 
-		if (::DoSave(g_VDCrashDumpPathA.c_str(), g_VDCrashDumpPathW.c_str(), mhThread, mpExc, mpszScopeInfo)) {
-			char buf[1024];
+		if (::DoSave(g_VDCrashDumpPath.c_str(), mhThread, mpExc, mpszScopeInfo)) {
+			wchar_t buf[1000];
 
-			sprintf(buf, "Save successful to: %.512s.\n", g_VDCrashDumpPathA.c_str());
-			MessageBoxA(mhdlg, buf, "VirtualDub Notice", MB_OK | MB_ICONINFORMATION);
-		} else
+			swprintf_s(buf, L"Save successful to: %.512s.\n", g_VDCrashDumpPath.c_str());
+			MessageBoxW(mhdlg, buf, L"VirtualDub Notice", MB_OK | MB_ICONINFORMATION);
+		} else {
 			MessageBoxA(mhdlg, "Save failed.", "VirtualDub Error", MB_OK | MB_ICONERROR);
+		}
 	}
 
 	static void DoHelp(HWND hwnd) {
