@@ -46,8 +46,8 @@ struct VDDbgHelpDynamicLoaderW32 {
 public:
 	BOOL (APIENTRY *pSymInitialize)(HANDLE hProcess, PCSTR UserSearchPath, BOOL fInvadeProcess);
 	BOOL (APIENTRY *pSymCleanup)(HANDLE hProcess);
-	BOOL (APIENTRY *pSymSetSearchPath)(HANDLE hProcess, PCSTR SearchPath);
-	DWORD(APIENTRY *pSymLoadModule)(HANDLE hProcess, HANDLE hFile, PCSTR ImageFile, PCSTR ModuleName, DWORD BaseOfDll, DWORD SizeOfDll);
+	BOOL (APIENTRY *pSymSetSearchPathW)(HANDLE hProcess, PCWSTR SearchPath);
+	DWORD64(APIENTRY *pSymLoadModuleExW)(HANDLE hProcess, HANDLE hFile, PCWSTR ImageName, PCWSTR ModuleName, DWORD64 BaseOfDll, DWORD DllSize, PMODLOAD_DATA Data, DWORD Flags);
 	BOOL (APIENTRY *pSymGetSymFromAddr)(HANDLE hProcess, DWORD Address, PDWORD Displacement, PIMAGEHLP_SYMBOL Symbol);
 	BOOL (APIENTRY *pSymGetModuleInfo)(HANDLE hProcess, DWORD dwAddr, PIMAGEHLP_MODULE ModuleInfo);
 	DWORD(APIENTRY *pUnDecorateSymbolName)(PCSTR name, PSTR outputString, DWORD maxStringLength, DWORD flags);
@@ -74,8 +74,8 @@ VDDbgHelpDynamicLoaderW32::VDDbgHelpDynamicLoaderW32()
 	static const char *const sFuncTbl[]={
 		"SymInitialize",
 		"SymCleanup",
-		"SymSetSearchPath",
-		"SymLoadModule",
+		"SymSetSearchPathW",
+		"SymLoadModuleExW",
 		"SymGetSymFromAddr",
 		"SymGetModuleInfo",
 		"UnDecorateSymbolName",
@@ -200,7 +200,7 @@ namespace {
 }
 
 void VDDumpMemoryLeaksVC() {
-    _CrtMemState msNow;
+	_CrtMemState msNow;
 
 	// disable CRT tracking of memory blocks
 	_CrtSetDbgFlag(_CrtSetDbgFlag(0) & ~_CRTDBG_ALLOC_MEM_DF);
@@ -216,15 +216,15 @@ void VDDumpMemoryLeaksVC() {
 
 	dbghelp.pSymInitialize(hProc, NULL, FALSE);
 
-	char filename[MAX_PATH], path[MAX_PATH];
-	GetModuleFileNameA(NULL, filename, std::size(filename));
+	wchar_t filename[MAX_PATH], path[MAX_PATH];
+	GetModuleFileNameW(NULL, filename, std::size(filename));
 
-	strcpy(path, filename);
+	wcscpy(path, filename);
 	*VDFileSplitPath(path) = 0;
 
-	dbghelp.pSymSetSearchPath(hProc, path);
-	SetCurrentDirectoryA(path);
-	DWORD dwAddr = dbghelp.pSymLoadModule(hProc, NULL, filename, NULL, 0, 0);
+	dbghelp.pSymSetSearchPathW(hProc, path);
+	SetCurrentDirectoryW(path);
+	DWORD64 dwAddr = dbghelp.pSymLoadModuleExW(hProc, NULL, filename, nullptr, 0, 0, nullptr, 0);
 
 	IMAGEHLP_MODULE modinfo = {sizeof(IMAGEHLP_MODULE)};
 
