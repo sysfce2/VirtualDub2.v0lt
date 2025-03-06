@@ -48,7 +48,7 @@ public:
 	BOOL (APIENTRY *pSymCleanup)(HANDLE hProcess);
 	BOOL (APIENTRY *pSymSetSearchPathW)(HANDLE hProcess, PCWSTR SearchPath);
 	DWORD64(APIENTRY *pSymLoadModuleExW)(HANDLE hProcess, HANDLE hFile, PCWSTR ImageName, PCWSTR ModuleName, DWORD64 BaseOfDll, DWORD DllSize, PMODLOAD_DATA Data, DWORD Flags);
-	BOOL (APIENTRY *pSymGetSymFromAddr)(HANDLE hProcess, DWORD Address, PDWORD Displacement, PIMAGEHLP_SYMBOL Symbol);
+	BOOL (APIENTRY *pSymFromAddr)(HANDLE hProcess, DWORD64 Address, PDWORD64 Displacement, PSYMBOL_INFO Symbol);
 	BOOL (APIENTRY *pSymGetModuleInfo)(HANDLE hProcess, DWORD dwAddr, PIMAGEHLP_MODULE ModuleInfo);
 	DWORD(APIENTRY *pUnDecorateSymbolName)(PCSTR name, PSTR outputString, DWORD maxStringLength, DWORD flags);
 
@@ -76,7 +76,7 @@ VDDbgHelpDynamicLoaderW32::VDDbgHelpDynamicLoaderW32()
 		"SymCleanup",
 		"SymSetSearchPathW",
 		"SymLoadModuleExW",
-		"SymGetSymFromAddr",
+		"SymFromAddr",
 		"SymGetModuleInfo",
 		"UnDecorateSymbolName",
 	};
@@ -307,17 +307,18 @@ void VDDumpMemoryLeaksVC() {
 #endif
 
 					struct {
-						IMAGEHLP_SYMBOL hdr;
+						SYMBOL_INFO hdr;
 						CHAR nameext[511];
 					} sym;
 
-					sym.hdr.SizeOfStruct = sizeof(IMAGEHLP_SYMBOL);
-					sym.hdr.MaxNameLength = 512;
+					sym.hdr.SizeOfStruct = sizeof(SYMBOL_INFO);
+					sym.hdr.MaxNameLen = 512;
 
-					if (dbghelp.pSymGetSymFromAddr(hProc, (DWORD)pRet, 0, &sym.hdr)) {
+					if (dbghelp.pSymFromAddr(hProc, (DWORD64)pRet, 0, &sym.hdr)) {
 						s += wsprintfA(s, "  Allocator: %p [%s]", pRet, sym.hdr.Name);
-					} else
+					} else {
 						s += wsprintfA(s, "  Allocator: %p", pRet);
+					}
 				}
 
 				if (pHdr->size >= sizeof(void *)) {
@@ -325,16 +326,16 @@ void VDDumpMemoryLeaksVC() {
 
 					if (vtbl >= (char *)modinfo.BaseOfImage && vtbl < (char *)modinfo.BaseOfImage + modinfo.ImageSize) {
 						struct {
-							IMAGEHLP_SYMBOL hdr;
+							SYMBOL_INFO hdr;
 							CHAR nameext[511];
 						} sym;
 
-						sym.hdr.SizeOfStruct = sizeof(IMAGEHLP_SYMBOL);
-						sym.hdr.MaxNameLength = 512;
+						sym.hdr.SizeOfStruct = sizeof(SYMBOL_INFO);
+						sym.hdr.MaxNameLen = 512;
 
 						char *t;
 
-						if (dbghelp.pSymGetSymFromAddr(hProc, (DWORD)vtbl, 0, &sym.hdr) && (t = strstr(sym.hdr.Name, "::`vftable'"))) {
+						if (dbghelp.pSymFromAddr(hProc, (DWORD64)vtbl, 0, &sym.hdr) && (t = strstr(sym.hdr.Name, "::`vftable'"))) {
 							*t = 0;
 							s += wsprintfA(s, " [Type: %s]", sym.hdr.Name);
 						}
