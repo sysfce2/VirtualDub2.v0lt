@@ -27,19 +27,18 @@
 // symbol conflicts
 namespace {
 	struct CrtBlockHeader {
-		CrtBlockHeader *pNext, *pPrev;
-		const char *pFilename;
-		int			line;
-#ifdef VD_CPU_AMD64
-		int			type;
-		size_t		size;
-#else
-		size_t		size;
-		int			type;
-#endif
-		unsigned	reqnum;
-		char		redzone_head[4];
-		char		data[1];
+		CrtBlockHeader*	pNext;
+		CrtBlockHeader*	pPrev;
+		const char*		pFilename;
+		int				line;
+
+		int				type;
+		size_t			size;
+
+		long			reqnum;
+		unsigned char	redzone_head[4];
+
+		unsigned char	data[1];
 	};
 }
 
