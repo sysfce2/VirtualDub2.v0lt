@@ -45,15 +45,15 @@ namespace {
 
 struct VDDbgHelpDynamicLoaderW32 {
 public:
-	BOOL (APIENTRY *pSymInitialize)(HANDLE hProcess, PSTR UserSearchPath, BOOL fInvadeProcess);
+	BOOL (APIENTRY *pSymInitialize)(HANDLE hProcess, PCSTR UserSearchPath, BOOL fInvadeProcess);
 	BOOL (APIENTRY *pSymCleanup)(HANDLE hProcess);
-	BOOL (APIENTRY *pSymSetSearchPath)(HANDLE hProcess, PSTR SearchPath);
-	BOOL (APIENTRY *pSymLoadModule)(HANDLE hProcess, HANDLE hFile, PSTR ImageFile, PSTR ModuleName, DWORD BaseOfDll, DWORD SizeOfDll);
+	BOOL (APIENTRY *pSymSetSearchPath)(HANDLE hProcess, PCSTR SearchPath);
+	DWORD(APIENTRY *pSymLoadModule)(HANDLE hProcess, HANDLE hFile, PCSTR ImageFile, PCSTR ModuleName, DWORD BaseOfDll, DWORD SizeOfDll);
 	BOOL (APIENTRY *pSymGetSymFromAddr)(HANDLE hProcess, DWORD Address, PDWORD Displacement, PIMAGEHLP_SYMBOL Symbol);
 	BOOL (APIENTRY *pSymGetModuleInfo)(HANDLE hProcess, DWORD dwAddr, PIMAGEHLP_MODULE ModuleInfo);
-	BOOL (APIENTRY *pUnDecorateSymbolName)(PCSTR DecoratedName, PSTR UnDecoratedName, DWORD UndecoratedLength, DWORD Flags);
+	DWORD(APIENTRY *pUnDecorateSymbolName)(PCSTR name, PSTR outputString, DWORD maxStringLength, DWORD flags);
 
-	HMODULE hmodDbgHelp;
+	HMODULE hmodDbgHelp = 0;
 
 	VDDbgHelpDynamicLoaderW32();
 	~VDDbgHelpDynamicLoaderW32();
@@ -85,29 +85,31 @@ VDDbgHelpDynamicLoaderW32::VDDbgHelpDynamicLoaderW32()
 
 	if (hmodDbgHelp) {
 		int i;
-		for(i=0; i<kFuncs; ++i) {
+		for (i = 0; i < kFuncs; ++i) {
 			FARPROC fp = GetProcAddress(hmodDbgHelp, sFuncTbl[i]);
-
-			if (!fp)
+			if (!fp) {
 				break;
+			}
 
-			((FARPROC *)this)[i] = fp;
+			((FARPROC*)this)[i] = fp;
 		}
 
-		if (i >= kFuncs)
+		if (i >= kFuncs) {
 			return;
+		}
 
-		FreeModule(hmodDbgHelp);
+		FreeLibrary(hmodDbgHelp);
 		hmodDbgHelp = 0;
 	}
 
-	for(int j=0; j<kFuncs; ++j)
-		((FARPROC *)this)[j] = 0;
+	for (int j = 0; j < kFuncs; ++j) {
+		((FARPROC*)this)[j] = 0;
+	}
 }
 
 VDDbgHelpDynamicLoaderW32::~VDDbgHelpDynamicLoaderW32() {
 	if (hmodDbgHelp) {
-		FreeModule(hmodDbgHelp);
+		FreeLibrary(hmodDbgHelp);
 		hmodDbgHelp = 0;
 	}
 }
@@ -230,7 +232,7 @@ void VDDumpMemoryLeaksVC() {
 	dbghelp.pSymGetModuleInfo(hProc, dwAddr, &modinfo);
 
 	// checkpoint the current memory layout
-    _CrtMemCheckpoint(&msNow);
+	_CrtMemCheckpoint(&msNow);
 
 	// traverse memory
 
