@@ -67,8 +67,9 @@ VDDbgHelpDynamicLoaderW32::VDDbgHelpDynamicLoaderW32()
 	if (!hmodDbgHelp) {
 		hmodDbgHelp = LoadLibraryW(L"c:\\program files (x86)\\debugging tools for windows\\dbghelp");
 
-		if (!hmodDbgHelp)
+		if (!hmodDbgHelp) {
 			hmodDbgHelp = LoadLibraryW(L"dbghelp");
+		}
 	}
 
 	static const char *const sFuncTbl[]={
@@ -106,7 +107,8 @@ VDDbgHelpDynamicLoaderW32::VDDbgHelpDynamicLoaderW32()
 	}
 }
 
-VDDbgHelpDynamicLoaderW32::~VDDbgHelpDynamicLoaderW32() {
+VDDbgHelpDynamicLoaderW32::~VDDbgHelpDynamicLoaderW32()
+{
 	if (hmodDbgHelp) {
 		FreeLibrary(hmodDbgHelp);
 		hmodDbgHelp = 0;
@@ -199,7 +201,8 @@ namespace {
 	}
 }
 
-void VDDumpMemoryLeaksVC() {
+void VDDumpMemoryLeaksVC()
+{
 	_CrtMemState msNow;
 
 	// disable CRT tracking of memory blocks
@@ -241,8 +244,9 @@ void VDDumpMemoryLeaksVC() {
 	for(; pHdr; pHdr = pHdr->pNext) {
 		const int type = (pHdr->type & 0xffff);
 
-		if (type != _CLIENT_BLOCK && type != _NORMAL_BLOCK)
+		if (type != _CLIENT_BLOCK && type != _NORMAL_BLOCK) {
 			continue;
+		}
 
 		BlockInfo info = {
 			pHdr,
@@ -258,12 +262,12 @@ void VDDumpMemoryLeaksVC() {
 		std::sort(heapinfo.begin(), heapinfo.end());
 
 		tHeapInfo::iterator itBase(heapinfo.begin());
-		for(tHeapInfo::iterator it(itBase), itEnd(heapinfo.end()); it!=itEnd; ++it) {
+		for (tHeapInfo::iterator it(itBase), itEnd(heapinfo.end()); it != itEnd; ++it) {
 			BlockInfo& blk = *it;
-			size_t pointers = blk.pBlock->size / sizeof(void *);
-			uintptr *pp = (uintptr *)blk.pBlock->data;
+			size_t pointers = blk.pBlock->size / sizeof(void*);
+			uintptr* pp = (uintptr*)blk.pBlock->data;
 
-			for(size_t i=0; i<pointers; ++i) {
+			for (size_t i = 0; i < pointers; ++i) {
 				uintptr ip = pp[i];
 
 				tHeapInfo::iterator itTarget(std::upper_bound(itBase, itEnd, ip));
@@ -271,8 +275,9 @@ void VDDumpMemoryLeaksVC() {
 				if (itTarget != itBase) {
 					BlockInfo& blk2 = *--itTarget;
 
-					if (ip - (uintptr)blk2.pBlock->data < blk2.pBlock->size)
+					if (ip - (uintptr)blk2.pBlock->data < blk2.pBlock->size) {
 						blk2.marked = true;
+					}
 				}
 			}
 		}
@@ -285,7 +290,7 @@ void VDDumpMemoryLeaksVC() {
 		sym.hdr.SizeOfStruct = sizeof(SYMBOL_INFO);
 		sym.hdr.MaxNameLen = std::size(sym.nameext);
 
-		for(int pass=0; pass<2; ++pass) {
+		for(int pass = 0; pass < 2; ++pass) {
 			bool test = pass ? true : false;
 
 			if (test) {
@@ -297,8 +302,9 @@ void VDDumpMemoryLeaksVC() {
 			for(tHeapInfo::iterator it(heapinfo.begin()), itEnd(heapinfo.end()); it!=itEnd; ++it) {
 				BlockInfo& blk = *it;
 
-				if (blk.marked != test)
+				if (blk.marked != test) {
 					continue;
+				}
 
 				pHdr = blk.pBlock;
 
@@ -317,10 +323,10 @@ void VDDumpMemoryLeaksVC() {
 					}
 				}
 
-				if (pHdr->size >= sizeof(void *)) {
-					void *vtbl = *(void **)pHdr->data;
+				if (pHdr->size >= sizeof(void*)) {
+					void* vtbl = *(void**)pHdr->data;
 
-					if (vtbl >= (char *)modinfo.BaseOfImage && vtbl < (char *)modinfo.BaseOfImage + modinfo.ImageSize) {
+					if (vtbl >= (char*)modinfo.BaseOfImage && vtbl < (char*)modinfo.BaseOfImage + modinfo.ImageSize) {
 						ret = dbghelp.pSymFromAddr(hProc, (DWORD64)vtbl, nullptr, &sym.hdr);
 						if (ret) {
 							char* t = strstr(sym.hdr.Name, "::`vftable'");
