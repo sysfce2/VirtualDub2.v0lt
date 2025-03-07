@@ -49,7 +49,7 @@ public:
 	BOOL (APIENTRY *pSymSetSearchPathW)(HANDLE hProcess, PCWSTR SearchPath);
 	DWORD64(APIENTRY *pSymLoadModuleExW)(HANDLE hProcess, HANDLE hFile, PCWSTR ImageName, PCWSTR ModuleName, DWORD64 BaseOfDll, DWORD DllSize, PMODLOAD_DATA Data, DWORD Flags);
 	BOOL (APIENTRY *pSymFromAddr)(HANDLE hProcess, DWORD64 Address, PDWORD64 Displacement, PSYMBOL_INFO Symbol);
-	BOOL (APIENTRY *pSymGetModuleInfo)(HANDLE hProcess, DWORD dwAddr, PIMAGEHLP_MODULE ModuleInfo);
+	BOOL (APIENTRY* pSymGetModuleInfo64)(HANDLE hProcess, DWORD64 dwAddr, PIMAGEHLP_MODULE64 ModuleInfo);
 	DWORD(APIENTRY *pUnDecorateSymbolName)(PCSTR name, PSTR outputString, DWORD maxStringLength, DWORD flags);
 
 	HMODULE hmodDbgHelp = 0;
@@ -77,7 +77,7 @@ VDDbgHelpDynamicLoaderW32::VDDbgHelpDynamicLoaderW32()
 		"SymSetSearchPathW",
 		"SymLoadModuleExW",
 		"SymFromAddr",
-		"SymGetModuleInfo",
+		"SymGetModuleInfo64",
 		"UnDecorateSymbolName",
 	};
 	enum { kFuncs = std::size(sFuncTbl) };
@@ -214,7 +214,7 @@ void VDDumpMemoryLeaksVC() {
 
 	HANDLE hProc = GetCurrentProcess();
 
-	dbghelp.pSymInitialize(hProc, NULL, FALSE);
+	BOOL ret = dbghelp.pSymInitialize(hProc, NULL, FALSE);
 
 	wchar_t filename[MAX_PATH], path[MAX_PATH];
 	GetModuleFileNameW(NULL, filename, std::size(filename));
@@ -222,13 +222,12 @@ void VDDumpMemoryLeaksVC() {
 	wcscpy(path, filename);
 	*VDFileSplitPath(path) = 0;
 
-	dbghelp.pSymSetSearchPathW(hProc, path);
+	ret = dbghelp.pSymSetSearchPathW(hProc, path);
 	SetCurrentDirectoryW(path);
-	DWORD64 dwAddr = dbghelp.pSymLoadModuleExW(hProc, NULL, filename, nullptr, 0, 0, nullptr, 0);
+	DWORD64 dwBaseAddr = dbghelp.pSymLoadModuleExW(hProc, NULL, filename, nullptr, 0, 0, nullptr, 0);
 
-	IMAGEHLP_MODULE modinfo = {sizeof(IMAGEHLP_MODULE)};
-
-	dbghelp.pSymGetModuleInfo(hProc, dwAddr, &modinfo);
+	IMAGEHLP_MODULE64 modinfo = {sizeof(IMAGEHLP_MODULE64)};
+	ret = dbghelp.pSymGetModuleInfo64(hProc, dwBaseAddr, &modinfo);
 
 	// checkpoint the current memory layout
 	_CrtMemCheckpoint(&msNow);
@@ -278,6 +277,14 @@ void VDDumpMemoryLeaksVC() {
 			}
 		}
 
+		struct {
+			SYMBOL_INFO hdr;
+			CHAR nameext[511];
+		} sym = {};
+
+		sym.hdr.SizeOfStruct = sizeof(SYMBOL_INFO);
+		sym.hdr.MaxNameLen = std::size(sym.nameext);
+
 		for(int pass=0; pass<2; ++pass) {
 			bool test = pass ? true : false;
 
@@ -300,24 +307,13 @@ void VDDumpMemoryLeaksVC() {
 				s += wsprintfA(buf, "    #%-5d %p (%8ld bytes)", pHdr->reqnum, pHdr->data, (long)pHdr->size);
 
 				if (pHdr->pFilename && !strcmp(pHdr->pFilename, "stack trace")) {
-#ifdef VD_CPU_AMD64
-					void *pRet = (void *)((size_t)pHdr->line + (size_t)&__ImageBase);
-#else
-					void *pRet = (void *)pHdr->line;
-#endif
+					DWORD64 dwAddress = dwBaseAddr + pHdr->line;
 
-					struct {
-						SYMBOL_INFO hdr;
-						CHAR nameext[511];
-					} sym;
-
-					sym.hdr.SizeOfStruct = sizeof(SYMBOL_INFO);
-					sym.hdr.MaxNameLen = 512;
-
-					if (dbghelp.pSymFromAddr(hProc, (DWORD64)pRet, 0, &sym.hdr)) {
-						s += wsprintfA(s, "  Allocator: %p [%s]", pRet, sym.hdr.Name);
+					ret = dbghelp.pSymFromAddr(hProc, dwAddress, nullptr, &sym.hdr);
+					if (ret) {
+						s += wsprintfA(s, "  Allocator: %p [%s]", (void*)dwAddress, sym.hdr.Name);
 					} else {
-						s += wsprintfA(s, "  Allocator: %p", pRet);
+						s += wsprintfA(s, "  Allocator: %p", (void*)dwAddress);
 					}
 				}
 
@@ -325,19 +321,13 @@ void VDDumpMemoryLeaksVC() {
 					void *vtbl = *(void **)pHdr->data;
 
 					if (vtbl >= (char *)modinfo.BaseOfImage && vtbl < (char *)modinfo.BaseOfImage + modinfo.ImageSize) {
-						struct {
-							SYMBOL_INFO hdr;
-							CHAR nameext[511];
-						} sym;
-
-						sym.hdr.SizeOfStruct = sizeof(SYMBOL_INFO);
-						sym.hdr.MaxNameLen = 512;
-
-						char *t;
-
-						if (dbghelp.pSymFromAddr(hProc, (DWORD64)vtbl, 0, &sym.hdr) && (t = strstr(sym.hdr.Name, "::`vftable'"))) {
-							*t = 0;
-							s += wsprintfA(s, " [Type: %s]", sym.hdr.Name);
+						ret = dbghelp.pSymFromAddr(hProc, (DWORD64)vtbl, nullptr, &sym.hdr);
+						if (ret) {
+							char* t = strstr(sym.hdr.Name, "::`vftable'");
+							if (t) {
+								*t = 0;
+								s += wsprintfA(s, " [Type: %s]", sym.hdr.Name);
+							}
 						}
 					}
 				}
