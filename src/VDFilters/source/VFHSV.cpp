@@ -1192,8 +1192,8 @@ static void hsv_run_scalar(uint32 *dst, ptrdiff_t dstpitch, unsigned w, unsigned
 	const int rshift = sectors * 8;
 	const int lshift = 24 - sectors * 8;
 
-	for(int y=0; y<h; ++y) {
-		for(int x=0; x<w; ++x) {
+	for(unsigned y=0; y<h; ++y) {
+		for(unsigned x=0; x<w; ++x) {
 			uint32 px = dst[x];
 			int r = (px>>16)&0xff;
 			int g = (px>> 8)&0xff;
