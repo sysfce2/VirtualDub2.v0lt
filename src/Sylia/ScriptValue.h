@@ -37,7 +37,7 @@ struct VDScriptObject {
 class VDScriptValue {
 public:
 	enum { T_VOID, T_INT, T_PINT, T_STR, T_ARRAY, T_OBJECT, T_FNAME, T_FUNCTION, T_VARLV, T_LONG, T_DOUBLE } type;
-	const VDScriptObject *thisPtr;
+	const VDScriptObject *thisPtr = nullptr;
 	union {
 		int i;
 		char **s;
@@ -52,19 +52,28 @@ public:
 		VariableTableEntry *vte;
 		sint64 l;
 		double d;
-	} u;
+	} u = {};
 
-	VDScriptValue()						{ type = T_VOID; }
-	explicit VDScriptValue(int i)				{ type = T_INT;			u.i = i; }
-	explicit VDScriptValue(sint64 l)				{ type = T_LONG;		u.l = l; }
-	explicit VDScriptValue(double d)				{ type = T_DOUBLE;		u.d = d; }
-	explicit VDScriptValue(char **s)				{ type = T_STR;			u.s = s; }
-	explicit VDScriptValue(void *p, const VDScriptObject *obj)	{ type = T_OBJECT;		u.obj.def = obj; u.obj.p = p; }
-	explicit VDScriptValue(void *p, const VDScriptObject *obj, const VDScriptFunctionDef *pf)	{ type = T_FNAME;		thisPtr = obj; u.method.pfn = pf; u.obj.p = p; }
-	explicit VDScriptValue(VariableTableEntry *vte) { type = T_VARLV;		u.vte = vte; }
+	VDScriptValue()                  { type = T_VOID; }
+	explicit VDScriptValue(int i)    { type = T_INT;    u.i = i; }
+	explicit VDScriptValue(sint64 l) { type = T_LONG;   u.l = l; }
+	explicit VDScriptValue(double d) { type = T_DOUBLE; u.d = d; }
+	explicit VDScriptValue(char **s) { type = T_STR;    u.s = s; }
+	explicit VDScriptValue(void *p, const VDScriptObject *obj) {
+		type = T_OBJECT;
+		u.obj.def = obj;
+		u.obj.p = p;
+	}
+	explicit VDScriptValue(void *p, const VDScriptObject *obj, const VDScriptFunctionDef *pf) {
+		type = T_FNAME;
+		thisPtr = obj;
+		u.method.pfn = pf;
+		u.obj.p = p;
+	}
+	explicit VDScriptValue(VariableTableEntry *vte) { type = T_VARLV; u.vte = vte; }
 
-	VDScriptValue& operator=(int i) { type = T_INT; u.i = i; return *this; }
-	VDScriptValue& operator=(sint64 l) { type = T_LONG; u.l = l; return *this; }
+	VDScriptValue& operator=(int i)    { type = T_INT;    u.i = i; return *this; }
+	VDScriptValue& operator=(sint64 l) { type = T_LONG;   u.l = l; return *this; }
 	VDScriptValue& operator=(double d) { type = T_DOUBLE; u.d = d; return *this; }
 
 	bool isVoid() const			{ return type == T_VOID; }

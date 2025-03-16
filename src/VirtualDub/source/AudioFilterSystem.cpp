@@ -924,8 +924,6 @@ uint32 VDXAPIENTRY VDAudioFilterInstance::GetCPUFeatureFlags() {
 ///////////////////////////////////////////////////////////////////////////
 
 VDAudioFilterSystem::VDAudioFilterSystem()
-	: mpIOScheduler(NULL)
-	, mpFastScheduler(NULL)
 {
 }
 

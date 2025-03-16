@@ -82,13 +82,13 @@ protected:
 
 	VDCriticalSection	mLock;
 
-	uint32	mObjectCount;
-	uint32	mClassCount;
-	uint32	mNextInstance;
+	uint32	mObjectCount  = 0;
+	uint32	mClassCount   = 0;
+	uint32	mNextInstance = 1;
 
-	VDStringA	*mpCaptureString;
+	VDStringA *mpCaptureString  = nullptr;
 
-	IVDBackfaceStream *mpOutput;
+	IVDBackfaceStream *mpOutput = nullptr;
 
 	vdlist<VDBackfaceClass>	mClasses;
 };
@@ -96,10 +96,6 @@ protected:
 VDBackfaceService g_VDBackfaceService;
 
 VDBackfaceService::VDBackfaceService()
-	: mObjectCount(0)
-	, mClassCount(0)
-	, mNextInstance(1)
-	, mpCaptureString(NULL)
 {
 }
 
@@ -393,18 +389,15 @@ protected:
 
 	void operator<<(const char *s);
 
-	HWND	mhwnd;
-	HWND	mhwndLog;
-	HWND	mhwndEdit;
-	HFONT	mFont;
-	HMODULE	mhmodRichEdit;
-	VDAtomicInt	mRefCount;
+	HWND    mhwnd     = NULL;
+	HWND    mhwndLog  = NULL;
+	HWND    mhwndEdit = NULL;
+	HFONT   mFont     = NULL;
+	HMODULE mhmodRichEdit = NULL;
+	VDAtomicInt	mRefCount = 0;
 };
 
 VDBackfaceConsole::VDBackfaceConsole()
-	: mRefCount(0)
-	, mFont(NULL)
-	, mhmodRichEdit(NULL)
 {
 }
 

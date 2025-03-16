@@ -85,10 +85,10 @@ protected:
 	void TryPrepare(VDAudioFilterInstance *pInst);
 	void Prepare(VDAudioFilterInstance *pInst, bool mustSucceed);
 
-	VDScheduler		*mpIOScheduler;
-	VDScheduler		*mpFastScheduler;
+	VDScheduler *mpIOScheduler   = nullptr;
+	VDScheduler *mpFastScheduler = nullptr;
 
-	VDAudioFilterInstance	*mpClock;
+	VDAudioFilterInstance *mpClock = nullptr;
 
 	typedef std::list<VDAudioFilterInstance *> tFilterList;
 	tFilterList		mFilters;

@@ -126,7 +126,7 @@ public:
 		kTypeBlock
 	};
 
-	VDPluginConfigVariant() : mType(kTypeInvalid) {}
+	VDPluginConfigVariant() {}
 	VDPluginConfigVariant(const VDPluginConfigVariant&);
 	~VDPluginConfigVariant();
 
@@ -156,9 +156,9 @@ public:
 	const unsigned GetBlockLen() const { return mData.vb.len; }
 
 protected:
-	unsigned mType;
+	unsigned mType = kTypeInvalid;
 
-	VDPluginConfigVariantData	mData;
+	VDPluginConfigVariantData mData = {};
 };
 
 typedef std::map<unsigned, VDPluginConfigVariant> VDPluginConfig;

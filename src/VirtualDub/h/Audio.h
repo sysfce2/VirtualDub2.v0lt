@@ -87,7 +87,7 @@ private:
 	sint64 mOffset;
 	sint64 mBasePos;
 	bool fZeroRead;
-	bool fStart;
+	//bool fStart;
 	bool mbSourceIsVBR;
 
 	vdautoptr<IVDAudioCodec>	mpCodec;

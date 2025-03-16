@@ -406,7 +406,9 @@ void AudioStream::Seek(VDPosition pos) {
 
 ////////////////////
 
-AudioStreamSource::AudioStreamSource(AudioSource *src, sint64 max_samples, bool allow_decompression, sint64 start_us) : AudioStream() {
+AudioStreamSource::AudioStreamSource(AudioSource *src, sint64 max_samples, bool allow_decompression, sint64 start_us)
+	: AudioStream()
+{
 	VDWaveFormat *iFormat = (VDWaveFormat *)src->getWaveFormat();
 	VDWaveFormat *oFormat;
 

@@ -36,16 +36,10 @@ struct VDPacketInfo;
 class IVDVideoCompressor;
 
 struct VDPacketInfo {
-	bool	keyframe;
-	sint64 pts;
-	sint64 dts;
-	sint64 duration;
-
-	VDPacketInfo() {
-		pts = VDX_NOPTS_VALUE;
-		dts = VDX_NOPTS_VALUE;
-		duration = 0;
-	}
+	bool keyframe = false;
+	sint64 pts = VDX_NOPTS_VALUE;
+	sint64 dts = VDX_NOPTS_VALUE;
+	sint64 duration = 0;;
 };
 
 class IVDVideoCompressorDesc : public IVDRefUnknown {

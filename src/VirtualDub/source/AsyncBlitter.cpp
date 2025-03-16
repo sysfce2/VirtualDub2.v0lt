@@ -118,8 +118,8 @@ private:
 	AsyncBlitRequest *mRequests;
 	int max_requests;
 
-	VDRTProfiler	*mpRTProfiler;
-	int				mProfileChannel;
+	VDRTProfiler	*mpRTProfiler = nullptr;
+	int				mProfileChannel = -1;
 	VDSignal		mEventDraw;
 	VDSignal		mEventDrawReturn;
 	VDSignal		mEventAbort;
@@ -132,7 +132,7 @@ private:
 	volatile bool	fStop;
 
 	PulseCallback	mpPulseCallback;
-	void			*mpPulseCallbackData;
+	void			*mpPulseCallbackData = nullptr;
 
 	void release(uint32);
 	bool waitPulse(uint32);

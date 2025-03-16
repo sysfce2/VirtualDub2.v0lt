@@ -697,13 +697,13 @@ struct VDXScriptObject {
 class VDXScriptValue {
 public:
 	enum { T_VOID, T_INT, T_PINT, T_STR, T_ARRAY, T_OBJECT, T_FNAME, T_FUNCTION, T_VARLV, T_LONG, T_DOUBLE } type;
-	VDXScriptObject *thisPtr;
+	VDXScriptObject *thisPtr = nullptr;
 	union {
 		int i;
 		char **s;
 		sint64 l;
 		double d;
-	} u;
+	} u = {};
 
 	VDXScriptValue()					{ type = T_VOID; }
 	VDXScriptValue(int i)				{ type = T_INT;			u.i = i; }

@@ -76,16 +76,16 @@ namespace nsVDFile
 
 class VDFile {
 protected:
-	VDFileHandle	mhFile;
-	vdautoptr2<wchar_t>	mpFilename;
-	sint64			mFilePosition;
+	VDFileHandle mhFile = NULL;
+	vdautoptr2<wchar_t> mpFilename;
+	sint64 mFilePosition = 0;
 
 private:
 	VDFile(const VDFile&);
 	const VDFile& operator=(const VDFile& f);
 
 public:
-	VDFile() : mhFile(NULL) {}
+	VDFile() {}
 	VDFile(const char *pszFileName, uint32 flags = nsVDFile::kRead | nsVDFile::kDenyWrite | nsVDFile::kOpenExisting);
 	VDFile(const wchar_t *pwszFileName, uint32 flags = nsVDFile::kRead | nsVDFile::kDenyWrite | nsVDFile::kOpenExisting);
 	VDFile(VDFileHandle h);

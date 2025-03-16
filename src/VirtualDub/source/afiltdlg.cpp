@@ -197,22 +197,19 @@ public:
 protected:
 	void ThreadRun();
 
-	VDScheduler					mFilterScheduler;
-	VDAudioFilterSystem			mFilterSys;
-	VDSignal					msigIdle;
-	VDSignal					msigResumed;
-	volatile bool				mbRequestExit;
-	volatile bool				mbSuspend;
-	volatile bool				mbResume;
+	VDScheduler         mFilterScheduler;
+	VDAudioFilterSystem mFilterSys;
+	VDSignal            msigIdle;
+	VDSignal            msigResumed;
+	volatile bool       mbRequestExit = false;
+	volatile bool       mbSuspend     = false;
+	volatile bool       mbResume      = false;
 
-	volatile sint64		mPosition;
-	sint64				mLength;
+	volatile sint64     mPosition = 0;
+	sint64              mLength   = 0;
 };
 
 VDAudioFilterPreviewThread::VDAudioFilterPreviewThread()
-	: mbRequestExit(false)
-	, mbSuspend(false)
-	, mbResume(false)
 {
 	mFilterScheduler.setSignal(&msigIdle);
 	mFilterSys.SetScheduler(&mFilterScheduler);
