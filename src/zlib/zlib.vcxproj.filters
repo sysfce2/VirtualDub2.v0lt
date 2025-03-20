@@ -19,9 +19,6 @@
     <ClCompile Include="deflate.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gzio.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="infback.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,6 +70,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="zutil.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gzguts.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
