@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 
-#include <streams.h>
+#include "streams.h"
 #include <initguid.h>
 
 #ifdef _DEBUG

@@ -10,13 +10,10 @@
 
 #define _WINDLL
 
-#include <streams.h>
+#include "streams.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <dvdmedia.h>
-#include <algorithm>
-
-using std::max;
 
 #ifdef _DEBUG
 #ifdef UNICODE
@@ -163,7 +160,7 @@ void WINAPI DbgInitKeyLevels(HKEY hKey, bool fTakeMax)
         }
         if(fTakeMax)
         {
-            m_Levels[lKeyPos] = max(dwKeyValue,m_Levels[lKeyPos]);
+            m_Levels[lKeyPos] = std::max(dwKeyValue,m_Levels[lKeyPos]);
         }
         else
         {

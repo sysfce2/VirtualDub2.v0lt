@@ -7,15 +7,11 @@
 //------------------------------------------------------------------------------
 
 
-#include <streams.h>
+#include "streams.h"
 #include <limits.h>
 #include <dvdmedia.h>
 #include <strsafe.h>
-#include <checkbmi.h>
-#include <algorithm>
-
-using std::max;
-using std::min;
+#include "checkbmi.h"
 
 static UINT MsgDestroy;
 
@@ -2144,7 +2140,7 @@ HRESULT CImagePalette::MakeIdentityPalette(__inout_ecount_full(iColours) PALETTE
 
     // Set the non VGA entries so that GDI doesn't map them
 
-    for (UINT Count = PalLoCount;INT(Count) < min(PalHiStart,iColours);Count++) {
+    for (UINT Count = PalLoCount; INT(Count) < std::min(PalHiStart,iColours); Count++) {
         pEntry[Count].peFlags = PC_NOCOLLAPSE;
     }
     return NOERROR;

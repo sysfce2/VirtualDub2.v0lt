@@ -13,7 +13,7 @@
 // renderers and transforms to pass by IMediaPosition and IMediaSeeking
 
 
-#include <streams.h>
+#include "streams.h"
 #include <limits.h>
 #include "seekpt.h"
 
@@ -70,10 +70,6 @@ CBaseDispatch::GetTypeInfo(
     // we only support one type element
     if (0 != itinfo) {
 	return TYPE_E_ELEMENTNOTFOUND;
-    }
-
-    if (NULL == pptinfo) {
-	return E_POINTER;
     }
 
     // always look for neutral

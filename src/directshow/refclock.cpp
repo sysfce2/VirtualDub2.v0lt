@@ -7,12 +7,8 @@
 //------------------------------------------------------------------------------
 
 
-#include <streams.h>
+#include "streams.h"
 #include <limits.h>
-#include <algorithm>
-
-using std::max;
-using std::min;
 
 #ifdef DXMPERF
 #include "dxmperf.h"
@@ -383,7 +379,7 @@ HRESULT CBaseReferenceClock::SetDefaultTimerResolution(
         DWORD dwMinResolution = (TIMERR_NOERROR == timeGetDevCaps(&tc, sizeof(tc)))
                             ? tc.wPeriodMin
                             : 1;
-        DWORD dwResolution = max( dwMinResolution, DWORD(timerResolution / 10000) );
+        DWORD dwResolution = std::max(dwMinResolution, DWORD(timerResolution / 10000));
         if( dwResolution != m_TimerResolution ) {
             timeEndPeriod(m_TimerResolution);
             m_TimerResolution = dwResolution;

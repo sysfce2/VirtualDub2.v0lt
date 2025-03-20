@@ -27,12 +27,8 @@
 //=====================================================================
 //=====================================================================
 
-#include <streams.h>
+#include "streams.h"
 #include <strsafe.h>
-#include <algorithm>
-
-using std::max;
-using std::min;
 
 #ifdef DXMPERF
 #include "dxmperf.h"
@@ -3722,7 +3718,7 @@ STDMETHODIMP CMediaSample::GetProperties(
         CheckPointer(pbProperties, E_POINTER);
         //  Return generic stuff up to the length
         AM_SAMPLE2_PROPERTIES Props;
-        Props.cbData     = min((size_t)cbProperties, sizeof(Props));
+        Props.cbData     = std::min((size_t)cbProperties, sizeof(Props));
         Props.dwSampleFlags = m_dwFlags & ~Sample_MediaTimeValid;
         Props.dwTypeSpecificFlags = m_dwTypeSpecificFlags;
         Props.pbBuffer   = m_pBuffer;

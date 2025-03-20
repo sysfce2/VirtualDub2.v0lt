@@ -12,12 +12,8 @@
 // types etc. Has same data members as the struct AM_MEDIA_TYPE defined
 // in the streams IDL file, but also has (non-virtual) functions
 
-#include <streams.h>
+#include "streams.h"
 #include <mmreg.h>
-#include <algorithm>
-
-using std::max;
-using std::min;
 
 CMediaType::~CMediaType(){
     FreeMediaType(*this);
@@ -284,7 +280,7 @@ CMediaType::ReallocFormatBuffer(ULONG length)
 
     if (cbFormat != 0) {
         ASSERT(pbFormat);
-        memcpy(pNewFormat,pbFormat,min(length,cbFormat));
+        memcpy(pNewFormat, pbFormat, std::min(length, cbFormat));
         CoTaskMemFree((PVOID)pbFormat);
     }
 

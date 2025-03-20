@@ -7,11 +7,7 @@
 //------------------------------------------------------------------------------
 
 
-#include <streams.h>
-#include <algorithm>
-
-using std::max;
-using std::min;
+#include "streams.h"
 
 // Constructor for the base property page class. As described in the header
 // file we must be initialised with dialog and title resource identifiers.
@@ -58,8 +54,8 @@ STDMETHODIMP_(ULONG) CBasePropertyPage::NonDelegatingAddRef()
 {
     LONG lRef = InterlockedIncrement(&m_cRef);
     ASSERT(lRef > 0);
-    UNREFERENCED_PARAMETER(lRef);
-    return max(ULONG(m_cRef),1ul);
+	UNREFERENCED_PARAMETER(lRef);
+    return std::max(ULONG(m_cRef), 1ul);
 }
 
 
@@ -78,7 +74,7 @@ STDMETHODIMP_(ULONG) CBasePropertyPage::NonDelegatingRelease()
         return ULONG(0);
     } else {
         //  Don't touch m_cRef again here!
-        return max(ULONG(lRef),1ul);
+        return std::max(ULONG(lRef), 1ul);
     }
 }
 
