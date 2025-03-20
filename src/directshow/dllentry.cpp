@@ -11,7 +11,7 @@
 #include <streams.h>
 #include <initguid.h>
 
-#ifdef DEBUG
+#ifdef _DEBUG
 #ifdef UNICODE
 #ifndef _UNICODE
 #define _UNICODE
@@ -290,7 +290,7 @@ _DllEntryPoint(
     __inout_opt LPVOID pv
     )
 {
-#ifdef DEBUG
+#ifdef _DEBUG
     extern bool g_fDbgInDllEntryPoint;
     g_fDbgInDllEntryPoint = true;
 #endif
@@ -309,7 +309,7 @@ _DllEntryPoint(
     case DLL_PROCESS_DETACH:
         DllInitClasses(FALSE);
 
-#ifdef DEBUG
+#ifdef _DEBUG
         if (CBaseObject::ObjectsActive()) {
             DbgSetModuleLevel(LOG_MEMORY, 2);
             TCHAR szInfo[512];
@@ -342,7 +342,7 @@ _DllEntryPoint(
         break;
     }
 
-#ifdef DEBUG
+#ifdef _DEBUG
     g_fDbgInDllEntryPoint = false;
 #endif
     return TRUE;

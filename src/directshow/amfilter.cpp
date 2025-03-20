@@ -318,7 +318,7 @@ STDMETHODIMP CBaseFilter::NonDelegatingQueryInterface(REFIID riid,
     }
 }
 
-#ifdef DEBUG
+#ifdef _DEBUG
 STDMETHODIMP_(ULONG) CBaseFilter::NonDelegatingRelease()
 {
     if (m_cRef == 1) {
@@ -984,7 +984,7 @@ CEnumPins::CEnumPins(__in CBaseFilter *pFilter,
     m_PinCache(NAME("Pin Cache"))
 {
 
-#ifdef DEBUG
+#ifdef _DEBUG
     m_dwCookie = DbgRegisterObjectCreation("CEnumPins", 0);
 #endif
 
@@ -1019,7 +1019,7 @@ CEnumPins::~CEnumPins()
 {
     m_pFilter->Release();
 
-#ifdef DEBUG
+#ifdef _DEBUG
     DbgRegisterObjectDestruction(m_dwCookie);
 #endif
 }
@@ -1237,7 +1237,7 @@ CEnumMediaTypes::CEnumMediaTypes(__in CBasePin *pPin,
     m_cRef(1)
 {
 
-#ifdef DEBUG
+#ifdef _DEBUG
     m_dwCookie = DbgRegisterObjectCreation("CEnumMediaTypes", 0);
 #endif
 
@@ -1267,7 +1267,7 @@ CEnumMediaTypes::CEnumMediaTypes(__in CBasePin *pPin,
 
 CEnumMediaTypes::~CEnumMediaTypes()
 {
-#ifdef DEBUG
+#ifdef _DEBUG
     DbgRegisterObjectDestruction(m_dwCookie);
 #endif
     m_pPin->Release();
@@ -1528,7 +1528,7 @@ CBasePin::CBasePin(__in_opt LPCTSTR pObjectName,
         }
     }
 
-#ifdef DEBUG
+#ifdef _DEBUG
     m_cRef = 0;
 #endif
 }
@@ -1581,7 +1581,7 @@ CBasePin::CBasePin(__in_opt LPCSTR pObjectName,
     }
 
 
-#ifdef DEBUG
+#ifdef _DEBUG
     m_cRef = 0;
 #endif
 }
@@ -1647,7 +1647,7 @@ CBasePin::NonDelegatingRelease()
 
 /* Displays pin connection information */
 
-#ifdef DEBUG
+#ifdef _DEBUG
 void
 CBasePin::DisplayPinInfo(IPin *pReceivePin)
 {
@@ -1678,7 +1678,7 @@ CBasePin::DisplayPinInfo(IPin *pReceivePin)
 
 /* Displays general information on the pin media type */
 
-#ifdef DEBUG
+#ifdef _DEBUG
 void CBasePin::DisplayTypeInfo(IPin *pPin, const CMediaType *pmt)
 {
     UNREFERENCED_PARAMETER(pPin);
@@ -4009,7 +4009,7 @@ STDMETHODIMP CDynamicOutputPin::Block(DWORD dwBlockFlags, HANDLE hEvent)
         }
     }
 
-    #ifdef DEBUG
+    #ifdef _DEBUG
     AssertValid();
     #endif // DEBUG
 
@@ -4027,7 +4027,7 @@ STDMETHODIMP CDynamicOutputPin::Block(DWORD dwBlockFlags, HANDLE hEvent)
         hr = UnblockOutputPin();
     }
 
-    #ifdef DEBUG
+    #ifdef _DEBUG
     AssertValid();
     #endif // DEBUG
 
@@ -4176,7 +4176,7 @@ HRESULT CDynamicOutputPin::StartUsingOutputPin(void)
 
     CAutoLock alBlockStateLock(&m_BlockStateLock);
 
-    #ifdef DEBUG
+    #ifdef _DEBUG
     AssertValid();
     #endif // DEBUG
 
@@ -4202,7 +4202,7 @@ HRESULT CDynamicOutputPin::StartUsingOutputPin(void)
 
         m_BlockStateLock.Lock();
 
-        #ifdef DEBUG
+        #ifdef _DEBUG
         AssertValid();
         #endif // DEBUG
 
@@ -4224,7 +4224,7 @@ HRESULT CDynamicOutputPin::StartUsingOutputPin(void)
 
     m_dwNumOutstandingOutputPinUsers++;
 
-    #ifdef DEBUG
+    #ifdef _DEBUG
     AssertValid();
     #endif // DEBUG
 
@@ -4235,7 +4235,7 @@ void CDynamicOutputPin::StopUsingOutputPin(void)
 {
     CAutoLock alBlockStateLock(&m_BlockStateLock);
 
-    #ifdef DEBUG
+    #ifdef _DEBUG
     AssertValid();
     #endif // DEBUG
 
@@ -4245,7 +4245,7 @@ void CDynamicOutputPin::StopUsingOutputPin(void)
         BlockOutputPin();
     }
 
-    #ifdef DEBUG
+    #ifdef _DEBUG
     AssertValid();
     #endif // DEBUG
 }
@@ -4483,7 +4483,7 @@ HRESULT CDynamicOutputPin::CompleteConnect(IPin *pReceivePin)
     return hr;
 }
 
-#ifdef DEBUG
+#ifdef _DEBUG
 void CDynamicOutputPin::AssertValid(void)
 {
     // Make sure the object was correctly initialized.

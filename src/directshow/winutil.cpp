@@ -35,7 +35,7 @@ CBaseWindow::CBaseWindow(BOOL bDoGetDC, bool bDoPostToDestroy) :
     m_MemoryDC(NULL),
     m_hPalette(NULL),
     m_bBackground(FALSE),
-#ifdef DEBUG
+#ifdef _DEBUG
     m_bRealizing(FALSE),
 #endif
     m_bNoRealize(FALSE),
@@ -98,7 +98,7 @@ HRESULT CBaseWindow::PrepareWindow()
 // Derived classes MUST call DoneWithWindow in their destructors so
 // that no messages arrive after the derived class constructor ends
 
-#ifdef DEBUG
+#ifdef _DEBUG
 CBaseWindow::~CBaseWindow()
 {
     ASSERT(m_hwnd == NULL);
@@ -453,14 +453,14 @@ LRESULT CALLBACK WndProc(HWND hwnd,         // Window handle
         }
 
         // Set the window LONG to be the object who created us
-#ifdef DEBUG
+#ifdef _DEBUG
         SetLastError(0);  // because of the way SetWindowLong works
 #endif
 
         LONG_PTR rc = _SetWindowLongPtr(hwnd, (DWORD) 0, pBaseWindow);
 
 
-#ifdef DEBUG
+#ifdef _DEBUG
         if (0 == rc) {
             // SetWindowLong MIGHT have failed.  (Read the docs which admit
             // that it is awkward to work out if you have had an error.)
@@ -786,11 +786,11 @@ LRESULT CBaseWindow::OnPaletteChange(HWND hwnd,UINT Message)
         }
 
         // Avoid recursion with multiple graphs in the same app
-#ifdef DEBUG
+#ifdef _DEBUG
         m_bRealizing = TRUE;
 #endif
         DoRealisePalette(Message != WM_QUERYNEWPALETTE);
-#ifdef DEBUG
+#ifdef _DEBUG
         m_bRealizing = FALSE;
 #endif
 
@@ -873,7 +873,7 @@ HDC CBaseWindow::GetMemoryHDC()
 }
 
 
-#ifdef DEBUG
+#ifdef _DEBUG
 HPALETTE CBaseWindow::GetPalette()
 {
     // The palette lock should always be held when accessing
@@ -944,7 +944,7 @@ CDrawImage::CDrawImage(__inout CBaseWindow *pBaseWindow) :
 
 void CDrawImage::DisplaySampleTimes(IMediaSample *pSample)
 {
-#ifdef DEBUG
+#ifdef _DEBUG
     //
     // Only allow the "annoying" time messages if the users has turned the
     // logging "way up"
@@ -1110,7 +1110,7 @@ void CDrawImage::FastRender(IMediaSample *pMediaSample)
     // draw the times into the offscreen device context however that actually
     // writes the text into the image data buffer which may not be writable
 
-    #ifdef DEBUG
+    #ifdef _DEBUG
     DisplaySampleTimes(pMediaSample);
     #endif
 
@@ -1205,7 +1205,7 @@ void CDrawImage::SlowRender(IMediaSample *pMediaSample)
     // the screen, unfortunately this has considerable performance penalties
     // and also means that this code is not executed when compiled retail
 
-    #ifdef DEBUG
+    #ifdef _DEBUG
     DisplaySampleTimes(pMediaSample);
     #endif
 }
@@ -1464,7 +1464,7 @@ CImageAllocator::CImageAllocator(__inout CBaseFilter *pFilter,
 
 // Check our DIB buffers have been released
 
-#ifdef DEBUG
+#ifdef _DEBUG
 CImageAllocator::~CImageAllocator()
 {
     ASSERT(m_bCommitted == FALSE);
@@ -1787,7 +1787,7 @@ CImagePalette::CImagePalette(__inout CBaseFilter *pBaseFilter,
 
 // Destructor
 
-#ifdef DEBUG
+#ifdef _DEBUG
 CImagePalette::~CImagePalette()
 {
     ASSERT(m_hPalette == NULL);
