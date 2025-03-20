@@ -98,9 +98,11 @@ BOOL CAMMsgEvent::WaitMsg(DWORD dwTimeout)
 
 CAMThread::CAMThread(__inout_opt HRESULT *phr)
     : m_EventSend(TRUE, phr),     // must be manual-reset for CheckRequest()
-      m_EventComplete(FALSE, phr)
+      m_EventComplete(FALSE, phr),
+      m_hThread(NULL),
+      m_dwParam(0),
+      m_dwReturnVal(0)
 {
-    m_hThread = NULL;
 }
 
 CAMThread::~CAMThread() {
@@ -334,7 +336,7 @@ CMsgThread::GetThreadMsg(__out CMsg *msg)
     CMsg * pmsg = NULL;
 
     // keep trying until a message appears
-    while (TRUE) {
+    for (;;) {
         {
             CAutoLock lck(&m_Lock);
             pmsg = m_ThreadQueue.RemoveHead();
@@ -344,7 +346,7 @@ CMsgThread::GetThreadMsg(__out CMsg *msg)
                 break;
             }
         }
-        // the semaphore will be signalled when it is non-empty
+        // the semaphore will be signaled when it is non-empty
         WaitForSingleObject(m_hSem, INFINITE);
     }
     // copy fields to caller's CMsg
@@ -559,6 +561,7 @@ STDAPI FreeBSTR(__deref_in BSTR* pstr)
 {
     if( (PVOID)*pstr == NULL ) return S_FALSE;
     SysFreeString( *pstr );
+    *pstr = NULL;
     return NOERROR;
 }
 

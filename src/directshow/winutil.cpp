@@ -39,9 +39,12 @@ CBaseWindow::CBaseWindow(BOOL bDoGetDC, bool bDoPostToDestroy) :
     m_bRealizing(FALSE),
 #endif
     m_bNoRealize(FALSE),
-    m_bDoPostToDestroy(bDoPostToDestroy)
+    m_bDoPostToDestroy(bDoPostToDestroy),
+    m_bDoGetDC(bDoGetDC),
+    m_Width(0),
+    m_Height(0),
+    m_RealizePalette(0)
 {
-    m_bDoGetDC = bDoGetDC;
 }
 
 
@@ -654,7 +657,7 @@ HRESULT CBaseWindow::DoCreateWindow()
 
 // The base class provides some default handling and calls DefWindowProc
 
-LRESULT CBaseWindow::OnReceiveMessage(HWND hwnd,         // Window handle
+INT_PTR CBaseWindow::OnReceiveMessage(HWND hwnd,         // Window handle
                                       UINT uMsg,         // Message ID
                                       WPARAM wParam,     // First parameter
                                       LPARAM lParam)     // Other parameter
@@ -881,7 +884,7 @@ HPALETTE CBaseWindow::GetPalette()
     ASSERT(CritCheckIn(&m_PaletteLock));
     return m_hPalette;
 }
-#endif // DEBUG
+#endif // _DEBUG
 
 
 // This is available to clients who want to change the window visiblity. It's
@@ -1005,6 +1008,7 @@ void CDrawImage::UpdateColourTable(HDC hdc,__in BITMAPINFOHEADER *pbmi)
 
     // Should always succeed but check in debug builds
     ASSERT(uiReturn == pbmi->biClrUsed);
+	UNREFERENCED_PARAMETER(uiReturn);
 }
 
 
@@ -1455,7 +1459,8 @@ CImageAllocator::CImageAllocator(__inout CBaseFilter *pFilter,
                                  __in_opt LPCTSTR pName,
                                  __inout HRESULT *phr) :
     CBaseAllocator(pName,NULL,phr,TRUE,TRUE),
-    m_pFilter(pFilter)
+    m_pFilter(pFilter),
+    m_pMediaType(NULL)
 {
     ASSERT(phr);
     ASSERT(pFilter);
@@ -1740,6 +1745,7 @@ CImageSample::CImageSample(__inout CBaseAllocator *pAllocator,
     CMediaSample(pName,pAllocator,phr,pBuffer,length),
     m_bInit(FALSE)
 {
+    ZeroMemory(&m_DibData, sizeof(DIBDATA));
     ASSERT(pAllocator);
     ASSERT(pBuffer);
 }
@@ -2284,7 +2290,7 @@ DWORD CImageDisplay::CountPrefixBits(DWORD Field)
     DWORD Mask = 1;
     DWORD Count = 0;
 
-    while (TRUE) {
+    for (;;) {
         if (Field & Mask) {
             return Count;
         }
@@ -2449,6 +2455,7 @@ HRESULT CImageDisplay::UpdateFormat(__inout VIDEOINFO *pVideoInfo)
     ASSERT(pVideoInfo);
 
     BITMAPINFOHEADER *pbmi = HEADER(pVideoInfo);
+	UNREFERENCED_PARAMETER(pbmi);
     SetRectEmpty(&pVideoInfo->rcSource);
     SetRectEmpty(&pVideoInfo->rcTarget);
 
@@ -2681,6 +2688,7 @@ STDAPI ConvertVideoInfoToVideoInfo2(__inout AM_MEDIA_TYPE *pmt)
         return E_INVALIDARG;
     }
     VIDEOINFO *pVideoInfo = (VIDEOINFO *)pmt->pbFormat;
+	UNREFERENCED_PARAMETER(pVideoInfo);
     DWORD dwNewSize;
     HRESULT hr = DWordAdd(pmt->cbFormat, sizeof(VIDEOINFOHEADER2) - sizeof(VIDEOINFOHEADER), &dwNewSize);
     if (FAILED(hr)) {

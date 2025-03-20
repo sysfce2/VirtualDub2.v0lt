@@ -772,15 +772,16 @@ CTransInPlaceInputPin::NotifyAllocator(
             hr = pAllocator->GetProperties(&Props);
             if (SUCCEEDED(hr)) {
                 hr = pOutputAllocator->SetProperties(&Props, &Actual);
-            }
-            if (SUCCEEDED(hr)) {
-                if (  (Props.cBuffers > Actual.cBuffers)
-                   || (Props.cbBuffer > Actual.cbBuffer)
-                   || (Props.cbAlign  > Actual.cbAlign)
-                   ) {
-                    hr =  E_FAIL;
-                }
-            }
+
+				if (SUCCEEDED(hr)) {
+					if (  (Props.cBuffers > Actual.cBuffers)
+					   || (Props.cbBuffer > Actual.cbBuffer)
+					   || (Props.cbAlign  > Actual.cbAlign)
+					   ) {
+						hr =  E_FAIL;
+					}
+				}
+			}
 
             //  Set the allocator on the output pin
             if (SUCCEEDED(hr)) {

@@ -15,16 +15,16 @@
 // buffer in the property page class and use it for all string loading. It
 // cannot be static as multiple property pages may be active simultaneously
 
-LPTSTR WINAPI StringFromResource(__out_ecount(STR_MAX_LENGTH) LPTSTR pBuffer, int iResourceID)
+LPCTSTR WINAPI StringFromResource(__out_ecount(STR_MAX_LENGTH) LPTSTR pBuffer, int iResourceID)
 {
     if (LoadString(g_hInst,iResourceID,pBuffer,STR_MAX_LENGTH) == 0) {
-        return (LPTSTR)TEXT("");
+        return TEXT("");
     }
     return pBuffer;
 }
 
 #ifdef UNICODE
-LPSTR WINAPI StringFromResource(__out_ecount(STR_MAX_LENGTH) LPSTR pBuffer, int iResourceID)
+LPCSTR WINAPI StringFromResource(__out_ecount(STR_MAX_LENGTH) LPSTR pBuffer, int iResourceID)
 {
     if (LoadStringA(g_hInst,iResourceID,pBuffer,STR_MAX_LENGTH) == 0) {
         return "";
@@ -44,7 +44,7 @@ LPSTR WINAPI StringFromResource(__out_ecount(STR_MAX_LENGTH) LPSTR pBuffer, int 
 
 #ifndef UNICODE
 
-LPWSTR WINAPI WideStringFromResource(__out_ecount(STR_MAX_LENGTH) LPWSTR pBuffer, int iResourceID)
+LPCWSTR WINAPI WideStringFromResource(__out_ecount(STR_MAX_LENGTH) LPWSTR pBuffer, int iResourceID)
 {
     *pBuffer = 0;
 
@@ -593,7 +593,6 @@ HRESULT CLoadDirectDraw::LoadDirectDraw(__in LPSTR szDevice)
     PDRAWCREATE pDrawCreate;
     PDRAWENUM pDrawEnum;
     LPDIRECTDRAWENUMERATEEXA pDrawEnumEx;
-    HRESULT hr = NOERROR;
 
     NOTE("Entering DoLoadDirectDraw");
 

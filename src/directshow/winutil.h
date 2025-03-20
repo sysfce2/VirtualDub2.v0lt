@@ -123,11 +123,11 @@ public:
 
     #ifdef _DEBUG
     HPALETTE GetPalette();
-    #endif // DEBUG
+    #endif // _DEBUG
 
     // This is the window procedure the derived object should override
 
-    virtual LRESULT OnReceiveMessage(HWND hwnd,          // Window handle
+    virtual INT_PTR OnReceiveMessage(HWND hwnd,          // Window handle
                                      UINT uMsg,          // Message ID
                                      WPARAM wParam,      // First parameter
                                      LPARAM lParam);     // Other parameter

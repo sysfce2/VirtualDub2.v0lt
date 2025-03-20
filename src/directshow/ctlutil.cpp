@@ -743,20 +743,20 @@ CPosPassThru::GetCurrentPosition(__out LONGLONG *pCurrent)
 STDMETHODIMP
 CPosPassThru::GetStopPosition(__out LONGLONG *pStop)
 {
-    return GetSeekingLongLong( &IMediaSeeking::GetStopPosition, pStop );;
+    return GetSeekingLongLong( &IMediaSeeking::GetStopPosition, pStop );
 }
 
 STDMETHODIMP
 CPosPassThru::GetDuration(__out LONGLONG *pDuration)
 {
-    return GetSeekingLongLong( &IMediaSeeking::GetDuration, pDuration );;
+    return GetSeekingLongLong( &IMediaSeeking::GetDuration, pDuration );
 }
 
 
 STDMETHODIMP
 CPosPassThru::GetPreroll(__out LONGLONG *pllPreroll)
 {
-    return GetSeekingLongLong( &IMediaSeeking::GetPreroll, pllPreroll );;
+    return GetSeekingLongLong( &IMediaSeeking::GetPreroll, pllPreroll );
 }
 
 
@@ -1078,7 +1078,7 @@ CRendererPosPassThru::EOS()
     else
     {
 	LONGLONG llStop;
-	if SUCCEEDED(hr=GetStopPosition(&llStop))
+	if (SUCCEEDED(hr=GetStopPosition(&llStop)))
 	{
 	    CAutoLock cAutoLock(&m_PositionLock);
 	    m_StartMedia =
@@ -1295,7 +1295,7 @@ HRESULT CSourceSeeking::GetPositions( __out_opt LONGLONG * pCurrent, __out_opt L
         *pStop = m_rtStop;
     }
 
-    return S_OK;;
+    return S_OK;
 }
 
 
@@ -2380,6 +2380,7 @@ CCmdQueue::SetTimeAdvise(void)
 		    &m_dwAdvise);
 
 	ASSERT(SUCCEEDED(hr));
+	UNREFERENCED_PARAMETER(hr);
 	m_tCurrentAdvise = current;
     }
 }

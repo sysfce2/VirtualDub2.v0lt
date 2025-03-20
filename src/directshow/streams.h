@@ -23,17 +23,7 @@
 #else
 #define AM_NOVTABLE
 #endif
-#endif	// MSC_VER
-
-
-// Because of differences between Visual C++ and older Microsoft SDKs,
-// you may have defined _DEBUG without defining DEBUG.  This logic
-// ensures that both will be set if Visual C++ sets _DEBUG.
-#ifdef _DEBUG
-#ifndef DEBUG
-#define DEBUG
-#endif
-#endif
+#endif // MSC_VER
 
 
 #include <windows.h>

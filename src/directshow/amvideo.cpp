@@ -23,8 +23,8 @@ const DWORD bits888[] = {0xFF0000,0x00FF00,0x0000FF};
 const struct {
     const GUID *pSubtype;
     WORD BitCount;
-    const CHAR *pName;
-    const WCHAR *wszName;
+    LPCSTR  pName;
+    LPCWSTR wszName;
 } BitCountMap[] =  { &MEDIASUBTYPE_RGB1,     1, "RGB Monochrome",   L"RGB Monochrome",
                      &MEDIASUBTYPE_RGB4,     4, "RGB VGA",          L"RGB VGA",
                      &MEDIASUBTYPE_RGB8,     8, "RGB 8",            L"RGB 8",
@@ -156,7 +156,7 @@ int LocateSubtype(const GUID *pSubtype)
     // Scan the mapping list seeing if the source GUID matches any known
     // bitmap subtypes, the list is terminated by a GUID_NULL entry
 
-    while (TRUE) {
+    for (;;) {
         pMediaSubtype = BitCountMap[iPosition].pSubtype;
         if (IsEqualGUID(*pMediaSubtype,*pSubtype) ||
             IsEqualGUID(*pMediaSubtype,GUID_NULL)
@@ -173,14 +173,14 @@ int LocateSubtype(const GUID *pSubtype)
 
 
 
-STDAPI_(WCHAR *) GetSubtypeNameW(const GUID *pSubtype)
+STDAPI_(LPCWSTR) GetSubtypeNameW(const GUID *pSubtype)
 {
-    return const_cast<WCHAR*>(BitCountMap[LocateSubtype(pSubtype)].wszName);
+    return BitCountMap[LocateSubtype(pSubtype)].wszName;
 }
 
-STDAPI_(CHAR *) GetSubtypeNameA(const GUID *pSubtype)
+STDAPI_(LPCSTR) GetSubtypeNameA(const GUID *pSubtype)
 {
-    return const_cast<CHAR*>(BitCountMap[LocateSubtype(pSubtype)].pName);
+    return BitCountMap[LocateSubtype(pSubtype)].pName;
 }
 
 #ifndef GetSubtypeName
@@ -190,7 +190,7 @@ STDAPI_(CHAR *) GetSubtypeNameA(const GUID *pSubtype)
 
 // this is here for people that linked to it directly; most people
 // would use the header file that picks the A or W version.
-STDAPI_(CHAR *) GetSubtypeName(const GUID *pSubtype)
+STDAPI_(LPCSTR) GetSubtypeName(const GUID *pSubtype)
 {
     return GetSubtypeNameA(pSubtype);
 }

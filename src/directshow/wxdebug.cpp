@@ -24,7 +24,7 @@ using std::max;
 #define _UNICODE
 #endif // _UNICODE
 #endif // UNICODE
-#endif // DEBUG
+#endif // _DEBUG
 
 #include <tchar.h>
 #include <strsafe.h>
@@ -79,7 +79,7 @@ bool g_fAutoRefreshLevels = false;
 
 LPCTSTR pBaseKey = TEXT("SOFTWARE\\Microsoft\\DirectShow\\Debug");
 LPCTSTR pGlobalKey = TEXT("GLOBAL");
-static const CHAR *pUnknownName = "UNKNOWN";
+static LPCSTR pUnknownName = "UNKNOWN";
 
 LPCTSTR TimeoutName = TEXT("TIMEOUT");
 
@@ -343,7 +343,8 @@ void WINAPI DbgInitLogTo (
             if (INVALID_HANDLE_VALUE != m_hOutput)
             {
               static const TCHAR cszBar[] = TEXT("\r\n\r\n=====DbgInitialize()=====\r\n\r\n");
-              SetFilePointer (m_hOutput, 0, NULL, FILE_END);
+              LARGE_INTEGER zero = {0, 0};
+              SetFilePointerEx(m_hOutput, zero, NULL, FILE_END);
               DbgOutString (cszBar);
             }
           }
@@ -1064,7 +1065,7 @@ void WINAPI DbgSetWaitTimeout(DWORD dwTimeout)
     dwWaitTimeout = dwTimeout;
 }
 
-#endif /* DEBUG */
+#endif // _DEBUG
 
 #ifdef _OBJBASE_H_
 
@@ -1301,7 +1302,7 @@ void WINAPI DisplayType(LPCTSTR label, const AM_MEDIA_TYPE *pmtIn)
         DisplayRECT(TEXT("Target rectangle"),pVideoInfo->rcTarget);
         DisplayBITMAPINFO(HEADER(pmtIn->pbFormat));
 
-    } if (pmtIn->formattype == FORMAT_VideoInfo2) {
+    } else if (pmtIn->formattype == FORMAT_VideoInfo2) {
 
         VIDEOINFOHEADER2 *pVideoInfo2 = (VIDEOINFOHEADER2 *)pmtIn->pbFormat;
 
