@@ -381,7 +381,7 @@ uint32 VDAudioFilterInstance::Prepare() {
 	if (!rv) {
 		mbPrepared = true;
 
-#ifdef DEBUG
+#ifdef _DEBUG
 		for(i=0; i<mpDefinition->mOutputPins; ++i) {
 			VDAudioFilterPinImpl& pin = OutputPin(i);
 

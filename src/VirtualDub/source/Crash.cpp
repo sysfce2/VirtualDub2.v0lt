@@ -1840,7 +1840,7 @@ static bool DoSave(const wchar_t *pwszFilename, HANDLE hThread, const EXCEPTION_
 
 	out.WriteF(
 			"VirtualDub2 crash report -- build %d ("
-#ifdef DEBUG
+#ifdef _DEBUG
 			"debug"
 #elif defined(_M_AMD64)
 			"release-AMD64"
