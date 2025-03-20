@@ -7,6 +7,7 @@
 #include <vd2/Kasumi/region.h>
 #include <vd2/Kasumi/pixel.h>
 #include <windows.h>
+#include <commdlg.h>
 #include <commctrl.h>
 #include "resource.h"
 

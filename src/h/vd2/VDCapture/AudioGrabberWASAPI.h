@@ -22,6 +22,7 @@
 #pragma once
 
 #include <windows.h>
+#include <mmreg.h>
 #include <vd2/system/vdstl.h>
 #include <vd2/system/atomic.h>
 #include <vd2/system/thread.h>
