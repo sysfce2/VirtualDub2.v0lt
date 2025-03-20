@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E8A3F6FA-AE1C-4C8E-A0B6-9C8480324EAA}</ProjectGuid>
-    <ProjectName>strmbasd</ProjectName>
+    <ProjectName>DirectShow</ProjectName>
     <RootNamespace>baseclasses</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
