@@ -41,7 +41,7 @@ public:
 			info->copy_ref(mInputInfo);
 			info->copy_alpha(mInputInfo);
 		}
-		return mInputLayout.format; 
+		return mInputLayout.format;
 	}
 	virtual void GetInputBitmapFormat(vdstructex<tagBITMAPINFOHEADER>& bm) {
 		bm = mInputFormat;

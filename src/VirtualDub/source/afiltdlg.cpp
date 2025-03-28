@@ -576,7 +576,7 @@ void VDDialogAudioFiltersW32::SaveGraph(VDAudioFilterGraph& graph, IVDFilterGrap
 			c.pin	= pConn->srcpin;
 
 			graph.mConnections.push_back(c);
-			
+
 			++pConn;
 		}
 	}

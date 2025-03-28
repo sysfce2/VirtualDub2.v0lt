@@ -1672,7 +1672,7 @@ void VDAudioDisplayControl::OnMouseMove(int x, int y, uint32 modifiers) {
 			case kDragModeAudioOffset:
 				mAudioOffsetDragEndPoint = pos;
 				mTrackAudioOffsetEvent.Raise(this, VDClampToSint32(pos - mAudioOffsetDragAnchor));
-				
+
 				{
 					char buf[64];
 
@@ -1861,7 +1861,7 @@ void VDAudioDisplayControl::OnPaint(HDC hdc, HRGN rgn) {
 
 void VDAudioDisplayControl::OnPaint2(HDC hdc, const PAINTSTRUCT& ps) {
 	SetStretchBltMode(hdc, COLORONCOLOR);
-	
+
 	if (mbSpectrumMode) {
 		int y0 = 0;
 		if (!mImage.empty()) {
@@ -2342,7 +2342,7 @@ bool VDAudioDisplayControl::ProcessAudioWaveform(const void *src, int count, int
 
 			for(int i=0; i<count; ++i) {
 				int s = int(*srcf*128*mScale) + 0x80;
-				if(s<0) s=0; 
+				if(s<0) s=0;
 				if(s>255) s=255;
 				*dst8 = (uint8)(s);
 				dst8 += mChanCount;
@@ -2356,7 +2356,7 @@ bool VDAudioDisplayControl::ProcessAudioWaveform(const void *src, int count, int
 
 			for(int i=0; i<count; ++i) {
 				int s = ((*src16*mScale)>>8) + 0x80;
-				if(s<0) s=0; 
+				if(s<0) s=0;
 				if(s>255) s=255;
 				*dst8 = (uint8)s;
 				dst8 += mChanCount;
@@ -2370,7 +2370,7 @@ bool VDAudioDisplayControl::ProcessAudioWaveform(const void *src, int count, int
 
 			for(int i=0; i<count; ++i) {
 				int s = (*src8-0x80)*mScale + 0x80;
-				if(s<0) s=0; 
+				if(s<0) s=0;
 				if(s>255) s=255;
 				*dst8 = (uint8)s;
 				dst8 += mChanCount;

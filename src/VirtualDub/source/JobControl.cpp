@@ -43,7 +43,7 @@ bool VDUIRequestSystemShutdown(VDGUIHandle hParent);
 
 ///////////////////////////////////////////////////////////////////////////////
 
-VDJobQueue::VDJobQueue() 
+VDJobQueue::VDJobQueue()
 	: mJobCount(0)
 	, mJobNumber(1)
 	, mpRunningJob(NULL)
@@ -189,7 +189,7 @@ void VDJobQueue::ListClear(bool force_no_update) {
 
 			mJobQueue.erase(mJobQueue.begin() + i);
 			--mJobCount;
-			
+
 			delete vdj;
 		}
 	}
@@ -251,7 +251,7 @@ void VDJobQueue::Delete(VDJob *job, bool force_no_update) {
 
 	mJobQueue.erase(mJobQueue.begin() + index);
 	--mJobCount;
-	
+
 	if (!force_no_update) SetModified();
 }
 
@@ -1019,7 +1019,7 @@ bool VDJobQueue::Flush(const wchar_t *fileName) {
 		}
 	} else {
 		VDFileStream outputStream(fileName, nsVDFile::kWrite | nsVDFile::kDenyAll | nsVDFile::kCreateAlways);
-		
+
 		Save(&outputStream, 0, 1, true);
 
 		mbModified = false;

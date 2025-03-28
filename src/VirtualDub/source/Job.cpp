@@ -244,7 +244,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 	case kVDAudioSourceMode_None:
 		output.addf("VirtualDub.audio.SetSource(0);");
 		break;
-	
+
 	}
 
 	output.addf("VirtualDub.audio.SetMode(%d);", opt->audio.mode);
@@ -452,7 +452,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 						, fa->IsPreciseCroppingEnabled() ? "" : ",0"
 						);
 		}
-		
+
 		if (fa->IsForceSingleFBEnabled()) {
 			output.addf("VirtualDub.video.filters.instance[%d].SetForceSingleFBEnabled(true);", iFilter);
 		}
@@ -503,7 +503,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 						, rangeEnd
 						);
 		}
-		
+
 		VDParameterCurve *pc = fa->GetAlphaParameterCurve();
 		if (pc) {
 			output.addf("declare curve = VirtualDub.video.filters.instance[%d].AddOpacityCurve();", iFilter);
@@ -635,7 +635,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 		output.addf("VirtualDub.project.ClearTextInfo();");
 		for(tTextInfo::const_iterator it(textInfo.begin()), itEnd(textInfo.end()); it!=itEnd; ++it) {
 			char buf[5]={0};
-			
+
 			memcpy(buf, &(*it).first, 4);
 
 			output.addf("VirtualDub.project.AddTextInfo(\"%s\", \"%s\");", buf, VDEncodeScriptString((*it).second).c_str());
@@ -1012,7 +1012,7 @@ void JobAddBatchDirectory(const wchar_t *lpszSrc, const wchar_t *lpszDst) {
 			*s++ = L'\\';
 
 	}
-	
+
 	if (*t) {
 
 		// If the path string is just \ or starts with x: or ends in a slash

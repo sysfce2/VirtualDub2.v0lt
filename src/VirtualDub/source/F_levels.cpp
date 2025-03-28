@@ -41,7 +41,7 @@ struct LevelsFilterData {
 	unsigned char xtblmono2[256];
 	int xtblluma[256];
 	const uint8 *xtblluma2[256];
-	
+
 	uint8		cliptab[768];
 
 	int			iInputLo, iInputHi;
@@ -779,7 +779,7 @@ static INT_PTR APIENTRY levelsDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 				return TRUE;
 
 			case IDC_LUMA:
-				{	
+				{
 					bool bNewState = !!IsDlgButtonChecked(hDlg, IDC_LUMA);
 
 					if (bNewState != mfd->bLuma) {

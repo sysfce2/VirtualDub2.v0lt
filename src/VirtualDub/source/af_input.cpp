@@ -181,7 +181,7 @@ uint32 VDAudioFilterInput::Run() {
 				return kVFARun_InternalWork;
 		}
 
-		bool inputEnded = mPos >= mLimit; 
+		bool inputEnded = mPos >= mLimit;
 
 		mpDecompressor->Convert(inputEnded, true);
 

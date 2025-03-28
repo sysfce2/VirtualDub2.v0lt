@@ -272,7 +272,7 @@ int VDXAPIENTRY VDVideoDecoderModelDefaultIP::GetRequiredCount() {
 bool VDXAPIENTRY VDVideoDecoderModelDefaultIP::IsDecodable(sint64 sample_num) {
 	if (mLastFrame == mDesiredFrame)
 		return true;
-	
+
 	return mpVS->isKey(sample_num);
 }
 
@@ -611,7 +611,7 @@ int VDVideoSourcePlugin::_read(VDPosition lStart, uint32 lCount, void *lpBuffer,
 	uint32 actualSamples = 0xBAADF00D;
 
 	bool result;
-	
+
 	vdwithinputplugin(mpContext) {
 		//if(lpBuffer) VDPROFILEBEGINEX("V-Read", (uint32)lStart);
 		result = mpXS->Read(lStart, lCount, lpBuffer, cbBuffer, &actualBytes, &actualSamples);
@@ -748,7 +748,7 @@ void VDVideoSourcePlugin::streamSetDesiredFrame(VDPosition frame_num) {
 
 VDPosition VDVideoSourcePlugin::streamGetNextRequiredFrame(bool& is_preroll) {
 	sint64 pos;
-	
+
 	vdwithinputplugin(mpContext) {
 		pos = mpXVDecModel->GetNextRequiredSample(is_preroll);
 	}
@@ -759,7 +759,7 @@ VDPosition VDVideoSourcePlugin::streamGetNextRequiredFrame(bool& is_preroll) {
 int	VDVideoSourcePlugin::streamGetRequiredCount(uint32 *totalsize) {
 	VDASSERT(!totalsize);
 	int count;
-	
+
 	vdwithinputplugin(mpContext) {
 		count = mpXVDecModel->GetRequiredCount();
 	}
@@ -769,7 +769,7 @@ int	VDVideoSourcePlugin::streamGetRequiredCount(uint32 *totalsize) {
 
 const void *VDVideoSourcePlugin::streamGetFrame(const void *inputBuffer, uint32 data_len, bool is_preroll, VDPosition sample_num, VDPosition target_num) {
 	const void *fb;
-	
+
 	vdwithinputplugin(mpContext) {
 		fb = mpXVDec->DecodeFrame(data_len ? inputBuffer : NULL, data_len, is_preroll, sample_num, target_num);
 	}
@@ -779,7 +779,7 @@ const void *VDVideoSourcePlugin::streamGetFrame(const void *inputBuffer, uint32 
 
 uint32 VDVideoSourcePlugin::streamGetDecodePadding() {
 	uint32 padding;
-	
+
 	vdwithinputplugin(mpContext) {
 		padding = mpXVDec->GetDecodePadding();
 	}
@@ -830,7 +830,7 @@ void VDVideoSourcePlugin::invalidateFrameBuffer() {
 
 bool VDVideoSourcePlugin::isFrameBufferValid() {
 	bool fbvalid;
-	
+
 	vdwithinputplugin(mpContext) {
 		fbvalid = mpXVDec->IsFrameBufferValid();
 	}
@@ -867,7 +867,7 @@ const void *VDVideoSourcePlugin::getFrame(VDPosition frameNum) {
 
 			for(;;) {
 				bool result = false;
-				
+
 				if (buffer.size() > padding) {
 					vdwithinputplugin(mpContext) {
 						//VDPROFILEBEGINEX("V-Read", (uint32)pos);
@@ -903,7 +903,7 @@ const void *VDVideoSourcePlugin::getFrame(VDPosition frameNum) {
 	} while(is_preroll);
 
 	const void *fb;
-	
+
 	vdwithinputplugin(mpContext) {
 		fb = mpXVDec->GetFrameBufferBase();
 	}
@@ -956,7 +956,7 @@ bool VDVideoSourcePlugin::isKey(VDPosition frame) {
 
 	if (frame < mSampleFirst || frame >= mSampleLast)
 		return false;
-	
+
 	vdwithinputplugin(mpContext) {
 		VDPosition stream_num = mpXVS->GetSampleNumberForFrame(frame);
 		iskey = mpXVS->IsKey(stream_num);
@@ -1018,7 +1018,7 @@ VDPosition VDVideoSourcePlugin::displayToStreamOrder(VDPosition frame) {
 	if (frame < mSampleFirst || frame >= mSampleLast)
 		return frame;
 
-	sint64 stream_num;	
+	sint64 stream_num;
 	vdwithinputplugin(mpContext) {
 		stream_num = mpXVS->GetSampleNumberForFrame(frame);
 	}
@@ -1194,7 +1194,7 @@ int VDAudioSourcePlugin::_read(VDPosition lStart, uint32 lCount, void *lpBuffer,
 	uint32 actualSamples;
 
 	bool result;
-	
+
 	vdwithinputplugin(mpContext) {
 		result = mpXS->Read(lStart, lCount, lpBuffer, cbBuffer, &actualBytes, &actualSamples);
 	}
@@ -1288,7 +1288,7 @@ public:
 
 	bool GetVideoSource(int index, IVDVideoSource **ppSrc);
 	bool GetAudioSource(int index, AudioSource **ppSrc);
-	int GetInputDriverApiVersion(){ 
+	int GetInputDriverApiVersion(){
 		return mpContext->max_api_version;
 	}
 	void GetFileTool(IFilterModFileTool **pp){
@@ -1343,7 +1343,7 @@ void VDInputFilePlugin::Init(const wchar_t *szFile) {
 
 bool VDInputFilePlugin::Append(const wchar_t *szFile, uint32 flags) {
 	bool appended;
-	
+
 	vdwithinputplugin(mpContext) {
 		if (mpContext->max_api_version>=10)
 			appended = mpXObject->Append2(szFile, flags, 0);

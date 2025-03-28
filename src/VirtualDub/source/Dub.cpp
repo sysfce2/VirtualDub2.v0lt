@@ -88,7 +88,7 @@ using namespace nsVDDub;
 #endif
 
 #ifndef PROCESS_MODE_BACKGROUND_END
-#define PROCESS_MODE_BACKGROUND_END 0x00200000 
+#define PROCESS_MODE_BACKGROUND_END 0x00200000
 #endif
 
 /// HACK!!!!
@@ -589,7 +589,7 @@ void Dubber::SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const char *
 		mAudioCompressionFormatHint = pShortNameHint;
 	else
 		mAudioCompressionFormatHint.clear();
-		
+
 	mAudioCompressionConfig.resize(config.size());
 	memcpy(mAudioCompressionConfig.data(),config.data(),config.size());
 }
@@ -685,7 +685,7 @@ void VDTranslateSubsetDirectMode(FrameSubset& dst, const FrameSubset& src, IVDVi
 				}
 
 				sint64 left = itNew->start - start;
-				
+
 				if (left > 0) {
 					itNew->start = start;
 					itNew->len += left;
@@ -920,7 +920,7 @@ void Dubber::InitAudioConversionChain() {
 
 	// Tack on a subset filter as well...
 	sint64 offset = 0;
-	
+
 	if (mOptions.audio.fStartAudio)
 		offset = vInfo.mFrameRateTimeline.scale64ir((sint64)1000000 * vInfo.start_src);
 
@@ -1066,7 +1066,7 @@ void Dubber::InitAudioConversionChain() {
 void Dubber::CheckAudioCodec(const char* format) {
 	if (!audioCompressor) return;
 	vd2::FormatConfidence fc = audioCompressor->SuggestFileFormat(format);
-	
+
 	if (fc==vd2::kFormat_Reject || fc==vd2::kFormat_Unwise) {
 		VDStringA aname = audioCompressor->name;
 		VDStringA text;
@@ -1119,7 +1119,7 @@ void Dubber::InitOutputFile() {
 	if (mbDoVideo) {
 		int outputWidth;
 		int outputHeight;
-		
+
 		if (mOptions.video.mode == DubVideoOptions::M_FULL) {
 			const VDPixmapLayout& outputLayout = filters.GetOutputLayout();
 
@@ -1183,7 +1183,7 @@ void Dubber::InitOutputFile() {
 
 		if (mpVideoCompressor && make.use_vc_format) {
 			VDPixmapCreateLinearLayout(driverLayout,VDPixmapFormatNormalize(outputFormatID),outputWidth,outputHeight,16);
-			if (!mpVideoCompressor->Query(&driverLayout, NULL)) 
+			if (!mpVideoCompressor->Query(&driverLayout, NULL))
 				throw MyError("Unable to initialize video compression. Check that the video codec is compatible with the output video frame size and that the settings are correct, or try a different one.");
 			driverLayout.formatEx = outputFormatID; //! is this needed here?
 		}
@@ -1398,7 +1398,7 @@ bool Dubber::NegotiateFastFormat(const BITMAPINFOHEADER& bih) {
 		if (!vs->setDecompressedFormat((const VDAVIBitmapInfoHeader *)&bih))
 			return false;
 	}
-	
+
 	const BITMAPINFOHEADER *pbih = (const BITMAPINFOHEADER *)mVideoSources.front()->getDecompressedFormat();
 
 	if (mpVideoCompressor->Query(pbih)) {
@@ -1425,7 +1425,7 @@ bool Dubber::NegotiateFastFormat(int format) {
 		if (!vs->setTargetFormat(format))
 			return false;
 	}
-	
+
 	IVDVideoSource* vs0 = mVideoSources.front();
 	const BITMAPINFOHEADER* pbih = (const BITMAPINFOHEADER*)vs0->getDecompressedFormat();
 	uint32 bih_size = vs0->getDecompressedFormatLen();
@@ -1660,7 +1660,7 @@ void Dubber::Init(IVDVideoSource *const *pVideoSources, uint32 nVideoSources, Au
 		make.combine();
 		int outputFormat = VDPixmapFormatNormalize(make.out);
 		const VDPixmapLayout& output = filters.GetOutputLayout();
-		
+
 		if (!CheckFormatSizeCompatibility(outputFormat, output.w, output.h)) {
 			const VDPixmapFormatInfo& formatInfo = VDPixmapGetInfo(outputFormat);
 
@@ -1969,7 +1969,7 @@ void Dubber::Stop() {
 
 			continue;
 		}
-		
+
 		uint32 currentTime = VDGetCurrentTick();
 
 		if ((dwRes -= WAIT_OBJECT_0) < nObjectsToWaitOn) {
@@ -2035,7 +2035,7 @@ void Dubber::Stop() {
 
 	if (fVDecompressionOk)	{
 		IVDStreamSource *pVideoStream = vSrc->asStream();
-		pVideoStream->streamEnd(); 
+		pVideoStream->streamEnd();
 		pVideoStream->applyStreamMode(IVDXStreamSourceV5::kStreamModeUncompress);
 	}
 	if (fADecompressionOk)	{ aSrc->streamEnd(); }

@@ -419,7 +419,7 @@ bool VDUIBatchWizard::OnCommand(uint32 id, uint32 extcode) {
 						// check if the filenames are actually the same (no-op).
 						if (!wcscmp(srcName, dstName))
 							noop = true;
-						
+
 						if (!noop) {
 							VDStringW tempPath;
 
@@ -504,7 +504,7 @@ bool VDUIBatchWizard::OnCommand(uint32 id, uint32 extcode) {
 								for(;;) {
 									const wchar_t *base = s.c_str();
 									const wchar_t *t = NULL;
-									
+
 									if (matchCase)
 										t = wcsstr(base + pos, searchStr);
 									else {
@@ -539,7 +539,7 @@ bool VDUIBatchWizard::OnCommand(uint32 id, uint32 extcode) {
 								}
 							}
 						}
-					}					
+					}
 				}
 			}
 			return true;

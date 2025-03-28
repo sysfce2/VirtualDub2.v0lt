@@ -65,7 +65,7 @@ static INT_PTR CALLBACK embossDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 			}
             return (TRUE);
 
-        case WM_COMMAND:                      
+        case WM_COMMAND:
             if (LOWORD(wParam) == IDOK) {
 				MyFilterData *mfd = (struct MyFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
 				int i;
@@ -83,7 +83,7 @@ static INT_PTR CALLBACK embossDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 				EndDialog(hDlg, 0);
 				return TRUE;
 			} else if (LOWORD(wParam) == IDCANCEL) {
-                EndDialog(hDlg, 1);  
+                EndDialog(hDlg, 1);
                 return TRUE;
             }
             break;

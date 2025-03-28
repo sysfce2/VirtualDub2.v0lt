@@ -175,7 +175,7 @@ static const char *const g_szCapVideoProcAmpItems[]={
 	"White balance",
 	"Backlight compensation",
 	"Gain",
-  
+
 	"Exposure",
 	"Focus",
 	"Iris",
@@ -1030,7 +1030,7 @@ void VDCaptureProjectUI::SetFullScreen(bool fs) {
 }
 
 void VDCaptureProjectUI::LoadLocalSettings() {
-	// If the user has selected a default capture file, use it; if not, 
+	// If the user has selected a default capture file, use it; if not,
 	VDRegistryAppKey key(g_szCapture);
 
 	// How about default capture settings?
@@ -2043,7 +2043,7 @@ void VDCaptureProjectUI::UICaptureDriverChanged(int driver) {
 
 	HMENU hMenu = GetMenu((HWND)mhwnd);
 	bool bHardwareDisplayAvailable = mpProject->IsHardwareDisplayAvailable();
-	
+
 	EnableMenuItem(hMenu, ID_VIDEO_OVERLAY, bHardwareDisplayAvailable ? MF_BYCOMMAND|MF_ENABLED : MF_BYCOMMAND|MF_GRAYED);
 
 	if (driver >= 0) {
@@ -2137,7 +2137,7 @@ void VDCaptureProjectUI::UICaptureDriverChanged(int driver) {
 void VDCaptureProjectUI::UICaptureFileUpdated() {
 	const wchar_t *pszAppend;
 	const VDStringW& name = mpProject->GetCaptureFile();
-	
+
 	if (mbCaptureActive)
 		pszAppend = L" [capture in progress]";
 	else if (VDDoesPathExist(name.c_str()))
@@ -2680,7 +2680,7 @@ LRESULT VDCaptureProjectUI::RestrictedWndProc(UINT msg, WPARAM wParam, LPARAM lP
 
 		case WM_CLOSE:
 			return 0;
-			 
+
 		case WM_HOTKEY:
 			if (wParam == kVDHotKeyIdCaptureStop)
 				mpProject->CaptureStop();
@@ -3435,7 +3435,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 					pwfexOld = (VDWaveFormat *)malloc(len);
 					memcpy(pwfexOld, wfex.data(), len);
 				}
-				
+
 				if (mpProject->GetAudioFormat(wfexSrc)) {
 					extern void GetMaskedAudioFormat(vdstructex<VDWaveFormat>& dst, const vdstructex<VDWaveFormat>& wfexInput, int mask);
 					VDAudioMaskParam param;
@@ -4089,7 +4089,7 @@ void VDCaptureProjectUI::GetPanelItems(VDCapturePreferences::InfoItems& items) {
 				{for(int i=0; i<wf->mChannels; i++)
 					if ((1<<i) & mask) cn2++; }
 
-				if (cn2<cn) 
+				if (cn2<cn)
 					items.push_back(kVDCaptureInfo_AudioChannelMask);
 			}
 		}
@@ -4246,7 +4246,7 @@ void VDCaptureProjectUI::RebuildPanel() {
 
 			HWND hwndGroup;
 			const wchar_t *groupLabel = VDLoadString(0, kVDST_CaptureUI, kVDMBase_CapInfoTypeLabels + type);
-			
+
 			hwndGroup = CreateWindowW(L"BUTTON", groupLabel, WS_CHILD|WS_VISIBLE|BS_GROUPBOX, x1, groupY, x2-x1, y - groupY, mhwndPanel, (HMENU)-1, g_hInst, NULL);
 
 			if (hwndGroup) {
@@ -4506,7 +4506,7 @@ void VDCaptureProjectUI::ShutdownHotKeys() {
 
 INT_PTR CALLBACK VDCaptureProjectUI::StaticPanelDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	VDCaptureProjectUI *pThis;
-	
+
 	if (msg == WM_INITDIALOG) {
 		SetWindowLongPtr(hwnd, DWLP_USER, lParam);
 		pThis = (VDCaptureProjectUI *)lParam;

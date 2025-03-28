@@ -143,7 +143,7 @@ VDStreamInterleaver::Action VDStreamInterleaver::PushStreams() {
 				continue;
 
 			sint64 microFrameOffset = microFrames;
-			
+
 			if (streaminfo.mIntervalMicroFrames != 65536) {
 				microFrameOffset += streaminfo.mIntervalMicroFrames - 1;
 				microFrameOffset -= microFrameOffset % streaminfo.mIntervalMicroFrames;
@@ -158,7 +158,7 @@ VDStreamInterleaver::Action VDStreamInterleaver::PushStreams() {
 
 			if (toread < 0)
 				toread = 0;
-		
+
 			VDASSERT((sint32)toread == toread);
 			streaminfo.mSamplesToWrite = (sint32)toread;
 
@@ -236,7 +236,7 @@ void VDRenderFrameMap::Init(const vdfastvector<IVDVideoSource *>& videoSources, 
 			useDirect = true;
 			directIndex = 0;
 			directFrame = srcFrame;
-			
+
 			// allow the filter system to remap if present since the subset depends on it anyway
 			if (pRemapperFS)
 				directFrame = pRemapperFS->GetSourceFrame(directFrame);
@@ -308,7 +308,7 @@ void VDRenderFrameMap::Init(const vdfastvector<IVDVideoSource *>& videoSources, 
 				srcFrame = directLast;
 			}
 		}
-		
+
 		// If we want only source frames, we must backtranslate output frames.
 		if (!useDirect && useSourceFrames) {
 			if (pRemapperFS)
@@ -336,7 +336,7 @@ void VDRenderFrameMap::Init(const vdfastvector<IVDVideoSource *>& videoSources, 
 					sameAsLast = true;
 			}
 		}
-		
+
 		if (sameAsLast && allowNullFrames) {
 			srcFrame = -1;
 			useDirect = true;

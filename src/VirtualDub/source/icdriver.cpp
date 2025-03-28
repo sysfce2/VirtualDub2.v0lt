@@ -216,7 +216,7 @@ LRESULT CALLBACK VCMDriverProc(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, 
 			for(i=0; videoDrivers[i]; i++)
                 if (!videoDrivers[i]->Load(hDriver))
                     return 0L;
-	    
+
             return (LRESULT)1L;
 
         case DRV_FREE:
@@ -226,23 +226,23 @@ LRESULT CALLBACK VCMDriverProc(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, 
 	    // Pass to all driver procs
             for(i=0; videoDrivers[i]; i++)
                 videoDrivers[i]->Free(hDriver);
-	    
+
             return (LRESULT)1L;
 
         case DRV_OPEN:
-             
+
             /*
-               Sent to the driver when it is opened. 
+               Sent to the driver when it is opened.
 
                dwDriverID is 0L.
-               
+
                lParam1 is a far pointer to a zero-terminated string
                containing the name used to open the driver.
-               
+
                lParam2 is passed through from the drvOpen call. It is
                NULL if this open is from the Drivers Applet in control.exe
                It is LPVIDEO_OPEN_PARMS otherwise.
-                
+
                Return 0L to fail the open.
              */
 
@@ -272,7 +272,7 @@ LRESULT CALLBACK VCMDriverProc(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, 
 
 				remove_translation(dpt);
 			}
-	    
+
 			return 0L;
 
 		case DRV_CLOSE:
@@ -291,7 +291,7 @@ LRESULT CALLBACK VCMDriverProc(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, 
         case DRV_QUERYCONFIGURE:
             return (LRESULT)0L;
 
-		case DRV_CONFIGURE:	    
+		case DRV_CONFIGURE:
             return DRV_OK;
 
         /*********************************************************************

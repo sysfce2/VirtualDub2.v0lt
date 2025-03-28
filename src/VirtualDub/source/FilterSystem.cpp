@@ -160,7 +160,7 @@ void VDFilterSystemProcessNode::Unblock() {
 }
 
 bool VDFilterSystemProcessProxy::Service() {
-	return engine->Service(index); 
+	return engine->Service(index);
 }
 
 bool VDFilterSystemProcessNode::Service(int index) {
@@ -620,7 +620,7 @@ void FilterSystem::initLinearChain(IVDFilterSystemScheduler *scheduler, uint32 f
 	StreamTail prevTail(inputTail);
 	vdfastvector<StreamTail> tails;
 
-	typedef vdhashmap<VDStringA, StreamTail> Tailset; 
+	typedef vdhashmap<VDStringA, StreamTail> Tailset;
 	Tailset tailset;
 
 	tailset[VDStringA("$input")] = inputTail;
@@ -736,7 +736,7 @@ void FilterSystem::initLinearChain(IVDFilterSystemScheduler *scheduler, uint32 f
 					}
 				} else {	// VDXA, CPU -> CPU
 					bool cpuConversionRequired = true;
-					
+
 					if (IsVDXAFormat(srcFormat)) {		// VDXA -> CPU
 						const VDPixmapLayout& prevLayout = tail.mpSrc->GetOutputLayout();
 
@@ -972,7 +972,7 @@ struct FilterSystem::RunState {
 int FilterSystem::RunNode(VDFilterSystemProcessNode* node, IVDFilterFrameSource* source, int index, RunState& state) {
 	IVDFilterFrameSource::RunResult rr;
 	int repeat = 0;
-	
+
 	if (!mpBitmaps->mpProcessScheduler && node->ServiceSync()) {
 		rr = IVDFilterFrameSource::kRunResult_Running;
 		LogRunResultSync(rr,source);

@@ -808,7 +808,7 @@ void VDUIDialogConfigureExternalEncoders::OnDestroy() {
 	VDSaveExternalEncoderProfiles();
 
 	mListView.Clear();
-	
+
 	VDDialogFrameW32::OnDestroy();
 }
 
@@ -1168,7 +1168,7 @@ bool VDUIDialogConfigureExternalEncoders::OnCommand(uint32 id, uint32 extcode) {
 			while(!esets.empty()) {
 				VDExtEncSet *eset = &*esets.back();
 				vdrefptr<VDExtEncSet> conflict;
-				
+
 				if (VDGetExternalEncoderSetByName(eset->mName.c_str(), ~conflict))
 					VDRemoveExternalEncoderSet(conflict);
 
@@ -1296,7 +1296,7 @@ bool VDUIDialogConfigureExternalEncoders::OnCommand(uint32 id, uint32 extcode) {
 					writer.Close();
 				writer.Close();
 			writer.Close();
-			
+
 			writer.End();
 			return true;
 		}
@@ -1422,7 +1422,7 @@ LRESULT CALLBACK VDUIDialogConfigureExternalEncoders::TabSubclassProc(HWND hwnd,
 				ExcludeClipRect(hdc, r.left, r.top, r.right, r.bottom);
 				GetClientRect(hwnd, &r);
 				FillRect(hdc, &r, (HBRUSH)(COLOR_3DFACE + 1));
-		
+
 				return TRUE;
 			}
 		}
@@ -1436,4 +1436,3 @@ void VDUIDisplayDialogConfigureExternalEncoders(VDGUIHandle h) {
 
 	dlg.ShowDialog(h);
 }
-

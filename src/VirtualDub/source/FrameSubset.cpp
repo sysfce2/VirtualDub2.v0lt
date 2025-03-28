@@ -366,7 +366,7 @@ void FrameSubset::offset(sint64 off) {
 
 void FrameSubset::trimInputRange(sint64 limit) {
 	iterator it(mTimeline.begin()), itEnd(mTimeline.end());
-	
+
 	while(it != itEnd) {
 		FrameSubsetNode& fsn = *it;
 
@@ -432,7 +432,7 @@ void FrameSubset::insert(iterator it, const FrameSubset& src) {
 void FrameSubset::insert(sint64 insertionPoint, const FrameSubset& src) {
 	sint64 offset = 0;
 	FrameSubset::iterator it;
-	
+
 	if (insertionPoint < 0)
 		it = begin();
 	else

@@ -966,7 +966,7 @@ uint32 VDVF1ResizeDlg::ExchangeWithDialog(bool write) {
 		if (doheight)
 			ex.ExchangeEdit(IDC_RELHEIGHT, mNewConfig.mImageRelH);
 	}
-	
+
 	if (write || !mNewConfig.mbUseRelative) {
 		if (dowidth)
 			ex.ExchangeEdit(IDC_WIDTH, mNewConfig.mImageW);

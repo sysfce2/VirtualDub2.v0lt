@@ -109,7 +109,7 @@ bool SceneDetector::Submit(const VDPixmap& src) {
 //	_RPT3(0,"Last frame diffs=%ld, lum(linear)=%ld, lum(rms)=%f\n",last_frame_diffs,lum_total,sqrt(lum_sq_total));
 
 	if (fade_threshold) {
-		// Var(X)	= E(X^2) - E(X)^2 
+		// Var(X)	= E(X^2) - E(X)^2
 		//			= sum(X^2)/N - sum(X)^2 / N^2
 		// SD(X)	= sqrt(N * sum(X^2) - sum(X)^2)) / N
 

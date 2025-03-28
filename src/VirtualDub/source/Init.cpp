@@ -297,7 +297,7 @@ static void crash3() {
 		for(int i=0; i<10; ++i) {
 		   vdprotected1("in foo iteration %d", int, i)
 //			volatile VDProtectedAutoScope1<int> autoscope(VDProtectedAutoScopeData1<int>(__FILE__, __LINE__, "in foo iteration %d", i));
-			
+
 			   if (i == 5)
 				   *(volatile char *)0 = 0;
 		}
@@ -548,7 +548,7 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine) {
 	VDCHECKPOINT;
 
     if (!InitApplication(hInstance))
-            return (FALSE);              
+            return (FALSE);
 
 	VDInstallModelessDialogHookW32();
 
@@ -710,7 +710,7 @@ bool InitInstance( HANDLE hInstance, int nCmdShow, bool topmost) {
 
 	DWORD dwExStyle = topmost ? WS_EX_TOPMOST : 0;
 
-    // Create a main window for this application instance. 
+    // Create a main window for this application instance.
 	{
 		g_hWnd = CreateWindowExW(
 			dwExStyle,
@@ -745,11 +745,11 @@ bool InitInstance( HANDLE hInstance, int nCmdShow, bool topmost) {
 	if (nCmdShow != SW_HIDE && !(GetWindowLong(g_hWnd, GWL_STYLE) & WS_VISIBLE))
 		ShowWindow(g_hWnd, nCmdShow);
 
-    UpdateWindow(g_hWnd);          
+    UpdateWindow(g_hWnd);
 
 	VDSetWindowTextW32(g_hWnd, versionFormat.c_str());
 
-    return (TRUE);               
+    return (TRUE);
 
 }
 
@@ -788,7 +788,7 @@ int VDProcessCommandLine(const VDCommandLine& cmdLine) {
 }
 
 int ProcessCommandLine::showHelp() {
-	const char* msg = 
+	const char* msg =
 	//   12345678901234567890123456789012345678901234567890123456789012345678901234567890
 	"  /autorecover              Scan for auto-recover files\n"
 //	"  /blockDebugOutput         Block debug output from specific DLLs\n"
@@ -911,7 +911,7 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, bool execute) {
 				else if (!wcscmp(token, L"blockDebugOutput")) {
 					if (!cmdLine.GetNextNonSwitchArgument(it, token))
 						throw MyError("Command line error: syntax is /blockDebugOutput <filter>");
-					
+
 					if (execute) VDInitDebugOutputFilterW32(VDTextWToA(token).c_str());
 				}
 				else if (!wcscmp(token, L"c")) {
@@ -1072,7 +1072,7 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, bool execute) {
 						VDInitOutputDrivers();
 						VDInitAudioEnc();
 						VDInitTools();
-	
+
 						guiSetStatus("Loaded external module: %s", 255, VDTextWToA(token).c_str());
 					}
 				}

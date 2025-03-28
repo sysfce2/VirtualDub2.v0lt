@@ -39,7 +39,7 @@ public:
 	VDAtomicInt	mbRequestSuccess;
 };
 
-VDFilterFrameConverterNode::VDFilterFrameConverterNode() 
+VDFilterFrameConverterNode::VDFilterFrameConverterNode()
 	: mbRequestPending(false)
 {
 	source = 0;
@@ -173,7 +173,7 @@ bool VDFilterFrameConverter::InitNewRequest(VDFilterFrameRequest *req, sint64 ou
 
 IVDFilterFrameSource::RunResult VDFilterFrameConverter::RunProcess(int index) {
 	if (index>=node_count) return kRunResult_Idle;
-	return node[index].RunProcess(); 
+	return node[index].RunProcess();
 }
 
 IVDFilterFrameSource::RunResult VDFilterFrameConverterNode::RunProcess() {
@@ -216,4 +216,3 @@ void VDFilterFrameConverterNode::Stop() {
 	mbRequestPending = false;
 	EndFrame(false);
 }
-

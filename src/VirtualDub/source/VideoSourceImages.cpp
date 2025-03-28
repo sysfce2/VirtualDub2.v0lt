@@ -85,7 +85,7 @@ IVDVideoSource *VDCreateVideoSourceImages(VDInputFileImages *parent) {
 	return new VideoSourceImages(parent);
 }
 
-INT_PTR APIENTRY VDInputFileImages::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
+INT_PTR APIENTRY VDInputFileImages::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -109,18 +109,18 @@ INT_PTR APIENTRY VDInputFileImages::_InfoDlgProc( HWND hDlg, UINT message, WPARA
 				ticks_to_str(s, (buf + std::size(buf)) - s, ticks);
 				sprintf(s+strlen(s),".%02d)", (ticks/10)%100);
 				SetDlgItemTextA(hDlg, IDC_VIDEO_NUMFRAMES, buf);
-				
+
 				const VDPixmapFormatInfo& info = VDPixmapGetInfo(pvs->getInitFormat());
 
 				s = buf + sprintf(buf, pvs->getInitAlpha() ? "%s with alpha" : "%s", info.name);
-				
+
 				SetDlgItemTextA(hDlg, IDC_VIDEO_COMPRESSION, buf);
 			}
 
 			return (TRUE);
 
 		case WM_COMMAND:
-			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) 
+			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 				EndDialog(hDlg, TRUE);
 			break;
 
@@ -134,7 +134,7 @@ INT_PTR APIENTRY VDInputFileImages::_InfoDlgProc( HWND hDlg, UINT message, WPARA
 	return FALSE;
 }
 
-void VDInputFileImages::InfoDialog(VDGUIHandle hwndParent) 
+void VDInputFileImages::InfoDialog(VDGUIHandle hwndParent)
 {
 	IVDVideoSource* vs;
 	GetVideoSource(0, &vs);
@@ -201,7 +201,7 @@ int VideoSourceImages::_read(VDPosition lStart, uint32 lCount, void *lpBuffer, u
 	const wchar_t *buf = mpParent->ComputeFilename(mPathBuf, lStart);
 
 	// Check if we already have the file handle cached.  If not, open the file.
-	
+
 	if (lStart == mCachedHandleFrame) {
 		mCachedFile.seek(0);
 	} else{
@@ -236,7 +236,7 @@ int VideoSourceImages::_read(VDPosition lStart, uint32 lCount, void *lpBuffer, u
 	}
 
 	mCachedFile.read(lpBuffer, size);
-	
+
 	if (plBytesRead)
 		*plBytesRead = size;
 
@@ -297,7 +297,7 @@ bool VideoSourceImages::setTargetFormat(VDPixmapFormatEx format) {
 			mTargetFormat = px;
 
 			invalidateFrameBuffer();
-			
+
 			return true;
 		}
 
@@ -319,7 +319,7 @@ bool VideoSourceImages::setTargetFormat(VDPixmapFormatEx format) {
 			mTargetFormat = px;
 
 			invalidateFrameBuffer();
-			
+
 			return true;
 		}
 
@@ -342,7 +342,7 @@ bool VideoSourceImages::setTargetFormat(VDPixmapFormatEx format) {
 			mTargetFormat = px;
 
 			invalidateFrameBuffer();
-			
+
 			return true;
 		}
 	}

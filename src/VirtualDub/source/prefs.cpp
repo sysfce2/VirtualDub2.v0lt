@@ -788,7 +788,7 @@ public:
 		case kEventSync:
 			{
 				unsigned v = 0;
-				
+
 				swscanf(GetCaption(100).c_str(), L"%u", &v);
 
 				if (v < 0)
@@ -876,7 +876,7 @@ int VDShowPreferencesDialog(VDGUIHandle h) {
 	VDDialogPreferences prefDlg(temp);
 
 	IVDUIBase *pBase = vdpoly_cast<IVDUIBase *>(pWin);
-	
+
 	pBase->SetCallback(&prefDlg, false);
 	int result = pBase->DoModal();
 

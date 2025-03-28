@@ -270,7 +270,7 @@ void VDInputFileRawVideoOptionsDialog::OnDataExchange(bool write) {
 			s.sprintf("%u/%u (~%.7f)", mOptions.mFrameRate.getHi(), mOptions.mFrameRate.getLo(), mOptions.mFrameRate.asDouble());
 
 		SetControlText(IDC_FRAMERATE, VDTextAToW(s).c_str());
-		
+
 		SetControlTextF(IDC_WIDTH, L"%u", mOptions.mWidth);
 		SetControlTextF(IDC_HEIGHT, L"%u", mOptions.mHeight);
 		SetControlTextF(IDC_ALIGNMENT, L"%u", mOptions.mAlignment);
@@ -342,7 +342,7 @@ VDVideoSourceRawVideo::VDVideoSourceRawVideo(IVDInputFileRawVideo *parent, const
 
 	mSampleFirst	= 0;
 	mSampleLast		= 0;
-	
+
 	sint64 fileSize = parent->GetFileSize();
 
 	mFrameOffset = options.mInitialPadding;
@@ -515,7 +515,7 @@ InputFileOptions *VDInputFileRawVideo::promptForOptions(VDGUIHandle hwndParent) 
 	// restore from registry
 	VDRegistryAppKey key(g_szRegKeyPersistence);
 
-	VDInputFileRawVideoOptions regopts; 
+	VDInputFileRawVideoOptions regopts;
 	regopts.mFrameRate = VDFraction((unsigned)key.getInt("Raw Video Input: Frame rate low", regopts.mFrameRate.getHi()),
 		(unsigned)key.getInt("Raw Video Input: Frame rate high", regopts.mFrameRate.getLo()));
 	regopts.mWidth = key.getInt("Raw Video Input: Width", regopts.mWidth);

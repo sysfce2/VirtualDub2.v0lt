@@ -78,7 +78,7 @@
 			}
 
 			mRasterizer.Clear();
-			VDPixmapConvertTextToPath(mRasterizer, NULL, size, 8.0f * 8.0f * 10.0f, 8.0f * 8.0f * y, mTextLine.c_str());		
+			VDPixmapConvertTextToPath(mRasterizer, NULL, size, 8.0f * 8.0f * 10.0f, 8.0f * 8.0f * y, mTextLine.c_str());
 			mRasterizer.ScanConvert(mTextRegion);
 			VDPixmapConvolveRegion(mShadowRegion, mTextRegion, mShadowBrush);
 			VDPixmapFillPixmapAntialiased8x(pxdst2, mShadowRegion, 0, 0, 0xFF000000);

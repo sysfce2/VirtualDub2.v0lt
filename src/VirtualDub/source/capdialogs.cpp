@@ -310,7 +310,7 @@ INT_PTR VDDialogCaptureSettings::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 				CheckDlgButton(mhdlg, IDC_CAPTURE_ON_OK, mParms.mbDisplayPrerollDialog ? 1 : 0);
 				CheckDlgButton(mhdlg, IDC_CAPTURE_CPU_POWER, mParms.mbMaxPower && mParms.mbEnablePower ? 1 : 0);
 				if (!mParms.mbEnablePower) EnableWindow(GetDlgItem(mhdlg, IDC_CAPTURE_CPU_POWER), false);
-			}	
+			}
 			return TRUE;
 
 		case WM_COMMAND:
@@ -409,7 +409,7 @@ INT_PTR VDDialogCaptureAllocate::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 				}
 
 				SetFocus(GetDlgItem(mhdlg, IDC_DISK_SPACE_ALLOCATE));
-			}	
+			}
 
 			return TRUE;
 
@@ -714,7 +714,7 @@ bool VDShowCapturePreferencesDialog(VDGUIHandle h, VDCapturePreferences& prefs) 
 	VDDialogCapturePreferences prefDlg(temp);
 
 	IVDUIBase *pBase = vdpoly_cast<IVDUIBase *>(pWin);
-	
+
 	pBase->SetCallback(&prefDlg, false);
 	int result = pBase->DoModal();
 
@@ -730,7 +730,7 @@ bool VDShowCapturePreferencesDialog(VDGUIHandle h, VDCapturePreferences& prefs) 
 
 void VDCaptureSavePreferences(const VDCapturePreferences& prefs) {
 	VDRegistryAppKey key(g_szCapture);
-	
+
 	key.setBinary("Capture: Info panel items", prefs.mInfoItems.empty() ? "" : (const char *)&prefs.mInfoItems[0], prefs.mInfoItems.size() * 4);
 	key.setInt("Capture: Start hotkey", prefs.mHotKeyStart);
 	key.setInt("Capture: Stop hotkey", prefs.mHotKeyStop);
@@ -845,7 +845,7 @@ int VDShowCaptureRawAudioFormatDialog(VDGUIHandle h, const std::list<vdstructex<
 	VDDialogCaptureRawAudioFormat prefDlg(formats, sel);
 
 	IVDUIBase *pBase = vdpoly_cast<IVDUIBase *>(pWin);
-	
+
 	pBase->SetCallback(&prefDlg, false);
 	int result = pBase->DoModal();
 	peer->Shutdown();
@@ -963,7 +963,7 @@ public:
 			int id = mask_ids[i];
 			bool on = (mask & (1<<i))!=0;
 			EnableWindow(GetDlgItem(mhdlg,id), i<channels);
-			if(i>=channels) 
+			if(i>=channels)
 				CheckDlgButton(mhdlg,id,BST_UNCHECKED);
 			else
 				CheckDlgButton(mhdlg,id,on ? BST_CHECKED:BST_UNCHECKED);
@@ -1035,7 +1035,7 @@ public:
 
 			{for(int i=0; i<channels; i++){
 				int id = mask_ids[i];
-				if(LOWORD(wParam)==id){ 
+				if(LOWORD(wParam)==id){
 					CheckDlgButton(mhdlg,IDC_MASK_ALL,BST_UNCHECKED);
 					break;
 				}
@@ -1178,7 +1178,7 @@ public:
 
 				int v;
 				wchar_t dummy;
-				
+
 				if (1 != swscanf(s.c_str(), L" %d %c", &v, &dummy)) {
 					if (mTimingSetup.mbAllowLateInserts) {
 						MessageBeep(MB_ICONEXCLAMATION);
@@ -1232,7 +1232,7 @@ bool VDShowCaptureTimingDialog(VDGUIHandle h, VDCaptureTimingSetup& timing) {
 	VDDialogTimingOptions prefDlg(timing);
 
 	IVDUIBase *pBase = vdpoly_cast<IVDUIBase *>(pWin);
-	
+
 	pBase->SetCallback(&prefDlg, false);
 	bool result = 0 != pBase->DoModal();
 	peer->Shutdown();
@@ -1289,7 +1289,7 @@ bool VDShowCaptureDeviceOptionsDialog(VDGUIHandle h, uint32& opts) {
 	VDDialogCaptureDeviceOptions prefDlg(opts);
 
 	IVDUIBase *pBase = vdpoly_cast<IVDUIBase *>(pWin);
-	
+
 	pBase->SetCallback(&prefDlg, false);
 	bool result = 0 != pBase->DoModal();
 	peer->Shutdown();
@@ -1321,7 +1321,7 @@ public:
 			vduirectinsets labelpad(0);
 
 			labelpad.right = pBase->MapUnitsToPixels(vduisize(3, 0)).w;
-			
+
 			child = VDCreateUIGrid();
 			child->SetAlignment(nsVDUI::kFill, nsVDUI::kFill);
 			pWin->AddChild(child);
@@ -1434,7 +1434,7 @@ void VDCreateDialogCaptureVideoProcAmp(IVDUIWindow *pParent, IVDCaptureProject *
 	VDDialogCaptureVideoProcAmp *procAmpDlg = new VDDialogCaptureVideoProcAmp(pProject,&ref);
 
 	IVDUIBase *pBase = vdpoly_cast<IVDUIBase *>(pWin);
-	
+
 	pBase->SetCallback(procAmpDlg, true);
 	pParent->AddChild(pWin);
 	pBase->SetAutoDestroy(true);

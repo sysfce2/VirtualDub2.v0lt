@@ -188,7 +188,7 @@ bool VDUIDialogAutoRecover::OnCommand(uint32 id, uint32 extcode) {
 				}
 			}
 			return true;
-		
+
 		case IDC_DELETE_ALL:
 			if (Confirm(L"Are you sure you want to delete ALL recovery files?", g_szWarningW)) {
 				mList.Clear();

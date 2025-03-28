@@ -961,7 +961,7 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 				SetPosition(mDragAnchorPos);
 				Notify(PCN_THUMBTRACK, VDPositionControlEventData::kEventTracking);
 			}
-			
+
 			pt.x = mThumbRect.left + mDragOffsetX;
 			ClientToScreen(mhwnd, &pt);
 			SetCursorPos(pt.x, pt.y);
@@ -1037,7 +1037,7 @@ void VDPositionControlW32::OnCreate() {
 	mFrameFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	nFrameCtlHeight = MulDiv(18, mTextScale, 100);
 	nFrameCtlWidth = MulDiv(320, mTextScale, 100);
-	
+
 	if (mFrameFont) {
 		if (HDC hdc = GetDC(mhwnd)) {
 			ht = MulDiv(GetDeviceCaps(hdc, LOGPIXELSY), ht, 96);

@@ -1365,7 +1365,7 @@ static void VDDebugCrashDumpRegisters(VDDebugCrashTextOutput& out, const EXCEPTI
 	out.WriteF("EFLAGS = %08lx\n", pContext->EFlags);
 	out.WriteF("FPUCW = %04x\n", pContext->FloatSave.ControlWord);
 	out.WriteF("FPUTW = %04x\n", pContext->FloatSave.TagWord);
-		
+
 #if 0
 	// extract out MMX registers
 
@@ -2182,4 +2182,3 @@ VDCrashResponse VDDisplayFriendlyCrashDialog(HWND hwndParent, HANDLE hThread, co
 bool VDDisplayAdvancedCrashDialog(HWND hwndParent, HANDLE hThread, const EXCEPTION_POINTERS *pExc, const char *pszScopeInfo, bool allowForcedExit) {
 	return VDCrashDialogAdvanced(hThread, pExc, pszScopeInfo, allowForcedExit).Display(hwndParent);
 }
-

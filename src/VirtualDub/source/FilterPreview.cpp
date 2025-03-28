@@ -1342,7 +1342,7 @@ void FilterPreview::OnVideoRedraw() {
 			VDFilterChainEntry *ent = *it;
 			FilterInstance *fa = ent->mpInstance;
 
-			if (!fa->view) 
+			if (!fa->view)
 				continue;
 
 			vdrefptr<IVDFilterFrameClientRequest> req2;
@@ -1641,7 +1641,7 @@ VDPosition FilterPreview::FetchFrame(VDPosition pos) {
 			if (mLastOutputFrame < 0)
 				mLastOutputFrame = mpFiltSys->GetOutputFrameCount();
 		}
-		
+
 		mLastTimelineFrame	= pos;
 		mLastTimelineTimeMS	= VDRoundToInt64(mpFiltSys->GetOutputFrameRate().AsInverseDouble() * 1000.0 * (double)pos);
 
@@ -1658,7 +1658,7 @@ VDPosition FilterPreview::FetchFrame(VDPosition pos) {
 	return pos;
 }
 
-int64 FilterPreview::FMSetPosition(int64 pos) { 
+int64 FilterPreview::FMSetPosition(int64 pos) {
 	if(mhdlg){
 		SceneShuttleStop();
 		mpPosition->SetPosition(pos);

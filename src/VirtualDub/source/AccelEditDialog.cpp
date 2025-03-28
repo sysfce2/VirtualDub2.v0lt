@@ -143,7 +143,7 @@ void VDDialogEditAccelerators::OnDataExchange(bool write) {
 		size_t n = mBoundCommands.size();
 
 		VDAccelTableDefinition newTable;
-		
+
 		for(size_t i=0; i<n; ++i) {
 			const BoundCommand& ent = *mBoundCommands[i];
 
@@ -275,7 +275,7 @@ bool VDDialogEditAccelerators::OnCommand(uint32 id, uint32 extcode) {
 				}
 
 				vdrefptr<BoundCommand> bc(new_nothrow BoundCommand);
-				
+
 				if (bc) {
 					bc->mpCommand = ace->mpName;
 					bc->mCommandId = ace->mId;

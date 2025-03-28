@@ -615,7 +615,7 @@ void HexViewer::MoveCaret() {
 
 LRESULT HexViewer::Handle_WM_MOUSEWHEEL(WPARAM wParam, LPARAM lParam) {
 	int iNewDelta, nScroll;
-	
+
 	iNewDelta = iMouseWheelDelta - (signed short)HIWORD(wParam);
 	nScroll = iNewDelta / WHEEL_DELTA;
 
@@ -655,7 +655,7 @@ LRESULT HexViewer::Handle_WM_SIZE(WPARAM wParam, LPARAM lParam) {
 
 	GetClientRect(hwnd, &r);
 
-	nCurrentWholeLines	= (r.bottom - r.top) / nLineHeight; 
+	nCurrentWholeLines	= (r.bottom - r.top) / nLineHeight;
 	nCurrentVisLines	= (r.bottom - r.top + nLineHeight - 1) / nLineHeight;
 
 	return 0;
@@ -746,7 +746,7 @@ LRESULT HexViewer::Handle_WM_CHAR(WPARAM wParam, LPARAM lParam) {
 			mpDataSource->ModifyByte(i64Position, (char)v, (char)0xf0);
 		else
 			mpDataSource->ModifyByte(i64Position, (char)(v<<4), 0x0f);
-	}	
+	}
 
 	// Advance right one char
 
@@ -1053,7 +1053,7 @@ private:
 	bool	bEnableAVIAssist;
 
 	// put this last since it's so big
-	
+
 	union {
 		char	filecache[4096];
 		double	__unused;			// force 8-alignment
@@ -1300,7 +1300,7 @@ void HexEditor::Commit() {
 const char *HexEditor::GetRow(sint64 start, int& len, long& modified_mask) {
 	HVModifiedLine *pModLine = FindModLine(start);
 	const char *pszData;
-	
+
 	if (pModLine) {
 		modified_mask = pModLine->mod_flags;
 		pszData = pModLine->data;
@@ -1610,7 +1610,7 @@ LRESULT HexEditor::Handle_WM_COMMAND(WPARAM wParam, LPARAM lParam) {
 
 			while(pLine = listMods.RemoveHead())
 				delete pLine;
-         
+
 			InvalidateRect(hwnd, NULL, TRUE);
 		}
 		break;
@@ -2079,7 +2079,7 @@ void HexEditor::Find(HWND hwndParent) {
 					if (pos + limit > basepos)
 						limit = (int)(basepos - pos);
 
-					if (!i) 
+					if (!i)
 						i = limit;
 
 					while((bool)itML && itML->address >= pos+limit)

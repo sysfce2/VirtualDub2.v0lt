@@ -254,7 +254,7 @@ public:
 
 	void BeginWait();
 	void EndWait();
-	
+
 	void CheckForSuspend();
 	void BeginSuspend();
 	bool TryWaitSuspend(uint32 timeout);

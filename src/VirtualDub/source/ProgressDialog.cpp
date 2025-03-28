@@ -28,7 +28,7 @@
 
 extern HINSTANCE g_hInst;
 
-ProgressDialog::ProgressDialog(HWND hwndParent, const char *szTitle, const char *szCaption, long _maxval, bool _fAbortEnabled) 
+ProgressDialog::ProgressDialog(HWND hwndParent, const char *szTitle, const char *szCaption, long _maxval, bool _fAbortEnabled)
 	:lpszTitle(szTitle)
 	,lpszCaption(szCaption)
 	,lpszValueFormat(NULL)

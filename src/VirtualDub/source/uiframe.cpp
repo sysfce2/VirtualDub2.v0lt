@@ -197,7 +197,7 @@ ATOM VDUIFrame::Register()
     wc.hInstance		= g_hInst;
     wc.hIcon			= LoadIcon(g_hInst, MAKEINTRESOURCE(IDI_VIRTUALDUB));
     wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1); //GetStockObject(LTGRAY_BRUSH); 
+    wc.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1); //GetStockObject(LTGRAY_BRUSH);
 	wc.lpszMenuName		= MAKEINTRESOURCEW(IDR_MAIN_MENU);
 	wc.lpszClassName	= szAppNameW;
 

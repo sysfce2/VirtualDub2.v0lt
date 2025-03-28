@@ -59,7 +59,7 @@ public:
 		LOCK_POST		= 0x00000008L,
 		LOCK_ASYNC_EXIT	= 0x00000010L,
 	};
-	
+
 	VDAtomicInt lock_state;
 #endif
 
@@ -228,7 +228,7 @@ uint32 VDAsyncBlitter::getPulseClock() const {
 bool VDAsyncBlitter::lock(uint32 id, sint32 timeout) {
 	if (!mRequests)
 		return true;
-	
+
 	if (fAbort)
 		return false;
 

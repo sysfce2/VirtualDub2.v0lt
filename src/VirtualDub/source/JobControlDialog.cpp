@@ -259,7 +259,7 @@ void VDUIJobControlDialog::OnDestroy() {
 
 bool VDUIJobControlDialog::OnCommand(uint32 id, uint32 extcode) {
 	OnMenuHit(id);
-	
+
 	if (extcode == BN_CLICKED) {
 		HWND hwndItem = GetDlgItem(mhdlg, IDC_JOBS);
 		int index = ListView_GetNextItem(hwndItem, -1, LVNI_ALL | LVNI_SELECTED);
@@ -328,7 +328,7 @@ bool VDUIJobControlDialog::OnCommand(uint32 id, uint32 extcode) {
 				return TRUE;
 
 			g_VDJobQueue.Swap(index+1, index);
-			
+
 			ListView_SetItemState(hwndItem, index  , 0, LVIS_SELECTED | LVIS_FOCUSED);
 			ListView_SetItemState(hwndItem, index+1, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
 			ListView_RedrawItems(hwndItem, index, index+1);
@@ -1006,4 +1006,3 @@ void OpenJobWindow() {
 void CloseJobWindow() {
 	g_VDUIJobControlDialog.Destroy();
 }
-

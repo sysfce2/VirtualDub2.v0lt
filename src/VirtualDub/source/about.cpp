@@ -104,7 +104,7 @@ void RenderTriangle(Pixel16 *dst, long dstpitch, Pixel16 *tex, TriPt *pt1, TriPt
 
 	dudxi = (int)(dudx * 16777216.0f) << 3;
 	dvdxi = (int)(dvdx * 16777216.0f) << 3;
-	
+
 	// Compute edge walking parameters
 
 	float dxl1=0, dxr1=0, dul1=0, dvl1=0;
@@ -238,7 +238,7 @@ void RenderTriangle(Pixel16 *dst, long dstpitch, Pixel16 *tex, TriPt *pt1, TriPt
 		x1		= (int)floor(xl + 0.5f);
 		x2		= (int)floor(xr + 0.5f);
 		xf		= (x1+0.5f) - xl;
-		
+
 		u		= ((int)((ul + xf * dudx)*16777216.0f) << 3) + u_correct;
 		v		= ((int)((vl + xf * dvdx)*16777216.0f) << 3) + v_correct;
 
@@ -367,10 +367,10 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 			}
             return (TRUE);
 
-        case WM_COMMAND:                      
-            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) 
+        case WM_COMMAND:
+            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
             {
-                EndDialog(hDlg, TRUE);  
+                EndDialog(hDlg, TRUE);
                 return TRUE;
             }
             break;
@@ -483,8 +483,8 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 			}
             return (TRUE);
 
-        case WM_COMMAND:                      
-            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) 
+        case WM_COMMAND:
+            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
             {
 				if (tex) {
 					delete[] tex;
@@ -512,7 +512,7 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 				if (bTimerSet)
 					timeEndPeriod(33);
 
-                EndDialog(hDlg, TRUE);  
+                EndDialog(hDlg, TRUE);
                 return TRUE;
             }
             break;

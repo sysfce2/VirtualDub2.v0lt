@@ -120,7 +120,7 @@ int VDAudioSourceWAV::_read(VDPosition lStart, uint32 lCount, void *buffer, uint
 		bytes = cbBuffer - cbBuffer % mBytesPerSample;
 		lCount = bytes / mBytesPerSample;
 	}
-	
+
 	if (buffer) {
 		mpParent->ReadSpan(mBytesPerSample*lStart, buffer, bytes);
 	}

@@ -528,7 +528,7 @@ protected:
 		sint64	mOutputFrame;
 	};
 
-	vdfastvector<DelayInfo>	mFsiDelayRing;	
+	vdfastvector<DelayInfo>	mFsiDelayRing;
 	uint32		mDelayRingPos;
 	VDXFilterStateInfo mfsi;
 

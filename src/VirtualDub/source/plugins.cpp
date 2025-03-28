@@ -290,7 +290,7 @@ void VDDisconnectPluginDescriptions(VDExternalModule *pModule) {
 
 		if (desc.mpModule == pModule)
 			desc.mpInfo = NULL;
-	}	
+	}
 }
 
 void VDEnumeratePluginDescriptions(std::vector<VDPluginDescription *>& plugins, uint32 type) {

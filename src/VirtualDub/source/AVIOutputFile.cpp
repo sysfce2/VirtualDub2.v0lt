@@ -86,7 +86,7 @@ typedef struct _avistdindex_chunk {
 								// relative to this
 	uint32	dwReserved3;			// must be 0
 //	struct _avistdindex_entry aIndex[];
-} AVISTDINDEX, * PAVISTDINDEX;	
+} AVISTDINDEX, * PAVISTDINDEX;
 
 #pragma pack(pop)
 
@@ -837,7 +837,7 @@ uint32 AVIOutputFile::HeaderBeginList(uint32 ckid) {
 void AVIOutputFile::HeaderEndList(uint32 pos) {
 	uint32 size;
 	uint32 currentPos = mHeaderPosition;
-	
+
 	size = (uint32)(currentPos - (pos-4));
 
 	HeaderSeek(pos-8);
@@ -852,7 +852,7 @@ uint32 AVIOutputFile::HeaderWriteChunk(uint32 ckid, const void *data, long len) 
 	dw[1] = len;
 
 	uint32 pos = mHeaderPosition;
-	
+
 	HeaderWrite(dw, 8);
 	HeaderWrite(data, len);
 
@@ -916,7 +916,7 @@ void AVIOutputFile::writeIndexedChunk(int nStream, uint32 flags, const void *pBu
 
 void AVIOutputFile::partialWriteIndexedChunkBegin(int nStream, uint32 flags, uint32 cbBuffer) {
 	VDASSERT(mbInitialized);
-	
+
 	tStreams::iterator itStream(mStreams.begin());
 	std::advance(itStream, nStream);
 	StreamInfo& stream = *itStream;
@@ -977,7 +977,7 @@ void AVIOutputFile::partialWriteIndexedChunkBegin(int nStream, uint32 flags, uin
 
 		mIndexSize += 16*stream.mChunkCount;
 	}
-	
+
 	// Give ourselves ~4K of headroom...
 
 	sint64	maxpoint = (chunkloc + cbBuffer + 1 + 8 + 14 + 2047 + mIndexSize + 4096) & -2048i64;
@@ -1207,7 +1207,7 @@ void AVIOutputFile::WriteIndexAVI2(AVISUPERINDEX *asi, _avisuperindex_entry *asi
 	tStreams::const_iterator itStream(mStreams.begin());
 	std::advance(itStream, nStream);
 	const StreamInfo& stream = *itStream;
-	
+
 	uint32 size = stream.mChunkCount;
 
 	if (!size)
@@ -1277,13 +1277,13 @@ index_complete:
 
 		--blocksize;
 	}
-	
+
 	int blockcount = (size - 1) / blocksize + 1;
 
 	if (blockcount > mSuperIndexLimit)
 		throw MyError("AVIOutput: Not enough superindex entries to index AVI file.  (%d slots required, %d slots preallocated)",
 			blockcount, mSuperIndexLimit);
-	
+
 	// Write out the actual index blocks.
 	const uint32 chunkID = stream.mChunkID;
 	const uint32 dwSampleSize = stream.mpStream->getStreamInfo().aviHeader.dwSampleSize;

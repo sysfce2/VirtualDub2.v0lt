@@ -124,7 +124,7 @@ int AppendAVIAutoscanEnum(const wchar_t *pszFile) {
 	for(;;) {
 		if (!VDDoesPathExist(buf))
 			break;
-		
+
 		++count;
 
 		s = t;
@@ -171,7 +171,7 @@ void AppendAVIAutoscan(const wchar_t *pszFile, bool skip_first) {
 		for(;;) {
 			if (!VDDoesPathExist(buf))
 				break;
-			
+
 			if (!skip_first) {
 				if (!inputAVI->Append(buf,0))
 					break;

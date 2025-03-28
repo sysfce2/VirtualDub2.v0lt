@@ -252,7 +252,7 @@ VDPosition VDTimeline::GetPrevEdit(VDPosition pos) {
 		}
 		return -1;
 	}
-	
+
 	if (offset)
 		return pos - offset;
 

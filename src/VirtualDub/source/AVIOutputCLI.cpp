@@ -501,7 +501,7 @@ uint32 VDCLIProcessW32::GetExitCode() const {
 	DWORD errCode;
 	if (!GetExitCodeProcess(mProcessHandle.GetHandle(), &errCode))
 		return 0;
-	
+
 	return errCode;
 }
 
@@ -1056,7 +1056,7 @@ bool AVIOutputCLI::init(const wchar_t *pwszFile) {
 		mVideoEncoderProcess.Run("video encoder",
 			cmdLine.c_str(),
 			outputDir.c_str(),
-			mVideoPipe.GetOutput(), 
+			mVideoPipe.GetOutput(),
 			mTemplate.mpVideoEncoderProfile->mbLogStdout ? videoOutputPipe.GetInput() : videoErrorSink.GetHandle(),
 			mTemplate.mpVideoEncoderProfile->mbLogStderr ? videoOutputPipe.GetInput() : videoErrorSink.GetHandle());
 
@@ -1109,7 +1109,7 @@ bool AVIOutputCLI::init(const wchar_t *pwszFile) {
 		mAudioEncoderProcess.Run("audio encoder",
 			cmdLine.c_str(),
 			outputDir.c_str(),
-			mAudioPipe.GetOutput(), 
+			mAudioPipe.GetOutput(),
 			mTemplate.mpAudioEncoderProfile->mbLogStdout ? audioOutputPipe.GetInput() : audioErrorSink.GetHandle(),
 			mTemplate.mpAudioEncoderProfile->mbLogStderr ? audioOutputPipe.GetInput() : audioErrorSink.GetHandle());
 
@@ -1182,7 +1182,7 @@ void AVIOutputCLI::Close(bool finalize) {
 			muxProcess.Run("multiplexer",
 				cmdLine.c_str(),
 				outputDir.c_str(),
-				muxErrorSink.GetHandle(), 
+				muxErrorSink.GetHandle(),
 				mTemplate.mpMultiplexerProfile->mbLogStdout ? muxOutputPipe.GetInput() : muxErrorSink.GetHandle(),
 				mTemplate.mpMultiplexerProfile->mbLogStderr ? muxOutputPipe.GetInput() : muxErrorSink.GetHandle());
 
@@ -1299,7 +1299,7 @@ void AVIOutputCLI::ExpandTokens(VDStringW& output, const wchar_t *templateLine0,
 
 		const wchar_t *tokenStart = templateLine;
 		const wchar_t *tokenEnd = wcschr(templateLine, L')');
-		
+
 		if (!tokenEnd)
 			goto invalid_template;
 
@@ -1369,4 +1369,3 @@ invalid_template:
 IAVIOutputCLI *VDCreateAVIOutputCLI(const VDAVIOutputCLITemplate& templ) {
 	return new AVIOutputCLI(templ);
 }
-

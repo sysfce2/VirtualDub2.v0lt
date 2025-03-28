@@ -197,7 +197,7 @@ public:
 				return kDC_High;
 
 			if (buf[0] == 0xFF && buf[1] == 0xD8) {
-				
+
 				if (buf[2] == 0xFF && buf[3] == 0xE0) {		// x'FF' SOI x'FF' APP0
 					// Hmm... might be a JPEG image.  Check for JFIF tag.
 

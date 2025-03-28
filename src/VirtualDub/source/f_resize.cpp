@@ -470,7 +470,7 @@ void VDVideoFilterResize::Run() {
 	const float fy3 = mConfig.mDstRect.bottom;
 	const float fx4 = (float)pxdst.w;
 	const float fy4 = (float)pxdst.h;
-	
+
 	uint32 fill = mConfig.mFillColor;
 	VDPixmapRectFillRGB32(pxdst, vdrect32f(fx1, fy1, fx4, fy2), fill);
 	VDPixmapRectFillRGB32(pxdst, vdrect32f(fx1, fy2, fx2, fy3), fill);
@@ -555,7 +555,7 @@ uint32 VDVideoFilterResize::GetParams() {
 		default:
 			return FILTERPARAM_NOT_SUPPORTED;
 	}
-	
+
 	if (mConfig.Validate()) {
 		// uh oh.
 		return 0;
@@ -775,10 +775,10 @@ namespace {
 			if (tapcount > 8) {
 				dst0[i] = (itaps[0] << 16) + (itaps[1] << 8) + itaps[2] + (itaps[3] << 24);
 				dst1[i] = (itaps[4] << 16) + (itaps[5] << 8) + itaps[6] + (itaps[7] << 24);
-				dst2[i] = (itaps[8] << 16) + (itaps[9] << 8) + itaps[10] + (istep << 24);			
+				dst2[i] = (itaps[8] << 16) + (itaps[9] << 8) + itaps[10] + (istep << 24);
 			} else if (tapcount > 4) {
 				dst0[i] = (itaps[0] << 16) + (itaps[1] << 8) + itaps[2] + (itaps[3] << 24);
-				dst1[i] = dst2[i] = (itaps[4] << 16) + (itaps[5] << 8) + itaps[6] + (istep << 24);			
+				dst1[i] = dst2[i] = (itaps[4] << 16) + (itaps[5] << 8) + itaps[6] + (istep << 24);
 			} else {
 				dst0[i] = dst1[i] = dst2[i] = (itaps[0] << 16) + (itaps[1] << 8) + itaps[2] + (istep << 24);
 			}
@@ -1376,7 +1376,7 @@ void VDVideoFilterCanvas::Run() {
 	const float fy3 = mConfig.mDstRect.bottom;
 	const float fx4 = (float)pxdst.w;
 	const float fy4 = (float)pxdst.h;
-	
+
 	uint32 fill = mConfig.mFillColor;
 	VDPixmapRectFillRGB32(pxdst, vdrect32f(fx1, fy1, fx4, fy2), fill);
 	VDPixmapRectFillRGB32(pxdst, vdrect32f(fx1, fy2, fx2, fy3), fill);
@@ -1425,7 +1425,7 @@ uint32 VDVideoFilterCanvas::GetParams() {
 		default:
 			return FILTERPARAM_NOT_SUPPORTED;
 	}
-	
+
 	if (mConfig.Validate()) {
 		// uh oh.
 		return 0;

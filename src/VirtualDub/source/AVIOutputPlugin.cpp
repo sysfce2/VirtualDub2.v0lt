@@ -415,9 +415,9 @@ public:
 	virtual bool IsEnded() const { return false; }
 
 	virtual unsigned	GetInputLevel() const {
-		return plugin->GetInputLevel(); 
+		return plugin->GetInputLevel();
 	}
-	virtual unsigned	GetInputSpace() const { 
+	virtual unsigned	GetInputSpace() const {
 		return plugin->GetInputSpace();
 	}
 	virtual unsigned	GetOutputLevel() const {
@@ -577,4 +577,3 @@ IVDAudioEnc *VDGetAudioEncByName(const char *name) {
 
 	return NULL;
 }
-

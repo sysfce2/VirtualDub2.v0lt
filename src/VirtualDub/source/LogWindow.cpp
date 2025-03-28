@@ -375,7 +375,7 @@ void VDLogWindowControl::OnTimer() {
 	vdsynchronized(mcsPending) {
 		if (!mLineArrayPending.empty()) {
 			mTextArray.splice(mTextArray.end(), mTextArrayPending);
-			
+
 			const tLineArray::size_type count = mLineArrayPending.size();
 			sint32 ypos = mLineArray[pos-1].mPos;
 
@@ -452,7 +452,7 @@ void VDLogWindowControl::OnCommand(int cmd) {
 				} catch(const MyError& e) {
 					e.post(mhwnd, g_szError);
 				}
-			}		
+			}
 		}
 		break;
 	case ID_LOG_COPY:
@@ -729,7 +729,7 @@ void VDLogWindowControl::CreateBuffer(vdfastvector<char>& buffer) {
 		const Entry& e = *it;
 		const VDStringW& s = *e.mpText;
 
-		// sigh... more word wrapping code....	
+		// sigh... more word wrapping code....
 		VDStringW::size_type nPos = 0;
 		const VDStringW::size_type nChars = s.size();
 

@@ -267,7 +267,7 @@ int VDVideoSourceTest::_read(VDPosition lStart, uint32 lCount, void *lpBuffer, u
 	}
 
 	*(VDPosition *)lpBuffer = lStart;
-	
+
 	if (plBytesRead)
 		*plBytesRead = sizeof(VDPosition);
 
@@ -455,7 +455,7 @@ namespace {
 	void DrawZonePlateA8(VDPixmap& dst, int plane, int x0, int y0, int w, int h, uint8 minval, uint8 maxval) {
 		uint8 *row;
 		ptrdiff_t pitch;
-		
+
 		switch(plane) {
 		case 0:
 		default:
@@ -972,7 +972,7 @@ const void *VDVideoSourceTest::getFrame(VDPosition frameNum) {
 
 void VDVideoSourceTest::DrawRotatingCubeFrame(VDPixmap& dst, bool interlaced, bool oddField, int frame_num, bool isyuv, int variant) {
 	VDPixmapFormatEx f1 = VDPixmapFormatNormalize(dst);
-	
+
 	// draw cube
 	static const int kIndices[] = {
 		0, 1, 4, 4, 1, 5,
@@ -1277,7 +1277,7 @@ InputFileOptions *VDInputFileTest::promptForOptions(VDGUIHandle hwnd) {
 	VDInputFileTestOptionsDialog dlg(*testopts);
 
 	IVDUIBase *pBase = vdpoly_cast<IVDUIBase *>(pWin);
-	
+
 	pBase->SetCallback(&dlg, false);
 	int result = pBase->DoModal();
 

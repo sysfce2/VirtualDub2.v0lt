@@ -361,9 +361,9 @@ INT_PTR CALLBACK ShowTextDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM
             return FALSE;
 
         case WM_COMMAND:
-            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) 
+            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
             {
-                EndDialog(hDlg, TRUE);  
+                EndDialog(hDlg, TRUE);
                 return TRUE;
             }
             break;
@@ -378,7 +378,7 @@ INT_PTR CALLBACK WelcomeDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM 
         case WM_COMMAND:
 			switch(LOWORD(wParam)) {
 			case IDOK: case IDCANCEL:
-                EndDialog(hDlg, TRUE);  
+                EndDialog(hDlg, TRUE);
                 return TRUE;
 			case IDC_HELP2:
 				VDShowHelp(hDlg);
@@ -406,7 +406,7 @@ INT_PTR CALLBACK AnnounceExperimentalDlgProc( HWND hDlg, UINT message, WPARAM wP
         case WM_COMMAND:
 			switch(LOWORD(wParam)) {
 			case IDOK: case IDCANCEL:
-                EndDialog(hDlg, TRUE);  
+                EndDialog(hDlg, TRUE);
                 return TRUE;
 			case IDC_VERIFY:
 				EnableWindow(GetDlgItem(hDlg, IDOK), IsDlgButtonChecked(hDlg, IDC_VERIFY));

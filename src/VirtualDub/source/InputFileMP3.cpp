@@ -132,7 +132,7 @@ int VDAudioSourceMP3::_read(VDPosition start, uint32 count, void *buffer, uint32
 			bytes = cbBuffer;
 			count = bytes;
 		}
-		
+
 		if (buffer)
 			mpParent->ReadSpan(start, buffer, bytes);
 
@@ -250,7 +250,7 @@ void VDInputFileMP3::Init(const wchar_t *szFile) {
 			uint32 id3length = ((uint32)id3header[6] << 21) + ((uint32)id3header[7] << 14) + ((uint32)id3header[8] << 7) + id3header[9];
 
 			// check for footer
-			if (id3header[5] & 0x10) 
+			if (id3header[5] & 0x10)
 				id3length += 10;
 
 			mDataStart = 10 + id3length;

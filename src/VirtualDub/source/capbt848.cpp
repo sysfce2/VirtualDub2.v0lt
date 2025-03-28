@@ -232,7 +232,7 @@ INT_PTR CALLBACK CaptureBT848TweakerDlgProc(HWND hdlg, UINT msg, WPARAM wParam, 
 			CaptureBT848TweakerDlgProc(hdlg, WM_HSCROLL, SB_THUMBPOSITION, (LPARAM)GetDlgItem(hdlg, IDC_SLIDER_BURSTDELAY));
 			CaptureBT848TweakerDlgProc(hdlg, WM_HSCROLL, SB_THUMBPOSITION, (LPARAM)GetDlgItem(hdlg, IDC_SLIDER_WHITEDOWN));
 			CaptureBT848TweakerDlgProc(hdlg, WM_HSCROLL, SB_THUMBPOSITION, (LPARAM)GetDlgItem(hdlg, IDC_SLIDER_WHITEUP));
-				
+
 			break;
 		default:
 			if (HIWORD(wParam) == BN_CLICKED)

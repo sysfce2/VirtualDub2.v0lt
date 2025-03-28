@@ -545,7 +545,7 @@ IVDInputDriver *VDAutoselectInputDriverForFile(const wchar_t *fn, uint32 flags) 
 
 		throw MyFileError(MyFileError::file_type_unknown, "The file \"%ls\" is of an unknown or unsupported file type.", fn);
 	}
-	
+
 	IVDInputDriver* driver = list[x];
 	VDXMediaInfo info;
 	wcsncpy(info.format_name,driver->GetFilenamePattern(),100);

@@ -49,13 +49,13 @@ namespace {
 		//VDASSERTCT(sizeof(VDPixmap)-sizeof(FilterModPixmapInfo) == sizeof(VDXPixmap));
 		//VDASSERTCT(sizeof(VDPixmapLayout)-sizeof(VDPixmapFormatEx) == sizeof(VDXPixmapLayout));
 		VDASSERTCT(offsetof(VDPixmapLayout, pitch3)+sizeof(((VDPixmapLayout*)0)->pitch3) == sizeof(VDXPixmapLayout));
-				
+
 		VDASSERTCT(offsetof(VDPixmap, data) == offsetof(VDXPixmap, data));
 		VDASSERTCT(offsetof(VDPixmap, pitch) == offsetof(VDXPixmap, pitch));
 		VDASSERTCT(offsetof(VDPixmap, format) == offsetof(VDXPixmap, format));
 		VDASSERTCT(offsetof(VDPixmap, w) == offsetof(VDXPixmap, w));
 		VDASSERTCT(offsetof(VDPixmap, h) == offsetof(VDXPixmap, h));
-				
+
 		VDASSERTCT(offsetof(VDPixmapLayout, data) == offsetof(VDXPixmapLayout, data));
 		VDASSERTCT(offsetof(VDPixmapLayout, pitch) == offsetof(VDXPixmapLayout, pitch));
 		VDASSERTCT(offsetof(VDPixmapLayout, format) == offsetof(VDXPixmapLayout, format));
@@ -899,7 +899,7 @@ FilterInstance::FilterInstance(FilterDefinitionInstance *fdi)
 		if (filter->initProc) {
 			try {
 				vdrefptr<FilterInstanceAutoDeinit> autoDeinit;
-				
+
 				if (!filter->copyProc && !filter->copyProc2 && filter->deinitProc)
 					autoDeinit = new FilterInstanceAutoDeinit;
 
@@ -1455,7 +1455,7 @@ void FilterInstance::Start(uint32 flags, IVDFilterFrameSource *const *pSources, 
 
 		// Older filters use the fa->src/dst/last fields directly and need buffers
 		// bound in order to start correctly.
-		
+
 		if (mAPIVersion < 16 || mbForceSingleFB) {
 			if (!mRealSrc.hdc) {
 				vdrefptr<VDFilterFrameBuffer> tempSrc;
@@ -1528,7 +1528,7 @@ void FilterInstance::Start(uint32 flags, IVDFilterFrameSource *const *pSources, 
 
 void FilterInstance::StartFilterCallback(VDFilterAccelEngineDispatchQueue *queue, VDFilterAccelEngineMessage *message) {
 	StopStartMessage& msg = *static_cast<StopStartMessage *>(message);
-	
+
 	try {
 		msg.mpThis->StartInner();
 	} catch(MyError& err) {
@@ -1628,7 +1628,7 @@ void FilterInstance::Stop() {
 
 void FilterInstance::StopFilterCallback(VDFilterAccelEngineDispatchQueue *queue, VDFilterAccelEngineMessage *message) {
 	StopStartMessage& msg = *static_cast<StopStartMessage *>(message);
-	
+
 	try {
 		msg.mpThis->StopInner();
 	} catch(MyError& err) {
@@ -1855,7 +1855,7 @@ bool FilterInstance::CreateSamplingRequest(sint64 outputFrame, VDXFilterPreviewS
 
 FilterInstance::RunResult FilterInstance::RunRequests(const uint32 *batchNumberLimit, int index) {
 	if (index>0) return kRunResult_Idle;
-  
+
 	if (mbRequestFramePending)
 		return kRunResult_Blocked;
 
@@ -2277,7 +2277,7 @@ void FilterInstance::RunFilter() {
 				IVDTProfiler *vdtc = vdpoly_cast<IVDTProfiler *>(tc);
 				if (vdtc)
 					VDTBeginScopeF(vdtc, 0xe0ffe0, "Run filter '%ls'", mFilterName.c_str());
-				
+
 				try {
 					RunFilterInner();
 					mbRequestFrameSuccess = true;
@@ -2463,7 +2463,7 @@ void FilterInstance::RunFilterInner() {
 				dst.h -= (qy1+qy2) << formatInfo.qhbits;
 				VDPixmapBlt(dst, src);
 			}
-			
+
 			if (qx2>0) {
 				src = VDPixmapOffset(*blendSrc,        (qw-qx2) << formatInfo.qwbits, qy1 << formatInfo.qhbits);
 				dst = VDPixmapOffset(mRealDst.mPixmap, (qw-qx2) << formatInfo.qwbits, qy1 << formatInfo.qhbits);
@@ -2484,7 +2484,7 @@ void FilterInstance::RunFilterInner() {
 	VDFilterFrameBuffer* dstBuffer = mRealDst.GetBuffer();
 	if (dstBuffer)
 		dstBuffer->info = mRealDst.mPixmap.info;
-	
+
 	mbFirstFrame = false;
 }
 
@@ -2748,7 +2748,7 @@ void FilterInstance::SetLogicError(const char *s) const {
 		error->mError.sprintf("A logic error was detected in filter '%s': %s", filter->name, s);
 
 		VDFilterFrameRequestError *oldError = mpLogicError.compareExchange(error, NULL);
-		
+
 		if (!oldError)
 			error.release();
 	}
@@ -2769,7 +2769,7 @@ void FilterInstance::SetLogicErrorF(const char *format, ...) const {
 		va_end(val);
 
 		VDFilterFrameRequestError *oldError = mpLogicError.compareExchange(error, NULL);
-		
+
 		if (!oldError)
 			error.release();
 	}

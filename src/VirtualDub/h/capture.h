@@ -335,7 +335,7 @@ public:
 
 	virtual void	SetDiskSettings(const VDCaptureDiskSettings& sets) = 0;
 	virtual const VDCaptureDiskSettings& GetDiskSettings() = 0;
- 
+
 	virtual uint32	GetPreviewFrameCount() = 0;
 
 	virtual void  LoadVideoConfig(VDRegistryAppKey& key) = 0;

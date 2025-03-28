@@ -169,7 +169,7 @@ namespace {
 				pEndAlloc = pStart + s;
 			}
 		}
-			
+
 		void push_back(const T& x) {
 			if (pEnd == pEndAlloc)
 				reserve(pEndAlloc==pStart ? 16 : size()*2);

@@ -347,7 +347,7 @@ void PluginReloadFormat(IVDXAudioEnc* plugin, ACMChooserData* thisPtr, ACMTagEnt
 		f1->pFormatTag = entry;
 		f1->fCompatible = true;
 		memset(&f1->afd,0,sizeof(f1->afd));
-		
+
 		f1->pwfex = (WAVEFORMATEX *)allocmem(dst_format_len);
 		memcpy(f1->pwfex, plugin->GetOutputFormat(), dst_format_len);
 
@@ -488,7 +488,7 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 
 				delete pTag;
 			}
-			
+
 		}
 		return TRUE;
 

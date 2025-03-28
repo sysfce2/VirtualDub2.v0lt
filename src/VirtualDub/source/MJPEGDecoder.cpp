@@ -757,7 +757,7 @@ const uint8 *MJPEGDecoder::decodeScan(const uint8 *ptr, bool odd_field) {
 ///////////////////////////////////////////////////////////////////////////
 
 // 320x240 -> 20x30 -> 600 MCUs
-// 304x228 -> 19x29 -> 551 MCUs 
+// 304x228 -> 19x29 -> 551 MCUs
 
 const uint8 *MJPEGDecoder::decodeMCUs(const uint8 *ptr, bool odd_field) {
 	int mcu;
@@ -1029,7 +1029,7 @@ void mb_decode(uint32& bitheap0, int& bitcnt0, const uint8 *& src0, int mcu_leng
 
 		VDASSERT(bitcnt < 32);
 		VDASSERT(code <= 16);
-		
+
 		sint32 coeff = 0;
 		if (code) {
 			// sign-extend DC difference

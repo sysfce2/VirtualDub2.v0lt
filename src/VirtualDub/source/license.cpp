@@ -119,9 +119,9 @@ INT_PTR APIENTRY Licensor::DProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM
             return TRUE;
 
         case WM_COMMAND:
-            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) 
+            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
             {
-                EndDialog(hDlg, 1);  
+                EndDialog(hDlg, 1);
                 return TRUE;
             }
             break;

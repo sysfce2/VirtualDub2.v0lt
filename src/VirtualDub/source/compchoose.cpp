@@ -240,7 +240,7 @@ bool VDUIDialogChooseVideoCompressorW32::OnLoaded() {
 		SetControlTextF(IDC_KEYRATE, L"%d", mpCompVars->lKey);
 	} else
 		CheckButton(IDC_USE_KEYFRAMES, BST_UNCHECKED);
-	
+
 	if ((mpCompVars->dwFlags & ICMF_COMPVARS_VALID) && mpCompVars->lDataRate) {
 		CheckButton(IDC_USE_DATARATE, BST_CHECKED);
 		SetControlTextF(IDC_DATARATE, L"%d", mpCompVars->lDataRate);
@@ -886,7 +886,7 @@ void VDUIDialogChooseVideoCompressorW32::SelectCompressor(CodecInfo *pii) {
 	int kd;
 
 	int codec_format = mhCodec->queryInputFormat(0);
-	
+
 	for (int i = 0; i < std::size(g_xres); i++) {
 		w = g_xres[i];
 		bi.bmiHeader.biWidth = w;
@@ -1177,4 +1177,3 @@ void ChooseCaptureCompressor(HWND hwndParent, COMPVARS2 *lpCompVars, BITMAPINFOH
 
 	dlg.ShowDialog((VDGUIHandle)hwndParent);
 }
-

@@ -208,7 +208,7 @@ void VDAFCallback_Wake(const VDAudioFilterContext *pContext) {
 
 ///////////////////////////////////////////////////////////////////////////
 
-VDAudioFilterPinImpl::VDAudioFilterPinImpl() 
+VDAudioFilterPinImpl::VDAudioFilterPinImpl()
 	: mpPin(NULL)
 {
 	mpFormat = NULL;
@@ -308,7 +308,7 @@ sint32 VDAudioFilterPinImpl::OutputDelay() const {
 
 ///////////////////////////////////////////////////////////////////////////
 
-VDAudioFilterInstance::VDAudioFilterInstance(VDPluginDescription *pDesc) 
+VDAudioFilterInstance::VDAudioFilterInstance(VDPluginDescription *pDesc)
 	: mpDescription(pDesc)
 	, mpPluginInfo(NULL)
 	, mbPrepared(false)
@@ -972,7 +972,7 @@ void VDAudioFilterSystem::Disconnect(IVDAudioFilterInstance *pFilter, unsigned o
 	VDASSERT(outputPin < pInst->OutputPinCount());
 
 	VDAudioFilterPinImpl& pin = pInst->OutputPin(outputPin);
-	
+
 	if (pin.IsConnected()) {
 		Unprepare(pin.ConnectedFilter());
 		pin.Disconnect();

@@ -278,7 +278,7 @@ int AudioSourceAVI::_read(VDPosition lStart, uint32 lCount, void *lpBuffer, uint
 	//
 	// AVISTREAMREAD_CONVENIENT will tell us if we're actually encountering a
 	// true read error or not.  At least for the AVI handler, it returns
-	// AVIERR_ERROR if we've broached the end.  
+	// AVIERR_ERROR if we've broached the end.
 
 	*lpBytesRead = *lpSamplesRead = 0;
 
@@ -371,7 +371,7 @@ bool AudioSourceDV::init() {
 	const VDPosition streamEnd = mpStream->End();
 	VDPosition streamTestPos = streamStart;
 	sint32 samplingRate;
-	
+
 	for(int i=0; i<5; ++i) {
 		if (streamTestPos < streamEnd) {
 			long bytes, samples;

@@ -311,7 +311,7 @@ public:
 	VDVFilterFillDialog()
 		: VDDialogFrameW32(IDD_FILTER_FILL)
 	{
-		hbrColor = 0; 
+		hbrColor = 0;
 		fa = 0;
 		filter = 0;
 	}

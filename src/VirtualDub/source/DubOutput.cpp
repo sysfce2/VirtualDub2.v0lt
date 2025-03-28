@@ -684,8 +684,8 @@ bool VDAVIOutputImagesSystem::IsVideoImageOutputEnabled() {
 	return false;
 }
 
-bool VDAVIOutputImagesSystem::IsVideoImageOutputRequired() { 
-	return IsVideoImageOutputEnabled(); 
+bool VDAVIOutputImagesSystem::IsVideoImageOutputRequired() {
+	return IsVideoImageOutputEnabled();
 }
 
 int VDAVIOutputImagesSystem::GetVideoOutputFormatOverride(int last_format) {
@@ -757,7 +757,7 @@ IVDMediaOutput *VDAVIOutputFilmstripSystem::CreateSegment() {
 
 	if (!mVideoFormat.empty()) {
 		IVDMediaOutputStream *pOutputStream = pOutput->createVideoStream();
-		
+
 		pOutputStream->setFormat(&mVideoFormat[0], mVideoFormat.size());
 		pOutputStream->setStreamInfo(mVideoStreamInfo);
 	}
@@ -810,7 +810,7 @@ IVDMediaOutput *VDAVIOutputGIFSystem::CreateSegment() {
 	AVIOutput *pAVIOut = pOutput->AsAVIOutput();
 	if (!mVideoFormat.empty()) {
 		IVDMediaOutputStream *pOutputStream = pAVIOut->createVideoStream();
-		
+
 		pOutputStream->setFormat(&mVideoFormat[0], mVideoFormat.size());
 		pOutputStream->setStreamInfo(mVideoStreamInfo);
 	}

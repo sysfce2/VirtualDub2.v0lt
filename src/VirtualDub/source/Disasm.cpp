@@ -552,7 +552,7 @@ char *VDDisasmMatchRule(VDDisassemblyContext *pContext, const unsigned char *sou
 					--source;
 					++bytes;
 				}
-			
+
 				const unsigned char *src_end;
 
 				hp = VDDisasmApplyRuleset(pContext, pContext->pRuleBase + pContext->pRuleSystemOffsets[count+1], sp, hp, source, bytes, src_end);

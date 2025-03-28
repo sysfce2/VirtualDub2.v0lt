@@ -640,7 +640,7 @@ long AudioStreamSource::_Read(void *buffer, long max_samples, long *lplBytes) {
 				break;
 		};
 
-		long bytes = (lTotalBytes - lBytesLeft); 
+		long bytes = (lTotalBytes - lBytesLeft);
 		*lplBytes = bytes + lAddedBytes;
 
 		long samples = bytes / GetFormat()->mBlockSize + lAddedSamples;
@@ -1511,7 +1511,7 @@ vd2::FormatConfidence AudioCompressor::SuggestFileFormat(const char* name) {
 }
 
 bool AudioCompressor::IsVBR() const {
-	return fVBR; 
+	return fVBR;
 }
 
 void AudioCompressor::GetStreamInfo(VDXStreamInfo& si) const {
@@ -1562,7 +1562,7 @@ void AudioCompressor::SkipSource(long samples) {
 
 			if (tc > maxRead)
 				tc = maxRead;
-				
+
 			actualSamples = source->Read(dst, tc, &actualBytes);
 
 			samples -= actualSamples;
@@ -2303,4 +2303,3 @@ void AudioFilterSystemStream::Seek(VDPosition pos) {
 
 	mFilterSystem.Seek(mStartTime + (mSamplePos * pFormat->mBlockSize * 1000000) / pFormat->mDataRate);
 }
-

@@ -63,7 +63,7 @@ bool AVIReadCache::WriteBegin(sint64 pos, uint32 len) {
 
 			if (idxblock.mHead == idxblock.mTail)
 				break;
-			
+
 			if (mFree >= needed)
 				goto have_space;
 		}

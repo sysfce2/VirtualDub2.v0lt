@@ -205,7 +205,7 @@ public:
 		bool fAcceptPartial;
 	} opts;
 
-		
+
 	~InputFileMPEGOptions();
 
 	bool read(const char *buf);
@@ -810,7 +810,7 @@ VDPosition VideoSourceMPEG::nextKey(VDPosition lSample64) {
 	lSample = translate_frame(renumber_frame(lSample));
 
 	// For a B-frame, the next display I/P is actually before the B-frame in
-	// the stream order.  Check the preceding I/P and 
+	// the stream order.  Check the preceding I/P and
 
 	if (parentPtr->video_sample_list[lSample].frame_type == MPEG_FRAME_TYPE_B) {
 		LONG pos = prev_IP(lSample);
@@ -1081,7 +1081,7 @@ const void *VideoSourceMPEG::streamGetFrame(const void *inputBuffer, uint32 data
 		else
 			mpDecoder->SwapFrameBuffers(buffer, MPEG_BUFFER_BACKWARD);
 	}
-	
+
 	if (!is_preroll) {
 		DecodeFrameBuffer(mpDecoder->GetFrameBuffer(target_num));
 		mbFBValid = true;
@@ -1131,7 +1131,7 @@ const void *VideoSourceMPEG::getFrame(VDPosition frameNum64) {
 	//				2)	Earlier I/P-frame in a buffer - predict from that.
 	//	B-frame		1)	No buffers with required prediction frames - read up from I-frame.
 	//				2)	Forward prediction frame only - read the backward prediction I/P.
-	//				3)	Backward prediction frame only - 
+	//				3)	Backward prediction frame only -
 
 	lCurrent = frameNum;
 
@@ -1840,7 +1840,7 @@ int AudioSourceMPEG::_read(VDPosition lStart64, uint32 lCount, void *lpBuffer, u
 				// layer III: add packets to preload bit reservoir
 				if (layer == 3) {
 					long nReservoirDelay = 511;		// main_data_start is 9 bits (0..511)
-					
+
 					while(lCurrentPacket > 0 && nReservoirDelay > 0) {
 						--lCurrentPacket;
 
@@ -2199,7 +2199,7 @@ void MPEGVideoParser::Parse(const void *pData, int len, DataVector *dst) {
 						// +---+---+---+-------------------+
 						// |pc0|C_G|B_L|xxxxxxxxxxxxxxxxxxx| buf[3] (closed_gop, broken_link)
 						// +---+---+---+-------------------+
-						
+
 						// We can't rely on the timestamp in GOP headers, unfortunately, as
 						// some MPEG-1 files have them incorrect in minutes whenever secs=0.
 						// But we can use broken_link.
@@ -2215,7 +2215,7 @@ void MPEGVideoParser::Parse(const void *pData, int len, DataVector *dst) {
 						mbFirstGOP = false;
 						mbIPFoundInGroup = false;
 						break;
-				}	
+				}
 			}
 			continue;
 		}
@@ -2831,7 +2831,7 @@ void InputFileMPEG::Skip(int bytes) {
 			--bytes;
 			continue;
 		}
-			
+
 
 		if (tc >= bytes) {
 			pScan += bytes;
@@ -3100,7 +3100,7 @@ INT_PTR CALLBACK InputFileMPEG::ParseDialogProc(HWND hDlg, UINT uMsg, WPARAM wPa
 	case WM_TIMER:
 		{
 			char buf[128];
-		
+
 			SendMessage(GetDlgItem(hDlg, IDC_PROGRESS), PBM_SETPOS, (WPARAM)((thisPtr->file_cpos*16384) / thisPtr->file_len), 0);
 
 			if (thisPtr->fIsVCD)
@@ -3315,11 +3315,11 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 
             return (TRUE);
 
-        case WM_COMMAND:                      
-            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) 
+        case WM_COMMAND:
+            if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
             {
 				if (pInfo->hWndAbort == (HWND)1)
-					EndDialog(hDlg, TRUE);  
+					EndDialog(hDlg, TRUE);
                 return TRUE;
             }
             break;
@@ -3389,7 +3389,7 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 			break;
 
 		case WM_USER+256:
-			EndDialog(hDlg, TRUE);  
+			EndDialog(hDlg, TRUE);
 			break;
     }
     return FALSE;

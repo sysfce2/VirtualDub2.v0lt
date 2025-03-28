@@ -20,8 +20,8 @@
 
 void VDFilterAccelInterleaveYUV_SSE2(
 		void *dst, ptrdiff_t dstpitch,
-		const void *srcY, ptrdiff_t srcYPitch, 
-		const void *srcCb, ptrdiff_t srcCbPitch, 
+		const void *srcY, ptrdiff_t srcYPitch,
+		const void *srcCb, ptrdiff_t srcCbPitch,
 		const void *srcCr, ptrdiff_t srcCrPitch,
 		uint32 w,
 		uint32 h)

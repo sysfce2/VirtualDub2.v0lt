@@ -352,7 +352,7 @@ void VDDubProcessThread::ThreadRun() {
 			mVideoProcessor.CheckForDecompressorSwitch();
 
 			VDStreamInterleaver::Action nextAction;
-			
+
 			if (mpInterleaver)
 				nextAction = mpInterleaver->GetNextAction(stream, count);
 			else {
@@ -686,7 +686,7 @@ void VDDubProcessThread::UpdateAudioFormat() {
 
 void VDDubProcessThread::UpdateAudioStreamRate() {
 	vdstructex<WAVEFORMATEX> wfex((const WAVEFORMATEX *)mpAudioOut->getFormat(), mpAudioOut->getFormatLen());
-	
+
 	if (mpAudioCorrector)
 		wfex->nAvgBytesPerSec = mpAudioCorrector->ComputeByterate(wfex->nSamplesPerSec);
 

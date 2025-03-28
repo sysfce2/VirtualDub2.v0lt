@@ -108,7 +108,7 @@ uint32 VDAudioFilterStereoChorus::Run() {
 	// compute output samples
 	int samples = std::min<int>(mpContext->mCommonSamples, 4096 / format.mChannels);
 	sint16 *dst = (sint16 *)mpContext->mpOutputs[0]->mpBuffer;
-	
+
 	if (!samples) {
 		if (pin.mbEnded && !mpContext->mInputSamples)
 			return kVFARun_Finished;

@@ -32,7 +32,7 @@ VDCaptureAutoPriority::VDCaptureAutoPriority() {
 VDCaptureAutoPriority::~VDCaptureAutoPriority() {
 	HANDLE hProcess = GetCurrentProcess();
 	HANDLE hThread = GetCurrentThread();
-	
+
 	if (GetThreadPriority(hThread) == THREAD_PRIORITY_ABOVE_NORMAL)
 		SetThreadPriority(hThread, mPreviousThreadPriority);
 
@@ -84,4 +84,3 @@ long VDCaptureHashDriverName(const char *name) {
 
 	return hash;
 }
-

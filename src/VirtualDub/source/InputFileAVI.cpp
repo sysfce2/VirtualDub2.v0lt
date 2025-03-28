@@ -314,7 +314,7 @@ public:
 			fDisableFastIO = false;
 		}
 	} opts;
-		
+
 	~InputFileAVIOptions();
 
 	bool read(const char *buf);
@@ -432,7 +432,7 @@ INT_PTR APIENTRY InputFileAVIOptions::SetupDlgProc( HWND hDlg, UINT message, WPA
 					thisPtr->opts.lForceAudioHz = GetDlgItemInt(hDlg, IDC_AUDIORATE, NULL, FALSE);
 				else
 					thisPtr->opts.lForceAudioHz = 0;
-				
+
 				EndDialog(hDlg, 0);
 				return TRUE;
 
@@ -647,7 +647,7 @@ void InputFileAVI::getAppendFilters(wchar_t *filters, int filters_max) {
 }
 
 void InputFileAVI::GetTextInfo(tFileTextInfo& info) {
-	pAVIFile->GetTextInfo(info);	
+	pAVIFile->GetTextInfo(info);
 }
 
 bool InputFileAVI::isOptimizedForRealtime() {
@@ -882,7 +882,7 @@ bool VDAVIFileInfoDialog::OnLoaded() {
 				buf.resize(27);
 				buf += L"...";
 			}
-			
+
 			buf += L" (";
 			buf += printW_fourcc(pvs->getImageFormat()->biCompression);
 			buf += ')';

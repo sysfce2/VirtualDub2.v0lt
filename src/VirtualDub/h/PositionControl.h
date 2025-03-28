@@ -56,7 +56,7 @@ struct VDPositionControlEventData {
 	};
 
 	VDPosition	mPosition;
-	EventType	mEventType;	
+	EventType	mEventType;
 };
 
 class IVDPositionControl : public IVDRefCount {

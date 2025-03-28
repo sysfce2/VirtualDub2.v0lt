@@ -92,7 +92,7 @@ void VDDubIOThread::ThreadRun() {
 	double nAudioRate = bAudioActive ? mpAudio->GetFormat()->mDataRate : 0;
 
 	int minAudioBufferSpace = 0;
-	if (bAudioActive) { 
+	if (bAudioActive) {
 		const VDWaveFormat *format = mpAudio->GetFormat();
 		minAudioBufferSpace = format->mBlockSize;
 
@@ -105,7 +105,7 @@ void VDDubIOThread::ThreadRun() {
 	try {
 		mpCurrentAction = "running main loop";
 
-		while(!mbAbort && (bAudioActive || bVideoActive)) { 
+		while(!mbAbort && (bAudioActive || bVideoActive)) {
 			bool bBlocked = true;
 			if (mbPreview) waitingForAudioSpace = false;
 
@@ -371,7 +371,7 @@ void VDDubIOThread::ReadRawVideoFrame(int sourceIndex, VDPosition streamFrame, V
 	uint32 lActualBytes;
 	{
 		VDDubAutoThreadLocation loc(mpCurrentAction, "reading video data from disk");
-		hr = vsrc->asStream()->read(streamFrame, 1, buffer, size, &lActualBytes, NULL); 
+		hr = vsrc->asStream()->read(streamFrame, 1, buffer, size, &lActualBytes, NULL);
 	}
 
 	if (hr) {
@@ -463,7 +463,7 @@ bool VDDubIOThread::MainAddAudioFrame(int& min_space) {
 
 			int tc;
 			void *dst;
-			
+
 			dst = mpAudioPipe->BeginWrite(len, tc);
 
 			if (!tc)
@@ -503,4 +503,3 @@ bool VDDubIOThread::MainAddAudioFrame(int& min_space) {
 		return lActualSamples > 0;
 	}
 }
-

@@ -372,7 +372,7 @@ double VDVideoWindow::GetMaxZoomForArea(int w, int h, int border) {
 		double zh = (double)h / (double)mSourceHeight;
 		return std::min<double>(zw,zh);
 	}
-	
+
 	return 1;
 }
 
@@ -835,9 +835,9 @@ LRESULT VDVideoWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 void VDVideoWindow::NCPaint(HRGN hrgn) {
 	if (mbBorderless)
 		return;
-	
+
 	HDC hdc;
-	
+
 	// MSDN docs are in error -- if you do not include 0x10000, GetDCEx() will
 	// return NULL but still won't set an error flag.  Feng Yuan's Windows
 	// Graphics book calls this the "undocumented flag that makes GetDCEx()
@@ -1157,6 +1157,6 @@ void VDVideoWindow::UpdateSourcePARMenuItem() {
 
 	if (pos != VDStringW::npos)
 		t.replace(pos, 1, s.data(), s.size());
-	
+
 	VDSetMenuItemTextByCommandW32(mhmenu, ID_DISPLAY_AR_PIXEL_SOURCE, t.c_str());
 }

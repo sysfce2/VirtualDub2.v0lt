@@ -782,7 +782,7 @@ LRESULT CALLBACK VDCaptureDriverEmulation::StaticMessageWndProc(HWND hwnd, UINT 
 					samples = 0;
 				}
 			}
-			
+
 			if (err || !samples) {
 				if (!pThis->mAudioPos)
 					break;

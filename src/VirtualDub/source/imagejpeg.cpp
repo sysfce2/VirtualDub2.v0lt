@@ -480,7 +480,7 @@ namespace {
 	struct fdct_llm {
 		enum { round = 1<<(10 + postshift), shift = 11 + postshift, postround = (1<<postshift)>>1 };
 
-		static void go(int *dst, const T *x) { 
+		static void go(int *dst, const T *x) {
 			int s0 = x[0*stride];
 			int s1 = x[1*stride];
 			int s2 = x[2*stride];

@@ -329,7 +329,7 @@ void VDInputFileFLM::Init(const wchar_t *filename) {
 	FilmstripHeader	mHeader;
 	if (fsize >= 36) {
 		mFile.seek(fsize - 36);
-		
+
 		char hdrbuf[36];
 		mFile.read(hdrbuf, 36);
 

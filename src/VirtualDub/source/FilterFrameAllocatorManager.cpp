@@ -77,7 +77,7 @@ void VDFilterFrameAllocatorManager::AssignAllocators(VDFilterAccelEngine *accelE
 		VDFilterFrameAllocatorProxy *proxy = ent.mpProxy;
 		VDFilterFrameAllocatorProxy *link = NULL;
 		VDFilterFrameAllocatorProxy *linkNext;
-		
+
 		linkNext = proxy->GetLink();
 
 		if (linkNext) {
@@ -100,7 +100,7 @@ void VDFilterFrameAllocatorManager::AssignAllocators(VDFilterAccelEngine *accelE
 		ProxyEntry& ent = *it;
 		VDFilterFrameAllocatorProxy *proxy = ent.mpProxy;
 		VDFilterFrameAllocatorProxy *link = proxy->GetLink();
-		
+
 		if (link)
 			proxy->AddRequirements(link);
 	}

@@ -220,7 +220,7 @@ void TGAEncoder::Save(VDFile& mFile, const VDPixmap& px, bool comp, bool alpha) 
 				}
 
 				int round;
-				
+
 				if (pelsize == 3) {
 					round = 3 - literalbytes % 3;
 					if (round == 3)

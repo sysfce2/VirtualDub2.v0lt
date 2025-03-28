@@ -789,7 +789,7 @@ void OpenInput(bool append, bool audio, const wchar_t* filename, MyError* err) {
 
 	const wchar_t* title = L"Open video file";
 	int fskey = VDFSPECKEY_LOADVIDEOFILE;
-	
+
 	VDRegistryAppKey key(g_szRegKeyPersistence);
 	if (audio) {
 		dlg.select_mode = 0;
@@ -1538,7 +1538,7 @@ void SaveSegmentedAVI(HWND hWnd, bool queueAsJob) {
 					if (2 == swscanf(wfd.cFileName, szPattern, &n, &c) && tolower(c) == 'i') {
 						++nMatchCount;
 					}
-					
+
 				} while(FindNextFileW(h, &wfd));
 				FindClose(h);
 			}
@@ -1567,8 +1567,8 @@ void SaveSegmentedAVI(HWND hWnd, bool queueAsJob) {
 							wcscpy(t, wfd.cFileName);
 							DeleteFileW(t);
 						}
-							
-						
+
+
 					} while(FindNextFileW(h, &wfd));
 					FindClose(h);
 				}
@@ -1653,7 +1653,7 @@ VDSaveImageSeqDialogW32::~VDSaveImageSeqDialogW32() {}
 
 void VDSaveImageSeqDialogW32::UpdateFilenames() {
 	mFormatString = VDMakePath(mDirectory.c_str(), mPrefix.c_str());
-	
+
 	VDStringW format(mPrefix + L"%0*lld" + mPostfix);
 	int digits = actualDigits();
 
@@ -2391,7 +2391,7 @@ void SaveConfiguration(HWND hWnd) {
 
 void SaveProject(HWND hWnd, bool reset_path) {
 	VDStringW filename = g_project->mProjectFilename;
-	
+
 	if (filename.empty() || reset_path || g_project->mProjectReadonly) {
 		if (!hWnd) return;
 		filename = VDGetSaveFileName(kFileDialog_Project, (VDGUIHandle)hWnd, L"Save Project", fileFiltersSaveProject, L"vdproject", 0, 0);

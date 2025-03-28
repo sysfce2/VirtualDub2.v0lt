@@ -26,7 +26,7 @@
 #include "AVIOutputAPNG.h"
 #include "APNG.h"
 
-class AVIVideoAPNGOutputStream : public AVIOutputStream 
+class AVIVideoAPNGOutputStream : public AVIOutputStream
 {
 public:
 	AVIVideoAPNGOutputStream(FILE *pFile);
@@ -46,7 +46,7 @@ public:
 	void partialWriteEnd();
 
 private:
-	FILE			* mpFile; 
+	FILE			* mpFile;
 	int				mFrameCount;
 	int				mLoopCount;
 	int				mAlpha;
@@ -86,11 +86,11 @@ AVIVideoAPNGOutputStream::AVIVideoAPNGOutputStream(FILE *pFile)
 {
 }
 
-AVIVideoAPNGOutputStream::~AVIVideoAPNGOutputStream() 
+AVIVideoAPNGOutputStream::~AVIVideoAPNGOutputStream()
 {
 }
 
-void AVIVideoAPNGOutputStream::init(int frameCount, int loopCount, int alpha, int grayscale, int rate, int scale, FILE * pFile) 
+void AVIVideoAPNGOutputStream::init(int frameCount, int loopCount, int alpha, int grayscale, int rate, int scale, FILE * pFile)
 {
 	mFrameCount = frameCount;
 	mLoopCount = loopCount;
@@ -237,7 +237,7 @@ void AVIVideoAPNGOutputStream::init(int frameCount, int loopCount, int alpha, in
 	}
 }
 
-void AVIVideoAPNGOutputStream::finalize() 
+void AVIVideoAPNGOutputStream::finalize()
 {
 	uint8 png_Software[19] = { 83, 111, 102, 116, 119, 97, 114, 101, '\0', 86, 105, 114, 116, 117, 97, 108, 68, 117, 98};
 
@@ -412,7 +412,7 @@ void AVIVideoAPNGOutputStream::write_row(uint32 j, uint8 * row)
 
 	memcpy(png_ptr->row_buf+1, row, png_ptr->rowbytes);
 
-	uint8 * rp; 
+	uint8 * rp;
 	uint8 * dp;
 	uint8 * lp;
 	uint8 * pp;
@@ -478,7 +478,7 @@ void AVIVideoAPNGOutputStream::write_row(uint32 j, uint8 * row)
 				break;
 		}
 		if (sum < mins)
-		{ 
+		{
 			mins = sum;
 			best_row = png_ptr->avg_row;
 		}
@@ -564,7 +564,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect1(uint32 w, uint32 h, uint8 **pp1, uint
 	if (diffnum == 0)
 	{
 		*px = *py = 0;
-		*pw = *ph = 1; 
+		*pw = *ph = 1;
 		return 1;
 	}
 
@@ -613,8 +613,8 @@ uint32 AVIVideoAPNGOutputStream::get_rect2(uint32 w, uint32 h, uint8 **pp1, uint
 			if (s != d)
 			{
 				diffnum++;
-				if ((d & 0xFF00) == 0xFF00) 
-					ovr_num++; 
+				if ((d & 0xFF00) == 0xFF00)
+					ovr_num++;
 				else
 					over_is_possible = 0;
 
@@ -629,7 +629,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect2(uint32 w, uint32 h, uint8 **pp1, uint
 	if (diffnum == 0)
 	{
 		*px = *py = 0;
-		*pw = *ph = 1; 
+		*pw = *ph = 1;
 		*pBop = PNG_BLEND_OP_SOURCE;
 		return 1;
 	}
@@ -645,7 +645,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect2(uint32 w, uint32 h, uint8 **pp1, uint
 
 		for (i=x_min; i<=x_max; i++)
 		{
-			if (*(dp+i) != 0) 
+			if (*(dp+i) != 0)
 				src_num++;
 		}
 	}
@@ -689,8 +689,8 @@ uint32 AVIVideoAPNGOutputStream::get_rect2(uint32 w, uint32 h, uint8 **pp1, uint
 			if (s != d)
 			{
 				diffnum++;
-				if ((d & 0xFF00) == 0xFF00) 
-					ovr_num++; 
+				if ((d & 0xFF00) == 0xFF00)
+					ovr_num++;
 				else
 					over_is_possible = 0;
 
@@ -705,7 +705,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect2(uint32 w, uint32 h, uint8 **pp1, uint
 	if (diffnum == 0)
 	{
 		*px = *py = 0;
-		*pw = *ph = 1; 
+		*pw = *ph = 1;
 		*pBop = PNG_BLEND_OP_SOURCE;
 		return 1;
 	}
@@ -721,7 +721,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect2(uint32 w, uint32 h, uint8 **pp1, uint
 
 		for (i=x_min; i<=x_max; i++)
 		{
-			if (*(dp+i) != 0) 
+			if (*(dp+i) != 0)
 				src_num++;
 		}
 	}
@@ -772,7 +772,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect3(uint32 w, uint32 h, uint8 **pp1, uint
 	if (diffnum == 0)
 	{
 		*px = *py = 0;
-		*pw = *ph = 1; 
+		*pw = *ph = 1;
 		return 1;
 	}
 
@@ -820,8 +820,8 @@ uint32 AVIVideoAPNGOutputStream::get_rect4(uint32 w, uint32 h, uint8 **pp1, uint
 			if (s != d)
 			{
 				diffnum++;
-				if ((d & 0xFF000000) == 0xFF000000) 
-					ovr_num++; 
+				if ((d & 0xFF000000) == 0xFF000000)
+					ovr_num++;
 				else
 					over_is_possible = 0;
 
@@ -836,7 +836,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect4(uint32 w, uint32 h, uint8 **pp1, uint
 	if (diffnum == 0)
 	{
 		*px = *py = 0;
-		*pw = *ph = 1; 
+		*pw = *ph = 1;
 		*pBop = PNG_BLEND_OP_SOURCE;
 		return 1;
 	}
@@ -852,7 +852,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect4(uint32 w, uint32 h, uint8 **pp1, uint
 
 		for (i=x_min; i<=x_max; i++)
 		{
-			if (*(dp+i) != 0) 
+			if (*(dp+i) != 0)
 				src_num++;
 		}
 	}
@@ -895,8 +895,8 @@ uint32 AVIVideoAPNGOutputStream::get_rect4(uint32 w, uint32 h, uint8 **pp1, uint
 			if (s != d)
 			{
 				diffnum++;
-				if ((d & 0xFF000000) == 0xFF000000) 
-					ovr_num++; 
+				if ((d & 0xFF000000) == 0xFF000000)
+					ovr_num++;
 				else
 					over_is_possible = 0;
 
@@ -913,7 +913,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect4(uint32 w, uint32 h, uint8 **pp1, uint
 	if (diffnum == 0)
 	{
 		*px = *py = 0;
-		*pw = *ph = 1; 
+		*pw = *ph = 1;
 		*pBop = PNG_BLEND_OP_SOURCE;
 		return 1;
 	}
@@ -929,7 +929,7 @@ uint32 AVIVideoAPNGOutputStream::get_rect4(uint32 w, uint32 h, uint8 **pp1, uint
 
 		for (i=x_min; i<=x_max; i++)
 		{
-			if (*(dp+i) != 0) 
+			if (*(dp+i) != 0)
 				src_num++;
 		}
 	}
@@ -958,7 +958,7 @@ void AVIVideoAPNGOutputStream::prepare_buffer(uint8 **pp1, uint8 **pp2, uint32 x
 
 				for (i=x0; i<x0+w0; i++)
 				{
-					if (*(sp+i) == *(dp+i)) 
+					if (*(sp+i) == *(dp+i))
 						*(dp+i) = 0;
 					else
 						*(sp+i) = *(dp+i);
@@ -975,7 +975,7 @@ void AVIVideoAPNGOutputStream::prepare_buffer(uint8 **pp1, uint8 **pp2, uint32 x
 
 				for (i=x0; i<x0+w0; i++)
 				{
-					if (*(sp+i) == *(dp+i)) 
+					if (*(sp+i) == *(dp+i))
 						*(dp+i) = 0;
 				}
 			}
@@ -989,7 +989,7 @@ void AVIVideoAPNGOutputStream::prepare_buffer(uint8 **pp1, uint8 **pp2, uint32 x
 
 				for (i=x0; i<x0+w0; i++)
 				{
-					if (*(sp+i) == *(dp+i)) 
+					if (*(sp+i) == *(dp+i))
 						*(dp+i) = 0;
 					*(sp+i) = 0;
 				}
@@ -1007,7 +1007,7 @@ void AVIVideoAPNGOutputStream::prepare_buffer(uint8 **pp1, uint8 **pp2, uint32 x
 
 				for (i=x0; i<x0+w0; i++)
 				{
-					if (*(sp+i) == *(dp+i)) 
+					if (*(sp+i) == *(dp+i))
 						*(dp+i) = 0;
 					else
 						*(sp+i) = *(dp+i);
@@ -1024,7 +1024,7 @@ void AVIVideoAPNGOutputStream::prepare_buffer(uint8 **pp1, uint8 **pp2, uint32 x
 
 				for (i=x0; i<x0+w0; i++)
 				{
-					if (*(sp+i) == *(dp+i)) 
+					if (*(sp+i) == *(dp+i))
 						*(dp+i) = 0;
 				}
 			}
@@ -1038,7 +1038,7 @@ void AVIVideoAPNGOutputStream::prepare_buffer(uint8 **pp1, uint8 **pp2, uint32 x
 
 				for (i=x0; i<x0+w0; i++)
 				{
-					if (*(sp+i) == *(dp+i)) 
+					if (*(sp+i) == *(dp+i))
 						*(dp+i) = 0;
 					*(sp+i) = 0;
 				}
@@ -1047,7 +1047,7 @@ void AVIVideoAPNGOutputStream::prepare_buffer(uint8 **pp1, uint8 **pp2, uint32 x
 	}
 }
 
-void AVIVideoAPNGOutputStream::write(const void *pBuffer, uint32 cbBuffer, IVDXOutputFile::PacketInfo& packetInfo, FilterModPixmapInfo* info) 
+void AVIVideoAPNGOutputStream::write(const void *pBuffer, uint32 cbBuffer, IVDXOutputFile::PacketInfo& packetInfo, FilterModPixmapInfo* info)
 {
 	uint32 i, j;
 	uint32 area_none, area_prev, area_back;
@@ -1056,7 +1056,7 @@ void AVIVideoAPNGOutputStream::write(const void *pBuffer, uint32 cbBuffer, IVDXO
 	uint8 bop1, bop2;
 	uint8 dop = PNG_DISPOSE_OP_NONE;
 
-	if (!cbBuffer || !mpFile || !png_ptr) 
+	if (!cbBuffer || !mpFile || !png_ptr)
 	{
 		++mCurFrame;
 		return;
@@ -1078,7 +1078,7 @@ void AVIVideoAPNGOutputStream::write(const void *pBuffer, uint32 cbBuffer, IVDXO
 	{
 		uint8   r, g, b, a;
 		uint8 * sp = curp;
-		uint8 * dp = curp; 
+		uint8 * dp = curp;
 		row_pointers_cur[j] = curp;
 
 		if (png_ptr->color_type & PNG_COLOR_MASK_COLOR)
@@ -1299,22 +1299,22 @@ void AVIVideoAPNGOutputStream::write(const void *pBuffer, uint32 cbBuffer, IVDXO
 	++mCurFrame;
 }
 
-void AVIVideoAPNGOutputStream::partialWriteBegin(uint32 flags, uint32 bytes, uint32 samples) 
+void AVIVideoAPNGOutputStream::partialWriteBegin(uint32 flags, uint32 bytes, uint32 samples)
 {
 	throw MyError("Partial write operations are not supported for video streams.");
 }
 
-void AVIVideoAPNGOutputStream::partialWrite(const void *pBuffer, uint32 cbBuffer) 
+void AVIVideoAPNGOutputStream::partialWrite(const void *pBuffer, uint32 cbBuffer)
 {
 }
 
-void AVIVideoAPNGOutputStream::partialWriteEnd() 
+void AVIVideoAPNGOutputStream::partialWriteEnd()
 {
 }
 
 //////////////////////////////////
 
-class AVIOutputAPNG : public AVIOutput, public IVDAVIOutputAPNG 
+class AVIOutputAPNG : public AVIOutput, public IVDAVIOutputAPNG
 {
 public:
 	AVIOutputAPNG();
@@ -1334,7 +1334,7 @@ public:
 	void finalize();
 
 protected:
-	FILE * mpFile; 
+	FILE * mpFile;
 	int mFramesCount;
 	int mLoopCount;
 	int mAlpha;
@@ -1356,12 +1356,12 @@ AVIOutputAPNG::AVIOutputAPNG()
 {
 }
 
-AVIOutput *VDGetAVIOutputAPNG() 
+AVIOutput *VDGetAVIOutputAPNG()
 {
 	return new AVIOutputAPNG;
 }
 
-IVDMediaOutputStream *AVIOutputAPNG::createVideoStream() 
+IVDMediaOutputStream *AVIOutputAPNG::createVideoStream()
 {
 	VDASSERT(!videoOut);
 	if (!(videoOut = new_nothrow AVIVideoAPNGOutputStream(mpFile)))
@@ -1369,12 +1369,12 @@ IVDMediaOutputStream *AVIOutputAPNG::createVideoStream()
 	return videoOut;
 }
 
-IVDMediaOutputStream *AVIOutputAPNG::createAudioStream() 
+IVDMediaOutputStream *AVIOutputAPNG::createAudioStream()
 {
 	return NULL;
 }
 
-bool AVIOutputAPNG::init(const wchar_t *szFile) 
+bool AVIOutputAPNG::init(const wchar_t *szFile)
 {
 	errno_t err = _wfopen_s(&mpFile, szFile, L"wb");
 	if (err) {
@@ -1391,7 +1391,7 @@ bool AVIOutputAPNG::init(const wchar_t *szFile)
 	return true;
 }
 
-void AVIOutputAPNG::finalize() 
+void AVIOutputAPNG::finalize()
 {
 	if (videoOut)
 		static_cast<AVIVideoAPNGOutputStream *>(videoOut)->finalize();

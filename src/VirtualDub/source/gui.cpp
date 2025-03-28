@@ -713,7 +713,7 @@ void guiPositionBlit(HWND hWndClipping, VDPosition lFrame, int w, int h) {
 }
 
 bool guiChooseColor(HWND hwnd, COLORREF& rgbOld) {
-	CHOOSECOLOR cc;                 // common dialog box structure 
+	CHOOSECOLOR cc;                 // common dialog box structure
 
 	// Initialize CHOOSECOLOR
 	memset(&cc, 0, sizeof(CHOOSECOLOR));
@@ -1146,4 +1146,3 @@ bool VDDialogBaseW32::CreateModeless(VDGUIHandle hParent) {
 void VDDialogBaseW32::DestroyModeless() {
 	DestroyWindow(mhdlg);
 }
-

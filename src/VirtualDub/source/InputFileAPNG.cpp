@@ -90,7 +90,7 @@ VDInputFileAPNGSharedData::VDInputFileAPNGSharedData()
 VDInputFileAPNGSharedData::~VDInputFileAPNGSharedData() {
 }
 
-void VDInputFileAPNGSharedData::Parse(const wchar_t *filename) 
+void VDInputFileAPNGSharedData::Parse(const wchar_t *filename)
 {
 	uint32 i;
 	uint32 numFCTL = 0;
@@ -214,7 +214,7 @@ void VDInputFileAPNGSharedData::Parse(const wchar_t *filename)
 			}
 		}
 		else
-		if (chunk == 'tRNS') 
+		if (chunk == 'tRNS')
 		{
 			if (mColorType == PNG_COLOR_TYPE_GRAY)
 			{
@@ -338,7 +338,7 @@ void VDInputFileAPNGSharedData::Parse(const wchar_t *filename)
 
 	// compute time to frame mapping
 	mFrameRate.Assign(10, 1);
-	if (mNumFrames > 1) 
+	if (mNumFrames > 1)
 	{
 		vdfastvector<ImageInfo> images;
 		mFrameRate.Assign(spancount * 2, 1);
@@ -528,7 +528,7 @@ VDVideoSourceAPNG::VDVideoSourceAPNG(VDInputFileAPNGSharedData *sharedData)
 	}
 }
 
-VDVideoSourceAPNG::~VDVideoSourceAPNG() 
+VDVideoSourceAPNG::~VDVideoSourceAPNG()
 {
 	if (png_ptr != NULL)
 	{
@@ -590,7 +590,7 @@ const void *VDVideoSourceAPNG::getFrame(VDPosition frameNum) {
 	vdfastvector<char> buffer;
 	while(current <= frameNum) {
 		read(current, 1, NULL, 0x7FFFFFFF, &lBytes, NULL);
-		
+
 		if (lBytes) {
 			buffer.resize(lBytes);
 
@@ -773,7 +773,7 @@ void VDVideoSourceAPNG::read_row(uint8 * row)
 	memcpy(row, png_ptr->row_buf + 1, png_ptr->rowbytes);
 }
 
-const void *VDVideoSourceAPNG::streamGetFrame(const void *inputBuffer, uint32 data_len, bool is_preroll, VDPosition frame_num, VDPosition target_sample) 
+const void *VDVideoSourceAPNG::streamGetFrame(const void *inputBuffer, uint32 data_len, bool is_preroll, VDPosition frame_num, VDPosition target_sample)
 {
 	if (frame_num < 0)
 		frame_num = target_sample;
@@ -1155,7 +1155,7 @@ namespace {
 	};
 }
 
-INT_PTR APIENTRY VDInputFileAPNG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
+INT_PTR APIENTRY VDInputFileAPNG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	MyFileInfo *pInfo = (MyFileInfo *)GetWindowLongPtr(hDlg, DWLP_USER);
 
@@ -1168,7 +1168,7 @@ INT_PTR APIENTRY VDInputFileAPNG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM 
 				SetWindowLongPtr(hDlg, DWLP_USER, lParam);
 				pInfo = (MyFileInfo *)lParam;
 
-				if (pInfo->mpVideo) 
+				if (pInfo->mpVideo)
 				{
 					char *s;
 					VDVideoSourceAPNG *pvs = static_cast<VDVideoSourceAPNG *>(&*pInfo->mpVideo);
@@ -1202,7 +1202,7 @@ INT_PTR APIENTRY VDInputFileAPNG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM 
 			return (TRUE);
 
 		case WM_COMMAND:
-			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) 
+			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 				EndDialog(hDlg, TRUE);
 			break;
 
@@ -1216,7 +1216,7 @@ INT_PTR APIENTRY VDInputFileAPNG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM 
 	return FALSE;
 }
 
-void VDInputFileAPNG::InfoDialog(VDGUIHandle hwndParent) 
+void VDInputFileAPNG::InfoDialog(VDGUIHandle hwndParent)
 {
 	MyFileInfo mai;
 	memset(&mai, 0, sizeof mai);

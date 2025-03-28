@@ -226,7 +226,7 @@ void VDDubVideoProcessorDisplay::CheckForDecompressorSwitch() {
 
 	if (!mpVideoCompressor)
 		return;
-	
+
 	if (mbVideoDecompressorEnabled == mpOptions->video.fShowDecompressedFrame)
 		return;
 
@@ -249,7 +249,7 @@ void VDDubVideoProcessorDisplay::CheckForDecompressorSwitch() {
 					mpLoopThrottle->BeginWait();
 					mpBlitter->lock(BUFFERID_OUTPUT);
 					mpLoopThrottle->EndWait();
-					mpBlitter->postAPC(BUFFERID_OUTPUT, -1, AsyncDecompressorSuccessfulCallback, mpOutputDisplay, NULL);					
+					mpBlitter->postAPC(BUFFERID_OUTPUT, -1, AsyncDecompressorSuccessfulCallback, mpOutputDisplay, NULL);
 
 					int format = mpVideoDecompressor->GetTargetFormat();
 					int variant = mpVideoDecompressor->GetTargetFormatVariant();
@@ -443,4 +443,3 @@ bool VDDubVideoProcessorDisplay::AsyncUpdateInputCallback(int pass, VDPosition t
 		return false;
 	}
 }
-

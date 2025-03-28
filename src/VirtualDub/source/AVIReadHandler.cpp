@@ -70,7 +70,7 @@ namespace {
 
 	bool isValidFOURCCChar(uint8 c) {
 		// FOURCCs must consist of a sequence of alphanumerics, padded at the end by spaces.
-		// 
+		//
 		// Change: Underscores spotted out of DirectShow DV mux filter. *sigh*
 		return (uint8)(c-0x30)<10 || (uint8)(c-0x41)<26 || (uint8)(c-0x61)<26 || c==0x20 || c==(uint8)'_';
 	}
@@ -261,7 +261,7 @@ AVIStreamNode::AVIStreamNode() {
 	bytes = 0;
 	handler_count = 0;
 	streaming_count = 0;
-	
+
 	stream_bytes = 0;
 	stream_pushes = 0;
 	cache = NULL;
@@ -739,7 +739,7 @@ sint32 AVIReadStream::Read(VDPosition lStart, long lSamples, void *lpBuffer, lon
 						parent->DisableStreaming(streamno);
 					}
 				}
-						
+
 				lStreamTrackValue = lStart;
 			}
 
@@ -1157,7 +1157,7 @@ bool AVIReadHandler::AppendFile(const wchar_t *pszFile) {
 
 		pasn_old = pasn_old_next;
 		delete pasn_new;
-	}	
+	}
 
 	++nFiles;
 	return true;
@@ -1479,7 +1479,7 @@ terminate_scan:
 						mpCurrentFile->mFile.seek(current_pos);
 					}
 				}
-				
+
 				if (!bValid) {
 					// Notify the user that recovering this file requires stronger measures.
 
@@ -1516,7 +1516,7 @@ terminate_scan:
 					mpCurrentFile->mFile.skip(invalidBytes-8);
 					continue;
 				}
-				
+
 				dwLengthLeft -= 8+(dwLength + (dwLength&1));
 
 				// Skip over the chunk.  Don't skip over RIFF chunks of type AVIX, or
@@ -1541,7 +1541,7 @@ terminate_scan:
 
 				if (mpCurrentFile->mFile.tell() > fileSize)
 					break;
-					
+
 
 				// TODO: This isn't necessarily correct for OpenDML, for which the MS parser accepts
 				// non-sequential IDs (according to alexnoe)
@@ -1662,7 +1662,7 @@ bool AVIReadHandler::_parseStreamHeader(List2<AVIStreamNode>& streamlist, uint32
 	uint32 fccType;
 	uint32 dwLength;
 	bool hyperindexed = false;
-	
+
 	if (!pasn)
 		throw MyMemoryError();
 
@@ -2256,7 +2256,7 @@ bool AVIReadHandler::Stream(AVIStreamNode *pusher, sint64 pos) {
 						actual = left;
 
 						dst = _StreamRead(actual);
-						
+
 						if (!dst) {
 							if (fWrite)
 								pasn->cache->WriteEnd();

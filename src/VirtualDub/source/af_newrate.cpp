@@ -78,7 +78,7 @@ public:
 	VDAudioFilterNewRate() {
 		mConfig.newfreq = 44100;
 	}
-	
+
 	bool Config(HWND hwnd) {
 		VDAudioFilterNewRateConfig	config(mConfig);
 

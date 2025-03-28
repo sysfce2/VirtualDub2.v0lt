@@ -232,7 +232,7 @@ bool VDCaptureVideoHistogram::Process(const VDPixmap& px, float out[256], double
 	}
 
 	memset(mData.mCounters, 0, sizeof mData.mCounters);
-	
+
 	const tpSpanRoutine pSpanRoutine = mpSpanRoutine;
 	const uint8 *src = (const uint8 *)px.data + mOffset;
 	const ptrdiff_t pitch = px.pitch;

@@ -730,7 +730,7 @@ void VDInputFileANIM::Init(const wchar_t *filename) {
 	sint64 fsize = mFile.size();
 
 	mAmigaViewportMode = 0;
-	
+
 	while(mFile.readData(hdr, 8) >= 8) {
 		uint32 cksize = VDFromBigEndian32(hdr[1]), tc;
 		uint32 ckround = cksize & 1;

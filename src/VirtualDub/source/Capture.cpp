@@ -1411,7 +1411,7 @@ bool VDCaptureProject::IsPropertySupported(uint32 id) {
 sint32 VDCaptureProject::GetPropertyInt(uint32 id, bool *pAutomatic) {
 	if (mpDriver)
 		return mpDriver->GetPropertyInt(id, pAutomatic);
-	
+
 	if (pAutomatic)
 		*pAutomatic = true;
 	return 0;
@@ -1713,7 +1713,7 @@ void VDCaptureProject::DecrementFileID() {
 	const wchar_t *s = name.c_str();
 
 	VDStringW::size_type pos = VDFileSplitExt(s) - s;
-	
+
 	while(pos > 0) {
 		--pos;
 
@@ -1739,7 +1739,7 @@ void VDCaptureProject::IncrementFileID() {
 	const wchar_t *s = name.c_str();
 
 	int pos = VDFileSplitExt(s) - s;
-	
+
 	while(--pos >= 0) {
 		if (iswdigit(name[pos])) {
 			if (name[pos] == '9')
@@ -2247,7 +2247,7 @@ unknown_PCM_format:
 				astrhdr.dwScale				= wfexOutput->mBlockSize;
 				astrhdr.dwRate				= wfexOutput->mDataRate;
 				astrhdr.dwQuality			= (unsigned long)-1;
-				astrhdr.dwSampleSize		= wfexOutput->mBlockSize; 
+				astrhdr.dwSampleSize		= wfexOutput->mBlockSize;
 
 				icd.mpAudioOut->setFormat(wfexOutput.data(), wfexOutput.size());
 				icd.mpAudioOut->setStreamInfo(asi);
@@ -2989,7 +2989,7 @@ void VDCaptureProject::ShutdownVideoHistogram() {
 bool VDCaptureProject::InitVideoFrameTransfer() {
 	if (mpCB && !mbVideoFrameTransferActive) {
 		VDPixmap px;
-		
+
 		px.data		= NULL;
 		px.data2	= NULL;
 		px.data3	= NULL;
@@ -3115,7 +3115,7 @@ void VDCaptureData::CreateNewFile() {
 
 		IVDMediaOutputStream *pNewVideo = pNewFile->createVideoStream();
 		IVDMediaOutputStream *pNewAudio = NULL;
-		
+
 		if (mpAudioOut)
 			pNewAudio = pNewFile->createAudioStream();
 
@@ -3138,7 +3138,7 @@ void VDCaptureData::CreateNewFile() {
 		if (mpAudioOut) {
 			pNewAudio->setStreamInfo(mpAudioOut->getStreamInfo());
 			pNewAudio->setFormat(mpAudioOut->getFormat(), mpAudioOut->getFormatLen());
-		} 
+		}
 
 		// init the new file
 
@@ -3342,7 +3342,7 @@ void VDCaptureData::DoSpill() {
 
 void VDCaptureData::CheckVideoAfter() {
 	++mVideoBlocks;
-	
+
 	if (mVideoSwitchPt && mVideoBlocks == mVideoSwitchPt) {
 
 		mpVideoOut = mpOutputFilePending->getVideoOutput();

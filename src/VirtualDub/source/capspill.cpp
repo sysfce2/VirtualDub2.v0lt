@@ -52,7 +52,7 @@ wchar_t *CapSpillDrive::makePath(wchar_t *buf, const wchar_t *fn) const {
 
 	if (t>buf) {
 		if (t[-1] != L'\\' && t[-1]!=L':')
-			*t++ = L'\\'; 
+			*t++ = L'\\';
 	}
 
 	wcscpy(t, fn);
@@ -506,7 +506,7 @@ static void LVBeginEdit(HWND hwndLV, int index, int subitem) {
 			w + 2,
 			r.bottom-r.top + 2,
 			hwndLV, (HMENU)1, g_hInst, NULL);
-	
+
 	if (g_hwndEdit) {
 		LVITEM lvi;
 		CapSpillDrive *pcsd;

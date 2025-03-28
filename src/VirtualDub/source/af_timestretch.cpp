@@ -91,7 +91,7 @@ protected:
 
 	void ProcessBlock();
 	void CopyOutputSamples(void *dst, int count);
-	
+
 	VDAudioFilterTimeStretchConfig	mConfig;
 	vdfastvector<sint16>			mDelayLineBuffers;
 	vdfastvector<sint16>			mInputBuffer;

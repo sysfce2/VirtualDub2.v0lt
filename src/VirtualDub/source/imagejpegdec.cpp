@@ -853,7 +853,7 @@ void VDJPEGDecoder::ParseScanHeader() {
 	int mcusize = 0;
 
 	int dcbase = 128*8;
-	
+
 	if (mpIDCT->pPrescaler)
 		dcbase = (dcbase * mpIDCT->pPrescaler[mpScan[0]] + 128) >> 8;
 
@@ -931,7 +931,7 @@ void VDJPEGDecoder::ParseScanHeader() {
 
 				if (!found) {
 					mpSrc = pLastECS;
-					
+
 					while(mpSrc < mpSrcEnd-1) {
 						if (mpSrc[0] == 0xFF && mpSrc[1] == nextRST) {
 							found = true;
@@ -1008,7 +1008,7 @@ void VDJPEGDecoder::ParseMCU_prescaled32(int mcusize) {
 
 		while(idx < 64) {
 			uint8 rs;
-			
+
 			if (mBitHeap < nACTableAccelLimit) {
 				const AccelEntry& ae = pACTableAccel[mBitHeap >> 24];
 

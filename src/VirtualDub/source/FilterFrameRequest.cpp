@@ -348,14 +348,14 @@ bool VDFilterFrameRequest::IsResultBufferStealable() const {
 
 void VDFilterFrameRequest::CreateClient(bool writable, IVDFilterFrameClientRequest **ppReq) {
 	vdrefptr<VDFilterFrameClientRequest> req;
-	
+
 	if (mpAllocator)
 		mpAllocator->AllocateClientRequest(~req);
 	else
 		req = new VDFilterFrameClientRequest;
 
 	req->Init(this);
-	
+
 	mClientRequests.push_back(req);
 
 	*ppReq = req.release();

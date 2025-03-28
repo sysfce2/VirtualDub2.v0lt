@@ -151,7 +151,7 @@ protected:
 	vdfastvector<VDThreadEventScope> mScopes;
 	vdfastvector<char *> mDynScopeStrings;
 
-	typedef vdfastvector<PerThreadInfo *> Threads; 
+	typedef vdfastvector<PerThreadInfo *> Threads;
 	Threads mThreads;
 	PerSampleInfo mSample[sample_count];
 };
@@ -425,7 +425,7 @@ void VDEventProfilerW32::UpdateScopes(vdfastvector<VDThreadEventScope>& scopes) 
 	for(int i=0; i<mScopes.size(); i++) {
 		scopes[i].comment = mScopes[i].comment;
 	}
-	
+
 	mMutex.Unlock();
 }
 
@@ -935,7 +935,7 @@ LRESULT VDRTProfileDisplay2::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			return 0;
 
 		case WM_USER+604: // set mode
-			if (lParam==3) 
+			if (lParam==3)
 				Clear();
 			else
 				mode = lParam;
@@ -1122,7 +1122,7 @@ void VDRTProfileDisplay2::UpdateRange() {
 			continue;
 
 		const vdspan<VDProfileTrackedEvent>& events = tracker->GetEvents();
-		
+
 		if (!events.empty()) {
 			const VDProfileTrackedEvent& ev = events.front();
 			uint64 t = ev.mStartTime;
@@ -1481,7 +1481,7 @@ void VDRTProfileDisplay2::UpdateSummary() {
 			continue;
 
 		const vdspan<VDProfileTrackedEvent>& events = tracker->GetEvents();
-		
+
 		if (!events.empty()) {
 			for(uint32 j=0; j<events.size(); ++j) {
 				const VDProfileTrackedEvent& ev = events[j];
@@ -1601,7 +1601,7 @@ void VDRTProfileDisplay2::UpdateList() {
 			continue;
 
 		const vdspan<VDProfileTrackedEvent>& events = tracker->GetEvents();
-		
+
 		if (!events.empty()) {
 			for(uint32 j=0; j<events.size(); ++j) {
 				const VDProfileTrackedEvent& ev = events[j];

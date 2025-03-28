@@ -114,7 +114,7 @@ public:
 		kPreviewFieldsNonIntTFF,
 		kPreviewFieldsNonIntBFF
 	};
-	
+
 	VDPixmapFormatEx		mInputFormat;
 	VDPixmapFormatEx		mOutputFormat;
 	int		outputReference;

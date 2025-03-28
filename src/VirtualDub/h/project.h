@@ -192,7 +192,7 @@ public:
 
 	void Quit();
 	void CmdOpen(const wchar_t *token);
-	void OpenProject(const wchar_t *pFilename, bool readOnly=false); 
+	void OpenProject(const wchar_t *pFilename, bool readOnly=false);
 	void OpenJob(const wchar_t *pFilename, VDJob* job);
 	void Open(const wchar_t *pFilename, IVDInputDriver *pSelectedDriver = 0, int open_flags = 0, int fAutoscan = 0, const char *pInputOpts = 0, uint32 inputOptsLen = 0);
 	void Reopen();

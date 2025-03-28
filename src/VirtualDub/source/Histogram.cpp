@@ -106,7 +106,7 @@ void Histogram::Process(const VBitmap *vbmp) {
 
 	if (!vbmp->w || !vbmp->h) return;
 
-	h = vbmp->h; 
+	h = vbmp->h;
 	do {
 		w = vbmp->w;
 		do {
@@ -135,7 +135,7 @@ void Histogram::Process24(const VBitmap *vbmp) {
 
 	if (!vbmp->w || !vbmp->h) return;
 
-	h = vbmp->h; 
+	h = vbmp->h;
 	do {
 		w = vbmp->w;
 		do {

@@ -57,7 +57,7 @@ extern IVDVideoCodecBugTrap *g_pVDVideoCodecBugTrap;
 //		lDataRate		Set to data rate in 1024*kilobytes, or zero if not
 //						supported.
 //		lKeyRate		Set to the desired maximum keyframe interval.  For
-//						all keyframes, set to 1.		
+//						all keyframes, set to 1.
 //
 //	ICM_COMPRESS:
 //
@@ -454,7 +454,7 @@ bool VideoSequenceCompressor::packFrame(void *dst, const void *src, uint32& size
 	// incorrectly modifying its input buffer. VFW itself relies on this,
 	// such as when it emulates crunch using quality. The MSU lossless
 	// codec 0.5.2 is known to do this.
-	
+
 	const uint8 firstInputByte = *(const uint8 *)src;
 
 	// A couple of notes:

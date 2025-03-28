@@ -38,7 +38,7 @@ public:
 	bool GetAudioSource(int index, AudioSource **ppSrc);
 	int GetFileFlags() {
 		if (single_file_mode) return 0;
-		return IVDInputDriver::kFF_Sequence; 
+		return IVDInputDriver::kFF_Sequence;
 	}
 
 public:

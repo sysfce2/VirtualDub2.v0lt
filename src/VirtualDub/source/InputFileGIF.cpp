@@ -484,7 +484,7 @@ const void *VDVideoSourceGIF::getFrame(VDPosition frameNum) {
 	vdfastvector<char> buffer;
 	while(current <= frameNum) {
 		read(current, 1, NULL, 0x7FFFFFFF, &lBytes, NULL);
-		
+
 		if (lBytes) {
 			buffer.resize(lBytes);
 
@@ -806,7 +806,7 @@ namespace {
 	};
 }
 
-INT_PTR APIENTRY VDInputFileGIF::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
+INT_PTR APIENTRY VDInputFileGIF::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	MyFileInfo *pInfo = (MyFileInfo *)GetWindowLongPtr(hDlg, DWLP_USER);
 
@@ -819,7 +819,7 @@ INT_PTR APIENTRY VDInputFileGIF::_InfoDlgProc( HWND hDlg, UINT message, WPARAM w
 				SetWindowLongPtr(hDlg, DWLP_USER, lParam);
 				pInfo = (MyFileInfo *)lParam;
 
-				if (pInfo->mpVideo) 
+				if (pInfo->mpVideo)
 				{
 					char *s;
 					VDVideoSourceGIF *pvs = static_cast<VDVideoSourceGIF *>(&*pInfo->mpVideo);
@@ -848,7 +848,7 @@ INT_PTR APIENTRY VDInputFileGIF::_InfoDlgProc( HWND hDlg, UINT message, WPARAM w
 			return (TRUE);
 
 		case WM_COMMAND:
-			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) 
+			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 				EndDialog(hDlg, TRUE);
 			break;
 
@@ -862,7 +862,7 @@ INT_PTR APIENTRY VDInputFileGIF::_InfoDlgProc( HWND hDlg, UINT message, WPARAM w
 	return FALSE;
 }
 
-void VDInputFileGIF::InfoDialog(VDGUIHandle hwndParent) 
+void VDInputFileGIF::InfoDialog(VDGUIHandle hwndParent)
 {
 	MyFileInfo mai;
 	memset(&mai, 0, sizeof mai);

@@ -379,7 +379,7 @@ public:
   virtual void Display(VDXHWND, bool){}
   virtual void RedoFrame(){
     editor->mFiltSys.InvalidateCachedFrames(pFiltInst);
-    editor->preview->RedoFrame2(); 
+    editor->preview->RedoFrame2();
   }
   virtual void RedoSystem(){
     editor->preview->AsIVDXFilterPreview2()->RedoSystem();
@@ -387,7 +387,7 @@ public:
   virtual void UndoSystem(){
     editor->preview->AsIVDXFilterPreview2()->UndoSystem();
   }
-  virtual void InitButton(VDXHWND w){ 
+  virtual void InitButton(VDXHWND w){
     ShowWindow((HWND)w,SW_HIDE);
   }
   virtual void Close(){}
@@ -458,7 +458,7 @@ VDVideoFilterOutputNameDialog::VDVideoFilterOutputNameDialog()
 void VDVideoFilterOutputNameDialog::OnDataExchange(bool write) {
 	if (write) {
 		VDStringW s;
-		
+
 		if (!GetControlText(IDC_NAME, s)) {
 			FailValidation(IDC_NAME);
 			return;
@@ -799,7 +799,7 @@ INT_PTR VDFilterBlendingDialog::DlgProc(UINT message, WPARAM wParam, LPARAM lPar
 class VDVideoFiltersDialog : public VDDialogFrameW32 {
 public:
 	VDVideoFiltersDialog();
-	
+
 public:
 	FiltersEditor* editor;
 	bool is_first;
@@ -1130,7 +1130,7 @@ bool VDVideoFiltersDialog::OnCommand(uint32 id, uint32 extcode) {
 		case IDC_CONFIGURE:
 			{
 				int index = mListView.GetSelectedIndex();
-				FilterListItem *fli = vdpoly_cast<FilterListItem *>(static_cast<FilterListItemBase *>(mListView.GetVirtualItem(index))); 
+				FilterListItem *fli = vdpoly_cast<FilterListItem *>(static_cast<FilterListItemBase *>(mListView.GetVirtualItem(index)));
 
 				if (fli) {
 					FilterInstance *fa = fli->mpEntry->mpInstance;
@@ -1205,7 +1205,7 @@ bool VDVideoFiltersDialog::OnCommand(uint32 id, uint32 extcode) {
 
 						while(prevIndex > 0) {
 							--prevIndex;
-							
+
 							if (!vdpoly_cast<FilterInputListItem *>(static_cast<FilterListItemBase *>(mListView.GetVirtualItem(prevIndex))))
 								break;
 						}
@@ -1420,7 +1420,7 @@ bool VDVideoFiltersDialog::OnCommand(uint32 id, uint32 extcode) {
 		case ID_FILTERLIST_EXTRAVIEW:
 			{
 				int index = mListView.GetSelectedIndex();
-				FilterListItem *fli = vdpoly_cast<FilterListItem *>(static_cast<FilterListItemBase *>(mListView.GetVirtualItem(index))); 
+				FilterListItem *fli = vdpoly_cast<FilterListItem *>(static_cast<FilterListItemBase *>(mListView.GetVirtualItem(index)));
 				if (fli->mpEntry->mpView)
 					fli->mpEntry->mpView->Destroy();
 				else
@@ -1557,7 +1557,7 @@ bool VDVideoFiltersDialog::ConfigureCrop(FilterInstance *fa) {
 
 	} else {
 		editor->config_first = fa;
-		
+
 		if (VDCreateVideoFilterPreviewDialog(&editor->mFiltSys, editor->mpVS ? &editor->filter_desc : NULL, fa, ~editor->preview)) {
 			editor->preview->SetFilterList(mhdlg);
 			if (editor->mInitialTimeUS >= 0)
@@ -1596,7 +1596,7 @@ bool VDVideoFiltersDialog::ConfigureBlend(FilterInstance *fa) {
 
 	} else {
 		editor->config_first = fa;
-		
+
 		if (VDCreateVideoFilterPreviewDialog(&editor->mFiltSys, editor->mpVS ? &editor->filter_desc : NULL, fa, ~editor->preview)) {
 			editor->preview->SetFilterList(mhdlg);
 			if (editor->mInitialTimeUS >= 0)
@@ -1750,7 +1750,7 @@ void VDVideoFiltersDialog::OnContextMenu(uint32 id, int x, int y) {
 
 						if (!outputName.empty()) {
 							const VDStringW& tmp = VDTextAToW(outputName);
-							
+
 							wchar_t *s = (wchar_t *)linearAlloc.Allocate(sizeof(wchar_t) * (tmp.size() + 1));
 							wcscpy(s, tmp.c_str());
 
@@ -1815,7 +1815,7 @@ void VDVideoFiltersDialog::OnItemSelectionChanged(VDUIProxyListView *sender, int
 void VDVideoFiltersDialog::MakeFilterChainDesc(VDFilterChainDesc& desc, MakeChainType type) {
 	// have to do this since the filter list is intrusive
 	editor->UndoSystem();
-	
+
 	desc.Clear();
 
 	int n = mListView.GetItemCount();
@@ -2041,7 +2041,7 @@ void FiltersEditor::ActivateNextWindow() {
 		HWND wnd2 = GetWindow(wnd,GW_ENABLEDPOPUP);
 		if (wnd2) wnd = wnd2;
 		if (preview) {
-			wnd2 = preview->GetHwnd(); 
+			wnd2 = preview->GetHwnd();
 			if (wnd2) wnd = wnd2;
 		}
 

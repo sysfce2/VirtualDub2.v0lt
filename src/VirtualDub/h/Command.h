@@ -81,7 +81,7 @@ struct RequestVideo: public CommandRequest {
 	bool removeVideo;
 	IVDOutputDriver* driver;
 	const char* format;
-	
+
 	RequestVideo() {
 		compat = false;
 		removeAudio = false;

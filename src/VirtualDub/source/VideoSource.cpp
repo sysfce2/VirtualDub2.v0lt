@@ -1829,7 +1829,7 @@ int VideoSourceAVI::_read(VDPosition lStart, uint32 lCount, void *lpBuffer, uint
 
 				if (((short *)pp2)[1]==(short)0xE0FF)
 					pp2[10] = 2;
-				
+
 			} else {
 
 				memcpy(lpBuffer, (char *)mjpeg_reorder_buffer+lOffset, lLength);
@@ -2216,7 +2216,7 @@ const void *VideoSourceAVI::streamGetFrame(const void *inputBuffer, uint32 data_
 					throw MyError("VideoSourceAVI: uncompressed frame %I64u is short (expected %d bytes, got %d)", frame_num, mSourceFrameSize, data_len);
 			}
 		}
-		
+
 		memcpy((void *)getFrameBuffer(), inputBuffer, to_copy);
 	} else {
 		// Asus ASV1 crashes with zero byte frames!!!

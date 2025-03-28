@@ -154,7 +154,7 @@ uint32 VDAudioFilterGain::Run() {
 	// compute output samples
 	int samples = mpContext->mCommonSamples;
 	sint16 *dst = (sint16 *)mpContext->mpOutputs[0]->mpBuffer;
-	
+
 	if (!samples) {
 		if (pin.mbEnded && !mpContext->mInputSamples)
 			return kVFARun_Finished;

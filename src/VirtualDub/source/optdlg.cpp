@@ -1156,7 +1156,7 @@ void VDDialogVideoDepthW32::ApplyChanges() {
 			VDRenderSetVideoSourceInputFormat(inputVideo, mInputFormat);
 		}
 	}
-	
+
 	InitFinalFormat();
 }
 
@@ -2101,11 +2101,11 @@ bool VDDisplayAudioVolumeDialog(VDGUIHandle hParent, DubOptions& opts) {
 
 class VDDialogJumpToPositionW32 : public VDDialogBaseW32 {
 public:
-	inline VDDialogJumpToPositionW32(VDPosition currentFrame, IVDVideoSource *pVS, const VDFraction& realRate, bool usePos=false, bool useSelect=false) 
+	inline VDDialogJumpToPositionW32(VDPosition currentFrame, IVDVideoSource *pVS, const VDFraction& realRate, bool usePos=false, bool useSelect=false)
 		: VDDialogBaseW32(useSelect ? IDD_JUMPTOFRAME1 : (usePos ? IDD_JUMPTOFRAME2 : IDD_JUMPTOFRAME))
 		, mFrame(currentFrame)
 		, mpVideo(pVS)
-		, mRealRate(realRate) 
+		, mRealRate(realRate)
 	{
 		mbUsePos = usePos;
 		title = 0;
@@ -2695,7 +2695,7 @@ void VDDialogFileTextInfoW32::BeginEdit(int index) {
 				r.bottom - r.top,
 				mhwndList, (HMENU)1, g_hInst, NULL);
 	}
-	
+
 	if (mhwndEdit) {
 		{
 			mOldEditProc = (WNDPROC)GetWindowLongPtrW(mhwndEdit, GWLP_WNDPROC);

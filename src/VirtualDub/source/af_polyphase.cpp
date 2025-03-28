@@ -198,7 +198,7 @@ uint32 VDAudioFilterSymmetricFIR::Run() {
 
 	if (samples > (int)mpContext->mOutputSamples)
 		samples = mpContext->mOutputSamples;
-	
+
 	if (samples > (int)mMaxQuantum)
 		samples = mMaxQuantum;
 
@@ -723,7 +723,7 @@ public:
 	VDAudioFilterStretch() {
 		mConfig.ratio = 1.0;
 	}
-	
+
 	bool Config(HWND hwnd) {
 		VDAudioFilterStretchConfig	config(mConfig);
 

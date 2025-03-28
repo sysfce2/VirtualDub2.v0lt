@@ -608,7 +608,7 @@ namespace {
 	struct Column {
 		int x;
 		int y;
-		
+
 		Column() : x(0), y(0) {}
 	};
 }
@@ -1090,7 +1090,7 @@ VDFilterGraphControl::ObjectType VDFilterGraphControl::HitTestFilter(Filter *pFi
 				RECT r;
 				GetFilterPinRect(*pFilter, r, false, pin);
 				if (PtInRect(&r, pt))
-					return kInputPin;			
+					return kInputPin;
 			}
 		} else if (xoffset >= pFilter->w - mPinW) {
 			for(pin = 0; pin < pFilter->outputs; ++pin) {
@@ -1289,7 +1289,7 @@ void VDFilterGraphControl::SetFilterGraph(const std::vector<VDFilterGraphNode>& 
 void VDFilterGraphControl::SetConnectionLabel(IVDRefCount *pInstance, int outpin, const wchar_t *pLabel) {
 	vdforeach(tFilterList, mFilters) {
 		Filter& f = *it;
-		
+
 		if (f.pInstance != pInstance)
 			continue;
 

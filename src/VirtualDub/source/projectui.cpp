@@ -570,7 +570,7 @@ INT_PTR CALLBACK max_host_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 	case DM_GETDEFID:
 		return 0;
-		
+
 	case WM_SIZE:
 		{
 			HWND child = GetWindow(wnd,GW_CHILD);
@@ -656,7 +656,7 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 	pFrame->Attach(this);
 
 	LoadSettings();
-	
+
 	// Load menus.
 	if (!(mhMenuNormal	= LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_MAIN_MENU    )))) {
 		Detach();
@@ -1478,7 +1478,7 @@ void VDProjectUI::SaveAnimatedGIFAsk() {
 	VDOutputFileAnimatedGIFOptionsDialog dlg;
 
 	IVDUIBase *pBase = vdpoly_cast<IVDUIBase *>(pWin);
-	
+
 	pBase->SetCallback(&dlg, false);
 	int result = pBase->DoModal();
 
@@ -1738,7 +1738,7 @@ void VDUIDialogExportViaEncoder::OnDataExchange(bool write) {
 
 bool VDGetExternalEncoderSetAsk(HWND parent, VDExtEncSet **pp) {
 	VDRegistryAppKey key(g_szRegKeyPersistence);
-	
+
 	VDUIDialogExportViaEncoder dlg;
 
 	VDStringW encName;
@@ -1794,7 +1794,7 @@ void VDProjectUI::ExportViaEncoderAsk(bool batch) {
 		filterSpec += L"*";
 
 	filterSpec += (wchar_t)0;
-	
+
 	const VDStringW filename(VDGetSaveFileName(kFileDialog_ExtOut, mhwnd, L"Export via external encoder", filterSpec.c_str(), ext));
 	if (!filename.empty()) {
 		if (batch) {
@@ -1831,7 +1831,7 @@ void VDProjectUI::LoadProjectAsk() {
 
 void VDProjectUI::SetVideoFiltersAsk() {
 	VDPosition initialTime = -1;
-	
+
 	if (mVideoTimelineFrameRate.getLo() && mVideoTimelineFrameRate.getHi())
 		initialTime = mVideoTimelineFrameRate.scale64ir(GetCurrentFrame()*1000000);
 
@@ -2311,7 +2311,7 @@ bool VDProjectUI::MenuHit(UINT id) {
 		case ID_EXPORT_DRIVERTOOL3:
 			ExportViaDriverTool(id-ID_EXPORT_DRIVERTOOL0);
 			break;
-		case ID_EXPORT_STREAM_COPY:	
+		case ID_EXPORT_STREAM_COPY:
 			ExportViaDriverTool("Export.StreamCopy");
 			break;
 		case ID_FILE_CLOSEAVI:					Close();						break;
@@ -2498,7 +2498,7 @@ bool VDProjectUI::MenuHit(UINT id) {
 		case ID_VIDEO_SEEK_KEYNEXT:				QueueCommand(kVDProjectCmd_GoToNextKey); break;
 		case ID_VIDEO_SEEK_SELSTART:
 			if (IsSelectionPresent())
-				QueueCommand(kVDProjectCmd_GoToSelectionStart);	
+				QueueCommand(kVDProjectCmd_GoToSelectionStart);
 			break;
 		case ID_VIDEO_SEEK_SELEND:
 			if (IsSelectionPresent())
@@ -3271,7 +3271,7 @@ LRESULT VDProjectUI::MainWndProc( UINT msg, WPARAM wParam, LPARAM lParam) {
 	static HWND hwndItem0 = NULL;
 
 	switch (msg) {
- 
+
 	case WM_INITMENU:
 		UpdateMainMenu((HMENU)wParam);
 		break;
@@ -4759,7 +4759,7 @@ void VDProjectUI::OnCurveUpdated(IVDUIParameterCurveControl *source, const int& 
 		CurveLoadSelected();
 		return;
 	}
-	
+
 	if (!inputVideo) {
 		UIRefreshOutputFrame(false);
 		return;
@@ -5072,7 +5072,7 @@ void VDProjectUI::UIAudioSourceUpdated() {
 }
 
 void VDProjectUI::UIVideoSourceUpdated() {
-	
+
 	UpdateVideoFrameLayout();
 }
 
@@ -5393,7 +5393,7 @@ bool VDProjectUI::GetFrameString(wchar_t *buf, size_t buflen, VDPosition dstFram
 		srcFrame = filters.GetSourceFrame(srcFrame);
 
 		VDPosition srcStreamFrame;
-		
+
 		IVDStreamSource *pVSS = inputVideo->asStream();
 		if (srcFrame < 0)
 			srcFrame = srcStreamFrame = pVSS->getLength();
@@ -5448,7 +5448,7 @@ bool VDProjectUI::GetFrameString(wchar_t *buf, size_t buflen, VDPosition dstFram
 			VDPosition formatTime = dstTime;
 			VDPosition formatFrameTotal;
 			VDPosition formatTimeTotal;
-			
+
 			if (iswupper(c)) {
 				formatFrame = srcFrame;
 				formatTime = srcTime;
@@ -5508,7 +5508,7 @@ bool VDProjectUI::GetFrameString(wchar_t *buf, size_t buflen, VDPosition dstFram
 			case 'D':
 				{
 					VDPosition nearestKey = -1;
-					
+
 					// we can't safely call this while a dub is occurring because it would cause I/O on
 					// two threads
 					if (!mbDubActive) {
@@ -5711,7 +5711,7 @@ void VDProjectUI::DisplayPreview(bool v)
 	}
 	if (mhwndFilters) ShowWindow(mhwndFilters, v ? SW_HIDE:SW_SHOWNOACTIVATE);
 	mpUIBase->SetVisible(!v);
-	
+
 	if (v) {
 		if (GetParent(mhwndInputFrame)==(HWND)mhwnd) ::ShowWindow(mhwndInputFrame, SW_HIDE);
 		if (GetParent(mhwndOutputFrame)==(HWND)mhwnd) ::ShowWindow(mhwndOutputFrame, SW_HIDE);
@@ -5721,4 +5721,3 @@ void VDProjectUI::DisplayPreview(bool v)
 		::ShowWindow(mhwndOutputFrame, mPaneLayoutMode != kPaneLayoutInput && videoPresent);
 	}
 }
-

@@ -528,7 +528,7 @@ void VDDubVideoProcessor::DeactivatePaths(uint32 path) {
 
 bool VDDubVideoProcessor::RunPathWriteOutputFrames() {
 	VideoWriteResult result = kVideoWriteNoOutput;
-	
+
 	if (!mPendingOutputFrames.empty())
 		result = ProcessVideoFrame();
 
@@ -593,7 +593,7 @@ bool VDDubVideoProcessor::RunPathWriteAsyncCompressedFrame() {
 		DeactivatePaths(kPath_WriteAsyncCompressedFrame);
 		return false;
 	}
-	
+
 	if (!CheckForThreadedCompressDone()) {
 		DeactivatePaths(kPath_WriteAsyncCompressedFrame);
 		return false;
@@ -1249,7 +1249,7 @@ VDDubVideoProcessor::VideoWriteResult VDDubVideoProcessor::ProcessVideoFrame() {
 }
 
 VDDubVideoProcessor::VideoWriteResult VDDubVideoProcessor::WriteFinishedVideoFrame(VDRenderOutputBuffer *pBuffer, bool holdBuffer) {
-	// write it to the file	
+	// write it to the file
 	const void *frameBuffer = pBuffer->mpBase;
 
 	vdrefptr<VDRenderPostCompressionBuffer> pNewBuffer;
@@ -1349,7 +1349,7 @@ void VDDubVideoProcessor::WriteFinishedVideoFrame(const void *data, uint32 size,
 		lFrameDelta = mpProcDisplay->GetLatency() / 2;
 
 		if (lFrameDelta < 0) lFrameDelta = 0;
-		
+
 		if (lFrameDelta > 0) {
 			mFramesToDrop = lFrameDelta;
 		}
@@ -1438,4 +1438,3 @@ How the hell mPendingSourceFrames and VDRenderVideoPipeFrameInfo relate?
 mPendingSourceFrames -> mpVideoRequestQueue -> mpVideoPipe -> pFrameInfo
 
 */
-

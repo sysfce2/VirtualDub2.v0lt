@@ -253,7 +253,7 @@ void RunScriptMemory(const char *mem, int start_line, bool stopAtReloadMarker, b
 					, errorLineStart + pos - prelen
 					, errorLineStart + pos);
 		*/
-					
+
 	} catch(const MyError& e) {
 		g_project->EndLoading();
 		throw e;
@@ -423,7 +423,7 @@ static const VDScriptFunctionDef obj_VDParameterCurve_functbl[]={
 };
 
 static const VDScriptObject obj_VDParameterCurve={
-	"VDParameterCurve", NULL, obj_VDParameterCurve_functbl, NULL	
+	"VDParameterCurve", NULL, obj_VDParameterCurve_functbl, NULL
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -607,7 +607,7 @@ static const VDScriptFunctionDef obj_VDVFiltInst_functbl[]={
 };
 
 extern const VDScriptObject obj_VDVFiltInst={
-	"VDVideoFilterInstance", obj_VDVFiltInst_lookup, obj_VDVFiltInst_functbl, NULL	
+	"VDVideoFilterInstance", obj_VDVFiltInst_lookup, obj_VDVFiltInst_functbl, NULL
 };
 
 ///////////////////
@@ -630,7 +630,7 @@ static const VDScriptFunctionDef obj_VDVFilters_instance_functbl[]={
 };
 
 static const VDScriptObject obj_VDVFilters_instance={
-	"VDVideoFilterList", NULL, obj_VDVFilters_instance_functbl, NULL	
+	"VDVideoFilterList", NULL, obj_VDVFilters_instance_functbl, NULL
 };
 
 static void func_VDVFilters_Clear(IVDScriptInterpreter *, VDScriptValue *, int) {
@@ -694,7 +694,7 @@ static const VDScriptFunctionDef obj_VDVFilters_functbl[]={
 };
 
 static const VDScriptObject obj_VDVFilters={
-	"VDVideoFilters", obj_VDVFilters_lookup, obj_VDVFilters_functbl, NULL	
+	"VDVideoFilters", obj_VDVFilters_lookup, obj_VDVFilters_functbl, NULL
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -1381,7 +1381,7 @@ namespace {
 
 static void func_VDAFiltInst_SetInt(IVDScriptInterpreter *isi, VDScriptValue *argv, int argc) {
 	VDPluginConfigVariant v;
-	
+
 	v.SetS32(argv[1].asInt());
 
 	SetFilterParam(argv[-1].asObjectPtr(), argv[0].asInt(), v);
@@ -1389,7 +1389,7 @@ static void func_VDAFiltInst_SetInt(IVDScriptInterpreter *isi, VDScriptValue *ar
 
 static void func_VDAFiltInst_SetLong(IVDScriptInterpreter *isi, VDScriptValue *argv, int argc) {
 	VDPluginConfigVariant v;
-	
+
 	if (argc == 2)
 		v.SetU64(argv[1].asLong());
 	else
@@ -1414,7 +1414,7 @@ static void func_VDAFiltInst_SetDouble(IVDScriptInterpreter *isi, VDScriptValue 
 
 		foo.bar.lo = argv[2].asInt();
 		foo.bar.hi = argv[1].asInt();
-	
+
 		v.SetDouble(foo.d);
 	}
 
@@ -1423,7 +1423,7 @@ static void func_VDAFiltInst_SetDouble(IVDScriptInterpreter *isi, VDScriptValue 
 
 static void func_VDAFiltInst_SetString(IVDScriptInterpreter *isi, VDScriptValue *argv, int argc) {
 	VDPluginConfigVariant v;
-	
+
 	v.SetWStr(VDTextU8ToW(*argv[1].asString(), -1).c_str());
 
 	SetFilterParam(argv[-1].asObjectPtr(), argv[0].asInt(), v);
@@ -1457,7 +1457,7 @@ static const VDScriptFunctionDef obj_VDAFiltInst_functbl[]={
 };
 
 static const VDScriptObject obj_VDAFiltInst={
-	"VDAudio", NULL, obj_VDAFiltInst_functbl, NULL	
+	"VDAudio", NULL, obj_VDAFiltInst_functbl, NULL
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -1486,7 +1486,7 @@ static const VDScriptFunctionDef obj_VDAFilters_instance_functbl[]={
 };
 
 static const VDScriptObject obj_VDAFilters_instance={
-	"VDAudioFilterList", NULL, obj_VDAFilters_instance_functbl, NULL	
+	"VDAudioFilterList", NULL, obj_VDAFilters_instance_functbl, NULL
 };
 
 static void func_VDAFilters_Clear(IVDScriptInterpreter *, VDScriptValue *, int) {
@@ -1574,7 +1574,7 @@ static const VDScriptFunctionDef obj_VDAFilters_functbl[]={
 };
 
 static const VDScriptObject obj_VDAFilters={
-	"VDAudio", obj_VDAFilters_lookup, obj_VDAFilters_functbl, NULL	
+	"VDAudio", obj_VDAFilters_lookup, obj_VDAFilters_functbl, NULL
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -1919,7 +1919,7 @@ static void func_VDSubset_LookupFrameAtFilter(IVDScriptInterpreter *isi, VDScrip
 		VDSCRIPT_EXT_ERROR(VAR_NOT_FOUND);
 
 	VDProject *p = g_project;
-	
+
 	if (!p)
 		VDSCRIPT_EXT_ERROR(VAR_NOT_FOUND);
 
@@ -1989,7 +1989,7 @@ static const VDScriptFunctionDef obj_VDParams_functbl[]={
 };
 
 static const VDScriptObject obj_VDParams={
-	"VDParams", NULL, obj_VDParams_functbl, NULL	
+	"VDParams", NULL, obj_VDParams_functbl, NULL
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -2023,7 +2023,7 @@ static const VDScriptFunctionDef obj_VDProject_functbl[]={
 };
 
 static const VDScriptObject obj_VDProject={
-	"VDProject", NULL, obj_VDProject_functbl, NULL	
+	"VDProject", NULL, obj_VDProject_functbl, NULL
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -2059,7 +2059,7 @@ static void VirtualDub_Open2(VDScriptValue *arglist, int arg_count, int fAutoSca
 	IVDInputDriver *pDriver = NULL;
 	VDStringW signature;
 	int open_flags = f_open_quiet;
-	
+
 	if (arg_count > 1) {
 		signature = VDTextAToW(*arglist[1].asString());
 		pDriver = VDGetInputDriverByName(signature.c_str());
@@ -2504,5 +2504,3 @@ static VDScriptValue RootHandler(IVDScriptInterpreter *isi, char *szName, void *
 
 	VDSCRIPT_EXT_ERROR(VAR_NOT_FOUND);
 }
-
- 

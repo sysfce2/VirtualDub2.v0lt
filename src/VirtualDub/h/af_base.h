@@ -55,7 +55,7 @@ namespace nsVDAudioFilterBase {
 		};																		\
 																				\
 		const nsVDAudioFilterBase::ConfigEntryExt ConfigInfo<idx_>::members={ &ConfigInfo<idx_-1>::members.info, idx_, VDXPluginConfigEntry::kType##type_, L#name_, sdesc_, ldesc_, offsetof(ConfigInfo<idx_>, name_) }
-		
+
 #define VDAFBASE_END_CONFIG(filtername_, idx_)		\
 		}											\
 		typedef nsVDAFConfigInfo_##filtername_::ConfigInfo<idx_> VDAudioFilterData_##filtername_

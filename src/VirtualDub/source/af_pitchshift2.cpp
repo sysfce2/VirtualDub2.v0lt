@@ -116,7 +116,7 @@ protected:
 	enum { kOverlapTestSize = kWindowSize >> 1 };
 	enum { kFFTSize = kWindowSize * 2 };
 	enum { kFFTSizeBits = 12 };
-	
+
 	VDAudioFilterPitchScaleConfig	mConfig;
 	vdfastvector<sint16>			mDelayLineBuffers;
 	vdfastvector<float>				mFFTBuffers;

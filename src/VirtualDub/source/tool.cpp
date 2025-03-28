@@ -59,7 +59,7 @@ public:
 		VDPosition time = -1;
 		if (fr.getLo() && fr.getHi())
 			time = fr.scale64ir(pos*1000000);
-		
+
 		if (FiltersEditorGotoFrame(pos,time))
 			return;
 		g_project->MoveToFrame(pos);
@@ -140,7 +140,7 @@ void VDShutdownTools() {
 
 void VDInitTools() {
 	VDShutdownTools();
-	
+
 	std::vector<VDPluginDescription *> plugins;
 	VDEnumeratePluginDescriptions(plugins, kVDXPluginType_Tool);
 

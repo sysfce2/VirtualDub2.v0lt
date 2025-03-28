@@ -84,7 +84,7 @@ public:
 	void Block();
 
 	void InvalidateCachedFrames(FilterInstance *startingFilter);
-	
+
 	void DumpStatus(VDTextOutputStream& os);
 
 	void DeinitFilters();

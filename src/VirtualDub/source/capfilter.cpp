@@ -643,7 +643,7 @@ public:
 
 	void Push(const VDPixmap& px);
 	bool Run();
-	
+
 protected:
 	VDPosition	mWindowFrameStart;
 	uint32		mWindowFrameCount;
@@ -670,7 +670,7 @@ void VDCaptureFilterChainFrameSource::Init(uint32 frameCount, const VDPixmapLayo
 	mWindowFrameCount = 0;
 	mWindowStartIndex = 0;
 	mWindowSize = frameCount;
-	
+
 	SetOutputLayout(layout);
 
 	mFrameQueue.resize(frameCount, NULL);
@@ -835,7 +835,7 @@ bool VDCaptureFilterChainAdapter::ProcessOut(VDPixmap& px) {
 				break;
 		}
 	}
-	
+
 	if (!mpRequest->IsSuccessful()) {
 		VDFilterFrameRequestError *err = mpRequest->GetError();
 

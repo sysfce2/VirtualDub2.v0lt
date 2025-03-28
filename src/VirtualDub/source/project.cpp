@@ -436,7 +436,7 @@ VDProject::~VDProject() {
 #endif
 }
 
-bool VDProject::Attach(VDGUIHandle hwnd) {	
+bool VDProject::Attach(VDGUIHandle hwnd) {
 	mhwnd = hwnd;
 	return true;
 }
@@ -695,7 +695,7 @@ void VDProject::Paste() {
 			mposZoomEnd += len;
 		}
 	}
-	
+
 	EndTimelineUpdate();
 	MoveToFrame(start);
 }
@@ -1266,7 +1266,7 @@ void EmptyDataDirectory(const VDStringW& dst) {
 			} else {
 				DeleteFileW((dst+L"\\"+name).c_str());
 			}
-			
+
 		} while(FindNextFileW(h,&fd));
 		FindClose(h);
 	}
@@ -1306,7 +1306,7 @@ bool CleanupDataDir(const VDStringW& dst, const VDStringW& src, vdfastvector<Fil
 				if (used)
 					empty = false;
 			}
-			
+
 		} while(FindNextFileW(h,&fd));
 		FindClose(h);
 	}
@@ -1343,7 +1343,7 @@ void VDProject::SaveData(const VDStringW& path, VDStringW& dataSubdir, bool make
 
 	{for(VDFilterChainDesc::Entries::const_iterator it(g_filterChain.mEntries.begin()), itEnd(g_filterChain.mEntries.end()); it != itEnd; ++it) {
 		FilterInstance *fa = (*it)->mpInstance;
-		if (!fa->fmProject.dataPrefix.empty()) 
+		if (!fa->fmProject.dataPrefix.empty())
 			used_prefix.push_back(fa);
 		if (!fa->fmProject.data.empty())
 			data_empty = false;
@@ -2319,7 +2319,7 @@ void VDProject::SetAudioErrorMode(int errorMode0) {
 	AudioSources::iterator it(mInputAudioSources.begin()), itEnd(mInputAudioSources.end());
 	for(; it!=itEnd; ++it) {
 		AudioSource *as = *it;
-	
+
 		as->setDecodeErrorMode(errorMode);
 	}
 
@@ -2887,8 +2887,8 @@ void VDProject::RunOperation(IVDDubberOutputSystem *pOutputSystem, VideoOperatio
 					break;
 				}
 
-				TranslateMessage(&msg); 
-				DispatchMessage(&msg); 
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
 			}
 		}
 
@@ -2963,7 +2963,7 @@ void VDProject::AbortOperation() {
 bool VDProject::AbortPreviewing() {
 	if (!g_dubber)
 		return true;
-	if (!g_dubber->IsPreviewing()) 
+	if (!g_dubber->IsPreviewing())
 		return false;
 	g_dubber->Abort();
 	mPreviewRestartMode = kPreviewRestart_None;

@@ -836,7 +836,7 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			CreateWindowExA(0                ,"STATIC"       ,"X1 offset"  ,WS_CHILD | SS_LEFT                           ,( 0*duX)/4, ( 2*duY)/8, (22*duX)/4, ( 8*duY)/8, mhwnd, (HMENU)kIDC_X1_STATIC   , g_hInst, NULL);
 			CreateWindowExA(WS_EX_CLIENTEDGE , "EDIT"        ,""  ,WS_CHILD | WS_TABSTOP | ES_LEFT | ES_NUMBER               ,(23*duX)/4, ( 0*duY)/8, (24*duX)/4, (10*duY)/8, mhwnd, (HMENU)kIDC_X1_EDIT , g_hInst, NULL);
 			CreateWindowExA(WS_EX_CLIENTEDGE ,UPDOWN_CLASSA  ,""  ,WS_CHILD | UDS_NOTHOUSANDS | UDS_AUTOBUDDY | UDS_ALIGNRIGHT   | UDS_SETBUDDYINT, 0, 0,     ( 2*duX)/4, (10*duY)/8, mhwnd, (HMENU)kIDC_X1_SPIN , g_hInst, NULL);
-			
+
 			// x2
 			CreateWindowExA(0                ,"STATIC"       ,"X2 offset"  ,WS_CHILD | SS_LEFT                           ,0         , 0         , (22*duX)/4, ( 8*duY)/8, mhwnd, (HMENU)kIDC_X2_STATIC   , g_hInst, NULL);
 			CreateWindowExA(WS_EX_CLIENTEDGE , "EDIT"        ,""  ,WS_CHILD | WS_TABSTOP | ES_LEFT | ES_NUMBER               ,0         , 0         , (24*duX)/4, (10*duY)/8, mhwnd, (HMENU)kIDC_X2_EDIT , g_hInst, NULL);
@@ -850,12 +850,12 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			// size
 			CreateWindowExA(0, "STATIC", "Size", WS_CHILD | SS_LEFT, 0, (26*duY)/8, (47*duX)/4, duY, mhwnd, (HMENU)kIDC_SIZE_LABEL, g_hInst, NULL);
 			CreateWindowExA(0, "STATIC", "320x240", WS_CHILD | SS_LEFT, 0, (34*duY)/8, (47*duX)/4, (10*duY)/8, mhwnd, (HMENU)kIDC_SIZE, g_hInst, NULL);
-						
+
 			// y2
 			CreateWindowExA(0                ,"STATIC"       ,"Y2 offset"  ,WS_CHILD | SS_LEFT                           ,0         , 0         , (22*duX)/4, ( 8*duY)/8, mhwnd, (HMENU)kIDC_Y2_STATIC   , g_hInst, NULL);
 			CreateWindowExA(WS_EX_CLIENTEDGE , "EDIT"        ,""  ,WS_CHILD | WS_TABSTOP | ES_LEFT | ES_NUMBER               ,0         , 0         , (24*duX)/4, (10*duY)/8, mhwnd, (HMENU)kIDC_Y2_EDIT , g_hInst, NULL);
 			CreateWindowExA(WS_EX_CLIENTEDGE ,UPDOWN_CLASSA  ,""  ,WS_CHILD | UDS_NOTHOUSANDS | UDS_ALIGNRIGHT   | UDS_SETBUDDYINT   ,0         , 0         , ( 2*duX)/4, (10*duY)/8, mhwnd, (HMENU)kIDC_Y2_SPIN , g_hInst, NULL);
-			
+
 			HWND hwndDisplay = (HWND)VDCreateDisplayWindowW32(0, WS_CHILD, 0, 0, 0, 0, (VDGUIHandle)mhwnd);
 			SetWindowLong(hwndDisplay, GWL_ID, kIDC_VIDEODISPLAY);
 
@@ -879,7 +879,7 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			pOverlay->hwndDisplay = hwndDisplay;
 
 			pVD->SetCallback(this);
-			
+
 			SetWindowPos(hwndDisplay, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE|SWP_NOCOPYBITS);
 			fInhibitRefresh = false;
 		}

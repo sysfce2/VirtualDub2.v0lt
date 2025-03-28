@@ -127,7 +127,7 @@ public:
 	void SetLastPosition(VDPosition pos, bool fast_update);
 	void NotifyPositionChange(VDPosition pos) {
 		pvinfo->cur_proc_src = pos;
-		PostMessage(hwndStatus, MYWM_NOTIFY_POSITION_CHANGE,0,0); 
+		PostMessage(hwndStatus, MYWM_NOTIFY_POSITION_CHANGE,0,0);
 	}
 	void Freeze(bool, bool);
 	bool isVisible();
@@ -322,7 +322,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 	}
 
 	int nProgress	= 0;
-	
+
 	if (totalVSamples)
 		nProgress = curVSample>=totalVSamples ? 4096 : (int)((curVSample << 12) / totalVSamples);
 
@@ -340,7 +340,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 
 	sprintf(buf, "%I64d/%I64d", curASample, totalASamples);
 	SetDlgItemTextA(hWnd, IDC_CURRENT_ASAMPLE, buf);
- 
+
 	size_to_str(buf, std::size(buf), pvinfo->total_size);
 
 	if (pvinfo->processed) {
@@ -885,7 +885,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 					curVSample = 0;
 
 				int nProgress = 0;
-				
+
 				if (totalVSamples && !thisPtr->pvinfo->fAudioOnly)
 					nProgress += curVSample>=totalVSamples ? 4096 : (int)((curVSample << 12) / totalVSamples);
 
@@ -922,7 +922,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 			}
 			}break;
 
-        case WM_COMMAND:                      
+        case WM_COMMAND:
 			switch(LOWORD(wParam)) {
 			case IDC_DRAW_INPUT:
 				thisPtr->opt->video.fShowInputFrame = SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)==BST_CHECKED;

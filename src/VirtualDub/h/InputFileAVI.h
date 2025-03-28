@@ -56,7 +56,7 @@ private:
 	typedef std::vector<vdfastvector<uint32> > NewKeyFlags;
 	NewKeyFlags mNewKeyFlags;
 
-	typedef vdlist<VDAVIStreamSource> Streams; 
+	typedef vdlist<VDAVIStreamSource> Streams;
 	Streams	mStreams;
 
 	static char szME[];

@@ -208,7 +208,7 @@ void VDBackfaceService::Execute(IVDBackfaceStream& out, char *s) {
 				}
 			} else if (cmd == "lo") {
 				const char *cname = argv[1];
-				
+
 				if (cname) {
 					VDBackfaceClass *cl = GetClassByName(VDStringSpanA(cname));
 
@@ -442,7 +442,7 @@ ATOM VDBackfaceConsole::RegisterWindowClass() {
 
 LRESULT CALLBACK VDBackfaceConsole::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	VDBackfaceConsole *pThis;
-	
+
 	if (msg == WM_NCCREATE) {
 		pThis = (VDBackfaceConsole *)(((const CREATESTRUCT *)lParam)->lpCreateParams);
 		pThis->AddRef();

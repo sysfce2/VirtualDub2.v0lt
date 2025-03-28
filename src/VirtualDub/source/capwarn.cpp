@@ -89,7 +89,7 @@ void CaptureWarnCheckDrivers(HWND hwnd) {
 
 		if (hFind != INVALID_HANDLE_VALUE) {
 			FindClose(hFind);
-			
+
 			CaptureWarnInit();
 
 			if (IDYES == MessageBoxA(hwnd,
@@ -125,7 +125,7 @@ void CaptureWarnCheckDrivers(HWND hwnd) {
 
 		if (hFind != INVALID_HANDLE_VALUE) {
 			FindClose(hFind);
-			
+
 			CaptureWarnInit();
 
 			if (IDYES == MessageBoxA(hwnd,
@@ -141,4 +141,3 @@ void CaptureWarnCheckDrivers(HWND hwnd) {
 		}
 	}
 }
-

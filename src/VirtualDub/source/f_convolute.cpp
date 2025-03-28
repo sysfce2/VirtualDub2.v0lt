@@ -246,7 +246,7 @@ static INT_PTR CALLBACK convoluteDlgProc( HWND hDlg, UINT message, WPARAM wParam
 			}
             return (TRUE);
 
-        case WM_COMMAND:                      
+        case WM_COMMAND:
             if (LOWORD(wParam) == IDOK) {
 				struct ConvoluteFilterData *cfd = (struct ConvoluteFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
 
@@ -259,7 +259,7 @@ static INT_PTR CALLBACK convoluteDlgProc( HWND hDlg, UINT message, WPARAM wParam
 				EndDialog(hDlg, 0);
 				return TRUE;
 			} else if (LOWORD(wParam) == IDCANCEL) {
-                EndDialog(hDlg, 1);  
+                EndDialog(hDlg, 1);
                 return TRUE;
             }
             break;
