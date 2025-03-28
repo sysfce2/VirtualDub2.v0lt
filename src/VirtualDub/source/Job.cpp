@@ -275,8 +275,10 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 
 	if (g_ACompressionFormat) {
 		if (g_ACompressionFormat->mExtraSize) {
-			mem = (char *)allocmem(((g_ACompressionFormat->mExtraSize+2)/3)*4 + 1);
-			if (!mem) throw MyMemoryError();
+			mem = (char*)allocmem(((g_ACompressionFormat->mExtraSize + 2) / 3) * 4 + 1);
+			if (!mem) {
+				throw MyMemoryError();
+			}
 
 			membase64(mem, (char *)(g_ACompressionFormat+1), g_ACompressionFormat->mExtraSize);
 			output.addf("VirtualDub.audio.SetCompressionWithHint(%d,%d,%d,%d,%d,%d,%d,\"%s\",\"%s\");"
@@ -305,19 +307,21 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 
 		long l = g_ACompressionConfig.size();
 
-		if (l>0) {
-			mem = (char *)allocmem(l + ((l+2)/3)*4 + 1);
-			if (!mem) throw MyMemoryError();
-			memcpy(mem,g_ACompressionConfig.data(),l);
-			membase64(mem+l, mem, l);
+		if (l > 0) {
+			mem = (char*)allocmem(l + ((l + 2) / 3) * 4 + 1);
+			if (!mem) {
+				throw MyMemoryError();
+			}
+			memcpy(mem, g_ACompressionConfig.data(), l);
+			membase64(mem + l, mem, l);
 			VDStringA line;
 			line.sprintf("VirtualDub.audio.SetCompData(%d,\"", l);
-			line += (mem+l);
+			line += (mem + l);
 			line += "\");";
 			output.adds(line.c_str());
 			freemem(mem);
 		}
-  
+
 	} else
 		output.addf("VirtualDub.audio.SetCompression();");
 
@@ -642,13 +646,18 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 void JobAddConfigurationInputs(JobScriptOutput& output, const VDProject* project, const wchar_t *szFileInput, const wchar_t *pszInputDriver, int inputFlags, List2<InputFilenameNode> *pListAppended) {
 	do {
 		VDStringW s(szFileInput);
-		if (project) s = project->BuildProjectPath(szFileInput);
+		if (project) {
+			s = project->BuildProjectPath(szFileInput);
+		}
 		const VDStringA filename = VDEncodeScriptString(s);
 		const char* funcName = "VirtualDub.Open";
-		if (inputFlags!=-1 && (inputFlags & IVDInputDriver::kFF_Sequence))
-		funcName = "VirtualDub.OpenSequence";
+		if (inputFlags != -1 && (inputFlags & IVDInputDriver::kFF_Sequence)) {
+			funcName = "VirtualDub.OpenSequence";
+		}
 		VDStringA sdriver;
-		if (pszInputDriver) sdriver = VDEncodeScriptString(VDStringW(pszInputDriver));
+		if (pszInputDriver) {
+			sdriver = VDEncodeScriptString(VDStringW(pszInputDriver));
+		}
 
 		if (pszInputDriver && g_pInputOpts) {
 			int req = g_pInputOpts->write(NULL, 0);
