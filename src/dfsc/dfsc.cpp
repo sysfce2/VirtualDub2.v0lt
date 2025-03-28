@@ -416,4 +416,3 @@ DWORD DfscInstance::DecompressEnd() {
 
   return ICERR_OK;
 }
-

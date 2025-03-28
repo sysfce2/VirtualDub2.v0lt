@@ -178,4 +178,3 @@ LRESULT YUVCodec::GetInfo(ICINFO *lpicinfo, DWORD cbSize) {
 
 	return sizeof(ICINFO);
 }
-

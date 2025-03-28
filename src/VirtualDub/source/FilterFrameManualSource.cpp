@@ -170,5 +170,3 @@ void VDFilterFrameManualSource::CompleteRequest(VDFilterFrameRequest *req, bool 
 bool VDFilterFrameManualSource::InitNewRequest(VDFilterFrameRequest *req, sint64 outputFrame, bool writable, uint32 batchNumber) {
 	return true;
 }
-
-

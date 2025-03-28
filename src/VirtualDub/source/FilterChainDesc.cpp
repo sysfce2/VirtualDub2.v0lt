@@ -57,4 +57,3 @@ void VDFilterChainDesc::AddEntry(VDFilterChainEntry *ent) {
 	mEntries.push_back(ent);
 	ent->AddRef();
 }
-

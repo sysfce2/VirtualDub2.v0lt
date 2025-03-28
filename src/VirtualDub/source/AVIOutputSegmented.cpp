@@ -1087,4 +1087,3 @@ void VDAVIOutputSegmented::GetNextPreferredStreamWrite(int& stream, sint32& coun
 		count = 1;
 	}
 }
-

@@ -61,4 +61,3 @@ protected:
 };
 
 #endif	// f_VD2_FILTERFRAMECACHE_H
-

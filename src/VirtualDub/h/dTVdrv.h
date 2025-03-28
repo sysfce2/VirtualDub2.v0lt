@@ -279,6 +279,3 @@ typedef DWORD (WINAPI * PMemoryWrite) (DWORD dwAddress, DWORD dwValue);
 #endif
 
 #endif
-
-
-

@@ -208,4 +208,3 @@ LRESULT CVideoCompressor::SetState(LPVOID pv, DWORD cbSize) {
 LRESULT CVideoCompressor::Default(DWORD dwDriverID, HDRVR hDriver, UINT uiMessage, LPARAM lParam1, LPARAM lParam2) {
 	return ICERR_UNSUPPORTED;
 }
-

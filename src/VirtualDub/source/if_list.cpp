@@ -11,4 +11,3 @@ static const VDPluginInfo *const g_inputDrv_list[]={
 void VDInitBuiltinInputDrivers() {
 	VDAddInternalPlugins(g_inputDrv_list);
 }
-

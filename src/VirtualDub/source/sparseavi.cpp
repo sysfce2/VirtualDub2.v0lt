@@ -371,4 +371,3 @@ void CreateExtractSparseAVI(HWND hwndParent, bool bExtract) {
 		}
 	}
 }
-
