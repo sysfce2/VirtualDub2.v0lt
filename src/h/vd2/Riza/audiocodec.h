@@ -36,11 +36,11 @@ struct VDXStreamInfo;
 
 struct VDWaveFormat {
 	enum {
-		kTagPCM			= 1,
-		kTagCCITTALaw	= 6,
-		kTagCCITTMuLaw	= 7,
-		kTagMPEG1		= 80,
-		kTagMPEGLayer3	= 85
+		kTagPCM			= 1,      // WAVE_FORMAT_PCM
+		kTagCCITTALaw	= 0x0006, // WAVE_FORMAT_ALAW
+		kTagCCITTMuLaw	= 0x0007, // WAVE_FORMAT_MULAW
+		kTagMPEG1		= 0x0050, // WAVE_FORMAT_MPEG
+		kTagMPEGLayer3	= 0x0055, // WAVE_FORMAT_MPEGLAYER3
 	};
 
 	uint16		mTag;

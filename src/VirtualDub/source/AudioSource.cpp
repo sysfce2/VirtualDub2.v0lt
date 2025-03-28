@@ -174,13 +174,18 @@ bool AudioSourceAVI::init() {
 			memcpy(newFormat.data(), pwfex, sizeof(WAVEFORMATEX));
 			newFormat->Format.wFormatTag = WAVE_FORMAT_EXTENSIBLE;
 			newFormat->Samples.wValidBitsPerSample = pwfex->mSampleBits;
-			if (pwfex->mTag == WAVE_FORMAT_PCM) newFormat->SubFormat = KSDATAFORMAT_SUBTYPE_PCM;
-			if (pwfex->mTag == WAVE_FORMAT_IEEE_FLOAT) newFormat->SubFormat = KSDATAFORMAT_SUBTYPE_IEEE_FLOAT;
-			newFormat->Format.cbSize = sizeof(WAVEFORMATEXTENSIBLE)-sizeof(WAVEFORMATEX);
+			if (pwfex->mTag == WAVE_FORMAT_PCM) {
+				newFormat->SubFormat = KSDATAFORMAT_SUBTYPE_PCM;
+			}
+			else if (pwfex->mTag == WAVE_FORMAT_IEEE_FLOAT) {
+				newFormat->SubFormat = KSDATAFORMAT_SUBTYPE_IEEE_FLOAT;
+			}
+			newFormat->Format.cbSize = sizeof(WAVEFORMATEXTENSIBLE) - sizeof(WAVEFORMATEX);
 			newFormat->dwChannelMask = default_channel_mask(pwfex->mChannels);
 
-			if (!allocFormat(requiredFormatSize))
+			if (!allocFormat(requiredFormatSize)) {
 				return FALSE;
+			}
 
 			pwfex = (VDWaveFormat *)getWaveFormat();
 			memcpy(pwfex, &*newFormat, requiredFormatSize);

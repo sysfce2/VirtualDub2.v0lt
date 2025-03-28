@@ -1711,7 +1711,7 @@ static void func_VDAudio_SetCompressionPCM(IVDScriptInterpreter *isi, VDScriptVa
 	pwf->wf.wFormatTag			= WAVE_FORMAT_PCM;
 	pwf->wf.nSamplesPerSec		= arglist[0].asInt();
 	pwf->wf.nChannels			= (WORD)arglist[1].asInt();
-	pwf->   wBitsPerSample		= (WORD)arglist[2].asInt();
+	pwf->wBitsPerSample			= (WORD)arglist[2].asInt();
 	pwf->wf.nBlockAlign			= (WORD)((pwf->wBitsPerSample/8) * pwf->wf.nChannels);
 	pwf->wf.nAvgBytesPerSec		= pwf->wf.nSamplesPerSec * pwf->wf.nBlockAlign;
 	g_ACompressionFormatSize	= sizeof(PCMWAVEFORMAT);
