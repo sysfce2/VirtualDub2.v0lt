@@ -1,6 +1,6 @@
 VirtualDub2.1 change log
 
-2.3.0.x dev
+2.3.0.845 - 2025-04-16
 ----------------------
 VirtualDub2 is now a Unicode application.
 Improved support for file paths with Unicode characters.
@@ -8,8 +8,22 @@ Removed obsolete "Disk I/O write mode" setting.
 The "/queryVersion" parameter has been deprecated.
 Updated zlib 1.3.1.
 
+Updated avlib-1.vdplugin to version 0.7.1.264.
+    FFmpeg 7.1.1 is now supported.
+    Fixed crash on problematic AAC audio.
+    Fixed missing sound for some MP4 files with AAC audio.
+    Fixed a crash when playing video files with changing video frame size.
+    Ignore m3u playlist files.
+    Fixed frame retrieval for some HEVC streams.
+    Added video encoder SVT-AV1.
+    Minor optimizations.
 
-2.2.0.755 - 2024-02-03
+Updated scripted.vdplugin to version 0.2.2.100.
+    Scintilla 5.5.6 updated.
+    Lexilla 5.4.4 updated.
+
+
+2.2.0.755 - 2025-02-03
 ----------------------
 The auxsetup utility now has two versions: for win32 and x64.
 Removed "64" prefixes for exe and dll files.
