@@ -1570,7 +1570,7 @@ void VideoSourceAVI::redoKeyFlags(vdfastvector<uint32>& newFlags) {
 		throw MyMemoryError();
 	}
 
-	pFrameSums = new long[(size_t)(mSampleLast - mSampleFirst)];
+	pFrameSums = new(std::nothrow) long[(size_t)(mSampleLast - mSampleFirst)];
 	if (!pFrameSums) {
 		delete[] lpInputBuffer;
 		throw MyMemoryError();

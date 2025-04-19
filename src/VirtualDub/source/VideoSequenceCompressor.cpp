@@ -94,7 +94,7 @@ VideoSequenceCompressor::~VideoSequenceCompressor() {
 		delete driver;
 
 	delete[] pConfigData;
-	delete pPrevBuffer;
+	delete[] pPrevBuffer;
 }
 
 void VideoSequenceCompressor::SetDriver(EncoderHIC* driver, uint32 kilobytesPerSecond, long quality, long keyrate, bool ownHandle) {
