@@ -1233,7 +1233,8 @@ void VDDialogVideoDepthW32::InitFinalFormat() {
 }
 
 void VDDialogVideoDepthW32::InitFocus() {
-	int format = mLockFormat!=-1 ? mLockFormat : mInputFormat;
+	const int format = (mLockFormat!=-1) ? mLockFormat : mInputFormat.format;
+
 	for (const auto& fbm : kFormatButtonMappings) {
 		if (fbm.mFormat == format) {
 			SetFocusToControl(fbm.mInputButton);
@@ -1245,9 +1246,9 @@ void VDDialogVideoDepthW32::InitFocus() {
 }
 
 void VDDialogVideoDepthW32::SyncControls() {
-	int format = mLockFormat!=-1 ? mLockFormat : mInputFormat;
-
+	const int format = (mLockFormat!=-1) ? mLockFormat : mInputFormat.format;
 	bool enableDefault = mLockFormat==-1;
+
 	if (mType!=DepthDialog_input) {
 		if (outputReference==0) enableDefault = false;
 	}
@@ -1267,8 +1268,9 @@ void VDDialogVideoDepthW32::SyncControls() {
 }
 
 void VDDialogVideoDepthW32::SyncInputColor() {
-	int format = mLockFormat!=-1 ? mLockFormat : mInputFormat;
+	const int format = (mLockFormat!=-1) ? mLockFormat : mInputFormat.format;
 	bool enable = VDPixmapFormatMatrixType(format)!=0;
+
 	if (format==0 && mType==DepthDialog_input && inputVideo) {
 		VDPixmapFormatEx src = inputVideo->getTargetFormat();
 		enable = VDPixmapFormatMatrixType(src)!=0;
