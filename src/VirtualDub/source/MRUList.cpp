@@ -24,7 +24,7 @@
 
 #include "MRUList.h"
 
-MRUList::MRUList(int max_files, char *key_name)
+MRUList::MRUList(int max_files, const char* key_name)
 	: mKey(max_files, 0)
 	, mFiles(max_files)
 	, mMaxCount(max_files)

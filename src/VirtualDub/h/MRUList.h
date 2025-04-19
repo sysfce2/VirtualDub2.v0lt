@@ -30,7 +30,7 @@ private:
 	bool			mbDirty;
 
 public:
-	MRUList(int max_files, char *key);
+	MRUList(int max_files, const char* key);
 	~MRUList();
 
 	VDStringW operator[](int i);
