@@ -612,7 +612,7 @@ char *VDDisasmMatchRule(VDDisassemblyContext *pContext, const unsigned char *sou
 	return NULL;
 }
 
-char *VDDisassemble(VDDisassemblyContext *pvdc, const unsigned char *source, int bytes, int& count) {
+const char* VDDisassemble(VDDisassemblyContext *pvdc, const unsigned char *source, int bytes, int& count) {
 	const unsigned char *src2 = source;
 	const unsigned char *src_end;
 	char *s;
