@@ -120,7 +120,7 @@ void VDRingBuffer<T, Allocator>::Init(int size) {
 template<class T, class Allocator>
 void VDRingBuffer<T, Allocator>::Shutdown() {
 	if (pBuffer) {
-		deallocate(pBuffer, nSize);
+		this->deallocate(pBuffer, nSize);
 		pBuffer = NULL;
 	}
 }
