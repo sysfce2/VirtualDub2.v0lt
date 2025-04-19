@@ -1,5 +1,9 @@
 VirtualDub2.1 change log
 
+2.3.1.x dev
+----------------------
+
+
 2.3.0.845 - 2025-04-16
 ----------------------
 VirtualDub2 is now a Unicode application.
