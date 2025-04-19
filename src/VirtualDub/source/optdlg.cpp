@@ -2612,11 +2612,11 @@ void VDDialogFileTextInfoW32::ReinitDialog() {
 		SendMessageW(hwndList, LVM_SETEXTENDEDLISTVIEWSTYLE, LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT);
 
 		lvc.mask = LVCF_TEXT | LVCF_WIDTH;
-		lvc.pszText = L"Field";
+		lvc.pszText = (LPWSTR)L"Field";
 		lvc.cx = 50;
 		SendMessageW(hwndList, LVM_INSERTCOLUMNW, 0, (LPARAM)&lvc);
 
-		lvc.pszText = L"Text";
+		lvc.pszText = (LPWSTR)L"Text";
 		lvc.cx = 100;
 		SendMessageW(hwndList, LVM_INSERTCOLUMNW, 0, (LPARAM)&lvc);
 	}

@@ -245,15 +245,15 @@ INT_PTR CALLBACK CaptureSpillDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM 
 			lvc.mask	= LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
 			lvc.fmt		= LVCFMT_LEFT;
 			lvc.cx		= 50;
-			lvc.pszText	= L"Priority";
+			lvc.pszText	= (LPWSTR)L"Priority";
 
 			ListView_InsertColumn(hwndItem, 0, &lvc);
 
-			lvc.pszText	= L"Threshold";
+			lvc.pszText	= (LPWSTR)L"Threshold";
 			lvc.cx		= 100;
 			ListView_InsertColumn(hwndItem, 1, &lvc);
 
-			lvc.pszText	= L"Path";
+			lvc.pszText	= (LPWSTR)L"Path";
 			lvc.cx		= r.right - r.left - 150;
 			ListView_InsertColumn(hwndItem, 2, &lvc);
 
