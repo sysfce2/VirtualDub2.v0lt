@@ -1154,12 +1154,12 @@ public:
 	vdfastvector(const value_type *p, const value_type *q) {
 		m.eos = NULL;
 
-		assign(p, q);
+		this->assign(p, q);
 	}
 
 	vdfastvector& operator=(const vdfastvector& x) {
 		if (this != &x)
-			assign(x.mpBegin, x.mpEnd);
+			this->assign(x.mpBegin, x.mpEnd);
 
 		return *this;
 	}
