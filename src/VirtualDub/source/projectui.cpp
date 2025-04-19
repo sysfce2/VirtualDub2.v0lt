@@ -5168,11 +5168,11 @@ void VDProjectUI::UpdateMRUList() {
 	}
 
 	if (!index) {
-		mii.fMask			= MIIM_TYPE | MIIM_STATE | MIIM_ID;
-		mii.fType			= MFT_STRING;
+		mii.fMask		= MIIM_TYPE | MIIM_STATE | MIIM_ID;
+		mii.fType		= MFT_STRING;
 		mii.fState		= MFS_GRAYED;
 		mii.wID			= ID_MRU_FILE0;
-		mii.dwTypeData	= L"Recent file list";
+		mii.dwTypeData	= (LPWSTR)L"Recent file list";
 		mii.cch			= 0;
 
 		InsertMenuItemW(hmenuFile, mMRUListPosition+index, TRUE, &mii);
@@ -5231,11 +5231,11 @@ void VDProjectUI::UpdateCaptureMRUList() {
 	}
 
 	if (!index) {
-		mii.fMask			= MIIM_TYPE | MIIM_STATE | MIIM_ID;
-		mii.fType			= MFT_STRING;
+		mii.fMask		= MIIM_TYPE | MIIM_STATE | MIIM_ID;
+		mii.fType		= MFT_STRING;
 		mii.fState		= MFS_GRAYED;
 		mii.wID			= ID_MRU_FILE0;
-		mii.dwTypeData	= L"Recent captured files";
+		mii.dwTypeData	= (LPWSTR)L"Recent captured files";
 		mii.cch			= 0;
 
 		InsertMenuItemW(hmenuCap, mCaptureMRUListPosition+index, TRUE, &mii);
