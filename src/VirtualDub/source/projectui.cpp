@@ -4761,7 +4761,7 @@ void VDProjectUI::OnCurveUpdated(IVDUIParameterCurveControl *source, const int& 
 	}
 
 	if (!inputVideo) {
-		UIRefreshOutputFrame(false);
+		UIRefreshOutputFrame(nullptr);
 		return;
 	}
 
