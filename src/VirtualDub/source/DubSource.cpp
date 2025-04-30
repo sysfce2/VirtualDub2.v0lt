@@ -22,18 +22,15 @@ DubSource::DubSource() {
 }
 
 DubSource::~DubSource() {
-	delete[] format;
 }
 
 void *DubSource::allocFormat(int format_len) {
 	if (this->format_len != format_len) {
-		delete[] format;
-
+		format.reset(new char[format_len]);
 		this->format_len = format_len;
-		format = new char[format_len];
 	}
 
-	return (void *)format;
+	return (void *)format.get();
 }
 
 bool DubSource::isStreaming() {

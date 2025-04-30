@@ -98,8 +98,8 @@ public:
 
 class DubSource : public vdrefcounted<IVDStreamSource> {
 private:
-	char*	format = nullptr;
-	int		format_len = 0;
+	std::unique_ptr<char[]>	format;
+	int format_len = 0;
 
 protected:
 	void *allocFormat(int format_len);
@@ -140,7 +140,7 @@ public:
 	virtual int read(VDPosition lStart, uint32 lCount, void *lpBuffer, uint32 cbBuffer, uint32 *lBytesRead, uint32 *lSamplesRead);
 	virtual int _read(VDPosition lStart, uint32 lCount, void *lpBuffer, uint32 cbBuffer, uint32 *lBytesRead, uint32 *lSamplesRead) = 0;
 
-	void *getFormat() const { return format; }
+	void *getFormat() const { return format.get(); }
 	int getFormatLen() const { return format_len; }
 
 	virtual bool isStreaming();
