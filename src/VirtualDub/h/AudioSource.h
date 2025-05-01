@@ -33,8 +33,10 @@ public:
 	~AudioSource(){}
 
 	void* allocSrcWaveFormat(int format_len) {
-		src_format.reset(new char[format_len]);
-		this->src_format_len = format_len;
+		if (src_format_len != format_len) {
+			src_format.reset(new char[format_len]);
+			src_format_len = format_len;
+		}
 
 		return (void*)src_format.get();
 	}
