@@ -85,6 +85,8 @@ extern VDProject *g_project;
 bool				g_drawDecompressedFrame	= FALSE;
 bool				g_showStatusWindow		= TRUE;
 
+extern int VDPreferencesGetDubPriority();
+extern bool VDPreferencesGetAVIRestrict1Gb();
 extern uint32& VDPreferencesGetRenderOutputBufferSize();
 extern bool VDPreferencesGetRenderBackgroundPriority();
 
@@ -223,7 +225,7 @@ void AppendAVIAutoscan(const wchar_t *pszFile, bool skip_first) {
 ///////////////////////////////////////////////////////////////////////////
 
 void VideoOperation::setPrefs() {
-	iDubPriority = g_prefs.main.iDubPriority;
+	iDubPriority = VDPreferencesGetDubPriority();
 	backgroundPriority = VDPreferencesGetRenderBackgroundPriority();
 }
 
@@ -270,7 +272,7 @@ void SavePlugin(RequestVideo& req) {
 void SaveAVI(RequestVideo& req) {
 	VDAVIOutputFileSystem fileout;
 
-	fileout.Set1GBLimit(g_prefs.fAVIRestrict1Gb != 0);
+	fileout.Set1GBLimit(VDPreferencesGetAVIRestrict1Gb());
 	fileout.SetCaching(false);
 	fileout.SetIndexing(!req.compat);
 	fileout.SetFilename(req.fileOutput.c_str());
@@ -291,7 +293,7 @@ void SaveStripedAVI(const wchar_t *szFile) {
 
 	VDAVIOutputStripedSystem outstriped(szFile);
 
-	outstriped.Set1GBLimit(g_prefs.fAVIRestrict1Gb != 0);
+	outstriped.Set1GBLimit(VDPreferencesGetAVIRestrict1Gb());
 
 	VideoOperation op;
 	op.setPrefs();
@@ -306,7 +308,7 @@ void SaveStripeMaster(const wchar_t *szFile) {
 
 	VDAVIOutputStripedSystem outstriped(szFile);
 
-	outstriped.Set1GBLimit(g_prefs.fAVIRestrict1Gb != 0);
+	outstriped.Set1GBLimit(VDPreferencesGetAVIRestrict1Gb());
 
 	VideoOperation op;
 	op.setPrefs();
