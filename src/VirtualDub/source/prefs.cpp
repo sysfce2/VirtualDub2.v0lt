@@ -45,20 +45,16 @@ extern HINSTANCE g_hInst;
 
 namespace {
 	struct VDPreferences2 {
-		struct { // Preferences
-			struct { // PreferencesMain
-				char iPreviewPriority = 0; // only project.cpp
-				char iDubPriority = 0;
-				bool fAttachExtension = true;
-			} main;
-			struct { // PreferencesScene 
-				int iCutThreshold  = 50 * 16; // only project.cpp
-				int iFadeThreshold =  4 * 16; // only project.cpp
-			} scene;
-			int iDisplay = 0;
-			bool fAVIRestrict1Gb  = false;
-			bool fNoCorrectLayer3 = false; // only Dub.cpp
-		} mOldPrefs;
+		int iPreviewPriority = 0;
+		int iDubPriority = 0;
+		bool fAttachExtension = true;
+
+		int iSceneCutThreshold  = 50 * 16;
+		int iSceneFadeThreshold =  4 * 16;
+
+		int iDisplay = 0;
+		bool fAVIRestrict1Gb  = false;
+		bool fNoCorrectLayer3 = false;
 
 		bool			mbUIRememberZoom;
 
@@ -140,7 +136,7 @@ namespace {
 		}
 
 		bool displayChanged(VDPreferences2& old) {
-			if (old.mOldPrefs.iDisplay!=mOldPrefs.iDisplay)
+			if (old.iDisplay!=iDisplay)
 				return true;
 			if (old.mbDisplayAllowDirectXOverlays!=mbDisplayAllowDirectXOverlays)
 				return true;
@@ -191,18 +187,18 @@ public:
 		switch(type) {
 		case kEventAttach:
 			mpBase = pBase;
-			//SetValue(100, mPrefs.mOldPrefs.main.iPreviewDepth);
+			//SetValue(100, mPrefs.iPreviewDepth);
 			SetValue(101, mPrefs.mbUIRememberZoom);
-			SetValue(102, mPrefs.mOldPrefs.main.fAttachExtension);
+			SetValue(102, mPrefs.fAttachExtension);
 			SetValue(103, mPrefs.mbConfirmExit);
 
 			pBase->ExecuteAllLinks();
 			return true;
 		case kEventSync:
 		case kEventDetach:
-			//mPrefs.mOldPrefs.main.iPreviewDepth		= (char)GetValue(100);
+			//mPrefs.iPreviewDepth		= (char)GetValue(100);
 			mPrefs.mbUIRememberZoom	= GetValue(101) != 0;
-			mPrefs.mOldPrefs.main.fAttachExtension	= (char)GetValue(102);
+			mPrefs.fAttachExtension	= (char)GetValue(102);
 			mPrefs.mbConfirmExit = GetValue(103) != 0;
 			return true;
 		}
@@ -219,13 +215,13 @@ public:
 		switch(type) {
 		case kEventAttach:
 			mpBase = pBase;
-			SetValue(100, 0 != (mPrefs.mOldPrefs.iDisplay & kDisplayDither16));
-			SetValue(101,     !(mPrefs.mOldPrefs.iDisplay & kDisplayDisableDX));
-			SetValue(102, 0 != (mPrefs.mOldPrefs.iDisplay & kDisplayUseDXWithTS));
-			SetValue(103, 0 != (mPrefs.mOldPrefs.iDisplay & kDisplayEnableD3D));
-			SetValue(104, 0 != (mPrefs.mOldPrefs.iDisplay & kDisplayEnableOpenGL));
-			SetValue(105, 0 != (mPrefs.mOldPrefs.iDisplay & kDisplayEnableD3DFX));
-			SetValue(106, 0 != (mPrefs.mOldPrefs.iDisplay & kDisplayEnableVSync));
+			SetValue(100, 0 != (mPrefs.iDisplay & kDisplayDither16));
+			SetValue(101,     !(mPrefs.iDisplay & kDisplayDisableDX));
+			SetValue(102, 0 != (mPrefs.iDisplay & kDisplayUseDXWithTS));
+			SetValue(103, 0 != (mPrefs.iDisplay & kDisplayEnableD3D));
+			SetValue(104, 0 != (mPrefs.iDisplay & kDisplayEnableOpenGL));
+			SetValue(105, 0 != (mPrefs.iDisplay & kDisplayEnableD3DFX));
+			SetValue(106, 0 != (mPrefs.iDisplay & kDisplayEnableVSync));
 			SetValue(107, mPrefs.mbDisplayAllowDirectXOverlays);
 			SetValue(108, mPrefs.mbDisplayEnableDebugInfo);
 			SetValue(109, mPrefs.mbDisplayEnableHighPrecision);
@@ -237,14 +233,14 @@ public:
 			return true;
 		case kEventSync:
 		case kEventDetach:
-			mPrefs.mOldPrefs.iDisplay = 0;
-			if ( GetValue(100)) mPrefs.mOldPrefs.iDisplay |= kDisplayDither16;
-			if (!GetValue(101)) mPrefs.mOldPrefs.iDisplay |= kDisplayDisableDX;
-			if ( GetValue(102)) mPrefs.mOldPrefs.iDisplay |= kDisplayUseDXWithTS;
-			if ( GetValue(103)) mPrefs.mOldPrefs.iDisplay |= kDisplayEnableD3D;
-			if ( GetValue(104)) mPrefs.mOldPrefs.iDisplay |= kDisplayEnableOpenGL;
-			if ( GetValue(105)) mPrefs.mOldPrefs.iDisplay |= kDisplayEnableD3DFX;
-			if ( GetValue(106)) mPrefs.mOldPrefs.iDisplay |= kDisplayEnableVSync;
+			mPrefs.iDisplay = 0;
+			if ( GetValue(100)) mPrefs.iDisplay |= kDisplayDither16;
+			if (!GetValue(101)) mPrefs.iDisplay |= kDisplayDisableDX;
+			if ( GetValue(102)) mPrefs.iDisplay |= kDisplayUseDXWithTS;
+			if ( GetValue(103)) mPrefs.iDisplay |= kDisplayEnableD3D;
+			if ( GetValue(104)) mPrefs.iDisplay |= kDisplayEnableOpenGL;
+			if ( GetValue(105)) mPrefs.iDisplay |= kDisplayEnableD3DFX;
+			if ( GetValue(106)) mPrefs.iDisplay |= kDisplayEnableVSync;
 			mPrefs.mbDisplayAllowDirectXOverlays = GetValue(107) != 0;
 			mPrefs.mbDisplayEnableDebugInfo = GetValue(108) != 0;
 			mPrefs.mbDisplayEnableHighPrecision = GetValue(109) != 0;
@@ -342,7 +338,7 @@ public:
 
 				if (pTrackbar) {
 					pTrackbar->SetRange(0, 255);
-					pWin->SetValue(mPrefs.mOldPrefs.scene.iCutThreshold ? 256 - ((mPrefs.mOldPrefs.scene.iCutThreshold+8)>>4) : 0);
+					pWin->SetValue(mPrefs.iSceneCutThreshold ? 256 - ((mPrefs.iSceneCutThreshold+8)>>4) : 0);
 				}
 
 				pWin = mpBase->GetControl(200);
@@ -350,7 +346,7 @@ public:
 
 				if (pTrackbar) {
 					pTrackbar->SetRange(0, 255);
-					pWin->SetValue(mPrefs.mOldPrefs.scene.iFadeThreshold);
+					pWin->SetValue(mPrefs.iSceneFadeThreshold);
 				}
 
 				SyncLabels();
@@ -361,8 +357,8 @@ public:
 		case kEventDetach:
 			{
 				int v = GetValue(100);
-				mPrefs.mOldPrefs.scene.iCutThreshold = v ? (256-v)<<4 : 0;
-				mPrefs.mOldPrefs.scene.iFadeThreshold = GetValue(200);
+				mPrefs.iSceneCutThreshold = v ? (256-v)<<4 : 0;
+				mPrefs.iSceneFadeThreshold = GetValue(200);
 			}
 			return true;
 
@@ -399,8 +395,8 @@ public:
 		case kEventAttach:
 			mpBase = pBase;
 			SetValue(111, 0 != (mPrefs.mbAVITestRaw));
-			SetValue(100, 0 != (mPrefs.mOldPrefs.fAVIRestrict1Gb));
-			SetValue(101, 0 != (mPrefs.mOldPrefs.fNoCorrectLayer3));
+			SetValue(100, 0 != (mPrefs.fAVIRestrict1Gb));
+			SetValue(101, 0 != (mPrefs.fNoCorrectLayer3));
 			SetValue(102, mPrefs.mbAllowDirectYCbCrDecoding);
 			SetValue(103, mPrefs.mbEnableAVIAlignmentThreshold);
 			{
@@ -423,8 +419,8 @@ public:
 		case kEventDetach:
 		case kEventSync:
 			mPrefs.mbAVITestRaw = 0 != GetValue(111);
-			mPrefs.mOldPrefs.fAVIRestrict1Gb = 0 != GetValue(100);
-			mPrefs.mOldPrefs.fNoCorrectLayer3 = 0 != GetValue(101);
+			mPrefs.fAVIRestrict1Gb = 0 != GetValue(100);
+			mPrefs.fNoCorrectLayer3 = 0 != GetValue(101);
 			mPrefs.mbAllowDirectYCbCrDecoding = 0!=GetValue(102);
 			if (mPrefs.mbEnableAVIAlignmentThreshold = (0 != GetValue(103)))
 				mPrefs.mAVIAlignmentThreshold = (uint32)wcstoul(GetCaption(200).c_str(), 0, 10);
@@ -587,8 +583,8 @@ public:
 
 			SetValue(102, mPrefs.mFilterProcessAhead);
 
-			SetValue(103, mPrefs.mOldPrefs.main.iPreviewPriority);
-			SetValue(104, mPrefs.mOldPrefs.main.iDubPriority);
+			SetValue(103, mPrefs.iPreviewPriority);
+			SetValue(104, mPrefs.iDubPriority);
 
 			pWin = mpBase->GetControl(106);
 			{
@@ -608,8 +604,8 @@ public:
 			mPrefs.mVideoCompressionThreads = std::min<uint32>(wcstoul(GetCaption(100).c_str(), 0, 10), 32);
 			mPrefs.mFilterThreads = GetValue(101) - 1;
 			mPrefs.mFilterProcessAhead = VDClampToUint32(GetValue(102));
-			mPrefs.mOldPrefs.main.iPreviewPriority	= (char)GetValue(103);
-			mPrefs.mOldPrefs.main.iDubPriority		= (char)GetValue(104);
+			mPrefs.iPreviewPriority	= (char)GetValue(103);
+			mPrefs.iDubPriority		= (char)GetValue(104);
 			mPrefs.mbRenderBackgroundPriority = GetValue(105) != 0;
 			mPrefs.mRenderThrottlePercent			= GetValue(106) * 10;
 			return true;
@@ -911,16 +907,16 @@ void LoadPreferences() {
 
 	VDRegistryAppKey baseKey(reg);
 
-	g_prefs2.mOldPrefs.main.iPreviewPriority = baseKey.getInt("PreviewPriority", 0);
-	g_prefs2.mOldPrefs.main.iDubPriority     = baseKey.getInt("DubPriority", 0);
-	g_prefs2.mOldPrefs.main.fAttachExtension = baseKey.getBool("AttachExtension", true);
+	g_prefs2.iPreviewPriority = baseKey.getInt("PreviewPriority", 0);
+	g_prefs2.iDubPriority     = baseKey.getInt("DubPriority", 0);
+	g_prefs2.fAttachExtension = baseKey.getBool("AttachExtension", true);
 
-	g_prefs2.mOldPrefs.scene.iCutThreshold  = baseKey.getInt("SceneCutThreshold", 50 * 16);
-	g_prefs2.mOldPrefs.scene.iFadeThreshold = baseKey.getInt("SceneFadeThreshold", 4 * 16);
+	g_prefs2.iSceneCutThreshold  = baseKey.getInt("SceneCutThreshold", 50 * 16);
+	g_prefs2.iSceneFadeThreshold = baseKey.getInt("SceneFadeThreshold", 4 * 16);
 
-	g_prefs2.mOldPrefs.iDisplay         = baseKey.getInt("Display", 0);
-	g_prefs2.mOldPrefs.fAVIRestrict1Gb  = baseKey.getBool("AVIRestrict1Gb", false);
-	g_prefs2.mOldPrefs.fNoCorrectLayer3 = baseKey.getBool("NoCorrectLayer3", false);
+	g_prefs2.iDisplay         = baseKey.getInt("Display", 0);
+	g_prefs2.fAVIRestrict1Gb  = baseKey.getBool("AVIRestrict1Gb", false);
+	g_prefs2.fNoCorrectLayer3 = baseKey.getBool("NoCorrectLayer3", false);
 
 	VDRegistryAppKey key(reg, "Preferences");
 
@@ -1017,16 +1013,16 @@ void VDSavePreferences(VDPreferences2& prefs) {
 
 	VDRegistryAppKey baseKey(reg);
 
-	baseKey.setInt ("PreviewPriority", g_prefs2.mOldPrefs.main.iPreviewPriority);
-	baseKey.setInt ("DubPriority",     g_prefs2.mOldPrefs.main.iDubPriority);
-	baseKey.setBool("AttachExtension", g_prefs2.mOldPrefs.main.fAttachExtension);
+	baseKey.setInt ("PreviewPriority", g_prefs2.iPreviewPriority);
+	baseKey.setInt ("DubPriority",     g_prefs2.iDubPriority);
+	baseKey.setBool("AttachExtension", g_prefs2.fAttachExtension);
 
-	baseKey.setInt("SceneCutThreshold",  g_prefs2.mOldPrefs.scene.iCutThreshold);
-	baseKey.setInt("SceneFadeThreshold", g_prefs2.mOldPrefs.scene.iFadeThreshold);
+	baseKey.setInt("SceneCutThreshold",  g_prefs2.iSceneCutThreshold);
+	baseKey.setInt("SceneFadeThreshold", g_prefs2.iSceneFadeThreshold);
 
-	baseKey.setInt ("Display",         g_prefs2.mOldPrefs.iDisplay);
-	baseKey.setBool("AVIRestrict1Gb",  g_prefs2.mOldPrefs.fAVIRestrict1Gb);
-	baseKey.setBool("NoCorrectLayer3", g_prefs2.mOldPrefs.fNoCorrectLayer3);
+	baseKey.setInt ("Display",         g_prefs2.iDisplay);
+	baseKey.setBool("AVIRestrict1Gb",  g_prefs2.fAVIRestrict1Gb);
+	baseKey.setBool("NoCorrectLayer3", g_prefs2.fNoCorrectLayer3);
 
 	VDRegistryAppKey key(reg, "Preferences");
 
@@ -1134,35 +1130,35 @@ void VDSetPreferencesString(const char *name, const char *s) {
 }
 
 int VDPreferencesGetPreviewPriority() {
-	return g_prefs2.mOldPrefs.main.iPreviewPriority;
+	return g_prefs2.iPreviewPriority;
 }
 
 int VDPreferencesGetDubPriority() {
-	return g_prefs2.mOldPrefs.main.iDubPriority;
+	return g_prefs2.iDubPriority;
 }
 
 bool VDPreferencesGetAttachExtension() {
-	return g_prefs2.mOldPrefs.main.fAttachExtension;
+	return g_prefs2.fAttachExtension;
 }
 
 int VDPreferencesGetSceneCutThreshold() {
-	return g_prefs2.mOldPrefs.scene.iCutThreshold;
+	return g_prefs2.iSceneCutThreshold;
 }
 
 int VDPreferencesSceneFadeThreshold() {
-	return g_prefs2.mOldPrefs.scene.iFadeThreshold;
+	return g_prefs2.iSceneFadeThreshold;
 }
 
 int VDPreferencesGetDisplay() {
-	return g_prefs2.mOldPrefs.iDisplay;
+	return g_prefs2.iDisplay;
 }
 
 bool VDPreferencesGetAVIRestrict1Gb() {
-	return g_prefs2.mOldPrefs.fAVIRestrict1Gb;
+	return g_prefs2.fAVIRestrict1Gb;
 }
 
 bool VDPreferencesGetNoCorrectLayer3() {
-	return g_prefs2.mOldPrefs.fNoCorrectLayer3;
+	return g_prefs2.fNoCorrectLayer3;
 }
 
 bool VDPreferencesGetRememberZoom() {
@@ -1356,12 +1352,12 @@ int VDPreferencesGetTimelineScaleButtons() {
 
 void VDPreferencesUpdated() {
 	VDVideoDisplaySetFeatures(
-		!(g_prefs2.mOldPrefs.iDisplay & kDisplayDisableDX),
+		!(g_prefs2.iDisplay & kDisplayDisableDX),
 		g_prefs2.mbDisplayAllowDirectXOverlays,
-		!!(g_prefs2.mOldPrefs.iDisplay & kDisplayUseDXWithTS),
-		!!(g_prefs2.mOldPrefs.iDisplay & kDisplayEnableOpenGL),
-		!!(g_prefs2.mOldPrefs.iDisplay & kDisplayEnableD3D),
-		!!(g_prefs2.mOldPrefs.iDisplay & kDisplayEnableD3DFX),
+		!!(g_prefs2.iDisplay & kDisplayUseDXWithTS),
+		!!(g_prefs2.iDisplay & kDisplayEnableOpenGL),
+		!!(g_prefs2.iDisplay & kDisplayEnableD3D),
+		!!(g_prefs2.iDisplay & kDisplayEnableD3DFX),
 		g_prefs2.mbDisplayEnableHighPrecision
 		);
 

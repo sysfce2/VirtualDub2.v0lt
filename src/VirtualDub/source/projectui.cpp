@@ -1265,7 +1265,7 @@ void VDProjectUI::SaveWAVAsk(bool batchMode) {
 			L"All files (*.*)\0"						L"*.*\0"
 			;
 
-	const VDStringW filename(VDGetSaveFileName(kFileDialog_WAVAudioOut, mhwnd, L"Save WAV File", kWAVFileFilters, g_prefs.main.fAttachExtension ? L"wav" : NULL));
+	const VDStringW filename(VDGetSaveFileName(kFileDialog_WAVAudioOut, mhwnd, L"Save WAV File", kWAVFileFilters, VDPreferencesGetAttachExtension() ? L"wav" : NULL));
 
 	if (!filename.empty()) {
 		if (batchMode)

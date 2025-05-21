@@ -112,6 +112,7 @@ extern wchar_t g_szInputWAVFile[MAX_PATH];
 extern char g_serverName[256];
 
 extern int VDPreferencesGetPreviewPriority();
+extern int VDPreferencesGetDubPriority();
 extern int VDPreferencesGetSceneCutThreshold();
 extern int VDPreferencesSceneFadeThreshold();
 extern uint32 VDPreferencesGetRenderThrottlePercent();
@@ -1968,7 +1969,7 @@ void VDProject::Preview(DubOptions *options) {
 	op.iDubPriority = VDPreferencesGetPreviewPriority();
 	RunOperation(&outpreview, op);
 
-	//RunOperation(&outpreview, false, &opts, g_prefs.main.iPreviewPriority, true, 0, 0);
+	//RunOperation(&outpreview, false, &opts, VDPreferencesGetPreviewPriority(), true, 0, 0);
 }
 
 void VDProject::PreviewRestart() {
@@ -2007,7 +2008,7 @@ void VDProject::RunNullVideoPass(bool benchmark) {
 	op.setPrefs();
 	RunOperation(&nullout, op);
 
-	//RunOperation(&nullout, FALSE, &dubOpt, g_prefs.main.iDubPriority, true, 0, 0, VDPreferencesGetRenderBackgroundPriority());
+	//RunOperation(&nullout, FALSE, &dubOpt, VDPreferencesGetDubPriority(), true, 0, 0, VDPreferencesGetRenderBackgroundPriority());
 }
 
 void VDProject::QueueNullVideoPass() {
