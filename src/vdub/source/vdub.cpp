@@ -166,7 +166,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	static const size_t magicSwitchLen = std::size(magicSwitch) - 1;
 	size_t cmdLineLen = lstrlenW(cmdLine);
 	size_t appNameLen = lstrlenW(exepath2);
-	LPWSTR newCmdLine = (LPWSTR)alloca(sizeof(WCHAR) * (cmdLineLen + appNameLen + magicSwitchLen + 3));
+	LPWSTR newCmdLine = (LPWSTR)_malloca(sizeof(WCHAR) * (cmdLineLen + appNameLen + magicSwitchLen + 3));
 	LPWSTR p = newCmdLine;
 
 	*p++ = '"';
@@ -217,6 +217,8 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			LocalFree((HLOCAL)msg);
 		}
 	}
+
+	_freea(newCmdLine);
 
 	if (g_bAbortCaught && !rc) {
 		rc = 5;

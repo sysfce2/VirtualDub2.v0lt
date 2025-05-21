@@ -254,7 +254,7 @@ void VDConsoleLogger::Write(const wchar_t *text, size_t len) {
 
 	int mblen = WideCharToMultiByte(CP_ACP, 0, text, len, NULL, 0, NULL, NULL);
 
-	char *buf = (char *)alloca(mblen + 2);
+	char *buf = (char *)_malloca(mblen + 2);
 
 	mblen = WideCharToMultiByte(CP_ACP, 0, text, len, buf, mblen, NULL, NULL);
 
@@ -264,6 +264,7 @@ void VDConsoleLogger::Write(const wchar_t *text, size_t len) {
 
 		WriteFile(GetStdHandle(STD_OUTPUT_HANDLE), buf, mblen+2, &actual, NULL);
 	}
+	_freea(buf);
 }
 
 ///////////////////////////////////////////////////////////////////////////

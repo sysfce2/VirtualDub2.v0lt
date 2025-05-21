@@ -553,13 +553,14 @@ LRESULT VDBackfaceConsole::OnNotify(NMHDR *pHdr) {
 				if (mf.wParam == '\r') {
 					int len = GetWindowTextLengthA(mhwndEdit);
 					if (len) {
-						char *buf = (char *)_alloca(len+1);
+						char *buf = (char *)_malloca(len+1);
 						buf[0] = 0;
 
 						if (GetWindowTextA(mhwndEdit, buf, len+1)) {
 							SetWindowTextA(mhwndEdit, "");
 							g_VDBackfaceService.Execute(*this, buf);
 						}
+						_freea(buf);
 					}
 					return true;
 				}
