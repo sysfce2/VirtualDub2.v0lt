@@ -267,7 +267,7 @@ void VDBackfaceService::operator()(const char *format, ...) {
 	va_list val;
 
 	va_start(val, format);
-	if ((unsigned)_vsnprintf(buf, 3072, format, val) < 3072) {
+	if ((unsigned)vsprintf_s(buf, format, val) < 3072) {
 		if (mpCaptureString)
 			mpCaptureString->assign(buf);
 		else {
