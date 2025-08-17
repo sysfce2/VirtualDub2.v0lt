@@ -175,9 +175,6 @@ public:
 	void streamAppendReinit() override {}
 
 	void invalidateFrameBuffer() override;
-	virtual	bool isFrameBufferValid() = NULL;
-
-	virtual const void *getFrame(VDPosition frameNum) = NULL;
 
 	bool isKey(VDPosition lSample) override;
 	VDPosition nearestKey(VDPosition lSample) override;
