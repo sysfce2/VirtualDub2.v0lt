@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include <ctype.h>
-#include <memory>
 
 #include "oshelper.h"
 #include <vd2/system/file.h>
