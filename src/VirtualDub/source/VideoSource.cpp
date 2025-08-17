@@ -930,12 +930,6 @@ IVDVideoDecompressor *VDFindVideoDecompressorEx(uint32 fccHandler, const VDAVIBi
 ///////////////////////////////////////////////////////////////////////////
 
 VideoSource::VideoSource()
-	: stream_current_frame(-1)
-	, mpFrameBuffer(NULL)
-	, mFrameBufferSize(0)
-	, mpStreamOwner(NULL)
-	, mDefaultFormat(0)
-	, mSourceFormat(0)
 {
 }
 
