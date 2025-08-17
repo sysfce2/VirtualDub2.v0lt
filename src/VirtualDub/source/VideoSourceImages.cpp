@@ -290,7 +290,7 @@ bool VideoSourceImages::setTargetFormat(VDPixmapFormatEx format) {
 			px.w = w;
 			px.h = h;
 			px.pitch = w*8;
-			px.data = mpFrameBuffer;
+			px.data = mpFrameBuffer.get();
 			mTargetFormat = px;
 
 			invalidateFrameBuffer();
@@ -312,7 +312,7 @@ bool VideoSourceImages::setTargetFormat(VDPixmapFormatEx format) {
 			px.w = w;
 			px.h = h;
 			px.pitch = w*2;
-			px.data = mpFrameBuffer;
+			px.data = mpFrameBuffer.get();
 			mTargetFormat = px;
 
 			invalidateFrameBuffer();
@@ -335,7 +335,7 @@ bool VideoSourceImages::setTargetFormat(VDPixmapFormatEx format) {
 			px.w = w;
 			px.h = h;
 			px.pitch = w;
-			px.data = mpFrameBuffer;
+			px.data = mpFrameBuffer.get();
 			mTargetFormat = px;
 
 			invalidateFrameBuffer();
@@ -512,15 +512,16 @@ const void *VideoSourceImages::streamGetFrame(const void *inputBuffer, uint32 da
 
 	mCachedFrame = frame_num;
 
-	return mpFrameBuffer;
+	return mpFrameBuffer.get();
 }
 
 const void *VideoSourceImages::getFrame(VDPosition frameNum) {
 	uint32 lBytes;
 	const void *pFrame = NULL;
 
-	if (mCachedFrame == frameNum)
-		return mpFrameBuffer;
+	if (mCachedFrame == frameNum) {
+		return mpFrameBuffer.get();
+	}
 
 	if (!read(frameNum, 1, NULL, 0x7FFFFFFF, &lBytes, NULL) && lBytes) {
 		char *pBuffer = new char[lBytes];

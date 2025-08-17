@@ -956,12 +956,13 @@ const void *VDVideoSourceTest::streamGetFrame(const void *inputBuffer, uint32 da
 	}
 
 	mCachedFrame = frame_num;
-	return mpFrameBuffer;
+	return mpFrameBuffer.get();
 }
 
 const void *VDVideoSourceTest::getFrame(VDPosition frameNum) {
-	if (mCachedFrame == frameNum)
-		return mpFrameBuffer;
+	if (mCachedFrame == frameNum) {
+		return mpFrameBuffer.get();
+	}
 
 	return streamGetFrame(&frameNum, sizeof(VDPosition), FALSE, frameNum, frameNum);
 }

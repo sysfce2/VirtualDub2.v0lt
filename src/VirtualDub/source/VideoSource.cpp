@@ -933,24 +933,13 @@ VideoSource::VideoSource()
 {
 }
 
-VideoSource::~VideoSource() {
-	FreeFrameBuffer();
-}
-
 void *VideoSource::AllocFrameBuffer(long size) {
-	FreeFrameBuffer();
-
-	mpFrameBuffer = VDAlignedMalloc(size, 128);
-	mFrameBufferSize = size;
-
-	return mpFrameBuffer;
-}
-
-void VideoSource::FreeFrameBuffer() {
-	if (mpFrameBuffer) {
-		VDAlignedFree(mpFrameBuffer);
-		mpFrameBuffer = NULL;
+	if (mFrameBufferSize != size) {
+		mpFrameBuffer.reset(VDAlignedMalloc(size, 128));
+		mFrameBufferSize = size;
 	}
+
+	return mpFrameBuffer.get();
 }
 
 const VDFraction VideoSource::getPixelAspectRatio() const {
@@ -977,7 +966,7 @@ bool VideoSource::setTargetFormatVariant(VDPixmapFormatEx format, int variant) {
 	format = VDPixmapFormatCombine(format);
 	VDMakeBitmapCompatiblePixmapLayout(layout, w, h, format, variant, 0, bih_format ? bih->biSizeImage:0);
 
-	mTargetFormat = VDPixmapFromLayout(layout, mpFrameBuffer);
+	mTargetFormat = VDPixmapFromLayout(layout, mpFrameBuffer.get());
 	mTargetFormatVariant = variant;
 	mTargetFormat.info.colorRangeMode = format.colorRangeMode;
 	mTargetFormat.info.colorSpaceMode = format.colorSpaceMode;
@@ -1389,7 +1378,7 @@ bool VideoSourceAVI::_construct(int streamIndex) {
 	}
 
 	// init target format to something sane
-	mTargetFormat = VDPixmapFromLayout(mSourceLayout, mpFrameBuffer);
+	mTargetFormat = VDPixmapFromLayout(mSourceLayout, mpFrameBuffer.get());
 	mpTargetFormatHeader.assign(getImageFormat(), sizeof(VDAVIBitmapInfoHeader));
 	mpTargetFormatHeader->biSize			= sizeof(VDAVIBitmapInfoHeader);
 	mpTargetFormatHeader->biPlanes			= 1;
@@ -1595,7 +1584,7 @@ void VideoSourceAVI::redoKeyFlags(vdfastvector<uint32>& newFlags) {
 
 			streamGetFrame(lpInputBuffer, lActualBytes, false, lSample, lSample);
 
-			ptr = (unsigned char *)mpFrameBuffer;
+			ptr = (unsigned char *)mpFrameBuffer.get();
 			y = lHeight;
 			do {
 				x = lWidth;
@@ -1636,7 +1625,7 @@ rekey_error:
 
 			streamGetFrame(lpInputBuffer, lActualBytes, false, lSample, lSample);
 
-			ptr = (unsigned char *)mpFrameBuffer;
+			ptr = (unsigned char *)mpFrameBuffer.get();
 			y = lHeight;
 			do {
 				x = lWidth;
@@ -2217,10 +2206,10 @@ const void *VideoSourceAVI::streamGetFrame(const void *inputBuffer, uint32 data_
 
 		if (data_len) {
 			try {
-				vdprotected2("using output buffer at "VDPROT_PTR"-"VDPROT_PTR, void *, mpFrameBuffer, void *, (char *)mpFrameBuffer + mFrameBufferSize - 1) {
+				vdprotected2("using output buffer at "VDPROT_PTR"-"VDPROT_PTR, void *, mpFrameBuffer.get(), void *, (char *)mpFrameBuffer.get() + mFrameBufferSize - 1) {
 					vdprotected2("using input buffer at "VDPROT_PTR"-"VDPROT_PTR, const void *, inputBuffer, const void *, (const char *)inputBuffer + data_len - 1) {
 						vdprotected1("decompressing video frame %lu", unsigned long, (unsigned long)frame_num) {
-							mpDecompressor->DecompressFrame(mpFrameBuffer, inputBuffer, data_len, _isKey(frame_num), is_preroll);
+							mpDecompressor->DecompressFrame(mpFrameBuffer.get(), inputBuffer, data_len, _isKey(frame_num), is_preroll);
 						}
 					}
 				}

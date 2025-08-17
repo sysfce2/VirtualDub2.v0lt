@@ -100,7 +100,7 @@ public:
 
 class VideoSource : public DubSource, public IVDVideoSource {
 protected:
-	void		*mpFrameBuffer = nullptr;
+	std::unique_ptr<void, decltype(&VDAlignedFree)> mpFrameBuffer{ nullptr, &VDAlignedFree };
 	uint32		mFrameBufferSize = 0;
 
 	vdstructex<VDAVIBitmapInfoHeader> mpTargetFormatHeader;
@@ -116,7 +116,6 @@ protected:
 	uint32		mPalette[256];
 
 	void *AllocFrameBuffer(long size);
-	void FreeFrameBuffer();
 
 	bool setTargetFormatVariant(VDPixmapFormatEx format, int variant);
 	virtual bool _isKey(VDPosition lSample);
@@ -133,8 +132,6 @@ public:
 		IFMODE_DISCARD2		=5,
 	};
 
-	virtual ~VideoSource();
-
 	IVDStreamSource *asStream() override { return this; }
 
 	int AddRef() override { return DubSource::AddRef(); }
@@ -146,8 +143,8 @@ public:
 
 	const VDFraction getPixelAspectRatio() const override;
 
-	const void *getFrameBuffer() override {
-		return mpFrameBuffer;
+	const void* getFrameBuffer() override {
+		return mpFrameBuffer.get();
 	}
 
 	VDPixmapFormatEx getDefaultFormat() override { return mDefaultFormat; }

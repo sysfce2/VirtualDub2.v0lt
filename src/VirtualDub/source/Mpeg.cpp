@@ -1030,8 +1030,9 @@ const void *VideoSourceMPEG::streamGetFrame(const void *inputBuffer, uint32 data
 		}
 
 		// the "read" function gave us the extra 3 bytes we need
-		if (data_len<=3)
-			return mpFrameBuffer;	// HACK
+		if (data_len <= 3) {
+			return mpFrameBuffer.get(); // HACK
+		}
 
 		const int type = parentPtr->video_sample_list[frame_num].frame_type;
 
@@ -1092,7 +1093,7 @@ const void *VideoSourceMPEG::streamGetFrame(const void *inputBuffer, uint32 data
 		__asm emms
 #endif
 
-	return mpFrameBuffer;
+	return mpFrameBuffer.get();
 }
 
 const void *VideoSourceMPEG::getFrame(VDPosition frameNum64) {
@@ -1114,7 +1115,7 @@ const void *VideoSourceMPEG::getFrame(VDPosition frameNum64) {
 		DecodeFrameBuffer(buffer);
 		mbFBValid = true;
 
-		return mpFrameBuffer;
+		return mpFrameBuffer.get();
 	}
 
 	// I-frames have no prediction, so all we have to do there is decode the I-frame.
@@ -1279,7 +1280,7 @@ const void *VideoSourceMPEG::getFrame(VDPosition frameNum64) {
 }
 
 void VideoSourceMPEG::DecodeFrameBuffer(int buffer) {
-	char *pBuffer = (char *)mpFrameBuffer;
+	char *pBuffer = (char *)mpFrameBuffer.get();
 	const long w = getImageFormat()->biWidth;
 	const long h = getImageFormat()->biHeight;
 
