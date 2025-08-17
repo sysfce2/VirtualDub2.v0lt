@@ -516,20 +516,20 @@ private:
 
 	static INT_PTR CALLBACK ParseDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-	void setOptions(InputFileOptions *);
-	InputFileOptions *createOptions(const void *buf, uint32 len);
-	InputFileOptions *promptForOptions(VDGUIHandle);
+	void setOptions(InputFileOptions *) override;
+	InputFileOptions *createOptions(const void *buf, uint32 len) override;
+	InputFileOptions *promptForOptions(VDGUIHandle) override;
 public:
 	InputFileMPEG();
-	~InputFileMPEG();
+	~InputFileMPEG() override;
 
-	void Init(const wchar_t *szFile);
+	void Init(const wchar_t *szFile) override;
 	static void _InfoDlgThread(void *pvInfo);
 	static INT_PTR CALLBACK _InfoDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	void InfoDialog(VDGUIHandle hwndParent);
+	void InfoDialog(VDGUIHandle hwndParent) override;
 
-	bool GetVideoSource(int index, IVDVideoSource **ppSrc);
-	bool GetAudioSource(int index, AudioSource **ppSrc);
+	bool GetVideoSource(int index, IVDVideoSource **ppSrc) override;
+	bool GetAudioSource(int index, AudioSource **ppSrc) override;
 };
 
 
