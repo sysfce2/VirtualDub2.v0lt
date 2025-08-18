@@ -1673,7 +1673,7 @@ int VideoSourceAVI::_read(VDPosition lStart, uint32 lCount, void *lpBuffer, uint
 	// MJPEG modification mode?
 
 	if (mjpeg_mode) {
-		int res;
+		int res = IVDStreamSource::kBufferTooSmall;
 		LONG lBytes, lSamples;
 		long lOffset, lLength;
 
@@ -1694,7 +1694,7 @@ int VideoSourceAVI::_read(VDPosition lStart, uint32 lCount, void *lpBuffer, uint
 				if (mjpeg_reorder_buffer_size)
 					res = pSource->Read(lStart, 1, mjpeg_reorder_buffer, mjpeg_reorder_buffer_size, &lBytes, &lSamples);
 
-				if (res == IVDStreamSource::kBufferTooSmall || !mjpeg_reorder_buffer_size) {
+				if (res == IVDStreamSource::kBufferTooSmall) {
 					void *new_buffer;
 					int new_size;
 
