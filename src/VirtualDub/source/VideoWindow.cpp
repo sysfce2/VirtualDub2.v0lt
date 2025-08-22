@@ -34,7 +34,7 @@
 extern HINSTANCE g_hInst;
 
 extern int VDPreferencesGetDisplay();
-extern bool VDPreferencesIsDisplay3DEnabled();
+extern bool VDPreferencesIsDisplayD3D11Enabled();
 
 //static LRESULT APIENTRY VideoWindowWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -1101,7 +1101,7 @@ void VDVideoWindow::OnContextMenu(int x, int y) {
 	DWORD dwEnabled1 = MF_BYCOMMAND | MF_GRAYED;
 	if (mpDisplay && !(VDPreferencesGetDisplay() & kDisplayDisableDX)) {
 		if ((VDPreferencesGetDisplay() & (kDisplayEnableD3D | kDisplayEnableOpenGL))
-			|| VDPreferencesIsDisplay3DEnabled())
+			|| VDPreferencesIsDisplayD3D11Enabled())
 			dwEnabled1 = MF_BYCOMMAND | MF_ENABLED;
 	}
 	EnableMenuItem(hmenu, ID_DISPLAY_FILTER_POINT, dwEnabled1);
@@ -1121,7 +1121,7 @@ void VDVideoWindow::OnContextMenu(int x, int y) {
 	DWORD dwEnabled2 = MF_BYCOMMAND | MF_GRAYED;
 	if (mpDisplay && !(VDPreferencesGetDisplay() & kDisplayDisableDX)) {
 		if ((VDPreferencesGetDisplay() & (kDisplayEnableD3D))
-			|| VDPreferencesIsDisplay3DEnabled())
+			|| VDPreferencesIsDisplayD3D11Enabled())
 			dwEnabled2 = MF_BYCOMMAND | MF_ENABLED;
 	}
 	EnableMenuItem(hmenu, ID_DISPLAY_DEFAULT, dwEnabled2);

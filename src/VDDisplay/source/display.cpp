@@ -243,7 +243,7 @@ public:
 	static bool		sbEnableDXOverlay;
 	static bool		sbEnableD3D;
 	static bool		sbEnableD3DFX;
-	static bool		sbEnable3D;
+	static bool		sbEnableD3D11;
 	static bool		sbEnableOGL;
 	static bool		sbEnableTS;
 	static bool		sbEnableDebugInfo;
@@ -261,7 +261,7 @@ bool VDVideoDisplayWindow::sbEnableDX = true;
 bool VDVideoDisplayWindow::sbEnableDXOverlay = true;
 bool VDVideoDisplayWindow::sbEnableD3D;
 bool VDVideoDisplayWindow::sbEnableD3DFX;
-bool VDVideoDisplayWindow::sbEnable3D;
+bool VDVideoDisplayWindow::sbEnableD3D11;
 bool VDVideoDisplayWindow::sbEnableOGL;
 bool VDVideoDisplayWindow::sbEnableTS;
 bool VDVideoDisplayWindow::sbEnableDebugInfo;
@@ -312,8 +312,8 @@ void VDVideoDisplaySetD3D9ExEnabled(bool enable) {
 	VDVideoDisplayWindow::sbEnableD3D9Ex = enable;
 }
 
-void VDVideoDisplaySet3DEnabled(bool enable) {
-	VDVideoDisplayWindow::sbEnable3D = enable;
+void VDVideoDisplaySetD3D11Enabled(bool enable) {
+	VDVideoDisplayWindow::sbEnableD3D11 = enable;
 }
 
 void VDVideoDisplaySetDDrawEnabled(bool enable) {
@@ -1173,7 +1173,7 @@ bool VDVideoDisplayWindow::SyncInit(bool bAutoRefresh, bool bAllowNonpersistentS
 			if (mAccelMode != kAccelOnlyInForeground || !mSource.bAllowConversion || bIsForeground) {
 				// The 3D drivers don't currently support subrects.
 				if (sbEnableDX) {
-					if (!mbUseSubrect && sbEnable3D && (sbEnableTS3D || !isTermServ)) {
+					if (!mbUseSubrect && sbEnableD3D11 && (sbEnableTS3D || !isTermServ)) {
 						mpMiniDriver = VDCreateDisplayDriver3D();
 						if (InitMiniDriver())
 							break;

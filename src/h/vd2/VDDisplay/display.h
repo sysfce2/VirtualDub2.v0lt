@@ -134,7 +134,7 @@ public:
 void VDVideoDisplaySetFeatures(bool enableDirectX, bool enableOverlays, bool enableTermServ, bool enableOpenGL, bool enableDirect3D, bool enableD3DFX, bool enableHighPrecision);
 void VDVideoDisplaySetD3D9ExEnabled(bool enable);
 void VDVideoDisplaySetDDrawEnabled(bool enable);
-void VDVideoDisplaySet3DEnabled(bool enable);
+void VDVideoDisplaySetD3D11Enabled(bool enable);
 void VDVideoDisplaySetD3DFXFileName(const wchar_t *path);
 void VDVideoDisplaySetDebugInfoEnabled(bool enable);
 void VDVideoDisplaySetBackgroundFallbackEnabled(bool enable);
