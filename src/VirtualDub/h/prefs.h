@@ -37,7 +37,6 @@ enum {
 };
 
 enum {
-	kDisplayDither16     = 0x01,
 	kDisplayDisableDX    = 0x02,
 	kDisplayUseDXWithTS  = 0x04,
 	kDisplayEnableD3D    = 0x08,

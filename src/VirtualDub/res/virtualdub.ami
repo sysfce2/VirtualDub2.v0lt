@@ -313,7 +313,6 @@ dialog 1011, "" : fill, child {
 	group 0, "Display options" {
 		set 0 : vertical {
 			now valign=top, align=left;
-			checkbox 100, "Enable dithering for 16-bit displays";
 			checkbox 101, "Use DirectX for display panes";
 			using marginl=20, enable = {@101} {
 				checkbox 102, "Use DirectX when Terminal Services is active (may cause display corruption)";

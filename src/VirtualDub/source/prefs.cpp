@@ -215,7 +215,6 @@ public:
 		switch(type) {
 		case kEventAttach:
 			mpBase = pBase;
-			SetValue(100, 0 != (mPrefs.iDisplay & kDisplayDither16));
 			SetValue(101,     !(mPrefs.iDisplay & kDisplayDisableDX));
 			SetValue(102, 0 != (mPrefs.iDisplay & kDisplayUseDXWithTS));
 			SetValue(103, 0 != (mPrefs.iDisplay & kDisplayEnableD3D));
@@ -234,7 +233,6 @@ public:
 		case kEventSync:
 		case kEventDetach:
 			mPrefs.iDisplay = 0;
-			if ( GetValue(100)) mPrefs.iDisplay |= kDisplayDither16;
 			if (!GetValue(101)) mPrefs.iDisplay |= kDisplayDisableDX;
 			if ( GetValue(102)) mPrefs.iDisplay |= kDisplayUseDXWithTS;
 			if ( GetValue(103)) mPrefs.iDisplay |= kDisplayEnableD3D;
