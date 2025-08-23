@@ -39,9 +39,9 @@ enum {
 enum {
 	kDisplayDisableDX    = 0x02,
 	kDisplayUseDXWithTS  = 0x04,
-	kDisplayEnableD3D    = 0x08,
+	kDisplayEnableD3D9   = 0x08,
 	kDisplayEnableOpenGL = 0x10,
-	kDisplayEnableD3DFX  = 0x20,
+	kDisplayEnableD3D9FX = 0x20,
 	kDisplayEnableVSync  = 0x40
 };
 

@@ -1100,7 +1100,7 @@ void VDVideoWindow::OnContextMenu(int x, int y) {
 
 	DWORD dwEnabled1 = MF_BYCOMMAND | MF_GRAYED;
 	if (mpDisplay && !(VDPreferencesGetDisplay() & kDisplayDisableDX)) {
-		if ((VDPreferencesGetDisplay() & (kDisplayEnableD3D | kDisplayEnableOpenGL))
+		if ((VDPreferencesGetDisplay() & (kDisplayEnableD3D9 | kDisplayEnableOpenGL))
 			|| VDPreferencesIsDisplayD3D11Enabled())
 			dwEnabled1 = MF_BYCOMMAND | MF_ENABLED;
 	}
@@ -1120,7 +1120,7 @@ void VDVideoWindow::OnContextMenu(int x, int y) {
 
 	DWORD dwEnabled2 = MF_BYCOMMAND | MF_GRAYED;
 	if (mpDisplay && !(VDPreferencesGetDisplay() & kDisplayDisableDX)) {
-		if ((VDPreferencesGetDisplay() & (kDisplayEnableD3D))
+		if ((VDPreferencesGetDisplay() & (kDisplayEnableD3D9))
 			|| VDPreferencesIsDisplayD3D11Enabled())
 			dwEnabled2 = MF_BYCOMMAND | MF_ENABLED;
 	}

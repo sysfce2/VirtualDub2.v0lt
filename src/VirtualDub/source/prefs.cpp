@@ -217,9 +217,9 @@ public:
 			mpBase = pBase;
 			SetValue(101,     !(mPrefs.iDisplay & kDisplayDisableDX));
 			SetValue(102, 0 != (mPrefs.iDisplay & kDisplayUseDXWithTS));
-			SetValue(103, 0 != (mPrefs.iDisplay & kDisplayEnableD3D));
+			SetValue(103, 0 != (mPrefs.iDisplay & kDisplayEnableD3D9));
 			SetValue(104, 0 != (mPrefs.iDisplay & kDisplayEnableOpenGL));
-			SetValue(105, 0 != (mPrefs.iDisplay & kDisplayEnableD3DFX));
+			SetValue(105, 0 != (mPrefs.iDisplay & kDisplayEnableD3D9FX));
 			SetValue(106, 0 != (mPrefs.iDisplay & kDisplayEnableVSync));
 			SetValue(107, mPrefs.mbDisplayAllowDirectXOverlays);
 			SetValue(108, mPrefs.mbDisplayEnableDebugInfo);
@@ -235,9 +235,9 @@ public:
 			mPrefs.iDisplay = 0;
 			if (!GetValue(101)) mPrefs.iDisplay |= kDisplayDisableDX;
 			if ( GetValue(102)) mPrefs.iDisplay |= kDisplayUseDXWithTS;
-			if ( GetValue(103)) mPrefs.iDisplay |= kDisplayEnableD3D;
+			if ( GetValue(103)) mPrefs.iDisplay |= kDisplayEnableD3D9;
 			if ( GetValue(104)) mPrefs.iDisplay |= kDisplayEnableOpenGL;
-			if ( GetValue(105)) mPrefs.iDisplay |= kDisplayEnableD3DFX;
+			if ( GetValue(105)) mPrefs.iDisplay |= kDisplayEnableD3D9FX;
 			if ( GetValue(106)) mPrefs.iDisplay |= kDisplayEnableVSync;
 			mPrefs.mbDisplayAllowDirectXOverlays = GetValue(107) != 0;
 			mPrefs.mbDisplayEnableDebugInfo = GetValue(108) != 0;
@@ -1354,8 +1354,8 @@ void VDPreferencesUpdated() {
 		g_prefs2.mbDisplayAllowDirectXOverlays,
 		!!(g_prefs2.iDisplay & kDisplayUseDXWithTS),
 		!!(g_prefs2.iDisplay & kDisplayEnableOpenGL),
-		!!(g_prefs2.iDisplay & kDisplayEnableD3D),
-		!!(g_prefs2.iDisplay & kDisplayEnableD3DFX),
+		!!(g_prefs2.iDisplay & kDisplayEnableD3D9),
+		!!(g_prefs2.iDisplay & kDisplayEnableD3D9FX),
 		g_prefs2.mbDisplayEnableHighPrecision
 		);
 
