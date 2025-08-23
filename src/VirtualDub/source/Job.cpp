@@ -134,35 +134,31 @@ void JobScriptOutput::adds(const char *s) {
 
 void JobScriptOutput::addf(const char *fmt, ...) {
 	char buf[256];
-	char *bufptr = buf;
+	char* bufptr = buf;
 
 	va_list val;
 	va_start(val, fmt);
 
-	int len = vsprintf_s(buf, fmt, val);
-
-	if ((unsigned)len >= sizeof buf) {
-		len = _vscprintf(fmt, val);
-
-		if (len >= 0) {
-			len += 1; // for terminating null character
-			bufptr = (char *)malloc(len);
-
-			len = vsprintf_s(bufptr, len, fmt, val);
+	int len = _vscprintf(fmt, val);
+	if (len >= 0) {
+		len += 1; // for terminating null character
+		if (len > (int)std::size(buf)) {
+			bufptr = (char*)malloc(len);
 		}
+		len = vsprintf_s(bufptr, len, fmt, val);
 	}
 
 	va_end(val);
 
-	if (len < 0)
+	if (len < 0) {
 		throw MyInternalError("Unable to add formatted line to script.");
-
-	bufptr[len]=0;
+	}
 
 	adds(bufptr);
 
-	if (bufptr && bufptr != buf)
+	if (bufptr != buf) {
 		free(bufptr);
+	}
 }
 
 const JobScriptOutput::Script& JobScriptOutput::getscript() {
