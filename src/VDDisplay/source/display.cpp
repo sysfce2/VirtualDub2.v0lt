@@ -253,17 +253,17 @@ public:
 };
 
 ATOM VDVideoDisplayWindow::sChildWindowClass;
-int  VDVideoDisplayWindow::sDisplayAPI = kDisplayDirect3D9;
-bool VDVideoDisplayWindow::sbEnableDXOverlay = true;
-bool VDVideoDisplayWindow::sbEnableD3D9Ex;
-bool VDVideoDisplayWindow::sbEnableHighPrecision;
-bool VDVideoDisplayWindow::sbEnableFX = false;
-bool VDVideoDisplayWindow::sbEnableTS;
-bool VDVideoDisplayWindow::sbEnableTS3D = false;
-bool VDVideoDisplayWindow::sbEnableBackgroundFallback;
-bool VDVideoDisplayWindow::sbEnableDebugInfo;
-bool VDVideoDisplayWindow::sbEnableSecondaryMonitorDX;
-bool VDVideoDisplayWindow::sbEnableMonitorSwitchingDX;
+int  VDVideoDisplayWindow::sDisplayAPI                = kDisplayDirect3D9;
+bool VDVideoDisplayWindow::sbEnableDXOverlay          = false;
+bool VDVideoDisplayWindow::sbEnableD3D9Ex             = false; // not configurable
+bool VDVideoDisplayWindow::sbEnableHighPrecision      = false;
+bool VDVideoDisplayWindow::sbEnableFX                 = false;
+bool VDVideoDisplayWindow::sbEnableTS                 = false;
+bool VDVideoDisplayWindow::sbEnableTS3D               = false; // not configurable
+bool VDVideoDisplayWindow::sbEnableBackgroundFallback = true;
+bool VDVideoDisplayWindow::sbEnableDebugInfo          = false;
+bool VDVideoDisplayWindow::sbEnableSecondaryMonitorDX = false;
+bool VDVideoDisplayWindow::sbEnableMonitorSwitchingDX = false;
 
 ///////////////////////////////////////////////////////////////////////////
 

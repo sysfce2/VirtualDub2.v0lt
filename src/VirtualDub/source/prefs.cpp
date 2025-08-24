@@ -939,7 +939,7 @@ void LoadPreferences() {
 
 	VDRegistryAppKey key(reg, "Preferences");
 
-	g_prefs2.mDisplayAPI = key.getInt("Display: API", false);
+	g_prefs2.mDisplayAPI = key.getInt("Display: API", kDisplayDirect3D9);
 	switch (g_prefs2.mDisplayAPI) {
 	case kDisplayGDI:
 	case kDisplayDirectDraw:
