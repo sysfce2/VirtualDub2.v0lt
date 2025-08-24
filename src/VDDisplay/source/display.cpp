@@ -239,51 +239,72 @@ protected:
 	static ATOM				sChildWindowClass;
 
 public:
-	static bool		sbEnableDX;
+	static int		sDisplayAPI;
 	static bool		sbEnableDXOverlay;
-	static bool		sbEnableD3D9;
-	static bool		sbEnableD3D9FX;
-	static bool		sbEnableD3D11;
-	static bool		sbEnableOGL;
-	static bool		sbEnableTS;
-	static bool		sbEnableDebugInfo;
+	static bool		sbEnableD3D9Ex;
 	static bool		sbEnableHighPrecision;
+	static bool		sbEnableFX;
+	static bool		sbEnableTS;
+	static bool		sbEnableTS3D;
 	static bool		sbEnableBackgroundFallback;
+	static bool		sbEnableDebugInfo;
 	static bool		sbEnableSecondaryMonitorDX;
 	static bool		sbEnableMonitorSwitchingDX;
-	static bool		sbEnableD3D9Ex;
-	static bool		sbEnableDDraw;
-	static bool		sbEnableTS3D;
 };
 
-ATOM									VDVideoDisplayWindow::sChildWindowClass;
-bool VDVideoDisplayWindow::sbEnableDX = true;
+ATOM VDVideoDisplayWindow::sChildWindowClass;
+int  VDVideoDisplayWindow::sDisplayAPI = kDisplayDirect3D9;
 bool VDVideoDisplayWindow::sbEnableDXOverlay = true;
-bool VDVideoDisplayWindow::sbEnableD3D9;
-bool VDVideoDisplayWindow::sbEnableD3D9FX;
-bool VDVideoDisplayWindow::sbEnableD3D11;
-bool VDVideoDisplayWindow::sbEnableOGL;
-bool VDVideoDisplayWindow::sbEnableTS;
-bool VDVideoDisplayWindow::sbEnableDebugInfo;
+bool VDVideoDisplayWindow::sbEnableD3D9Ex;
 bool VDVideoDisplayWindow::sbEnableHighPrecision;
+bool VDVideoDisplayWindow::sbEnableFX = false;
+bool VDVideoDisplayWindow::sbEnableTS;
+bool VDVideoDisplayWindow::sbEnableTS3D = false;
 bool VDVideoDisplayWindow::sbEnableBackgroundFallback;
+bool VDVideoDisplayWindow::sbEnableDebugInfo;
 bool VDVideoDisplayWindow::sbEnableSecondaryMonitorDX;
 bool VDVideoDisplayWindow::sbEnableMonitorSwitchingDX;
-bool VDVideoDisplayWindow::sbEnableD3D9Ex;
-bool VDVideoDisplayWindow::sbEnableDDraw = true;
-bool VDVideoDisplayWindow::sbEnableTS3D = false;
 
 ///////////////////////////////////////////////////////////////////////////
 
-void VDVideoDisplaySetDebugInfoEnabled(bool enable) {
-	VDVideoDisplayWindow::sbEnableDebugInfo = enable;
+void VDVideoDisplaySetAPI(int displayAPI) {
+	VDVideoDisplayWindow::sDisplayAPI = displayAPI;
+}
+
+void VDVideoDisplaySetDirectXOverlays(bool enable) {
+	VDVideoDisplayWindow::sbEnableDXOverlay = enable;
+}
+
+void VDVideoDisplaySetD3D9ExEnabled(bool enable) {
+	VDVideoDisplayWindow::sbEnableD3D9Ex = enable;
+}
+
+void VDVideoDisplaySetHighPrecision(bool enable) {
+	VDVideoDisplayWindow::sbEnableHighPrecision = enable;
+}
+
+void VDVideoDisplaySetD3DFX(bool enable) {
+	VDVideoDisplayWindow::sbEnableFX = enable;
+}
+
+void VDVideoDisplaySetDXWithTS(bool enable) {
+	VDVideoDisplayWindow::sbEnableTS = enable;
+}
+
+void VDVideoDisplaySetTermServ3DEnabled(bool enable) {
+	VDVideoDisplayWindow::sbEnableTS3D = enable;
 }
 
 void VDVideoDisplaySetBackgroundFallbackEnabled(bool enable) {
 	VDVideoDisplayWindow::sbEnableBackgroundFallback = enable;
 
-	if (g_pVDVideoDisplayManager)
+	if (g_pVDVideoDisplayManager) {
 		g_pVDVideoDisplayManager->SetBackgroundFallbackEnabled(enable);
+	}
+}
+
+void VDVideoDisplaySetDebugInfoEnabled(bool enable) {
+	VDVideoDisplayWindow::sbEnableDebugInfo = enable;
 }
 
 void VDVideoDisplaySetSecondaryDXEnabled(bool enable) {
@@ -292,32 +313,6 @@ void VDVideoDisplaySetSecondaryDXEnabled(bool enable) {
 
 void VDVideoDisplaySetMonitorSwitchingDXEnabled(bool enable) {
 	VDVideoDisplayWindow::sbEnableMonitorSwitchingDX = enable;
-}
-
-void VDVideoDisplaySetTermServ3DEnabled(bool enable) {
-	VDVideoDisplayWindow::sbEnableTS3D = enable;
-}
-
-void VDVideoDisplaySetFeatures(bool enableDirectX, bool enableDirectXOverlay, bool enableTermServ, bool enableOpenGL, bool enableDirectD3D9, bool enableDirect3D9FX, bool enableHighPrecision) {
-	VDVideoDisplayWindow::sbEnableDX = enableDirectX;
-	VDVideoDisplayWindow::sbEnableDXOverlay = enableDirectXOverlay;
-	VDVideoDisplayWindow::sbEnableD3D9 = enableDirectD3D9;
-	VDVideoDisplayWindow::sbEnableD3D9FX = enableDirect3D9FX;
-	VDVideoDisplayWindow::sbEnableOGL = enableOpenGL;
-	VDVideoDisplayWindow::sbEnableTS = enableTermServ;
-	VDVideoDisplayWindow::sbEnableHighPrecision = enableHighPrecision;
-}
-
-void VDVideoDisplaySetD3D9ExEnabled(bool enable) {
-	VDVideoDisplayWindow::sbEnableD3D9Ex = enable;
-}
-
-void VDVideoDisplaySetD3D11Enabled(bool enable) {
-	VDVideoDisplayWindow::sbEnableD3D11 = enable;
-}
-
-void VDVideoDisplaySetDDrawEnabled(bool enable) {
-	VDVideoDisplayWindow::sbEnableDDraw = enable;
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -1172,15 +1167,15 @@ bool VDVideoDisplayWindow::SyncInit(bool bAutoRefresh, bool bAllowNonpersistentS
 		if ((!sbEnableTS || !sbEnableTS3D || !isTermServ) && !isDrawing) {
 			if (mAccelMode != kAccelOnlyInForeground || !mSource.bAllowConversion || bIsForeground) {
 				// The 3D drivers don't currently support subrects.
-				if (sbEnableDX) {
-					if (!mbUseSubrect && sbEnableD3D11 && (sbEnableTS3D || !isTermServ)) {
+				if (sDisplayAPI != kDisplayGDI) {
+					if (!mbUseSubrect && sDisplayAPI == kDisplayDirect3D11 && (sbEnableTS3D || !isTermServ)) {
 						mpMiniDriver = VDCreateDisplayDriver3D();
 						if (InitMiniDriver())
 							break;
 						SyncReset();
 					}
 
-					if (!mbUseSubrect && sbEnableOGL && (sbEnableTS3D || !isTermServ)) {
+					if (!mbUseSubrect && sDisplayAPI == kDisplayOpenGL && (sbEnableTS3D || !isTermServ)) {
 						mpMiniDriver = VDCreateVideoDisplayMinidriverOpenGL();
 						if (InitMiniDriver())
 							break;
@@ -1188,8 +1183,8 @@ bool VDVideoDisplayWindow::SyncInit(bool bAutoRefresh, bool bAllowNonpersistentS
 					}
 
 					if (sbEnableSecondaryMonitorDX || sbEnableMonitorSwitchingDX || !(CheckForMonitorChange(), IsOnSecondaryMonitor())) {
-						if (!mbUseSubrect && sbEnableD3D9 && (sbEnableTS3D || !isTermServ)) {
-							if (sbEnableD3D9FX)
+						if (!mbUseSubrect && sDisplayAPI == kDisplayDirect3D9 && (sbEnableTS3D || !isTermServ)) {
+							if (sbEnableFX)
 								mpMiniDriver = VDCreateVideoDisplayMinidriverD3DFX(!sbEnableSecondaryMonitorDX || sbEnableMonitorSwitchingDX);
 							else
 								mpMiniDriver = VDCreateVideoDisplayMinidriverDX9(!sbEnableSecondaryMonitorDX || sbEnableMonitorSwitchingDX, sbEnableD3D9Ex);
@@ -1203,7 +1198,7 @@ bool VDVideoDisplayWindow::SyncInit(bool bAutoRefresh, bool bAllowNonpersistentS
 							SyncReset();
 						}
 
-						if (sbEnableDDraw && (sbEnableTS || !isTermServ)) {
+						if (sDisplayAPI == kDisplayDirectDraw && (sbEnableTS || !isTermServ)) {
 							mpMiniDriver = VDCreateVideoDisplayMinidriverDirectDraw(sbEnableDXOverlay, sbEnableSecondaryMonitorDX);
 							if (InitMiniDriver()) {
 								mbMiniDriverSecondarySensitive = !sbEnableSecondaryMonitorDX;

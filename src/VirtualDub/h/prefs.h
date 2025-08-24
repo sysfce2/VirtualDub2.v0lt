@@ -37,15 +37,6 @@ enum {
 };
 
 enum {
-	kDisplayDisableDX    = 0x02,
-	kDisplayUseDXWithTS  = 0x04,
-	kDisplayEnableD3D9   = 0x08,
-	kDisplayEnableOpenGL = 0x10,
-	kDisplayEnableD3D9FX = 0x20,
-	kDisplayEnableVSync  = 0x40
-};
-
-enum {
 	pref_time_hmst,
 	pref_time_hmst_r,
 	pref_time_m,

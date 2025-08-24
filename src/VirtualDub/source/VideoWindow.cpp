@@ -33,8 +33,8 @@
 
 extern HINSTANCE g_hInst;
 
-extern int VDPreferencesGetDisplay();
-extern bool VDPreferencesIsDisplayD3D11Enabled();
+extern int VDPreferencesGetDisplayAPI();
+extern bool VDPreferencesGetDisplayEnableVSync();
 
 //static LRESULT APIENTRY VideoWindowWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -1099,10 +1099,12 @@ void VDVideoWindow::OnContextMenu(int x, int y) {
 	VDCheckMenuItemByCommandW32(hmenu, ID_DISPLAY_AR_FRAME_1777, explicitFrame && fabs(mAspectRatio - 16.0/ 9.0) < 1e-5);
 
 	DWORD dwEnabled1 = MF_BYCOMMAND | MF_GRAYED;
-	if (mpDisplay && !(VDPreferencesGetDisplay() & kDisplayDisableDX)) {
-		if ((VDPreferencesGetDisplay() & (kDisplayEnableD3D9 | kDisplayEnableOpenGL))
-			|| VDPreferencesIsDisplayD3D11Enabled())
+	const int displayAPI = VDPreferencesGetDisplayAPI();
+
+	if (mpDisplay && displayAPI != kDisplayGDI) {
+		if (displayAPI == kDisplayDirect3D9 || displayAPI == kDisplayDirect3D11 || displayAPI == kDisplayOpenGL) {
 			dwEnabled1 = MF_BYCOMMAND | MF_ENABLED;
+		}
 	}
 	EnableMenuItem(hmenu, ID_DISPLAY_FILTER_POINT, dwEnabled1);
 	EnableMenuItem(hmenu, ID_DISPLAY_FILTER_BILINEAR, dwEnabled1);
@@ -1119,10 +1121,10 @@ void VDVideoWindow::OnContextMenu(int x, int y) {
 	}
 
 	DWORD dwEnabled2 = MF_BYCOMMAND | MF_GRAYED;
-	if (mpDisplay && !(VDPreferencesGetDisplay() & kDisplayDisableDX)) {
-		if ((VDPreferencesGetDisplay() & (kDisplayEnableD3D9))
-			|| VDPreferencesIsDisplayD3D11Enabled())
+	if (mpDisplay && displayAPI != kDisplayGDI) {
+		if (displayAPI == kDisplayDirect3D9 || displayAPI == kDisplayDirect3D11) {
 			dwEnabled2 = MF_BYCOMMAND | MF_ENABLED;
+		}
 	}
 	EnableMenuItem(hmenu, ID_DISPLAY_DEFAULT, dwEnabled2);
 	EnableMenuItem(hmenu, ID_DISPLAY_COLOR, dwEnabled2);

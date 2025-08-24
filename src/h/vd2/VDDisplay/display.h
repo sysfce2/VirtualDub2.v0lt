@@ -7,6 +7,14 @@
 #include <vd2/system/atomic.h>
 #include <vd2/Kasumi/pixmap.h>
 
+enum {
+	kDisplayGDI        = 0,
+	kDisplayDirectDraw = 1,
+	kDisplayDirect3D9  = 4,
+	kDisplayDirect3D11 = 5,
+	kDisplayOpenGL     = 8,
+};
+
 VDGUIHandle VDCreateDisplayWindowW32(uint32 dwExFlags, uint32 dwFlags, int x, int y, int width, int height, VDGUIHandle hwndParent);
 
 class IVDVideoDisplay;
@@ -131,16 +139,18 @@ public:
 	virtual bool GetMaxArea(int& w, int& h) = 0;
 };
 
-void VDVideoDisplaySetFeatures(bool enableDirectX, bool enableOverlays, bool enableTermServ, bool enableOpenGL, bool enableDirectD3D9, bool enableD3D9FX, bool enableHighPrecision);
+void VDVideoDisplaySetAPI(int displayAPI);
+void VDVideoDisplaySetDirectXOverlays(bool enable);
 void VDVideoDisplaySetD3D9ExEnabled(bool enable);
-void VDVideoDisplaySetDDrawEnabled(bool enable);
-void VDVideoDisplaySetD3D11Enabled(bool enable);
+void VDVideoDisplaySetHighPrecision(bool enable);
+void VDVideoDisplaySetD3DFX(bool enable);
 void VDVideoDisplaySetD3DFXFileName(const wchar_t *path);
-void VDVideoDisplaySetDebugInfoEnabled(bool enable);
+void VDVideoDisplaySetDXWithTS(bool enable);
+void VDVideoDisplaySetTermServ3DEnabled(bool enable);
 void VDVideoDisplaySetBackgroundFallbackEnabled(bool enable);
+void VDVideoDisplaySetDebugInfoEnabled(bool enable);
 void VDVideoDisplaySetSecondaryDXEnabled(bool enable);
 void VDVideoDisplaySetMonitorSwitchingDXEnabled(bool enable);
-void VDVideoDisplaySetTermServ3DEnabled(bool enable);
 
 IVDVideoDisplay *VDGetIVideoDisplay(VDGUIHandle hwnd);
 bool VDRegisterVideoDisplayControl();

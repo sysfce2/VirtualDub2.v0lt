@@ -28,7 +28,8 @@
 #include "prefs.h"
 #include "DubStatus.h"
 
-int VDPreferencesGetDisplay();
+int  VDPreferencesGetDisplayAPI();
+bool VDPreferencesGetDisplayEnableVSync();
 bool VDPreferencesIsPreferInternalVideoDecodersEnabled();
 IVDVideoDecompressor *VDFindVideoDecompressorEx(uint32 fccHandler, const VDAVIBitmapInfoHeader *hdr, uint32 hdrlen, bool preferInternal);
 
@@ -343,8 +344,9 @@ bool VDDubVideoProcessorDisplay::AsyncUpdateOutputCallback(int pass, VDPosition 
 
 	uint32 baseFlags = IVDVideoDisplay::kVisibleOnly | IVDVideoDisplay::kDoNotCache;
 
-	if (VDPreferencesGetDisplay() & kDisplayEnableVSync)
+	if (VDPreferencesGetDisplayEnableVSync()) {
 		baseFlags |= IVDVideoDisplay::kVSync;
+	}
 
 	if (pBuffer) {
 		if (nFieldMode) {
@@ -422,8 +424,9 @@ bool VDDubVideoProcessorDisplay::AsyncUpdateInputCallback(int pass, VDPosition t
 
 	uint32 baseFlags = IVDVideoDisplay::kVisibleOnly;
 
-	if (VDPreferencesGetDisplay() & kDisplayEnableVSync)
+	if (VDPreferencesGetDisplayEnableVSync()) {
 		baseFlags |= IVDVideoDisplay::kVSync;
+	}
 
 	if (nFieldMode) {
 		if ((nFieldMode - 1) & 1) {

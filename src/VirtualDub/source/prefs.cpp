@@ -52,9 +52,25 @@ namespace {
 		int iSceneCutThreshold  = 50 * 16;
 		int iSceneFadeThreshold =  4 * 16;
 
-		int iDisplay = 0;
 		bool fAVIRestrict1Gb  = false;
 		bool fNoCorrectLayer3 = false;
+
+		int				mDisplayAPI = kDisplayDirect3D9;
+		bool			mbDisplayAllowDirectXOverlays; // DirectDraw
+		bool			mbDisplayEnableHighPrecision;  // D3D9
+		bool			mbDisplayEnableFX;             // D3D9
+		bool			mbDisplayUseDXWithTS;
+		bool			mbDisplayEnableVSync;
+		bool			mbDisplayEnableBackgroundFallback;
+		bool			mbDisplayEnableDebugInfo;
+		enum DisplaySecondaryMode {
+			kDisplaySecondaryMode_Disable,
+			kDisplaySecondaryMode_ForcePrimary,
+			kDisplaySecondaryMode_AutoSwitch,
+			kDisplaySecondaryModeCount
+		};
+		DisplaySecondaryMode mDisplaySecondaryMode;
+		VDStringW		mD3DFXFile;                    // D3D9 + FX
 
 		bool			mbUIRememberZoom;
 
@@ -66,9 +82,7 @@ namespace {
 		int				mTimelineScaleTrack;
 		int				mTimelineScaleInfo;
 		int				mTimelineScaleButtons;
-
 		bool			mbAllowDirectYCbCrDecoding;
-		bool			mbDisplayEnableDebugInfo;
 		bool			mbConfirmRenderAbort;
 		bool			mbConfirmExit;
 		bool			mbRenderWarnNoAudio;
@@ -92,25 +106,10 @@ namespace {
 		bool			mbRenderInhibitSystemSleep;
 		bool			mbRenderShowFrames;
 
-		VDStringW		mD3DFXFile;
 		uint32			mAVISuperindexLimit;
 		uint32			mAVISubindexLimit;
 
 		VDFraction		mImageSequenceFrameRate;
-
-		bool			mbDisplayAllowDirectXOverlays;
-		bool			mbDisplayEnableHighPrecision;
-		bool			mbDisplayEnableBackgroundFallback;
-		bool			mbDisplayEnableD3D11;
-
-		enum DisplaySecondaryMode {
-			kDisplaySecondaryMode_Disable,
-			kDisplaySecondaryMode_ForcePrimary,
-			kDisplaySecondaryMode_AutoSwitch,
-			kDisplaySecondaryModeCount
-		};
-
-		DisplaySecondaryMode mDisplaySecondaryMode;
 
 		int				mVideoCompressionThreads;
 
@@ -136,20 +135,33 @@ namespace {
 		}
 
 		bool displayChanged(VDPreferences2& old) {
-			if (old.iDisplay!=iDisplay)
+			if (old.mDisplayAPI != mDisplayAPI) {
 				return true;
-			if (old.mbDisplayAllowDirectXOverlays!=mbDisplayAllowDirectXOverlays)
+			}
+			if (old.mbDisplayEnableHighPrecision != mbDisplayEnableHighPrecision) {
 				return true;
-			if (old.mbDisplayEnableHighPrecision!=mbDisplayEnableHighPrecision)
+			}
+			if (old.mbDisplayEnableFX != mbDisplayEnableFX) {
 				return true;
-			if (old.mbDisplayEnableBackgroundFallback!=mbDisplayEnableBackgroundFallback)
+			}
+			if (old.mbDisplayUseDXWithTS != mbDisplayUseDXWithTS) {
 				return true;
-			if (old.mbDisplayEnableD3D11 != mbDisplayEnableD3D11)
+			}
+			if (old.mbDisplayAllowDirectXOverlays != mbDisplayAllowDirectXOverlays) {
 				return true;
-			if (old.mDisplaySecondaryMode!=mDisplaySecondaryMode)
+			}
+			if (old.mbDisplayEnableVSync != mbDisplayEnableVSync) {
 				return true;
-			if (old.mD3DFXFile!=mD3DFXFile)
+			}
+			if (old.mbDisplayEnableBackgroundFallback != mbDisplayEnableBackgroundFallback) {
 				return true;
+			}
+			if (old.mDisplaySecondaryMode != mDisplaySecondaryMode) {
+				return true;
+			}
+			if (old.mD3DFXFile != mD3DFXFile) {
+				return true;
+			}
 			return false;
 		}
 
@@ -215,39 +227,49 @@ public:
 		switch(type) {
 		case kEventAttach:
 			mpBase = pBase;
-			SetValue(101,     !(mPrefs.iDisplay & kDisplayDisableDX));
-			SetValue(102, 0 != (mPrefs.iDisplay & kDisplayUseDXWithTS));
-			SetValue(103, 0 != (mPrefs.iDisplay & kDisplayEnableD3D9));
-			SetValue(104, 0 != (mPrefs.iDisplay & kDisplayEnableOpenGL));
-			SetValue(105, 0 != (mPrefs.iDisplay & kDisplayEnableD3D9FX));
-			SetValue(106, 0 != (mPrefs.iDisplay & kDisplayEnableVSync));
-			SetValue(107, mPrefs.mbDisplayAllowDirectXOverlays);
-			SetValue(108, mPrefs.mbDisplayEnableDebugInfo);
+			switch (mPrefs.mDisplayAPI) {
+			case kDisplayGDI:        SetValue(300, 0); break;
+			case kDisplayDirectDraw: SetValue(300, 1); break;
+			default:
+			case kDisplayDirect3D9:  SetValue(300, 2); break;
+			case kDisplayDirect3D11: SetValue(300, 3); break;
+			case kDisplayOpenGL:     SetValue(300, 4); break;
+			}
+
 			SetValue(109, mPrefs.mbDisplayEnableHighPrecision);
+			SetValue(105, mPrefs.mbDisplayEnableFX);
+			SetValue(102, mPrefs.mbDisplayUseDXWithTS);
+			SetValue(107, mPrefs.mbDisplayAllowDirectXOverlays);
+			SetValue(106, mPrefs.mbDisplayEnableVSync);
 			SetValue(110, mPrefs.mbDisplayEnableBackgroundFallback);
+			SetValue(108, mPrefs.mbDisplayEnableDebugInfo);
+
 			SetValue(111, (VDPreferences2::kDisplaySecondaryModeCount - 1) - mPrefs.mDisplaySecondaryMode);
-			SetValue(112, mPrefs.mbDisplayEnableD3D11);
-			SetCaption(300, mPrefs.mD3DFXFile.c_str());
+			SetCaption(230, mPrefs.mD3DFXFile.c_str());
+
 			pBase->ExecuteAllLinks();
 			return true;
 		case kEventSync:
 		case kEventDetach:
-			mPrefs.iDisplay = 0;
-			if (!GetValue(101)) mPrefs.iDisplay |= kDisplayDisableDX;
-			if ( GetValue(102)) mPrefs.iDisplay |= kDisplayUseDXWithTS;
-			if ( GetValue(103)) mPrefs.iDisplay |= kDisplayEnableD3D9;
-			if ( GetValue(104)) mPrefs.iDisplay |= kDisplayEnableOpenGL;
-			if ( GetValue(105)) mPrefs.iDisplay |= kDisplayEnableD3D9FX;
-			if ( GetValue(106)) mPrefs.iDisplay |= kDisplayEnableVSync;
-			mPrefs.mbDisplayAllowDirectXOverlays = GetValue(107) != 0;
-			mPrefs.mbDisplayEnableDebugInfo = GetValue(108) != 0;
-			mPrefs.mbDisplayEnableHighPrecision = GetValue(109) != 0;
+			switch (GetValue(300)) {
+			case 0: mPrefs.mDisplayAPI = kDisplayGDI;        break;
+			case 1: mPrefs.mDisplayAPI = kDisplayDirectDraw; break;
+			default:
+			case 2: mPrefs.mDisplayAPI = kDisplayDirect3D9;  break;
+			case 3: mPrefs.mDisplayAPI = kDisplayDirect3D11; break;
+			case 4: mPrefs.mDisplayAPI = kDisplayOpenGL;     break;
+			}
+
+			mPrefs.mbDisplayEnableHighPrecision      = GetValue(109) != 0;
+			mPrefs.mbDisplayEnableFX                 = GetValue(105) != 0;
+			mPrefs.mbDisplayUseDXWithTS              = GetValue(102) != 0;
+			mPrefs.mbDisplayAllowDirectXOverlays     = GetValue(107) != 0;
+			mPrefs.mbDisplayEnableVSync              = GetValue(106) != 0;
 			mPrefs.mbDisplayEnableBackgroundFallback = GetValue(110) != 0;
-			mPrefs.mbDisplayEnableD3D11 = GetValue(112) != 0;
+			mPrefs.mbDisplayEnableDebugInfo          = GetValue(108) != 0;
 
 			mPrefs.mDisplaySecondaryMode = (VDPreferences2::DisplaySecondaryMode)((VDPreferences2::kDisplaySecondaryModeCount - 1) - GetValue(111));
-
-			mPrefs.mD3DFXFile = GetCaption(300);
+			mPrefs.mD3DFXFile = GetCaption(230);
 			return true;
 		}
 		return false;
@@ -912,11 +934,38 @@ void LoadPreferences() {
 	g_prefs2.iSceneCutThreshold  = baseKey.getInt("SceneCutThreshold", 50 * 16);
 	g_prefs2.iSceneFadeThreshold = baseKey.getInt("SceneFadeThreshold", 4 * 16);
 
-	g_prefs2.iDisplay         = baseKey.getInt("Display", 0);
 	g_prefs2.fAVIRestrict1Gb  = baseKey.getBool("AVIRestrict1Gb", false);
 	g_prefs2.fNoCorrectLayer3 = baseKey.getBool("NoCorrectLayer3", false);
 
 	VDRegistryAppKey key(reg, "Preferences");
+
+	g_prefs2.mDisplayAPI = key.getInt("Display: API", false);
+	switch (g_prefs2.mDisplayAPI) {
+	case kDisplayGDI:
+	case kDisplayDirectDraw:
+	case kDisplayDirect3D9:
+	case kDisplayDirect3D11:
+	case kDisplayOpenGL:
+		// correct value, do nothing
+		break;
+	default:
+		// incorrect value, set default value
+		g_prefs2.mDisplayAPI = kDisplayDirect3D9;
+	}
+
+	g_prefs2.mbDisplayAllowDirectXOverlays     = key.getBool("Display: Allow DirectX overlays", false);
+	g_prefs2.mbDisplayEnableHighPrecision      = key.getBool("Display: Enable high precision", false);
+	g_prefs2.mbDisplayEnableFX                 = key.getBool("Display: Use effect file", false);
+	g_prefs2.mbDisplayUseDXWithTS              = key.getBool("Display: Use DirectX with Terminal", false);
+	g_prefs2.mbDisplayEnableVSync              = key.getBool("Display: Enable VSync", false);;
+	g_prefs2.mbDisplayEnableBackgroundFallback = key.getBool("Display: Enable background fallback", true);
+	g_prefs2.mbDisplayEnableDebugInfo          = key.getBool("Display: Enable debug info", false);
+
+	g_prefs2.mDisplaySecondaryMode = (VDPreferences2::DisplaySecondaryMode)key.getEnumInt("Display: Secondary monitor mode", VDPreferences2::kDisplaySecondaryModeCount);
+
+	if (!key.getString("Direct3D FX file", g_prefs2.mD3DFXFile)) {
+		g_prefs2.mD3DFXFile = L"display.fx";
+	}
 
 	bool init_zoom = false;
 	{
@@ -936,9 +985,6 @@ void LoadPreferences() {
 	g_prefs2.mTimelineScaleTrack = key.getInt("Timeline: Scale track", 100);
 	g_prefs2.mTimelineScaleInfo = key.getInt("Timeline: Scale info", 100);
 	g_prefs2.mTimelineScaleButtons = key.getInt("Timeline: Scale buttons", 100);
-
-	if (!key.getString("Direct3D FX file", g_prefs2.mD3DFXFile))
-		g_prefs2.mD3DFXFile = L"display.fx";
 
 	g_prefs2.mbAllowDirectYCbCrDecoding = key.getBool("Allow direct YCbCr decoding", true);
 
@@ -967,14 +1013,6 @@ void LoadPreferences() {
 	g_prefs2.mbRenderShowFrames = key.getBool("Render: Show frames", true);
 	g_prefs2.mAVISuperindexLimit = key.getInt("AVI: Superindex entry limit", 256);
 	g_prefs2.mAVISubindexLimit = key.getInt("AVI: Subindex entry limit", 8192);
-
-	g_prefs2.mbDisplayAllowDirectXOverlays = key.getBool("Display: Allow DirectX overlays", false);
-	g_prefs2.mbDisplayEnableDebugInfo = key.getBool("Display: Enable debug info", false);
-	g_prefs2.mbDisplayEnableHighPrecision = key.getBool("Display: Enable high precision", false);
-	g_prefs2.mbDisplayEnableBackgroundFallback = key.getBool("Display: Enable background fallback", true);
-	g_prefs2.mbDisplayEnableD3D11 = key.getBool("Display: Enable unified 3D driver", false);
-
-	g_prefs2.mDisplaySecondaryMode = (VDPreferences2::DisplaySecondaryMode)key.getEnumInt("Display: Secondary monitor mode", VDPreferences2::kDisplaySecondaryModeCount);
 
 	uint32 imageSeqHi = key.getInt("Images: Frame rate numerator", 10);
 	uint32 imageSeqLo = key.getInt("Images: Frame rate denominator", 1);
@@ -1018,11 +1056,23 @@ void VDSavePreferences(VDPreferences2& prefs) {
 	baseKey.setInt("SceneCutThreshold",  prefs.iSceneCutThreshold);
 	baseKey.setInt("SceneFadeThreshold", prefs.iSceneFadeThreshold);
 
-	baseKey.setInt ("Display",         prefs.iDisplay);
 	baseKey.setBool("AVIRestrict1Gb",  prefs.fAVIRestrict1Gb);
 	baseKey.setBool("NoCorrectLayer3", prefs.fNoCorrectLayer3);
 
 	VDRegistryAppKey key(reg, "Preferences");
+
+	key.setInt("Display: API", prefs.mDisplayAPI);
+
+	key.setBool("Display: Allow DirectX overlays", prefs.mbDisplayAllowDirectXOverlays);
+	key.setBool("Display: Enable high precision", prefs.mbDisplayEnableHighPrecision);
+	key.setBool("Display: Use effect file", prefs.mbDisplayEnableFX);
+	key.setBool("Display: Use DirectX with Terminal", prefs.mbDisplayUseDXWithTS);
+	key.setBool("Display: Enable VSync", prefs.mbDisplayEnableVSync);
+	key.setBool("Display: Enable background fallback", prefs.mbDisplayEnableBackgroundFallback);
+	key.setBool("Display: Enable debug info", prefs.mbDisplayEnableDebugInfo);
+
+	key.setInt("Display: Secondary monitor mode", prefs.mDisplaySecondaryMode);
+	key.setString("Direct3D FX file", prefs.mD3DFXFile.c_str());
 
 	key.setBool("UI: Remember autosize and zoom", prefs.mbUIRememberZoom);
 
@@ -1052,7 +1102,6 @@ void VDSavePreferences(VDPreferences2& prefs) {
 	key.setBool("AVI: Rekey", prefs.mbAVIRekey);
 	key.setBool("AVI: Ignore index", prefs.mbAVIIgnoreIndex);
 
-	key.setString("Direct3D FX file", prefs.mD3DFXFile.c_str());
 	key.setInt("Render: Output buffer size", prefs.mRenderOutputBufferSize);
 	key.setInt("Render: Wave buffer size", prefs.mRenderWaveBufferSize);
 	key.setInt("Render: Video buffer count", prefs.mRenderVideoBufferCount);
@@ -1063,13 +1112,6 @@ void VDSavePreferences(VDPreferences2& prefs) {
 	key.setBool("Render: Show frames", prefs.mbRenderShowFrames);
 	key.setInt("AVI: Superindex entry limit", prefs.mAVISuperindexLimit);
 	key.setInt("AVI: Subindex entry limit", prefs.mAVISubindexLimit);
-
-	key.setBool("Display: Allow DirectX overlays", prefs.mbDisplayAllowDirectXOverlays);
-	key.setBool("Display: Enable debug info", prefs.mbDisplayEnableDebugInfo);
-	key.setBool("Display: Enable high precision", prefs.mbDisplayEnableHighPrecision);
-	key.setBool("Display: Enable background fallback", prefs.mbDisplayEnableBackgroundFallback);
-	key.setBool("Display: Enable unified 3D driver", prefs.mbDisplayEnableD3D11);
-	key.setInt("Display: Secondary monitor mode", prefs.mDisplaySecondaryMode);
 
 	key.setInt("Images: Frame rate numerator", prefs.mImageSequenceFrameRate.getHi());
 	key.setInt("Images: Frame rate denominator", prefs.mImageSequenceFrameRate.getLo());
@@ -1147,8 +1189,12 @@ int VDPreferencesSceneFadeThreshold() {
 	return g_prefs2.iSceneFadeThreshold;
 }
 
-int VDPreferencesGetDisplay() {
-	return g_prefs2.iDisplay;
+int VDPreferencesGetDisplayAPI() {
+	return g_prefs2.mDisplayAPI;
+}
+
+bool VDPreferencesGetDisplayEnableVSync() {
+	return g_prefs2.mbDisplayEnableVSync;
 }
 
 bool VDPreferencesGetAVIRestrict1Gb() {
@@ -1316,10 +1362,6 @@ int VDPreferencesGetHistoryClearCounter() {
 	return g_prefs2.mHistoryClearCounter;
 }
 
-bool VDPreferencesIsDisplayD3D11Enabled() {
-	return g_prefs2.mbDisplayEnableD3D11;
-}
-
 bool VDPreferencesGetConfirmExit() {
 	return g_prefs2.mbConfirmExit;
 }
@@ -1348,21 +1390,20 @@ int VDPreferencesGetTimelineScaleButtons() {
 	return g_prefs2.mTimelineScaleButtons;
 }
 
-void VDPreferencesUpdated() {
-	VDVideoDisplaySetFeatures(
-		!(g_prefs2.iDisplay & kDisplayDisableDX),
-		g_prefs2.mbDisplayAllowDirectXOverlays,
-		!!(g_prefs2.iDisplay & kDisplayUseDXWithTS),
-		!!(g_prefs2.iDisplay & kDisplayEnableOpenGL),
-		!!(g_prefs2.iDisplay & kDisplayEnableD3D9),
-		!!(g_prefs2.iDisplay & kDisplayEnableD3D9FX),
-		g_prefs2.mbDisplayEnableHighPrecision
-		);
+void VDPreferencesUpdated()
+{
+	VDVideoDisplaySetAPI(g_prefs2.mDisplayAPI);
 
-	VDVideoDisplaySetD3D11Enabled(g_prefs2.mbDisplayEnableD3D11);
+	VDVideoDisplaySetDirectXOverlays(g_prefs2.mbDisplayAllowDirectXOverlays);
+
+	VDVideoDisplaySetHighPrecision(g_prefs2.mbDisplayEnableHighPrecision);
+	VDVideoDisplaySetD3DFX(g_prefs2.mbDisplayEnableFX);
 	VDVideoDisplaySetD3DFXFileName(g_prefs2.mD3DFXFile.c_str());
-	VDVideoDisplaySetDebugInfoEnabled(g_prefs2.mbDisplayEnableDebugInfo);
+
+	VDVideoDisplaySetDXWithTS(g_prefs2.mbDisplayUseDXWithTS);
 	VDVideoDisplaySetBackgroundFallbackEnabled(g_prefs2.mbDisplayEnableBackgroundFallback);
+	VDVideoDisplaySetDebugInfoEnabled(g_prefs2.mbDisplayEnableDebugInfo);
+
 	VDVideoDisplaySetSecondaryDXEnabled(g_prefs2.mDisplaySecondaryMode != VDPreferences2::kDisplaySecondaryMode_Disable);
 	VDVideoDisplaySetMonitorSwitchingDXEnabled(g_prefs2.mDisplaySecondaryMode == VDPreferences2::kDisplaySecondaryMode_AutoSwitch);
 }
