@@ -4,7 +4,9 @@ VirtualDub2.1 change log
 ----------------------
 Settings are now stored in HKEY_CURRENT_USER\SOFTWARE\VirtualDub2\VirtualDub.
 Saving of some settings has been reworked.
+The "Display" settings panel has been redesigned.
 Code refactoring for modern compilers.
+Cosmetic changes.
 
 
 2.3.0.845 - 2025-04-16
