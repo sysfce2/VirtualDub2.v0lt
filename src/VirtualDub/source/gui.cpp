@@ -409,11 +409,11 @@ void VDSetDialogDefaultIcons(HWND hdlg) {
 
 void guiSetStatus(const char *format, int nPart, ...) {
 	char buf[1024];
-	va_list val;
+	buf[0] = 0;
 
+	va_list val;
 	va_start(val, nPart);
-	if ((unsigned)vsprintf_s(buf, format, val) >= std::size(buf))
-		buf[0] = 0;
+	_vsnprintf_s(buf, _TRUNCATE, format, val);
 	va_end(val);
 
 	// replace newlines with spaces
@@ -431,12 +431,13 @@ void guiSetStatusW(const wchar_t *text, int nPart) {
 
 void guiSetTitleA(HWND hWnd, UINT uID, ...) {
 	char buf1[256], buf2[256];
-	va_list val;
 
 	LoadStringA(g_hInst, uID, buf1, sizeof buf1);
+	buf2[0] = 0;
 
+	va_list val;
 	va_start(val, uID);
-	vsprintf_s(buf2, buf1, val);
+	_vsnprintf_s(buf2, _TRUNCATE, buf1, val);
 	va_end(val);
 
 	SetWindowTextA(hWnd, buf2);
@@ -873,10 +874,11 @@ void guiEndDeferWindowPos(HDWP hdwp) {
 
 int guiMessageBoxF(HWND hwnd, LPCSTR lpCaption, UINT uType, const char* format, ...) {
 	char buf[1024];
-	va_list val;
+	buf[0] = 0;
 
+	va_list val;
 	va_start(val, format);
-	vsprintf_s(buf, format, val);
+	_vsnprintf_s(buf, _TRUNCATE, format, val);
 	va_end(val);
 
 	return MessageBoxA(hwnd, buf, lpCaption, uType);

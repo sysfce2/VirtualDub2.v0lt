@@ -396,9 +396,10 @@ void VDTextOutputStream::FormatLine(const char *format, ...) {
 void VDTextOutputStream::Format2(const char *format, va_list val) {
 	char buf[3072];
 
-	int rv = vsprintf_s(buf, format, val);
-	if (rv > 0)
+	int rv = _vsnprintf_s(buf, std::size(buf) - 1, format, val);
+	if (rv > 0) {
 		PutData(buf, rv);
+	}
 }
 
 void VDTextOutputStream::PutData(const char *s, int len) {

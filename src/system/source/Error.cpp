@@ -141,11 +141,11 @@ MyUserAbortError::MyUserAbortError() {
 
 MyInternalError::MyInternalError(const char *format, ...) {
 	char buf[1024];
-	va_list val;
+	buf[0] = 0;
 
+	va_list val;
 	va_start(val, format);
-	vsprintf_s(buf, format, val);
-	buf[1023] = 0;
+	_vsnprintf_s(buf, _TRUNCATE, format, val);
 	va_end(val);
 
 	setf("Internal error: %s", buf);
