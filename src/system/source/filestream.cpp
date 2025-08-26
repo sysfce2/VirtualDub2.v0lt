@@ -389,8 +389,9 @@ void VDTextOutputStream::FormatLine(const char *format, ...) {
 		Format2(format, val);
 	}
 
-	PutData("\r\n", 2);
 	va_end(val);
+
+	PutData("\r\n", 2);
 }
 
 void VDTextOutputStream::Format2(const char *format, va_list val) {
