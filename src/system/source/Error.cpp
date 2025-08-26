@@ -80,22 +80,26 @@ void MyError::setf(const char *f, ...) {
 }
 
 void MyError::vsetf(const char *f, va_list val) {
-	for(int size = 1024; size <= 32768; size += size) {
-		free(buf);
-		buf = NULL;
+	free(buf);
+	buf = NULL;
 
-		buf = (char *)malloc(size);
+	int len = _vscprintf(f, val);
+	if (len >= 0) {
+		size_t size = std::min((len + 1 + 1023) & ~1023, 32768);
+
+		buf = (char*)malloc(size);
 		if (!buf) {
 			return;
 		}
 
-		if ((unsigned)vsprintf_s(buf, size, f, val) < (unsigned)size) {
+		len = _vsnprintf_s(buf, size, _TRUNCATE, f, val);
+		if (len >= 0) {
 			return;
 		}
-	}
 
-	free(buf);
-	buf = NULL;
+		free(buf);
+		buf = NULL;
+	}
 }
 
 void MyError::post(HWND hWndParent, const char *title) const {
