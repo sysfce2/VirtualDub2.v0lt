@@ -361,7 +361,7 @@ void VDTextOutputStream::Format(const char *format, ...) {
 
 	int rv = -1;
 	if (mLevel < kBufSize - 4) {
-		rv = vsprintf_s(mBuf + mLevel, kBufSize - mLevel, format, val);
+		rv = _vsnprintf_s(mBuf + mLevel, kBufSize - mLevel, _TRUNCATE, format, val);
 	}
 
 	if (rv >= 0) {
@@ -380,7 +380,7 @@ void VDTextOutputStream::FormatLine(const char *format, ...) {
 
 	int rv = -1;
 	if (mLevel < kBufSize - 4) {
-		rv = vsprintf_s(mBuf + mLevel, kBufSize - mLevel, format, val);
+		rv = _vsnprintf_s(mBuf + mLevel, kBufSize - mLevel, _TRUNCATE, format, val);
 	}
 
 	if (rv >= 0) {
