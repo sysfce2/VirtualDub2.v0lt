@@ -85,7 +85,7 @@ void MyError::vsetf(const char *f, va_list val) {
 
 	int len = _vscprintf(f, val);
 	if (len >= 0) {
-		size_t size = std::min((len + 1 + 1023) & ~1023, 32768);
+		size_t size = std::min(len + 1, 32768);
 
 		mbuf = (char*)malloc(size);
 		if (!mbuf) {
