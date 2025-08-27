@@ -32,15 +32,15 @@
 #include <vd2/system/log.h>
 
 MyError::MyError() {
-	buf = NULL;
+	mbuf = NULL;
 }
 
 MyError::MyError(const MyError& err) {
-	buf = _strdup(err.buf);
+	mbuf = _strdup(err.mbuf);
 }
 
 MyError::MyError(const char *f, ...)
-	: buf(NULL)
+	: mbuf(NULL)
 {
 	va_list val;
 
@@ -50,25 +50,25 @@ MyError::MyError(const char *f, ...)
 }
 
 MyError::~MyError() {
-	free(buf);
+	free(mbuf);
 }
 
 void MyError::clear() {
-	if (buf)			// we do this check because debug free() always does a heapchk even if buf==NULL
-		free(buf);
-	buf = NULL;
+	if (mbuf)			// we do this check because debug free() always does a heapchk even if mbuf==NULL
+		free(mbuf);
+	mbuf = NULL;
 }
 
 void MyError::assign(const MyError& e) {
-	if (buf)
-		free(buf);
-	buf = _strdup(e.buf);
+	if (mbuf)
+		free(mbuf);
+	mbuf = _strdup(e.mbuf);
 }
 
 void MyError::assign(const char *s) {
-	if (buf)
-		free(buf);
-	buf = _strdup(s);
+	if (mbuf)
+		free(mbuf);
+	mbuf = _strdup(s);
 }
 
 void MyError::setf(const char *f, ...) {
@@ -80,55 +80,55 @@ void MyError::setf(const char *f, ...) {
 }
 
 void MyError::vsetf(const char *f, va_list val) {
-	free(buf);
-	buf = NULL;
+	free(mbuf);
+	mbuf = NULL;
 
 	int len = _vscprintf(f, val);
 	if (len >= 0) {
 		size_t size = std::min((len + 1 + 1023) & ~1023, 32768);
 
-		buf = (char*)malloc(size);
-		if (!buf) {
+		mbuf = (char*)malloc(size);
+		if (!mbuf) {
 			return;
 		}
 
-		len = _vsnprintf_s(buf, size, _TRUNCATE, f, val);
+		len = _vsnprintf_s(mbuf, size, _TRUNCATE, f, val);
 		if (len >= 0) {
 			return;
 		}
 
-		free(buf);
-		buf = NULL;
+		free(mbuf);
+		mbuf = NULL;
 	}
 }
 
 void MyError::post(HWND hWndParent, const char *title) const {
-	if (!buf || !*buf)
+	if (!mbuf || !*mbuf)
 		return;
 
-	VDDEBUG("*** %s: %s\n", title, buf);
-	VDLog(kVDLogError, VDswprintf(L"Error: %hs", 1, &buf));
+	VDDEBUG("*** %s: %s\n", title, mbuf);
+	VDLog(kVDLogError, VDswprintf(L"Error: %hs", 1, &mbuf));
 
-	MessageBoxA(hWndParent, buf, title, MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+	MessageBoxA(hWndParent, mbuf, title, MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
 }
 
 void MyError::discard() {
-	free(buf);
-	buf = NULL;
+	free(mbuf);
+	mbuf = NULL;
 }
 
 void MyError::swap(MyError& err) {
-	char *s = err.buf;
-	err.buf = buf;
-	buf = s;
+	char *s = err.mbuf;
+	err.mbuf = mbuf;
+	mbuf = s;
 }
 
 void MyError::TransferFrom(MyError& err) {
-	if (buf)
-		free(buf);
+	if (mbuf)
+		free(mbuf);
 
-	buf = err.buf;
-	err.buf = NULL;
+	mbuf = err.mbuf;
+	err.mbuf = NULL;
 }
 
 MyMemoryError::MyMemoryError() {
@@ -140,7 +140,7 @@ MyMemoryError::MyMemoryError(size_t requestedSize) {
 }
 
 MyUserAbortError::MyUserAbortError() {
-	buf = _strdup("");
+	mbuf = _strdup("");
 }
 
 MyInternalError::MyInternalError(const char *format, ...) {

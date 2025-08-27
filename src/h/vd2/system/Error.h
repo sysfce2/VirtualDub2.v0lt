@@ -50,7 +50,7 @@ private:
 	const MyError& operator=(const MyError&);		// protect against accidents
 
 protected:
-	char *buf;
+	char *mbuf;
 
 public:
 	MyError();
@@ -64,12 +64,12 @@ public:
 	void vsetf(const char *f, va_list val);
 	void post(struct HWND__ *hWndParent, const char *title) const;
 	char *gets() const {
-		return buf;
+		return mbuf;
 	}
 	char *c_str() const {
-		return buf;
+		return mbuf;
 	}
-	bool empty() const { return !buf; }
+	bool empty() const { return !mbuf; }
 	void discard();
 	void swap(MyError& err);
 	void TransferFrom(MyError& err);
