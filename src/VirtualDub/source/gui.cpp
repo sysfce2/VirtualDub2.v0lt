@@ -432,7 +432,7 @@ void guiSetStatusW(const wchar_t *text, int nPart) {
 void guiSetTitleA(HWND hWnd, UINT uID, ...) {
 	char buf1[256], buf2[256];
 
-	LoadStringA(g_hInst, uID, buf1, sizeof buf1);
+	LoadStringA(g_hInst, uID, buf1, std::size(buf1));
 	buf2[0] = 0;
 
 	va_list val;
@@ -465,7 +465,7 @@ void guiMenuHelp(HWND hwnd, WPARAM wParam, WPARAM part, const UINT *iTranslator)
 
 		while(idPtr[0]) {
 			if (idPtr[0] == LOWORD(wParam)) {
-				if (LoadStringA(g_hInst, idPtr[1], msgbuf, sizeof msgbuf)) {
+				if (LoadStringA(g_hInst, idPtr[1], msgbuf, std::size(msgbuf))) {
 					SendMessageA(hwndStatus, SB_SETTEXTA, part, (LPARAM)msgbuf);
 					return;
 				}
