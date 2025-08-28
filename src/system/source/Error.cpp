@@ -91,14 +91,9 @@ void MyError::vsetf(const char *f, va_list val) {
 		if (!mbuf) {
 			return;
 		}
+		mbuf[0] = 0;
 
-		len = _vsnprintf_s(mbuf, size, _TRUNCATE, f, val);
-		if (len >= 0) {
-			return;
-		}
-
-		free(mbuf);
-		mbuf = NULL;
+		_vsnprintf_s(mbuf, size, _TRUNCATE, f, val);
 	}
 }
 
