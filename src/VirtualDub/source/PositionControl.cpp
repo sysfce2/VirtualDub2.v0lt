@@ -129,9 +129,9 @@ static const struct {
 	{ IDC_FILTER_MARKOUT,	L"[Mark out] Specify the end for filter range." },
 };
 
-HBITMAP LoadImageStretch(LPSTR id, int w, int h)
+HBITMAP LoadImageStretch(LPCWSTR id, int w, int h)
 {
-	HBITMAP bm0 = (HBITMAP)LoadImageA(g_hInst, id,IMAGE_BITMAP,0,0,LR_LOADTRANSPARENT|LR_LOADMAP3DCOLORS);
+	HBITMAP bm0 = (HBITMAP)LoadImageW(g_hInst, id,IMAGE_BITMAP,0,0,LR_LOADTRANSPARENT|LR_LOADMAP3DCOLORS);
 	if (!bm0) return 0;
 	HDC hdc = GetDC(0);
 	BITMAPINFO bmi = {0};
@@ -149,7 +149,7 @@ HBITMAP LoadImageStretch(LPSTR id, int w, int h)
 	SelectObject(dc1,bm1);
 
 	BITMAP bm0_info;
-	GetObject(bm0,sizeof(BITMAP),&bm0_info);
+	GetObjectW(bm0,sizeof(BITMAP),&bm0_info);
 
 	SetStretchBltMode(dc1,HALFTONE);
 	StretchBlt(dc1,0,0,w,h,dc0,0,0,bm0_info.bmWidth,bm0_info.bmHeight,SRCCOPY);
@@ -303,12 +303,12 @@ ATOM VDPositionControlW32::Register() {
 	wc.cbWndExtra	= sizeof(VDPositionControlW32 *);
 	wc.hInstance	= g_hInst;
 	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor		= LoadCursorW(NULL, IDC_ARROW);
 	wc.hbrBackground= (HBRUSH)(COLOR_3DFACE+1);	//GetStockObject(LTGRAY_BRUSH);
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= POSITIONCONTROLCLASS;
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 ATOM RegisterPositionControl() {
@@ -316,7 +316,7 @@ ATOM RegisterPositionControl() {
 }
 
 IVDPositionControl *VDGetIPositionControl(VDGUIHandle h) {
-	return static_cast<IVDPositionControl *>((VDPositionControlW32 *)GetWindowLongPtr((HWND)h, 0));
+	return static_cast<IVDPositionControl *>((VDPositionControlW32 *)GetWindowLongPtrW((HWND)h, 0));
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -617,7 +617,7 @@ BOOL CALLBACK VDPositionControlW32::InitChildrenProc(HWND hWnd, LPARAM lParam) {
 	int fill_b = (fill & 0xFF0000) >> 16;
 	int fill_y = ((fill_b * 19 + fill_g * 183 + fill_r * 54) >> 8);
 
-	switch(id = GetWindowLong(hWnd, GWL_ID)) {
+	switch(id = GetWindowLongW(hWnd, GWL_ID)) {
 	case IDC_STOP:
 	case IDC_PLAY:
 	case IDC_PLAYPREVIEW:
@@ -638,12 +638,12 @@ BOOL CALLBACK VDPositionControlW32::InitChildrenProc(HWND hWnd, LPARAM lParam) {
 			void* icon = pThis->shIcon1[i];
 			void* icon_dark = pThis->shIcon2[i];
 			if (fill_y < 128 && icon_dark) icon = icon_dark;
-			SendMessage(hWnd, BM_SETIMAGE, pThis->mbButtonIcon ? IMAGE_ICON:IMAGE_BITMAP, (LPARAM)icon);
+			SendMessageW(hWnd, BM_SETIMAGE, pThis->mbButtonIcon ? IMAGE_ICON:IMAGE_BITMAP, (LPARAM)icon);
 		}
 		break;
 
 	case IDC_FRAME:
-		SendMessage(hWnd, WM_SETFONT, (WPARAM)pThis->mFrameFont, (LPARAM)MAKELONG(FALSE, 0));
+		SendMessageW(hWnd, WM_SETFONT, (WPARAM)pThis->mFrameFont, (LPARAM)MAKELONG(FALSE, 0));
 		break;
 
 	}
@@ -660,12 +660,12 @@ LRESULT APIENTRY VDPositionControlW32::StaticWndProc(HWND hwnd, UINT msg, WPARAM
 			return FALSE;
 
 		pcd->AddRef();
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pcd);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pcd);
 		break;
 	case WM_NCDESTROY:
 		pcd->mhwnd = NULL;
 		pcd->Release();
-		SetWindowLongPtr(hwnd, 0, 0);
+		SetWindowLongPtrW(hwnd, 0, 0);
 		pcd = NULL;
 		break;
 	}
@@ -870,7 +870,7 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 				GetWindowRect(hwndFrame,&r);
 				MapWindowPoints(0,mhwnd,(POINT*)&r,2);
 				if (PtInRect(&r, pt)) {
-					SendMessage(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLong(mhwnd, GWL_ID), PCN_JUMPTO), (LPARAM)mhwnd);
+					SendMessageW(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLongW(mhwnd, GWL_ID), PCN_JUMPTO), (LPARAM)mhwnd);
 				}
 			}
 		}
@@ -1007,7 +1007,7 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 		return 0;
 	}
 
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 extern int VDPreferencesGetTimelineScaleTrack();
@@ -1020,15 +1020,15 @@ void VDPositionControlW32::OnCreate() {
 	int mButtonScale = VDPreferencesGetTimelineScaleButtons();
 
 	DWORD dwStyles;
-	TOOLINFO ti;
+	TOOLINFOW ti;
 	HWND hwndTT;
 
-	dwStyles = GetWindowLong(mhwnd, GWL_STYLE);
+	dwStyles = GetWindowLongW(mhwnd, GWL_STYLE);
 	mbHasPlaybackControls	= !!(dwStyles & PCS_PLAYBACK);
 	mbHasMarkControls		= !!(dwStyles & PCS_MARK);
 	mbHasSceneControls		= !!(dwStyles & PCS_SCENE);
 	mbHasNavControls		= !(dwStyles & PCS_XNAV);
-	mbHasPosText		= !(dwStyles & PCS_XNAV);
+	mbHasPosText			= !(dwStyles & PCS_XNAV);
 	mbHasFilterControls		= !!(dwStyles & PCS_FILTER);
 
 	// We use 24px at 96 dpi.
@@ -1044,15 +1044,15 @@ void VDPositionControlW32::OnCreate() {
 			ht = MulDiv(GetDeviceCaps(hdc, LOGPIXELSY), ht, 96);
 			gap = MulDiv(GetDeviceCaps(hdc, LOGPIXELSX), gap, 96);
 
-			TEXTMETRIC tm;
+			TEXTMETRICW tm;
 			int pad = 2*GetSystemMetrics(SM_CYEDGE);
 			int availHeight = ht;
 
 			if (mTextScale!=100) {
-				LOGFONT lf;
-				if (GetObject(mFrameFont, sizeof lf, &lf)) {
+				LOGFONTW lf;
+				if (GetObjectW(mFrameFont, sizeof lf, &lf)) {
 					lf.lfHeight = MulDiv(lf.lfHeight,mTextScale,100);
-					HFONT hFont = CreateFontIndirect(&lf);
+					HFONT hFont = CreateFontIndirectW(&lf);
 					if (hFont)
 						mFrameFont = hFont;		// the old font was a stock object, so it doesn't need to be deleted
 				}
@@ -1060,16 +1060,16 @@ void VDPositionControlW32::OnCreate() {
 
 			HGDIOBJ hgoFont = SelectObject(hdc, mFrameFont);
 
-			if (GetTextMetrics(hdc, &tm)) {
-				LOGFONT lf;
+			if (GetTextMetricsW(hdc, &tm)) {
+				LOGFONTW lf;
 
 				nFrameCtlHeight = tm.tmHeight + tm.tmInternalLeading + pad;
 
-				if (nFrameCtlHeight > availHeight && GetObject(mFrameFont, sizeof lf, &lf)) {
+				if (nFrameCtlHeight > availHeight && GetObjectW(mFrameFont, sizeof lf, &lf)) {
 					lf.lfHeight = availHeight - pad;
 					nFrameCtlHeight = availHeight;
 
-					HFONT hFont = CreateFontIndirect(&lf);
+					HFONT hFont = CreateFontIndirectW(&lf);
 					if (hFont) {
 						DeleteObject(mFrameFont);
 						mFrameFont = hFont;
@@ -1095,19 +1095,19 @@ void VDPositionControlW32::OnCreate() {
 		if (HDC hdc = GetDC(mhwnd)) {
 
 			if (mTrackScale!=100) {
-				LOGFONT lf;
-				if (GetObject(mFrameNumberFont, sizeof lf, &lf)) {
+				LOGFONTW lf;
+				if (GetObjectW(mFrameNumberFont, sizeof lf, &lf)) {
 					lf.lfHeight = MulDiv(lf.lfHeight,mTrackScale,100);
-					HFONT hFont = CreateFontIndirect(&lf);
+					HFONT hFont = CreateFontIndirectW(&lf);
 					if (hFont)
 						mFrameNumberFont = hFont;		// the old font was a stock object, so it doesn't need to be deleted
 				}
 			}
 
-			TEXTMETRIC tm;
+			TEXTMETRICW tm;
 			HGDIOBJ hgoFont = SelectObject(hdc, mFrameNumberFont);
 
-			if (GetTextMetrics(hdc, &tm))
+			if (GetTextMetricsW(hdc, &tm))
 				mFrameNumberHeight = tm.tmHeight + tm.tmInternalLeading;
 
 			SIZE siz;
@@ -1124,8 +1124,8 @@ void VDPositionControlW32::OnCreate() {
 	if (mTickWidth<1) mTickWidth = 1;
 
 	if (mbHasPosText) {
-		CreateWindowExW(WS_EX_STATICEDGE,L"STATIC",NULL,WS_CHILD|WS_VISIBLE,0,0,0,ht,mhwnd,(HMENU)IDC_FRAME,g_hInst,NULL);
-		mhmenuPopup = LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_POSITION_MENU));
+		CreateWindowExW(WS_EX_STATICEDGE, L"STATIC", NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, ht, mhwnd, (HMENU)IDC_FRAME, g_hInst, NULL);
+		mhmenuPopup = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_POSITION_MENU));
 	}
 
 	mbButtonIcon = true;
@@ -1144,19 +1144,19 @@ void VDPositionControlW32::OnCreate() {
 			if (mbButtonIcon) {
 				int id_light = uIconIDs[i][0];
 				int id_dark = uIconIDs[i][1];
-				if (!(shIcon1[i] = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(id_light),IMAGE_ICON,0,0,0))) {
+				if (!(shIcon1[i] = (HICON)LoadImageW(g_hInst, MAKEINTRESOURCEW(id_light),IMAGE_ICON,0,0,0))) {
 					_RPT1(0,"PositionControl: load failure on icon #%d\n",i+1);
 				}
-				if (id_dark && !(shIcon2[i] = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(id_dark),IMAGE_ICON,0,0,0))) {
+				if (id_dark && !(shIcon2[i] = (HICON)LoadImageW(g_hInst, MAKEINTRESOURCEW(id_dark),IMAGE_ICON,0,0,0))) {
 					_RPT1(0,"PositionControl: load failure on icon #%d\n",i+1);
 				}
 			} else {
 				int id_light = uIconIDs_x128[i][0];
 				int id_dark = uIconIDs_x128[i][1];
-				if (!(shIcon1[i] = (HICON)LoadImageStretch(MAKEINTRESOURCEA(id_light),iconSize,iconSize))) {
+				if (!(shIcon1[i] = (HICON)LoadImageStretch(MAKEINTRESOURCEW(id_light),iconSize,iconSize))) {
 					_RPT1(0,"PositionControl: load failure on icon #%d\n",i+1);
 				}
-				if (id_dark && !(shIcon2[i] = (HICON)LoadImageStretch(MAKEINTRESOURCEA(id_dark),iconSize,iconSize))) {
+				if (id_dark && !(shIcon2[i] = (HICON)LoadImageStretch(MAKEINTRESOURCEW(id_dark),iconSize,iconSize))) {
 					_RPT1(0,"PositionControl: load failure on icon #%d\n",i+1);
 				}
 			}
@@ -1164,29 +1164,29 @@ void VDPositionControlW32::OnCreate() {
 	}
 
 	if (mbHasPlaybackControls) {
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_STOP       , g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_PLAY       , g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_PLAYPREVIEW    , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_STOP           , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_PLAY           , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_PLAYPREVIEW    , g_hInst, NULL);
 	}
 	if (mbHasNavControls) {
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_START      , g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_BACKWARD   , g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_FORWARD    , g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_END        , g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_KEYPREV    , g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_KEYNEXT    , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_START          , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_BACKWARD       , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_FORWARD        , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_END            , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_KEYPREV        , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_KEYNEXT        , g_hInst, NULL);
 	}
 	if (mbHasSceneControls) {
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX | BS_PUSHLIKE | buttonStyle   ,0,0,ht,ht,mhwnd, (HMENU)IDC_SCENEREV, g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX | BS_PUSHLIKE | buttonStyle   ,0,0,ht,ht,mhwnd, (HMENU)IDC_SCENEFWD, g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX | BS_PUSHLIKE | buttonStyle   ,0,0,ht,ht,mhwnd, (HMENU)IDC_SCENEREV       , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX | BS_PUSHLIKE | buttonStyle   ,0,0,ht,ht,mhwnd, (HMENU)IDC_SCENEFWD       , g_hInst, NULL);
 	}
 	if (mbHasMarkControls) {
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_MARKIN , g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_MARKOUT    , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_MARKIN         , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_MARKOUT        , g_hInst, NULL);
 	}
 	if (mbHasFilterControls) {
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_FILTER_MARKIN  , g_hInst, NULL);
-		CreateWindowExA(0                ,"BUTTON"       ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle           ,0,0,ht,ht,mhwnd, (HMENU)IDC_FILTER_MARKOUT , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_FILTER_MARKIN  , g_hInst, NULL);
+		CreateWindowExW(0   ,L"BUTTON"  ,NULL,WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | buttonStyle                   ,0,0,ht,ht,mhwnd, (HMENU)IDC_FILTER_MARKOUT , g_hInst, NULL);
 	}
 
 	if (mFrameFont)
@@ -1194,26 +1194,26 @@ void VDPositionControlW32::OnCreate() {
 
 	// Create tooltip control.
 
-	hwndTT = CreateWindowEx(WS_EX_TOPMOST, TOOLTIPS_CLASS, NULL, WS_POPUP|TTS_NOPREFIX|TTS_ALWAYSTIP,
+	hwndTT = CreateWindowExW(WS_EX_TOPMOST, TOOLTIPS_CLASSW, NULL, WS_POPUP|TTS_NOPREFIX|TTS_ALWAYSTIP,
 			CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 			mhwnd, NULL, g_hInst, NULL);
 
 	if (hwndTT) {
 
 		SetWindowPos(hwndTT, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-		SendMessage(hwndTT, TTM_SETDELAYTIME, TTDT_AUTOMATIC, MAKELONG(2000, 0));
-		SendMessage(hwndTT, TTM_SETDELAYTIME, TTDT_RESHOW, MAKELONG(2000, 0));
+		SendMessageW(hwndTT, TTM_SETDELAYTIME, TTDT_AUTOMATIC, MAKELONG(2000, 0));
+		SendMessageW(hwndTT, TTM_SETDELAYTIME, TTDT_RESHOW, MAKELONG(2000, 0));
 
-		ti.cbSize		= sizeof(TOOLINFO);
-		ti.uFlags		= TTF_SUBCLASS | TTF_IDISHWND;
-		ti.hwnd			= mhwnd;
-		ti.lpszText		= LPSTR_TEXTCALLBACK;
+		ti.cbSize	= sizeof(TOOLINFOW);
+		ti.uFlags	= TTF_SUBCLASS | TTF_IDISHWND;
+		ti.hwnd		= mhwnd;
+		ti.lpszText	= LPSTR_TEXTCALLBACKW;
 
 		for (const auto& posctltip : g_posctltips) {
 			ti.uId = (WPARAM)GetDlgItem(mhwnd, posctltip.id);
 
 			if (ti.uId) {
-				SendMessage(hwndTT, TTM_ADDTOOL, 0, (LPARAM)&ti);
+				SendMessageW(hwndTT, TTM_ADDTOOLW, 0, (LPARAM)&ti);
 			}
 		}
 	}
@@ -1652,9 +1652,9 @@ void VDPositionControlW32::RecalcThumbRect(VDPosition pos, bool update) {
 bool VDPositionControlW32::Notify(UINT code, VDPositionControlEventData::EventType eventType) {
 	NMHDR nm;
 	nm.hwndFrom = mhwnd;
-	nm.idFrom	= GetWindowLong(mhwnd, GWL_ID);
+	nm.idFrom	= GetWindowLongPtrW(mhwnd, GWL_ID);
 	nm.code		= code;
-	int r = SendMessage(GetParent(mhwnd), WM_NOTIFY, nm.idFrom, (LPARAM)&nm);
+	int r = SendMessageW(GetParent(mhwnd), WM_NOTIFY, nm.idFrom, (LPARAM)&nm);
 	if (r==-1) return false;
 
 	if (eventType) {
