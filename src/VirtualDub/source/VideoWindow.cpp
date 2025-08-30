@@ -1101,7 +1101,7 @@ void VDVideoWindow::OnContextMenu(int x, int y) {
 	DWORD dwEnabled1 = MF_BYCOMMAND | MF_GRAYED;
 	const int displayAPI = VDPreferencesGetDisplayAPI();
 
-	if (mpDisplay && displayAPI == kDisplayDirect3D9 || displayAPI == kDisplayDirect3D11 || displayAPI == kDisplayOpenGL) {
+	if (mpDisplay && (displayAPI == kDisplayDirect3D9 || displayAPI == kDisplayDirect3D11 || displayAPI == kDisplayOpenGL)) {
 		dwEnabled1 = MF_BYCOMMAND | MF_ENABLED;
 	}
 	EnableMenuItem(hmenu, ID_DISPLAY_FILTER_POINT, dwEnabled1);
