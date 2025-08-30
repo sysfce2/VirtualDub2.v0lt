@@ -1121,10 +1121,8 @@ void VDVideoWindow::OnContextMenu(int x, int y) {
 	}
 
 	DWORD dwEnabled2 = MF_BYCOMMAND | MF_GRAYED;
-	if (mpDisplay && displayAPI != kDisplayGDI) {
-		if (displayAPI == kDisplayDirect3D9 || displayAPI == kDisplayDirect3D11) {
-			dwEnabled2 = MF_BYCOMMAND | MF_ENABLED;
-		}
+	if (mpDisplay && displayAPI == kDisplayDirect3D9) {
+		dwEnabled2 = MF_BYCOMMAND | MF_ENABLED;
 	}
 	EnableMenuItem(hmenu, ID_DISPLAY_DEFAULT, dwEnabled2);
 	EnableMenuItem(hmenu, ID_DISPLAY_COLOR, dwEnabled2);
