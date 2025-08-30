@@ -81,52 +81,52 @@ static const UINT uIconIDs_x128[uIcon_count][2]={
 
 #undef IDC_START
 enum {
-	IDC_TRACKBAR	= 500,
-	IDC_FRAME		= 501,
-	IDC_STOP		= 502,
-	IDC_PLAY		= 503,
-	IDC_PLAYPREVIEW	= 504,
-	IDC_START		= 505,
-	IDC_BACKWARD	= 506,
-	IDC_FORWARD		= 507,
-	IDC_END			= 508,
-	IDC_KEYPREV		= 509,
-	IDC_KEYNEXT		= 510,
-	IDC_SCENEREV	= 511,
-	IDC_SCENEFWD	= 512,
-	IDC_MARKIN		= 513,
-	IDC_MARKOUT		= 514,
-	IDC_FILTER_MARKIN		= 515,
-	IDC_FILTER_MARKOUT		= 516,
+	IDC_TRACKBAR		= 500,
+	IDC_FRAME			= 501,
+	IDC_STOP			= 502,
+	IDC_PLAY			= 503,
+	IDC_PLAYPREVIEW		= 504,
+	IDC_START			= 505,
+	IDC_BACKWARD		= 506,
+	IDC_FORWARD			= 507,
+	IDC_END				= 508,
+	IDC_KEYPREV			= 509,
+	IDC_KEYNEXT			= 510,
+	IDC_SCENEREV		= 511,
+	IDC_SCENEFWD		= 512,
+	IDC_MARKIN			= 513,
+	IDC_MARKOUT			= 514,
+	IDC_FILTER_MARKIN	= 515,
+	IDC_FILTER_MARKOUT	= 516,
 };
 
 static const struct {
 	UINT id;
-	const char *tip;
+	const wchar_t *tip;
 } g_posctltips[]={
-	{ IDC_TRACKBAR, "[Trackbar]\r\n\r\nDrag this to seek to any frame in the movie. Hold down SHIFT to snap to keyframes/I-frames." },
-	{ IDC_FRAME, "[Frame indicator]\r\n\r\nDisplays the current frame number, timestamp, and frame type.\r\n\r\n"
-					"[ ] AVI delta frame\r\n"
-					"[D] AVI dropped frame\r\n"
-					"[K] AVI key frame\r\n"
-					"[I] MPEG-1 intra frame\r\n"
-					"[P] MPEG-1 forward predicted frame\r\n"
-					"[B] MPEG-1 bidirectionally predicted frame" },
-	{ IDC_STOP, "[Stop] Stops playback or the current dub operation." },
-	{ IDC_PLAY, "[Input playback] Starts playback of the input file." },
-	{ IDC_PLAYPREVIEW, "[Output playback] Starts preview of processed output." },
-	{ IDC_START, "[Start] Move to the first frame." },
-	{ IDC_BACKWARD, "[Backward] Back up by one frame." },
-	{ IDC_FORWARD, "[Forward] Advance by one frame." },
-	{ IDC_END, "[End] Move to the last frame." },
-	{ IDC_KEYPREV, "[Key previous] Move to the previous key frame or I-frame." },
-	{ IDC_KEYNEXT, "[Key next] Move to the next key frame or I-frame." },
-	{ IDC_SCENEREV, "[Scene reverse] Scan backward for the last scene change." },
-	{ IDC_SCENEFWD, "[Scene forward] Scan forward for the next scene change." },
-	{ IDC_MARKIN, "[Mark in] Specify the start for processing or of a selection to delete." },
-	{ IDC_MARKOUT, "[Mark out] Specify the end for processing or of a selection to delete." },
-	{ IDC_FILTER_MARKIN, "[Mark in] Specify the start for filter range." },
-	{ IDC_FILTER_MARKOUT, "[Mark out] Specify the end for filter range." },
+	{ IDC_TRACKBAR,			L"[Trackbar]\r\n\r\nDrag this to seek to any frame in the movie. Hold down SHIFT to snap to keyframes/I-frames." },
+	{ IDC_FRAME,			L"[Frame indicator]\r\n\r\nDisplays the current frame number, timestamp, and frame type.\r\n\r\n"
+							L"[ ] AVI delta frame\r\n"
+							L"[D] AVI dropped frame\r\n"
+							L"[K] AVI key frame\r\n"
+							L"[I] MPEG-1 intra frame\r\n"
+							L"[P] MPEG-1 forward predicted frame\r\n"
+							L"[B] MPEG-1 bidirectionally predicted frame" },
+	{ IDC_STOP,				L"[Stop] Stops playback or the current dub operation." },
+	{ IDC_PLAY,				L"[Input playback] Starts playback of the input file." },
+	{ IDC_PLAYPREVIEW,		L"[Output playback] Starts preview of processed output." },
+	{ IDC_START,			L"[Start] Move to the first frame." },
+	{ IDC_BACKWARD,			L"[Backward] Back up by one frame." },
+	{ IDC_FORWARD,			L"[Forward] Advance by one frame." },
+	{ IDC_END,				L"[End] Move to the last frame." },
+	{ IDC_KEYPREV,			L"[Key previous] Move to the previous key frame or I-frame." },
+	{ IDC_KEYNEXT,			L"[Key next] Move to the next key frame or I-frame." },
+	{ IDC_SCENEREV,			L"[Scene reverse] Scan backward for the last scene change." },
+	{ IDC_SCENEFWD,			L"[Scene forward] Scan forward for the next scene change." },
+	{ IDC_MARKIN,			L"[Mark in] Specify the start for processing or of a selection to delete." },
+	{ IDC_MARKOUT,			L"[Mark out] Specify the end for processing or of a selection to delete." },
+	{ IDC_FILTER_MARKIN,	L"[Mark in] Specify the start for filter range." },
+	{ IDC_FILTER_MARKOUT,	L"[Mark out] Specify the end for filter range." },
 };
 
 HBITMAP LoadImageStretch(LPSTR id, int w, int h)
@@ -692,17 +692,18 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 		return 0;
 
 	case WM_NOTIFY:
-		if (TTN_GETDISPINFO == ((LPNMHDR)lParam)->code) {
-			NMTTDISPINFO *lphdr = (NMTTDISPINFO*)lParam;
-			UINT id = (lphdr->uFlags & TTF_IDISHWND) ? GetWindowLong((HWND)lphdr->hdr.idFrom, GWL_ID) : lphdr->hdr.idFrom;
+		if (TTN_GETDISPINFOW == ((LPNMHDR)lParam)->code) {
+			NMTTDISPINFOW* lphdr = (NMTTDISPINFOW*)lParam;
+			UINT_PTR id = (lphdr->uFlags & TTF_IDISHWND) ? GetWindowLongPtrW((HWND)lphdr->hdr.idFrom, GWL_ID) : lphdr->hdr.idFrom;
 
 			*lphdr->lpszText = 0;
 
-			SendMessage(lphdr->hdr.hwndFrom, TTM_SETMAXTIPWIDTH, 0, 5000);
+			SendMessageW(lphdr->hdr.hwndFrom, TTM_SETMAXTIPWIDTH, 0, 1000);
 
 			for(const auto& posctltip : g_posctltips) {
 				if (id == posctltip.id) {
-					lphdr->lpszText = const_cast<wchar_t*>(VDTextAToW(posctltip.tip).c_str());
+					lphdr->lpszText = const_cast<wchar_t*>(posctltip.tip);
+					break;
 				}
 			}
 
