@@ -213,7 +213,7 @@ VDVideoCompressorVCM::~VDVideoCompressorVCM() {
 	if (mbOwnHandle)
 		delete driver;
 
-	delete pConfigData;
+	delete[] (char*)pConfigData;
 	delete pPrevBuffer;
 }
 

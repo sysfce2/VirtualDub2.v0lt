@@ -475,7 +475,7 @@ VDCaptureData::VDCaptureData()
 	, mVideoSegmentIndex(0)
 	, mAudioSegmentIndex(0)
 	, mpVideoCompressor(NULL)
-	, pOutputBuffer(0)
+	, pOutputBuffer(NULL)
 	, mpOutput(NULL)
 	, mpOutputFile(NULL)
 	, mpOutputFilePending(NULL)
@@ -2482,8 +2482,8 @@ VDDEBUG("Capture has stopped.\n");
 		ShutdownFilter();
 
 	icd.mpVideoCompressor = NULL;
-	delete icd.pOutputBuffer;
-	icd.pOutputBuffer = 0;
+	delete[] (char*)icd.pOutputBuffer;
+	icd.pOutputBuffer = NULL;
 
 	if (icd.mpOutputFilePending && icd.mpOutputFilePending == icd.mpOutputFile)
 		icd.mpOutputFilePending = NULL;
