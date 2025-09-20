@@ -782,7 +782,7 @@ struct ProcessCommandLine {
 		forceAutoRecoverScan = false;
 		captureMode = false;
 	}
-	int scan(const VDCommandLine& cmdLine, bool execute);
+	int scan(const VDCommandLine& cmdLine, const bool execute);
 	int showHelp();
 };
 
@@ -859,7 +859,7 @@ int ProcessCommandLine::showHelp() {
 	}
 }
 
-int ProcessCommandLine::scan(const VDCommandLine& cmdLine, bool execute) {
+int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 	static const wchar_t seps[] = L" \t\n\r";
 
 	// parse cmdline looking for switches
@@ -1098,16 +1098,18 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, bool execute) {
 					if (execute) SetUnhandledExceptionFilter(NULL);
 				}
 				else if (!wcscmp(token, L"hexedit")) {
-					if (cmdLine.GetNextNonSwitchArgument(it, token))
+					if (cmdLine.GetNextNonSwitchArgument(it, token)) {
 						if (execute) HexEdit(NULL, token, false);
-					else
+					} else {
 						if (execute) HexEdit(NULL, NULL, false);
+					}
 				}
 				else if (!wcscmp(token, L"hexview")) {
-					if (cmdLine.GetNextNonSwitchArgument(it, token))
+					if (cmdLine.GetNextNonSwitchArgument(it, token)) {
 						if (execute) HexEdit(NULL, token, true);
-					else
+					} else {
 						if (execute) HexEdit(NULL, NULL, true);
+					}
 				}
 				else if (!wcscmp(token, L"i")) {
 					const wchar_t *filename;
