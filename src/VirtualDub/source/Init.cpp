@@ -1098,17 +1098,21 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 					if (execute) SetUnhandledExceptionFilter(NULL);
 				}
 				else if (!wcscmp(token, L"hexedit")) {
-					if (cmdLine.GetNextNonSwitchArgument(it, token)) {
-						if (execute) HexEdit(NULL, token, false);
-					} else {
-						if (execute) HexEdit(NULL, NULL, false);
+					if (execute) {
+						if (cmdLine.GetNextNonSwitchArgument(it, token)) {
+							HexEdit(NULL, token, false);
+						} else {
+							HexEdit(NULL, NULL, false);
+						}
 					}
 				}
 				else if (!wcscmp(token, L"hexview")) {
-					if (cmdLine.GetNextNonSwitchArgument(it, token)) {
-						if (execute) HexEdit(NULL, token, true);
-					} else {
-						if (execute) HexEdit(NULL, NULL, true);
+					if (execute) {
+						if (cmdLine.GetNextNonSwitchArgument(it, token)) {
+							HexEdit(NULL, token, true);
+						} else {
+							HexEdit(NULL, NULL, true);
+						}
 					}
 				}
 				else if (!wcscmp(token, L"i")) {
