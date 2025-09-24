@@ -347,7 +347,7 @@ void VDVideoCompressorVCM::internalStart(const void *outputFormat, uint32 output
 		if (!(info.dwFlags & VIDCF_FASTTEMPORALC)) {
 			// Allocate backbuffer
 
-			if (!(pPrevBuffer = new char[mInputFormat->biSizeImage]))
+			if (!(pPrevBuffer = new_nothrow char[mInputFormat->biSizeImage]))
 				throw MyMemoryError();
 		}
 	}
