@@ -705,7 +705,7 @@ void VideoSequenceCompressor::PackFrameInternal(void* dst, DWORD frameSize, DWOR
 }
 
 void* VideoSequenceCompressor::createResultBuffer() {
-	void* r = new char[lMaxPackedSize];
+	void* r = new_nothrow char[lMaxPackedSize];
 	if (!r)	throw MyMemoryError();
 	return r;
 }
