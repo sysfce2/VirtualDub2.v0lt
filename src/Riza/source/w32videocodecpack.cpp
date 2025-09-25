@@ -214,7 +214,7 @@ VDVideoCompressorVCM::~VDVideoCompressorVCM() {
 		delete driver;
 
 	delete[] (char*)pConfigData;
-	delete pPrevBuffer;
+	delete[] pPrevBuffer;
 }
 
 void VDVideoCompressorVCM::SetDriver(EncoderHIC* driver, uint32 kilobytesPerSecond, long quality, long keyrate, bool ownHandle) {
