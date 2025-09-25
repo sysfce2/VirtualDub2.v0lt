@@ -187,7 +187,7 @@ private:
 	sint32		mQualityLast;
 	sint32		mQualityHi;
 
-	void		*pConfigData;
+	char*		pConfigData;
 	int			cbConfigData;
 
 	VDStringW	mCodecName;
@@ -213,7 +213,7 @@ VDVideoCompressorVCM::~VDVideoCompressorVCM() {
 	if (mbOwnHandle)
 		delete driver;
 
-	delete[] (char*)pConfigData;
+	delete[] pConfigData;
 	delete[] pPrevBuffer;
 }
 
