@@ -708,11 +708,10 @@ static const char *CrashLookupExport(HMODULE hmod, uintptr_t addr, unsigned long
 
 	const char *pszName = NULL;
 	ulong bestdelta = 0xFFFFFFFF;
-	int i;
 
 	addr -= (uintptr_t)pBase;
 
-	for(i=0; i<pExportDir->nametbl_cnt; i++) {
+	for(ulong i=0; i<pExportDir->nametbl_cnt; i++) {
 		ulong fnaddr;
 		int idx;
 

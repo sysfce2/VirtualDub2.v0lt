@@ -463,10 +463,10 @@ void AVIVideoGIFOutputStream::write(uint32 flags, const void *pBuffer, uint32 cb
 	quant.Init();
 
 	if (!mFrameCount) {
-		for(uint32 y=0; y<pxdst.h; ++y) {
+		for(sint32 y=0; y<pxdst.h; ++y) {
 			const uint8 *src = (const uint8 *)vdptroffset(pxsrc.data, y * pxsrc.pitch);
 
-			for(uint32 x=0; x<pxdst.w; ++x) {
+			for(sint32 x=0; x<pxdst.w; ++x) {
 				quant.InsertColor(src[2], src[1], src[0]);
 				src += 4;
 			}
@@ -474,21 +474,21 @@ void AVIVideoGIFOutputStream::write(uint32 flags, const void *pBuffer, uint32 cb
 
 		quant.CreatePalette();
 
-		for(uint32 y=0; y<pxdst.h; ++y) {
+		for(sint32 y=0; y<pxdst.h; ++y) {
 			const uint8 *src = (const uint8 *)vdptroffset(pxsrc.data, y * pxsrc.pitch);
 			uint8 *dst = (uint8 *)vdptroffset(pxdst.data, y * pxdst.pitch);
 
-			for(uint32 x=0; x<pxdst.w; ++x) {
+			for(sint32 x=0; x<pxdst.w; ++x) {
 				*dst++ = quant.SearchOctree(src[2], src[1], src[0]);
 				src += 4;
 			}
 		}
 	} else {
-		for(uint32 y=0; y<pxdst.h; ++y) {
+		for(sint32 y=0; y<pxdst.h; ++y) {
 			const uint8 *src = (const uint8 *)vdptroffset(pxsrc.data, y * pxsrc.pitch);
 			const uint8 *prev = (const uint8 *)vdptroffset(mPrevConvertBuffer.data, y * mPrevConvertBuffer.pitch);
 
-			for(uint32 x=0; x<pxdst.w; ++x) {
+			for(sint32 x=0; x<pxdst.w; ++x) {
 				if (src[0] != prev[0] || src[1] != prev[1] || src[2] != prev[2])
 					quant.InsertColor(src[2], src[1], src[0]);
 
@@ -499,12 +499,12 @@ void AVIVideoGIFOutputStream::write(uint32 flags, const void *pBuffer, uint32 cb
 
 		quant.CreatePalette();
 
-		for(uint32 y=0; y<pxdst.h; ++y) {
+		for(sint32 y=0; y<pxdst.h; ++y) {
 			const uint8 *src = (const uint8 *)vdptroffset(pxsrc.data, y * pxsrc.pitch);
 			const uint8 *prev = (const uint8 *)vdptroffset(mPrevConvertBuffer.data, y * mPrevConvertBuffer.pitch);
 			uint8 *dst = (uint8 *)vdptroffset(pxdst.data, y * pxdst.pitch);
 
-			for(uint32 x=0; x<pxdst.w; ++x) {
+			for(sint32 x=0; x<pxdst.w; ++x) {
 				if (src[0] != prev[0] || src[1] != prev[1] || src[2] != prev[2])
 					*dst++ = quant.SearchOctree(src[2], src[1], src[0]);
 				else
@@ -669,7 +669,7 @@ void AVIVideoGIFOutputStream::write(uint32 flags, const void *pBuffer, uint32 cb
 	mFrameData.insert(mFrameData.end(), (const uint8 *)&imgdesc, (const uint8 *)(&imgdesc + 1));
 
 	// write local color table
-	for(int i=0; i<palsize; ++i) {
+	for(uint32 i=0; i<palsize; ++i) {
 		uint32 rgb = pal[i];
 
 		uint8 c[3] = {

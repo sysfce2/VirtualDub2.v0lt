@@ -449,14 +449,15 @@ bool VDUIJobControlDialog::OnMenuHit(uint32 id) {
 				break;
 
 			case ID_EDIT_DELETEDONEJOBS:
-				for(uint32 i=0; i<g_VDJobQueue.ListSize();) {
+				for(int i=0; i<g_VDJobQueue.ListSize();) {
 					VDJob *vdj = g_VDJobQueue.ListGet(i);
 
 					if (vdj->GetState() == VDJob::kStateCompleted) {
 						g_VDJobQueue.Delete(vdj, false);
 						delete vdj;
-					} else
+					} else {
 						++i;
+					}
 				}
 
 				break;
