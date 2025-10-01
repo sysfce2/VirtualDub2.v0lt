@@ -335,12 +335,12 @@ VDStringW VDMakeInputDriverFileFilter(const tVDInputDrivers& l, std::vector<int>
 	xlat.push_back(-1);
 	VDStringW finalfilter(L"All media types (");
 
-	int p = 0;
+	VDStringW::size_type p = 0;
 	int n = 0;
 	while(p<allspecs.length()){
-		int p1 = allspecs.length();
-		int p2 = allspecs.find(';',p);
-		if (p2!=-1 && p2<p1) p1 = p2;
+		VDStringW::size_type p1 = allspecs.length();
+		VDStringW::size_type p2 = allspecs.find(';',p);
+		if (p2!=VDStringW::npos && p2<p1) p1 = p2;
 		VDStringW pat = allspecs.subspan(p,p1-p);
 		const wchar_t* x = wcsstr(allspecs.c_str(),pat.c_str());
 		if (x-allspecs.c_str()==p) {
