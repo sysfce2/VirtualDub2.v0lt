@@ -1,6 +1,6 @@
 VirtualDub2.1 change log
 
-2.4.0.x dev
+2.4.1.930 - 2025-10-02
 ----------------------
 Settings are now stored in HKEY_CURRENT_USER\SOFTWARE\VirtualDub2\VirtualDub.
 Saving of some settings has been reworked.
@@ -8,6 +8,17 @@ The "Display" settings panel has been redesigned.
 Fixed crash of 64-bit version when using highpass, lowpass audio filters.
 Code refactoring for modern compilers.
 Cosmetic changes.
+
+Updated avlib-1.vdplugin to version 1.0.1.393.
+    The FFmpeg 8.0 x64 build from BtbN is used.
+    The FFmpeg 8.0 win32 build from Defisym is used.
+    Added saving and reading of encoder settings from the registry.
+    Added hardware video encoders NVENC, QSV, AMF for H.264 and HEVC.
+    Added hardware video encoders NVENC, AMF for AV1.
+    FFV1 version 0 video encoding is no longer supported.
+    Adjusted profile selection for ProRes encoder.
+    Allowed opening AviSynth scripts.
+    Cosmetic changes.
 
 
 2.3.0.845 - 2025-04-16
