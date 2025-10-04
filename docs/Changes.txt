@@ -1,5 +1,9 @@
 VirtualDub2.1 change log
 
+2.4.2.x dev
+----------------------
+
+
 2.4.1.930 - 2025-10-02
 ----------------------
 Settings are now stored in HKEY_CURRENT_USER\SOFTWARE\VirtualDub2\VirtualDub.
