@@ -18,6 +18,7 @@
 #include "stdafx.h"
 #include <vd2/system/vdtypes.h>
 #include <vd2/system/file.h>
+#include "../../VirtualDub/h/Version_num.h"
 
 #include <windows.h>
 
@@ -115,7 +116,7 @@ int get_version() {
 bool read_version() {
 	g_machineName = get_name();
 	g_versionMap.clear();
-	g_version = 0;
+	g_version = REV_NUM;
 
 	FILE *f = nullptr;
 	errno_t err = fopen_s(&f, "version2.bin","r");
