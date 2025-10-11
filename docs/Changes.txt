@@ -2,6 +2,7 @@ VirtualDub2.1 change log
 
 2.4.2.x dev
 ----------------------
+Fixed error text display in UTF-8, system ANSI, or mixed encoding (different encodings in different strings). This fixes the display of AviSynth+ errors.
 Cosmetic changes.
 
 

@@ -102,9 +102,11 @@ void MyError::post(HWND hWndParent, const char *title) const {
 		return;
 
 	VDDEBUG("*** %s: %s\n", title, mbuf);
-	VDLog(kVDLogError, VDswprintf(L"Error: %hs", 1, &mbuf));
 
-	MessageBoxA(hWndParent, mbuf, title, MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+	VDStringW errstr = VDTextLinesU8orAToW(mbuf, -1);
+	VDLog(kVDLogError, VDswprintf(L"Error: %s", 1, errstr));
+
+	MessageBoxW(hWndParent, errstr.c_str(), VDTextAToW(title).c_str(), MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
 }
 
 void MyError::discard() {

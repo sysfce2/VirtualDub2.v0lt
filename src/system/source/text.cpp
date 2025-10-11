@@ -280,6 +280,47 @@ bad_sequence_exit:
 	return w;
 }
 
+VDStringW VDTextLinesU8orAToW(const char* s, int length)
+{
+	if (length < 0) {
+		const char* t = s;
+		VDASSERT(length == -1);
+		do {
+			++length;
+		} while (*t++);
+	}
+
+	VDStringW wstr;
+	const char* pos = s;
+	const char* const end = s + length;
+
+	while (pos < end) {
+		const char* q = strchr(pos, '\n');
+		if (q) {
+			q++;
+		} else {
+			q = end;
+		}
+
+		const char* line = pos;
+		int line_size = (int)(q - pos);
+		UINT codePage = CP_UTF8;
+		int count = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, line, line_size, nullptr, 0);
+		if (count == 0) {
+			codePage = CP_ACP;
+			count = MultiByteToWideChar(CP_ACP, 0, line, line_size, nullptr, 0);
+		}
+
+		auto size = wstr.length();
+		wstr.resize(size + count);
+		MultiByteToWideChar(codePage, 0, line, line_size, &wstr[size], count);
+
+		pos = q;
+	}
+
+	return wstr;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 //
 //	VirtualDub's very own printf() functions.
