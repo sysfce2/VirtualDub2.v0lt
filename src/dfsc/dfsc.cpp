@@ -22,8 +22,7 @@
 #include "stdafx.h"
 #include "dfsc.h"
 #include <crtdbg.h>
-#include <STDIO.H>
-#include <TCHAR.H>
+#include <stdio.h>
 #include <vd2/Riza/bitmap.h>
 
 class DfscInstance {
@@ -167,9 +166,9 @@ BOOL DfscInstance::QueryAbout() {
 }
 
 DWORD DfscInstance::About(HWND hwnd) {
-  MessageBox(NULL, _T(
-          "DebugMode FrameServer VFW Codec\nCopyright 2000-2004 Satish Kumar. S\n\nhttp://www.debugmode.com/"),
-      _T("About"), MB_OK);
+  MessageBoxW(NULL,
+      L"DebugMode FrameServer VFW Codec\nCopyright 2000-2004 Satish Kumar. S\n\nhttp://www.debugmode.com/",
+      L"About", MB_OK);
   return ICERR_OK;
 }
 
@@ -381,13 +380,13 @@ DWORD DfscInstance::Decompress(ICDECOMPRESS* icinfo, DWORD dwSize) {
 
       vars->videoFrameIndex = ((DWORD*)icinfo->lpInput)[0];
       SetEvent(videoEncEvent);
-      // OutputDebugString("Waiting for video...");
+      // OutputDebugStringA("Waiting for video...");
 
       if (WaitForSingleObject(videoDecEvent, INFINITE) != WAIT_OBJECT_0)
         return ICERR_OK;            // some error.
       if (vars->encStatus == 1)         // encoder closed
         return ICERR_ABORT;
-      // OutputDebugString("got video...");
+      // OutputDebugStringA("got video...");
       memcpy(icinfo->lpOutput, ((LPBYTE)vars) + vars->videooffset, vars->videoBytesRead);
     }
     ReleaseSemaphore(videoEncSem, 1, NULL);
