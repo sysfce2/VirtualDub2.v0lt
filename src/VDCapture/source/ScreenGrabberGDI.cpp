@@ -27,7 +27,6 @@
 #include <vd2/VDCapture/ScreenGrabberGDI.h>
 #include "resource.h"
 #include <windows.h>
-#include <tchar.h>
 #include <dwmapi.h>
 
 extern HINSTANCE g_hInst;

@@ -28,7 +28,6 @@
 #include <vd2/system/w32assist.h>
 #include <vd2/VDCapture/ScreenGrabberGL.h>
 #include <windows.h>
-#include <tchar.h>
 
 using namespace nsVDCapture;
 

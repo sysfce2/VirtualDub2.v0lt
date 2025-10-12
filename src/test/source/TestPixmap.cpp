@@ -4,7 +4,6 @@
 #include <vd2/system/math.h>
 #include <vd2/system/memory.h>
 #include <vd2/system/vectors.h>
-#include <tchar.h>
 #include "test.h"
 
 DEFINE_TEST(Pixmap) {
