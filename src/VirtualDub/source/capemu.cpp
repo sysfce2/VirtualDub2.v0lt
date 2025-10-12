@@ -232,7 +232,7 @@ bool VDCaptureDriverEmulation::Init(VDGUIHandle hParent) {
 
 	mhwndParent = (HWND)hParent;
 
-	mhwndMessages = CreateWindowExW(0, (LPCTSTR)sMsgWndClass, L"", WS_POPUP, 0, 0, 0, 0, NULL, NULL, g_hInst, NULL);
+	mhwndMessages = CreateWindowExW(0, (LPCWSTR)sMsgWndClass, L"", WS_POPUP, 0, 0, 0, 0, NULL, NULL, g_hInst, NULL);
 	if (!mhwndMessages)
 		return false;
 

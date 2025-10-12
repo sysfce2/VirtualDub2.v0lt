@@ -1429,7 +1429,7 @@ bool VDVideoDisplayWindow::InitMiniDriver() {
 
 	RECT r;
 	GetClientRect(mhwnd, &r);
-	mhwndChild = CreateWindowExW(WS_EX_NOPARENTNOTIFY, (LPCTSTR)sChildWindowClass, L"", WS_CHILD|WS_VISIBLE|WS_CLIPSIBLINGS, 0, 0, r.right, r.bottom, mhwnd, NULL, VDGetLocalModuleHandleW32(), this);
+	mhwndChild = CreateWindowExW(WS_EX_NOPARENTNOTIFY, (LPCWSTR)sChildWindowClass, L"", WS_CHILD|WS_VISIBLE|WS_CLIPSIBLINGS, 0, 0, r.right, r.bottom, mhwnd, NULL, VDGetLocalModuleHandleW32(), this);
 	if (!mhwndChild)
 		return false;
 

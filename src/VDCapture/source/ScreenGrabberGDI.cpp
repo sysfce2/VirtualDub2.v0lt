@@ -358,8 +358,8 @@ bool VDScreenGrabberGDI::InitDisplay(HWND hwndParent, bool preview) {
 	const HINSTANCE hInst = VDGetLocalModuleHandleW32();
 
 	if (!mWndClass) {
-		TCHAR buf[64];
-		_sntprintf(buf, 64, _T("VDScreenGrabberGDI[%p])"), this);
+		WCHAR buf[64];
+		_snwprintf(buf, 64, L"VDScreenGrabberGDI[%p])", this);
 		buf[63] = 0;
 
 		WNDCLASS wc = { 0, StaticWndProc, 0, sizeof(VDScreenGrabberGDI *), hInst, NULL, NULL, NULL, NULL, buf };
@@ -373,7 +373,7 @@ bool VDScreenGrabberGDI::InitDisplay(HWND hwndParent, bool preview) {
 	// Create message sink.
 	const DWORD dwFlags = mbVisible ? WS_CHILD | WS_VISIBLE : WS_CHILD;
 
-	mhwnd = CreateWindow((LPCTSTR)mWndClass, _T(""), dwFlags, mDisplayArea.left, mDisplayArea.top, mDisplayArea.width(), mDisplayArea.height(), hwndParent, NULL, hInst, this);
+	mhwnd = CreateWindowW((LPCWSTR)mWndClass, L"", dwFlags, mDisplayArea.left, mDisplayArea.top, mDisplayArea.width(), mDisplayArea.height(), hwndParent, NULL, hInst, this);
 	if (!mhwnd) {
 		ShutdownDisplay();
 		return false;
@@ -397,7 +397,7 @@ void VDScreenGrabberGDI::ShutdownDisplay() {
 	}
 
 	if (mWndClass) {
-		UnregisterClass((LPCTSTR)mWndClass, VDGetLocalModuleHandleW32());
+		UnregisterClassW((LPCWSTR)mWndClass, VDGetLocalModuleHandleW32());
 		mWndClass = NULL;
 	}
 }

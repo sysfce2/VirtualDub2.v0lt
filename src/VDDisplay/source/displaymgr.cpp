@@ -456,7 +456,7 @@ bool VDVideoDisplayManager::RegisterWindowClass() {
 void VDVideoDisplayManager::UnregisterWindowClass() {
 	if (mWndClass) {
 		HMODULE hInst = VDGetLocalModuleHandleW32();
-		UnregisterClass((LPCTSTR)mWndClass, hInst);
+		UnregisterClassW((LPCWSTR)mWndClass, hInst);
 		mWndClass = NULL;
 	}
 }

@@ -1955,7 +1955,7 @@ bool VDCaptureDriverDS::Init(VDGUIHandle hParent) {
 
 	// Create message sink.
 
-	if (!(mhwndEventSink = CreateWindowW((LPCTSTR)sMsgSinkClass, L"", WS_POPUP, 0, 0, 0, 0, mhwndParent, NULL, g_hInst, this)))
+	if (!(mhwndEventSink = CreateWindowW((LPCWSTR)sMsgSinkClass, L"", WS_POPUP, 0, 0, 0, 0, mhwndParent, NULL, g_hInst, this)))
 		return false;
 
 	// Create a filter graph manager.
