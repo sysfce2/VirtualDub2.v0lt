@@ -13,7 +13,7 @@ DEFINE_TEST(Pixmap) {
 	// test pal1
 	for(int format=kPixFormat_Pal1; format<=kPixFormat_Pal8; ++format) {
 
-		_tprintf(_T("    Testing format %hs\n"), VDPixmapGetInfo(format).name);
+		printf("    Testing format %s\n", VDPixmapGetInfo(format).name);
 
 		int testw = 2048 >> (format - kPixFormat_Pal1);
 		int teststep = 8 >> (format - kPixFormat_Pal1);
@@ -335,7 +335,7 @@ DEFINE_TEST(Pixmap) {
 				VDPixmapBlt(inarray[i], srcarray[i]);
 			}
 
-			_tprintf(_T("    Testing source format %hs (size=%d)\n"), VDPixmapGetInfo(srcformat).name, size);
+			printf("    Testing source format %s (size=%d)\n", VDPixmapGetInfo(srcformat).name, size);
 
 			VDPixmapBuffer in(size, size, srcformat);
 
