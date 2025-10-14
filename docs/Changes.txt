@@ -1,9 +1,19 @@
 VirtualDub2.1 change log
 
-2.4.2.x dev
+2.4.3.944 - 2025-10-14
 ----------------------
 Fixed error text display in UTF-8, system ANSI, or mixed encoding (different encodings in different strings). This fixes the display of AviSynth+ errors.
 Cosmetic changes.
+Updated avlib-1.vdplugin to version 1.0.3.410.
+    Fixed a temporary freeze in the file open window when selecting certain .avs files. AviSynth script files are now identified by extension.
+    Fixed frame navigation for Avisynth script files.
+    Added display of FFmpeg error text when attempting to open a file fails.
+Updated scripted.vdplugin to version 0.3.1.123.
+    Settings are now saved in HKEY_CURRENT_USER\SOFTWARE\VirtualDub2\Script Editor.
+    Implemented the ability to save scripts opened in other programs with read access.
+    Fixed the display of error text when opening an AviSynth script file fails.
+    Changed the text highlighting styles for AviSynth and VapourSynth scripts.
+    Cosmetic changes.
 
 
 2.4.1.930 - 2025-10-02
