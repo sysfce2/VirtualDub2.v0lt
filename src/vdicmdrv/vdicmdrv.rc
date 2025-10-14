@@ -107,7 +107,7 @@ END
 IDD_ABOUT DIALOG DISCARDABLE  0, 0, 215, 77
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About VirtualDub ICM driver"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
 BEGIN
     DEFPUSHBUTTON   "OK",IDCANCEL,82,56,50,14
     CTEXT           "VirtualDub remote frameclient ICM driver, v1.0\n\nCopyright © 1998-2000 Avery Lee, All Rights Reserved.",
