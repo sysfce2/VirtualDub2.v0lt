@@ -500,15 +500,13 @@ INT_PTR CALLBACK DivXWarningDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPA
     return FALSE;
 }
 
-static bool DetectDriver(const char *pszName) {
-	char szDriverANSI[256];
+static bool DetectDriver(const wchar_t *pszName) {
 	ICINFO info = { sizeof(ICINFO) };
 
 	for(int i=0; ICInfo(ICTYPE_VIDEO, i, &info); ++i) {
-		if (WideCharToMultiByte(CP_ACP, 0, info.szDriver, -1, szDriverANSI, sizeof szDriverANSI, NULL, NULL)
-			&& !_stricmp(szDriverANSI, pszName))
-
+		if (_wcsicmp(info.szDriver, pszName) == 0) {
 			return true;
+		}
 	}
 
 	return false;
@@ -518,14 +516,14 @@ void DetectDivX() {
 	VDRegistryAppKey key;
 
 	if (!key.getInt("SeenDivXWarning", 0)) {
-		if (DetectDriver("divxc32.dll") || DetectDriver("divxc32f.dll")) {
+		if (DetectDriver(L"divxc32.dll") || DetectDriver(L"divxc32f.dll")) {
 			DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_DIVX_WARNING), NULL, DivXWarningDlgProc, (LPARAM)g_szDivXWarning);
 
 			key.setInt("SeenDivXWarning", 1);
 		}
 	}
 	if (!key.getInt("SeenAngelPotionWarning", 0)) {
-		if (DetectDriver("APmpg4v1.dll")) {
+		if (DetectDriver(L"APmpg4v1.dll")) {
 
 			DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_DIVX_WARNING), NULL, DivXWarningDlgProc, (LPARAM)g_szAPWarning);
 
