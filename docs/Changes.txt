@@ -1,4 +1,8 @@
-VirtualDub2.1 change log
+VirtualDub2.x change log
+
+2.4.4.x dev
+----------------------
+
 
 2.4.3.944 - 2025-10-14
 ----------------------
