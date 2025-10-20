@@ -72,6 +72,7 @@ protected:
 	int OnScroll(int type, int action, bool bForceExtreme);
 	void ScrollTo(sint32 pos);
 
+	void CreateBuffer(vdfastvector<wchar_t>& buffer);
 	void CreateBuffer(vdfastvector<char>& buffer);
 
 protected:	// internal functions
@@ -458,25 +459,27 @@ void VDLogWindowControl::OnCommand(int cmd) {
 	case ID_LOG_COPY:
 		if (OpenClipboard(mhwnd)) {
 			if (EmptyClipboard()) {
-				vdfastvector<char> buffer;
+				vdfastvector<wchar_t> buffer;
 
 				CreateBuffer(buffer);
 
-				HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, buffer.size() + 1);
+				HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, (buffer.size() + 1) * sizeof(wchar_t));
 
 				if (hMem) {
 					LPVOID ptr = GlobalLock(hMem);
 
 					if (ptr) {
-						memcpy(ptr, buffer.data(), buffer.size());
-						((char *)ptr)[buffer.size()] = 0;
+						memcpy(ptr, buffer.data(), buffer.size() * sizeof(wchar_t));
+						((wchar_t*)ptr)[buffer.size()] = 0;
 						GlobalUnlock(hMem);
-						if (SetClipboardData(CF_TEXT, hMem))
+						if (SetClipboardData(CF_UNICODETEXT, hMem)) {
 							hMem = NULL;
+						}
 					}
 
-					if (hMem)
+					if (hMem) {
 						GlobalFree(hMem);
+					}
 				}
 			}
 			CloseClipboard();
@@ -714,6 +717,76 @@ void VDLogWindowControl::Draw(HDC hdc, const VDStringW& s, RECT& r, bool bSizeOn
 	if (bSizeOnly)
 		r.bottom = y;
 #endif
+}
+
+void VDLogWindowControl::CreateBuffer(vdfastvector<wchar_t>& buffer)
+{
+	buffer.clear();
+
+	tLineArray::const_iterator it(mLineArray.begin()), itEnd(mLineArray.end());
+
+	// don't process marker
+	if (itEnd != it)
+		--itEnd;
+
+	for (; it != itEnd; ++it) {
+		const Entry& e = *it;
+		const VDStringW& s = *e.mpText;
+
+		// sigh... more word wrapping code....
+		VDStringW::size_type nPos = 0;
+		const VDStringW::size_type nChars = s.size();
+
+		while (nPos < nChars) {
+			VDStringW::size_type nLineEnd = s.find(L'\n', nPos);
+
+			if (nLineEnd == VDStringW::npos)
+				nLineEnd = nChars;
+
+			while (nPos < nLineEnd) {
+				const int nMaxChars = std::min<int>(74, nLineEnd - nPos);
+				size_t nEnd = nPos + nMaxChars;
+
+				if (!nMaxChars) {
+					// If no characters fit, force one.
+					++nEnd;
+				}
+				else {
+					// check for split in word
+					if (nEnd < nLineEnd && s.data()[nEnd] != L' ') {
+						while (nEnd > nPos && s.data()[nEnd - 1] != L' ')
+							--nEnd;
+
+						// check for one-long-word case
+						if (nEnd == nPos)
+							nEnd += nMaxChars;		// hack the word
+					}
+				}
+
+				const int alen = nEnd - nPos;
+				int blen = buffer.size();
+
+				buffer.resize(blen + alen + 6, ' ');
+				if (!nPos) {
+					buffer[blen] = '[';
+					buffer[blen + 1] = "i*!E"[e.mSeverity];
+					buffer[blen + 2] = ']';
+				}
+				wcsncpy_s(&buffer[blen + 4], alen+1, s.data() + nPos, alen);
+				buffer[blen + alen + 4] = '\r';
+				buffer[blen + alen + 5] = '\n';
+
+				nPos = nEnd;
+				while (nPos < nLineEnd && s.data()[nPos] == L' ')
+					++nPos;
+			}
+
+			nPos = nLineEnd + 1;
+		}
+
+		buffer.push_back('\r');
+		buffer.push_back('\n');
+	}
 }
 
 void VDLogWindowControl::CreateBuffer(vdfastvector<char>& buffer) {
