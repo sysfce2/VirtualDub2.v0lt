@@ -744,23 +744,12 @@ void VDLogWindowControl::CreateBuffer(vdfastvector<wchar_t>& buffer)
 				nLineEnd = nChars;
 
 			while (nPos < nLineEnd) {
-				const int nMaxChars = std::min<int>(74, nLineEnd - nPos);
+				const int nMaxChars = nLineEnd - nPos;
 				size_t nEnd = nPos + nMaxChars;
 
 				if (!nMaxChars) {
 					// If no characters fit, force one.
 					++nEnd;
-				}
-				else {
-					// check for split in word
-					if (nEnd < nLineEnd && s.data()[nEnd] != L' ') {
-						while (nEnd > nPos && s.data()[nEnd - 1] != L' ')
-							--nEnd;
-
-						// check for one-long-word case
-						if (nEnd == nPos)
-							nEnd += nMaxChars;		// hack the word
-					}
 				}
 
 				const int alen = nEnd - nPos;
@@ -813,22 +802,12 @@ void VDLogWindowControl::CreateBuffer(vdfastvector<char>& buffer) {
 				nLineEnd = nChars;
 
 			while(nPos < nLineEnd) {
-				const int nMaxChars = std::min<int>(74, nLineEnd - nPos);
+				const int nMaxChars = nLineEnd - nPos;
 				size_t nEnd = nPos + nMaxChars;
 
 				if (!nMaxChars) {
 					// If no characters fit, force one.
 					++nEnd;
-				} else {
-					// check for split in word
-					if (nEnd < nLineEnd && s.data()[nEnd] != L' ') {
-						while(nEnd > nPos && s.data()[nEnd-1] != L' ')
-							--nEnd;
-
-						// check for one-long-word case
-						if (nEnd == nPos)
-							nEnd += nMaxChars;		// hack the word
-					}
 				}
 
 				int alen = VDTextWToALength(s.data() + nPos, nEnd - nPos);
