@@ -73,7 +73,7 @@ protected:
 	void ScrollTo(sint32 pos);
 
 	VDStringW GetLogText();
-	void CreateBuffer(vdfastvector<char>& buffer);
+	VDStringA GetLogTextU8();
 
 protected:	// internal functions
 	const HWND mhwnd;
@@ -441,14 +441,12 @@ void VDLogWindowControl::OnCommand(int cmd) {
 			const VDStringW fname(VDGetSaveFileName(kFileDialog_Log, (VDGUIHandle)mhwnd, L"Save log", L"Text file (*.txt)\0*.txt\0", L"txt", NULL, NULL));
 
 			if (!fname.empty()) {
-				vdfastvector<char> buffer;
-
-				CreateBuffer(buffer);
+				VDStringA logTextU8 = GetLogTextU8();
 
 				try {
 					VDFile file(fname.c_str(), nsVDFile::kWrite | nsVDFile::kDenyAll | nsVDFile::kCreateAlways);
 
-					file.write(buffer.data(), buffer.size());
+					file.write(logTextU8.data(), logTextU8.length());
 					file.close();
 				} catch(const MyError& e) {
 					e.post(mhwnd, g_szError);
@@ -760,62 +758,55 @@ VDStringW VDLogWindowControl::GetLogText()
 	return logText;
 }
 
-void VDLogWindowControl::CreateBuffer(vdfastvector<char>& buffer) {
-	buffer.clear();
+VDStringA VDLogWindowControl::GetLogTextU8()
+{
+	VDStringA logText;
 
-	tLineArray::const_iterator it(mLineArray.begin()), itEnd(mLineArray.end());
+	size_t estimated_len = 0;
+	for (const auto& entry : mLineArray) {
+		if (!entry.mpText) {
+			continue; // don't process marker
+		}
+		estimated_len += entry.mpText->length() * 3 / 2;
+		estimated_len += (4 + 2) * 2;
+	}
 
-	// don't process marker
-	if (itEnd != it)
-		--itEnd;
+	logText.reserve(estimated_len);
 
-	for(; it!=itEnd; ++it) {
-		const Entry& e = *it;
-		const VDStringW& s = *e.mpText;
+	for (const auto& entry : mLineArray) {
+		if (!entry.mpText) {
+			continue; // don't process marker
+		}
+		const wchar_t* pos = entry.mpText->data();
+		const wchar_t* const end = entry.mpText->data() + entry.mpText->length();
 
-		// sigh... more word wrapping code....
-		VDStringW::size_type nPos = 0;
-		const VDStringW::size_type nChars = s.size();
-
-		while(nPos < nChars) {
-			VDStringW::size_type nLineEnd = s.find(L'\n', nPos);
-
-			if (nLineEnd == VDStringW::npos)
-				nLineEnd = nChars;
-
-			while(nPos < nLineEnd) {
-				const int nMaxChars = nLineEnd - nPos;
-				size_t nEnd = nPos + nMaxChars;
-
-				if (!nMaxChars) {
-					// If no characters fit, force one.
-					++nEnd;
-				}
-
-				int alen = VDTextWToALength(s.data() + nPos, nEnd - nPos);
-				int blen = buffer.size();
-
-				buffer.resize(blen + alen + 6, ' ');
-				if (!nPos) {
-					buffer[blen] = '[';
-					buffer[blen+1] = "i*!E"[e.mSeverity];
-					buffer[blen+2] = ']';
-				}
-				VDTextWToA(&buffer[blen + 4], alen, s.data() + nPos, nEnd-nPos);
-				buffer[blen+alen+4] = '\r';
-				buffer[blen+alen+5] = '\n';
-
-				nPos = nEnd;
-				while(nPos < nLineEnd && s.data()[nPos] == L' ')
-					++nPos;
+		while (pos < end) {
+			const wchar_t* q = wcschr(pos, L'\n');
+			if (!q) {
+				q = end;
 			}
 
-			nPos = nLineEnd + 1;
-		}
+			if (pos == entry.mpText->data()) {
+				logText.append_sprintf("[%c] ", "i*!E"[entry.mSeverity]);
+			} else {
+				logText.append("    ");
+			}
 
-		buffer.push_back('\r');
-		buffer.push_back('\n');
+			int line_size = (int)(q - pos);
+			int count = WideCharToMultiByte(CP_UTF8, 0, pos, line_size, nullptr, 0, nullptr, 0);
+			if (count > 0) {
+				auto size = logText.length();
+				logText.resize(logText.length() + count);
+				count = WideCharToMultiByte(CP_UTF8, 0, pos, line_size, &logText[size], count, nullptr, 0);
+			}
+
+			logText.append("\r\n");
+
+			pos = q + 1; // skip "\n"
+		}
 	}
+
+	return logText;
 }
 
 ///////////////////////////////////////////////////////////////////////////
