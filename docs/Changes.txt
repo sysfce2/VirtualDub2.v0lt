@@ -1,6 +1,6 @@
 VirtualDub2.x change log
 
-2.4.4.x dev
+2.5.0.x dev
 ----------------------
 
 
