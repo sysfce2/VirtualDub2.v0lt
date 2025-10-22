@@ -743,10 +743,10 @@ void VDUIJobControlDialog::GetJobListDispInfoW(NMLVDISPINFOW *nldi) {
 		VDTextAToW(nldi->item.pszText, nldi->item.cchTextMax, vdj->GetName());
 		break;
 	case 1:		// file in
-		VDTextAToW(nldi->item.pszText, nldi->item.cchTextMax, VDFileSplitPath(vdj->GetInputFile()));
+		wcscpy_s(nldi->item.pszText, nldi->item.cchTextMax, VDFileSplitPath(vdj->GetInputFile()));
 		break;
 	case 2:		// file out
-		VDTextAToW(nldi->item.pszText, nldi->item.cchTextMax, VDFileSplitPath(vdj->GetOutputFile()));
+		wcscpy_s(nldi->item.pszText, nldi->item.cchTextMax, VDFileSplitPath(vdj->GetOutputFile()));
 		break;
 	case 3:		// time in
 		ft = &vdj->mDateStart;

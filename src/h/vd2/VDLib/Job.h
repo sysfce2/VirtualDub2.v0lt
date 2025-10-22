@@ -56,13 +56,11 @@ public:
 	const char *	GetProjectDir() const			{ return mProjectDir.c_str(); }
 	void			SetProjectDir(const char *name)	{ mProjectDir = name; }
 
-	const char *	GetInputFile() const			{ return mInputFile.c_str(); }
-	void			SetInputFile(const char *file)	{ mInputFile = file; }
-	void			SetInputFile(const wchar_t *file);
+	const wchar_t*	GetInputFile() const				{ return mInputFile.c_str(); }
+	void			SetInputFile(const wchar_t* file)	{ mInputFile = file; }
 
-	const char *	GetOutputFile() const			{ return mOutputFile.c_str(); }
-	void			SetOutputFile(const char *file)	{ mOutputFile = file; }
-	void			SetOutputFile(const wchar_t *file);
+	const wchar_t*	GetOutputFile() const				{ return mOutputFile.c_str(); }
+	void			SetOutputFile(const wchar_t* file)	{ mOutputFile = file; }
 
 	const char *	GetError() const				{ return mError.c_str(); }
 	void			SetError(const char *err)		{ mError = err; }
@@ -99,8 +97,8 @@ public:
 	VDStringA	mRunnerName;
 protected:
 	VDStringA	mName;
-	VDStringA	mInputFile;
-	VDStringA	mOutputFile;
+	VDStringW	mInputFile;
+	VDStringW	mOutputFile;
 	VDStringA	mError;
 	VDStringA	mScript;
 	int mScriptLine;

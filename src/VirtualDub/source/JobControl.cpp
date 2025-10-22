@@ -643,13 +643,13 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 
 					VDStringA inputFile;
 					strgetarg(inputFile, t);
-					job->SetInputFile(inputFile.c_str());
+					job->SetInputFile(VDTextU8ToW(inputFile).c_str());
 
 				} else if (!_stricmp(s, "output")) {
 
 					VDStringA outputFile;
 					strgetarg(outputFile, t);
-					job->SetOutputFile(outputFile.c_str());
+					job->SetOutputFile(VDTextU8ToW(outputFile).c_str());
 
 				} else if (!_stricmp(s, "error")) {
 
@@ -1048,8 +1048,8 @@ void VDJobQueue::Save(IVDStream *stream, uint64 signature, uint32 revision, bool
 
 		output.FormatLine("// $job \"%s\""		, vdj->GetName());
 		output.FormatLine("// $data \"%s\""		, vdj->GetProjectSubdir());
-		output.FormatLine("// $input \"%s\""	, vdj->GetInputFile());
-		output.FormatLine("// $output \"%s\""	, vdj->GetOutputFile());
+		output.FormatLine("// $input \"%s\""	, VDTextWToU8(vdj->GetInputFile(), -1).c_str());
+		output.FormatLine("// $output \"%s\""	, VDTextWToU8(vdj->GetOutputFile(), -1).c_str());
 		output.FormatLine("// $state %d"		, state);
 		output.FormatLine("// $id %llx"			, vdj->mId);
 
