@@ -543,7 +543,7 @@ IVDInputDriver *VDAutoselectInputDriverForFile(const wchar_t *fn, uint32 flags) 
 			}
 		}
 
-		throw MyFileError(MyFileError::file_type_unknown, "The file \"%ls\" is of an unknown or unsupported file type.", fn);
+		throw MyFileError(MyFileError::file_type_unknown, "The file \"%s\" is of an unknown or unsupported file type.", VDTextWToU8(fn, -1).c_str());
 	}
 
 	IVDInputDriver* driver = list[x];
