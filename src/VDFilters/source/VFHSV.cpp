@@ -1504,29 +1504,29 @@ static INT_PTR CALLBACK hsvDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPAR
 				HWND hwndSlider = (HWND)lParam;
 				int val = SendMessage(hwndSlider, TBM_GETPOS, 0, 0);
 				int newval;
-				char buf[64];
+				wchar_t buf[12];
 				bool redo = false;
 
 				switch(GetWindowLong(hwndSlider, GWL_ID)) {
 				case IDC_HUE:
-					sprintf(buf, "%+.1f%s", (val-0x800) * (360.0 / 4096.0), VDTextWToA(L"\u00B0").c_str());
-					SetDlgItemTextA(hDlg, IDC_STATIC_HUE, buf);
+					swprintf_s(buf, L"%+.1f\u00B0", (val-0x800) * (360.0 / 4096.0));
+					SetDlgItemTextW(hDlg, IDC_STATIC_HUE, buf);
 					newval = ((val+0x800)<<4) & 0xfff0;
 					if (newval != mfd->hue)
 						redo = true;
 					mfd->hue = newval;
 					break;
 				case IDC_SATURATION:
-					sprintf(buf, "x%.1f%%", val * (100.0 / 4096.0));
-					SetDlgItemTextA(hDlg, IDC_STATIC_SATURATION, buf);
+					swprintf_s(buf, L"x%.1f%%", val * (100.0 / 4096.0));
+					SetDlgItemTextW(hDlg, IDC_STATIC_SATURATION, buf);
 					if (val != mfd->sat) {
 						mfd->sat = val << 4;
 						redo = true;
 					}
 					break;
 				case IDC_VALUE:
-					sprintf(buf, "%+.1f%%", val * (100. / 4096.0) - 100.0);
-					SetDlgItemTextA(hDlg, IDC_STATIC_VALUE, buf);
+					swprintf_s(buf, L"%+.1f%%", val * (100. / 4096.0) - 100.0);
+					SetDlgItemTextW(hDlg, IDC_STATIC_VALUE, buf);
 					newval = (val<<4) - 65536;
 					if (newval != mfd->val) {
 						mfd->val = newval;
