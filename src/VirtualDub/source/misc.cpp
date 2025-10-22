@@ -205,17 +205,15 @@ VDStringA VDEncodeScriptString(const VDStringSpanA& sa) {
 	VDStringA out;
 
 	// this is not very fast, but it's only used during script serialization
-	for(VDStringA::const_iterator it(sa.begin()), itEnd(sa.end()); it != itEnd; ++it) {
+	for (VDStringA::const_iterator it(sa.begin()), itEnd(sa.end()); it != itEnd; ++it) {
 		char c = *it;
-		char buf[16];
 
-		if (!isprint((unsigned char)c)) {
-			sprintf(buf, "\\x%02x", (int)c & 0xff);
-			out.append(buf);
-		} else {
-			if (c == '"' || c=='\\')
-				out += '\\';
-			out += c;
+		switch (c) {
+		case '\\': out += "\\\\";  break;
+		case '\"': out += "\\\"";  break;
+		case '\r': out += "\\r";   break;
+		case '\n': out += "\\n";   break;
+		default: out += c;
 		}
 	}
 
