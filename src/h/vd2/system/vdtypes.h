@@ -204,7 +204,8 @@ enum VDAssertResult {
 
 extern VDAssertResult VDAssert(const char *exp, const char *file, int line);
 extern VDAssertResult VDAssertPtr(const char *exp, const char *file, int line);
-extern void VDDebugPrint(const char *format, ...);
+extern void VDDebugPrint(const char* format, ...);
+extern void VDDebugPrint(const wchar_t* format, ...);
 
 #if defined(_MSC_VER)
 	#define VDBREAK		__debugbreak()

@@ -141,9 +141,9 @@ void MyError::post(HWND hWndParent, const char *title) const {
 		return;
 	}
 
-	VDDEBUG("*** %s: %s\n", title, mbuf);
+	VDDEBUG(L"*** %hs: %s\n", title, mbuf);
 
-	VDLog(kVDLogError, VDswprintf(L"Error: %s", 1, mbuf));
+	VDLog(kVDLogError, VDswprintf(L"Error: %s", 1, &mbuf));
 
 	MessageBoxW(hWndParent, mbuf, VDTextAToW(title).c_str(), MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
 }

@@ -129,7 +129,8 @@ VDAssertResult VDAssertPtr(const char *exp, const char *file, int line) {
 
 #endif
 
-void VDDebugPrint(const char *format, ...) {
+void VDDebugPrint(const char* format, ...)
+{
 	char buf[4096];
 	buf[0] = 0;
 
@@ -140,6 +141,20 @@ void VDDebugPrint(const char *format, ...) {
 
 	Sleep(0);
 	OutputDebugStringA(buf);
+}
+
+extern void VDDebugPrint(const wchar_t* format, ...)
+{
+	wchar_t buf[4096];
+	buf[0] = 0;
+
+	va_list val;
+	va_start(val, format);
+	_vsnwprintf_s(buf, _TRUNCATE, format, val);
+	va_end(val);
+
+	Sleep(0);
+	OutputDebugStringW(buf);
 }
 
 ///////////////////////////////////////////////////////////////////////////
