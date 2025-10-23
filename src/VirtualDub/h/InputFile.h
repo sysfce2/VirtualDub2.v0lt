@@ -46,7 +46,7 @@ public:
 	};
 	int error;
 
-	MyFileError(int error, const char *f, ...);
+	MyFileError(int error, const wchar_t* f, ...);
 };
 
 class InputFileOptions {

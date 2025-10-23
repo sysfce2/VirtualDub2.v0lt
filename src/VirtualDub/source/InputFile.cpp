@@ -31,7 +31,7 @@
 extern const char g_szError[];
 extern const wchar_t fileFiltersAppendAll[];
 
-MyFileError::MyFileError(int error, const char *format, ...) {
+MyFileError::MyFileError(int error, const wchar_t* format, ...) {
 	va_list val;
 
 	va_start(val, format);
@@ -543,7 +543,7 @@ IVDInputDriver *VDAutoselectInputDriverForFile(const wchar_t *fn, uint32 flags) 
 			}
 		}
 
-		throw MyFileError(MyFileError::file_type_unknown, "The file \"%s\" is of an unknown or unsupported file type.", VDTextWToU8(fn, -1).c_str());
+		throw MyFileError(MyFileError::file_type_unknown, L"The file \"%s\" is of an unknown or unsupported file type.", fn);
 	}
 
 	IVDInputDriver* driver = list[x];
