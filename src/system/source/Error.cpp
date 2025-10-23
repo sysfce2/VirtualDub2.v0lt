@@ -32,15 +32,22 @@
 #include <vd2/system/log.h>
 
 MyError::MyError() {
-	mbuf = NULL;
 }
 
 MyError::MyError(const MyError& err) {
-	mbuf = _strdup(err.mbuf);
+	mbuf = _wcsdup(err.mbuf);
 }
 
-MyError::MyError(const char *f, ...)
-	: mbuf(NULL)
+MyError::MyError(const wchar_t* f, ...)
+{
+	va_list val;
+
+	va_start(val, f);
+	vsetf(f, val);
+	va_end(val);
+}
+
+MyError::MyError(const char* f, ...)
 {
 	va_list val;
 
@@ -54,59 +61,91 @@ MyError::~MyError() {
 }
 
 void MyError::clear() {
-	if (mbuf)			// we do this check because debug free() always does a heapchk even if mbuf==NULL
+	if (mbuf) {			// we do this check because debug free() always does a heapchk even if mbuf==NULL
 		free(mbuf);
-	mbuf = NULL;
+		mbuf = nullptr;
+	}
 }
 
 void MyError::assign(const MyError& e) {
-	if (mbuf)
+	if (mbuf) {
 		free(mbuf);
-	mbuf = _strdup(e.mbuf);
+	}
+	mbuf = _wcsdup(e.mbuf);
 }
 
-void MyError::assign(const char *s) {
-	if (mbuf)
+void MyError::assign(const wchar_t* s)
+{
+	if (mbuf) {
 		free(mbuf);
-	mbuf = _strdup(s);
+	}
+	mbuf = _wcsdup(s);
 }
 
-void MyError::setf(const char *f, ...) {
+void MyError::setf(const wchar_t* f, ...)
+{
 	va_list val;
 
 	va_start(val, f);
-	vsetf(f,val);
+	vsetf(f, val);
 	va_end(val);
 }
 
-void MyError::vsetf(const char *f, va_list val) {
+void MyError::setf(const char* f, ...)
+{
+	va_list val;
+
+	va_start(val, f);
+	vsetf(f, val);
+	va_end(val);
+}
+
+void MyError::vsetf(const wchar_t* f, va_list val)
+{
 	free(mbuf);
 	mbuf = NULL;
 
-	int len = _vscprintf(f, val);
+	int len = _vscwprintf(f, val);
 	if (len >= 0) {
 		size_t size = std::min(len + 1, 32768);
 
-		mbuf = (char*)malloc(size);
+		mbuf = (wchar_t*)malloc(size* sizeof(wchar_t));
 		if (!mbuf) {
 			return;
 		}
 		mbuf[0] = 0;
 
-		_vsnprintf_s(mbuf, size, _TRUNCATE, f, val);
+		_vsnwprintf_s(mbuf, size, _TRUNCATE, f, val);
+	}
+}
+
+void MyError::vsetf(const char* f, va_list val)
+{
+	int len = _vscprintf(f, val);
+	if (len >= 0) {
+		size_t size = std::min(len + 1, 32768);
+
+		vdfastvector<char> buf(size);
+		buf[0] = 0;
+
+		_vsnprintf_s(buf.data(), size, _TRUNCATE, f, val);
+
+		VDStringW str = VDTextAToW(buf.data(), size - 1);
+
+		assign(str.c_str());
 	}
 }
 
 void MyError::post(HWND hWndParent, const char *title) const {
-	if (!mbuf || !*mbuf)
+	if (!mbuf || !*mbuf) {
 		return;
+	}
 
 	VDDEBUG("*** %s: %s\n", title, mbuf);
 
-	VDStringW errstr = VDTextLinesU8orAToW(mbuf, -1);
-	VDLog(kVDLogError, VDswprintf(L"Error: %s", 1, errstr));
+	VDLog(kVDLogError, VDswprintf(L"Error: %s", 1, mbuf));
 
-	MessageBoxW(hWndParent, errstr.c_str(), VDTextAToW(title).c_str(), MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+	MessageBoxW(hWndParent, mbuf, VDTextAToW(title).c_str(), MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
 }
 
 void MyError::discard() {
@@ -115,7 +154,7 @@ void MyError::discard() {
 }
 
 void MyError::swap(MyError& err) {
-	char *s = err.mbuf;
+	wchar_t* s = err.mbuf;
 	err.mbuf = mbuf;
 	mbuf = s;
 }
@@ -129,18 +168,32 @@ void MyError::TransferFrom(MyError& err) {
 }
 
 MyMemoryError::MyMemoryError() {
-	setf("Out of memory");
+	setf(L"Out of memory");
 }
 
 MyMemoryError::MyMemoryError(size_t requestedSize) {
-	setf("Out of memory (unable to allocate %llu bytes)", (unsigned long long)requestedSize);
+	setf(L"Out of memory (unable to allocate %zu bytes)", requestedSize);
 }
 
 MyUserAbortError::MyUserAbortError() {
-	mbuf = _strdup("");
+	mbuf = _wcsdup(L"");
 }
 
-MyInternalError::MyInternalError(const char *format, ...) {
+MyInternalError::MyInternalError(const wchar_t* format, ...)
+{
+	wchar_t buf[1024];
+	buf[0] = 0;
+
+	va_list val;
+	va_start(val, format);
+	_vsnwprintf_s(buf, _TRUNCATE, format, val);
+	va_end(val);
+
+	setf(L"Internal error: %s", buf);
+}
+
+MyInternalError::MyInternalError(const char* format, ...)
+{
 	char buf[1024];
 	buf[0] = 0;
 
@@ -149,5 +202,5 @@ MyInternalError::MyInternalError(const char *format, ...) {
 	_vsnprintf_s(buf, _TRUNCATE, format, val);
 	va_end(val);
 
-	setf("Internal error: %s", buf);
+	setf(L"Internal error: %s", buf);
 }

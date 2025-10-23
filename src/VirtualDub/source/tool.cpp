@@ -214,7 +214,7 @@ void VDToolExecuteCommand(int id, HWND parent) {
 
 bool VDToolCatchError(FileNameCommand* cmd, const MyError& e) {
 	VDTool* tool = (VDTool*)cmd->object;
-	return tool->object->HandleError(e.c_str(),0,cmd->userData);
+	return tool->object->HandleError(VDTextWToA(e.c_str()).c_str(), 0, cmd->userData);
 }
 
 bool VDCheckToolsDialogs(LPMSG pMsg) {
@@ -251,8 +251,9 @@ bool VDToolsHandleFileOpenError(const wchar_t* fname, const wchar_t* driver_name
 		VDTool *p = *it;
 		if (p->version<2) continue;
 
-		if (p->object->HandleFileOpenError(fname, driver_name, (VDXHWND)parent, e.c_str(), line))
+		if (p->object->HandleFileOpenError(fname, driver_name, (VDXHWND)parent, VDTextWToA(e.c_str()).c_str(), line)) {
 			return true;
+		}
 	}
 
 	return false;

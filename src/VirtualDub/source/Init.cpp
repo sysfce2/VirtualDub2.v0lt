@@ -1346,10 +1346,11 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 		}
 	} catch(const MyError& e) {
 		if (g_consoleMode) {
-			const char *err = e.gets();
+			const wchar_t* err = e.gets();
 
-			if (err)
-				VDLog(kVDLogError, VDTextAToW(err));
+			if (err) {
+				VDLog(kVDLogError, err);
+			}
 
 			rc = 5;
 		} else {

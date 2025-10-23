@@ -1047,20 +1047,20 @@ void FilterPreview::OnPaint() {
 		SetTextColor(hdc, 0);
 
 		HGDIOBJ hgoFont = SelectObject(hdc, GetStockObject(DEFAULT_GUI_FONT));
-		char buf[1024];
-		const char *s = mFailureReason.gets();
-		_snprintf(buf, sizeof buf, "Unable to start filters:\n%s", s?s:"(unknown)");
+		wchar_t buf[1024];
+		const wchar_t* s = mFailureReason.gets();
+		_snwprintf(buf, std::size(buf), L"Unable to start filters:\n%s", s ? s : L"(unknown)");
 		buf[1023] = 0;
 
 		RECT r2 = r;
-		DrawTextA(hdc, buf, -1, &r2, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX|DT_CALCRECT);
+		DrawTextW(hdc, buf, -1, &r2, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX|DT_CALCRECT);
 
 		int text_h = r2.bottom - r2.top;
 		int space_h = r.bottom - r.top;
 		if (text_h < space_h)
 			r.top += (space_h - text_h) >> 1;
 
-		DrawTextA(hdc, buf, -1, &r, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX);
+		DrawTextW(hdc, buf, -1, &r, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX);
 		SelectObject(hdc, hgoFont);
 	}
 

@@ -50,23 +50,26 @@ private:
 	const MyError& operator=(const MyError&);		// protect against accidents
 
 protected:
-	char *mbuf;
+	wchar_t* mbuf = nullptr;
 
 public:
 	MyError();
 	MyError(const MyError& err);
-	MyError(const char *f, ...);
+	MyError(const wchar_t* f, ...);
+	MyError(const char* f, ...);
 	~MyError();
 	void clear();
 	void assign(const MyError& e);
-	void assign(const char *s);
-	void setf(const char *f, ...);
-	void vsetf(const char *f, va_list val);
+	void assign(const wchar_t* s);
+	void setf(const wchar_t* f, ...);
+	void setf(const char* f, ...);
+	void vsetf(const wchar_t* f, va_list val);
+	void vsetf(const char* f, va_list val);
 	void post(struct HWND__ *hWndParent, const char *title) const;
-	char *gets() const {
+	wchar_t* gets() const {
 		return mbuf;
 	}
-	char *c_str() const {
+	wchar_t* c_str() const {
 		return mbuf;
 	}
 	bool empty() const { return !mbuf; }
@@ -125,7 +128,8 @@ public:
 
 class MyInternalError : public MyError {
 public:
-	MyInternalError(const char *format, ...);
+	MyInternalError(const wchar_t* format, ...);
+	MyInternalError(const char* format, ...);
 };
 
 #endif

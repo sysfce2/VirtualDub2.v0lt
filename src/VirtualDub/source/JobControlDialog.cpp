@@ -67,19 +67,19 @@ VDUIJobErrorDialog::VDUIJobErrorDialog(const VDJob& job)
 bool VDUIJobErrorDialog::OnLoaded() {
 	VDSetWindowTextFW32(mhdlg, L"VirtualDub2 - Job \"%hs\"", mJob.GetName());
 
-	const char *text = mJob.GetError();
-	size_t len = strlen(text);
-	vdblock<char> buf2(len*2+1);
+	const wchar_t* text = mJob.GetError();
+	size_t len = wcslen(text);
+	vdblock<wchar_t> buf2(len * 2 + 1);
 
-	char *dst = buf2.data();
+	wchar_t* dst = buf2.data();
 
-	while(char c = *text++) {
-		if (c == '\r' || c == '\n') {
-			if (*text == (c ^ ('\r' ^ '\n')))
+	while(wchar_t c = *text++) {
+		if (c == L'\r' || c == L'\n') {
+			if (*text == (c ^ (L'\r' ^ L'\n'))) {
 				++text;
-			else {
-				dst[0] = '\r';
-				dst[1] = '\n';
+			} else {
+				dst[0] = L'\r';
+				dst[1] = L'\n';
 				dst += 2;
 				continue;
 			}
@@ -90,7 +90,7 @@ bool VDUIJobErrorDialog::OnLoaded() {
 
 	*dst = 0;
 
-	SetDlgItemTextA(mhdlg, IDC_ERROR, buf2.data());
+	SetDlgItemTextW(mhdlg, IDC_ERROR, buf2.data());
 
 	return VDDialogFrameW32::OnLoaded();
 }

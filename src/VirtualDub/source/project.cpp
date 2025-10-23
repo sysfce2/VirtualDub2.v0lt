@@ -922,17 +922,19 @@ void VDProject::DisplayFrame(bool bDispInput, bool bDispOutput, bool forceInput,
 		}
 
 	} catch(const MyError& e) {
-		const char *src = e.gets();
-		char *dst = _strdup(src);
+		const wchar_t* src = e.gets();
+		wchar_t* dst = _wcsdup(src);
 
 		if (!dst)
-			guiSetStatus("%s", 255, e.gets());
+			guiSetStatusW(e.gets(), 255);
 		else {
-			for(char *t = dst; *t; ++t)
-				if (*t == '\n')
-					*t = ' ';
+			for (wchar_t* t = dst; *t; ++t) {
+				if (*t == L'\n') {
+					*t = L' ';
+				}
+			}
 
-			guiSetStatus("%s", 255, dst);
+			guiSetStatusW(dst, 255);
 			free(dst);
 		}
 		SceneShuttleStop();

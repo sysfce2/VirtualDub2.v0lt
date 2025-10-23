@@ -593,7 +593,7 @@ void VDOpenVideoDialogW32::ShowFileInfo() {
 		if(vs) vs->Release();
 		if(as) as->Release();
 	} catch (const MyError& e){
-		SetDlgItemTextA(mhdlg,IDC_INFO_MSG,e.gets());
+		SetDlgItemTextW(mhdlg, IDC_INFO_MSG, e.gets());
 	}
 }
 
@@ -992,7 +992,7 @@ void VDSaveVideoDialogW32::InitDubber() {
 		SetDlgItemTextA(mhdlg,IDC_AUDIO_INFO,s.c_str());
 
 	} catch(const MyError& e) {
-		SetDlgItemTextA(mhdlg,IDC_AUDIO_INFO,e.c_str());
+		SetDlgItemTextW(mhdlg, IDC_AUDIO_INFO, e.c_str());
 		removeAudio = true;
 		inputAudio = 0;
 	}

@@ -62,8 +62,8 @@ public:
 	const wchar_t*	GetOutputFile() const				{ return mOutputFile.c_str(); }
 	void			SetOutputFile(const wchar_t* file)	{ mOutputFile = file; }
 
-	const char *	GetError() const				{ return mError.c_str(); }
-	void			SetError(const char *err)		{ mError = err; }
+	const wchar_t*	GetError() const					{ return mError.c_str(); }
+	void			SetError(const wchar_t* err)		{ mError = err; }
 
 	const char *	GetRunnerName() const			{ return mRunnerName.c_str(); }
 	uint64			GetRunnerId() const				{ return mRunnerId; }
@@ -99,7 +99,7 @@ protected:
 	VDStringA	mName;
 	VDStringW	mInputFile;
 	VDStringW	mOutputFile;
-	VDStringA	mError;
+	VDStringW	mError;
 	VDStringA	mScript;
 	int mScriptLine;
 	VDStringA	mProjectSubdir;

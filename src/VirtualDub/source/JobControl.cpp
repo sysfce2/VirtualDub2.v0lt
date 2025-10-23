@@ -655,7 +655,7 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 
 					VDStringA error;
 					strgetarg2(error, t);
-					job->SetError(error.c_str());
+					job->SetError(VDTextU8ToW(error).c_str());
 
 				} else if (!_stricmp(s, "state")) {
 
@@ -1074,7 +1074,7 @@ void VDJobQueue::Save(IVDStream *stream, uint64 signature, uint32 revision, bool
 		}
 
 		if (state == VDJob::kStateError)
-			output.FormatLine("// $error \"%s\"", VDEncodeScriptString(VDStringSpanA(vdj->GetError())).c_str());
+			output.FormatLine("// $error \"%s\"", VDEncodeScriptString(vdj->GetError()));
 
 		output.PutLine("// $script");
 		output.PutLine("");

@@ -208,7 +208,7 @@ void AppendAVIAutoscan(const wchar_t *pszFile, bool skip_first) {
 			throw;
 
 		// log append errors, but otherwise eat them
-		VDLog(kVDLogWarning, VDTextAToW(e.gets()));
+		VDLog(kVDLogWarning, e.gets());
 	}
 
 	guiSetStatus("Appended %d segments (last was \"%s\")", 255, count, VDTextWToA(last).c_str());
