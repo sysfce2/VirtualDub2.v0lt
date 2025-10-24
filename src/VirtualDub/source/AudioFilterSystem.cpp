@@ -1004,7 +1004,7 @@ void VDAudioFilterSystem::Connect(IVDAudioFilterInstance *pFilterOut, unsigned n
 	VDASSERT(!pIn->IsPrepared());
 	pIn->InputPin(nPinIn).Connect(pOut, nPinOut);
 
-	VDDEBUG("[AudioFilter] %s[%d] -> %s[%d]\n", VDTextWToA(pFilterIn->GetPluginInfo()->mpName).c_str(), nPinIn, VDTextWToA(pFilterOut->GetPluginInfo()->mpName).c_str(), nPinOut);
+	VDDEBUG(L"[AudioFilter] %s[%d] -> %s[%d]\n", pFilterIn->GetPluginInfo()->mpName, nPinIn, pFilterOut->GetPluginInfo()->mpName, nPinOut);
 
 	// now check whether we can prepare some filters
 	if (pOut->IsPrepared())
@@ -1055,14 +1055,16 @@ void VDAudioFilterSystem::LoadFromGraph(const VDAudioFilterGraph& graph, std::ve
 		const VDAudioFilterGraph::FilterEntry& f = *it;
 
 		VDPluginDescription *pDesc = VDGetPluginDescription(f.mFilterName.c_str(), kVDXPluginType_Audio);
-		if (!pDesc)
-			throw MyError("Cannot find audio filter \"%s\" specified in filter graph.", VDTextWToA(f.mFilterName).c_str());
+		if (!pDesc) {
+			throw MyError(L"Cannot find audio filter \"%s\" specified in filter graph.", f.mFilterName.c_str());
+		}
 
 		const VDPluginInfo *pInfo = pDesc->mpInfo;
 		const VDAudioFilterDefinition *pDef = reinterpret_cast<const VDAudioFilterDefinition *>(pInfo->mpTypeSpecificInfo);
 
-		if (pDef->mInputPins != (uint32)f.mInputPins || pDef->mOutputPins != (uint32)f.mOutputPins)
-			throw MyError("Audio filter \"%s\" has a different number of pins than specified in filter graph.", VDTextWToA(pDesc->mName).c_str());
+		if (pDef->mInputPins != (uint32)f.mInputPins || pDef->mOutputPins != (uint32)f.mOutputPins) {
+			throw MyError(L"Audio filter \"%s\" has a different number of pins than specified in filter graph.", pDesc->mName.c_str());
+		}
 
 		IVDAudioFilterInstance *pInst = Create(pDesc);
 
@@ -1076,8 +1078,9 @@ void VDAudioFilterSystem::LoadFromGraph(const VDAudioFilterGraph& graph, std::ve
 		for(int i=0; i<f.mInputPins; ++i) {
 			const VDAudioFilterGraph::FilterConnection& conn = graph.mConnections[connidx];
 
-			if (conn.filt < 0)
-				throw MyError("Audio filter \"%s\" has unconnected input pins.", VDTextWToA(f.mFilterName).c_str());
+			if (conn.filt < 0) {
+				throw MyError(L"Audio filter \"%s\" has unconnected input pins.", f.mFilterName.c_str());
+			}
 
 			if (conn.filt >= filterPtrs.size())
 				throw MyInternalError("Audio filter graph has forward branches\n(%s:%d)", __FILE__, __LINE__);
@@ -1176,8 +1179,9 @@ void VDAudioFilterSystem::Prepare(VDAudioFilterInstance *pInst, bool mustSucceed
 		mpClock = pInst;
 
 	for(i=0, n=pInst->InputPinCount(); i<n; ++i) {
-		if (!pInst->InputPin(i).IsConnected())
-			throw MyError("Input pin %d of audio filter \"%s\" is unconnected.", i, VDTextWToA(pInst->GetPluginInfo()->mpName).c_str());
+		if (!pInst->InputPin(i).IsConnected()) {
+			throw MyError(L"Input pin %d of audio filter \"%s\" is unconnected.", i, pInst->GetPluginInfo()->mpName);
+		}
 		pInst->InputPin(i).ResetBufferConfiguration();
 		pInst->InputPin(i).PullBufferConfiguration();
 
@@ -1185,16 +1189,18 @@ void VDAudioFilterSystem::Prepare(VDAudioFilterInstance *pInst, bool mustSucceed
 	}
 
 	for(i=0, n=pInst->OutputPinCount(); i<n; ++i) {
-		if (!pInst->OutputPin(i).IsConnected())
-			throw MyError("Output pin %d of audio filter \"%s\" is unconnected.", i, VDTextWToA(pInst->GetPluginInfo()->mpName).c_str());
+		if (!pInst->OutputPin(i).IsConnected()) {
+			throw MyError(L"Output pin %d of audio filter \"%s\" is unconnected.", i, pInst->GetPluginInfo()->mpName);
+		}
 		pInst->OutputPin(i).ResetBufferConfiguration();
 	}
 
 	uint32 rv = pInst->Prepare();
 
-	if (rv == kVFAPrepare_BadFormat)
-		throw MyError("Audio filter \"%s\" cannot handle its input. Check that the filter is designed to handle the audio format you are attempting to process.",
-			VDTextWToA(pInst->GetPluginInfo()->mpName).c_str());
+	if (rv == kVFAPrepare_BadFormat) {
+		throw MyError(L"Audio filter \"%s\" cannot handle its input. Check that the filter is designed to handle the audio format you are attempting to process.",
+			pInst->GetPluginInfo()->mpName);
+	}
 
 	pInst->EqualizeDelay();
 
@@ -1202,7 +1208,7 @@ void VDAudioFilterSystem::Prepare(VDAudioFilterInstance *pInst, bool mustSucceed
 		VDAudioFilterPinImpl& pin = pInst->InputPin(i);
 
 		pin.PushBufferConfiguration();
-		VDDEBUG("AudioFilterSystem: Filter %s pin %d: size %d\n", VDTextWToA(pInst->GetPluginInfo()->mpName).c_str(), i, pin.mBufferSize);
+		VDDEBUG(L"AudioFilterSystem: Filter %s pin %d: size %d\n", pInst->GetPluginInfo()->mpName, i, pin.mBufferSize);
 	}
 
 	for(i=0, n=pInst->OutputPinCount(); i<n; ++i) {

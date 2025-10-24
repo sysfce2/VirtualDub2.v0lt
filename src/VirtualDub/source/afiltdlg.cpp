@@ -334,8 +334,9 @@ protected:
 
 			VDPluginDescription *pDesc = VDGetPluginDescription(pd->mName.c_str(), kVDXPluginType_Audio);
 
-			if (!pDesc)
-				throw MyError("Audio filter \"%s\" is not loaded.", VDTextWToA(pd->mName).c_str());
+			if (!pDesc) {
+				throw MyError(L"Audio filter \"%s\" is not loaded.", pd->mName.c_str());
+			}
 
 			IVDAudioFilterInstance *pInst = afs.Create(pDesc);
 

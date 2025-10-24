@@ -211,8 +211,9 @@ int VideoSourceImages::_read(VDPosition lStart, uint32 lCount, void *lpBuffer, u
 
 	uint32 size = (uint32)mCachedFile.size();
 
-	if (size > 0x3fffffff)
-		throw MyError("VideoSourceImages: File \"%s\" is too large (>1GB).", VDTextWToA(buf).c_str());
+	if (size > 0x3fffffff) {
+		throw MyError(L"VideoSourceImages: File \"%s\" is too large (>1GB).", buf);
+	}
 
 	if (!lpBuffer) {
 		if (plBytesRead)

@@ -1303,15 +1303,17 @@ namespace {
 
 		VDPluginDescription *pDesc = VDGetPluginDescription(pFilt->mFilterName.c_str(), kVDXPluginType_Audio);
 
-		if (!pDesc)
-			throw MyError("VDAFiltInst: Unknown audio filter: \"%s\"", VDTextWToA(pFilt->mFilterName).c_str());
+		if (!pDesc) {
+			throw MyError(L"VDAFiltInst: Unknown audio filter: \"%s\"", pFilt->mFilterName.c_str());
+		}
 
 		VDPluginPtr lock(pDesc);
 
 		const VDXPluginConfigEntry *pEnt = GetFilterParamEntry(((VDAudioFilterDefinition *)lock->mpInfo->mpTypeSpecificInfo)->mpConfigInfo, idx);
 
-		if (!pEnt)
-			throw MyError("VDAFiltInst: Audio filter \"%s\" does not have a parameter with id %d", VDTextWToA(pFilt->mFilterName).c_str(), idx);
+		if (!pEnt) {
+			throw MyError(L"VDAFiltInst: Audio filter \"%s\" does not have a parameter with id %d", pFilt->mFilterName.c_str(), idx);
+		}
 
 		VDPluginConfigVariant& var = pFilt->mConfig[idx];
 
@@ -1375,7 +1377,7 @@ namespace {
 
 		pFilt->mConfig.erase(idx);
 
-		throw MyError("VDAFiltInst: Type mismatch on audio filter \"%s\" param %d (\"%s\")", VDTextWToA(pFilt->mFilterName).c_str(), idx, VDTextWToA(pEnt->name).c_str());
+		throw MyError(L"VDAFiltInst: Type mismatch on audio filter \"%s\" param %d (\"%s\")", pFilt->mFilterName.c_str(), idx, pEnt->name);
 	}
 };
 
@@ -1501,8 +1503,9 @@ static void func_VDAFilters_Add(IVDScriptInterpreter *isi, VDScriptValue *argv, 
 
 	VDPluginDescription *pDesc = VDGetPluginDescription(filt.mFilterName.c_str(), kVDXPluginType_Audio);
 
-	if (!pDesc)
-		throw MyError("VDAFilters.Add(): Unknown audio filter: \"%s\"", VDTextWToA(filt.mFilterName).c_str());
+	if (!pDesc) {
+		throw MyError(L"VDAFilters.Add(): Unknown audio filter: \"%s\"", filt.mFilterName.c_str());
+	}
 
 	const VDAudioFilterDefinition *pDef = reinterpret_cast<const VDAudioFilterDefinition *>(pDesc->mpInfo->mpTypeSpecificInfo);
 
@@ -2177,16 +2180,14 @@ static void func_VirtualDub_SaveAVI(IVDScriptInterpreter *, VDScriptValue *argli
 
 	IVDOutputDriver *driver = VDGetOutputDriverByName(g_FileOutDriver.c_str());
 	if (!driver) {
-		VDStringA drv = VDTextWToA(g_FileOutDriver);
-		throw MyError("Cannot save video with '%s': no such driver loaded", drv.c_str());
+		throw MyError(L"Cannot save video with '%s': no such driver loaded", g_FileOutDriver.c_str());
 	}
 	for(int i=0; ; i++){
 		wchar_t filter[128];
 		wchar_t ext[128];
 		char name[128];
 		if (!driver->GetDriver()->EnumFormats(i,filter,ext,name)) {
-			VDStringA drv = VDTextWToA(g_FileOutDriver);
-			throw MyError("Cannot save video with '%s / %s': no such format supported by driver", drv.c_str(), g_FileOutFormat.c_str());
+			throw MyError(L"Cannot save video with '%s / %hs': no such format supported by driver", g_FileOutDriver.c_str(), g_FileOutFormat.c_str());
 		}
 
 		if (g_FileOutFormat == name) {
@@ -2314,16 +2315,14 @@ static void func_VirtualDub_SaveAudio(IVDScriptInterpreter *, VDScriptValue *arg
 
 	IVDOutputDriver *driver = VDGetOutputDriverByName(g_AudioOutDriver.c_str());
 	if (!driver) {
-		VDStringA drv = VDTextWToA(g_AudioOutDriver);
-		throw MyError("Cannot save audio with '%s': no such driver loaded", drv.c_str());
+		throw MyError(L"Cannot save audio with '%s': no such driver loaded", g_AudioOutDriver.c_str());
 	}
 	for(int i=0; ; i++){
 		wchar_t filter[128];
 		wchar_t ext[128];
 		char name[128];
 		if (!driver->GetDriver()->EnumFormats(i,filter,ext,name)) {
-			VDStringA drv = VDTextWToA(g_AudioOutDriver);
-			throw MyError("Cannot save audio with '%s / %s': no such format supported by driver", drv.c_str(), g_AudioOutFormat.c_str());
+			throw MyError(L"Cannot save audio with '%s / %hs': no such format supported by driver", g_AudioOutDriver.c_str(), g_AudioOutFormat.c_str());
 		}
 
 		if (g_AudioOutFormat == name) {

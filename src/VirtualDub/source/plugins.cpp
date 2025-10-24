@@ -376,7 +376,7 @@ void VDExternalModule::Unlock() {
 		VDDisconnectPluginDescriptions(this);
 		FreeLibrary(mhModule);
 		mhModule = 0;
-		VDDEBUG("Plugins: Unloading module \"%s\"\n", VDTextWToA(mFilename).c_str());
+		VDDEBUG(L"Plugins: Unloading module \"%s\"\n", mFilename.c_str());
 	}
 }
 
