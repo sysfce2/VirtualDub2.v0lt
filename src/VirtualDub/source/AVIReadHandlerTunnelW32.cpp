@@ -284,7 +284,7 @@ AVIReadHandlerTunnelW32::AVIReadHandlerTunnelW32(PAVIFILE pAVIFile)
 		const char *s;
 
 		if (mpAvisynthClipInfo->GetError(&s)) {
-			VDStringW errstr = VDTextLinesU8orAToW(s);
+			VDStringW errstr = VDTextLinesU8orAToW(s); // AviSynth+ error text in mixed encodings is supported
 			MyError e(L"Avisynth open failure:\n%s", errstr.c_str());
 			mpAvisynthClipInfo->Release();
 			mpAvisynthClipInfo = NULL;

@@ -100,7 +100,15 @@ void * VDXAPIENTRY VDInputDriverContextImpl::GetExtendedAPI(const char *pExtende
 void VDXAPIENTRYV VDInputDriverContextImpl::SetError(const char *format, ...) {
 	va_list val;
 	va_start(val, format);
-	mError.vsetf(format, val);
+	int len = _vscprintf(format, val);
+	if (len >= 0) {
+		size_t size = std::min(len + 1, 32768);
+		vdfastvector<char> buf(size);
+		buf[0] = 0;
+		_vsnprintf_s(buf.data(), size, _TRUNCATE, format, val);
+		VDStringW str = VDTextLinesU8orAToW(buf.data(), size - 1); // AviSynth+ error text in mixed encodings is supported
+		mError.assign(str.c_str());
+	}
 	va_end(val);
 }
 
