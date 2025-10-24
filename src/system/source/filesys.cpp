@@ -598,17 +598,8 @@ void VDRemoveDirectory(const wchar_t *path) {
 
 ///////////////////////////////////////////////////////////////////////////
 
-bool VDDeletePathAutodetect(const wchar_t *path);
-bool (*VDRemoveFile)(const wchar_t *path) = VDDeletePathAutodetect;
-
-bool VDDeleteFileNT(const wchar_t *path) {
+bool VDRemoveFile(const wchar_t *path) {
 	return !!DeleteFileW(path);
-}
-
-bool VDDeletePathAutodetect(const wchar_t *path) {
-	VDRemoveFile = VDDeleteFileNT;
-
-	return VDRemoveFile(path);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -678,32 +669,7 @@ VDStringW VDGetFullPath(const wchar_t *partialPath) {
 	return VDStringW(partialPath);
 }
 
-VDStringW VDGetLongPathA(const wchar_t *s) {
-	const VDStringA& pathA = VDTextWToA(s);
-	CHAR buf[MAX_PATH];
-
-	DWORD len = GetLongPathNameA(pathA.c_str(), buf, MAX_PATH);
-	VDStringW longPath;
-
-	if (!len)
-		longPath = s;
-	else if (len <= MAX_PATH)
-		longPath = VDTextAToW(buf);
-	else if (len > MAX_PATH) {
-		vdfastvector<CHAR> extbuf(len, 0);
-
-		DWORD len2 = GetLongPathNameA(pathA.c_str(), extbuf.data(), len);
-
-		if (len2 && len2 <= len)
-			longPath = VDTextAToW(extbuf.data());
-		else
-			longPath = s;
-	}
-
-	return longPath;
-}
-
-VDStringW VDGetLongPathW(const wchar_t *s) {
+VDStringW VDGetLongPath(const wchar_t *s) {
 	WCHAR buf[MAX_PATH];
 
 	DWORD len = GetLongPathNameW(s, buf, MAX_PATH);
@@ -726,18 +692,6 @@ VDStringW VDGetLongPathW(const wchar_t *s) {
 
 	return longPath;
 }
-
-#if VD_CPU_X86
-	VDStringW VDGetLongPathAutodetect(const wchar_t *s) {
-		VDGetLongPath = VDGetLongPathW;
-
-		return VDGetLongPath(s);
-	}
-
-	extern VDStringW (*VDGetLongPath)(const wchar_t *path) = VDGetLongPathAutodetect;
-#else
-	extern VDStringW (*VDGetLongPath)(const wchar_t *path) = VDGetLongPathW;
-#endif
 
 VDStringW VDMakePath(const wchar_t *base, const wchar_t *file) {
 	if (!*base)
