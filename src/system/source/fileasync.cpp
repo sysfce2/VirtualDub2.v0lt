@@ -109,7 +109,7 @@ protected:
 	vdblock<char, VDFileUnbufferAllocator<char> >	mBuffer;
 
 	VDAtomicPtr<MyError>	mpError;
-	VDStringA	mFilename;
+	VDStringW	mFilename;
 	bool mPipeMode;
 };
 
@@ -131,11 +131,12 @@ VDFileAsyncNT::~VDFileAsyncNT() {
 
 void VDFileAsyncNT::Open(const wchar_t *pszFilename, uint32 count, uint32 bufferSize) {
 	try {
-		mFilename = VDTextWToA(pszFilename);
+		mFilename = pszFilename;
 
 		mhFileSlow = CreateFileW(pszFilename, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-		if (mhFileSlow == INVALID_HANDLE_VALUE)
-			throw MyWin32Error("Unable to open file \"%s\" for write: %%s", GetLastError(), mFilename.c_str());
+		if (mhFileSlow == INVALID_HANDLE_VALUE) {
+			throw MyWin32Error(L"Unable to open file \"%s\" for write: %%s", GetLastError(), mFilename.c_str());
+		}
 
 		mhFileFast = CreateFileW(pszFilename, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_NO_BUFFERING | FILE_FLAG_OVERLAPPED, NULL);
 		if (mhFileFast == INVALID_HANDLE_VALUE)
@@ -165,12 +166,13 @@ void VDFileAsyncNT::Open(const wchar_t *pszFilename, uint32 count, uint32 buffer
 
 void VDFileAsyncNT::OpenPipe(VDFileHandle h, uint32 count, uint32 bufferSize) {
 	try {
-		mFilename = "<anonymous pipe>";
+		mFilename = L"<anonymous pipe>";
 		mPipeMode = true;
 
 		HANDLE hProcess = GetCurrentProcess();
-		if (!DuplicateHandle(hProcess, h, hProcess, &mhFileSlow, 0, FALSE, DUPLICATE_SAME_ACCESS))
-			throw MyWin32Error("Unable to open file \"%s\" for write: %%s", GetLastError(), mFilename.c_str());
+		if (!DuplicateHandle(hProcess, h, hProcess, &mhFileSlow, 0, FALSE, DUPLICATE_SAME_ACCESS)) {
+			throw MyWin32Error(L"Unable to open file \"%s\" for write: %%s", GetLastError(), mFilename.c_str());
+		}
 
 		mSectorSize = 4096;		// guess for now... proper way would be GetVolumeMountPoint() followed by GetDiskFreeSpace().
 
@@ -286,8 +288,9 @@ void VDFileAsyncNT::Write(sint64 pos, const void *p, uint32 bytes) {
 	Seek(pos);
 
 	DWORD dwActual;
-	if (!WriteFile(mhFileSlow, p, bytes, &dwActual, NULL) || (mClientSlowPointer += dwActual),(dwActual != bytes))
-		throw MyWin32Error("Write error occurred on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+	if (!WriteFile(mhFileSlow, p, bytes, &dwActual, NULL) || (mClientSlowPointer += dwActual),(dwActual != bytes)) {
+		throw MyWin32Error(L"Write error occurred on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+	}
 }
 
 void VDFileAsyncNT::WriteZero(sint64 pos, uint32 bytes) {
@@ -311,8 +314,9 @@ bool VDFileAsyncNT::Extend(sint64 pos) {
 
 void VDFileAsyncNT::Truncate(sint64 pos) {
 	Seek(pos);
-	if (!SetEndOfFile(mhFileSlow))
-		throw MyWin32Error("I/O error on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+	if (!SetEndOfFile(mhFileSlow)) {
+		throw MyWin32Error(L"I/O error on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+	}
 }
 
 void VDFileAsyncNT::SafeTruncateAndClose(sint64 pos) {
@@ -340,15 +344,16 @@ sint64 VDFileAsyncNT::GetSize()
 
 	if (!result) {
 		DWORD err = GetLastError();
-		throw MyWin32Error("I/O error on file \"%s\": %%s", err, mFilename.c_str());
+		throw MyWin32Error(L"I/O error on file \"%s\": %%s", err, mFilename.c_str());
 	}
 
 	return filesize.QuadPart;
 }
 
 void VDFileAsyncNT::Seek(sint64 pos) {
-	if (!SeekNT(pos))
-		throw MyWin32Error("I/O error on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+	if (!SeekNT(pos)) {
+		throw MyWin32Error(L"I/O error on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+	}
 }
 
 bool VDFileAsyncNT::SeekNT(sint64 pos)
@@ -395,8 +400,9 @@ void VDFileAsyncNT::ThreadRun() {
 	sint64	currentSize;
 
 	try {
-		if (!VDGetFileSizeW32(mhFileFast, currentSize))
-			throw MyWin32Error("I/O error on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+		if (!VDGetFileSizeW32(mhFileFast, currentSize)) {
+			throw MyWin32Error(L"I/O error on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+		}
 
 		for(;;) {
 			int state = mState;
@@ -447,8 +453,9 @@ void VDFileAsyncNT::ThreadRun() {
 								break;
 
 							DWORD dwActual;
-							if (!GetOverlappedResult(mhFileFast, &buf, &dwActual, TRUE))
-								throw MyWin32Error("Write error occurred on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+							if (!GetOverlappedResult(mhFileFast, &buf, &dwActual, TRUE)) {
+								throw MyWin32Error(L"Write error occurred on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+							}
 						}
 
 						buf.mbActive = false;
@@ -508,8 +515,9 @@ void VDFileAsyncNT::ThreadRun() {
 			buf.mbPending = false;
 
 			if (!WriteFile(mhFileFast, &mBuffer[readOffset], actual, &dwActual, &buf)) {
-				if (GetLastError() != ERROR_IO_PENDING)
-					throw MyWin32Error("Write error occurred on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+				if (GetLastError() != ERROR_IO_PENDING) {
+					throw MyWin32Error(L"Write error occurred on file \"%s\": %%s", GetLastError(), mFilename.c_str());
+				}
 
 				buf.mbPending = true;
 			}

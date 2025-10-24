@@ -574,8 +574,9 @@ void VDCreateDirectory(const wchar_t *path) {
 
 	BOOL succeeded = CreateDirectoryW(path, NULL);
 
-	if (!succeeded)
+	if (!succeeded) {
 		throw MyWin32Error("Cannot create directory: %%s", GetLastError());
+	}
 }
 
 void VDRemoveDirectory(const wchar_t *path) {
@@ -592,8 +593,9 @@ void VDRemoveDirectory(const wchar_t *path) {
 
 	BOOL succeeded = RemoveDirectoryW(path);
 
-	if (!succeeded)
+	if (!succeeded) {
 		throw MyWin32Error("Cannot remove directory: %%s", GetLastError());
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -607,8 +609,9 @@ bool VDRemoveFile(const wchar_t *path) {
 void VDMoveFile(const wchar_t *srcPath, const wchar_t *dstPath) {
 	bool success = MoveFileW(srcPath, dstPath) != 0;
 
-	if (!success)
-		throw MyWin32Error("Cannot rename \"%ls\" to \"%ls\": %%s", GetLastError(), srcPath, dstPath);
+	if (!success) {
+		throw MyWin32Error(L"Cannot rename \"%s\" to \"%s\": %%s", GetLastError(), srcPath, dstPath);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -794,8 +797,9 @@ VDStringW VDGetProgramFilePath() {
 	VDStringW wstr;
 
 	{
-		if (!GetModuleFileNameW(NULL, buf, MAX_PATH))
+		if (!GetModuleFileNameW(NULL, buf, MAX_PATH)) {
 			throw MyWin32Error("Unable to get program path: %%s", GetLastError());
+		}
 
 		wstr = buf;
 	}
@@ -806,8 +810,9 @@ VDStringW VDGetProgramFilePath() {
 VDStringW VDGetSystemPath() {
 	wchar_t path[MAX_PATH];
 
-	if (!GetSystemDirectoryW(path, MAX_PATH))
+	if (!GetSystemDirectoryW(path, MAX_PATH)) {
 		throw MyWin32Error("Cannot locate system directory: %%s", GetLastError());
+	}
 
 	return VDStringW(path);
 }
@@ -927,7 +932,7 @@ void VDFileSetAttributes(const wchar_t *path, uint32 attrsToChange, uint32 newAt
 		}
 	}
 
-	throw MyWin32Error("Cannot change attributes on \"%ls\": %%s.", GetLastError(), path);
+	throw MyWin32Error(L"Cannot change attributes on \"%s\": %%s.", GetLastError(), path);
 }
 
 ///////////////////////////////////////////////////////////////////////////

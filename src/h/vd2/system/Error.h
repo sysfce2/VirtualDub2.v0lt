@@ -108,7 +108,8 @@ public:
 
 class MyWin32Error : public MyError {
 public:
-	MyWin32Error(const char *format, uint32 err, ...);
+	MyWin32Error(const wchar_t* format, uint32 err, ...);
+	MyWin32Error(const char* format, uint32 err, ...);
 
 	uint32 GetWin32Error() const { return mWin32Error; }
 

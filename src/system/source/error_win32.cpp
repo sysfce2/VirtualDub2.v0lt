@@ -102,6 +102,82 @@ MyAVIError::MyAVIError(const char *s, uint32 avierr) {
 	setf("%s error: %s (%08lx)", s, err, avierr);
 }
 
+MyWin32Error::MyWin32Error(const wchar_t* format, uint32 err, ...)
+	: mWin32Error(err)
+{
+	wchar_t szError[1024];
+	wchar_t szTemp[1024];
+	szError[0] = 0;
+
+	va_list val;
+	va_start(val, err);
+	_vsnwprintf_s(szError, _TRUNCATE, format, val);
+	va_end(val);
+
+	// Determine the position of the last %s, and escape everything else. This doesn't
+	// track escaped % signs properly, but it works for the strings that we receive (and at
+	// worst just produces a funny message).
+	const wchar_t* keep = wcsstr(szError, L"%s");
+	if (keep) {
+		for (;;) {
+			const wchar_t* test = wcsstr(keep + 1, L"%s");
+			if (!test) {
+				break;
+			}
+			keep = test;
+		}
+	}
+
+	wchar_t* t = szTemp;
+	wchar_t* end = szTemp + std::size(szTemp) - 1;
+	const wchar_t* s = szError;
+
+	while (wchar_t c = *s++) {
+		if (c == L'%') {
+			// We allow one %s to go through. Everything else gets escaped.
+			if (s - 1 != keep) {
+				if (t >= end) {
+					break;
+				}
+
+				*t++ = L'%';
+			}
+		}
+
+		if (t >= end) {
+			break;
+		}
+
+		*t++ = c;
+	}
+
+	*t = 0;
+
+	if (!FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		0,
+		err,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		szError,
+		std::size(szError),
+		NULL))
+	{
+		szError[0] = 0;
+	}
+
+	if (szError[0]) {
+		long l = wcslen(szError);
+
+		if (l > 1 && szError[l - 2] == L'\r') {
+			szError[l - 2] = 0;
+		}
+		else if (szError[l - 1] == L'\n') {
+			szError[l - 1] = 0;
+		}
+	}
+
+	setf(szTemp, szError);
+}
+
 MyWin32Error::MyWin32Error(const char *format, uint32 err, ...)
 	: mWin32Error(err)
 {

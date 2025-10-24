@@ -176,7 +176,7 @@ bool VDFile::open_internal(const wchar_t *pwszFilename, uint32 flags, bool throw
 			return false;
 		}
 
-		throw MyWin32Error("Cannot open file \"%ls\":\n%%s", err, mpFilename.get());
+		throw MyWin32Error(L"Cannot open file \"%s\":\n%%s", err, mpFilename.get());
 	}
 
 	mFilePosition = 0;
@@ -199,7 +199,7 @@ bool VDFile::closeNT()
 void VDFile::close()
 {
 	if (!closeNT()) {
-		throw MyWin32Error("Cannot complete file \"%ls\": %%s", GetLastError(), mpFilename.get());
+		throw MyWin32Error(L"Cannot complete file \"%s\": %%s", GetLastError(), mpFilename.get());
 	}
 }
 
@@ -211,7 +211,7 @@ bool VDFile::truncateNT()
 void VDFile::truncate()
 {
 	if (!truncateNT()) {
-		throw MyWin32Error("Cannot truncate file \"%ls\": %%s", GetLastError(), mpFilename.get());
+		throw MyWin32Error(L"Cannot truncate file \"%s\": %%s", GetLastError(), mpFilename.get());
 	}
 }
 
@@ -223,7 +223,7 @@ bool VDFile::extendValidNT(sint64 pos)
 void VDFile::extendValid(sint64 pos)
 {
 	if (!extendValidNT(pos)) {
-		throw MyWin32Error("Cannot extend file \"%ls\": %%s", GetLastError(), mpFilename.get());
+		throw MyWin32Error(L"Cannot extend file \"%s\": %%s", GetLastError(), mpFilename.get());
 	}
 }
 
@@ -269,7 +269,7 @@ long VDFile::readData(void *buffer, long length)
 	DWORD dwActual;
 
 	if (!ReadFile(mhFile, buffer, (DWORD)length, &dwActual, NULL)) {
-		throw MyWin32Error("Cannot read from file \"%ls\": %%s", GetLastError(), mpFilename.get());
+		throw MyWin32Error(L"Cannot read from file \"%s\": %%s", GetLastError(), mpFilename.get());
 	}
 
 	mFilePosition += dwActual;
@@ -280,7 +280,7 @@ long VDFile::readData(void *buffer, long length)
 void VDFile::read(void *buffer, long length)
 {
 	if (length != readData(buffer, length)) {
-		throw MyWin32Error("Cannot read from file \"%ls\": Premature end of file.", GetLastError(), mpFilename.get());
+		throw MyWin32Error(L"Cannot read from file \"%s\": Premature end of file.", GetLastError(), mpFilename.get());
 	}
 }
 
@@ -290,7 +290,7 @@ long VDFile::writeData(const void *buffer, long length)
 	bool success = false;
 
 	if (!WriteFile(mhFile, buffer, (DWORD)length, &dwActual, NULL) || dwActual != (DWORD)length) {
-		throw MyWin32Error("Cannot write to file \"%ls\": %%s", GetLastError(), mpFilename.get());
+		throw MyWin32Error(L"Cannot write to file \"%s\": %%s", GetLastError(), mpFilename.get());
 	}
 
 	mFilePosition += dwActual;
@@ -301,7 +301,7 @@ long VDFile::writeData(const void *buffer, long length)
 void VDFile::write(const void *buffer, long length)
 {
 	if (length != writeData(buffer, length)) {
-		throw MyWin32Error("Cannot write to file \"%ls\": Unable to write all data.", GetLastError(), mpFilename.get());
+		throw MyWin32Error(L"Cannot write to file \"%s\": Unable to write all data.", GetLastError(), mpFilename.get());
 	}
 }
 
@@ -339,7 +339,7 @@ bool VDFile::seekNT(sint64 newPos, eSeekMode mode)
 void VDFile::seek(sint64 newPos, eSeekMode mode)
 {
 	if (!seekNT(newPos, mode)) {
-		throw MyWin32Error("Cannot seek within file \"%ls\": %%s", GetLastError(), mpFilename.get());
+		throw MyWin32Error(L"Cannot seek within file \"%s\": %%s", GetLastError(), mpFilename.get());
 	}
 }
 
@@ -368,7 +368,7 @@ void VDFile::skip(sint64 delta)
 
 	if (delta > 0 && delta <= sizeof buf) {
 		if ((long)delta != readData(buf, (long)delta)) {
-			throw MyWin32Error("Cannot seek within file \"%ls\": %%s", GetLastError(), mpFilename.get());
+			throw MyWin32Error(L"Cannot seek within file \"%s\": %%s", GetLastError(), mpFilename.get());
 		}
 	} else {
 		seek(delta, kSeekCur);
@@ -382,7 +382,7 @@ sint64 VDFile::size()
 
 	if (!result) {
 		DWORD err = GetLastError();
-		throw MyWin32Error("Cannot retrieve size of file \"%ls\": %%s", err, mpFilename.get());
+		throw MyWin32Error(L"Cannot retrieve size of file \"%s\": %%s", err, mpFilename.get());
 	}
 
 	return filesize.QuadPart;
@@ -401,7 +401,7 @@ bool VDFile::flushNT()
 void VDFile::flush()
 {
 	if (!flushNT()) {
-		throw MyWin32Error("Cannot flush file \"%ls\": %%s", GetLastError(), mpFilename.get());
+		throw MyWin32Error(L"Cannot flush file \"%s\": %%s", GetLastError(), mpFilename.get());
 	}
 }
 

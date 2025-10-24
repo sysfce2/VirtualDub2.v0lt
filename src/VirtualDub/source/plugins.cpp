@@ -326,8 +326,9 @@ bool VDExternalModule::Lock() {
 			VDExternalCodeBracket bracket(mFilename.c_str(), __FILE__, __LINE__);
 
 			HANDLE h = CreateFileW(mFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
-			if (h==INVALID_HANDLE_VALUE)
-				throw MyWin32Error("Cannot load plugin module \"%ls\": %%s", GetLastError(), mFilename.c_str());
+			if (h == INVALID_HANDLE_VALUE) {
+				throw MyWin32Error(L"Cannot load plugin module \"%s\": %%s", GetLastError(), mFilename.c_str());
+			}
 
 			const int size = 4096;
 			char buf[size];
@@ -339,20 +340,23 @@ bool VDExternalModule::Lock() {
 				IMAGE_NT_HEADERS* h1 = (IMAGE_NT_HEADERS*)(buf+h0->e_lfanew);
 				IMAGE_FILE_HEADER* fh = &h1->FileHeader;
 				#ifdef _M_AMD64
-				if (fh->Machine==IMAGE_FILE_MACHINE_I386)
-					throw MyError("Cannot load plugin module \"%ls\": this is 32-bit plugin", mFilename.c_str());
+				if (fh->Machine == IMAGE_FILE_MACHINE_I386) {
+					throw MyError(L"Cannot load plugin module \"%s\": this is 32-bit plugin", mFilename.c_str());
+				}
 				#endif
 				#ifdef _M_IX86
-				if (fh->Machine==IMAGE_FILE_MACHINE_AMD64)
-					throw MyError("Cannot load plugin module \"%ls\": this is 64-bit plugin", mFilename.c_str());
+				if (fh->Machine == IMAGE_FILE_MACHINE_AMD64) {
+					throw MyError(L"Cannot load plugin module \"%s\": this is 64-bit plugin", mFilename.c_str());
+				}
 				#endif
 			}
 
 			mhModule = LoadLibraryW(mFilename.c_str());
 		}
 
-		if (!mhModule)
-			throw MyWin32Error("Cannot load plugin module \"%ls\": %%s", GetLastError(), mFilename.c_str());
+		if (!mhModule) {
+			throw MyWin32Error(L"Cannot load plugin module \"%s\": %%s", GetLastError(), mFilename.c_str());
+		}
 
 		ReconnectOldPlugins();
 		allOk = ReconnectPlugins();

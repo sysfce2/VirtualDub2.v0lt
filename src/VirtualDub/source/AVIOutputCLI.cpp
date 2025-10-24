@@ -281,8 +281,9 @@ void VDAutoHandleW32::Assign(const VDAutoHandleW32& src, bool inheritable) {
 void VDAutoHandleW32::Duplicate(HANDLE h, bool inheritable) {
 	if (h != INVALID_HANDLE_VALUE) {
 		HANDLE me = GetCurrentProcess();
-		if (!::DuplicateHandle(me, h, me, &h, 0, inheritable, DUPLICATE_SAME_ACCESS))
-			throw MyError("Unable to duplicate handle: %%s", GetLastError());
+		if (!::DuplicateHandle(me, h, me, &h, 0, inheritable, DUPLICATE_SAME_ACCESS)) {
+			throw MyWin32Error("Unable to duplicate handle: %%s", GetLastError());
+		}
 	}
 
 	if (mHandle != INVALID_HANDLE_VALUE)
@@ -327,8 +328,9 @@ VDCLIPipeW32::VDCLIPipeW32(uint32 size, bool inputInheritable, bool outputInheri
 }
 
 void VDCLIPipeW32::Init(uint32 size, bool inputInheritable, bool outputInheritable) {
-	if (!CreatePipe(~mOutput, ~mInput, NULL, size))
-		throw MyError("Unable to create pipe: %%s", GetLastError());
+	if (!CreatePipe(~mOutput, ~mInput, NULL, size)) {
+		throw MyWin32Error("Unable to create pipe: %%s", GetLastError());
+	}
 
 	if (inputInheritable) {
 		VDAutoHandleW32 t(mInput, true);
