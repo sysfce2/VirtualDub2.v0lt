@@ -251,7 +251,7 @@ bool VDToolsHandleFileOpenError(const wchar_t* fname, const wchar_t* driver_name
 		VDTool *p = *it;
 		if (p->version<2) continue;
 
-		if (p->object->HandleFileOpenError(fname, driver_name, (VDXHWND)parent, VDTextWToA(e.c_str()).c_str(), line)) {
+		if (p->object->HandleFileOpenError(fname, driver_name, (VDXHWND)parent, VDTextWToU8(e.c_str()).c_str(), line)) {
 			return true;
 		}
 	}
