@@ -48,7 +48,7 @@ VDStringA VDTextWToU8(const wchar_t *s, int length);
 VDStringW VDTextU8ToW(const VDStringA& s);
 VDStringW VDTextU8ToW(const char *s, int length);
 
-VDStringW VDTextLinesU8orAToW(const char* s, int length);
+VDStringW VDTextLinesU8orAToW(const char* s, int length = -1);
 
 // The terminating NULL character is not included in these.
 

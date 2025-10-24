@@ -284,7 +284,8 @@ AVIReadHandlerTunnelW32::AVIReadHandlerTunnelW32(PAVIFILE pAVIFile)
 		const char *s;
 
 		if (mpAvisynthClipInfo->GetError(&s)) {
-			MyError e("Avisynth open failure:\n%s", s);
+			VDStringW errstr = VDTextLinesU8orAToW(s);
+			MyError e(L"Avisynth open failure:\n%s", errstr.c_str());
 			mpAvisynthClipInfo->Release();
 			mpAvisynthClipInfo = NULL;
 			AVIFileRelease(mpAVIFile);
