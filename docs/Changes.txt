@@ -2,6 +2,8 @@ VirtualDub2.x change log
 
 2.5.0.x dev
 ----------------------
+Improved Unicode support.
+Script, job, and project files are now saved in UTF-8 encoding.
 
 
 2.4.3.944 - 2025-10-14
