@@ -709,10 +709,10 @@ bool VDVFLogo::Configure(VDXHWND hwnd) {
 }
 
 void VDVFLogo::GetSettingString(char *buf, int maxlen) {
-	VDStringA logoFnameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szLogoPath), -1);
+	VDStringA logoFnameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szLogoPath));
 
 	if (mConfig.bEnableAlphaBlending && mConfig.bEnableSecondaryAlpha) {
-		VDStringA alphaFnameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szAlphaPath), -1);
+		VDStringA alphaFnameU8 = VDTextWToU8(VDFileSplitPath(mConfig.szAlphaPath));
 
 		SafePrintf(buf, maxlen, " (logo:\"%s\", alpha:\"%s\")", logoFnameU8.c_str(), alphaFnameU8.c_str());
 	} else {

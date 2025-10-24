@@ -1048,8 +1048,8 @@ void VDJobQueue::Save(IVDStream *stream, uint64 signature, uint32 revision, bool
 
 		output.FormatLine("// $job \"%s\""		, vdj->GetName());
 		output.FormatLine("// $data \"%s\""		, vdj->GetProjectSubdir());
-		output.FormatLine("// $input \"%s\""	, VDTextWToU8(vdj->GetInputFile(), -1).c_str());
-		output.FormatLine("// $output \"%s\""	, VDTextWToU8(vdj->GetOutputFile(), -1).c_str());
+		output.FormatLine("// $input \"%s\""	, VDTextWToU8(vdj->GetInputFile()).c_str());
+		output.FormatLine("// $output \"%s\""	, VDTextWToU8(vdj->GetOutputFile()).c_str());
 		output.FormatLine("// $state %d"		, state);
 		output.FormatLine("// $id %llx"			, vdj->mId);
 

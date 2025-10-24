@@ -1629,7 +1629,9 @@ void VDProject::Open(const wchar_t *pFilename, IVDInputDriver *pSelectedDriver, 
 		Close();
 		if (pSelectedDriver) {
 			const wchar_t* driver_name = pSelectedDriver->GetSignatureName();
-			if (VDToolsHandleFileOpenError(filename.c_str(), driver_name, e)) throw MyError();
+			if (VDToolsHandleFileOpenError(filename.c_str(), driver_name, e)) {
+				throw MyError();
+			}
 		}
 		throw;
 	}

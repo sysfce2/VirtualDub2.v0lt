@@ -44,7 +44,7 @@ VDStringW VDTextAToW(const char *src, int length = -1);
 VDStringW VDTextAToW(const VDStringA& sw);
 
 VDStringA VDTextWToU8(const VDStringW& s);
-VDStringA VDTextWToU8(const wchar_t *s, int length);
+VDStringA VDTextWToU8(const wchar_t *s, int length = -1);
 VDStringW VDTextU8ToW(const VDStringA& s);
 VDStringW VDTextU8ToW(const char *s, int length);
 
