@@ -290,8 +290,7 @@ extern void VDDebugPrint(const wchar_t* format, ...);
 		#define	VDNEVERHERE			VDASSERT(false)
 	#endif
 
-	extern int VDDEBUG_Helper(const char *, ...);
-	#define VDDEBUG				(void)sizeof VDDEBUG_Helper
+	#define VDDEBUG(...)			__noop
 
 #endif
 
