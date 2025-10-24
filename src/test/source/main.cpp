@@ -105,7 +105,7 @@ next:
 			try {
 				ent.mpTestFn();
 			} catch(const AssertionException& e) {
-				wprintf(L"    TEST FAILED: %hs\n", e.gets());
+				wprintf(L"    TEST FAILED: %s\n", e.gets());
 				++failedTests;
 			}
 		}
