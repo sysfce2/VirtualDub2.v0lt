@@ -68,9 +68,23 @@ void VDLogDS(const char* msg, HRESULT hr){
 }
 
 #ifdef _DEBUG
-	#define DS_VERIFY(exp, msg) if (FAILED(hr = (exp))) { VDLogDS(msg,hr); VDDEBUG("Failed: " msg " [%08lx : %s]\n", hr, GetDXErrorName(hr)); VDDEBUG(VDDumpFilterGraphDShow(mpGraph).c_str()); TearDownGraph(); return false; } else
+	#define DS_VERIFY(exp, msg) \
+	if (FAILED(hr = (exp))) { \
+		VDLogDS(msg,hr); \
+		VDDEBUG("Failed: " msg " [%08lx : %s]\n", hr, GetDXErrorName(hr)); \
+		VDDEBUG(VDDumpFilterGraphDShow(mpGraph).c_str()); \
+		TearDownGraph(); \
+		return false; \
+	} else
+
 #else
-	#define DS_VERIFY(exp, msg) if (FAILED(hr = (exp))) { VDLogDS(msg,hr); TearDownGraph(); return false; } else
+	#define DS_VERIFY(exp, msg) \
+	if (FAILED(hr = (exp))) { \
+		VDLogDS(msg,hr); \
+		TearDownGraph(); \
+		return false; \
+	} else
+
 #endif
 
 //#define VD_DSHOW_VERBOSE_LOGGING 1
