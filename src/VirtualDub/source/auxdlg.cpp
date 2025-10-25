@@ -109,12 +109,12 @@ extern void ShutdownLogWindow() {
 class VDStatusWindowThread : public VDThread {
 public:
 	VDSignal mReady;
-	VDStringA s;
+	VDStringW s;
 
 	VDStatusWindowThread() : VDThread("Status Window") {}
 
 	void ThreadRun() {
-		VDStringA s = this->s;
+		VDStringW s = this->s;
 		mReady.signal();
 		// There is a race condition here that can allow two log windows to appear,
 		// but that is not a big deal.
@@ -127,13 +127,13 @@ public:
 		}
 	}
 
-	static void SetText(HWND hdlg, const char* s) {
+	static void SetText(HWND hdlg, const wchar_t* s) {
 		HWND hwndEdit = GetDlgItem(hdlg, IDC_EDIT);
 
 		if (hwndEdit) {
 			::SetFocus(hwndEdit);
-			::SetWindowTextA(hwndEdit, s);
-			::SendMessage(hwndEdit, EM_SETSEL, 0, 0);
+			::SetWindowTextW(hwndEdit, s);
+			::SendMessageW(hwndEdit, EM_SETSEL, 0, 0);
 		}
 	}
 
@@ -142,7 +142,7 @@ public:
 		case WM_INITDIALOG:
 			g_hwndStatusWindow = hdlg;
 			VDSetDialogDefaultIcons(hdlg);
-			SetText(hdlg,(const char *)lParam);
+			SetText(hdlg,(const wchar_t*)lParam);
 			return FALSE;
 
 		case WM_SIZE:
@@ -171,7 +171,7 @@ public:
 	}
 };
 
-extern void VDShowStatus(VDStringA& s) {
+extern void VDShowStatus(VDStringW& s) {
 	VDStatusWindowThread logwin;
 	logwin.s = s;
 

@@ -966,7 +966,7 @@ namespace cap_dshow {
 		return inGraph;
 	}
 
-	VDStringA VDDumpFilterGraphDShow(IFilterGraph *pGraph) {
+	VDStringW VDDumpFilterGraphDShow(IFilterGraph *pGraph) {
 		std::list<IBaseFilterPtr> filters;
 
 		IEnumFiltersPtr pEnumFilters;
@@ -989,9 +989,9 @@ namespace cap_dshow {
 			pEnumFilters = NULL;
 		}
 
-		VDStringA buf;
+		VDStringW buf;
 
-		buf.append_sprintf("Filter graph %p:\r\n", &*pGraph);
+		buf.append_sprintf(L"Filter graph %p:\r\n", &*pGraph);
 
 		IMediaFilterPtr pGraphMF;
 		if (SUCCEEDED(pGraph->QueryInterface(IID_IMediaFilter, (void **)~pGraphMF))) {
@@ -1000,9 +1000,9 @@ namespace cap_dshow {
 			if (SUCCEEDED(pGraphMF->GetSyncSource(~pRefClock))) {
 				IBaseFilterPtr pRefFilter;
 				if (!pRefClock)
-					buf.append_sprintf("  Reference clock: none\r\n");
+					buf.append(L"  Reference clock: none\r\n");
 				else if (SUCCEEDED(pRefClock->QueryInterface(IID_IFilterGraph, (void **)~IFilterGraphPtr())))
-					buf.append_sprintf("  Reference clock: filter graph\r\n");
+					buf.append(L"  Reference clock: filter graph\r\n");
 				else if (SUCCEEDED(pRefClock->QueryInterface(IID_IBaseFilter, (void **)~pRefFilter))) {
 					FILTER_INFO fi;
 
@@ -1010,10 +1010,10 @@ namespace cap_dshow {
 						if (fi.pGraph)
 							fi.pGraph->Release();
 
-						buf.append_sprintf("  Reference clock: filter \"%s\"\r\n", VDTextWToA(fi.achName).c_str());
+						buf.append_sprintf(L"  Reference clock: filter \"%s\"\r\n", fi.achName);
 					}
 				} else if (pRefClock)
-					buf.append_sprintf("  Reference clock: unknown\r\n");
+					buf.append(L"  Reference clock: unknown\r\n");
 			}
 		}
 
@@ -1028,7 +1028,7 @@ namespace cap_dshow {
 			if (SUCCEEDED(pFilter->QueryFilterInfo(&fi))) {
 				fi.pGraph->Release();
 			}
-			buf.append_sprintf("  Filter %p [%s]:\r\n", &*pFilter, VDTextWToA(fi.achName).c_str());
+			buf.append_sprintf(L"  Filter %p [%s]:\r\n", &*pFilter, fi.achName);
 
 			IEnumPinsPtr pEnumPins;
 			if (SUCCEEDED(pFilter->EnumPins(~pEnumPins))) {
@@ -1041,7 +1041,7 @@ namespace cap_dshow {
 					PIN_INFO pi;
 					VDVERIFY(SUCCEEDED(pPin->QueryPinInfo(&pi)));
 					pi.pFilter->Release();
-					buf.append_sprintf("    Pin \"%s\" (%s): ", VDTextWToA(pi.achName).c_str(), pi.dir == PINDIR_INPUT ? "input" : "output");
+					buf.append_sprintf(L"    Pin \"%s\" (%s): ", pi.achName, pi.dir == PINDIR_INPUT ? L"input" : L"output");
 
 					IPinPtr pPinConn;
 					if (SUCCEEDED(pPin->ConnectedTo(~pPinConn))) {
@@ -1049,15 +1049,15 @@ namespace cap_dshow {
 						FILTER_INFO fi2;
 						VDVERIFY(SUCCEEDED(pPinConn->QueryPinInfo(&pi2)));
 						VDVERIFY(SUCCEEDED(pi2.pFilter->QueryFilterInfo(&fi2)));
-						buf.append_sprintf(" connected to pin \"%s\" of filter \"%s\"\r\n", VDTextWToA(pi2.achName).c_str(), VDTextWToA(fi2.achName).c_str());
+						buf.append_sprintf(L" connected to pin \"%s\" of filter \"%s\"\r\n", pi2.achName, fi2.achName);
 						fi2.pGraph->Release();
 						pi2.pFilter->Release();
 					} else
-						buf.append_sprintf(" unconnected\r\n");
+						buf.append(L" unconnected\r\n");
 				}
 			}
 		}
-		buf.append_sprintf("\r\n");
+		buf.append(L"\r\n");
 		return buf;
 	}
 
@@ -1814,7 +1814,7 @@ protected:
 	HWND mhwndParent;					// Parent window
 	HWND mhwndEventSink;				// Our dummy window used as DS event sink
 	vdrect32 mDisplayRect;
-	VDStringA graph_dump;
+	VDStringW graph_dump;
 
 	uint32	mUpdateLocks;
 	bool	mbUpdatePending;
@@ -4492,7 +4492,7 @@ bool VDCaptureDriverDS::BuildGraph(bool bNeedCapture, bool bEnableAudio) {
 }
 
 void VDCaptureDriverDS::DisplayDump() {
-	extern void VDShowStatus(VDStringA& s);
+	extern void VDShowStatus(VDStringW& s);
 	VDShowStatus(graph_dump);
 }
 

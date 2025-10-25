@@ -143,7 +143,7 @@ void VDDebugPrint(const char* format, ...)
 	OutputDebugStringA(buf);
 }
 
-extern void VDDebugPrint(const wchar_t* format, ...)
+void VDDebugPrint(const wchar_t* format, ...)
 {
 	wchar_t buf[4096];
 	buf[0] = 0;
