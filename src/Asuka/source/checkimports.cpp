@@ -296,16 +296,18 @@ void tool_checkimports(const vdfastvector<const char *>& args, const vdfastvecto
 		while(it.Next()) {
 			HMODULE hmod = LoadPECOFF(it.GetFullPath().c_str());
 
-			if (!hmod)
-				throw MyError("Unable to open: %s", VDTextWToA(it.GetName()).c_str());
+			if (!hmod) {
+				throw MyError(L"Unable to open: %s", it.GetName());
+			}
 
 			vdvector<VDStringA> exports;
 			bool success = ExtractExports(hmod, exports);
 
 			FreePECOFF(hmod);
 
-			if (!success)
-				throw MyError("Failed to extract exports from: %s", VDTextWToA(it.GetFullPath()).c_str());
+			if (!success) {
+				throw MyError(L"Failed to extract exports from: %s", it.GetFullPath().c_str());
+			}
 
 			VDStringW dllnamew(it.GetName());
 			std::transform(dllnamew.begin(), dllnamew.end(), dllnamew.begin(), towlower);
