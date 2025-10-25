@@ -142,7 +142,7 @@ protected:
 
 	void OnCodecSelectionChanged(VDUIProxyListBoxControl *sender, int index);
 	void SetVideoDepthOptionsAsk();
-	int testFilterFormat(EncoderHIC* plugin, const char* debug_id);
+	int testFilterFormat(EncoderHIC* plugin, const wchar_t* debug_id);
 	int testDIBFormat(EncoderHIC* plugin, BITMAPINFOHEADER* format, const char* debug_id);
 	int testVDFormat(EncoderHIC* plugin, int format, const char* debug_id);
 
@@ -414,10 +414,10 @@ enum {
 	format_compress_ready = 3,
 };
 
-int VDUIDialogChooseVideoCompressorW32::testFilterFormat(EncoderHIC* plugin, const char* debug_id) {
+int VDUIDialogChooseVideoCompressorW32::testFilterFormat(EncoderHIC* plugin, const wchar_t* debug_id) {
 	int flags = 0;
 
-	vdprotected1("querying video codec \"%.64s\"", const char *, debug_id) {
+	vdprotected1("querying video codec \"%.64s\"", const char *, VDTextWToA(debug_id).c_str()) {
 		if (mpSrcFormat) {
 			// try unknown vfw
 			if (plugin->compressQuery(mpSrcFormat, NULL)==ICERR_OK)
@@ -548,14 +548,9 @@ void VDUIDialogChooseVideoCompressorW32::EnumerateCodecs() {
 
 				if (plugin.hic) {
 					ICINFO ici = { sizeof(ICINFO) };
-					char namebuf[64];
+					plugin.getInfo(ici);
 
-					namebuf[0] = 0;
-
-				  if (plugin.getInfo(ici))
-						VDTextWToA(namebuf, sizeof namebuf, ici.szDescription, -1);
-
-					bool formatSupported = testFilterFormat(&plugin,namebuf)!=0;
+					bool formatSupported = (testFilterFormat(&plugin, ici.szDescription) != 0);
 
 					CodecInfo *pii = new CodecInfo;
 					static_cast<ICINFO&>(*pii) = ici;
@@ -588,16 +583,14 @@ void VDUIDialogChooseVideoCompressorW32::EnumeratePluginCodecs() {
 			int next_fcc = 0;
 			while(1){
 				EncoderHIC* plugin = EncoderHIC::load(path, ICTYPE_VIDEO, next_fcc, ICMODE_COMPRESS);
-				if (!plugin) break;
+				if (!plugin) {
+					break;
+				}
+				
 				ICINFO ici = { sizeof(ICINFO) };
-				char namebuf[64];
+				plugin->getInfo(ici);
 
-				namebuf[0] = 0;
-
-				if (plugin->getInfo(ici))
-					VDTextWToA(namebuf, sizeof namebuf, ici.szDescription, -1);
-
-				bool formatSupported = testFilterFormat(plugin,namebuf)!=0;
+				bool formatSupported = (testFilterFormat(plugin, ici.szDescription) != 0);
 
 				CodecInfo *pii = new CodecInfo;
 				static_cast<ICINFO&>(*pii) = ici;
