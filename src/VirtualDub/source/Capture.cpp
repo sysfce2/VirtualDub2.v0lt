@@ -1989,7 +1989,7 @@ void VDCaptureProject::Capture(bool fTest) {
 
 		if (!fTest) {
 			if (mbStripingEnabled) {
-				pStripeSystem = new AVIStripeSystem(VDTextWToA(mFilename).c_str());
+				pStripeSystem = new AVIStripeSystem(mFilename.c_str());
 
 				if (mbEnableSpill)
 					throw MyError("Sorry, striping and spilling are not compatible.");

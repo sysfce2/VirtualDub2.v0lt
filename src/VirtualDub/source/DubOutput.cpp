@@ -260,7 +260,7 @@ bool VDAVIOutputFileSystem::AcceptsAudio() {
 
 VDAVIOutputStripedSystem::VDAVIOutputStripedSystem(const wchar_t *filename)
 	: mbUse1GBLimit(false)
-	, mpStripeSystem(new AVIStripeSystem(VDTextWToA(filename, -1).c_str()))
+	, mpStripeSystem(new AVIStripeSystem(filename))
 {
 }
 

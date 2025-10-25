@@ -67,10 +67,10 @@ private:
 	void _destruct();
 public:
 	AVIStripeSystem(int nStripes);
-	AVIStripeSystem(const char *szFile);
+	AVIStripeSystem(const wchar_t* szFile);
 	~AVIStripeSystem();
 
-	void		Save(const char *szFile);
+	void		Save(const wchar_t* szFile); // hmm, not implemented
 
 	int			getStripeCount();
 	AVIStripe *	getStripeInfo(int nStripe);
