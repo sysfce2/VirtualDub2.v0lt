@@ -572,24 +572,25 @@ void InputFileAVI::Init(const wchar_t *szFile) {
 					}
 
 					if (!VDDoesPathExist(sPath.c_str())) {
-						char szPath[MAX_PATH];
 						wchar_t szTitle[MAX_PATH];
 
 						swprintf(szTitle, MAX_PATH, L"Cannot find file %s", sPath.c_str());
 
-						strcpy(szPath, VDTextWToA(sPath).c_str());
-
 						const VDStringW fname(VDGetLoadFileName(VDFSPECKEY_LOADVIDEOFILE, (VDGUIHandle)g_hWnd, szTitle, fileFiltersAppendAVI, L"avi", 0, 0));
 
-						if (fname.empty())
+						if (fname.empty()) {
 							throw MyUserAbortError();
+						}
 
-						if (!Append(fname.c_str(),0))
+						if (!Append(fname.c_str(), 0)) {
 							break;
+						}
 
 						sPathPattern = VDMakePath(VDFileSplitPathLeft(fname).c_str(), sPathTail.c_str());
-					} else if (!Append(sPath.c_str(),0))
+					}
+					else if (!Append(sPath.c_str(), 0)) {
 						break;
+					}
 				}
 			} catch(const MyError& e) {
 				char err[128];
