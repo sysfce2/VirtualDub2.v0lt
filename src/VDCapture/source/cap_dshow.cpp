@@ -4853,6 +4853,9 @@ void VDCaptureDriverDS::DoEvents() {
 		case EC_ERRORABORT:
 			VDDEBUG("Cap/DShow: Error abort detected: hr=%08x (%s)\n", (int)param1, GetDXErrorName((HRESULT)param1));
 			break;
+		case EC_VIDEO_SIZE_CHANGED:
+			VDDEBUG("Cap/DShow: Native video size has changed: %ux%u\n", LOWORD(param1), HIWORD(param1));
+			break;
 		default:
 			VDDEBUG("Cap/DShow: Unknown event %08x detected\n", (int)evCode);
 			break;
