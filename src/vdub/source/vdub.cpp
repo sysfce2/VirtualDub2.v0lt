@@ -4,7 +4,7 @@
 
 #pragma comment(lib, "vcruntime.lib")
 
-#define APPNAME "VirtualDub2.exe"
+#define APPNAMEW L"VirtualDub2.exe"
 
 struct CopyHandles {
 	CRITICAL_SECTION *pWriteLock;
@@ -92,7 +92,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	GetModuleFileNameW(NULL, exepath, MAX_PATH);
 	GetFullPathNameW(exepath, MAX_PATH, exepath2, &fname);
-	lstrcpyW(fname, _CRT_WIDE(APPNAME));
+	lstrcpyW(fname, APPNAMEW);
 
 	HANDLE hOutputPipeRead;
 	HANDLE hOutputPipeWrite;
@@ -210,9 +210,9 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		WCHAR* msg; // using unicode for windows messages
 
 		if (FormatMessageW(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER, NULL, GetLastError(), 0, (LPWSTR)&msg, 0, NULL)) {
-			static const CHAR pretext[] = "Cannot launch " APPNAME ": ";
+			static const WCHAR pretext[] = L"Cannot launch " APPNAMEW ": ";
 			DWORD actual;
-			WriteConsoleA(hStdOut, pretext, std::size(pretext) - 1, &actual, nullptr);
+			WriteConsoleW(hStdOut, pretext, std::size(pretext) - 1, &actual, nullptr);
 			WriteConsoleW(hStdOut, msg, lstrlenW(msg), &actual, nullptr);
 			LocalFree((HLOCAL)msg);
 		}
