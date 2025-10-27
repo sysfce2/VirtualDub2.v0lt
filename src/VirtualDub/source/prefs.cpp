@@ -657,10 +657,10 @@ public:
 					list->AddItem(L"Default system playback device");
 
 					for(UINT i=0; i<numDevices; ++i) {
-						WAVEOUTCAPSA caps = {0};
+						WAVEOUTCAPSW caps = {0};
 
-						if (MMSYSERR_NOERROR == waveOutGetDevCapsA(i, &caps, sizeof(caps))) {
-							const VDStringW key(VDTextAToW(caps.szPname).c_str());
+						if (MMSYSERR_NOERROR == waveOutGetDevCapsW(i, &caps, sizeof(caps))) {
+							const VDStringW key(caps.szPname);
 
 							mPlaybackDeviceKeys[i + 1] = key;
 

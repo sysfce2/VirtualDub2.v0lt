@@ -118,12 +118,10 @@ bool VDAudioOutputWaveOutW32::Init(uint32 bufsize, uint32 bufcount, const WAVEFO
 		UINT numDevices = waveOutGetNumDevs();
 
 		for(UINT i=0; i<numDevices; ++i) {
-			WAVEOUTCAPSA caps = {0};
+			WAVEOUTCAPSW caps = {};
 
-			if (MMSYSERR_NOERROR == waveOutGetDevCapsA(i, &caps, sizeof(caps))) {
-				const VDStringW key(VDTextAToW(caps.szPname).c_str());
-
-				if (key == preferredDevice) {
+			if (MMSYSERR_NOERROR == waveOutGetDevCapsW(i, &caps, sizeof(caps))) {
+				if (wcscmp(caps.szPname, preferredDevice) == 0) {
 					deviceID = i;
 					break;
 				}
