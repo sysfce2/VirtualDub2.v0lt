@@ -1558,8 +1558,9 @@ bool VDVideoDisplayWindow::IsOnSecondaryMonitor() const {
 		return false;
 
 	MONITORINFO monInfo = {sizeof(MONITORINFO)};
-	if (!GetMonitorInfoA(mhLastMonitor, &monInfo))
+	if (!GetMonitorInfoW(mhLastMonitor, &monInfo)) {
 		return false;
+	}
 
 	return !(monInfo.dwFlags & MONITORINFOF_PRIMARY);
 }
@@ -1567,7 +1568,7 @@ bool VDVideoDisplayWindow::IsOnSecondaryMonitor() const {
 void VDVideoDisplayWindow::GetMonitorRect(RECT *r, HMONITOR hmon) {
 
 	MONITORINFO monInfo = {sizeof(MONITORINFO)};
-	if (GetMonitorInfoA(hmon, &monInfo)) {
+	if (GetMonitorInfoW(hmon, &monInfo)) {
 		*r = monInfo.rcMonitor;
 		return;
 	}

@@ -209,12 +209,11 @@ bool VDDirectDrawManager::Init(IVDDirectDrawClient *pClient) {
 
 	mMonitorRect.set(0, 0, ::GetSystemMetrics(SM_CXSCREEN), ::GetSystemMetrics(SM_CYSCREEN));
 
-	// GetMonitorInfo() requires Windows 98/2000.
 	bool isDefaultMonitor = true;
 
 	if (mhMonitor) {
 		MONITORINFO monInfo = {sizeof(MONITORINFO)};
-		if (GetMonitorInfoA(mhMonitor, &monInfo)) {
+		if (GetMonitorInfoW(mhMonitor, &monInfo)) {
 			mMonitorRect.set(monInfo.rcMonitor.left, monInfo.rcMonitor.top, monInfo.rcMonitor.right, monInfo.rcMonitor.bottom);
 
 			isDefaultMonitor = (monInfo.dwFlags & MONITORINFOF_PRIMARY) != 0;

@@ -1328,7 +1328,7 @@ HRESULT VDD3D9Manager::Present(const RECT *src, HWND hwndDest, bool vsync, float
 
 			HMONITOR hmon = mpD3D->GetAdapterMonitor(mAdapter);
 			MONITORINFO monInfo = {sizeof(MONITORINFO)};
-			if (GetMonitorInfo(hmon, &monInfo)) {
+			if (GetMonitorInfoW(hmon, &monInfo)) {
 				top = monInfo.rcMonitor.top;
 				bottom = monInfo.rcMonitor.bottom;
 			}
@@ -1629,7 +1629,7 @@ HRESULT VDD3D9Manager::PresentSwapChain(IVDD3D9SwapChain *pSwapChain, const RECT
 		MapWindowPoints(hwndDest,0,(POINT*)&r,2);
 		HMONITOR hmon = mpD3D->GetAdapterMonitor(mAdapter);
 		MONITORINFO monInfo = {sizeof(MONITORINFO)};
-		GetMonitorInfo(hmon, &monInfo);
+		GetMonitorInfoW(hmon, &monInfo);
 		RECT& mr = monInfo.rcMonitor;
 		if (mr.top>r.top) r.top = mr.top;
 		if (mr.left>r.left) r.left = mr.left;
@@ -1671,7 +1671,7 @@ HRESULT VDD3D9Manager::PresentSwapChain(IVDD3D9SwapChain *pSwapChain, const RECT
 
 		HMONITOR hmon = mpD3D->GetAdapterMonitor(mAdapter);
 		MONITORINFO monInfo = {sizeof(MONITORINFO)};
-		GetMonitorInfo(hmon, &monInfo);
+		GetMonitorInfoW(hmon, &monInfo);
 		int top = monInfo.rcMonitor.top;
 		int bottom = monInfo.rcMonitor.bottom;
 

@@ -566,7 +566,7 @@ void FilterPreview::ShowZoomMode(int px, int py) {
 		mZoomPopup.Create((VDGUIHandle)mhdlg);
 		HMONITOR monitor = MonitorFromPoint(pts,MONITOR_DEFAULTTONEAREST);
 		MONITORINFO minfo = {sizeof(MONITORINFO)};
-		GetMonitorInfo(monitor,&minfo);
+		GetMonitorInfoW(monitor,&minfo);
 		RECT r0;
 		GetWindowRect(mZoomPopup.GetWindowHandle(),&r0);
 		int zw = r0.right-r0.left;
@@ -1181,7 +1181,7 @@ void FilterPreview::OnVideoResize(bool bInitial) {
 		int y1 = pp.y;
 
 		MONITORINFO info = {sizeof(info)};
-		GetMonitorInfo(MonitorFromWindow(mhwndParent,MONITOR_DEFAULTTONEAREST), &info);
+		GetMonitorInfoW(MonitorFromWindow(mhwndParent,MONITOR_DEFAULTTONEAREST), &info);
 		if (x0<info.rcMonitor.left) x0 = info.rcMonitor.left;
 		if(y0<info.rcMonitor.top) y0 = info.rcMonitor.top;
 		if (x1>info.rcMonitor.right) x1 = info.rcMonitor.right;
@@ -2302,7 +2302,7 @@ BOOL PixmapView::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 							RECT r1 = {0,0,0,0};
 							AdjustWindowRectEx(&r1, GetWindowLong(mhdlg, GWL_STYLE), FALSE, GetWindowLong(mhdlg, GWL_EXSTYLE));
 							MONITORINFO info = {sizeof(info)};
-							GetMonitorInfo(MonitorFromWindow(mhdlg,MONITOR_DEFAULTTONEAREST), &info);
+							GetMonitorInfoW(MonitorFromWindow(mhdlg,MONITOR_DEFAULTTONEAREST), &info);
 							int w = info.rcWork.right-r.left - (r1.right-r1.left);
 							int h = info.rcWork.bottom-r.top - (r1.bottom-r1.top);
 							mpVideoWindow->SetZoom(mpVideoWindow->GetMaxZoomForArea(w, h), false);

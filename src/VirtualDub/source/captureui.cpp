@@ -2939,7 +2939,7 @@ void VDCaptureProjectUI::UpdateMaximize() {
 	if(style1!=style0){
 		HMONITOR mon = MonitorFromWindow((HWND)mhwnd,MONITOR_DEFAULTTONEAREST);
 		MONITORINFO info = {sizeof(MONITORINFO)};
-		GetMonitorInfo(mon,&info);
+		GetMonitorInfoW(mon,&info);
 		RECT rr = info.rcWork;
 		int x = rr.left;
 		int y = rr.top;
