@@ -216,7 +216,7 @@ bool VDUIDialogExtEncMain::OnCommand(uint32 id, uint32 extcode) {
 						SendMessageW(hwndEdit, EM_REPLACESEL, TRUE, (LPARAM)VDStringW(s, t).c_str());
 					} else {
 						SendMessageA(hwndEdit, EM_SETSEL, -1, -1);
-						SendMessageA(hwndEdit, EM_REPLACESEL, TRUE, (LPARAM)VDTextWToA(VDStringW(s, t)).c_str());
+						SendMessageA(hwndEdit, EM_REPLACESEL, TRUE, (LPARAM)VDTextWToA(s, (int)(t - s)).c_str());
 					}
 
 					SetFocus(hwndEdit);

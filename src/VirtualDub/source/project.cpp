@@ -1199,7 +1199,7 @@ void VDProject::OpenProject(const wchar_t *pFilename, bool readOnly) {
 			SaveProjectPath(VDStringW(pFilename), VDTextU8ToW(subDir), readOnly);
 			mProjectName = job->GetName();
 			VDStringW base = VDFileSplitPathLeft(mProjectFilename);
-			VDStringW back = VDTextU8ToW(VDStringA(job->GetProjectDir()));
+			VDStringW back = VDTextU8ToW(job->GetProjectDir());
 			if (back!=base) mProjectBack = back;
 			RunScriptMemory(job->GetScript(), job->GetScriptLine(), true);
 			mProjectBack = L"";

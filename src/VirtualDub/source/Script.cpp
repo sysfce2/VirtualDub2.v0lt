@@ -1679,7 +1679,7 @@ static void func_VDAudio_SetSource(IVDScriptInterpreter *, VDScriptValue *arglis
 
 static void func_VDAudio_SetSourceExternal(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
 	IVDInputDriver *pDriver = NULL;
-	VDStringW s(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	VDStringW s(VDTextU8ToW(*arglist[0].asString()));
 	VDStringW fileName(g_project->ExpandProjectPath(s.c_str()));
 
 	if (arg_count >= 2) {
@@ -2058,7 +2058,7 @@ static void func_VirtualDub_OpenOld(IVDScriptInterpreter *, VDScriptValue *argli
 }
 
 static void VirtualDub_Open2(VDScriptValue *arglist, int arg_count, int fAutoScan) {
-	VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	IVDInputDriver *pDriver = NULL;
 	VDStringW signature;
 	int open_flags = f_open_quiet;
@@ -2105,13 +2105,13 @@ static void func_VirtualDub_intOpenTest(IVDScriptInterpreter *, VDScriptValue *a
 }
 
 static void func_VirtualDub_Append(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 
 	AppendAVI(filename.c_str(),IVDInputDriver::kOF_SingleFile);
 }
 
 static void func_VirtualDub_AppendSequence(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 
 	AppendAVI(filename.c_str(),IVDInputDriver::kOF_Sequence);
 }
@@ -2165,7 +2165,7 @@ namespace {
 }
 
 static void func_VirtualDub_SaveAVI(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2204,7 +2204,7 @@ static void func_VirtualDub_SaveAVI(IVDScriptInterpreter *, VDScriptValue *argli
 }
 
 static void func_VirtualDub_SaveCompatibleAVI(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2217,7 +2217,7 @@ static void func_VirtualDub_SaveCompatibleAVI(IVDScriptInterpreter *, VDScriptVa
 }
 
 static void func_VirtualDub_SaveSegmentedAVI(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	const VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2241,8 +2241,8 @@ static void func_VirtualDub_SaveSegmentedAVI(IVDScriptInterpreter *, VDScriptVal
 }
 
 static void func_VirtualDub_SaveImageSequence(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW prefix(VDTextU8ToW(VDStringA(*arglist[0].asString())));
-	const VDStringW suffix(VDTextU8ToW(VDStringA(*arglist[1].asString())));
+	const VDStringW prefix(VDTextU8ToW(*arglist[0].asString()));
+	const VDStringW suffix(VDTextU8ToW(*arglist[1].asString()));
 
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
@@ -2262,8 +2262,8 @@ static void func_VirtualDub_SaveImageSequence(IVDScriptInterpreter *, VDScriptVa
 }
 
 static void func_VirtualDub_SaveImageSequence2(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW prefix(VDTextU8ToW(VDStringA(*arglist[0].asString())));
-	const VDStringW suffix(VDTextU8ToW(VDStringA(*arglist[1].asString())));
+	const VDStringW prefix(VDTextU8ToW(*arglist[0].asString()));
+	const VDStringW suffix(VDTextU8ToW(*arglist[1].asString()));
 
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
@@ -2283,7 +2283,7 @@ static void func_VirtualDub_SaveImageSequence2(IVDScriptInterpreter *, VDScriptV
 }
 
 static void func_VirtualDub_SaveWAV(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	const VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2299,7 +2299,7 @@ static void func_VirtualDub_SaveWAV(IVDScriptInterpreter *, VDScriptValue *argli
 }
 
 static void func_VirtualDub_SaveAudio(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	const VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2340,7 +2340,7 @@ static void func_VirtualDub_SaveAudio(IVDScriptInterpreter *, VDScriptValue *arg
 }
 
 static void func_VirtualDub_SaveRawAudio(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	const VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2348,7 +2348,7 @@ static void func_VirtualDub_SaveRawAudio(IVDScriptInterpreter *, VDScriptValue *
 }
 
 static void func_VirtualDub_SaveRawVideo(IVDScriptInterpreter *isi, VDScriptValue *arglist, int arg_count) {
-	const VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	const VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2373,7 +2373,7 @@ static void func_VirtualDub_SaveRawVideo(IVDScriptInterpreter *isi, VDScriptValu
 }
 
 static void func_VirtualDub_SaveAnimatedGIF(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	const VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2381,7 +2381,7 @@ static void func_VirtualDub_SaveAnimatedGIF(IVDScriptInterpreter *, VDScriptValu
 }
 
 static void func_VirtualDub_SaveAnimatedPNG(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	const VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2389,8 +2389,8 @@ static void func_VirtualDub_SaveAnimatedPNG(IVDScriptInterpreter *, VDScriptValu
 }
 
 static void func_VirtualDub_ExportViaEncoderSet(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW filename(VDTextU8ToW(VDStringA(*arglist[0].asString())));
-	const VDStringW encSetName(VDTextU8ToW(VDStringA(*arglist[1].asString())));
+	const VDStringW filename(VDTextU8ToW(*arglist[0].asString()));
+	const VDStringW encSetName(VDTextU8ToW(*arglist[1].asString()));
 	DubOptions opts(g_dubOpts);
 	InitBatchOptions(opts);
 
@@ -2398,7 +2398,7 @@ static void func_VirtualDub_ExportViaEncoderSet(IVDScriptInterpreter *, VDScript
 }
 
 static void func_VirtualDub_Log(IVDScriptInterpreter *, VDScriptValue *arglist, int arg_count) {
-	const VDStringW text(VDTextU8ToW(VDStringA(*arglist[0].asString())));
+	const VDStringW text(VDTextU8ToW(*arglist[0].asString()));
 
 	VDLog(kVDLogInfo, text);
 }

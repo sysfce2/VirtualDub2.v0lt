@@ -1120,7 +1120,7 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 					if (execute) {
 						g_VDStartupArguments.clear();
 						while(cmdLine.GetNextNonSwitchArgument(it, token))
-							g_VDStartupArguments.push_back(VDTextWToU8(VDStringW(token)));
+							g_VDStartupArguments.push_back(VDTextWToU8(token));
 
 						RunScript(filename);
 					} else {
