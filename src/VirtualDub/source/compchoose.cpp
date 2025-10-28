@@ -417,7 +417,7 @@ enum {
 int VDUIDialogChooseVideoCompressorW32::testFilterFormat(EncoderHIC* plugin, const wchar_t* debug_id) {
 	int flags = 0;
 
-	vdprotected1("querying video codec \"%.64s\"", const char *, VDTextWToA(debug_id).c_str()) {
+	vdprotected1("querying video codec \"%.64ls\"", const wchar_t*, debug_id) {
 		if (mpSrcFormat) {
 			// try unknown vfw
 			if (plugin->compressQuery(mpSrcFormat, NULL)==ICERR_OK)
