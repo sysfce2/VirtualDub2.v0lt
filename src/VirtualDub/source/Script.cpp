@@ -1426,7 +1426,7 @@ static void func_VDAFiltInst_SetDouble(IVDScriptInterpreter *isi, VDScriptValue 
 static void func_VDAFiltInst_SetString(IVDScriptInterpreter *isi, VDScriptValue *argv, int argc) {
 	VDPluginConfigVariant v;
 
-	v.SetWStr(VDTextU8ToW(*argv[1].asString(), -1).c_str());
+	v.SetWStr(VDTextU8ToW(*argv[1].asString()).c_str());
 
 	SetFilterParam(argv[-1].asObjectPtr(), argv[0].asInt(), v);
 }
@@ -1499,7 +1499,7 @@ static void func_VDAFilters_Clear(IVDScriptInterpreter *, VDScriptValue *, int) 
 static void func_VDAFilters_Add(IVDScriptInterpreter *isi, VDScriptValue *argv, int argc) {
 	VDAudioFilterGraph::FilterEntry filt;
 
-	filt.mFilterName = VDTextU8ToW(*argv[0].asString(), -1);
+	filt.mFilterName = VDTextU8ToW(*argv[0].asString());
 
 	VDPluginDescription *pDesc = VDGetPluginDescription(filt.mFilterName.c_str(), kVDXPluginType_Audio);
 
@@ -1683,7 +1683,7 @@ static void func_VDAudio_SetSourceExternal(IVDScriptInterpreter *, VDScriptValue
 	VDStringW fileName(g_project->ExpandProjectPath(s.c_str()));
 
 	if (arg_count >= 2) {
-		const VDStringW driverName(VDTextU8ToW(*arglist[1].asString(), -1));
+		const VDStringW driverName(VDTextU8ToW(*arglist[1].asString()));
 
 		if (driverName.empty())
 			pDriver = VDAutoselectInputDriverForFile(fileName.c_str(), IVDInputDriver::kF_Audio);

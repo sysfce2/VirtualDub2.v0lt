@@ -730,11 +730,11 @@ void VDVFLogo::ScriptConfig(IVDXScriptInterpreter *, const VDXScriptValue *argv,
 
 	mConfig.bEnableSecondaryAlpha = false;
 
-	wcsncpy(mConfig.szLogoPath, VDTextU8ToW(*argv[0].asString(), -1).c_str(), std::size(mConfig.szLogoPath));
+	wcsncpy(mConfig.szLogoPath, VDTextU8ToW(*argv[0].asString()).c_str(), std::size(mConfig.szLogoPath));
 	mConfig.szLogoPath[std::size(mConfig.szLogoPath) - 1] = 0;
 
 	if (argv[3].isString()) {
-		wcsncpy(mConfig.szAlphaPath, VDTextU8ToW(*argv[3].asString(), -1).c_str(), std::size(mConfig.szAlphaPath));
+		wcsncpy(mConfig.szAlphaPath, VDTextU8ToW(*argv[3].asString()).c_str(), std::size(mConfig.szAlphaPath));
 		mConfig.szAlphaPath[std::size(mConfig.szAlphaPath) - 1] = 0;
 		mConfig.bEnableAlphaBlending = true;
 		mConfig.bEnableSecondaryAlpha = true;
