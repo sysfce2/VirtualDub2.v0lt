@@ -168,7 +168,7 @@ private:
 	enum { INPUT_BUFFER_SIZE = 16384 };
 
 public:
-	AudioCompressor(AudioStream *src, const VDWaveFormat *dst_format, long dst_format_len, const char *shortNameHint, vdblock<char>& config);
+	AudioCompressor(AudioStream *src, const VDWaveFormat *dst_format, long dst_format_len, const wchar_t* shortNameHint, vdblock<char>& config);
 	~AudioCompressor();
 	vd2::FormatConfidence SuggestFileFormat(const char* name);
 	void UpdateFormat();
@@ -180,7 +180,7 @@ public:
 	long _ReadVBR(void *buffer, long size, long *lplBytes, sint64 *duration);
 	bool	isEnd();
 
-	VDStringA name;
+	VDStringW name;
 
 protected:
 	bool Process();

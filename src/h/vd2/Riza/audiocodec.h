@@ -85,15 +85,15 @@ public:
 	virtual vd2::FormatConfidence SuggestFileFormat(const char* name) { return vd2::kFormat_Unknown; }
 };
 
-IVDAudioCodec *VDLocateAudioDecompressor(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, bool preferInternalCodecs, const char *pShortNameDriverHint = NULL);
+IVDAudioCodec *VDLocateAudioDecompressor(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, bool preferInternalCodecs, const wchar_t* pShortNameDriverHint = NULL);
 
 IVDAudioCodec *VDCreateAudioDecompressor(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat);
 IVDAudioCodec *VDCreateAudioDecompressorALaw(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat);
 IVDAudioCodec *VDCreateAudioDecompressorMuLaw(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat);
 IVDAudioCodec *VDCreateAudioDecompressorMPEG(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat);
 
-IVDAudioCodec *VDCreateAudioCompressorW32(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, const char *pShortNameDriverHint, bool throwIfNotFound);
-IVDAudioCodec *VDCreateAudioDecompressorW32(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, const char *pShortNameDriverHint, bool throwIfNotFound);
+IVDAudioCodec *VDCreateAudioCompressorW32(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, const wchar_t* pShortNameDriverHint, bool throwIfNotFound);
+IVDAudioCodec *VDCreateAudioDecompressorW32(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, const wchar_t* pShortNameDriverHint, bool throwIfNotFound);
 
 long fill_silence_pcm(void* buf, int samples, const VDWaveFormat *wfex);
 bool is_audio_pcm(const VDWaveFormat *wfex);

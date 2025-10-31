@@ -356,8 +356,8 @@ public:
 	virtual void	GetAudioMask(VDAudioMaskParam& param) = 0;
 
 	virtual void	SetAudioCompFormat() = 0;
-	virtual void	SetAudioCompFormat(const VDWaveFormat& wfex, uint32 cbwfex, const char *shortNameHint) = 0;
-	virtual bool	GetAudioCompFormat(vdstructex<VDWaveFormat>& wfex, VDStringA& shortNameHint) = 0;
+	virtual void	SetAudioCompFormat(const VDWaveFormat& wfex, uint32 cbwfex, const wchar_t* shortNameHint) = 0;
+	virtual bool	GetAudioCompFormat(vdstructex<VDWaveFormat>& wfex, VDStringW& shortNameHint) = 0;
 
 	virtual bool	IsPropertySupported(uint32 id) = 0;
 	virtual sint32	GetPropertyInt(uint32 id, bool *pAutomatic) = 0;

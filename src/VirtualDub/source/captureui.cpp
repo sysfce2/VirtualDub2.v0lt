@@ -194,7 +194,7 @@ static char g_szStripeFile[MAX_PATH];
 extern COMPVARS2 g_compression;
 extern VDPixmapFormatEx g_compformat;
 
-extern WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *pwfexOld, WAVEFORMATEX *pwfexSrc, VDStringA& shortNameHint, vdblock<char>& config, bool enable_plugin=false);
+extern WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *pwfexOld, WAVEFORMATEX *pwfexSrc, VDStringW& shortNameHint, vdblock<char>& config, bool enable_plugin=false);
 extern void ChooseCaptureCompressor(HWND hwndParent, COMPVARS2 *lpCompVars, BITMAPINFOHEADER *bihInput);
 
 static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -1400,8 +1400,8 @@ void VDCaptureProjectUI::LoadDeviceSettings() {
 		vdblock<char> buf(len);
 
 		if (devkey.getBinary(g_szAudioCompFormat, buf.data(), buf.size())) {
-			const char *pHint = NULL;
-			VDStringA hint;
+			const wchar_t* pHint = NULL;
+			VDStringW hint;
 
 			if (devkey.getString(g_szAudioCompHint, hint))
 				pHint = hint.c_str();
@@ -1561,7 +1561,7 @@ void VDCaptureProjectUI::SaveDeviceSettings(uint32 mask) {
 
 	if (mask & kSaveDevAudioComp) {
 		vdstructex<VDWaveFormat> wfex;
-		VDStringA hint;
+		VDStringW hint;
 
 		if (mpProject->GetAudioCompFormat(wfex, hint)) {
 			devkey.setBinary(g_szAudioCompFormat, (const char *)&*wfex, wfex.size());
@@ -3435,7 +3435,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 				vdstructex<VDWaveFormat> wfexSrc2;
 				VDWaveFormat *pwfexSrc = NULL;
 				VDWaveFormat *pwfexOld = NULL;
-				VDStringA hint;
+				VDStringW hint;
 				vdblock<char> config;
 
 				if (mpProject->GetAudioCompFormat(wfex, hint)) {

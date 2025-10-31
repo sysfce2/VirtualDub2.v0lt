@@ -32,7 +32,7 @@ public:
 	VDAudioCodecW32();
 	~VDAudioCodecW32();
 
-	bool Init(const WAVEFORMATEX *pSrcFormat, const WAVEFORMATEX *pDstFormat, bool isCompression, const char *pShortNameDriverHint, bool throwOnError);
+	bool Init(const WAVEFORMATEX *pSrcFormat, const WAVEFORMATEX *pDstFormat, bool isCompression, const wchar_t* pShortNameDriverHint, bool throwOnError);
 	void Shutdown();
 
 	bool IsEnded() const { return mbEnded; }
@@ -58,8 +58,8 @@ protected:
 	vdstructex<VDWaveFormat>	mSrcFormat;
 	vdstructex<VDWaveFormat>	mDstFormat;
 	ACMSTREAMHEADER mBufferHdr;
-	char mDriverName[64];
-	char mDriverFilename[64];
+	wchar_t mDriverName[64];
+	wchar_t mDriverFilename[64];
 
 	unsigned		mOutputReadPt;
 	bool			mbFirst;

@@ -47,7 +47,7 @@ extern IDubber				*g_dubber;
 
 extern VDWaveFormat		*g_ACompressionFormat;
 extern uint32			g_ACompressionFormatSize;
-extern VDStringA		g_ACompressionFormatHint;
+extern VDStringW		g_ACompressionFormatHint;
 extern vdblock<char>	g_ACompressionConfig;
 
 extern VDAudioFilterGraph	g_audioFilterGraph;

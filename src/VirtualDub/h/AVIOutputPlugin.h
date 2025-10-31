@@ -27,7 +27,7 @@ public:
 class VDINTERFACE IVDAudioEnc : public IVDRefCount {
 public:
 	virtual const wchar_t *	GetName() = 0;
-	virtual const char *	GetSignatureName() = 0;
+	virtual const wchar_t*	GetSignatureName() = 0;
 	virtual IVDXAudioEnc * GetDriver() = 0;
 	virtual VDOutputDriverContextImpl* GetContext() = 0;
 };
@@ -42,7 +42,7 @@ IVDOutputDriver *VDGetOutputDriverByName(const wchar_t *name);
 void VDInitAudioEnc();
 void VDShutdownAudioEnc();
 void VDGetAudioEncList(tVDAudioEncList& l);
-IVDAudioEnc *VDGetAudioEncByName(const char *name);
+IVDAudioEnc *VDGetAudioEncByName(const wchar_t* name);
 
 class IVDMediaOutputPlugin : public IVDMediaOutput {
 public:
@@ -50,6 +50,6 @@ public:
 };
 
 IVDMediaOutputPlugin *VDCreateMediaOutputPlugin(IVDOutputDriver* driver, const char* format);
-IVDAudioCodec *VDCreateAudioCompressorPlugin(const VDWaveFormat *srcFormat, const char *pSignatureName, vdblock<char>& config, bool throwIfNotFound);
+IVDAudioCodec *VDCreateAudioCompressorPlugin(const VDWaveFormat *srcFormat, const wchar_t* pSignatureName, vdblock<char>& config, bool throwIfNotFound);
 
 #endif

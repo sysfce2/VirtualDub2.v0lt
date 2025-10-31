@@ -154,7 +154,7 @@ namespace {
 		virtual void Init(const VDPluginInfo *pInfo, VDExternalModule *pModule) {
 			VDShadowedPluginDescription::Init(pInfo, pModule);
 
-			const VDXAudioEncDefinition *def = static_cast<const VDXAudioEncDefinition *>(pInfo->mpTypeSpecificInfo);
+			const VDXAudioEncDefinition2 *def = static_cast<const VDXAudioEncDefinition2 *>(pInfo->mpTypeSpecificInfo);
 			memset(&mDefinition, 0, sizeof mDefinition);
 			memcpy(&mDefinition, def, std::min<uint32>(def->mSize, sizeof mDefinition));
 			mShadowedInfo.mpTypeSpecificInfo = &mDefinition;
@@ -166,10 +166,10 @@ namespace {
 		}
 
 	protected:
-		VDXAudioEncDefinition	mDefinition;
+		VDXAudioEncDefinition2	mDefinition;
 
 		VDStringW				mDriverName;
-		VDStringA				mDriverTagName;
+		VDStringW				mDriverTagName;
 	};
 }
 

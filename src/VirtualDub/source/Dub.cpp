@@ -450,7 +450,7 @@ private:
 	FrameSubset				*inputSubsetAlloc;
 
 	vdstructex<WAVEFORMATEX> mAudioCompressionFormat;
-	VDStringA			mAudioCompressionFormatHint;
+	VDStringW			mAudioCompressionFormatHint;
 	vdblock<char>		mAudioCompressionConfig;
 
 	VDPixmapLayout		mVideoFilterOutputPixmapLayout;
@@ -478,7 +478,7 @@ public:
 	Dubber(DubOptions *);
 	~Dubber();
 
-	void SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const char *pShortNameHint, vdblock<char>& config);
+	void SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const wchar_t* pShortNameHint, vdblock<char>& config);
 	void SetInputDisplay(IVDVideoDisplay *);
 	void SetOutputDisplay(IVDVideoDisplay *);
 	void SetAudioFilterGraph(const VDAudioFilterGraph& graph);
@@ -584,7 +584,7 @@ Dubber::~Dubber() {
 
 /////////////////////////////////////////////////
 
-void Dubber::SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const char *pShortNameHint, vdblock<char>& config) {
+void Dubber::SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const wchar_t* pShortNameHint, vdblock<char>& config) {
 	mAudioCompressionFormat.assign((const WAVEFORMATEX *)wf, cb);
 	if (pShortNameHint)
 		mAudioCompressionFormatHint = pShortNameHint;
@@ -1069,10 +1069,8 @@ void Dubber::CheckAudioCodec(const char* format) {
 	vd2::FormatConfidence fc = audioCompressor->SuggestFileFormat(format);
 
 	if (fc==vd2::kFormat_Reject || fc==vd2::kFormat_Unwise) {
-		VDStringA aname = audioCompressor->name;
-		VDStringA text;
-		text.sprintf("Codec \"%s\" not supported in container \"%s\".\nSelect different compression or different file type.", aname.c_str(), format);
-		throw MyError(text.c_str());
+		throw MyError(L"Codec \"%s\" not supported in container \"%hs\".\nSelect different compression or different file type.",
+			audioCompressor->name.c_str(), format);
 	}
 }
 

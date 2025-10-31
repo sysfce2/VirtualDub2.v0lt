@@ -1472,7 +1472,7 @@ bool AudioStreamResampler::_isEnd() {
 //
 ///////////////////////////////////////////////////////////////////////////
 
-AudioCompressor::AudioCompressor(AudioStream *src, const VDWaveFormat *dst_format, long dst_format_len, const char *pShortNameHint, vdblock<char>& config) : AudioStream() {
+AudioCompressor::AudioCompressor(AudioStream *src, const VDWaveFormat *dst_format, long dst_format_len, const wchar_t* pShortNameHint, vdblock<char>& config) : AudioStream() {
 	VDWaveFormat *iFormat = src->GetFormat();
 
 	SetSource(src);

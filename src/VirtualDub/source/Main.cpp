@@ -952,7 +952,7 @@ void VDSaveVideoDialogW32::InitCodec() {
 	VDStringW aname = VDStringW(L"(None)");
 	if (inputAudio) {
 		if (g_ACompressionFormat) {
-			aname = VDTextU8ToW(g_ACompressionFormatHint);
+			aname = g_ACompressionFormatHint;
 			IVDAudioEnc* driver = (IVDAudioEnc*)VDGetAudioEncByName(g_ACompressionFormatHint.c_str());
 			if (driver) aname = driver->GetName();
 		} else {

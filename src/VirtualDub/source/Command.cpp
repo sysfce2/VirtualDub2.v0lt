@@ -69,7 +69,7 @@ IDubber				*g_dubber				= NULL;
 COMPVARS2			g_Vcompression;
 VDWaveFormat		*g_ACompressionFormat		= NULL;
 uint32				g_ACompressionFormatSize	= 0;
-VDStringA			g_ACompressionFormatHint;
+VDStringW			g_ACompressionFormatHint;
 vdblock<char>		g_ACompressionConfig;
 
 VDAudioFilterGraph	g_audioFilterGraph;

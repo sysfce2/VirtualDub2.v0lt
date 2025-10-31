@@ -469,7 +469,7 @@ VDAudioPluginCodec::VDAudioPluginCodec(VDPluginDescription *desc)
 {
 	mpDesc = desc;
 	const VDPluginInfo* info = VDLockPlugin(desc);
-	VDXAudioEncDefinition* mpDef = (VDXAudioEncDefinition*)info->mpTypeSpecificInfo;
+	VDXAudioEncDefinition2* mpDef = (VDXAudioEncDefinition2*)info->mpTypeSpecificInfo;
 	mpDef->mpCreate(&context, ~plugin);
 }
 
@@ -487,7 +487,7 @@ public:
 		return mpDef->mpDriverName;
 	}
 
-	const char *	GetSignatureName() {
+	const wchar_t*	GetSignatureName() {
 		return mpDef->mpDriverTagName;
 	}
 
@@ -506,7 +506,7 @@ public:
 
 	VDPluginDescription *mpDesc;
 	const VDPluginInfo *info;
-	VDXAudioEncDefinition *mpDef;
+	VDXAudioEncDefinition2 *mpDef;
 	vdrefptr<IVDXAudioEnc> plugin;
 	VDOutputDriverContextImpl context;
 };
@@ -516,7 +516,7 @@ VDAudioEncPlugin::VDAudioEncPlugin(VDPluginDescription *desc)
 {
 	mpDesc = desc;
 	info = VDLockPlugin(desc);
-	mpDef = (VDXAudioEncDefinition*)info->mpTypeSpecificInfo;
+	mpDef = (VDXAudioEncDefinition2*)info->mpTypeSpecificInfo;
 	mpDef->mpCreate(&context, ~plugin);
 }
 
@@ -525,7 +525,7 @@ VDAudioEncPlugin::~VDAudioEncPlugin() {
 	VDUnlockPlugin(mpDesc);
 }
 
-IVDAudioCodec *VDCreateAudioCompressorPlugin(const VDWaveFormat *srcFormat, const char *pSignatureName, vdblock<char>& config, bool throwIfNotFound) {
+IVDAudioCodec *VDCreateAudioCompressorPlugin(const VDWaveFormat *srcFormat, const wchar_t* pSignatureName, vdblock<char>& config, bool throwIfNotFound) {
 	VDAudioEncPlugin* driver = (VDAudioEncPlugin*)VDGetAudioEncByName(pSignatureName);
 	if (!driver) {
 		if (throwIfNotFound) throw MyError(
@@ -565,13 +565,13 @@ void VDGetAudioEncList(tVDAudioEncList& l) {
 	}
 }
 
-IVDAudioEnc *VDGetAudioEncByName(const char *name) {
+IVDAudioEnc *VDGetAudioEncByName(const wchar_t* name) {
 	for(tVDAudioEncList::const_iterator it(g_VDAudioEnc.begin()), itEnd(g_VDAudioEnc.end()); it!=itEnd; ++it) {
 		IVDAudioEnc *pDriver = *it;
 
-		const char *dvname = pDriver->GetSignatureName();
+		const wchar_t* dvname = pDriver->GetSignatureName();
 
-		if (dvname && !_stricmp(name, dvname))
+		if (dvname && !_wcsicmp(name, dvname))
 			return pDriver;
 	}
 

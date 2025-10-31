@@ -735,8 +735,8 @@ public:
 	void	GetAudioMask(VDAudioMaskParam& param){ param = audioMask; }
 
 	void	SetAudioCompFormat();
-	void	SetAudioCompFormat(const VDWaveFormat& wfex, uint32 cbwfex, const char *pShortNameHint);
-	bool	GetAudioCompFormat(vdstructex<VDWaveFormat>& wfex, VDStringA& hint);
+	void	SetAudioCompFormat(const VDWaveFormat& wfex, uint32 cbwfex, const wchar_t* pShortNameHint);
+	bool	GetAudioCompFormat(vdstructex<VDWaveFormat>& wfex, VDStringW& hint);
 
 	void		SetCaptureFile(const wchar_t *filename, bool bIsStripeSystem);
 	VDStringW	GetCaptureFile();
@@ -840,7 +840,7 @@ protected:
 	tDrivers	mDrivers;
 
 	vdstructex<VDWaveFormat>	mAudioCompFormat;
-	VDStringA					mAudioCompFormatHint;
+	VDStringW					mAudioCompFormatHint;
 	vdstructex<WAVEFORMATEX>	mAudioAnalysisFormat;
 	VDAudioMaskParam audioMask;
 
@@ -1644,7 +1644,7 @@ void VDCaptureProject::SetAudioCompFormat() {
 	mAudioCompFormatHint.clear();
 }
 
-void VDCaptureProject::SetAudioCompFormat(const VDWaveFormat& wfex, uint32 cbwfex, const char *pHint) {
+void VDCaptureProject::SetAudioCompFormat(const VDWaveFormat& wfex, uint32 cbwfex, const wchar_t* pHint) {
 	if (wfex.mTag == WAVE_FORMAT_PCM) {
 		mAudioCompFormat.clear();
 		mAudioCompFormatHint.clear();
@@ -1657,7 +1657,7 @@ void VDCaptureProject::SetAudioCompFormat(const VDWaveFormat& wfex, uint32 cbwfe
 	}
 }
 
-bool VDCaptureProject::GetAudioCompFormat(vdstructex<VDWaveFormat>& wfex, VDStringA& hint) {
+bool VDCaptureProject::GetAudioCompFormat(vdstructex<VDWaveFormat>& wfex, VDStringW& hint) {
 	wfex.assign((const VDWaveFormat *)mAudioCompFormat.data(), mAudioCompFormat.size());
 	hint = mAudioCompFormatHint;
 	return !wfex.empty();

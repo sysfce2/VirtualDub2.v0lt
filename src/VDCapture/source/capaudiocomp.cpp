@@ -35,7 +35,7 @@ public:
 	void SetChildCallback(IVDCaptureDriverCallback *pChild);
 	void SetSourceSplit(bool enable);
 
-	void Init(const WAVEFORMATEX *srcFormat, const WAVEFORMATEX *dstFormat, const char *pShortNameHint);
+	void Init(const WAVEFORMATEX *srcFormat, const WAVEFORMATEX *dstFormat, const wchar_t* pShortNameHint);
 
 	void GetStatus(VDCaptureAudioCompStatus&);
 
@@ -71,7 +71,7 @@ void VDCaptureAudioCompFilter::SetSourceSplit(bool enable) {
 	mbSplitSource = enable;
 }
 
-void VDCaptureAudioCompFilter::Init(const WAVEFORMATEX *srcFormat, const WAVEFORMATEX *dstFormat, const char *pShortNameHint) {
+void VDCaptureAudioCompFilter::Init(const WAVEFORMATEX *srcFormat, const WAVEFORMATEX *dstFormat, const wchar_t* pShortNameHint) {
 	mCodec.Init(srcFormat, dstFormat, true, pShortNameHint, true);
 }
 

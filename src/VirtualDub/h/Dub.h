@@ -230,7 +230,7 @@ class IDubber {
 public:
 	virtual ~IDubber()					=0;
 
-	virtual void SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const char *pShortNameHint, vdblock<char>& config) = 0;
+	virtual void SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const wchar_t* pShortNameHint, vdblock<char>& config) = 0;
 	virtual void SetInputDisplay(IVDVideoDisplay *pDisplay) = 0;
 	virtual void SetOutputDisplay(IVDVideoDisplay *pDisplay) = 0;
 	virtual void SetAudioFilterGraph(const VDAudioFilterGraph& graph)=0;

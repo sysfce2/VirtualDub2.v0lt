@@ -49,7 +49,7 @@ class ACMTagEntry;
 
 class ACMFormatEntry : public ListNode2<ACMFormatEntry> {
 public:
-	ACMFORMATDETAILSA afd;
+	ACMFORMATDETAILSW afd;
 	ACMTagEntry *pFormatTag;
 	WAVEFORMATEX *pwfex;
 	bool fCompatible;
@@ -64,8 +64,8 @@ ACMFormatEntry::~ACMFormatEntry() {
 class ACMTagEntry {
 public:
 	List2<ACMFormatEntry> formats;
-	ACMFORMATTAGDETAILSA aftd;
-	ACMDRIVERDETAILSA add;
+	ACMFORMATTAGDETAILSW aftd;
+	ACMDRIVERDETAILSW add;
 	HACMDRIVERID hadid;
 	IVDAudioEnc* driver;
 	bool mbSupportsAbout;
@@ -103,7 +103,7 @@ struct ACMEnumeratorData {
 	DWORD cbwfex;
 	ACMFormatEntry *pFormatSelect;
 	ACMTagEntry *pTagSelect;
-	const char *pHintSelect;
+	const wchar_t* pHintSelect;
 	bool fAttemptedWeird;
 
 	bool mbCurrentFormatTagMatchesHint;
@@ -117,14 +117,14 @@ struct ACMEnumeratorData {
 
 struct ACMChooserData {
 	WAVEFORMATEX *pwfex, *pwfexSrc;
-	VDStringA *pHint;
+	VDStringW* pHint;
 	vdblock<char> *pConfig;
 	bool enable_plugin;
 };
 
 ///////////////////////////////////////////////////////////////////////////
 
-BOOL CALLBACK ACMFormatEnumerator(HACMDRIVERID hadid, LPACMFORMATDETAILSA pafd, DWORD_PTR dwInstance, DWORD fdwSupport) {
+BOOL CALLBACK ACMFormatEnumerator(HACMDRIVERID hadid, LPACMFORMATDETAILSW pafd, DWORD_PTR dwInstance, DWORD fdwSupport) {
 	ACMEnumeratorData *pData = (ACMEnumeratorData *)dwInstance;
 	ACMFormatEntry *pafe = new ACMFormatEntry();
 
@@ -171,7 +171,7 @@ BOOL CALLBACK ACMFormatEnumerator(HACMDRIVERID hadid, LPACMFORMATDETAILSA pafd, 
 	return TRUE;
 }
 
-BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, LPACMFORMATTAGDETAILSA paftd, DWORD_PTR dwInstance, DWORD fdwSupport) {
+BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, LPACMFORMATTAGDETAILSW paftd, DWORD_PTR dwInstance, DWORD fdwSupport) {
 	ACMEnumeratorData *pData = (ACMEnumeratorData *)dwInstance;
 
 	if (paftd->dwFormatTag != WAVE_FORMAT_PCM) {
@@ -181,7 +181,7 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 
 		if (index != LB_ERR) {
 			ACMTagEntry *pate = new ACMTagEntry();
-			ACMFORMATDETAILSA afd;
+			ACMFORMATDETAILSW afd;
 
 			pate->hadid = hadid;
 			pate->aftd = *paftd;
@@ -192,11 +192,12 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 			pData->pate = pate;
 			pData->mbCurrentFormatTagMatchesHint = false;
 
-			if (acmDriverDetailsA(hadid, &pate->add, 0))
+			if (acmDriverDetailsW(hadid, &pate->add, 0)) {
 				pate->add.cbStruct = 0;
-			else {
-				if (pData->pHintSelect && !_stricmp(pData->pHintSelect, pate->add.szShortName))
+			} else {
+				if (pData->pHintSelect && !_wcsicmp(pData->pHintSelect, pate->add.szShortName)) {
 					pData->mbCurrentFormatTagMatchesHint = true;
+				}
 			}
 
 			memset(&afd, 0, sizeof afd);
@@ -207,7 +208,7 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 			pData->pwfex->wFormatTag = (WORD)paftd->dwFormatTag;
 
 			pData->fAttemptedWeird = false;
-			acmFormatEnumA(pData->had, &afd, ACMFormatEnumerator, dwInstance, ACM_FORMATENUMF_WFORMATTAG);
+			acmFormatEnumW(pData->had, &afd, ACMFormatEnumerator, dwInstance, ACM_FORMATENUMF_WFORMATTAG);
 
 			if (!pData->fAttemptedWeird && pData->pwfexSrc) {
 
@@ -219,7 +220,7 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 					afd.dwFormatIndex = 0;
 					afd.fdwSupport = 0;
 
-					if (!acmFormatDetailsA(pData->had, &afd, ACM_FORMATDETAILSF_FORMAT))
+					if (!acmFormatDetailsW(pData->had, &afd, ACM_FORMATDETAILSF_FORMAT))
 						ACMFormatEnumerator(hadid, &afd, dwInstance, 0);
 				}
 			}
@@ -236,16 +237,16 @@ BOOL /*ACMDRIVERENUMCB*/ CALLBACK ACMDriverEnumerator(HACMDRIVERID hadid, DWORD_
 
 	vdprotected1("enumerating audio codec ID %p", decltype(hadid), hadid) {
 		if (!acmDriverOpen(&pData->had, hadid, 0)) {
-			ACMDRIVERDETAILSA add = { sizeof(ACMDRIVERDETAILSA) };
-			acmDriverDetailsA(hadid, &add, 0);
+			ACMDRIVERDETAILSW add = { sizeof(ACMDRIVERDETAILSW) };
+			acmDriverDetailsW(hadid, &add, 0);
 
-			vdprotected1("enumerating formats for audio codec \"%.64s\"", const char *, add.szLongName) {
-				ACMFORMATTAGDETAILSA aftd;
+			vdprotected1("enumerating formats for audio codec \"%.64ls\"", const wchar_t*, add.szLongName) {
+				ACMFORMATTAGDETAILSW aftd;
 
 				memset(&aftd, 0, sizeof aftd);
 				aftd.cbStruct = sizeof aftd;
 
-				acmFormatTagEnumA(pData->had, &aftd, ACMFormatTagEnumerator, dwInstance, 0);
+				acmFormatTagEnumW(pData->had, &aftd, ACMFormatTagEnumerator, dwInstance, 0);
 
 				acmDriverClose(pData->had, 0);
 			}
@@ -318,20 +319,21 @@ static void AudioChooseShowFormats(HWND hdlg, ACMTagEntry *pTag, bool fShowCompa
 	ACMFormatEntry *pFormat = pTag->formats.AtHead(), *pFormat_next;
 
 	while(pFormat_next = pFormat->NextFromHead()) {
-		char buf[128];
+		wchar_t buf[128];
 		int band;
 
 		if (!fShowCompatibleOnly || pFormat->fCompatible) {
 			if (pFormat->pwfex->nAvgBytesPerSec) {
 				band = (pFormat->pwfex->nAvgBytesPerSec+1023)/1024;
-				wsprintfA(buf, "%s\t%dKB/s", pFormat->afd.szFormat, band);
+				wsprintfW(buf, L"%s\t%dKB/s", pFormat->afd.szFormat, band);
 			} else {
-				strcpy(buf, pFormat->afd.szFormat);
+				wcscpy(buf, pFormat->afd.szFormat);
 			}
 
-			idx = SendMessageA(hwndListFormats, LB_ADDSTRING, 0, (LPARAM)buf);
-			if (idx != LB_ERR)
-				SendMessage(hwndListFormats, LB_SETITEMDATA, idx, (LPARAM)pFormat);
+			idx = SendMessageW(hwndListFormats, LB_ADDSTRING, 0, (LPARAM)buf);
+			if (idx != LB_ERR) {
+				SendMessageW(hwndListFormats, LB_SETITEMDATA, idx, (LPARAM)pFormat);
+			}
 		}
 
 		pFormat = pFormat_next;
@@ -351,12 +353,15 @@ void PluginReloadFormat(IVDXAudioEnc* plugin, ACMChooserData* thisPtr, ACMTagEnt
 		f1->pwfex = (WAVEFORMATEX *)allocmem(dst_format_len);
 		memcpy(f1->pwfex, plugin->GetOutputFormat(), dst_format_len);
 
-		if (f1->pwfex->nChannels==1)
-			wsprintfA(f1->afd.szFormat, "%d Hz, Mono", f1->pwfex->nSamplesPerSec);
-		if (f1->pwfex->nChannels==2)
-			wsprintfA(f1->afd.szFormat, "%d Hz, Stereo", f1->pwfex->nSamplesPerSec);
-		if (f1->pwfex->nChannels>2)
-			wsprintfA(f1->afd.szFormat, "%d Hz, %d ch", f1->pwfex->nSamplesPerSec, f1->pwfex->nChannels);
+		if (f1->pwfex->nChannels == 1) {
+			wsprintfW(f1->afd.szFormat, L"%d Hz, Mono", f1->pwfex->nSamplesPerSec);
+		}
+		if (f1->pwfex->nChannels == 2) {
+			wsprintfW(f1->afd.szFormat, L"%d Hz, Stereo", f1->pwfex->nSamplesPerSec);
+		}
+		if (f1->pwfex->nChannels > 2) {
+			wsprintfW(f1->afd.szFormat, L"%d Hz, %d ch", f1->pwfex->nSamplesPerSec, f1->pwfex->nChannels);
+		}
 
 		entry->formats.AddTail(f1);
 	}
@@ -660,7 +665,7 @@ redisplay_formats:
 	return FALSE;
 }
 
-WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *pwfexOld, WAVEFORMATEX *pwfexSrc, VDStringA& shortNameHint, vdblock<char>& config, bool enable_plugin) {
+WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *pwfexOld, WAVEFORMATEX *pwfexSrc, VDStringW& shortNameHint, vdblock<char>& config, bool enable_plugin) {
 	ACMChooserData data;
 
 	data.pwfex = pwfexOld;

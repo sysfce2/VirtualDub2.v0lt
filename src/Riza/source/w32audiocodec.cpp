@@ -76,7 +76,7 @@ namespace {
 	}
 }
 
-IVDAudioCodec *VDCreateAudioCompressorW32(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, const char *pShortNameDriverHint, bool throwIfNotFound) {
+IVDAudioCodec *VDCreateAudioCompressorW32(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, const wchar_t* pShortNameDriverHint, bool throwIfNotFound) {
 	vdautoptr<VDAudioCodecW32> codec(new VDAudioCodecW32);
 
 	if (!codec->Init((const WAVEFORMATEX *)srcFormat, (const WAVEFORMATEX *)dstFormat, true, pShortNameDriverHint, throwIfNotFound))
@@ -85,7 +85,7 @@ IVDAudioCodec *VDCreateAudioCompressorW32(const VDWaveFormat *srcFormat, const V
 	return codec.release();
 }
 
-IVDAudioCodec *VDCreateAudioDecompressorW32(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, const char *pShortNameDriverHint, bool throwIfNotFound) {
+IVDAudioCodec *VDCreateAudioDecompressorW32(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, const wchar_t* pShortNameDriverHint, bool throwIfNotFound) {
 	vdautoptr<VDAudioCodecW32> codec(new VDAudioCodecW32);
 
 	if (!codec->Init((const WAVEFORMATEX *)srcFormat, (const WAVEFORMATEX *)dstFormat, false, pShortNameDriverHint, throwIfNotFound))
@@ -113,7 +113,7 @@ namespace {
 	struct ACMDriverList {
 		typedef const HACMDRIVERID *const_iterator;
 
-		ACMDriverList(const char *hint)
+		ACMDriverList(const wchar_t* hint)
 			: mpHint(hint)
 		{
 			acmDriverEnum(Callback, (DWORD_PTR)this, 0);
@@ -129,9 +129,9 @@ namespace {
 			// If we have a hint, check if the driver matches. If so, push it at the front of
 			// the list instead of the back.
 			if (pThis->mpHint) {
-				ACMDRIVERDETAILSA add = {sizeof(ACMDRIVERDETAILSA)};
+				ACMDRIVERDETAILSW add = {sizeof(ACMDRIVERDETAILSW)};
 
-				if (!acmDriverDetailsA(hadid, &add, 0) && !_stricmp(add.szShortName, pThis->mpHint)) {
+				if (!acmDriverDetailsW(hadid, &add, 0) && !_wcsicmp(add.szShortName, pThis->mpHint)) {
 					pThis->mDriverIds.insert(pThis->mDriverIds.begin(), hadid);
 					pThis->mpHint = NULL;
 					return TRUE;
@@ -142,12 +142,12 @@ namespace {
 			return TRUE;
 		}
 
-		const char *mpHint;
+		const wchar_t* mpHint;
 		vdfastvector<HACMDRIVERID> mDriverIds;
 	};
 }
 
-bool VDAudioCodecW32::Init(const WAVEFORMATEX *pSrcFormat, const WAVEFORMATEX *pDstFormat, bool isCompression, const char *pDriverShortNameHint, bool throwOnError) {
+bool VDAudioCodecW32::Init(const WAVEFORMATEX *pSrcFormat, const WAVEFORMATEX *pDstFormat, bool isCompression, const wchar_t* pDriverShortNameHint, bool throwOnError) {
 	Shutdown();
 
 	SafeCopyWaveFormat(mSrcFormat, (const VDWaveFormat *)pSrcFormat);
@@ -324,10 +324,10 @@ bool VDAudioCodecW32::Init(const WAVEFORMATEX *pSrcFormat, const WAVEFORMATEX *p
 
 	HACMDRIVERID hDriverID;
 	if (!acmDriverID((HACMOBJ)mhStream, &hDriverID, 0)) {
-		ACMDRIVERDETAILSA add = { sizeof(ACMDRIVERDETAILSA) };
-		if (!acmDriverDetailsA(hDriverID, &add, 0)) {
-			strncpyz(mDriverName, add.szLongName, std::size(mDriverName));
-			strncpyz(mDriverFilename, add.szShortName, std::size(mDriverFilename));
+		ACMDRIVERDETAILSW add = { sizeof(ACMDRIVERDETAILSW) };
+		if (!acmDriverDetailsW(hDriverID, &add, 0)) {
+			wcsncpyz(mDriverName, add.szLongName, std::size(mDriverName));
+			wcsncpyz(mDriverFilename, add.szShortName, std::size(mDriverFilename));
 		}
 	}
 
@@ -426,7 +426,7 @@ bool VDAudioCodecW32::Convert(bool flush, bool requireOutput) {
 
 
 	if (mBufferHdr.cbSrcLength || flush) {
-		vdprotected2(isCompression ? "compressing audio" : "decompressing audio", const char *, mDriverName, const char *, mDriverFilename) {
+		vdprotected2(isCompression ? "compressing audio" : "decompressing audio", const wchar_t*, mDriverName, const wchar_t*, mDriverFilename) {
 			DWORD flags = ACM_STREAMCONVERTF_BLOCKALIGN;
 
 			if (flush && !mBufferHdr.cbSrcLength)
@@ -515,7 +515,7 @@ unsigned VDAudioCodecW32::CopyOutput(void *dst, unsigned bytes) {
 
 ///////////////////////////////////////////////////////////////////////////
 
-IVDAudioCodec *VDLocateAudioDecompressor(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, bool preferInternalCodecs, const char *pShortNameDriverHint) {
+IVDAudioCodec *VDLocateAudioDecompressor(const VDWaveFormat *srcFormat, const VDWaveFormat *dstFormat, bool preferInternalCodecs, const wchar_t* pShortNameDriverHint) {
 	IVDAudioCodec *codec = NULL;
 
 	if (preferInternalCodecs) {

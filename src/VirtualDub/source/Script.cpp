@@ -1783,8 +1783,9 @@ static void func_VDAudio_SetCompressionWithHint(IVDScriptInterpreter *isi, VDScr
 
 	func_VDAudio_SetCompression(isi, arglist, arg_count - 1);
 
-	if (g_ACompressionFormat)
-		g_ACompressionFormatHint.assign(*arglist[arg_count - 1].asString());
+	if (g_ACompressionFormat) {
+		g_ACompressionFormatHint.assign(VDTextU8ToW(*arglist[arg_count - 1].asString()));
+	}
 }
 
 static void func_VDAudio_SetCompData(IVDScriptInterpreter *isi, VDScriptValue *arglist, int arg_count) {
