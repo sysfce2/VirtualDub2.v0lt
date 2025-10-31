@@ -599,7 +599,7 @@ typedef bool (VDXAPIENTRY *VDXOutputDriverCreateProc)(const VDXInputDriverContex
 
 struct VDXOutputDriverDefinition {
 	uint32		mSize;				// size of this structure in bytes
-	uint32		mFlags;       // reserved
+	uint32		mFlags;				// reserved
 
 	const wchar_t *mpDriverName;
 	const wchar_t *mpDriverTagName;
@@ -664,8 +664,8 @@ public:
 typedef bool (VDXAPIENTRY *VDXAudioEncCreateProc)(const VDXInputDriverContext *pContext, IVDXAudioEnc **);
 
 struct VDXAudioEncDefinition {
-	uint32		mSize;				// size of this structure in bytes
-	uint32		mFlags;       // reserved
+	uint32		mSize;			// size of this structure in bytes
+	uint32		mFlags;			// reserved
 
 	const wchar_t *mpDriverName;
 	const char *mpDriverTagName;
