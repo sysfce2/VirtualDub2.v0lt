@@ -42,11 +42,11 @@
 ///////////////////////////////////////////////////////////////////////////
 
 struct VDFileAsyncNTBuffer : public OVERLAPPED {
-	bool	mbActive;
-	bool	mbPending;
-	uint32	mLength;
+	bool    mbActive  = false;
+	bool    mbPending = false;
+	uint32  mLength   = 0;
 
-	VDFileAsyncNTBuffer() : mbActive(false), mbPending(false) { hEvent = CreateEvent(NULL, TRUE, FALSE, NULL); }
+	VDFileAsyncNTBuffer() { hEvent = CreateEvent(NULL, TRUE, FALSE, NULL); }
 	~VDFileAsyncNTBuffer() { if (hEvent) CloseHandle(hEvent); }
 };
 

@@ -31,17 +31,17 @@ public:
 protected:
 	void StaticTimerCallback(void *, unsigned, unsigned, unsigned long);
 
-	void *mChangeHandle;
-	uint64 mLastWriteTime;
-	bool mbWatchDir;
+	void *mChangeHandle   = INVALID_HANDLE_VALUE;
+	uint64 mLastWriteTime = 0;
+	bool mbWatchDir       = false;
 	VDStringW mPath;
 
-	IVDFileWatcherCallback *mpCB;
+	IVDFileWatcherCallback* mpCB = nullptr;
 
-	bool mbRepeatRequested;
-	bool mbThunksInited;
-	VDFunctionThunk *mpThunk;
-	uint32 mTimerId;
+	bool mbRepeatRequested = false;
+	bool mbThunksInited    = false;
+	VDFunctionThunk* mpThunk = nullptr;
+	uint32 mTimerId = 0;
 };
 
 #endif

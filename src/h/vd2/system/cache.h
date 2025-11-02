@@ -257,9 +257,9 @@ protected:
 	virtual bool IsValid() const { return true; }
 
 protected:
-	VDCache			*mpCache;
-	VDAtomicInt		mRefCount;
-	VDCacheState	mState;
+	VDCache*     mpCache   = nullptr;
+	VDAtomicInt  mRefCount = 0;
+	VDCacheState mState    = kVDCacheStateFree;
 };
 
 ///////////////////////////////////////////////////////////////////////////

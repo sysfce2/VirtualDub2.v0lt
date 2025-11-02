@@ -57,7 +57,7 @@ protected:
 	const char *const mpszText;
 	const char *const mpszCaption;
 	const DWORD mdwFlags;
-	DWORD mdwResult;
+	DWORD mdwResult = 0;
 };
 
 UINT VDSafeMessageBoxW32(HWND hwndParent, const char *pszText, const char *pszCaption, DWORD dwFlags) {

@@ -259,8 +259,6 @@ void VDCache::MarkCompleted(VDCachedObject *pObject) {
 ///////////////////////////////////////////////////////////////////////////
 
 VDCachedObject::VDCachedObject()
-	: mRefCount(0)
-	, mpCache(NULL)
 {
 }
 

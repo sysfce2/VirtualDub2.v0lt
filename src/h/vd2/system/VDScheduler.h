@@ -121,7 +121,7 @@ protected:
 	void ThreadRun();
 
 	VDScheduler *mpScheduler;
-	uint32 mAffinity;
+	//uint32 mAffinity;
 };
 
 class VDSchedulerThreadPool {
