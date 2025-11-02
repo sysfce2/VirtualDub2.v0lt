@@ -188,8 +188,8 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 		{
 			VDStringW s(g_szInputWAVFile);
 			if (project_relative) s = g_project->BuildProjectPath(g_szInputWAVFile);
-			const VDStringA& encodedFileName = VDEncodeScriptString(s);
-			const VDStringA& encodedDriverName = VDEncodeScriptString(g_project->GetAudioSourceDriverName());
+			const VDStringA& encodedFileName = VDEncodeString(s);
+			const VDStringA& encodedDriverName = VDEncodeString(g_project->GetAudioSourceDriverName());
 
 			// check if we have options to write out
 			const InputFileOptions *opts = g_project->GetAudioSourceOptions();
@@ -288,7 +288,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 						,g_ACompressionFormat->mBlockSize
 						,g_ACompressionFormat->mExtraSize
 						,mem
-						,VDEncodeScriptString(g_ACompressionFormatHint).c_str()
+						,VDEncodeString(g_ACompressionFormatHint).c_str()
 						);
 
 			freemem(mem);
@@ -300,7 +300,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 						,g_ACompressionFormat->mSampleBits
 						,g_ACompressionFormat->mDataRate
 						,g_ACompressionFormat->mBlockSize
-						,VDEncodeScriptString(g_ACompressionFormatHint).c_str()
+						,VDEncodeString(g_ACompressionFormatHint).c_str()
 						);
 
 		long l = g_ACompressionConfig.size();
@@ -354,7 +354,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 	if ((g_Vcompression.dwFlags & ICMF_COMPVARS_VALID) && g_Vcompression.fccHandler) {
 		if (g_Vcompression.driver && !g_Vcompression.driver->path.empty()) {
 			VDStringW name = VDFileSplitPathRight(g_Vcompression.driver->path);
-			VDStringA sname = VDEncodeScriptString(name);
+			VDStringA sname = VDEncodeString(name);
 			output.addf("VirtualDub.video.SetCompression(0x%08lx,%d,%d,%d,\"%s\");",
 					g_Vcompression.fccHandler,
 					g_Vcompression.lKey,
@@ -401,7 +401,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 		output.addf("VirtualDub.video.SetCompression();");
 
 	if (!g_FileOutDriver.empty()) {
-		const VDStringA driver = VDEncodeScriptString(g_FileOutDriver);
+		const VDStringA driver = VDEncodeString(g_FileOutDriver);
 		output.addf("VirtualDub.SaveFormat(\"%s\",\"%s\");"
 			,driver.c_str()
 			,g_FileOutFormat.c_str()
@@ -411,7 +411,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 		output.addf("VirtualDub.SaveFormatAVI();");
 
 	if (!g_AudioOutDriver.empty()) {
-		const VDStringA driver = VDEncodeScriptString(g_AudioOutDriver);
+		const VDStringA driver = VDEncodeString(g_AudioOutDriver);
 		output.addf("VirtualDub.SaveAudioFormat(\"%s\",\"%s\");"
 			,driver.c_str()
 			,g_AudioOutFormat.c_str()
@@ -435,7 +435,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 	{
 		VDFilterChainEntry *ent = *it;
 		FilterInstance *fa = ent->mpInstance;
-		VDStringA sname = VDEncodeScriptString(fa->GetName());
+		VDStringA sname = VDEncodeString(fa->GetName());
 		output.addf("VirtualDub.video.filters.Add(\"%s\");", sname.c_str());
 
 		if (fa->IsCroppingEnabled()) {
@@ -467,7 +467,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 			output.addf("VirtualDub.video.filters.instance[%d].SetEnabled(false);", iFilter);
 
 		if (!ent->mOutputName.empty())
-			output.addf("VirtualDub.video.filters.instance[%d].SetOutputName(\"%s\");", iFilter, VDEncodeScriptString(ent->mOutputName).c_str());
+			output.addf("VirtualDub.video.filters.instance[%d].SetOutputName(\"%s\");", iFilter, VDEncodeString(ent->mOutputName).c_str());
 
 		if (!ent->mSources.empty()) {
 			for(vdvector<VDStringA>::const_iterator it2(ent->mSources.begin()), it2End(ent->mSources.end());
@@ -475,7 +475,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 				++it2)
 			{
 				const VDStringA& name = *it2;
-				output.addf("VirtualDub.video.filters.instance[%d].AddInput(\"%s\");", iFilter, VDEncodeScriptString(name).c_str());
+				output.addf("VirtualDub.video.filters.instance[%d].AddInput(\"%s\");", iFilter, VDEncodeString(name).c_str());
 			}
 		}
 
@@ -531,7 +531,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 
 		for(; it!=itEnd; ++it, ++srcfilt) {
 			const VDAudioFilterGraph::FilterEntry& fe = *it;
-			VDStringA sname = VDEncodeScriptString(fe.mFilterName);
+			VDStringA sname = VDEncodeString(fe.mFilterName);
 
 			output.addf("VirtualDub.audio.filters.Add(\"%s\");", sname.c_str());
 
@@ -564,13 +564,13 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 					break;
 				case VDPluginConfigVariant::kTypeAStr:
 					{
-						VDStringA s = VDEncodeScriptString(VDTextAToW(var.GetAStr()));
+						VDStringA s = VDEncodeString(VDTextAToW(var.GetAStr()));
 						output.addf("VirtualDub.audio.filters.instance[%d].SetString(%d, \"%s\");", srcfilt, idx, s.c_str());
 					}
 					break;
 				case VDPluginConfigVariant::kTypeWStr:
 					{
-						VDStringA s = VDEncodeScriptString(VDStringW(var.GetWStr()));
+						VDStringA s = VDEncodeString(VDStringW(var.GetWStr()));
 						output.addf("VirtualDub.audio.filters.instance[%d].SetString(%d, \"%s\");", srcfilt, idx, s.c_str());
 					}
 					break;
@@ -636,7 +636,7 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 
 			memcpy(buf, &(*it).first, 4);
 
-			output.addf("VirtualDub.project.AddTextInfo(\"%s\", \"%s\");", buf, VDEncodeScriptString((*it).second).c_str());
+			output.addf("VirtualDub.project.AddTextInfo(\"%s\", \"%s\");", buf, VDEncodeString((*it).second).c_str());
 		}
 	}
 }
@@ -647,14 +647,14 @@ void JobAddConfigurationInputs(JobScriptOutput& output, const VDProject* project
 		if (project) {
 			s = project->BuildProjectPath(szFileInput);
 		}
-		const VDStringA filename = VDEncodeScriptString(s);
+		const VDStringA filename = VDEncodeString(s);
 		const char* funcName = "VirtualDub.Open";
 		if (inputFlags != -1 && (inputFlags & IVDInputDriver::kFF_Sequence)) {
 			funcName = "VirtualDub.OpenSequence";
 		}
 		VDStringA sdriver;
 		if (pszInputDriver) {
-			sdriver = VDEncodeScriptString(VDStringW(pszInputDriver));
+			sdriver = VDEncodeString(VDStringW(pszInputDriver));
 		}
 
 		if (pszInputDriver && g_pInputOpts) {
@@ -684,7 +684,7 @@ void JobAddConfigurationInputs(JobScriptOutput& output, const VDProject* project
 			while(ifn_next = ifn->NextFromHead()) {
 				VDStringW s(ifn->name);
 				if (project) s = project->BuildProjectPath(ifn->name);
-				VDStringA sa = VDEncodeScriptString(s);
+				VDStringA sa = VDEncodeString(s);
 				if (ifn->flags & IVDInputDriver::kOF_Sequence)
 					output.addf("VirtualDub.AppendSequence(\"%s\");", sa.c_str());
 				else
@@ -760,7 +760,7 @@ void JobAddConfiguration(JobRequestVideo& req) {
 	JobScriptOutput output;
 	JobWriteContent(output, req);
 
-	VDStringA sname = VDEncodeScriptString(req.fileOutput);
+	VDStringA sname = VDEncodeString(req.fileOutput);
 
 	// Add actual run option
 	if (req.lSegmentCount>1)
@@ -779,8 +779,8 @@ void JobAddConfigurationImages(JobRequestImages& req) {
 	JobWriteContent(output, req);
 
 	// Add actual run option
-	VDStringA sprefix = VDEncodeScriptString(req.filePrefix);
-	VDStringA ssuffix = VDEncodeScriptString(req.fileSuffix);
+	VDStringA sprefix = VDEncodeString(req.filePrefix);
+	VDStringA ssuffix = VDEncodeString(req.fileSuffix);
 
 	if (req.startDigit>0)
 		output.addf("VirtualDub.SaveImageSequence2(\"%s\", \"%s\", %d, %d, %d, %d);", sprefix.c_str(), ssuffix.c_str(), req.minDigits, req.startDigit, req.imageFormat, req.quality);
@@ -798,7 +798,7 @@ void JobAddConfigurationSaveAudio(JobRequestAudio& req) {
 	JobWriteContent(output, req);
 
 	// Add actual run option
-	VDStringA name = VDEncodeScriptString(req.fileOutput);
+	VDStringA name = VDEncodeString(req.fileOutput);
 	if (req.raw) {
 		output.addf("VirtualDub.SaveRawAudio(\"%s\");", name.c_str());
 	} else {
@@ -817,7 +817,7 @@ void JobAddConfigurationSaveAudioPlugin(JobRequest& req) {
 	JobWriteContent(output, req);
 
 	// Add actual run option
-	VDStringA name = VDEncodeScriptString(req.fileOutput);
+	VDStringA name = VDEncodeString(req.fileOutput);
 	output.addf("VirtualDub.SaveAudio(\"%s\");", name.c_str());
 
 	JobAddClose(output);
@@ -828,7 +828,7 @@ void JobAddConfigurationSaveRawVideo(JobRequestRawVideo& req) {
 	JobScriptOutput output;
 	JobWriteContent(output, req);
 
-	VDStringA name = VDEncodeScriptString(req.fileOutput);
+	VDStringA name = VDEncodeString(req.fileOutput);
 
 	// Add actual run option
 	output.addf("VirtualDub.SaveRawVideo(\"%s\", %u, %u, %u, %u);"
@@ -849,8 +849,8 @@ void JobAddConfigurationExportViaEncoder(JobRequestExtVideo& req) {
 
 	// Add actual run option
 	output.addf("VirtualDub.ExportViaEncoderSet(\"%s\", \"%s\");"
-		, VDEncodeScriptString(req.fileOutput).c_str()
-		, VDEncodeScriptString(req.encSetName).c_str()
+		, VDEncodeString(req.fileOutput).c_str()
+		, VDEncodeString(req.encSetName).c_str()
 		);
 
 	JobAddClose(output);

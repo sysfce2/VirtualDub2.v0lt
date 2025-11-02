@@ -697,3 +697,44 @@ VDStringW VDswprintf(const wchar_t *format, int args, ...) {
 
 	return r;
 }
+
+////////////////////////////////////////////////
+
+VDStringA VDEncodeString(const VDStringSpanA& sa)
+{
+	VDStringA out;
+
+	for (VDStringA::const_iterator it(sa.begin()), itEnd(sa.end()); it != itEnd; ++it) {
+		char c = *it;
+
+		switch (c) {
+		case '\\': out += "\\\\";  break;
+		case '\"': out += "\\\"";  break;
+		case '\r': out += "\\r";   break;
+		case '\n': out += "\\n";   break;
+		case '\t': out += "\\t";   break;
+		case '\v': out += "\\v";   break;
+		case '\b': out += "\\b";   break;
+		case '\f': out += "\\f";   break;
+		case '\a': out += "\\a";   break;
+		default: out += c;
+		}
+	}
+
+	return out;
+}
+
+VDStringA VDEncodeString(const VDStringW& sw)
+{
+	return VDEncodeString(VDTextWToU8(sw));
+}
+
+VDStringA VDEncodeString(const char* sa)
+{
+	return VDEncodeString(VDStringSpanA(sa));
+}
+
+VDStringA VDEncodeString(const wchar_t* sw)
+{
+	return VDEncodeString(VDTextWToU8(sw));
+}

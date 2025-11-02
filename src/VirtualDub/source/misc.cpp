@@ -201,29 +201,6 @@ FOURCC toupperFOURCC(FOURCC fcc) {
 	void VDInitExternalCallTrap() {}
 #endif
 
-VDStringA VDEncodeScriptString(const VDStringSpanA& sa) {
-	VDStringA out;
-
-	// this is not very fast, but it's only used during script serialization
-	for (VDStringA::const_iterator it(sa.begin()), itEnd(sa.end()); it != itEnd; ++it) {
-		char c = *it;
-
-		switch (c) {
-		case '\\': out += "\\\\";  break;
-		case '\"': out += "\\\"";  break;
-		case '\r': out += "\\r";   break;
-		case '\n': out += "\\n";   break;
-		default: out += c;
-		}
-	}
-
-	return out;
-}
-
-VDStringA VDEncodeScriptString(const VDStringW& sw) {
-	return VDEncodeScriptString(VDTextWToU8(sw));
-}
-
 HMODULE VDLoadVTuneDLLW32() {
 	VDRegistryKey key("SOFTWARE\\Intel Corporation\\VTune(TM) Performance Environment\\6.0", true);
 

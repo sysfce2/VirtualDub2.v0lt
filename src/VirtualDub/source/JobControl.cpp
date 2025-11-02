@@ -1062,7 +1062,7 @@ void VDJobQueue::Save(IVDStream *stream, uint64 signature, uint32 revision, bool
 
 		if (state == VDJob::kStateInProgress || state == VDJob::kStateAborting || state == VDJob::kStateCompleted || state == VDJob::kStateError) {
 			output.FormatLine("// $runner_id %llx", vdj->mRunnerId);
-			output.FormatLine("// $runner_name \"%s\"", VDEncodeScriptString(VDStringSpanA(vdj->GetRunnerName())).c_str());
+			output.FormatLine("// $runner_name \"%s\"", VDEncodeString(VDStringSpanA(vdj->GetRunnerName())).c_str());
 		}
 
 		output.FormatLine("// $start_time %08lx %08lx", (unsigned long)(vdj->mDateStart >> 32), (unsigned long)vdj->mDateStart);
@@ -1074,7 +1074,7 @@ void VDJobQueue::Save(IVDStream *stream, uint64 signature, uint32 revision, bool
 		}
 
 		if (state == VDJob::kStateError)
-			output.FormatLine("// $error \"%s\"", VDEncodeScriptString(vdj->GetError()));
+			output.FormatLine("// $error \"%s\"", VDEncodeString(vdj->GetError()));
 
 		output.PutLine("// $script");
 		output.PutLine("");
