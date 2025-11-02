@@ -96,7 +96,7 @@ void VDLogF(int severity, const wchar_t *format, ...) {
 
 void VDAttachLogger(IVDLogger *pLogger, bool bThisThreadOnly, bool bReplayLog) {
 	vdsynchronized(g_csLog) {
-		g_loggers.push_back(tVDLoggers::value_type(pLogger, bThisThreadOnly ? VDGetCurrentThreadID() : 0));
+		g_loggers.emplace_back(tVDLoggers::value_type(pLogger, bThisThreadOnly ? VDGetCurrentThreadID() : 0));
 
 		if (bReplayLog) {
 			int idx = g_logHead;
@@ -161,7 +161,7 @@ VDAutoLogger::~VDAutoLogger() {
 
 void VDAutoLogger::AddLogEntry(int severity, const wchar_t *s) {
 	if (severity >= mMinSeverity)
-		mEntries.push_back(Entry(severity, s));
+		mEntries.emplace_back(severity, s);
 }
 
 const VDAutoLogger::tEntries& VDAutoLogger::GetEntries() {
