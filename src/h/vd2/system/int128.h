@@ -61,7 +61,7 @@ public:
 		sint64 q[2];
 	};
 
-	vdint128() {}
+	vdint128() = default;
 
 	vdint128(sint64 x) {
 		q[0] = x;
@@ -214,7 +214,7 @@ public:
 		uint64 q[2];
 	};
 
-	vduint128() {}
+	vduint128() = default;
 
 	vduint128(sint64 x) {
 		q[0] = (sint64)x;

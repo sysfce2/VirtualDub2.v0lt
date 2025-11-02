@@ -79,49 +79,41 @@ protected:
 	void ThrowError();
 	void ThreadRun();
 
-	HANDLE		mhFileSlow;
-	HANDLE		mhFileFast;
-	uint32		mBlockSize;
-	uint32		mBlockCount;
-	uint32		mBufferSize;
-	uint32		mSectorSize;
+	HANDLE		mhFileSlow  = INVALID_HANDLE_VALUE;
+	HANDLE		mhFileFast  = INVALID_HANDLE_VALUE;
+	uint32		mBlockSize  = 0;
+	uint32		mBlockCount = 0;
+	uint32		mBufferSize = 0;
+	uint32		mSectorSize = 0;
 
 	enum {
 		kStateNormal,
 		kStateFlush,
 		kStateAbort
 	};
-	VDAtomicInt	mState;
+	VDAtomicInt	mState = 0;
 
 	VDSignal	mReadOccurred;
 	VDSignal	mWriteOccurred;
 
-	uint32		mWriteOffset;
-	VDAtomicInt	mBufferLevel;
-	sint64		mClientSlowPointer;
-	sint64		mClientFastPointer;
-	sint64		mFastPointer;
+	uint32		mWriteOffset = 0;
+	VDAtomicInt	mBufferLevel = 0;
+	sint64		mClientSlowPointer = 0;
+	sint64		mClientFastPointer = 0;
+	sint64		mFastPointer = 0;
 
-	volatile bool	mbPreemptiveExtend;
+	volatile bool	mbPreemptiveExtend = false;
 
 	vdautoarrayptr<VDFileAsyncNTBuffer>	mpBlocks;
 
 	vdblock<char, VDFileUnbufferAllocator<char> >	mBuffer;
 
-	VDAtomicPtr<MyError>	mpError;
+	VDAtomicPtr<MyError> mpError = nullptr;
 	VDStringW	mFilename;
-	bool mPipeMode;
+	bool mPipeMode = false;
 };
 
 VDFileAsyncNT::VDFileAsyncNT()
-	: mhFileSlow(INVALID_HANDLE_VALUE)
-	, mhFileFast(INVALID_HANDLE_VALUE)
-	, mFastPointer(0)
-	, mClientSlowPointer(0)
-	, mClientFastPointer(0)
-	, mbPreemptiveExtend(false)
-	, mpError(NULL)
-	, mPipeMode(false)
 {
 }
 

@@ -85,7 +85,7 @@ private:
 	const VDFile& operator=(const VDFile& f);
 
 public:
-	VDFile() {}
+	VDFile() = default;
 	VDFile(const char *pszFileName, uint32 flags = nsVDFile::kRead | nsVDFile::kDenyWrite | nsVDFile::kOpenExisting);
 	VDFile(const wchar_t *pwszFileName, uint32 flags = nsVDFile::kRead | nsVDFile::kDenyWrite | nsVDFile::kOpenExisting);
 	VDFile(VDFileHandle h);
@@ -198,13 +198,13 @@ private:
 	const VDFileStream& operator=(const VDFileStream& f);
 
 public:
-	VDFileStream() {}
+	VDFileStream() = default;
 	VDFileStream(const char *pszFileName, uint32 flags = nsVDFile::kRead | nsVDFile::kDenyWrite | nsVDFile::kOpenExisting)
 		: VDFile(pszFileName, flags) {}
 	VDFileStream(const wchar_t *pwszFileName, uint32 flags = nsVDFile::kRead | nsVDFile::kDenyWrite | nsVDFile::kOpenExisting)
 		: VDFile(pwszFileName, flags) {}
 	VDFileStream(VDFileHandle h) : VDFile(h) {}
-	~VDFileStream();
+	~VDFileStream() = default;
 
 	const wchar_t *GetNameForError();
 	sint64	Pos();
@@ -236,7 +236,7 @@ protected:
 class VDBufferedStream : public IVDRandomAccessStream {
 public:
 	VDBufferedStream(IVDRandomAccessStream *pSrc, uint32 bufferSize);
-	~VDBufferedStream();
+	~VDBufferedStream() = default;
 
 	const wchar_t *GetNameForError();
 	sint64	Pos();
@@ -260,7 +260,7 @@ protected:
 class VDTextStream {
 public:
 	VDTextStream(IVDStream *pSrc);
-	~VDTextStream();
+	~VDTextStream() = default;
 
 	const char *GetNextLine();
 
@@ -285,7 +285,7 @@ protected:
 class VDTextInputFile {
 public:
 	VDTextInputFile(const wchar_t *filename, uint32 flags = nsVDFile::kOpenExisting);
-	~VDTextInputFile();
+	~VDTextInputFile() = default;
 
 	inline const char *GetNextLine() {
 		return mTextStream.GetNextLine();

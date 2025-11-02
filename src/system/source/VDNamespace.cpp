@@ -76,10 +76,9 @@ const char *VDNamespaceGroup::namedup(const char *s) {
 ///////////////////////////////////////////////////////////////////////////
 
 VDNamespaceItem::VDNamespaceItem(const char *_pszName, VDNamespaceGroup *parent, const void *src)
-: VDNamespaceNode(_pszName,parent), object(src)
+	: VDNamespaceNode(_pszName,parent)
+	, object(src)
 {}
-
-VDNamespaceItem::~VDNamespaceItem() {}
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -100,9 +99,6 @@ bool VDNamespaceCompare(const char *psz1, const char *psz2) {
 }
 
 VDNamespace::VDNamespace() : root("", NULL) {
-}
-
-VDNamespace::~VDNamespace() {
 }
 
 VDNamespaceGroup *VDNamespace::_lookupGroup(const char *pszName, bool fCreate, bool fIsFilter) {

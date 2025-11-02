@@ -75,7 +75,7 @@ public:
 	const void *object;
 
 	VDNamespaceItem(const char *_pszName, VDNamespaceGroup *parent, const void *src);
-	~VDNamespaceItem();
+	~VDNamespaceItem() = default;
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -95,7 +95,7 @@ protected:
 public:
 
 	VDNamespace();
-	~VDNamespace();
+	~VDNamespace() = default;
 
 	typedef bool (*tGroupEnumerator)(VDNamespace *pThis, const char *pszName, const VDNamespaceGroup *pGroup, void *pvData);
 	typedef bool (*tItemEnumerator)(VDNamespace *pThis, const char *pszName, const void *pItem, void *pvData);

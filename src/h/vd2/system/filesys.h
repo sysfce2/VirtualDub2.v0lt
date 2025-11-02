@@ -257,18 +257,18 @@ public:
 	}
 
 protected:
-	void *mpHandle;
-	bool mbSearchComplete;
+	void* mpHandle        = nullptr;
+	bool mbSearchComplete = false;
 
 	VDStringW	mSearchPath;
 	VDStringW	mBasePath;
 
 	VDStringW	mFilename;
-	sint64		mFileSize;
-	bool		mbDirectory;
-	uint32		mAttributes;
+	sint64		mFileSize   = 0;
+	bool		mbDirectory = false;
+	uint32		mAttributes = 0;
 
-	VDDate		mLastWriteDate;
+	VDDate		mLastWriteDate = {};
 };
 
 #endif

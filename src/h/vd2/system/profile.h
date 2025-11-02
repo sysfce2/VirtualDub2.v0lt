@@ -71,7 +71,7 @@ public:
 
 public:
 	VDRTProfiler();
-	~VDRTProfiler();
+	~VDRTProfiler() = default;
 
 	void BeginCollection();
 	void EndCollection();
@@ -124,9 +124,9 @@ public:
 	Counters				mCounterArray;
 	Counters				mCounterArrayToPaint;
 	uint64					mPerfFreq;
-	uint64					mSnapshotTime;
+	uint64					mSnapshotTime = 0;
 
-	volatile bool			mbEnableCollection;
+	volatile bool			mbEnableCollection = false;
 };
 
 //

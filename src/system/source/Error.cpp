@@ -31,8 +31,7 @@
 #include <vd2/system/Error.h>
 #include <vd2/system/log.h>
 
-MyError::MyError() {
-}
+MyError::MyError() = default;
 
 MyError::MyError(const MyError& err) {
 	mbuf = _wcsdup(err.mbuf);

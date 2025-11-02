@@ -5,10 +5,6 @@
 #include <vd2/system/thunk.h>
 #include <vd2/system/w32assist.h>
 
-VDFileWatcher::VDFileWatcher()
-{
-}
-
 VDFileWatcher::~VDFileWatcher() {
 	Shutdown();
 }

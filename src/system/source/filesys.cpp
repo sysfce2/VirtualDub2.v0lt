@@ -939,8 +939,6 @@ void VDFileSetAttributes(const wchar_t *path, uint32 attrsToChange, uint32 newAt
 
 VDDirectoryIterator::VDDirectoryIterator(const wchar_t *path)
 	: mSearchPath(path)
-	, mpHandle(NULL)
-	, mbSearchComplete(false)
 {
 	mBasePath = VDFileSplitPathLeft(mSearchPath);
 	VDFileFixDirPath(mBasePath);

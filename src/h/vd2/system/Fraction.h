@@ -37,7 +37,7 @@ private:
 	static VDFraction reduce(uint64 hi, uint64 lo);
 
 public:
-	VDFraction() {}
+	VDFraction() = default;
 	explicit VDFraction(int i) : hi(i), lo(1) {}
 	explicit VDFraction(unsigned int i) : hi(i), lo(1) {}
 	explicit VDFraction(unsigned long i) : hi(i), lo(1) { }

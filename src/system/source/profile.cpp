@@ -48,12 +48,8 @@ VDRTProfiler *VDGetRTProfiler() {
 ///////////////////////////////////////////////////////////////////////////
 
 VDRTProfiler::VDRTProfiler()
-	: mbEnableCollection(false)
 {
 	mPerfFreq = VDGetPreciseTicksPerSecondI();
-}
-
-VDRTProfiler::~VDRTProfiler() {
 }
 
 void VDRTProfiler::BeginCollection() {

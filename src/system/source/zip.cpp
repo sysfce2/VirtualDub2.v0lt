@@ -97,10 +97,6 @@ VDZipStream::VDZipStream(IVDStream *pSrc, uint64 limit, bool bStored) {
 	Init(pSrc, limit, bStored);
 }
 
-VDZipStream::~VDZipStream() {
-}
-
-
 void VDZipStream::Init(IVDStream *pSrc, uint64 limit, bool bStored) {
 	mBits.init(pSrc, limit);
 	mBlockType = kNoBlock;
@@ -531,12 +527,6 @@ namespace {
 
 #pragma pack(pop)
 
-VDZipArchive::VDZipArchive() {
-}
-
-VDZipArchive::~VDZipArchive() {
-}
-
 void VDZipArchive::Init(IVDRandomAccessStream *pSrc) {
 	mpStream = pSrc;
 
@@ -643,14 +633,8 @@ IVDStream *VDZipArchive::OpenRawStream(sint32 idx) {
 
 ///////////////////////////////////////////////////////////////////////////
 
-VDGUnzipStream::VDGUnzipStream() {
-}
-
 VDGUnzipStream::VDGUnzipStream(IVDStream *pSrc, uint64 limit) {
 	Init(pSrc, limit);
-}
-
-VDGUnzipStream::~VDGUnzipStream() {
 }
 
 void VDGUnzipStream::Init(IVDStream *pSrc, uint64 limit) {

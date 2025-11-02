@@ -55,7 +55,7 @@ public:
 	typedef vdfloat2c		vector_ctor_type;
 	typedef vdfloat2x2		self_type;
 
-	vdfloat2x2() {}
+	vdfloat2x2() = default;
 	vdfloat2x2(zero_type) { m[0] = m[1] = vector_ctor_type(0, 0); }
 	vdfloat2x2(identity_type) {
 		m[0] = vector_ctor_type(1, 0);
@@ -147,7 +147,7 @@ public:
 	typedef vdfloat3c		vector_ctor_type;
 	typedef vdfloat3x3		self_type;
 
-	vdfloat3x3() {}
+	vdfloat3x3() = default;
 	vdfloat3x3(zero_type) { m[0] = m[1] = m[2] = vector_ctor_type(0, 0, 0); }
 	vdfloat3x3(identity_type) {
 		m[0].set(1, 0, 0);
@@ -288,7 +288,7 @@ public:
 	typedef vdfloat4		vector_type;
 	typedef vdfloat4c		vector_ctor_type;
 
-	vdfloat4x4() {}
+	vdfloat4x4() = default;
 	vdfloat4x4(const vdfloat3x3& v) {
 		m[0].set(v.m[0].x, v.m[0].y, v.m[0].z, 0.0f);
 		m[1].set(v.m[1].x, v.m[1].y, v.m[1].z, 0.0f);

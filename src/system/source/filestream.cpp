@@ -26,9 +26,6 @@
 #include "stdafx.h"
 #include <vd2/system/file.h>
 
-VDFileStream::~VDFileStream() {
-}
-
 const wchar_t *VDFileStream::GetNameForError() {
 	return getFilenameForError();
 }
@@ -118,9 +115,6 @@ VDBufferedStream::VDBufferedStream(IVDRandomAccessStream *pSrc, uint32 bufferSiz
 	, mBufferOffset(0)
 	, mBufferValidSize(0)
 {
-}
-
-VDBufferedStream::~VDBufferedStream() {
 }
 
 const wchar_t *VDBufferedStream::GetNameForError() {
@@ -238,9 +232,6 @@ VDTextStream::VDTextStream(IVDStream *pSrc)
 {
 }
 
-VDTextStream::~VDTextStream() {
-}
-
 const char *VDTextStream::GetNextLine() {
 	if (!mpSrc)
 		return NULL;
@@ -309,9 +300,6 @@ VDTextInputFile::VDTextInputFile(const wchar_t *filename, uint32 flags)
 	: mFileStream(filename, flags | nsVDFile::kRead)
 	, mTextStream(&mFileStream)
 {
-}
-
-VDTextInputFile::~VDTextInputFile() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////

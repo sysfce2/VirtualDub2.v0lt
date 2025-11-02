@@ -27,14 +27,8 @@
 #include <vd2/system/cmdline.h>
 #include <vd2/system/VDString.h>
 
-VDCommandLine::VDCommandLine() {
-}
-
 VDCommandLine::VDCommandLine(const wchar_t *s) {
 	Init(s);
-}
-
-VDCommandLine::~VDCommandLine() {
 }
 
 void VDCommandLine::Init(const wchar_t *s) {

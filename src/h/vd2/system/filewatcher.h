@@ -17,7 +17,7 @@ public:
 
 class VDFileWatcher {
 public:
-	VDFileWatcher();
+	VDFileWatcher() = default;
 	~VDFileWatcher();
 
 	bool IsActive() const;

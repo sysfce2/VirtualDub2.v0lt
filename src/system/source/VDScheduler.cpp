@@ -38,9 +38,6 @@ VDScheduler::VDScheduler()
 {
 }
 
-VDScheduler::~VDScheduler() {
-}
-
 void VDScheduler::setSignal(VDSignal *pSignal) {
 	pWakeupSignal = pSignal;
 }
@@ -240,9 +237,6 @@ VDSchedulerThread::VDSchedulerThread()
 	: VDThread("Scheduler thread")
 	, mpScheduler(NULL)
 {
-}
-
-VDSchedulerThread::~VDSchedulerThread() {
 }
 
 bool VDSchedulerThread::Start(VDScheduler *pScheduler) {

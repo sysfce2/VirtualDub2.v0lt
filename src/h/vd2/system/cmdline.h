@@ -41,9 +41,9 @@ private:
 
 class VDCommandLine {
 public:
-	VDCommandLine();
+	VDCommandLine() = default;
 	VDCommandLine(const wchar_t *s);
-	~VDCommandLine();
+	~VDCommandLine() = default;
 
 	void Init(const wchar_t *s);
 

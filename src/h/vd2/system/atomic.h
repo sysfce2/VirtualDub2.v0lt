@@ -90,7 +90,7 @@ protected:
 	volatile int n;
 
 public:
-	VDAtomicInt() {}
+	VDAtomicInt() = default;
 	VDAtomicInt(int v) : n(v) {}
 
 	bool operator!() const { return !n; }
@@ -261,7 +261,7 @@ protected:
 	volatile float n;
 
 public:
-	VDAtomicFloat() {}
+	VDAtomicFloat() = default;
 	VDAtomicFloat(float v) : n(v) {}
 
 	bool operator!=(float v) const  { return n!=v; }
@@ -292,7 +292,7 @@ protected:
 	volatile char n;
 
 public:
-	VDAtomicBool() {}
+	VDAtomicBool() = default;
 	VDAtomicBool(bool v) : n(v) {}
 
 	bool operator!=(bool v) const { return (n != 0) != v; }

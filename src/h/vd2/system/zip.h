@@ -37,7 +37,7 @@
 
 class VDDeflateBitReader {
 public:
-	VDDeflateBitReader() : mpSrc(0), mBufferPt(0), accum(0), bits(0) {}
+	VDDeflateBitReader() = default;
 
 	void init(IVDStream *pSrc, uint64 limit) {
 		mpSrc = pSrc;
@@ -115,13 +115,13 @@ protected:
 	enum { kBigAvailThreshold = 16777216 };
 	enum { kBufferSize = 256 };
 
-	unsigned long accum;
-	unsigned	bits;
-	int			mBufferPt;			// counts from -256 to 0
-	uint64		mBytesLeft;
-	unsigned	mBytesLeftLimited;
+	unsigned long accum      = 0;
+	unsigned      bits       = 0;
+	int           mBufferPt  = 0;      // counts from -256 to 0
+	uint64        mBytesLeft = 0;
+	unsigned      mBytesLeftLimited = 0;
 
-	IVDStream *mpSrc;
+	IVDStream* mpSrc = nullptr;
 	uint8	mBuffer[kBufferSize];
 };
 
@@ -131,7 +131,7 @@ public:
 		kCRC32		= 0xEDB88320		// CRC-32 used by PKZIP, PNG (x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11 + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x^1 + 1)
 	};
 
-	VDCRCChecker() {}
+	VDCRCChecker() = default;
 	VDCRCChecker(uint32 crc) { Init(crc); }
 
 	void Init(uint32 crc);
@@ -149,7 +149,7 @@ class VDZipStream : public IVDStream {
 public:
 	VDZipStream();
 	VDZipStream(IVDStream *pSrc, uint64 limit, bool bStored);
-	~VDZipStream();
+	~VDZipStream() = default;
 
 	void	Init(IVDStream *pSrc, uint64 limit, bool bStored);
 	void	EnableCRC(uint32 crc = VDCRCChecker::kCRC32) { mCRCChecker.Init(crc); mbCRCEnabled = true; }
@@ -199,8 +199,8 @@ public:
 		bool		mbPacked;
 	};
 
-	VDZipArchive();
-	~VDZipArchive();
+	VDZipArchive() = default;
+	~VDZipArchive() = default;
 
 	void Init(IVDRandomAccessStream *pSrc);
 
@@ -219,9 +219,9 @@ protected:
 
 class VDGUnzipStream : public VDZipStream {
 public:
-	VDGUnzipStream();
+	VDGUnzipStream() = default;
 	VDGUnzipStream(IVDStream *pSrc, uint64 limit);
-	~VDGUnzipStream();
+	~VDGUnzipStream() = default;
 
 	void Init(IVDStream *pSrc, uint64 limit);
 

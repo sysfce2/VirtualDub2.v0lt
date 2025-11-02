@@ -230,8 +230,7 @@ class VDStringRefA : public VDStringSpanA {
 public:
 	typedef VDStringRefA this_type;
 
-	VDStringRefA()  {
-	}
+	VDStringRefA() = default;
 
 	explicit VDStringRefA(const value_type *s)
 		: VDStringSpanA(s)
@@ -827,8 +826,7 @@ class VDStringRefW : public VDStringSpanW {
 public:
 	typedef VDStringRefW this_type;
 
-	VDStringRefW()  {
-	}
+	VDStringRefW() = default;
 
 	explicit VDStringRefW(const value_type *s)
 		: VDStringSpanW(s)

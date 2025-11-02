@@ -148,7 +148,7 @@ public:
 		ListNode2<T> *next;
 
 	public:
-		iterator() {}
+		iterator() = default;
 		iterator(const iterator& src) noexcept : node(src.node), next(src.next) {}
 
 		bool operator!() const noexcept { return 0 == next; }
