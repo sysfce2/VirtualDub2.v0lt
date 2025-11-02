@@ -442,7 +442,7 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine)
 	if (portableAltFile) {
 		portableRegPath = portableAltFile;
 	} else {
-		portableRegPath = VDMakePath(VDGetProgramPath().c_str(), L"VirtualDub.ini");
+		portableRegPath = VDMakePath(VDGetProgramPath().c_str(), L"VirtualDub2.ini");
 	}
 
 	if (portableAltFile || cmdLine.FindAndRemoveSwitch(L"portable") || VDDoesPathExist(portableRegPath.c_str())) {
