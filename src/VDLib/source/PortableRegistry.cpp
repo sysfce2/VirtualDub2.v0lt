@@ -24,8 +24,9 @@ void VDLoadRegistry(const wchar_t *path) {
 
 	vdautoptr<VDRegistryKey> key;
 	VDStringA token;
-	VDStringW strvalue;
+	VDStringA strvalue;
 	vdfastvector<char> binvalue;
+
 	while(const char *s = ini.GetNextLine()) {
 		while(*s == ' ' || *s == '\t')
 			++s;
@@ -139,7 +140,7 @@ void VDLoadRegistry(const wchar_t *path) {
 
 								--s;
 
-								strvalue.push_back((wchar_t)v);
+								strvalue.push_back((char)v);
 							}
 							continue;
 
@@ -149,11 +150,11 @@ void VDLoadRegistry(const wchar_t *path) {
 					}
 				}
 
-				strvalue.push_back((wchar_t)(uint8)c);
+				strvalue.push_back(c);
 			}
 
 stop:
-			key->setString(token.c_str(), strvalue.c_str());
+			key->setString(token.c_str(), VDTextU8ToW(strvalue).c_str());
 		} else if (*s == '[') {
 			binvalue.clear();
 
@@ -208,41 +209,8 @@ void ATUISaveRegistryPath(VDTextOutputStream& os, VDStringA& path, bool global) 
 
 			case VDRegistryKey::kTypeString:
 				if (key.getString(name, strval)) {
-					os.Format("\"%s\" = \"", name);
-
-					bool lastWasHexEscape = false;
-					for(VDStringW::const_iterator it(strval.begin()), itEnd(strval.end()); it != itEnd; ++it) {
-						uint32 c = *it;
-
-						if ((c >= 0x20 && c < 0x7f) && c != '"' && c != '\\') {
-							if (!lastWasHexEscape || !isxdigit(c)) {
-								lastWasHexEscape = false;
-								char c8 = (char)c;
-								os.Write(&c8, 1);
-								continue;
-							}
-						}
-
-						lastWasHexEscape = false;
-
-						switch(c) {
-							case L'\n':	os.Write("\\n");	break;
-							case L'\t':	os.Write("\\t");	break;
-							case L'\v':	os.Write("\\v");	break;
-							case L'\b':	os.Write("\\b");	break;
-							case L'\r':	os.Write("\\r");	break;
-							case L'\f':	os.Write("\\f");	break;
-							case L'\a':	os.Write("\\a");	break;
-							case L'\"':	os.Write("\\\"");	break;
-							case L'\\':	os.Write("\\\\");		break;
-							default:
-								lastWasHexEscape = true;
-								os.Format("\\x%X", c);
-								break;
-						}
-					}
-
-					os.PutLine("\"");
+					VDStringA encstr = VDEncodeString(strval);
+					os.FormatLine("\"%s\" = \"%s\"", name, encstr.c_str());
 				}
 				break;
 
