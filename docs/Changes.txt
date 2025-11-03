@@ -3,7 +3,7 @@ VirtualDub2.x change log
 2.5.0.x dev
 ----------------------
 Improved Unicode support.
-Script, job, and project files are now saved in UTF-8 encoding.
+Script, job, project and settings files are now saved in UTF-8 encoding.
 API change: The VDXAudioEncDefinition structure has been replaced with VDXAudioEncDefinition2, whose mpDriverTagName field points to a wide string.
 Minor optimizations.
 
