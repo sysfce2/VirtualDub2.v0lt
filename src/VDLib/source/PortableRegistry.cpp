@@ -248,7 +248,7 @@ void VDSaveRegistry(const wchar_t *fnpath) {
 	VDFileStream fs(fnpath, nsVDFile::kWrite | nsVDFile::kDenyRead | nsVDFile::kCreateAlways);
 	VDTextOutputStream os(&fs);
 
-	os.PutLine("; VirtualDub settings file. EDIT AT YOUR OWN RISK.");
+	os.PutLine("; VirtualDub2.5 settings file. EDIT AT YOUR OWN RISK.");
 
 	VDStringA path;
 	ATUISaveRegistryPath(os, path, false);
