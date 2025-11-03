@@ -24,7 +24,7 @@ void VDLoadRegistry(const wchar_t *path) {
 
 	vdautoptr<VDRegistryKey> key;
 	VDStringA token;
-	VDStringA strvalue;
+	VDStringW strvalue;
 	vdfastvector<char> binvalue;
 
 	while(const char *s = ini.GetNextLine()) {
@@ -98,17 +98,19 @@ void VDLoadRegistry(const wchar_t *path) {
 			key->setInt(token.c_str(), (int)v);
 		} else if (*s == '"') {
 			// string
-			++s;
+			VDStringW wstr = VDTextU8ToW(s);
+			const wchar_t* ws = wstr.c_str();
+			++ws;
 
 			strvalue.clear();
 			for(;;) {
-				char c = *s++;
+				wchar_t c = *ws++;
 
 				if (!c || c == '"')
 					break;
 
 				if (c == '\\') {
-					c = *s++;
+					c = *ws++;
 
 					if (!c)
 						break;
@@ -127,7 +129,7 @@ void VDLoadRegistry(const wchar_t *path) {
 						case '"':	break;
 						case 'x':
 							{
-								c = *s++;
+								c = *ws++;
 								if (!isxdigit((uint8)c))
 									goto stop;
 
@@ -135,12 +137,12 @@ void VDLoadRegistry(const wchar_t *path) {
 								do {
 									v = (v << 4) + kUnhexTab[c & 0x1f];
 
-									c = *s++;
+									c = *ws++;
 								} while(isxdigit((uint8)c));
 
-								--s;
+								--ws;
 
-								strvalue.push_back((char)v);
+								strvalue.push_back((wchar_t)v);
 							}
 							continue;
 
@@ -154,7 +156,7 @@ void VDLoadRegistry(const wchar_t *path) {
 			}
 
 stop:
-			key->setString(token.c_str(), VDTextU8ToW(strvalue).c_str());
+			key->setString(token.c_str(), strvalue.c_str());
 		} else if (*s == '[') {
 			binvalue.clear();
 
