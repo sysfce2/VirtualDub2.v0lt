@@ -3659,11 +3659,13 @@ LRESULT VDProjectUI::DubWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
     return (0);
 }
 
-void VDProjectUI::HandleDragDrop(HDROP hdrop) {
-	UINT fileCount = DragQueryFile(hdrop, 0xFFFFFFFF, NULL, 0);
+void VDProjectUI::HandleDragDrop(HDROP hdrop)
+{
+	UINT fileCount = DragQueryFileW(hdrop, 0xFFFFFFFF, NULL, 0);
 
-	if (fileCount < 1)
+	if (fileCount < 1) {
 		return;
+	}
 
 	bool isAppend = (GetKeyState(VK_CONTROL) < 0);
 
@@ -3695,7 +3697,16 @@ void VDProjectUI::HandleDragDrop(HDROP hdrop) {
 					AppendAVI(filename.c_str(),IVDInputDriver::kOF_SingleFile);
 				}
 			} else {
-				CmdOpen(filenames.front().c_str());
+				auto& fn = filenames.front();
+				if (EndsWithNoCase(fn, L".vdscript")) {
+					VDStringW msg;
+					msg.sprintf(L"Are you sure you want to load processing setting from file \"%s\"?", VDFileSplitPath(fn.c_str()));
+					if (IDYES == MessageBoxW((HWND)mhwnd, msg.c_str(), L"Load processing setting", MB_YESNO)) {
+						RunScript(fn.c_str());
+					}
+				} else {
+					CmdOpen(fn.c_str());
+				}
 			}
 
 			logDisp.Post(mhwnd);

@@ -60,6 +60,11 @@ VDStringW VDaswprintf(const wchar_t *format, int args, const void *const *argv);
 VDStringW VDvswprintf(const wchar_t *format, int args, va_list val);
 VDStringW VDswprintf(const wchar_t *format, int args, ...);
 
+//
+
+bool VDStartsWithNoCase(const VDStringW& str, const wchar_t* prefix, int pos = 0);
+bool EndsWithNoCase(const VDStringW& str, const wchar_t* suffix);
+
 // Replace control characters. Wide strings will first be converted to UTF-8.
 
 VDStringA VDEncodeString(const VDStringSpanA& sa);

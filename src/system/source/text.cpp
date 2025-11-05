@@ -700,6 +700,23 @@ VDStringW VDswprintf(const wchar_t *format, int args, ...) {
 
 ////////////////////////////////////////////////
 
+bool VDStartsWithNoCase(const VDStringW& str, const wchar_t* prefix, int pos)
+{
+	return _wcsnicmp(str.c_str() + pos, prefix, std::char_traits<wchar_t>::length(prefix)) == 0;
+}
+
+bool EndsWithNoCase(const VDStringW& str, const wchar_t* suffix)
+{
+	const size_t len = std::char_traits<wchar_t>::length(suffix);
+	const int pos = str.length() - (int)len;
+	if (pos >= 0) {
+		return _wcsnicmp(str.c_str() + pos, suffix, len) == 0;
+	}
+	return false;
+}
+
+////////////////////////////////////////////////
+
 VDStringA VDEncodeString(const VDStringSpanA& sa)
 {
 	VDStringA out;
