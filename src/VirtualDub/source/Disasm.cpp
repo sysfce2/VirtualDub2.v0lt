@@ -612,7 +612,7 @@ char *VDDisasmMatchRule(VDDisassemblyContext *pContext, const unsigned char *sou
 	return NULL;
 }
 
-const char* VDDisassemble(VDDisassemblyContext *pvdc, const unsigned char *source, int bytes, int& count) {
+const char* VDDisassemble(VDDisassemblyContext* pvdc, const unsigned char* source, int bytes, int& count) {
 	const unsigned char *src2 = source;
 	const unsigned char *src_end;
 	char *s;
@@ -655,13 +655,13 @@ const char* VDDisassemble(VDDisassemblyContext *pvdc, const unsigned char *sourc
 	return dst_base;
 }
 
-bool VDDisasmInit(VDDisassemblyContext *pvdc, const char *pszFilename) {
+bool VDDisasmInit(VDDisassemblyContext* pvdc, const wchar_t* pszFilename) {
 	HANDLE h;
 
 	pvdc->pRawBlock = NULL;
 	pvdc->pExtraData = NULL;
 
-	h = CreateFileA(pszFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	h = CreateFileW(pszFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (h == INVALID_HANDLE_VALUE)
 		return false;
@@ -718,7 +718,7 @@ bool VDDisasmInit(VDDisassemblyContext *pvdc, const char *pszFilename) {
 	return true;
 }
 
-void VDDisasmDeinit(VDDisassemblyContext *pvdc) {
+void VDDisasmDeinit(VDDisassemblyContext* pvdc) {
 	if (pvdc->pRawBlock) {
 		VirtualFree(pvdc->pRawBlock, 0, MEM_RELEASE);
 		pvdc->pRawBlock = NULL;
@@ -727,13 +727,13 @@ void VDDisasmDeinit(VDDisassemblyContext *pvdc) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-static void SpliceProgramPath(char *buf, int bufsiz, const char *fn) {
-	char tbuf[MAX_PATH];
-	char *pszFile;
+static void SpliceProgramPath(wchar_t* buf, int bufsiz, const wchar_t* fn) {
+	wchar_t tbuf[MAX_PATH];
+	wchar_t* pszFile;
 
-	GetModuleFileNameA(NULL, tbuf, std::size(tbuf));
-	GetFullPathNameA(tbuf, bufsiz, buf, &pszFile);
-	strcpy(pszFile, fn);
+	GetModuleFileNameW(NULL, tbuf, std::size(tbuf));
+	GetFullPathNameW(tbuf, bufsiz, buf, &pszFile);
+	wcscpy(pszFile, fn);
 }
 
 CodeDisassemblyWindow::CodeDisassemblyWindow(void *_code, long _length, void *_rbaseptr, void *_abaseptr)
@@ -745,13 +745,13 @@ CodeDisassemblyWindow::CodeDisassemblyWindow(void *_code, long _length, void *_r
 {
 //	lbents = new lbent[MAX_INSTRUCTIONS];
 
-	char buf[MAX_PATH];
+	wchar_t buf[MAX_PATH];
 
 	vdc.pRuleBase = NULL;
 	vdc.pSymLookup = NULL;
 	vdc.physToVirtOffset = -(ptrdiff_t)_rbaseptr;
 
-	SpliceProgramPath(buf, sizeof buf, "VirtualDub2.vdi");
+	SpliceProgramPath(buf, std::size(buf), L"VirtualDub2.vdi");
 	VDDisasmInit(&vdc, buf);
 
 	lbents = (lbent *)VirtualAlloc(NULL, sizeof(lbent)*MAX_INSTRUCTIONS, MEM_COMMIT, PAGE_READWRITE);

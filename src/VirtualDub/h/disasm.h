@@ -45,9 +45,9 @@ struct VDDisassemblyContext {
 };
 
 
-bool VDDisasmInit(VDDisassemblyContext *, const char *, const char *);
-void VDDisasmDeinit(VDDisassemblyContext *);
-const char* VDDisassemble(VDDisassemblyContext *pvdc, const unsigned char *source, int bytes, int& count);
+bool VDDisasmInit(VDDisassemblyContext* pvdc, const wchar_t* pszFilename);
+void VDDisasmDeinit(VDDisassemblyContext* pvdc);
+const char* VDDisassemble(VDDisassemblyContext* pvdc, const unsigned char* source, int bytes, int& count);
 
 
 
