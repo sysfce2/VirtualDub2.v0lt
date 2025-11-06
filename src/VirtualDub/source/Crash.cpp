@@ -916,7 +916,7 @@ static const struct ExceptionLookup {
 
 long VDDebugInfoLookupRVA(VDDebugInfoContext *pctx, unsigned rva, char *buf, int buflen);
 bool VDDebugInfoInitFromMemory(VDDebugInfoContext *pctx, const void *_src);
-bool VDDebugInfoInitFromFile(VDDebugInfoContext *pctx, const char *pszFilename);
+bool VDDebugInfoInitFromFile(VDDebugInfoContext* pctx, const wchar_t* pszFilename);
 void VDDebugInfoDeinit(VDDebugInfoContext *pctx);
 
 static void SpliceProgramPath(wchar_t* buf, int bufsiz, const wchar_t* fn) {
