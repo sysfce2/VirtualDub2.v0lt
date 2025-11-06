@@ -4,8 +4,10 @@ VirtualDub2.x change log
 ----------------------
 Improved Unicode support.
 Script, job, project and settings files are now saved in UTF-8 encoding.
+Set "activeCodePage=UTF-8" in the application manifest. This will add support for AviSynth+ scripts with Unicode character paths.
 API change: The VDXAudioEncDefinition structure has been replaced with VDXAudioEncDefinition2, whose mpDriverTagName field points to a wide string.
-Minor optimizations.
+Added the ability to load processing setting files (.vdscript) using drag-and-drop.
+Minor optimizations and cosmetic changes.
 
 
 2.4.3.944 - 2025-10-14
