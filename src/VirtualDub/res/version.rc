@@ -24,6 +24,7 @@ BEGIN
     BEGIN
       VALUE "InternalName", "VirtualDub"
       VALUE "ProductName", "VirtualDub2"
+      VALUE "ProductVersion", VERSION_STR
       VALUE "FileVersion", VERSION_STR
       #ifdef _WIN64
       VALUE "FileDescription", "VirtualDub2 (x64)"
