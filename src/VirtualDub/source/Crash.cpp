@@ -919,13 +919,13 @@ bool VDDebugInfoInitFromMemory(VDDebugInfoContext *pctx, const void *_src);
 bool VDDebugInfoInitFromFile(VDDebugInfoContext *pctx, const char *pszFilename);
 void VDDebugInfoDeinit(VDDebugInfoContext *pctx);
 
-static void SpliceProgramPath(char *buf, int bufsiz, const char *fn) {
-	char tbuf[MAX_PATH];
-	char *pszFile;
+static void SpliceProgramPath(wchar_t* buf, int bufsiz, const wchar_t* fn) {
+	wchar_t tbuf[MAX_PATH];
+	wchar_t* pszFile;
 
-	GetModuleFileNameA(NULL, tbuf, std::size(tbuf));
-	GetFullPathNameA(tbuf, bufsiz, buf, &pszFile);
-	strcpy(pszFile, fn);
+	GetModuleFileNameW(NULL, tbuf, std::size(tbuf));
+	GetFullPathNameW(tbuf, bufsiz, buf, &pszFile);
+	wcscpy(pszFile, fn);
 }
 
 static long CrashSymLookup(VDDisassemblyContext *pctx, unsigned long virtAddr, char *buf, int buf_len) {
@@ -1146,8 +1146,9 @@ LONG __stdcall CrashHandler(EXCEPTION_POINTERS *pExc, bool allowForcedExit) {
 	if (cdw.vdc.pExtraData) {
 		bSuccess = VDDebugInfoInitFromMemory(&g_debugInfo, cdw.vdc.pExtraData);
 	} else {
-		SpliceProgramPath(buf, sizeof buf, "VirtualDub2.vdi");
-		bSuccess = VDDebugInfoInitFromFile(&g_debugInfo, buf);
+		wchar_t path[MAX_PATH];
+		SpliceProgramPath(path, std::size(buf), L"VirtualDub2.vdi");
+		bSuccess = VDDebugInfoInitFromFile(&g_debugInfo, path);
 	}
 
 	cdw.vdc.pSymLookup = CrashSymLookup;
@@ -1572,11 +1573,11 @@ void VDDebugInfoDeinit(VDDebugInfoContext *pctx) {
 	}
 }
 
-bool VDDebugInfoInitFromFile(VDDebugInfoContext *pctx, const char *pszFilename) {
+bool VDDebugInfoInitFromFile(VDDebugInfoContext* pctx, const wchar_t* pszFilename) {
 	pctx->pRawBlock = NULL;
 	pctx->pRVAHeap = NULL;
 
-	HANDLE h = CreateFileA(pszFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE h = CreateFileW(pszFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == h) {
 		return false;
