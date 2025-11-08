@@ -99,7 +99,7 @@ public:
 
 	uint64 GetUniqueId();
 
-	const char *GetRunnerName() const;
+	const wchar_t* GetRunnerName() const;
 	uint64 GetRunnerId() const;
 
 	bool IsAutoUpdateEnabled() const;
@@ -140,7 +140,7 @@ protected:
 
 	uint64	mJobIdToRun;
 
-	VDStringA	mComputerName;
+	VDStringW	mComputerName;
 	uint64	mBaseSignature;
 	uint64	mRunnerId;
 	uint64	mLastSignature;

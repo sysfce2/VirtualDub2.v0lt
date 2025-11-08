@@ -65,7 +65,7 @@ public:
 	const wchar_t*	GetError() const					{ return mError.c_str(); }
 	void			SetError(const wchar_t* err)		{ mError = err; }
 
-	const char *	GetRunnerName() const			{ return mRunnerName.c_str(); }
+	const wchar_t*	GetRunnerName() const			{ return mRunnerName.c_str(); }
 	uint64			GetRunnerId() const				{ return mRunnerId; }
 
 	bool	IsRunning() const { return mState == kStateInProgress || mState == kStateAborting; }
@@ -77,7 +77,7 @@ public:
 
 	uint64	GetId() const { return mId; }
 
-	void	SetRunner(uint64 id, const char *name);
+	void	SetRunner(uint64 id, const wchar_t* name);
 
 	bool	IsReloadMarkerPresent() const { return mbContainsReloadMarker; }
 
@@ -94,7 +94,7 @@ public:
 	VDStringA	ToString() const;
 
 	uint64		mRunnerId;
-	VDStringA	mRunnerName;
+	VDStringW	mRunnerName;
 protected:
 	VDStringA	mName;
 	VDStringW	mInputFile;

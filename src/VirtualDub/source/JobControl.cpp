@@ -59,14 +59,14 @@ VDJobQueue::VDJobQueue()
 	, mLastSignature(0)
 	, mLastRevision(0)
 {
-	char name[MAX_COMPUTERNAME_LENGTH + 1];
-	DWORD len = MAX_COMPUTERNAME_LENGTH + 1;
+	wchar_t name[MAX_COMPUTERNAME_LENGTH + 1];
+	DWORD len = std::size(name);
 
-	mComputerName = "unnamed";
+	mComputerName = L"unnamed";
 
 	mRunnerId = (uint32)GetCurrentProcessId();
 	mBaseSignature = (uint64)mRunnerId << 32;
-	if (GetComputerNameA(name, &len)) {
+	if (GetComputerNameW(name, &len)) {
 		mComputerName = name;
 
 		uint64 computerHash = (uint64)VDHashString32(name) << 32;
@@ -289,7 +289,7 @@ void VDJobQueue::Run(VDJob *job) {
 	uint64 oldDateEnd = job->mDateEnd;
 	int oldState = job->GetState();
 	uint64 oldRunner = job->GetRunnerId();
-	VDStringA oldRunnerName(job->GetRunnerName());
+	VDStringW oldRunnerName(job->GetRunnerName());
 
 	job->mDateStart = ((uint64)ft.dwHighDateTime << 32) + (uint32)ft.dwLowDateTime;
 	job->mDateEnd = 0;
@@ -679,7 +679,9 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 
 				} else if (!_stricmp(s, "runner_name")) {
 
-					strgetarg2(job->mRunnerName, t);
+					VDStringA runner_name;
+					strgetarg2(runner_name, t);
+					job->mRunnerName = VDTextU8ToW(runner_name);
 
 				} else if (!_stricmp(s, "revision")) {
 
@@ -1062,7 +1064,7 @@ void VDJobQueue::Save(IVDStream *stream, uint64 signature, uint32 revision, bool
 
 		if (state == VDJob::kStateInProgress || state == VDJob::kStateAborting || state == VDJob::kStateCompleted || state == VDJob::kStateError) {
 			output.FormatLine("// $runner_id %llx", vdj->mRunnerId);
-			output.FormatLine("// $runner_name \"%s\"", VDEncodeString(VDStringSpanA(vdj->GetRunnerName())).c_str());
+			output.FormatLine("// $runner_name \"%s\"", VDEncodeString(vdj->GetRunnerName()));
 		}
 
 		output.FormatLine("// $start_time %08lx %08lx", (unsigned long)(vdj->mDateStart >> 32), (unsigned long)vdj->mDateStart);
@@ -1233,7 +1235,7 @@ uint64 VDJobQueue::GetUniqueId() {
 	return id;
 }
 
-const char *VDJobQueue::GetRunnerName() const {
+const wchar_t* VDJobQueue::GetRunnerName() const {
 	return mComputerName.c_str();
 }
 

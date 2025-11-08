@@ -58,7 +58,7 @@ void VDJob::SetState(int state) {
 	}
 }
 
-void VDJob::SetRunner(uint64 id, const char *name) {
+void VDJob::SetRunner(uint64 id, const wchar_t* name) {
 	mRunnerId = id;
 	mRunnerName = name;
 }
