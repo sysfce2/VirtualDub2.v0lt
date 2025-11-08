@@ -562,7 +562,8 @@ void VDJobQueue::LoadProject(const wchar_t *fileName) {
 	Load(&fileStream,false);
 }
 
-bool VDJobQueue::Load(IVDStream *stream, bool merge) {
+bool VDJobQueue::Load(IVDStream *stream, bool merge)
+{
 	JobQueue newJobs;
 	vdautoptr<VDJob> job;
 
@@ -585,8 +586,9 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 			// read in the line
 
 			const char *line = input.GetNextLine();
-			if (!line)
+			if (!line) {
 				break;
+			}
 
 			linebuffer.assign(line, line+strlen(line)+1);
 			input_line++;
@@ -596,126 +598,140 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 			// scan for a command
 
 			if (s = findcmdline(linebuffer.data())) {
-				char *t = s;
+				char* t = s;
 
-				while(isalpha((unsigned char)*t) || *t=='_') ++t;
+				while (isalpha((unsigned char)*t) || *t == '_') {
+					++t;
+				}
+				if (*t) {
+					*t++ = 0;
+				}
+				while (isspace((unsigned char)*t)) {
+					++t;
+				}
 
-				if (*t) *t++=0;
-				while(isspace((unsigned char)*t)) ++t;
-
-				if (!_stricmp(s, "signature")) {
+				if (!_stricmp(s, "signature"))
+				{
 					uint64 sig;
 					uint32 revision;
 
-					if (2 != sscanf(t, "%llx %x", &sig, &revision))
+					if (2 != sscanf(t, "%llx %x", &sig, &revision)) {
 						throw MyError("invalid signature");
+					}
 
-					if (merge && sig == mLastSignature && revision == mLastRevision)
+					if (merge && sig == mLastSignature && revision == mLastRevision) {
 						return false;
+					}
 
 					newSignature = sig;
 					newRevision = revision;
-				} else if (!_stricmp(s, "job")) {
+				}
+				else if (!_stricmp(s, "job"))
+				{
 					job = new_nothrow VDJob;
-					if (!job) throw MyError("out of memory");
+					if (!job) {
+						throw MyError("out of memory");
+					}
 
-					job->mpJobQueue			= this;
-					job->mCreationRevision	= newRevision;
-					job->mChangeRevision	= newRevision;
+					job->mpJobQueue = this;
+					job->mCreationRevision = newRevision;
+					job->mChangeRevision = newRevision;
 
 					VDStringA name;
 					strgetarg(name, t);
 					job->SetName(name.c_str());
-
-				} else if (!_stricmp(s, "data")) {
-
+				}
+				else if (!_stricmp(s, "data"))
+				{
 					VDStringA subdir;
 					strgetarg(subdir, t);
 					job->SetProjectSubdir(subdir.c_str());
-
-				} else if (!_stricmp(s, "location")) {
-
+				}
+				else if (!_stricmp(s, "location"))
+				{
 					VDStringA dir;
 					strgetarg(dir, t);
 					job->SetProjectDir(dir.c_str());
-
-				} else if (!_stricmp(s, "input")) {
-
+				}
+				else if (!_stricmp(s, "input"))
+				{
 					VDStringA inputFile;
 					strgetarg(inputFile, t);
 					job->SetInputFile(VDTextU8ToW(inputFile).c_str());
 
-				} else if (!_stricmp(s, "output")) {
-
+				}
+				else if (!_stricmp(s, "output"))
+				{
 					VDStringA outputFile;
 					strgetarg(outputFile, t);
 					job->SetOutputFile(VDTextU8ToW(outputFile).c_str());
-
-				} else if (!_stricmp(s, "error")) {
-
+				}
+				else if (!_stricmp(s, "error"))
+				{
 					VDStringA error;
 					strgetarg2(error, t);
 					job->SetError(VDTextU8ToW(error).c_str());
-
-				} else if (!_stricmp(s, "state")) {
-
+				}
+				else if (!_stricmp(s, "state"))
+				{
 					job->SetState(atoi(t));
-
-				} else if (!_stricmp(s, "id")) {
-
+				}
+				else if (!_stricmp(s, "id"))
+				{
 					uint64 id;
-					if (1 != sscanf(t, "%llx", &id))
+					if (1 != sscanf(t, "%llx", &id)) {
 						throw MyError("invalid ID");
-
+					}
 					job->mId = id;
-
-				} else if (!_stricmp(s, "runner_id")) {
-
+				}
+				else if (!_stricmp(s, "runner_id"))
+				{
 					uint64 id;
-					if (1 != sscanf(t, "%llx", &id))
+					if (1 != sscanf(t, "%llx", &id)) {
 						throw MyError("invalid runner ID");
-
+					}
 					job->mRunnerId = id;
-
-				} else if (!_stricmp(s, "runner_name")) {
-
+				}
+				else if (!_stricmp(s, "runner_name"))
+				{
 					VDStringA runner_name;
 					strgetarg2(runner_name, t);
 					job->mRunnerName = VDTextU8ToW(runner_name);
-
-				} else if (!_stricmp(s, "revision")) {
-
+				}
+				else if (!_stricmp(s, "revision"))
+				{
 					uint32 createrev, changerev;
-
-					if (2 != sscanf(t, "%x %x", &createrev, &changerev))
+					if (2 != sscanf(t, "%x %x", &createrev, &changerev)) {
 						throw MyError("invalid revisions");
-
+					}
 					job->mCreationRevision = createrev;
 					job->mChangeRevision = changerev;
-
-				} else if (!_stricmp(s, "start_time")) {
+				}
+				else if (!_stricmp(s, "start_time"))
+				{
 					uint32 lo, hi;
-
-					if (2 != sscanf(t, "%08lx %08lx", &hi, &lo))
+					if (2 != sscanf(t, "%08lx %08lx", &hi, &lo)) {
 						throw MyError("invalid start time");
-
+					}
 					job->mDateStart = ((uint64)hi << 32) + lo;
-				} else if (!_stricmp(s, "end_time")) {
+				}
+				else if (!_stricmp(s, "end_time"))
+				{
 					uint32 lo, hi;
-
-					if (2 != sscanf(t, "%08lx %08lx", &hi, &lo))
+					if (2 != sscanf(t, "%08lx %08lx", &hi, &lo)) {
 						throw MyError("invalid start time");
-
+					}
 					job->mDateEnd = ((uint64)hi << 32) + lo;
-
-				} else if (!_stricmp(s, "script")) {
-
+				}
+				else if (!_stricmp(s, "script"))
+				{
 					script_capture = true;
 					script_reloadable = false;
 					script.clear();
 					script_line = input_line;
-
-				} else if (!_stricmp(s, "endjob")) {
+				}
+				else if (!_stricmp(s, "endjob"))
+				{
 					if (script_capture) {
 						job->SetScript(script.begin(), script.size(), script_line, script_reloadable);
 						script_capture = false;
@@ -737,33 +753,34 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 
 								bool processExists = false;
 								if (hProcess) {
-									if (WAIT_TIMEOUT == WaitForSingleObject(hProcess, 0))
+									if (WAIT_TIMEOUT == WaitForSingleObject(hProcess, 0)) {
 										processExists = true;
-
+									}
 									CloseHandle(hProcess);
 								}
 
-								if (!processExists)
+								if (!processExists) {
 									job->SetState(VDJob::kStateAborted);
+								}
 							}
-						} else {
-							if (!mpRunningJob || mpRunningJob->mId != job->mId)
-								job->SetState(VDJob::kStateAborted);
+						}
+						else if (!mpRunningJob || mpRunningJob->mId != job->mId) {
+							job->SetState(VDJob::kStateAborted);
 						}
 					}
 
 					newJobs.push_back(job);
 					job.release();
 
-				} else if (!_stricmp(s, "logent")) {
-
+				}
+				else if (!_stricmp(s, "logent"))
+				{
 					int severity;
 					char dummyspace;
 					int pos;
-
-					if (2 != sscanf(t, "%d%c%n", &severity, &dummyspace, &pos))
+					if (2 != sscanf(t, "%d%c%n", &severity, &dummyspace, &pos)) {
 						throw MyError("invalid log entry");
-
+					}
 					job->mLogEntries.push_back(VDJob::tLogEntries::value_type(severity, VDTextAToW(t + pos, -1).c_str()));
 				}
 			}
@@ -776,9 +793,12 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 				script.push_back('\n');
 
 				// check for reload marker
-				while(isspace((unsigned char)*s)) ++s;
-				if (s[0] == '/' && s[1] == '/' && strstr(s, "$reloadstop"))
+				while (isspace((unsigned char)*s)) {
+					++s;
+				}
+				if (s[0] == '/' && s[1] == '/' && strstr(s, "$reloadstop")) {
 					script_reloadable = true;
+				}
 			}
 		}
 
@@ -810,8 +830,9 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 			for(JobQueue::const_iterator it(srcQueue.begin()), itEnd(srcQueue.end()); it!=itEnd; ++it) {
 				VDJob *job = *it;
 
-				if (job->mId)
+				if (job->mId) {
 					srcJobLookup.insert(JobQueueLookup::value_type(job->mId, it - srcQueue.begin()));
+				}
 			}
 
 			// iterate over dst queue
@@ -819,8 +840,9 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 			for(JobQueue::iterator it(dstQueue.begin()), itEnd(dstQueue.end()); it!=itEnd; ++it) {
 				VDJob *job = *it;
 
-				if (!job->mId)
+				if (!job->mId) {
 					continue;
+				}
 
 				JobQueueLookup::const_iterator itCrossJob(srcJobLookup.find(job->mId));
 				if (itCrossJob != srcJobLookup.end()) {
@@ -842,12 +864,14 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 
 						srcQueue[crossIndex] = NULL;
 					}
-				} else if (job->mCreationRevision < srcRevision) {
+				}
+				else if (job->mCreationRevision < srcRevision) {
 					dumpQueue.push_back(job);
 					*it = NULL;
 
-					if (useJobsFromDstQueue)
+					if (useJobsFromDstQueue) {
 						modified = true;
+					}
 				}
 			}
 
@@ -862,8 +886,9 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 					dstQueue.push_back(newJob);
 					*it = NULL;
 
-					if (useJobsFromDstQueue)
+					if (useJobsFromDstQueue) {
 						modified = true;
+					}
 				}
 			}
 
@@ -918,19 +943,21 @@ bool VDJobQueue::Load(IVDStream *stream, bool merge) {
 
 			VDASSERT(job->mpJobQueue == this);
 
-			if (!job->mId)
+			if (!job->mId) {
 				job->mId = VDJobQueue::GetUniqueId();
-
-			if (!job->mCreationRevision)
+			}
+			if (!job->mCreationRevision) {
 				job->mCreationRevision = newRevision;
-
-			if (!job->mChangeRevision)
+			}
+			if (!job->mChangeRevision) {
 				job->mChangeRevision = newRevision;
+			}
 		}
 
 		// notify
-		if (g_pVDJobQueueStatusCallback)
+		if (g_pVDJobQueueStatusCallback) {
 			g_pVDJobQueueStatusCallback->OnJobQueueReloaded();
+		}
 
 		// check if the current job is now marked as Aborting -- if so, issue an abort
 		if (mpRunningJob && mpRunningJob->GetState() == VDJob::kStateAborting && g_dubber) {
