@@ -2353,7 +2353,6 @@ void VDCaptureDriverDS::SetDisplayVisibility(bool vis) {
 
 void VDCaptureDriverDS::SetFramePeriod(sint32 framePeriod100nsUnits) {
 	AM_MEDIA_TYPE *past;
-	VDFraction pf;
 	bool bRet = false;
 
 	StopGraph();
