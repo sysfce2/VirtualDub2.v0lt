@@ -96,7 +96,7 @@ std::string get_name() {
 	char buf[256];
 	DWORD siz = sizeof buf;
 
-	if (!GetComputerName(buf, &siz))		// hostname would probably work on a Unix platform
+	if (!GetComputerNameA(buf, &siz))		// hostname would probably work on a Unix platform
 		buf[0] = 0;
 
 	std::string name(buf);
@@ -190,12 +190,12 @@ bool write_version(const char *tag) {
 			fclose(f);
 			return true;
 		} else {
-			DWORD attr = GetFileAttributes("version2.bin");
+			DWORD attr = GetFileAttributesW(L"version2.bin");
 			if (attr != 0xFFFFFFFF && (attr & FILE_ATTRIBUTE_READONLY)) {
 				LRESULT rv = DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_VERINC_ERROR), NULL, VerincErrorDlgProc);
 
 				if (rv == IDC_STRIP_READONLY) {
-					SetFileAttributes("version2.bin", attr & ~FILE_ATTRIBUTE_READONLY);
+					SetFileAttributesW(L"version2.bin", attr & ~FILE_ATTRIBUTE_READONLY);
 					continue;
 				} else if (rv == IDC_CHECKOUT) {
 					system("p4 edit version2.bin");

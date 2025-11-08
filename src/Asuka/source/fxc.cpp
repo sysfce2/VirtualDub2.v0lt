@@ -709,7 +709,7 @@ void tool_fxc(const vdfastvector<const char *>& args, const vdfastvector<const c
 	flags |= D3DXSHADER_USE_LEGACY_D3DX9_31_DLL;
 #endif
 
-	HRESULT hr = D3DXCreateEffectFromFile(pDevice, filename, NULL, NULL, flags, NULL, ~pEffect, ~pErrors);
+	HRESULT hr = D3DXCreateEffectFromFileA(pDevice, filename, NULL, NULL, flags, NULL, ~pEffect, ~pErrors);
 
 	if (FAILED(hr)) {
 		printf("Effect compilation failed for \"%s\"\n", filename);
