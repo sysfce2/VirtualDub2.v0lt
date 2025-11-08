@@ -44,25 +44,9 @@ bool VDUIRequestSystemShutdown(VDGUIHandle hParent);
 ///////////////////////////////////////////////////////////////////////////////
 
 VDJobQueue::VDJobQueue()
-	: mJobCount(0)
-	, mJobNumber(1)
-	, mpRunningJob(NULL)
-	, mbRunning(false)
-	, mbRunAll(false)
-	, mbRunAllStop(false)
-	, mbModified(false)
-	, mbBlocked(false)
-	, mbOrderModified(false)
-	, mbAutoRun(false)
-	, mbDistributedMode(false)
-	, mJobIdToRun(0)
-	, mLastSignature(0)
-	, mLastRevision(0)
 {
 	wchar_t name[MAX_COMPUTERNAME_LENGTH + 1];
 	DWORD len = std::size(name);
-
-	mComputerName = L"unnamed";
 
 	mRunnerId = (uint32)GetCurrentProcessId();
 	mBaseSignature = (uint64)mRunnerId << 32;

@@ -126,25 +126,25 @@ protected:
 	JobQueue mJobQueue;
 	VDProjectAutoSave autoSave;
 
-	uint32	mJobCount;
-	uint32	mJobNumber;
-	VDJob	*mpRunningJob;
-	bool	mbRunning;
-	bool	mbRunAll;
-	bool	mbRunAllStop;
-	bool	mbModified;
-	bool	mbBlocked;
-	bool	mbOrderModified;
-	bool	mbAutoRun;
-	bool	mbDistributedMode;
+	uint32	mJobCount         = 0;
+	uint32	mJobNumber        = 1;
+	VDJob*	mpRunningJob      = nullptr;
+	bool	mbRunning         = false;
+	bool	mbRunAll          = false;
+	bool	mbRunAllStop      = false;
+	bool	mbModified        = false;
+	bool	mbBlocked         = false;
+	bool	mbOrderModified   = false;
+	bool	mbAutoRun         = false;
+	bool	mbDistributedMode = false;
 
-	uint64	mJobIdToRun;
+	uint64	mJobIdToRun       = 0;
 
-	VDStringW	mComputerName;
+	VDStringW mComputerName{ L"unnamed" };
 	uint64	mBaseSignature;
 	uint64	mRunnerId;
-	uint64	mLastSignature;
-	uint32	mLastRevision;
+	uint64	mLastSignature    = 0;
+	uint32	mLastRevision     = 0;
 
 	VDStringW		mJobFilePath;
 	VDStringW		mDefaultJobFilePath;

@@ -28,20 +28,20 @@ public:
 		kStateCount			= 8
 	};
 
-	IVDJobQueue	*mpJobQueue;
+	IVDJobQueue* mpJobQueue = nullptr;
 
-	uint32		mCreationRevision;
-	uint32		mChangeRevision;
-	uint64		mId;
-	uint64		mDateStart;		///< Same units as NT FILETIME.
-	uint64		mDateEnd;		///< Same units as NT FILETIME.
+	uint32		mCreationRevision = 0;
+	uint32		mChangeRevision   = 0;
+	uint64		mId        = 0;
+	uint64		mDateStart = 0;	///< Same units as NT FILETIME.
+	uint64		mDateEnd   = 0;	///< Same units as NT FILETIME.
 
 	typedef VDAutoLogger::tEntries tLogEntries;
 	tLogEntries	mLogEntries;
 
 	/////
-	VDJob();
-	~VDJob();
+	VDJob() = default;
+	~VDJob() = default;
 
 	bool operator==(const VDJob& job) const;
 
@@ -93,7 +93,7 @@ public:
 
 	VDStringA	ToString() const;
 
-	uint64		mRunnerId;
+	uint64		mRunnerId = 0;
 	VDStringW	mRunnerName;
 protected:
 	VDStringA	mName;
@@ -101,12 +101,12 @@ protected:
 	VDStringW	mOutputFile;
 	VDStringW	mError;
 	VDStringA	mScript;
-	int mScriptLine;
+	int mScriptLine = -1;
 	VDStringA	mProjectSubdir;
 	VDStringA	mProjectDir;
-	int			mState;
-	bool		mbContainsReloadMarker;
-	bool		mbModified;
+	int			mState = VDJob::kStateWaiting;
+	bool		mbContainsReloadMarker = false;
+	bool		mbModified = false;
 };
 
 #endif
