@@ -18,14 +18,17 @@
 #include "stdafx.h"
 #include <vd2/system/vdstl.h>
 #include <vd2/system/hash.h>
+#include <vd2/system/VDString.h>
 #include <stdio.h>
 
-void tool_hash(const vdfastvector<const char *>& args, const vdfastvector<const char *>& switches) {
-	for(vdfastvector<const char *>::const_iterator it = args.begin(), itEnd = args.end();
+void tool_hash(const vdfastvector<const wchar_t*>& args, const vdfastvector<const wchar_t*>& switches) {
+	for(vdfastvector<const wchar_t*>::const_iterator it = args.begin(), itEnd = args.end();
 		it != itEnd;
 		++it)
 	{
-		const char *s = *it;
+		VDStringA str = VDTextWToA(*it);
+
+		const char *s = str.c_str();
 
 		printf("%08x \"%s\"\n", VDHashString32I(s), s);
 	}

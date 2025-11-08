@@ -51,33 +51,34 @@ namespace {
 	};
 }
 
-void tool_fontextract(const vdfastvector<const char *>& args, const vdfastvector<const char *>& switches) {
+void tool_fontextract(const vdfastvector<const wchar_t*>& args, const vdfastvector<const wchar_t*>& switches) {
 	if (args.size() < 6)
 		help_fontextract();
 
-	printf("Asuka: Extracting font: %s -> %s.\n", args[0], args[4]);
+	printf("Asuka: Extracting font: %ls -> %ls.\n", args[0], args[4]);
 	
 	int startChar;
 	int endChar;
 
-	if (1 != sscanf(args[2], "%d", &startChar) || 1 != sscanf(args[3], "%d", &endChar))
+	if (1 != swscanf(args[2], L"%d", &startChar) || 1 != swscanf(args[3], L"%d", &endChar)) {
 		help_fontextract();
+	}
 
 	if (startChar < 0 || endChar > 0xFFFF || endChar <= startChar) {
 		printf("Asuka: Invalid character range %d-%d\n", startChar, endChar);
 		exit(10);
 	}
 
-	int fontsAdded = AddFontResourceExA(args[0], FR_NOT_ENUM | FR_PRIVATE, 0);
+	int fontsAdded = AddFontResourceExW(args[0], FR_NOT_ENUM | FR_PRIVATE, 0);
 
 	if (!fontsAdded) {
-		printf("Asuka: Unable to load font file: %s\n", args[0]);
+		printf("Asuka: Unable to load font file: %ls\n", args[0]);
 		exit(10);
 	}
 
-	HFONT hfont = CreateFontA(10, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, args[1]);
+	HFONT hfont = CreateFontW(10, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, args[1]);
 	if (!hfont) {
-		printf("Asuka: Unable to instantiate font: %s\n", args[1]);
+		printf("Asuka: Unable to instantiate font: %ls\n", args[1]);
 		exit(10);
 	}
 
@@ -98,9 +99,9 @@ void tool_fontextract(const vdfastvector<const char *>& args, const vdfastvector
 	SelectObject(hdc, hfontOld);
 	DeleteObject(hfont);
 	
-	hfont = CreateFontA(metrics.m.otmEMSquare, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, args[1]);
+	hfont = CreateFontW(metrics.m.otmEMSquare, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, args[1]);
 	if (!hfont) {
-		printf("Asuka: Unable to instantiate font: %s\n", args[1]);
+		printf("Asuka: Unable to instantiate font: %ls\n", args[1]);
 		exit(10);
 	}
 
@@ -112,9 +113,9 @@ void tool_fontextract(const vdfastvector<const char *>& args, const vdfastvector
 	}
 
 	FILE *f = nullptr;
-	errno_t err = fopen_s(&f, args[4], "w");
+	errno_t err = _wfopen_s(&f, args[4], L"w");
 	if (err) {
-		printf("Asuka: Unable to open output file: %s\n", args[4]);
+		printf("Asuka: Unable to open output file: %ls\n", args[4]);
 		exit(10);
 	}
 
@@ -262,8 +263,8 @@ void tool_fontextract(const vdfastvector<const char *>& args, const vdfastvector
 	lastInfo.mCommandStart = commands.size();
 
 	// write points
-	fprintf(f, "// Created by Asuka from %s.  DO NOT EDIT!\n\n", VDFileSplitPath(args[0]));
-	fprintf(f, "const uint16 %s_FontPointArray[]={\n", args[5]);
+	fprintf(f, "// Created by Asuka from %ls.  DO NOT EDIT!\n\n", VDFileSplitPath(args[0]));
+	fprintf(f, "const uint16 %ls_FontPointArray[]={\n", args[5]);
 
 	float scaleX = (maxX > minX) ? 1.0f / (maxX - minX) : 0.0f;
 	float scaleY = (maxY > minY) ? 1.0f / (maxY - minY) : 0.0f;
@@ -287,7 +288,7 @@ void tool_fontextract(const vdfastvector<const char *>& args, const vdfastvector
 	fprintf(f, "};\n\n");
 
 	// write commands
-	fprintf(f, "const uint8 %s_FontCommandArray[]={\n", args[5]);
+	fprintf(f, "const uint8 %ls_FontCommandArray[]={\n", args[5]);
 
 	int commandElementCount = commands.size();
 
@@ -304,7 +305,7 @@ void tool_fontextract(const vdfastvector<const char *>& args, const vdfastvector
 	fprintf(f, "};\n\n");
 
 	// glyph data structures
-	fprintf(f, "const VDOutlineFontGlyphInfo %s_FontGlyphArray[]={\n", args[5]);
+	fprintf(f, "const VDOutlineFontGlyphInfo %ls_FontGlyphArray[]={\n", args[5]);
 	for(int i=startChar; i<=endChar; ++i) {
 		const GlyphInfo& info = glyphs[i - startChar];
 		fprintf(f, "{ %d, %d, %d, %d, %d },\n", info.mPointStart, info.mCommandStart, VDRoundToInt(info.mWidths.abcfA), VDRoundToInt(info.mWidths.abcfB), VDRoundToInt(info.mWidths.abcfC));
@@ -312,10 +313,10 @@ void tool_fontextract(const vdfastvector<const char *>& args, const vdfastvector
 	fprintf(f, "};\n\n");
 
 	// top-level data structure
-	fprintf(f, "const VDOutlineFontInfo %s_FontInfo={\n", args[5]);
-	fprintf(f, "\t%s_FontPointArray,\n", args[5]);
-	fprintf(f, "\t%s_FontCommandArray,\n", args[5]);
-	fprintf(f, "\t%s_FontGlyphArray,\n", args[5]);
+	fprintf(f, "const VDOutlineFontInfo %ls_FontInfo={\n", args[5]);
+	fprintf(f, "\t%ls_FontPointArray,\n", args[5]);
+	fprintf(f, "\t%ls_FontCommandArray,\n", args[5]);
+	fprintf(f, "\t%ls_FontGlyphArray,\n", args[5]);
 	fprintf(f, "\t%d, %d,\n", startChar, endChar);
 	fprintf(f, "\t%d, %d, %d, %d,\t// bounds (16:16)\n", minX, minY, maxX, maxY);
 	fprintf(f, "\t%d,\t// em square\n", metrics.m.otmEMSquare);

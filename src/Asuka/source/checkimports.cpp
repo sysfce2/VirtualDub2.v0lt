@@ -276,22 +276,22 @@ static bool ExtractImports(HMODULE hmod, vdvector<VDStringA>& imports) {
 	return true;
 }
 
-void tool_checkimports(const vdfastvector<const char *>& args, const vdfastvector<const char *>& switches) {
+void tool_checkimports(const vdfastvector<const wchar_t*>& args, const vdfastvector<const wchar_t*>& switches) {
 	if (args.size() != 3 || !switches.empty()) {
 		puts("usage: asuka checkimports extract dll_dir out_importsfile");
 		puts("       asuka checkimports verify dll_exe importsfile");
 		exit(5);
 	}
 
-	const char *cmd = args[0];
-	const char *src = args[1];
-	const char *dst = args[2];
+	const wchar_t* cmd = args[0];
+	const wchar_t* src = args[1];
+	const wchar_t* dst = args[2];
 
-	if (!strcmp(cmd, "extract")) {
+	if (!wcscmp(cmd, L"extract")) {
 		VDFileStream f(dst, nsVDFile::kWrite | nsVDFile::kDenyAll | nsVDFile::kCreateAlways);
 		VDTextOutputStream out(&f);
 
-		VDDirectoryIterator it(VDMakePath(VDTextAToW(src).c_str(), L"*.dll").c_str());
+		VDDirectoryIterator it(VDMakePath(src, L"*.dll").c_str());
 
 		while(it.Next()) {
 			HMODULE hmod = LoadPECOFF(it.GetFullPath().c_str());
@@ -321,10 +321,10 @@ void tool_checkimports(const vdfastvector<const char *>& args, const vdfastvecto
 				out.FormatLine("%s:%s", dllname.c_str(), it->c_str());
 			}
 		}
-	} else if (!strcmp(cmd, "verify")) {
+	} else if (!wcscmp(cmd, L"verify")) {
 		vdvector<VDStringA> allowedImports;
 		{
-			VDTextInputFile ifile(VDTextAToW(dst).c_str());
+			VDTextInputFile ifile(dst);
 
 			while(const char *s = ifile.GetNextLine()) {
 				while(*s == ' ' || *s == '\t')
@@ -337,18 +337,20 @@ void tool_checkimports(const vdfastvector<const char *>& args, const vdfastvecto
 			}
 		}
 
-		HMODULE hmod = LoadPECOFF(VDTextAToW(src).c_str());
+		HMODULE hmod = LoadPECOFF(src);
 
-		if (!hmod)
-			throw MyError("Unable to open %s", src);
+		if (!hmod) {
+			throw MyError(L"Unable to open %s", src);
+		}
 
 		vdvector<VDStringA> imports;
 		bool success = ExtractImports(hmod, imports);
 
 		FreePECOFF(hmod);
 
-		if (!success)
-			throw MyError("Unable to extract imports from: %s", src);
+		if (!success) {
+			throw MyError(L"Unable to extract imports from: %s", src);
+		}
 
 		std::sort(allowedImports.begin(), allowedImports.end());
 		std::sort(imports.begin(), imports.end());
@@ -366,6 +368,8 @@ void tool_checkimports(const vdfastvector<const char *>& args, const vdfastvecto
 
 			throw MyError("%d disallowed import(s) found.", n);
 		}
-	} else
-		throw MyError("Invalid subcommand: %s", cmd);
+	}
+	else {
+		throw MyError(L"Invalid subcommand: %s", cmd);
+	}
 }

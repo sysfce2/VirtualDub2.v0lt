@@ -157,7 +157,7 @@ void VDNORETURN help_mapconv() {
 	exit(5);
 }
 
-void tool_mapconv(const vdfastvector<const char *>& args, const vdfastvector<const char *>& switches, bool amd64) {
+void tool_mapconv(const vdfastvector<const wchar_t*>& args, const vdfastvector<const wchar_t*>& switches, bool amd64) {
 	int i;
 
 	if (args.size() < 3)
@@ -167,20 +167,20 @@ void tool_mapconv(const vdfastvector<const char *>& args, const vdfastvector<con
 
 	vdautoptr<IVDSymbolSource> syms(VDCreateSymbolSourceLinkMap());
 	vdfastvector<VDSymbol> rvabuf;
-	syms->Init(VDTextAToW(args[0]).c_str());
+	syms->Init(args[0]);
 
 	FILE *fo = nullptr;
-	errno_t err = fopen_s(&fo, args[1], "wb");
+	errno_t err = _wfopen_s(&fo, args[1], L"wb");
 	if (err) {
-		fail("    can't open output file \"%s\"\n", args[1]);
+		fail("    can't open output file \"%ls\"\n", args[1]);
 	}
 
 	int disasm_size = 0;
 	{
 		FILE *fd = nullptr;
-		err = fopen_s(&fd, args[2], "rb");
+		err = _wfopen_s(&fd, args[2], L"rb");
 		if (err) {
-			fail("    can't open disassembler module \"%s\"\n", args[2]);
+			fail("    can't open disassembler module \"%ls\"\n", args[2]);
 		}
 
 		void *buf = malloc(32768);

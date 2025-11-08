@@ -1608,13 +1608,13 @@ public:
 	}
 };
 
-void tool_filecreate(const vdfastvector<const char *>& args, const vdfastvector<const char *>& switches) {
+void tool_filecreate(const vdfastvector<const wchar_t*>& args, const vdfastvector<const wchar_t*>& switches) {
 	if (args.size() != 2) {
 		puts("usage: asuka filecreate source.filescript target.bin");
 		exit(5);
 	}
-	const char *fnin = args[0];
-	const char *fnout = args[1];
+	const wchar_t* fnin = args[0];
+	const wchar_t* fnout = args[1];
 
 	VDFile file(fnin);
 	vdfastvector<char> buf((uint32)file.size());
@@ -1625,8 +1625,9 @@ void tool_filecreate(const vdfastvector<const char *>& args, const vdfastvector<
 	VDCompilerLogOutputStdout out;
 
 	vdrefptr<IVDFileCreator> creator;
-	if (!parser.Parse(buf.data(), buf.size(), fnin, &out, ~creator))
+	if (!parser.Parse(buf.data(), buf.size(), VDTextWToA(fnin).c_str(), &out, ~creator)) {
 		exit(5);
+	}
 
-	creator->Create(VDTextAToW(fnout).c_str());
+	creator->Create(fnout);
 }

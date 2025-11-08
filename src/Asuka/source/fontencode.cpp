@@ -34,30 +34,30 @@ void VDNORETURN help_fontencode() {
 	exit(5);
 }
 
-void tool_fontencode(const vdfastvector<const char *>& args, const vdfastvector<const char *>& switches) {
+void tool_fontencode(const vdfastvector<const wchar_t*>& args, const vdfastvector<const wchar_t*>& switches) {
 	if (args.size() < 10)
 		help_fontencode();
 
-	const int cellWidth = atoi(args[1]);
-	const int cellHeight = atoi(args[2]);
-	const int gridWidth = atoi(args[3]);
-	const int gridHeight = atoi(args[4]);
-	const int cellAscent = atoi(args[5]);
-	const int cellAdvance = atoi(args[6]);
-	const int lineGap = atoi(args[7]);
+	const int cellWidth   = _wtoi(args[1]);
+	const int cellHeight  = _wtoi(args[2]);
+	const int gridWidth   = _wtoi(args[3]);
+	const int gridHeight  = _wtoi(args[4]);
+	const int cellAscent  = _wtoi(args[5]);
+	const int cellAdvance = _wtoi(args[6]);
+	const int lineGap     = _wtoi(args[7]);
 
 	if (cellWidth < 1 || cellHeight < 1 || cellWidth > 1000 || cellHeight > 1000) {
 		printf("Asuka: Invalid cell size %dx%d.\n", cellWidth, cellHeight);
 		exit(10);
 	}
 
-	printf("Asuka: Extracting %dx%d bitmap font: %s -> %s.\n", cellWidth, cellHeight, args[0], args[8]);
+	printf("Asuka: Extracting %dx%d bitmap font: %ls -> %ls.\n", cellWidth, cellHeight, args[0], args[8]);
 
-	HBITMAP hbm = (HBITMAP)LoadImageA(NULL, args[0], IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
+	HBITMAP hbm = (HBITMAP)LoadImageW(NULL, args[0], IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
 	BITMAP bm = {0};
 
 	if (!hbm || !GetObject(hbm, sizeof bm, &bm)) {
-		printf("Asuka: Unable to load font bitmap %s: error code %d.\n", args[0], GetLastError());
+		printf("Asuka: Unable to load font bitmap %ls: error code %d.\n", args[0], GetLastError());
 		exit(10);
 	}
 
@@ -158,14 +158,14 @@ void tool_fontencode(const vdfastvector<const char *>& args, const vdfastvector<
 	outheap.resize(((outheap.size() + 7) & ~7), 0);
 
 	FILE *f = nullptr;
-	errno_t err = fopen_s(&f, args[8], "w");
+	errno_t err = _wfopen_s(&f, args[8], L"w");
 	if (err) {
-		printf("Asuka: Unable to open output file: %s\n", args[5]);
+		printf("Asuka: Unable to open output file: %ls\n", args[8]);
 		exit(10);
 	}
 
-	fprintf(f, "// Created by Asuka from %s.  DO NOT EDIT!\n\n", VDFileSplitPath(args[0]));
-	fprintf(f, "const uint8 %s_FontData[]={\n", args[9]);
+	fprintf(f, "// Created by Asuka from %ls.  DO NOT EDIT!\n\n", VDFileSplitPath(args[0]));
+	fprintf(f, "const uint8 %ls_FontData[]={\n", args[9]);
 
 	int datalen = outheap.size();
 	for(int i=0; i<datalen; i+=8) {
@@ -192,7 +192,7 @@ void tool_fontencode(const vdfastvector<const char *>& args, const vdfastvector<
 
 	fprintf(f, "};\n\n");
 
-	fprintf(f, "const uint16 %s_PosData[]={\n", args[9]);
+	fprintf(f, "const uint16 %ls_PosData[]={\n", args[9]);
 
 	int poscount = posdata.size();
 	for(int i=0; i<poscount; ++i) {
@@ -211,9 +211,9 @@ void tool_fontencode(const vdfastvector<const char *>& args, const vdfastvector<
 	fprintf(f, "};\n\n");
 
 	// top-level data structure
-	fprintf(f, "const VDBitmapFontInfo %s_FontInfo={\n", args[9]);
-	fprintf(f, "\t%s_FontData,\n", args[9]);
-	fprintf(f, "\t%s_PosData,\n", args[9]);
+	fprintf(f, "const VDBitmapFontInfo %ls_FontInfo={\n", args[9]);
+	fprintf(f, "\t%ls_FontData,\n", args[9]);
+	fprintf(f, "\t%ls_PosData,\n", args[9]);
 	fprintf(f, "\t%d, %d,\n", startChar, endChar);
 	fprintf(f, "\t%d, %d,\n", cellWidth, cellHeight);
 	fprintf(f, "\t%d, %d,\n", cellAscent, cellAdvance);
