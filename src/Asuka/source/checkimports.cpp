@@ -309,16 +309,16 @@ void tool_checkimports(const vdfastvector<const wchar_t*>& args, const vdfastvec
 				throw MyError(L"Failed to extract exports from: %s", it.GetFullPath().c_str());
 			}
 
-			VDStringW dllnamew(it.GetName());
-			std::transform(dllnamew.begin(), dllnamew.end(), dllnamew.begin(), towlower);
+			VDStringW dllname(it.GetName());
+			std::transform(dllname.begin(), dllname.end(), dllname.begin(), towlower);
 
-			VDStringA dllname(VDTextWToA(dllnamew));
+			VDStringA dllnameA(VDTextWToA(dllname));
 
 			for(vdvector<VDStringA>::const_iterator it(exports.begin()), itEnd(exports.end());
 				it != itEnd;
 				++it)
 			{
-				out.FormatLine("%s:%s", dllname.c_str(), it->c_str());
+				out.FormatLine("%s:%s", dllnameA.c_str(), it->c_str());
 			}
 		}
 	} else if (!wcscmp(cmd, L"verify")) {

@@ -437,7 +437,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 		long lNewProgress = (nProgress*25)/2048;
 
 		if (iLastTitleMode != TITLE_MINIMIZED || lLastTitleProgress != lNewProgress) {
-			guiSetTitleW(g_hWnd, IDS_TITLE_DUBBING_MINIMIZED, lNewProgress, VDFileSplitPath(g_szInputAVIFile));
+			guiSetTitle(g_hWnd, IDS_TITLE_DUBBING_MINIMIZED, lNewProgress, VDFileSplitPath(g_szInputAVIFile));
 
 			iLastTitleMode = TITLE_MINIMIZED;
 			lLastTitleProgress = lNewProgress;
@@ -445,7 +445,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 	} else {
 		if (iLastTitleMode != TITLE_NORMAL) {
 			iLastTitleMode = TITLE_NORMAL;
-			guiSetTitleW(g_hWnd, IDS_TITLE_DUBBING, VDFileSplitPath(g_szInputAVIFile));
+			guiSetTitle(g_hWnd, IDS_TITLE_DUBBING, VDFileSplitPath(g_szInputAVIFile));
 		}
 	}
 }
@@ -843,12 +843,12 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				SendMessage(hwndItem, TBM_SETRANGE, TRUE, MAKELONG(0, 10));
 				SendMessage(hwndItem, TBM_SETPOS, TRUE, (thisPtr->opt->mThrottlePercent + 5) / 10);
 
-				guiSetTitleW(hdlg, IDS_TITLE_STATUS, VDFileSplitPath(g_szInputAVIFile));
+				guiSetTitle(hdlg, IDS_TITLE_STATUS, VDFileSplitPath(g_szInputAVIFile));
 
 			}
 			thisPtr->mModelessDialogNode.hdlg = hdlg;
 			guiAddModelessDialog(&thisPtr->mModelessDialogNode);
-            return FALSE;
+			return FALSE;
 
 		case WM_DESTROY:
 			thisPtr->mModelessDialogNode.Remove();

@@ -395,22 +395,22 @@ void VDExternalModule::DisconnectOldPlugins() {
 
 void VDExternalModule::ReconnectOldPlugins() {
 	if (!mModuleInfo.hInstModule) {
-		VDStringA nameA(VDTextWToA(mFilename));
 
 		mModuleInfo.hInstModule = (VDXHINSTANCE)mhModule;
 
 		try {
-			mModuleInfo.initProc   = (VDXFilterModuleInitProc  )GetProcAddress((HINSTANCE)mModuleInfo.hInstModule, "VirtualdubFilterModuleInit2");
-			mModuleInfo.filterModInitProc   = (FilterModModuleInitProc  )GetProcAddress((HINSTANCE)mModuleInfo.hInstModule, "FilterModModuleInit");
-			mModuleInfo.deinitProc = (VDXFilterModuleDeinitProc)GetProcAddress((HINSTANCE)mModuleInfo.hInstModule, "VirtualdubFilterModuleDeinit");
+			mModuleInfo.initProc          = (VDXFilterModuleInitProc  )GetProcAddress((HINSTANCE)mModuleInfo.hInstModule, "VirtualdubFilterModuleInit2");
+			mModuleInfo.filterModInitProc = (FilterModModuleInitProc  )GetProcAddress((HINSTANCE)mModuleInfo.hInstModule, "FilterModModuleInit");
+			mModuleInfo.deinitProc        = (VDXFilterModuleDeinitProc)GetProcAddress((HINSTANCE)mModuleInfo.hInstModule, "VirtualdubFilterModuleDeinit");
 
 			if (!mModuleInfo.initProc) {
 				void *fp = GetProcAddress((HINSTANCE)mModuleInfo.hInstModule, "VirtualdubFilterModuleInit");
 
-				if (fp)
+				if (fp) {
 					throw MyError(
 						"This filter was created for VirtualDub 1.1 or earlier, and is not compatible with version 1.2 or later. "
 						"Please contact the author for an updated version.");
+				}
 
 				if (GetProcAddress((HINSTANCE)mModuleInfo.hInstModule, "VDGetPluginInfo")) {
 					mModuleInfo.hInstModule = NULL;
@@ -423,8 +423,9 @@ void VDExternalModule::ReconnectOldPlugins() {
 				}
 			}
 
-			if (!mModuleInfo.initProc || !mModuleInfo.deinitProc)
-				throw MyError("Module \"%s\" does not contain VirtualDub filters.", nameA.c_str());
+			if (!mModuleInfo.initProc || !mModuleInfo.deinitProc) {
+				throw MyError(L"Module \"%s\" does not contain VirtualDub filters.", mFilename.c_str());
+			}
 
 			int ver_hi = VIRTUALDUB_FILTERDEF_VERSION;
 			int ver_lo = VIRTUALDUB_FILTERDEF_COMPATIBLE;
@@ -432,8 +433,9 @@ void VDExternalModule::ReconnectOldPlugins() {
 			if (mModuleInfo.filterModInitProc) {
 				int mod_hi = FILTERMOD_VERSION;
 				int mod_lo = FILTERMOD_VERSION;
-				if (mModuleInfo.filterModInitProc(&mModuleInfo, &g_FilterModCallbacks, ver_hi, ver_lo, mod_hi, mod_lo))
-					throw MyError("Error initializing module \"%s\".",nameA.c_str());
+				if (mModuleInfo.filterModInitProc(&mModuleInfo, &g_FilterModCallbacks, ver_hi, ver_lo, mod_hi, mod_lo)) {
+					throw MyError(L"Error initializing module \"%s\".", mFilename.c_str());
+				}
 
 				if (mod_lo > FILTERMOD_VERSION) {
 					mModuleInfo.deinitProc(&mModuleInfo, &g_VDFilterCallbacks);
@@ -445,8 +447,9 @@ void VDExternalModule::ReconnectOldPlugins() {
 				}
 
 			} else {
-				if (mModuleInfo.initProc(&mModuleInfo, &g_VDFilterCallbacks, ver_hi, ver_lo))
-					throw MyError("Error initializing module \"%s\".",nameA.c_str());
+				if (mModuleInfo.initProc(&mModuleInfo, &g_VDFilterCallbacks, ver_hi, ver_lo)) {
+					throw MyError(L"Error initializing module \"%s\".", mFilename.c_str());
+				}
 			}
 
 			if (ver_hi < VIRTUALDUB_FILTERDEF_COMPATIBLE) {

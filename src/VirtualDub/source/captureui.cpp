@@ -2153,10 +2153,11 @@ void VDCaptureProjectUI::UICaptureFileUpdated() {
 	else
 		pszAppend = L"";
 
-	if (mpProject->IsStripingEnabled())
-		guiSetTitleW((HWND)mhwnd, IDS_TITLE_CAPTURE2, name.c_str(), pszAppend);
-	else
-		guiSetTitleW((HWND)mhwnd, IDS_TITLE_CAPTURE, name.c_str(), pszAppend);
+	if (mpProject->IsStripingEnabled()) {
+		guiSetTitle((HWND)mhwnd, IDS_TITLE_CAPTURE2, name.c_str(), pszAppend);
+	} else {
+		guiSetTitle((HWND)mhwnd, IDS_TITLE_CAPTURE, name.c_str(), pszAppend);
+	}
 }
 
 void VDCaptureProjectUI::UICaptureVideoHistoBegin() {

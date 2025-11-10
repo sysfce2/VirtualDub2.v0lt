@@ -1651,7 +1651,7 @@ void VDProject::InnerReopen() {
 	} else {
 		pSelectedDriver = VDGetInputDriverByName(mInputDriverName.c_str());
 		if (!pSelectedDriver)
-			throw MyError("The input driver \"%ls\" is no more available.", mInputDriverName);
+			throw MyError(L"The input driver \"%s\" is no more available.", mInputDriverName.c_str());
 		if (g_pInputOpts) {
 			int len = g_pInputOpts->write(0,0);
 			options.resize(len);
@@ -1711,10 +1711,11 @@ void VDProject::InnerReopen() {
 					sint64 oldCount = oldFrameCount;
 					sint64 newCount = newFrameCount;
 
-					VDStringA msg(VDTextWToA(VDswprintf(VDLoadString(0, kVDST_Project, kVDM_ReopenChangesImminent), 2, &newCount, &oldCount)));
+					VDStringW msg(VDswprintf(VDLoadString(0, kVDST_Project, kVDM_ReopenChangesImminent), 2, &newCount, &oldCount));
 
-					if (IDCANCEL == MessageBoxA((HWND)mhwnd, msg.c_str(), g_szError, MB_OKCANCEL))
+					if (IDCANCEL == MessageBoxW((HWND)mhwnd, msg.c_str(), VDTextAToW(g_szError).c_str(), MB_OKCANCEL)) {
 						return;
+					}
 
 					break;
 				}

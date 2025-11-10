@@ -429,21 +429,7 @@ void guiSetStatusW(const wchar_t *text, int nPart) {
 	SendMessageW(GetDlgItem(g_hWnd, IDC_STATUS_WINDOW), SB_SETTEXTW, nPart, (LPARAM)text);
 }
 
-void guiSetTitleA(HWND hWnd, UINT uID, ...) {
-	char buf1[256], buf2[256];
-
-	LoadStringA(g_hInst, uID, buf1, std::size(buf1));
-	buf2[0] = 0;
-
-	va_list val;
-	va_start(val, uID);
-	_vsnprintf_s(buf2, _TRUNCATE, buf1, val);
-	va_end(val);
-
-	SetWindowTextA(hWnd, buf2);
-}
-
-void guiSetTitleW(HWND hWnd, UINT uID, ...) {
+void guiSetTitle(HWND hWnd, UINT uID, ...) {
 	wchar_t buf2[256];
 	va_list val;
 
