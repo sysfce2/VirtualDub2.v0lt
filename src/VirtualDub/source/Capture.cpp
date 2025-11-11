@@ -2504,7 +2504,7 @@ VDDEBUG("Capture has stopped.\n");
 
 	if (icd.mbVideoTimingWrapDetected) {
 		if (!QueryConfigDword(g_szCapture, g_szWarnTiming1, &dw) || !dw) {
-			if (IDYES != MessageBox((HWND)mhwnd,
+			if (IDYES != MessageBoxA((HWND)mhwnd,
 					"VirtualDub has detected, and compensated for, a possible bug in your video capture drivers that is causing "
 					"its timing information to wrap around at 35 or 71 minutes.  Your capture should be okay, but you may want "
 					"to try upgrading your video capture drivers anyway, since this can cause video capture to halt in "

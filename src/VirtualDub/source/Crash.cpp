@@ -651,7 +651,7 @@ static const char *CrashLookupExport(HMODULE hmod, uintptr_t addr, unsigned long
 	int i;
 
 	for(i=0; i<pHeader->sections; i++) {
-		MessageBox(NULL, pSHdrs[i].name, "section", MB_OK);
+		MessageBoxA(NULL, pSHdrs[i].name, "section", MB_OK);
 		if (!memcmp(pSHdrs[i].name, ".edata", 6))
 			break;
 	}
