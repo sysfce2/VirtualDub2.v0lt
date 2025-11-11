@@ -997,14 +997,14 @@ LRESULT CALLBACK VDCaptureDriverVFW::ErrorCallback(HWND hwnd, int nID, LPCSTR lp
 
 	for (unsigned i = 0; i < std::size(g_betterCaptureErrors); i++) {
 		if (g_betterCaptureErrors[i].id == nID) {
-			MessageBox(GetParent(hWnd), g_betterCaptureErrors[i].szError, "VirtualDub capture error", MB_OK);
+			MessageBoxA(GetParent(hwnd), g_betterCaptureErrors[i].szError, "VirtualDub capture error", MB_OK);
 			return 0;
 		}
 	}
 
 	buf[0] = 0;
 	_snprintf(buf, std::size(buf), "Error %d: %s", nID, lpsz);
-	MessageBox(GetParent(hWnd), buf, "VirtualDub capture error", MB_OK);
+	MessageBoxA(GetParent(hwnd), buf, "VirtualDub capture error", MB_OK);
 	VDDEBUG("%s\n",buf);
 #endif
 
