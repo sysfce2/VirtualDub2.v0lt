@@ -27,7 +27,7 @@
 #include "resource.h"
 
 extern const wchar_t g_szError[];
-extern const wchar_t g_szWarningW[];
+extern const wchar_t g_szWarning[];
 extern VDProject *g_project;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -177,7 +177,7 @@ bool VDUIDialogAutoRecover::OnCommand(uint32 id, uint32 extcode) {
 	switch(id) {
 		case IDC_DELETE:
 			if (FileItem *fi = static_cast<FileItem *>(mList.GetSelectedItem())) {
-				if (Confirm(L"Are you sure you want to delete this recovery file?", g_szWarningW)) {
+				if (Confirm(L"Are you sure you want to delete this recovery file?", g_szWarning)) {
 					try {
 						VDProject::DeleteProject(fi->mFullPath);
 					} catch(const MyError& e) {
@@ -190,7 +190,7 @@ bool VDUIDialogAutoRecover::OnCommand(uint32 id, uint32 extcode) {
 			return true;
 
 		case IDC_DELETE_ALL:
-			if (Confirm(L"Are you sure you want to delete ALL recovery files?", g_szWarningW)) {
+			if (Confirm(L"Are you sure you want to delete ALL recovery files?", g_szWarning)) {
 				mList.Clear();
 
 				while(!mFileItems.empty()) {

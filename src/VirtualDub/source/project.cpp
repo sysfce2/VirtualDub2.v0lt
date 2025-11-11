@@ -85,7 +85,7 @@ namespace {
 ///////////////////////////////////////////////////////////////////////////
 
 extern const wchar_t g_szError[];
-extern const char g_szWarning[];
+extern const wchar_t g_szWarning[];
 
 extern HINSTANCE g_hInst;
 
@@ -2747,7 +2747,7 @@ void VDProject::ResetTimeline() {
 
 void VDProject::ResetTimelineWithConfirmation() {
 	if (inputAVI) {
-		if (IDOK == MessageBoxA((HWND)mhwnd, "Discard edits and reset timeline?", g_szWarning, MB_OKCANCEL|MB_TASKMODAL|MB_SETFOREGROUND|MB_ICONEXCLAMATION)) {
+		if (IDOK == MessageBoxW((HWND)mhwnd, L"Discard edits and reset timeline?", g_szWarning, MB_OKCANCEL|MB_TASKMODAL|MB_SETFOREGROUND|MB_ICONEXCLAMATION)) {
 			ResetTimeline();
 		}
 	}

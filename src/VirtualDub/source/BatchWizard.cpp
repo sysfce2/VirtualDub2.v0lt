@@ -27,7 +27,7 @@ namespace {
 extern DubOptions g_dubOpts;
 extern HINSTANCE g_hInst;
 extern const wchar_t g_szError[];
-extern const char g_szWarning[];
+extern const wchar_t g_szWarning[];
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -720,9 +720,9 @@ bool VDUIBatchWizard::CheckAndConfirmConflicts() {
 	}
 
 	if (conflicts) {
-		VDStringA message;
-		message.sprintf("%u file(s) have conflicting output names and will attempt to overwrite the results of other entries. Proceed anyway?", conflicts);
-		return IDOK == MessageBoxA(mhdlg, message.c_str(), g_szWarning, MB_ICONWARNING | MB_OKCANCEL);
+		VDStringW message;
+		message.sprintf(L"%u file(s) have conflicting output names and will attempt to overwrite the results of other entries. Proceed anyway?", conflicts);
+		return IDOK == MessageBoxW(mhdlg, message.c_str(), g_szWarning, MB_ICONWARNING | MB_OKCANCEL);
 	}
 
 	return true;

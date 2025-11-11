@@ -104,7 +104,7 @@ namespace {
 ///////////////////////////////////////////////////////////////////////////
 
 extern const wchar_t g_szError[];
-extern const char g_szWarning[];
+extern const wchar_t g_szWarning[];
 
 extern bool g_bEnableVTuneProfiling;
 extern bool g_bAutoTest;
@@ -2039,10 +2039,10 @@ void VDProjectUI::CloseAndDelete() {
 	if (!inputAVI || !VDDoesPathExist(g_szInputAVIFile))
 		return;
 
-	VDStringA s;
-	s.sprintf("Are you sure you want to delete the file \"%ls\"?", g_szInputAVIFile);
+	VDStringW s;
+	s.sprintf(L"Are you sure you want to delete the file \"%s\"?", g_szInputAVIFile);
 
-	if (IDOK == MessageBoxA((HWND)mhwnd, s.c_str(), g_szWarning, MB_ICONEXCLAMATION | MB_OKCANCEL)) {
+	if (IDOK == MessageBoxW((HWND)mhwnd, s.c_str(), g_szWarning, MB_ICONEXCLAMATION | MB_OKCANCEL)) {
 		VDStringW fn(g_szInputAVIFile);
 
 		Close();

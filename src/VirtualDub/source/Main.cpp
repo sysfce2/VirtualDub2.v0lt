@@ -95,9 +95,8 @@ wchar_t g_szFile[MAX_PATH];
 
 char g_serverName[256];
 
-extern const wchar_t g_szError[]=L"VirtualDub Error";
-extern const char g_szWarning[]="VirtualDub Warning";
-extern const wchar_t g_szWarningW[]=L"VirtualDub Warning";
+extern const wchar_t g_szError[]   = L"VirtualDub Error";
+extern const wchar_t g_szWarning[] = L"VirtualDub Warning";
 
 static const char g_szRegKeyPersistence[]="Persistence";
 static const char g_szRegKeyAutoAppendByName[]="Auto-append by name";
@@ -1544,7 +1543,7 @@ void SaveSegmentedAVI(HWND hWnd, bool queueAsJob) {
 			}
 
 			if (nMatchCount) {
-				if (IDOK != guiMessageBoxF(g_hWnd, g_szWarningW, MB_OKCANCEL|MB_ICONEXCLAMATION,
+				if (IDOK != guiMessageBoxF(g_hWnd, g_szWarning, MB_OKCANCEL|MB_ICONEXCLAMATION,
 					L"There %s %d existing file%s which match%s the filename pattern \"%s\". These files "
 					L"will be erased if you continue, to prevent confusion with the new files."
 					,nMatchCount==1 ? L"is" : L"are"

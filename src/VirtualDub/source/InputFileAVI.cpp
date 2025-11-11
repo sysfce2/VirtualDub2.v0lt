@@ -594,7 +594,7 @@ void InputFileAVI::Init(const wchar_t *szFile) {
 				}
 			} catch(const MyError& e) {
 				wchar_t err[128];
-				swprintf(err, L"Cannot load video segment %02d", nSegment);
+				swprintf_s(err, L"Cannot load video segment %02d", nSegment);
 
 				e.post(NULL, err);
 			}

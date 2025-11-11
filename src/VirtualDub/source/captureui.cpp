@@ -187,7 +187,7 @@ static const char *const g_szCapVideoProcAmpItems[]={
 
 extern HINSTANCE g_hInst;
 extern const wchar_t g_szError[];
-extern const char g_szWarning[];
+extern const wchar_t g_szWarning[];
 
 static char g_szStripeFile[MAX_PATH];
 
@@ -3812,8 +3812,8 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 			} else if (id >= ID_AUDIO_CAPTURE_SOURCE && id < ID_AUDIO_CAPTURE_SOURCE+50) {
 
 				if (mbSwitchSourcesTogether) {
-					DWORD result = MessageBoxA((HWND)mhwnd,
-							"The audio source setting is currently being auto-set to match the video source. "
+					DWORD result = MessageBoxW((HWND)mhwnd,
+							L"The audio source setting is currently being auto-set to match the video source. "
 							"This will be disabled if you manually switch the audio source. Proceed?\n"
 							"\n"
 							"(Auto-switching can be re-enabled in Device, Device Settings.)",

@@ -33,7 +33,7 @@
 #include <vd2/plugin/vdaudiofilt.h>
 
 extern const wchar_t g_szError[];
-extern const char g_szWarning[];
+extern const wchar_t g_szWarning[];
 
 class AudioSource;
 
@@ -399,7 +399,7 @@ INT_PTR VDDialogAudioFiltersW32::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 				mpGraphControl->ConfigureSelection();
 				return TRUE;
 			case IDC_CLEAR:
-				if (MessageBoxA(mhdlg, "Clear filter graph?", g_szWarning, MB_ICONEXCLAMATION|MB_OKCANCEL)==IDOK){
+				if (MessageBoxW(mhdlg, L"Clear filter graph?", g_szWarning, MB_ICONEXCLAMATION|MB_OKCANCEL)==IDOK){
 					mpGraphControl->SetFilterGraph(std::vector<VDFilterGraphNode>(), std::vector<VDFilterGraphConnection>());
 				}
 				return TRUE;

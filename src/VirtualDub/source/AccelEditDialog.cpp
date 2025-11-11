@@ -9,7 +9,7 @@
 #include "gui.h"
 #include "resource.h"
 
-extern const char g_szWarning[];
+extern const wchar_t g_szWarning[];
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -262,10 +262,10 @@ bool VDDialogEditAccelerators::OnCommand(uint32 id, uint32 extcode) {
 						VDStringW keyName;
 						VDUIGetAcceleratorString(accel, keyName);
 
-						VDStringA msg;
-						msg.sprintf("The key %ls is already bound to %hs. Rebind it to %hs?", keyName.c_str(), obc->mpCommand, ace->mpName);
+						VDStringW msg;
+						msg.sprintf(L"The key %s is already bound to %hs. Rebind it to %hs?", keyName.c_str(), obc->mpCommand, ace->mpName);
 
-						if (IDOK != MessageBoxA(mhdlg, msg.c_str(), g_szWarning, MB_OKCANCEL | MB_ICONEXCLAMATION)) {
+						if (IDOK != MessageBoxW(mhdlg, msg.c_str(), g_szWarning, MB_OKCANCEL | MB_ICONEXCLAMATION)) {
 							return true;
 						}
 
@@ -313,7 +313,7 @@ bool VDDialogEditAccelerators::OnCommand(uint32 id, uint32 extcode) {
 
 		return true;
 	} else if (id == IDC_RESET) {
-		if (IDOK == MessageBoxA(mhdlg, "Really reset?", g_szWarning, MB_OKCANCEL | MB_ICONEXCLAMATION)) {
+		if (IDOK == MessageBoxW(mhdlg, L"Really reset?", g_szWarning, MB_OKCANCEL | MB_ICONEXCLAMATION)) {
 			LoadTable(mBoundCommandsDefault);
 		}
 
