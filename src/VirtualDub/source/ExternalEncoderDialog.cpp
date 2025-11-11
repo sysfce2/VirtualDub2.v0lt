@@ -29,7 +29,7 @@
 #include "ExternalEncoderProfile.h"
 
 extern const wchar_t g_szError[];
-const wchar_t g_szErrorW[]=L"VirtualDub Error";
+extern const wchar_t g_szWarning[];
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -1045,7 +1045,7 @@ bool VDUIDialogConfigureExternalEncoders::OnCommand(uint32 id, uint32 extcode) {
 
 						message.sprintf(L"The file contains an external encoder set called \"%ls\" that already exists. Do you want to load the file anyway, replacing existing profiles with the same names?", eset->mName.c_str());
 
-						if (!Confirm(message.c_str(), L"VirtualDub Warning"))
+						if (!Confirm(message.c_str(), g_szWarning))
 							throw MyUserAbortError();
 
 						overwriteConfirmed = true;
@@ -1103,7 +1103,7 @@ bool VDUIDialogConfigureExternalEncoders::OnCommand(uint32 id, uint32 extcode) {
 
 						message.sprintf(L"The file contains an external encoder profile called \"%ls\" that already exists. Do you want to load the file anyway, replacing existing profiles with the same names?", eprof->mName.c_str());
 
-						if (!Confirm(message.c_str(), L"VirtualDub Warning"))
+						if (!Confirm(message.c_str(), g_szWarning))
 							throw MyUserAbortError();
 
 						overwriteConfirmed = true;
@@ -1337,7 +1337,7 @@ void VDUIDialogConfigureExternalEncoders::OnLabelChanged(VDUIProxyListView *send
 				VDStringW msg;
 
 				msg.sprintf(L"The name \"%ls\" is already in use by another set.", eventData->mpNewLabel);
-				ShowError(msg.c_str(), g_szErrorW);
+				ShowError(msg.c_str(), g_szError);
 				return;
 			}
 
@@ -1353,7 +1353,7 @@ void VDUIDialogConfigureExternalEncoders::OnLabelChanged(VDUIProxyListView *send
 				VDStringW msg;
 
 				msg.sprintf(L"The name \"%ls\" is already in use by another profile.", eventData->mpNewLabel);
-				ShowError(msg.c_str(), g_szErrorW);
+				ShowError(msg.c_str(), g_szError);
 				return;
 			}
 

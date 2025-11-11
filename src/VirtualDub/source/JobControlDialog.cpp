@@ -30,6 +30,7 @@ static const char g_szRegKeyShutdownMode[] = "Shutdown mode";
 extern HINSTANCE g_hInst;
 extern HWND g_hwndJobs;
 extern const wchar_t g_szError[];
+extern const wchar_t g_szWarning[];
 
 extern VDJobQueue g_VDJobQueue;
 
@@ -424,12 +425,12 @@ bool VDUIJobControlDialog::OnMenuHit(uint32 id) {
 
 					if (!filename.empty()) {
 						if (!_wcsicmp(filename.c_str(), g_VDJobQueue.GetDefaultJobFilePath())) {
-							DWORD res = MessageBoxA(mhdlg,
-								"Using the same job file that is normally used for local job queue operation is not recommended as "
+							DWORD res = MessageBoxW(mhdlg,
+								L"Using the same job file that is normally used for local job queue operation is not recommended as "
 								"it can cause job queue corruption.\n"
 								"\n"
 								"Are you sure you want to use this file for the remote queue too?",
-								"VirtualDub Warning",
+								g_szWarning,
 								MB_ICONEXCLAMATION | MB_YESNO);
 
 							if (res != IDYES)
@@ -647,10 +648,10 @@ VDZINT_PTR VDUIJobControlDialog::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARA
 
 						case VDJob::kStateAborting:
 							if (!vdj->IsLocal()) {
-								VDStringA msg;
+								VDStringW msg;
+								msg.sprintf(L"This job may be running on a different instance of VirtualDub on the machine named %s. Are you sure you want to reset it to Waiting status?", vdj->GetRunnerName());
 
-								msg.sprintf("This job may be running on a different instance of VirtualDub on the machine named %hs. Are you sure you want to reset it to Waiting status?", vdj->GetRunnerName());
-								if (IDOK == MessageBoxA(mhdlg, msg.c_str(), "VirtualDub Warning", MB_ICONEXCLAMATION | MB_OKCANCEL)) {
+								if (IDOK == MessageBoxW(mhdlg, msg.c_str(), g_szWarning, MB_ICONEXCLAMATION | MB_OKCANCEL)) {
 									vdj->SetState(VDJob::kStateWaiting);
 									vdj->Refresh();
 								}

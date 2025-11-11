@@ -3465,8 +3465,9 @@ LRESULT VDProjectUI::MainWndProc( UINT msg, WPARAM wParam, LPARAM lParam) {
 
 	case WM_CLOSE:
 		if (VDPreferencesGetConfirmExit()) {
-			if (IDOK != MessageBoxA((HWND)mhwnd, "Are you sure you want to exit?", "VirtualDub warning", MB_ICONQUESTION | MB_OKCANCEL))
+			if (IDOK != MessageBoxW((HWND)mhwnd, L"Are you sure you want to exit?", g_szWarning, MB_ICONQUESTION | MB_OKCANCEL)) {
 				return 0;
+			}
 		}
 		break;
 
@@ -3543,8 +3544,9 @@ LRESULT VDProjectUI::DubWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_CLOSE:
 		if (VDPreferencesGetConfirmExit()) {
-			if (IDOK != MessageBoxA((HWND)mhwnd, "Are you sure you want to exit?", "VirtualDub warning", MB_ICONQUESTION | MB_OKCANCEL))
+			if (IDOK != MessageBoxW((HWND)mhwnd, L"Are you sure you want to exit?", g_szWarning, MB_ICONQUESTION | MB_OKCANCEL)) {
 				return 0;
+			}
 		}
 
 		if (g_dubber->IsPreviewing() || g_bEnableVTuneProfiling) {
@@ -3554,13 +3556,14 @@ LRESULT VDProjectUI::DubWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 			if (mpDubStatus && !mpDubStatus->isVisible())
 				mpDubStatus->ToggleStatus();
 
-			if (IDYES == MessageBoxA((HWND)mhwnd,
-					"A dub operation is currently in progress. Forcing VirtualDub to abort "
+			if (IDYES == MessageBoxW((HWND)mhwnd,
+					L"A dub operation is currently in progress. Forcing VirtualDub to abort "
 					"will leave the output file unusable and may have undesirable side effects. "
 					"Do you really want to do this?"
-					,"VirtualDub warning", MB_YESNO))
+					, g_szWarning, MB_YESNO)) {
 
-					ExitProcess(1000);
+				ExitProcess(1000);
+			}
 		}
 		break;
 
