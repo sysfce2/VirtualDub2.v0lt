@@ -31,7 +31,7 @@
 #include "InputFileTestPhysics.h"
 #include "gui.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 enum {
 	kTest_cube = 0,

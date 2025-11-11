@@ -65,7 +65,7 @@ public:
 	void setf(const char* f, ...);
 	void vsetf(const wchar_t* f, va_list val);
 	void vsetf(const char* f, va_list val);
-	void post(struct HWND__ *hWndParent, const char *title) const;
+	void post(struct HWND__ *hWndParent, const wchar_t* title) const;
 	wchar_t* gets() const {
 		return mbuf;
 	}

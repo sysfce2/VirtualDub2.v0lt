@@ -32,7 +32,7 @@
 #include <vd2/plugin/vdplugin.h>
 #include <vd2/plugin/vdaudiofilt.h>
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern const char g_szWarning[];
 
 class AudioSource;

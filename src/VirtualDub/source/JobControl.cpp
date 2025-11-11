@@ -17,7 +17,7 @@
 #include "project.h"
 #include "command.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern HWND g_hWnd;
 extern VDProject *g_project;
 extern bool g_exitOnDone;

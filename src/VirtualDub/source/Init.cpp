@@ -136,7 +136,7 @@ extern DubSource::ErrorMode	g_audioErrorMode;
 
 extern wchar_t g_szFile[MAX_PATH];
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 bool g_exitOnDone = false;
 bool g_bAutoTest = false;

@@ -95,7 +95,7 @@ wchar_t g_szFile[MAX_PATH];
 
 char g_serverName[256];
 
-extern const char g_szError[]="VirtualDub Error";
+extern const wchar_t g_szError[]=L"VirtualDub Error";
 extern const char g_szWarning[]="VirtualDub Warning";
 extern const wchar_t g_szWarningW[]=L"VirtualDub Warning";
 
@@ -1141,7 +1141,7 @@ public:
 
 void SaveAVI(HWND hWnd, bool fUseCompatibility, bool queueAsJob) {
 	if (!inputVideo) {
-		MessageBoxA(hWnd, "No input video stream to process.", g_szError, MB_OK);
+		MessageBoxW(hWnd, L"No input video stream to process.", g_szError, MB_OK);
 		return;
 	}
 
@@ -1288,7 +1288,7 @@ public:
 
 void SaveAudio(HWND hWnd, bool queueAsJob) {
 	if (!inputAudio) {
-		MessageBoxA(hWnd, "No input audio stream to extract.", g_szError, MB_OK);
+		MessageBoxW(hWnd, L"No input audio stream to extract.", g_szError, MB_OK);
 		return;
 	}
 
@@ -1437,7 +1437,7 @@ static const char g_szRegKeySegmentDigitCount[]="Segment digit count";
 
 void SaveSegmentedAVI(HWND hWnd, bool queueAsJob) {
 	if (!inputVideo) {
-		MessageBoxA(hWnd, "No input video stream to process.", g_szError, MB_OK);
+		MessageBoxW(hWnd, L"No input video stream to process.", g_szError, MB_OK);
 		return;
 	}
 
@@ -1927,7 +1927,7 @@ void SaveImageSeq(HWND hwnd, bool queueAsJob) {
 	dlg.addJob = queueAsJob;
 
 	if (!inputVideo) {
-		MessageBoxA(hwnd, "No input video stream to process.", g_szError, MB_OK);
+		MessageBoxW(hwnd, L"No input video stream to process.", g_szError, MB_OK);
 		return;
 	}
 

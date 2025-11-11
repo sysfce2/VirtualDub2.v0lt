@@ -24,7 +24,7 @@
 #include "InputFileImages.h"
 #include "image.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern HWND g_hWnd;
 
 VDInputFileImages::VDInputFileImages(uint32 flags) {

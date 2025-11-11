@@ -98,7 +98,7 @@ using namespace nsVDDub;
 
 ///////////////////////////////////////////////////////////////////////////
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern HWND g_hWnd;
 extern bool VDPreferencesGetNoCorrectLayer3();
 extern uint32& VDPreferencesGetRenderVideoBufferCount();

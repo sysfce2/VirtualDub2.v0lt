@@ -31,7 +31,7 @@
 #include "FilterGraph.h"
 
 extern HINSTANCE g_hInst;
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 extern const wchar_t g_szFilterGraphControlName[]=L"phaeronFilterGraphControl";
 
@@ -585,7 +585,7 @@ void VDFilterGraphControl::OnLButtonUp(int x, int y) {
 			}
 
 			if (IsReachable(pDstFilter, pSrcFilter)) {
-				MessageBoxA(mhwnd, "This connection would create a cycle in the filter graph and cannot be created.", g_szError, MB_OK|MB_ICONERROR);
+				MessageBoxW(mhwnd, L"This connection would create a cycle in the filter graph and cannot be created.", g_szError, MB_OK|MB_ICONERROR);
 				InvalidateRect(mhwnd, NULL, TRUE);
 			} else {
 				Connect(pSrcFilter, srcPin, pDstFilter, dstPin);
@@ -726,7 +726,7 @@ void VDFilterGraphControl::DeleteSelection() {
 		int i;
 
 		if (pf->bProtected) {
-			MessageBoxA(mhwnd, "This filter cannot be removed from the filter graph.", g_szError, MB_OK|MB_ICONERROR);
+			MessageBoxW(mhwnd, L"This filter cannot be removed from the filter graph.", g_szError, MB_OK|MB_ICONERROR);
 			return;
 		}
 
@@ -763,7 +763,7 @@ void VDFilterGraphControl::DeleteSelection() {
 void VDFilterGraphControl::ConfigureSelection() {
 	if (mpSelectedFilter) {
 		if (!mpCB || !mpSelectedFilter->pInstance || !mpCB->Configure((VDGUIHandle)mhwnd, mpSelectedFilter->pInstance))
-			MessageBoxA(mhwnd, "No options are available for the selected filter.", g_szError, MB_OK|MB_ICONINFORMATION);
+			MessageBoxW(mhwnd, L"No options are available for the selected filter.", g_szError, MB_OK|MB_ICONINFORMATION);
 		else
 			RequeryFormats();
 	}

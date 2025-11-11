@@ -1901,7 +1901,7 @@ bool FilterPreview::SampleCurrentFrame() {
 				}
 			}
 		} catch(const MyError& e) {
-			e.post(parent, "Video sampling error");
+			e.post(parent, L"Video sampling error");
 		}
 	}
 
@@ -2045,7 +2045,7 @@ long FilterPreview::SampleFrames() {
 		/* so what? */
 
 	} catch(const MyError& e) {
-		e.post(parent, "Video sampling error");
+		e.post(parent, L"Video sampling error");
 	}
 
 	RedrawFrame();
@@ -2144,7 +2144,7 @@ long FilterPreview::SampleFrames(IFilterModPreviewSample* handler) {
 		handler->Cancel();
 
 	} catch(const MyError& e) {
-		e.post(parent, "Video sampling error");
+		e.post(parent, L"Video sampling error");
 	}
 
 	if (image_changed)

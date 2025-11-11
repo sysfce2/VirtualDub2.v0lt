@@ -14,7 +14,7 @@
 #include "AVIOutputFile.h"
 #include <vector>
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 namespace {
 	static const uint8 ditherred[16][16]={

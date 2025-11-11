@@ -24,7 +24,7 @@
 #include "VideoSource.h"
 #include "InputFile.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 ///////////////////////////////////////////////////////////////////////////
 

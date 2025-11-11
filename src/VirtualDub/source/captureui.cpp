@@ -186,7 +186,7 @@ static const char *const g_szCapVideoProcAmpItems[]={
 };
 
 extern HINSTANCE g_hInst;
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern const char g_szWarning[];
 
 static char g_szStripeFile[MAX_PATH];
@@ -2762,7 +2762,7 @@ LRESULT VDCaptureProjectUI::MainWndProc(UINT msg, WPARAM wParam, LPARAM lParam) 
 				try {
 					mpProject->Capture(false);
 				} catch(const MyError& e) {
-					e.post((HWND)mhwnd, "Capture error");
+					e.post((HWND)mhwnd, L"Capture error");
 				}
 			}
 			break;
@@ -3854,7 +3854,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 			break;
 		}
 	} catch(const MyError& e) {
-		e.post((HWND)mhwnd, "Capture error");
+		e.post((HWND)mhwnd, L"Capture error");
 	}
 
 	return true;
@@ -4794,7 +4794,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 				pbih->biClrImportant	= 0;
 
 				if (!pProject->SetVideoFormat(*pbih, pbih.size())) {
-					MessageBoxA(NULL, "The capture device does not support the selected video format.", g_szError, MB_OK|MB_ICONEXCLAMATION);
+					MessageBoxW(NULL, L"The capture device does not support the selected video format.", g_szError, MB_OK|MB_ICONEXCLAMATION);
 					return TRUE;
 				}
 			} while(false);

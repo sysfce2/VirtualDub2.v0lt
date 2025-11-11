@@ -28,7 +28,7 @@
 #include <vd2/vdjson/jsonwriter.h>
 #include "ExternalEncoderProfile.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 const wchar_t g_szErrorW[]=L"VirtualDub Error";
 
 ///////////////////////////////////////////////////////////////////////////

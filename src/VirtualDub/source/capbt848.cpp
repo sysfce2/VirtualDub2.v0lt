@@ -28,7 +28,7 @@
 #include <vd2/system/error.h>
 #include "dtvdrv.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern HINSTANCE g_hInst;
 static HWND g_hwndTweaker;
 static HMODULE g_hmodDTV;

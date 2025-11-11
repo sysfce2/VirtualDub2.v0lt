@@ -86,7 +86,7 @@ using namespace nsVDCapture;
 ///////////////////////////////////////////////////////////////////////////
 
 extern HINSTANCE g_hInst;
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern VDFilterChainDesc g_filterChain;
 extern long g_lSpillMinSize;
 extern long g_lSpillMaxSize;
@@ -1866,7 +1866,7 @@ bool VDCaptureProject::SelectDriver(int nDriver) {
 
 	if (!mpDriver || !mpDriver->Init(mhwnd)) {
 		mpDriver = NULL;
-		MessageBoxA((HWND)mhwnd, "VirtualDub cannot connect to the desired capture driver.", g_szError, MB_OK);
+		MessageBoxW((HWND)mhwnd, L"VirtualDub cannot connect to the desired capture driver.", g_szError, MB_OK);
 		if (mpCB)
 			mpCB->UICaptureDriverChanged(-1);
 		return false;

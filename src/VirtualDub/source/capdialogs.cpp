@@ -37,7 +37,7 @@
 
 #include <vfw.h>
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern const char g_szCapture[];
 extern const char g_szAdjustVideoTiming[];
 extern const char g_szChunkSize[];

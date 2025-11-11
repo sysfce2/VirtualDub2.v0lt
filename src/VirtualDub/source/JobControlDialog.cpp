@@ -29,7 +29,7 @@ static const char g_szRegKeyShutdownMode[] = "Shutdown mode";
 
 extern HINSTANCE g_hInst;
 extern HWND g_hwndJobs;
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 extern VDJobQueue g_VDJobQueue;
 
@@ -360,7 +360,7 @@ bool VDUIJobControlDialog::OnCommand(uint32 id, uint32 extcode) {
 				return TRUE;
 
 			if (!vdj->IsReloadMarkerPresent())
-				MessageBoxA(mhdlg, "This job was created with an older version of VirtualDub and cannot be reloaded.", g_szError, MB_ICONERROR|MB_OK);
+				MessageBoxW(mhdlg, L"This job was created with an older version of VirtualDub and cannot be reloaded.", g_szError, MB_ICONERROR|MB_OK);
 			else
 				vdj->Reload();
 
@@ -404,14 +404,14 @@ bool VDUIJobControlDialog::OnMenuHit(uint32 id) {
 
 			case ID_FILE_USELOCALJOBQUEUE:
 				if (g_VDJobQueue.IsRunInProgress())
-					MessageBoxA(mhdlg, "Cannot switch job queues while a job is in progress.", g_szError, MB_ICONERROR | MB_OK);
+					MessageBoxW(mhdlg, L"Cannot switch job queues while a job is in progress.", g_szError, MB_ICONERROR | MB_OK);
 				else
 					g_VDJobQueue.SetJobFilePath(NULL, false, false);
 				break;
 
 			case ID_FILE_USEREMOTEJOBQUEUE:
 				if (g_VDJobQueue.IsRunInProgress())
-					MessageBoxA(mhdlg, "Cannot switch job queues while a job is in progress.", g_szError, MB_ICONERROR | MB_OK);
+					MessageBoxW(mhdlg, L"Cannot switch job queues while a job is in progress.", g_szError, MB_ICONERROR | MB_OK);
 				else {
 					const VDFileDialogOption opts[]={
 						{ VDFileDialogOption::kConfirmFile, 0, NULL, 0, 0},
@@ -523,7 +523,7 @@ bool VDUIJobControlDialog::OnMenuHit(uint32 id) {
 				break;
 		}
 	} catch(const MyError& e) {
-		e.post(mhdlg, "Job system error");
+		e.post(mhdlg, L"Job system error");
 	}
 
 	return true;

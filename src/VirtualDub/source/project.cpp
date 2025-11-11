@@ -84,7 +84,7 @@ namespace {
 
 ///////////////////////////////////////////////////////////////////////////
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern const char g_szWarning[];
 
 extern HINSTANCE g_hInst;
@@ -1713,7 +1713,7 @@ void VDProject::InnerReopen() {
 
 					VDStringW msg(VDswprintf(VDLoadString(0, kVDST_Project, kVDM_ReopenChangesImminent), 2, &newCount, &oldCount));
 
-					if (IDCANCEL == MessageBoxW((HWND)mhwnd, msg.c_str(), VDTextAToW(g_szError).c_str(), MB_OKCANCEL)) {
+					if (IDCANCEL == MessageBoxW((HWND)mhwnd, msg.c_str(), g_szError, MB_OKCANCEL)) {
 						return;
 					}
 

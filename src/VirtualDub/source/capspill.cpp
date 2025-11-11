@@ -63,7 +63,7 @@ wchar_t *CapSpillDrive::makePath(wchar_t *buf, const wchar_t *fn) const {
 ///////////////////////////////////////////////////////////////////////////
 
 extern HINSTANCE g_hInst;
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 static ListAlloc<CapSpillDrive> g_spillDrives;
 
@@ -281,13 +281,13 @@ INT_PTR CALLBACK CaptureSpillDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM 
 				lMin = GetDlgItemInt(hdlg, IDC_MIN_SIZE, &fOk, FALSE);
 				if (!fOk || lMin > 2048) {
 					SetFocus(GetDlgItem(hdlg, IDC_MIN_SIZE));
-					MessageBoxA(hdlg, "Minimum size must be between 0 and 2048 megabytes.", g_szError, MB_OK);
+					MessageBoxW(hdlg, L"Minimum size must be between 0 and 2048 megabytes.", g_szError, MB_OK);
 					return TRUE;
 				}
 				lMax = GetDlgItemInt(hdlg, IDC_MAX_SIZE, &fOk, FALSE);
 				if (!fOk || lMax < 50 || lMax > 2048) {
 					SetFocus(GetDlgItem(hdlg, IDC_MAX_SIZE));
-					MessageBoxA(hdlg, "Maximum size must be between 50 and 2048 megabytes.", g_szError, MB_OK);
+					MessageBoxW(hdlg, L"Maximum size must be between 50 and 2048 megabytes.", g_szError, MB_OK);
 					return TRUE;
 				}
 

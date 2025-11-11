@@ -62,7 +62,7 @@
 extern DubOptions g_dubOpts;
 extern HWND g_hWnd;
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern bool g_fJobMode;
 extern int g_returnCode;
 

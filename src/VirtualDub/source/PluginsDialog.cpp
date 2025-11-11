@@ -23,7 +23,7 @@
 #include "plugins.h"
 #include "resource.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 class VDUIDialogPlugins : public VDDialogFrameW32 {
 public:

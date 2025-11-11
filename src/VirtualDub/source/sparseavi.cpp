@@ -30,7 +30,7 @@
 #include "gui.h"
 #include "Version_num.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 struct SparseAVIHeader {
 	enum {

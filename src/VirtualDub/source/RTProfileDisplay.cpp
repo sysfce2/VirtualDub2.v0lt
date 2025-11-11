@@ -29,7 +29,7 @@
 #include "RTProfileDisplay.h"
 
 extern HINSTANCE g_hInst;
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 const wchar_t g_szRTProfileDisplayControlName[]=L"phaeronRTProfileDisplay";
 

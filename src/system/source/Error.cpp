@@ -135,16 +135,16 @@ void MyError::vsetf(const char* f, va_list val)
 	}
 }
 
-void MyError::post(HWND hWndParent, const char *title) const {
+void MyError::post(HWND hWndParent, const wchar_t* title) const {
 	if (!mbuf || !*mbuf) {
 		return;
 	}
 
-	VDDEBUG(L"*** %hs: %s\n", title, mbuf);
+	VDDEBUG(L"*** %s: %s\n", title, mbuf);
 
 	VDLog(kVDLogError, VDswprintf(L"Error: %s", 1, &mbuf));
 
-	MessageBoxW(hWndParent, mbuf, VDTextAToW(title).c_str(), MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+	MessageBoxW(hWndParent, mbuf, title, MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
 }
 
 void MyError::discard() {

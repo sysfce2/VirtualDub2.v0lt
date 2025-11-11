@@ -26,7 +26,7 @@ namespace {
 
 extern DubOptions g_dubOpts;
 extern HINSTANCE g_hInst;
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern const char g_szWarning[];
 
 ///////////////////////////////////////////////////////////////////////////////

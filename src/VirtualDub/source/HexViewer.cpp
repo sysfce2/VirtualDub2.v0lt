@@ -1223,7 +1223,7 @@ void HexEditor::Open(const wchar_t *pszFile, bool bRW) {
 
 		i64FileSize = mFile.size();
 	} catch(const MyError& e) {
-		e.post(NULL, "Hex editor error");
+		e.post(NULL, L"Hex editor error");
 		return;
 	}
 
@@ -1632,7 +1632,7 @@ LRESULT HexEditor::Handle_WM_COMMAND(WPARAM wParam, LPARAM lParam) {
 					mFile.seek(v1);
 					mFile.truncate();
 				} catch(const MyError& e) {
-					e.post(hwnd, "Error");
+					e.post(hwnd, L"Error");
 				}
 
 				i64FileReadPosition = mFile.tell();
@@ -1985,7 +1985,7 @@ void HexEditor::Extract() {
 			} catch(const MyUserAbortError&) {
 				mFile2.truncateNT();
 			} catch(const MyError& e) {
-				e.post(hwnd, "Error");
+				e.post(hwnd, L"Error");
 				mFile2.truncateNT();
 			}
 

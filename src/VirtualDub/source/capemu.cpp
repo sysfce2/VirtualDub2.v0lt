@@ -40,7 +40,7 @@ using namespace nsVDCapture;
 
 extern HINSTANCE g_hInst;
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 const VDStringW& VDPreferencesGetAudioPlaybackDeviceKey();
 

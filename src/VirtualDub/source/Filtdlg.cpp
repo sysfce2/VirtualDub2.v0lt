@@ -41,7 +41,7 @@
 #include "dub.h"
 #include "command.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern vdrefptr<VDProjectUI> g_projectui;
 extern VDProject *g_project;
 extern DubOptions	g_dubOpts;

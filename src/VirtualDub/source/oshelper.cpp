@@ -29,7 +29,7 @@
 #include "oshelper.h"
 #include "version.h"
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 VDStringW g_VDDataPath;
 

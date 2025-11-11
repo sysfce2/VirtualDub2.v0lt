@@ -10,7 +10,7 @@
 #include <vd2/system/filesys.h>
 #include <commctrl.h>
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 
 namespace {
 	enum {

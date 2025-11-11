@@ -28,7 +28,7 @@
 #include <vd2/system/filesys.h>
 #include <vd2/system/registry.h>
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern const wchar_t fileFiltersAppendAll[];
 
 MyFileError::MyFileError(int error, const wchar_t* format, ...) {
@@ -99,7 +99,7 @@ InputFileOptions *InputFile::createOptions(const void *buf, uint32 len) {
 }
 
 void InputFile::InfoDialog(VDGUIHandle hwndParent) {
-	MessageBoxA((HWND)hwndParent, "No file information is available for the current video file.", g_szError, MB_OK);
+	MessageBoxW((HWND)hwndParent, L"No file information is available for the current video file.", g_szError, MB_OK);
 }
 
 void InputFile::GetTextInfo(tFileTextInfo& info) {

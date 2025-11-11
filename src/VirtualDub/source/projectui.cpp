@@ -103,7 +103,7 @@ namespace {
 
 ///////////////////////////////////////////////////////////////////////////
 
-extern const char g_szError[];
+extern const wchar_t g_szError[];
 extern const char g_szWarning[];
 
 extern bool g_bEnableVTuneProfiling;

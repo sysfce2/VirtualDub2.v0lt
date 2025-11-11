@@ -875,6 +875,6 @@ void ActivateFrameServerDialog(HWND hwnd, const char *server) {
 		VDDEBUG("Frameserver exit.\n");
 
 	} catch(const MyError& e) {
-		e.post(hwnd, "Frameserver error");
+		e.post(hwnd, L"Frameserver error");
 	}
 }
