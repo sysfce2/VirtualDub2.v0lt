@@ -23,14 +23,6 @@ wchar_t g_szSystemPath[MAX_PATH];
 wchar_t g_szProgPath[MAX_PATH];
 wchar_t g_szTempPath[MAX_PATH];
 
-typedef BOOL WINAPI fntype_Wow64DisableWow64FsRedirection(PVOID* OldValue);
-typedef BOOL WINAPI fntype_Wow64RevertWow64FsRedirection(PVOID OldValue);
-fntype_Wow64DisableWow64FsRedirection* pfnWow64DisableWow64FsRedirection = (fntype_Wow64DisableWow64FsRedirection*)GetProcAddress(GetModuleHandleA("kernel32.dll"), "Wow64DisableWow64FsRedirection");
-fntype_Wow64RevertWow64FsRedirection* pfnWow64RevertWow64FsRedirection = (fntype_Wow64RevertWow64FsRedirection*)GetProcAddress(GetModuleHandleA("kernel32.dll"), "Wow64RevertWow64FsRedirection");
-
-typedef WINADVAPI LSTATUS APIENTRY fntype_RegDeleteKeyExA(HKEY hKey, LPCSTR lpSubKey, REGSAM samDesired, DWORD Reserved);
-fntype_RegDeleteKeyExA* pfnRegDeleteKeyExA = (fntype_RegDeleteKeyExA*)GetProcAddress(GetModuleHandleA("advapi32.dll"), "RegDeleteKeyExA");
-
 ///////////////////
 
 BOOL Init(HINSTANCE, int);
@@ -43,8 +35,7 @@ BOOL APIENTRY AboutDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 ///////////
 
-int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-	LPSTR lpCmdLine, int nCmdShow)
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
 	MSG msg;
 	wchar_t* lpszFilePart;
@@ -62,7 +53,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 	*lpszFilePart = 0;
 
-	if (!Init(hInstance, nCmdShow)) {
+	if (!Init(hInstance, nShowCmd)) {
 		return FALSE;
 	}
 
@@ -376,7 +367,7 @@ BOOL InstallDeleteKey(HKEY key, const char* name)
 
 BOOL InstallDeleteKey64(HKEY key, const char* name)
 {
-	LSTATUS r = pfnRegDeleteKeyExA(key, name, KEY_WOW64_64KEY, 0);
+	LSTATUS r = RegDeleteKeyExA(key, name, KEY_WOW64_64KEY, 0);
 	if (r == ERROR_FILE_NOT_FOUND) {
 		return TRUE;
 	}
