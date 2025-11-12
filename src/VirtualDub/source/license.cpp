@@ -145,8 +145,9 @@ Licensor::Licensor(HWND hwndParent, bool conditional) {
 		key.setInt(str, 1);
 	}
 
-	if (!DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_LICENSE), hwndParent, DProc))
+	if (!DialogBoxW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDD_LICENSE), hwndParent, DProc)) {
 		throw new int('budv');
+	}
 }
 
 void VDDisplayLicense(HWND hwndParent, bool conditional) {

@@ -2460,7 +2460,7 @@ void InputFileMPEG::Init(const wchar_t *szFile) {
 
 					// pop up the dialog...
 
-					if (!(hWndStatus = CreateDialogParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_PROGRESS), g_hWnd, ParseDialogProc, (LPARAM)this)))
+					if (!(hWndStatus = CreateDialogParamW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDD_PROGRESS), g_hWnd, ParseDialogProc, (LPARAM)this)))
 						throw MyMemoryError();
 
 					first_packet = false;
@@ -3150,7 +3150,7 @@ InputFileOptions *InputFileMPEG::promptForOptions(VDGUIHandle hwnd) {
 
 	if (!ifo) throw MyMemoryError();
 
-	DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_EXTOPENOPTS_MPEG), (HWND)hwnd, InputFileMPEGOptions::SetupDlgProc, (LPARAM)ifo);
+	DialogBoxParamW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDD_EXTOPENOPTS_MPEG), (HWND)hwnd, InputFileMPEGOptions::SetupDlgProc, (LPARAM)ifo);
 
 	return ifo;
 }

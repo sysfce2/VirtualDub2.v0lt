@@ -748,12 +748,12 @@ void OpenInput(bool append, bool audio, const wchar_t* filename, MyError* err) {
 	vdvector<VDStringW> filter_list;
 	VDGetInputDriverFileFilters(dlg.inputDrivers, filter_list);
 
-	OPENFILENAMEW fn = {sizeof(fn),0};
-	fn.Flags = OFN_ENABLETEMPLATE | OFN_ENABLEHOOK;
-	fn.hInstance = GetModuleHandle(0);
+	OPENFILENAMEW fn  = {sizeof(fn),0};
+	fn.Flags          = OFN_ENABLETEMPLATE | OFN_ENABLEHOOK;
+	fn.hInstance      = GetModuleHandleW(0);
 	fn.lpTemplateName = MAKEINTRESOURCEW(IDD_OPENVIDEO);
-	fn.lpfnHook = OpenVideoProc;
-	fn.lCustData = (LONG_PTR)&dlg;
+	fn.lpfnHook       = OpenVideoProc;
+	fn.lCustData      = (LONG_PTR)&dlg;
 	VDStringW filter_id;
 
 	if (audio) {
@@ -1151,12 +1151,12 @@ void SaveAVI(HWND hWnd, bool fUseCompatibility, bool queueAsJob) {
 	dlg.os_driver = g_FileOutDriver;
 	dlg.os_format = g_FileOutFormat;
 
-	OPENFILENAMEW fn = {sizeof(fn),0};
-	fn.Flags = OFN_ENABLETEMPLATE | OFN_ENABLEHOOK;
-	fn.hInstance = GetModuleHandle(0);
+	OPENFILENAMEW fn  = {sizeof(fn),0};
+	fn.Flags          = OFN_ENABLETEMPLATE | OFN_ENABLEHOOK;
+	fn.hInstance      = GetModuleHandleW(0);
 	fn.lpTemplateName = MAKEINTRESOURCEW(IDD_SAVEVIDEO_FORMAT);
-	fn.lpfnHook = SaveVideoProc;
-	fn.lCustData = (LONG_PTR)&dlg;
+	fn.lpfnHook       = SaveVideoProc;
+	fn.lCustData      = (LONG_PTR)&dlg;
 
 	VDStringW filters;
 	filters += L"Audio-Video Interleave (*.avi)";
@@ -1298,12 +1298,12 @@ void SaveAudio(HWND hWnd, bool queueAsJob) {
 	dlg.os_driver = g_AudioOutDriver;
 	dlg.os_format = g_AudioOutFormat;
 
-	OPENFILENAMEW fn = {sizeof(fn),0};
-	fn.Flags = OFN_ENABLETEMPLATE | OFN_ENABLEHOOK;
-	fn.hInstance = GetModuleHandle(0);
+	OPENFILENAMEW fn  = {sizeof(fn),0};
+	fn.Flags          = OFN_ENABLETEMPLATE | OFN_ENABLEHOOK;
+	fn.hInstance      = GetModuleHandleW(0);
 	fn.lpTemplateName = MAKEINTRESOURCEW(IDD_SAVEAUDIO_FORMAT);
-	fn.lpfnHook = SaveVideoProc;
-	fn.lCustData = (LONG_PTR)&dlg;
+	fn.lpfnHook       = SaveVideoProc;
+	fn.lCustData      = (LONG_PTR)&dlg;
 
 	VDStringW filters;
 	filters += L"Windows audio (*.wav, *.w64)";
@@ -2314,14 +2314,14 @@ void SaveImage(HWND hwnd, VDPosition frame, VDPixmap* px, bool skip_dialog) {
 	name = VDAutoIncrementPath(name);
 	VDSetLastLoadSavePath(VDFSPECKEY_SAVEIMAGEFILE, name.c_str());
 
-	OPENFILENAMEW fn = {sizeof(fn),0};
-	fn.hwndOwner = hwnd;
-	fn.Flags	= OFN_PATHMUSTEXIST|OFN_ENABLESIZING|OFN_EXPLORER|OFN_OVERWRITEPROMPT|OFN_HIDEREADONLY;
-	fn.Flags |= OFN_ENABLETEMPLATE | OFN_ENABLEHOOK;
-	fn.hInstance = GetModuleHandle(0);
+	OPENFILENAMEW fn  = {sizeof(fn),0};
+	fn.hwndOwner      = hwnd;
+	fn.Flags	      = OFN_PATHMUSTEXIST|OFN_ENABLESIZING|OFN_EXPLORER|OFN_OVERWRITEPROMPT|OFN_HIDEREADONLY;
+	fn.Flags         |= OFN_ENABLETEMPLATE | OFN_ENABLEHOOK;
+	fn.hInstance      = GetModuleHandleW(0);
 	fn.lpTemplateName = MAKEINTRESOURCEW(IDD_SAVEIMAGE_FORMAT);
-	fn.lpfnHook = SaveImageProc;
-	fn.lCustData = (LONG_PTR)&dlg;
+	fn.lpfnHook       = SaveImageProc;
+	fn.lCustData      = (LONG_PTR)&dlg;
 
 	const wchar_t* filter = L"Images\0*.bmp;*.tga;*.jpg;*.jpeg;*.png;*.tif;*.tiff\0";
 

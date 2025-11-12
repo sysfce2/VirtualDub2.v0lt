@@ -192,7 +192,7 @@ bool write_version(const char *tag) {
 		} else {
 			DWORD attr = GetFileAttributesW(L"version2.bin");
 			if (attr != 0xFFFFFFFF && (attr & FILE_ATTRIBUTE_READONLY)) {
-				LRESULT rv = DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_VERINC_ERROR), NULL, VerincErrorDlgProc);
+				LRESULT rv = DialogBoxW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDD_VERINC_ERROR), NULL, VerincErrorDlgProc);
 
 				if (rv == IDC_STRIP_READONLY) {
 					SetFileAttributesW(L"version2.bin", attr & ~FILE_ATTRIBUTE_READONLY);
@@ -247,7 +247,7 @@ INT_PTR CALLBACK ProjectSetupDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 }
 
 void ProjectSetup::Query() {
-	DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_SETUP), NULL, ProjectSetupDlgProc, (LPARAM)this);
+	DialogBoxParamW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDD_SETUP), NULL, ProjectSetupDlgProc, (LPARAM)this);
 }
 
 void ProjectSetup::Read(const wchar_t *filename) {

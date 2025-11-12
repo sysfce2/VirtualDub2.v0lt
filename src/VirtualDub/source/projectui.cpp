@@ -4179,7 +4179,7 @@ void VDProjectUI::OpenAudioDisplay() {
 	mpUIAudioSplitBar->Create(&parms);
 
 	HWND hwndParent = vdpoly_cast<IVDUIWindowW32 *>(mpUIBase)->GetHandleW32();
-	mhwndAudioDisplay = CreateWindowExW(WS_EX_STATICEDGE, g_szAudioDisplayControlName, L"", WS_CHILD|WS_VISIBLE, 0, 0, 0, 0, (HWND)hwndParent, NULL, GetModuleHandle(NULL), NULL);
+	mhwndAudioDisplay = CreateWindowExW(WS_EX_STATICEDGE, g_szAudioDisplayControlName, L"", WS_CHILD|WS_VISIBLE, 0, 0, 0, 0, (HWND)hwndParent, NULL, GetModuleHandleW(NULL), NULL);
 	mpUIAudioDisplay = VDUICreatePeer((VDGUIHandle)mhwndAudioDisplay);
 	mpUIAudioDisplay->SetAlignment(nsVDUI::kFill, nsVDUI::kFill);
 	mpUISplitSet->AddChild(mpUIAudioDisplay);
@@ -4515,7 +4515,7 @@ void VDProjectUI::OpenCurveEditor() {
 	mpUICurveSet->Create(&parms);
 
 	HWND hwndParent = vdpoly_cast<IVDUIWindowW32 *>(mpUIBase)->GetHandleW32();
-	mhwndCurveCtl = CreateDialogParam(GetModuleHandle(NULL),MAKEINTRESOURCE(IDD_CURVE),(HWND)hwndParent,CurveProc,(LPARAM)this);
+	mhwndCurveCtl = CreateDialogParamW(GetModuleHandleW(NULL),MAKEINTRESOURCEW(IDD_CURVE),(HWND)hwndParent,CurveProc,(LPARAM)this);
 	RECT r;
 	GetWindowRect(mhwndCurveCtl,&r);
 	mpUICurveCtl = VDUICreatePeer((VDGUIHandle)mhwndCurveCtl);
@@ -4523,7 +4523,7 @@ void VDProjectUI::OpenCurveEditor() {
 	mpUICurveCtl->SetMinimumSize(vduisize(0,r.bottom-r.top));
 	mpUICurveSet->AddChild(mpUICurveCtl);
 
-	mhwndCurveEditor = CreateWindowExW(WS_EX_STATICEDGE, g_VDParameterCurveControlClass, L"", WS_CHILD|WS_VISIBLE, 0, 0, 0, 0, (HWND)hwndParent, NULL, GetModuleHandle(NULL), NULL);
+	mhwndCurveEditor = CreateWindowExW(WS_EX_STATICEDGE, g_VDParameterCurveControlClass, L"", WS_CHILD|WS_VISIBLE, 0, 0, 0, 0, (HWND)hwndParent, NULL, GetModuleHandleW(NULL), NULL);
 	mpUICurveEditor = VDUICreatePeer((VDGUIHandle)mhwndCurveEditor);
 	mpUICurveEditor->SetAlignment(nsVDUI::kFill, nsVDUI::kFill);
 	mpUICurveSet->AddChild(mpUICurveEditor);

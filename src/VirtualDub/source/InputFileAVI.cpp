@@ -487,7 +487,7 @@ InputFileOptions *InputFileAVI::promptForOptions(VDGUIHandle hwnd) {
 
 	if (!ifo) throw MyMemoryError();
 
-	DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_EXTOPENOPTS_AVI),
+	DialogBoxParamW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDD_EXTOPENOPTS_AVI),
 			(HWND)hwnd, InputFileAVIOptions::SetupDlgProc, (LPARAM)ifo);
 
 	// if we were forced to AVIFile mode (possibly due to an Avisynth script),

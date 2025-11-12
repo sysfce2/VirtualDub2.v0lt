@@ -830,8 +830,9 @@ void ActivateFrameServerDialog(HWND hwnd, const char *server) {
 		ivdsl->GetComputerName(szServerName);
 		vdstrlcpy(szServerName, server, 128);
 	} else {
-		if (!DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_SERVER_SETUP), hwnd, FrameServerSetupDlgProc, (LPARAM)szServerName))
+		if (!DialogBoxParamW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDD_SERVER_SETUP), hwnd, FrameServerSetupDlgProc, (LPARAM)szServerName)) {
 			return;
+		}
 	}
 
 	try {

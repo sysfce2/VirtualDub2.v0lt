@@ -45,7 +45,7 @@ bool VDUIControlW32::CreateW32(IVDUIParameters *pParms, const wchar_t *pClass, D
 
 	const UINT id = mpBase->GetNextNativeID();
 
-	mhwnd = CreateWindowExW(exflags, pClass, mCaption.c_str(), flags, 0, 0, 0, 0, hwndParent, (HMENU)(UINT_PTR)id, GetModuleHandle(NULL), NULL);
+	mhwnd = CreateWindowExW(exflags, pClass, mCaption.c_str(), flags, 0, 0, 0, 0, hwndParent, (HMENU)(UINT_PTR)id, GetModuleHandleW(NULL), NULL);
 
 	if (!mhwnd)
 		return false;
@@ -211,7 +211,7 @@ bool VDUICustomControlW32::Create(IVDUIParameters *pParms, bool forceNonChild, D
 			wc.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1);
 			wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
 			wc.hIcon			= 0;
-			wc.hInstance		= GetModuleHandle(NULL);
+			wc.hInstance		= GetModuleHandleW(NULL);
 			wc.lpfnWndProc		= StaticWndProc;
 			wc.lpszClassName	= L"DitaCustomControl";
 			wc.lpszMenuName		= NULL;
@@ -242,7 +242,7 @@ bool VDUICustomControlW32::Create(IVDUIParameters *pParms, bool forceNonChild, D
 	templ.style |= flags;
 	templ.exStyle = exflags;
 
-	mhwnd = CreateDialogIndirectParamW(GetModuleHandle(NULL), (LPCDLGTEMPLATE)&templ, hwndParent, StaticDlgProc, (LPARAM)this);
+	mhwnd = CreateDialogIndirectParamW(GetModuleHandleW(NULL), (LPCDLGTEMPLATE)&templ, hwndParent, StaticDlgProc, (LPARAM)this);
 
 	if (mhwnd) {
 		VDSetWindowTextW32(mhwnd, mCaption.c_str());
