@@ -1,42 +1,43 @@
 #include <windows.h>
 #include "registry.h"
 
-HKEY OpenRegKey(HKEY hkBase, const char *szKeyName)
+HKEY OpenRegKey(HKEY hkBase, const char* szKeyName)
 {
 	HKEY hkey;
 
-	return RegOpenKeyExA(hkBase, szKeyName, 0, KEY_ALL_ACCESS, &hkey)==ERROR_SUCCESS
-			? hkey
-			: NULL;
+	return RegOpenKeyExA(hkBase, szKeyName, 0, KEY_ALL_ACCESS, &hkey) == ERROR_SUCCESS
+		? hkey
+		: NULL;
 }
 
-HKEY CreateRegKey(HKEY hkBase, const char *szKeyName)
-{
-	HKEY hkey;
-	DWORD dwDisposition;
-
-	return RegCreateKeyExA(hkBase, szKeyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hkey, &dwDisposition)==ERROR_SUCCESS
-			? hkey
-			: NULL;
-}
-
-HKEY CreateRegKey64(HKEY hkBase, const char *szKeyName)
+HKEY CreateRegKey(HKEY hkBase, const char* szKeyName)
 {
 	HKEY hkey;
 	DWORD dwDisposition;
 
-	return RegCreateKeyExA(hkBase, szKeyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS|KEY_WOW64_64KEY, NULL, &hkey, &dwDisposition)==ERROR_SUCCESS
-			? hkey
-			: NULL;
+	return RegCreateKeyExA(hkBase, szKeyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hkey, &dwDisposition) == ERROR_SUCCESS
+		? hkey
+		: NULL;
 }
 
-BOOL DeleteRegValue(HKEY hkBase, const char *szKeyName, const char *szValueName)
+HKEY CreateRegKey64(HKEY hkBase, const char* szKeyName)
+{
+	HKEY hkey;
+	DWORD dwDisposition;
+
+	return RegCreateKeyExA(hkBase, szKeyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS | KEY_WOW64_64KEY, NULL, &hkey, &dwDisposition) == ERROR_SUCCESS
+		? hkey
+		: NULL;
+}
+
+BOOL DeleteRegValue(HKEY hkBase, const char* szKeyName, const char* szValueName)
 {
 	HKEY hkey;
 	BOOL success;
 
-	if (!(hkey = OpenRegKey(hkBase, szKeyName)))
+	if (!(hkey = OpenRegKey(hkBase, szKeyName))) {
 		return FALSE;
+	}
 
 	success = (RegDeleteValueA(hkey, szValueName) == ERROR_SUCCESS);
 
@@ -45,14 +46,15 @@ BOOL DeleteRegValue(HKEY hkBase, const char *szKeyName, const char *szValueName)
 	return success;
 }
 
-BOOL QueryRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, char *lpBuffer, int cbBuffer)
+BOOL QueryRegString(HKEY hkBase, const char* szKeyName, const char* szValueName, char* lpBuffer, int cbBuffer)
 {
 	HKEY hkey;
 	BOOL success;
 	DWORD type;
 
-	if (!(hkey = OpenRegKey(hkBase, szKeyName)))
+	if (!(hkey = OpenRegKey(hkBase, szKeyName))) {
 		return FALSE;
+	}
 
 	success = (ERROR_SUCCESS == RegQueryValueExA(hkey, szValueName, 0, &type, (LPBYTE)lpBuffer, (LPDWORD)&cbBuffer));
 
@@ -61,30 +63,32 @@ BOOL QueryRegString(HKEY hkBase, const char *szKeyName, const char *szValueName,
 	return success;
 }
 
-BOOL SetRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, const char *lpBuffer)
+BOOL SetRegString(HKEY hkBase, const char* szKeyName, const char* szValueName, const char* lpBuffer)
 {
 	HKEY hkey;
 	BOOL success;
 
-	if (!(hkey = CreateRegKey(hkBase, szKeyName)))
+	if (!(hkey = CreateRegKey(hkBase, szKeyName))) {
 		return FALSE;
+	}
 
-	success = (ERROR_SUCCESS == RegSetValueExA(hkey, szValueName, 0, REG_SZ, (LPBYTE)lpBuffer, strlen(lpBuffer)+1));
+	success = (ERROR_SUCCESS == RegSetValueExA(hkey, szValueName, 0, REG_SZ, (LPBYTE)lpBuffer, strlen(lpBuffer) + 1));
 
 	RegCloseKey(hkey);
 
 	return success;
 }
 
-BOOL SetRegString64(HKEY hkBase, const char *szKeyName, const char *szValueName, const char *lpBuffer)
+BOOL SetRegString64(HKEY hkBase, const char* szKeyName, const char* szValueName, const char* lpBuffer)
 {
 	HKEY hkey;
 	BOOL success;
 
-	if (!(hkey = CreateRegKey64(hkBase, szKeyName)))
+	if (!(hkey = CreateRegKey64(hkBase, szKeyName))) {
 		return FALSE;
+	}
 
-	success = (ERROR_SUCCESS == RegSetValueExA(hkey, szValueName, 0, REG_SZ, (LPBYTE)lpBuffer, strlen(lpBuffer)+1));
+	success = (ERROR_SUCCESS == RegSetValueExA(hkey, szValueName, 0, REG_SZ, (LPBYTE)lpBuffer, strlen(lpBuffer) + 1));
 
 	RegCloseKey(hkey);
 
