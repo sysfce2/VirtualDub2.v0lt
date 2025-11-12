@@ -343,11 +343,10 @@ BOOL InstallFile(const wchar_t* szSource, const wchar_t* szDestFormat, ...)
 
 BOOL InstallRegStr(HKEY hkBase, const char *szKeyName, const char *szName, const char *szValue)
 {
-	char buf[256];
-
 	if (!SetRegString(hkBase, szKeyName, szName, szValue)) {
-		sprintf(buf,"Couldn't set registry key %s\\%s",szKeyName,szName?szName:"(default)");
-		MessageBoxA(NULL, buf, "Install error", MB_OK);
+		wchar_t buf[256];
+		swprintf_s(buf, L"Couldn't set registry key %hs\\%hs", szKeyName, szName ? szName : "(default)");
+		MessageBoxW(NULL, buf, L"Install error", MB_OK);
 		return FALSE;
 	}
 
@@ -356,11 +355,10 @@ BOOL InstallRegStr(HKEY hkBase, const char *szKeyName, const char *szName, const
 
 BOOL InstallRegStr64(HKEY hkBase, const char *szKeyName, const char *szName, const char *szValue)
 {
-	char buf[256];
-
 	if (!SetRegString64(hkBase, szKeyName, szName, szValue)) {
-		sprintf(buf,"Couldn't set x64 registry key %s\\%s",szKeyName,szName?szName:"(default)");
-		MessageBoxA(NULL, buf, "Install error", MB_OK);
+		wchar_t buf[256];
+		swprintf_s(buf,L"Couldn't set x64 registry key %hs\\%hs",szKeyName,szName?szName:"(default)");
+		MessageBoxW(NULL, buf, L"Install error", MB_OK);
 		return FALSE;
 	}
 
@@ -436,9 +434,9 @@ BOOL APIENTRY InstallAVIFileDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 				fSuccess &= InstallRegStr(HKEY_CLASSES_ROOT,"AVIFile\\RIFFHandlers\\VDRM",NULL,"{894288e0-0948-11d2-8109-004845000eb5}");
 
 				if (fSuccess) {
-					MessageBoxA(hDlg, "AVIFile frameclient install successful.", "VirtualDub Setup", MB_OK);
+					MessageBoxW(hDlg, L"AVIFile frameclient install successful.", L"VirtualDub Setup", MB_OK);
 				} else {
-					MessageBoxA(hDlg, "AVIFile frameclient install failed.", "VirtualDub Setup", MB_OK);
+					MessageBoxW(hDlg, L"AVIFile frameclient install failed.", L"VirtualDub Setup", MB_OK);
 				}
 
 				EndDialog(hDlg, TRUE);
@@ -485,23 +483,25 @@ BOOL APIENTRY UninstallAVIFileDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM
 				fRegSuccess &= InstallDeleteKey(HKEY_CLASSES_ROOT,"AVIFile\\Extensions\\VDR");
 				fRegSuccess &= InstallDeleteKey(HKEY_CLASSES_ROOT,"AVIFile\\RIFFHandlers\\VDRM");
 
-				if (!fRegSuccess)
-					MessageBoxA(hDlg, "Registry entries were in use.  Deinstall not successful.\n"
-									"\n"
-									"A partial installation now exists on your system.  Reinstall the AVIFile "
-									"handler to restore frameclient functionality, or close applications that may "
-									"be occupying the Registry entries and retry the deinstall."
-									,"VirtualDub Setup",MB_OK);
-
-				else if (!fSuccess)
-					MessageBoxA(hDlg, "DLL files were in use.  Deinstall not successful.\n"
-									"\n"
-									"A partial installation now exists on your system.  Reinstall the AVIFile "
-									"handler to restore frameclient functionality, or close applications that may "
-									"be occupying the shared DLLs and retry the deinstall."
-									,"VirtualDub Setup",MB_OK);
-				else
-					MessageBoxA(hDlg, "AVIFile frameclient deinstall successful.", "VirtualDub Setup", MB_OK);
+				if (!fRegSuccess) {
+					MessageBoxW(hDlg, L"Registry entries were in use.  Deinstall not successful.\n"
+						"\n"
+						"A partial installation now exists on your system.  Reinstall the AVIFile "
+						"handler to restore frameclient functionality, or close applications that may "
+						"be occupying the Registry entries and retry the deinstall."
+						, L"VirtualDub Setup", MB_OK);
+				}
+				else if (!fSuccess) {
+					MessageBoxW(hDlg, L"DLL files were in use.  Deinstall not successful.\n"
+						"\n"
+						"A partial installation now exists on your system.  Reinstall the AVIFile "
+						"handler to restore frameclient functionality, or close applications that may "
+						"be occupying the shared DLLs and retry the deinstall."
+						, L"VirtualDub Setup", MB_OK);
+				}
+				else {
+					MessageBoxW(hDlg, L"AVIFile frameclient deinstall successful.", L"VirtualDub Setup", MB_OK);
+				}
 
 				EndDialog(hDlg, TRUE);
 				return TRUE;
