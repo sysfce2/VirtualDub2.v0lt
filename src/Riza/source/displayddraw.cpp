@@ -1053,7 +1053,7 @@ bool VDVideoDisplayMinidriverDirectDraw::Init(HWND hwnd, HMONITOR hmonitor, cons
 			// explicitly checking for Windows Vista or higher.
 
 			{
-				HMODULE hmodDwmApi = LoadLibraryA("dwmapi");
+				HMODULE hmodDwmApi = LoadLibraryW(L"dwmapi");
 				if (hmodDwmApi) {
 					typedef HRESULT (WINAPI *tpDwmIsCompositionEnabled)(BOOL *);
 
@@ -1062,8 +1062,9 @@ bool VDVideoDisplayMinidriverDirectDraw::Init(HWND hwnd, HMONITOR hmonitor, cons
 						BOOL enabled;
 						HRESULT hr = pDwmIsCompositionEnabled(&enabled);
 
-						if (SUCCEEDED(hr) && enabled)
+						if (SUCCEEDED(hr) && enabled) {
 							allowOverlay = false;
+						}
 					}
 
 					FreeLibrary(hmodDwmApi);

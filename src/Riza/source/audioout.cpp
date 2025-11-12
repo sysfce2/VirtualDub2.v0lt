@@ -860,9 +860,10 @@ bool VDAudioOutputDirectSoundW32::InitDirectSound() {
 	mDSBufferSizeHalf = mBufferSize;
 
 	// attempt to load DirectSound library
-	mhmodDS = LoadLibraryA("dsound");
-	if (!mhmodDS)
+	mhmodDS = LoadLibraryW(L"dsound");
+	if (!mhmodDS) {
 		return false;
+	}
 
 	typedef HRESULT (WINAPI *tpDirectSoundCreate8)(LPCGUID, LPDIRECTSOUND8 *, LPUNKNOWN);
 	tpDirectSoundCreate8 pDirectSoundCreate8 = (tpDirectSoundCreate8)GetProcAddress(mhmodDS, "DirectSoundCreate8");

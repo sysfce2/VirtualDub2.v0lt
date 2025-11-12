@@ -357,15 +357,16 @@ bool VDInitiateSystemShutdownWithUITimeout(VDSystemShutdownMode mode, const wcha
 
 bool VDInitiateSystemShutdown(VDSystemShutdownMode mode) {
 	if (mode != kVDSystemShutdownMode_Shutdown) {
-		HMODULE hmodPowrProf = LoadLibraryA("powrprof");
+		HMODULE hmodPowrProf = LoadLibraryW(L"powrprof");
 		bool success = false;
 
 		if (hmodPowrProf) {
 			typedef BOOLEAN (APIENTRY *tpSetSuspendState)(BOOL Hibernate, BOOL ForceCritical, BOOL DisableWakeEvent);
 			tpSetSuspendState pSetSuspendState = (tpSetSuspendState)GetProcAddress(hmodPowrProf, "SetSuspendState");
 			if (pSetSuspendState) {
-				if (pSetSuspendState(mode == kVDSystemShutdownMode_Hibernate, FALSE, FALSE))
+				if (pSetSuspendState(mode == kVDSystemShutdownMode_Hibernate, FALSE, FALSE)) {
 					success = true;
+				}
 			}
 
 			FreeLibrary(hmodPowrProf);
