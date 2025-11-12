@@ -41,7 +41,6 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #define VDDEBUG_D3D VDDEBUG
-#define D3DSWAPEFFECT_FLIPEX (D3DSWAPEFFECT)5;
 
 using namespace nsVDD3D9;
 
@@ -470,18 +469,13 @@ bool VDD3D9Manager::Init() {
 		return false;
 	}
 
-	if (mbUseD3D9Ex) {
-
+	if (mbUseD3D9Ex && IsWindows7OrGreater()) {
 		// FLIPEX support requires at least Windows 7.
-		{
-			if (IsWindows7OrGreater()) {
-				HRESULT (APIENTRY *pDirect3DCreate9Ex)(UINT, IDirect3D9Ex **) = (HRESULT (APIENTRY *)(UINT, IDirect3D9Ex **))GetProcAddress(mhmodDX9, "Direct3DCreate9Ex");
-				if (pDirect3DCreate9Ex) {
-					HRESULT hr = pDirect3DCreate9Ex(D3D_SDK_VERSION, &mpD3DEx);
-
-					if (SUCCEEDED(hr))
-						mpD3D = mpD3DEx;
-				}
+		HRESULT(APIENTRY * pDirect3DCreate9Ex)(UINT, IDirect3D9Ex**) = (HRESULT(APIENTRY*)(UINT, IDirect3D9Ex**))GetProcAddress(mhmodDX9, "Direct3DCreate9Ex");
+		if (pDirect3DCreate9Ex) {
+			HRESULT hr = pDirect3DCreate9Ex(D3D_SDK_VERSION, &mpD3DEx);
+			if (SUCCEEDED(hr)) {
+				mpD3D = mpD3DEx;
 			}
 		}
 	}
@@ -1600,8 +1594,8 @@ HRESULT VDD3D9Manager::PresentSwapChain(IVDD3D9SwapChain *pSwapChain, const RECT
 		if (donotwait)
 			flags |= D3DPRESENT_DONOTWAIT;
 
-//		if (!vsync)
-//			flags |= D3DPRESENT_FORCEIMMEDIATE | D3DPRESENT_DONOTWAIT;
+		//if (!vsync)
+		//	flags |= D3DPRESENT_FORCEIMMEDIATE | D3DPRESENT_DONOTWAIT;
 
 		for(;;) {
 			hr = pD3DSwapChain->Present(NULL, NULL, NULL, NULL, flags);
