@@ -119,7 +119,8 @@ BOOL Init(HINSTANCE hInstance, int nCmdShow)
 	return (TRUE);
 }
 
-void PrintfWindowText(HWND hWnd, wchar_t *format, ...) {
+void PrintfWindowText(HWND hWnd, wchar_t *format, ...)
+{
 	wchar_t buf[256];
 	va_list val;
 
@@ -197,7 +198,8 @@ LRESULT APIENTRY WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 //////////////////////////////////////////////////////////////////////
 
-void ListboxAddf(HWND hwndListbox, const wchar_t *format, ...) {
+void ListboxAddf(HWND hwndListbox, const wchar_t *format, ...)
+{
 	wchar_t buf[256];
 	va_list val;
 
@@ -209,7 +211,8 @@ void ListboxAddf(HWND hwndListbox, const wchar_t *format, ...) {
 	SendMessageW(hwndListbox, LB_ADDSTRING, 0, (LPARAM)buf);
 }
 
-BOOL InstallFile(const wchar_t* szSource, const wchar_t* szDestFormat, ...) {
+BOOL InstallFile(const wchar_t* szSource, const wchar_t* szDestFormat, ...)
+{
 	wchar_t szDest[MAX_PATH];
 	wchar_t szDestPath[MAX_PATH];
 	wchar_t szDestFile[MAX_PATH];
@@ -338,7 +341,8 @@ BOOL InstallFile(const wchar_t* szSource, const wchar_t* szDestFormat, ...) {
 	return TRUE;
 }
 
-BOOL InstallRegStr(HKEY hkBase, const char *szKeyName, const char *szName, const char *szValue) {
+BOOL InstallRegStr(HKEY hkBase, const char *szKeyName, const char *szName, const char *szValue)
+{
 	char buf[256];
 
 	if (!SetRegString(hkBase, szKeyName, szName, szValue)) {
@@ -350,7 +354,8 @@ BOOL InstallRegStr(HKEY hkBase, const char *szKeyName, const char *szName, const
 	return TRUE;
 }
 
-BOOL InstallRegStr64(HKEY hkBase, const char *szKeyName, const char *szName, const char *szValue) {
+BOOL InstallRegStr64(HKEY hkBase, const char *szKeyName, const char *szName, const char *szValue)
+{
 	char buf[256];
 
 	if (!SetRegString64(hkBase, szKeyName, szName, szValue)) {
@@ -362,19 +367,22 @@ BOOL InstallRegStr64(HKEY hkBase, const char *szKeyName, const char *szName, con
 	return TRUE;
 }
 
-BOOL InstallDeleteKey(HKEY key, const char *name) {
+BOOL InstallDeleteKey(HKEY key, const char *name)
+{
 	LSTATUS r = RegDeleteKeyA(key,name);
 	if (r==ERROR_FILE_NOT_FOUND) return TRUE;
 	return r==ERROR_SUCCESS;
 }
 
-BOOL InstallDeleteKey64(HKEY key, const char *name) {
+BOOL InstallDeleteKey64(HKEY key, const char *name)
+{
 	LSTATUS r = pfnRegDeleteKeyExA(key,name,KEY_WOW64_64KEY,0);
 	if (r==ERROR_FILE_NOT_FOUND) return TRUE;
 	return r==ERROR_SUCCESS;
 }
 
-BOOL InstallDeleteFile(const wchar_t *szFileFormat, ...) {
+BOOL InstallDeleteFile(const wchar_t *szFileFormat, ...)
+{
 	wchar_t szFile[MAX_PATH+50];
 	va_list val;
 

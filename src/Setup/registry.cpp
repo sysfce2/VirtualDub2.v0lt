@@ -1,7 +1,8 @@
 #include <windows.h>
 #include "registry.h"
 
-HKEY OpenRegKey(HKEY hkBase, const char *szKeyName) {
+HKEY OpenRegKey(HKEY hkBase, const char *szKeyName)
+{
 	HKEY hkey;
 
 	return RegOpenKeyExA(hkBase, szKeyName, 0, KEY_ALL_ACCESS, &hkey)==ERROR_SUCCESS
@@ -9,7 +10,8 @@ HKEY OpenRegKey(HKEY hkBase, const char *szKeyName) {
 			: NULL;
 }
 
-HKEY CreateRegKey(HKEY hkBase, const char *szKeyName) {
+HKEY CreateRegKey(HKEY hkBase, const char *szKeyName)
+{
 	HKEY hkey;
 	DWORD dwDisposition;
 
@@ -18,7 +20,8 @@ HKEY CreateRegKey(HKEY hkBase, const char *szKeyName) {
 			: NULL;
 }
 
-HKEY CreateRegKey64(HKEY hkBase, const char *szKeyName) {
+HKEY CreateRegKey64(HKEY hkBase, const char *szKeyName)
+{
 	HKEY hkey;
 	DWORD dwDisposition;
 
@@ -27,7 +30,8 @@ HKEY CreateRegKey64(HKEY hkBase, const char *szKeyName) {
 			: NULL;
 }
 
-BOOL DeleteRegValue(HKEY hkBase, const char *szKeyName, const char *szValueName) {
+BOOL DeleteRegValue(HKEY hkBase, const char *szKeyName, const char *szValueName)
+{
 	HKEY hkey;
 	BOOL success;
 
@@ -41,7 +45,8 @@ BOOL DeleteRegValue(HKEY hkBase, const char *szKeyName, const char *szValueName)
 	return success;
 }
 
-BOOL QueryRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, char *lpBuffer, int cbBuffer) {
+BOOL QueryRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, char *lpBuffer, int cbBuffer)
+{
 	HKEY hkey;
 	BOOL success;
 	DWORD type;
@@ -56,7 +61,8 @@ BOOL QueryRegString(HKEY hkBase, const char *szKeyName, const char *szValueName,
 	return success;
 }
 
-BOOL SetRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, const char *lpBuffer) {
+BOOL SetRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, const char *lpBuffer)
+{
 	HKEY hkey;
 	BOOL success;
 
@@ -70,7 +76,8 @@ BOOL SetRegString(HKEY hkBase, const char *szKeyName, const char *szValueName, c
 	return success;
 }
 
-BOOL SetRegString64(HKEY hkBase, const char *szKeyName, const char *szValueName, const char *lpBuffer) {
+BOOL SetRegString64(HKEY hkBase, const char *szKeyName, const char *szValueName, const char *lpBuffer)
+{
 	HKEY hkey;
 	BOOL success;
 
