@@ -368,9 +368,11 @@ protected:
 
 	void	SetPCMAudioFormat(sint32 sampling_rate, bool is_16bit, bool is_stereo);
 
-	void	SetStatusF(const char *format, ...);
-	void	SetStatusImmediate(const char *s);
-	void	SetStatusImmediateF(const char *format, ...);
+	void	SetStatusF(const char* format, ...);
+	void	SetStatusImmediate(const wchar_t* s);
+	void	SetStatusImmediate(const char* s);
+	void	SetStatusImmediateF(const wchar_t* format, ...);
+	void	SetStatusImmediateF(const char* format, ...);
 
 	bool	IsFullScreen() const;
 	void	SetFullScreen(bool fs);
@@ -960,12 +962,7 @@ void VDCaptureProjectUI::SetPCMAudioFormat(sint32 sampling_rate, bool is_16bit, 
 		VDDEBUG("Couldn't set audio format!\n");
 }
 
-void VDCaptureProjectUI::SetStatusImmediate(const char *s) {
-	SendMessage(mhwndStatus, SB_SETTEXTA, 0, (LPARAM)s);
-	RedrawWindow(mhwndStatus, NULL, NULL, RDW_INVALIDATE|RDW_UPDATENOW);
-}
-
-void VDCaptureProjectUI::SetStatusF(const char *format, ...) {
+void VDCaptureProjectUI::SetStatusF(const char* format, ...) {
 	char buf[3072];
 	buf[0] = 0;
 
@@ -975,7 +972,34 @@ void VDCaptureProjectUI::SetStatusF(const char *format, ...) {
 	va_end(val);
 
 	if (buf[0]) {
-		SendMessage(mhwndStatus, SB_SETTEXTA, 0, (LPARAM)buf);
+		SendMessageW(mhwndStatus, SB_SETTEXTA, 0, (LPARAM)buf);
+	}
+}
+
+void VDCaptureProjectUI::SetStatusImmediate(const wchar_t* s)
+{
+	SendMessageW(mhwndStatus, SB_SETTEXTW, 0, (LPARAM)s);
+	RedrawWindow(mhwndStatus, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+void VDCaptureProjectUI::SetStatusImmediate(const char* s)
+{
+	SendMessageW(mhwndStatus, SB_SETTEXTA, 0, (LPARAM)s);
+	RedrawWindow(mhwndStatus, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+void VDCaptureProjectUI::SetStatusImmediateF(const wchar_t* format, ...)
+{
+	wchar_t buf[3072];
+	buf[0] = 0;
+
+	va_list val;
+	va_start(val, format);
+	_vsnwprintf_s(buf, _TRUNCATE, format, val);
+	va_end(val);
+
+	if (buf[0]) {
+		SetStatusImmediate(buf);
 	}
 }
 
@@ -2034,8 +2058,9 @@ void VDCaptureProjectUI::UICaptureDriverDisconnecting(int driver) {
 }
 
 void VDCaptureProjectUI::UICaptureDriverChanging(int driver) {
-	if (driver >= 0)
-		SetStatusImmediateF("Connecting to capture device: %ls", mpProject->GetDriverName(driver));
+	if (driver >= 0) {
+		SetStatusImmediateF(L"Connecting to capture device: %s", mpProject->GetDriverName(driver));
+	}
 }
 
 void VDCaptureProjectUI::UICaptureDriverChanged(int driver) {
@@ -2071,7 +2096,7 @@ void VDCaptureProjectUI::UICaptureDriverChanged(int driver) {
 		}
 
 		const wchar_t *s = mpProject->GetDriverName(driver);
-		SetStatusImmediateF("Connected to capture device: %ls", s);
+		SetStatusImmediateF(L"Connected to capture device: %s", s);
 		VDLog(kVDLogInfo, VDswprintf(L"Connected to capture device: %s", 1, &s));
 	} else
 		SetStatusImmediate("Disconnected");
