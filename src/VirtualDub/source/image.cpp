@@ -487,7 +487,7 @@ void DecodeImage(const void *pBuffer, long cbBuffer, VDPixmapBuffer& vb, int des
 
 			vdfastvector<wchar_t> errBuf;
 
-			throw MyError("Error decoding PNG image: %ls", VDLoadString(0, kVDST_PNGDecodeErrors, err));
+			throw MyError(L"Error decoding PNG image: %s", VDLoadString(0, kVDST_PNGDecodeErrors, err));
 		}
 
 		VDPixmapBlt(vb, pPNGDecoder->GetFrameBuffer());
@@ -501,7 +501,7 @@ void DecodeImage(const wchar_t* pszFile, VDPixmapBuffer& buf, int desired_format
 
 	sint64 flen = f.size();
 	if (flen > 0x7FFFFFFF) {
-		throw MyError("Image file \"%s\" is too large to read (>2GB!).\n");
+		throw MyError(L"Image file \"%s\" is too large to read (>2GB!).\n", pszFile);
 	}
 
 	vdblock<uint8> buffer;

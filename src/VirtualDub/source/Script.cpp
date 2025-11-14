@@ -1690,8 +1690,9 @@ static void func_VDAudio_SetSourceExternal(IVDScriptInterpreter *, VDScriptValue
 		else
 			pDriver = VDGetInputDriverByName(driverName.c_str());
 
-		if (!pDriver)
-			throw MyError("Unable to find input driver with name: %ls", driverName.c_str());
+		if (!pDriver) {
+			throw MyError(L"Unable to find input driver with name: %s", driverName.c_str());
+		}
 	}
 
 	if (arg_count >= 3) {

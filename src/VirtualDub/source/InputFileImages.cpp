@@ -68,8 +68,9 @@ void VDInputFileImages::Init(const wchar_t *szFile) {
 
 	// Make sure the first file exists.
 	vdfastvector<wchar_t> namebuf;
-	if (!VDDoesPathExist(ComputeFilename(namebuf, 0)))
-		throw MyError("File \"%ls\" does not exist.", namebuf.data());
+	if (!VDDoesPathExist(ComputeFilename(namebuf, 0))) {
+		throw MyError(L"File \"%s\" does not exist.", namebuf.data());
+	}
 
 	// Stat as many files as we can until we get an error.
 	if (mLastDigitPos >= 0 && !single_file_mode) {

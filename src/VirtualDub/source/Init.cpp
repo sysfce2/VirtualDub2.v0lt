@@ -1002,8 +1002,9 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 					if (!cmdLine.GetNextNonSwitchArgument(it, token))
 						throw MyError("Command line error: syntax is /capdevice <device>");
 
-					if (execute && !g_capProjectUI->SetDriver(token))
-						throw MyError("Unable to initialize capture device: %ls\n", token);
+					if (execute && !g_capProjectUI->SetDriver(token)) {
+						throw MyError(L"Unable to initialize capture device: %s\n", token);
+					}
 				}
 				else if (!wcscmp(token, L"capfile")) {
 					if (!captureMode)
@@ -1037,8 +1038,9 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 
 					unsigned long mbsize = wcstoul(token, NULL, 0);
 
-					if (!mbsize)
-						throw MyError("Command line error: invalid size '%ls' for preallocating capture file.", token);
+					if (!mbsize) {
+						throw MyError(L"Command line error: invalid size '%s' for preallocating capture file.", token);
+					}
 
 					if (execute) g_capProject->PreallocateCaptureFile((sint64)mbsize << 20);
 				}
@@ -1255,7 +1257,7 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 					else if (!wcscmp(token, L"realtime"))
 						priority = REALTIME_PRIORITY_CLASS;
 					else
-						throw MyError("Command line error: unknown priority '%ls'", token);
+						throw MyError(L"Command line error: unknown priority '%s'", token);
 
 					if (execute) SetPriorityClass(GetCurrentProcess(), priority);
 
@@ -1319,8 +1321,10 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 
 					// don't count the /x flag as an argument that does work
 					--argsFound;
-				} else
-					throw MyError("Command line error: unknown switch %ls", token);
+				}
+				else {
+					throw MyError(L"Command line error: unknown switch %s", token);
+				}
 			}
 		}
 

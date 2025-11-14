@@ -1024,13 +1024,14 @@ bool AVIReadHandler::AppendFile(const wchar_t *pszFile) {
 				uint32 fccOld = pasn_old->hdr.fccType;
 				uint32 fccNew = pasn_new->hdr.fccType;
 
-				if (fccOld != fccNew)
-					throw MyError("Cannot append segment \"%ls\": The segment has a different set of streams.", pszFile);
+				if (fccOld != fccNew) {
+					throw MyError(L"Cannot append segment \"%s\": The segment has a different set of streams.", pszFile);
+				}
 
 				// A/B ?= C/D ==> AD ?= BC
 
 				if ((sint64)pasn_old->hdr.dwScale * pasn_new->hdr.dwRate != (sint64)pasn_new->hdr.dwScale * pasn_old->hdr.dwRate)
-					throw MyError("Cannot append segment \"%ls\": The %s streams do not share a common sampling rate.\n"
+					throw MyError(L"Cannot append segment \"%s\": The %hs streams do not share a common sampling rate.\n"
 							"\n"
 							"First stream: %08x / %08x = %.5f samples/sec\n"
 							"Second stream: %08x / %08x = %.5f samples/sec"
@@ -1044,8 +1045,10 @@ bool AVIReadHandler::AppendFile(const wchar_t *pszFile) {
 							,(double)pasn_new->hdr.dwRate / pasn_new->hdr.dwScale
 							);
 
-				if (pasn_old->hdr.dwSampleSize != pasn_new->hdr.dwSampleSize)
-					throw MyError("Cannot append segment \"%ls\": The %s streams have different sample sizes (%d vs %d).", pszFile, szStreamType, pasn_old->hdr.dwSampleSize, pasn_new->hdr.dwSampleSize);
+				if (pasn_old->hdr.dwSampleSize != pasn_new->hdr.dwSampleSize) {
+					throw MyError(L"Cannot append segment \"%s\": The %hs streams have different sample sizes (%d vs %d).",
+						pszFile, szStreamType, pasn_old->hdr.dwSampleSize, pasn_new->hdr.dwSampleSize);
+				}
 
 				// I hate PCMWAVEFORMAT.
 
@@ -1057,36 +1060,36 @@ bool AVIReadHandler::AppendFile(const wchar_t *pszFile) {
 					const WAVEFORMATEX& wfex1 = *(const WAVEFORMATEX *)pasn_old->pFormat;
 					const WAVEFORMATEX& wfex2 = *(const WAVEFORMATEX *)pasn_new->pFormat;
 
-					if (wfex1.wFormatTag != wfex2.wFormatTag)
-						throw MyError("Cannot append segment \"%ls\": The audio streams use different compression formats.", pszFile);
+					if (wfex1.wFormatTag != wfex2.wFormatTag) {
+						throw MyError(L"Cannot append segment \"%s\": The audio streams use different compression formats.", pszFile);
+					}
+					if (wfex1.nSamplesPerSec != wfex2.nSamplesPerSec) {
+						throw MyError(L"Cannot append segment \"%s\": The audio streams use different sampling rates (%u vs. %u)", pszFile, wfex1.nSamplesPerSec, wfex2.nSamplesPerSec);
+					}
+					if (wfex1.nAvgBytesPerSec != wfex2.nAvgBytesPerSec) {
+						throw MyError(L"Cannot append segment \"%s\": The audio streams use different data rates (%u bytes/sec vs. %u bytes/sec)", pszFile, wfex1.nAvgBytesPerSec, wfex2.nAvgBytesPerSec);
+					}
 
-					if (wfex1.nSamplesPerSec != wfex2.nSamplesPerSec)
-						throw MyError("Cannot append segment \"%ls\": The audio streams use different sampling rates (%u vs. %u)", pszFile, wfex1.nSamplesPerSec, wfex2.nSamplesPerSec);
-
-					if (wfex1.nAvgBytesPerSec != wfex2.nAvgBytesPerSec)
-						throw MyError("Cannot append segment \"%ls\": The audio streams use different data rates (%u bytes/sec vs. %u bytes/sec)", pszFile, wfex1.nAvgBytesPerSec, wfex2.nAvgBytesPerSec);
-
-					if (wfex1.wFormatTag == WAVE_FORMAT_PCM
-						&& wfex2.wFormatTag == WAVE_FORMAT_PCM)
-					{
+					if (wfex1.wFormatTag == WAVE_FORMAT_PCM && wfex2.wFormatTag == WAVE_FORMAT_PCM) {
 						oldFormatLen = sizeof(PCMWAVEFORMAT);
 						newFormatLen = sizeof(PCMWAVEFORMAT);
 						basicFormatLen = sizeof(PCMWAVEFORMAT);
 					} else {
 						basicFormatLen = sizeof(WAVEFORMATEX);
 					}
-
-				} else if (pasn_new->hdr.fccType == kAVIStreamTypeVideo) {
+				}
+				else if (pasn_new->hdr.fccType == kAVIStreamTypeVideo) {
 					basicFormatLen = sizeof(BITMAPINFOHEADER);
 
 					const BITMAPINFOHEADER& hdr1 = *(const BITMAPINFOHEADER *)pasn_old->pFormat;
 					const BITMAPINFOHEADER& hdr2 = *(const BITMAPINFOHEADER *)pasn_new->pFormat;
 
-					if (hdr1.biWidth != hdr2.biWidth || hdr1.biHeight != hdr2.biHeight)
-						throw MyError("Cannot append segment \"%ls\": The video streams are of different sizes (%dx%d vs. %dx%d)", pszFile, hdr1.biWidth, hdr1.biHeight, hdr2.biWidth, hdr2.biHeight);
-
-					if (hdr1.biCompression != hdr2.biCompression)
-						throw MyError("Cannot append segment \"%ls\": The video streams use different compression schemes.", pszFile);
+					if (hdr1.biWidth != hdr2.biWidth || hdr1.biHeight != hdr2.biHeight) {
+						throw MyError(L"Cannot append segment \"%s\": The video streams are of different sizes (%dx%d vs. %dx%d)", pszFile, hdr1.biWidth, hdr1.biHeight, hdr2.biWidth, hdr2.biHeight);
+					}
+					if (hdr1.biCompression != hdr2.biCompression) {
+						throw MyError(L"Cannot append segment \"%s\": The video streams use different compression schemes.", pszFile);
+					}
 				}
 
 				uint32 minFormatLen = std::min<uint32>(oldFormatLen, newFormatLen);
@@ -1099,18 +1102,21 @@ bool AVIReadHandler::AppendFile(const wchar_t *pszFile) {
 
 				bool fOk = (i == oldFormatLen && i == newFormatLen);
 
-				if (!fOk)
-					throw MyError("Cannot append segment \"%ls\": The %s streams have incompatible data formats.\n\n(Mismatch detected in opaque codec data at byte %u of the format data.)", pszFile, szStreamType, i);
+				if (!fOk) {
+					throw MyError(L"Cannot append segment \"%s\": The %hs streams have incompatible data formats.\n\n(Mismatch detected in opaque codec data at byte %u of the format data.)",
+						pszFile, szStreamType, i);
+				}
 			}
 
 			pasn_old = pasn_old_next;
 			pasn_new = pasn_new_next;
 		}
 
-		if (pasn_old_next || pasn_new_next)
-			throw MyError("Cannot append segment \"%ls\": The segment has a different number of streams.", pszFile);
-
-	} catch(const MyError&) {
+		if (pasn_old_next || pasn_new_next) {
+			throw MyError(L"Cannot append segment \"%s\": The segment has a different number of streams.", pszFile);
+		}
+	}
+	catch(const MyError&) {
 		while(pasn_new = newstreams.RemoveHead())
 			delete pasn_new;
 

@@ -512,30 +512,37 @@ VDAVIOutputCLISystem::VDAVIOutputCLISystem(const wchar_t *pszFilename, const wch
 	, mpMuxProfile(NULL)
 {
 	vdrefptr<VDExtEncSet> eset;
-	if (!VDGetExternalEncoderSetByName(mEncSetName.c_str(), ~eset))
-		throw MyError("There is no external encoder set named \"%ls.\"", mEncSetName.c_str());
+	if (!VDGetExternalEncoderSetByName(mEncSetName.c_str(), ~eset)) {
+		throw MyError(L"There is no external encoder set named \"%s.\"", mEncSetName.c_str());
+	}
 
 	vdrefptr<VDExtEncProfile> vep;
-	if (!eset->mVideoEncoder.empty() && !VDGetExternalEncoderProfileByName(eset->mVideoEncoder.c_str(), ~vep))
-		throw MyError("Unable to find video encoder profile \"%ls\" referenced in encoder set \"%ls.\"", eset->mVideoEncoder.c_str(), mEncSetName.c_str());
+	if (!eset->mVideoEncoder.empty() && !VDGetExternalEncoderProfileByName(eset->mVideoEncoder.c_str(), ~vep)) {
+		throw MyError(L"Unable to find video encoder profile \"%s\" referenced in encoder set \"%s.\"", eset->mVideoEncoder.c_str(), mEncSetName.c_str());
+	}
 
 	vdrefptr<VDExtEncProfile> aep;
-	if (!eset->mAudioEncoder.empty() && !VDGetExternalEncoderProfileByName(eset->mAudioEncoder.c_str(), ~aep))
-		throw MyError("Unable to find video encoder profile \"%ls\" referenced in encoder set \"%ls.\"", eset->mAudioEncoder.c_str(), mEncSetName.c_str());
+	if (!eset->mAudioEncoder.empty() && !VDGetExternalEncoderProfileByName(eset->mAudioEncoder.c_str(), ~aep)) {
+		throw MyError(L"Unable to find video encoder profile \"%s\" referenced in encoder set \"%s.\"", eset->mAudioEncoder.c_str(), mEncSetName.c_str());
+	}
 
 	vdrefptr<VDExtEncProfile> mxp;
-	if (!eset->mMultiplexer.empty() && !VDGetExternalEncoderProfileByName(eset->mMultiplexer.c_str(), ~mxp))
-		throw MyError("Unable to find multiplexer profile \"%ls\" referenced in encoder set \"%ls.\"", eset->mMultiplexer.c_str(), mEncSetName.c_str());
+	if (!eset->mMultiplexer.empty() && !VDGetExternalEncoderProfileByName(eset->mMultiplexer.c_str(), ~mxp)) {
+		throw MyError(L"Unable to find multiplexer profile \"%s\" referenced in encoder set \"%s.\"", eset->mMultiplexer.c_str(), mEncSetName.c_str());
+	}
 
 	// validate set
-	if (vep && vep->mType != kVDExtEncType_Video)
-		throw MyError("The external encoder set \"%ls.\" does not have a valid video encoder entry.", mEncSetName.c_str());
+	if (vep && vep->mType != kVDExtEncType_Video) {
+		throw MyError(L"The external encoder set \"%s.\" does not have a valid video encoder entry.", mEncSetName.c_str());
+	}
 
-	if (aep && aep->mType != kVDExtEncType_Audio)
-		throw MyError("The external encoder set \"%ls.\" does not have a valid audio encoder entry.", mEncSetName.c_str());
+	if (aep && aep->mType != kVDExtEncType_Audio) {
+		throw MyError(L"The external encoder set \"%s.\" does not have a valid audio encoder entry.", mEncSetName.c_str());
+	}
 
-	if (mxp && mxp->mType != kVDExtEncType_Mux)
-		throw MyError("The external encoder set \"%ls.\" does not have a valid multiplexer entry.", mEncSetName.c_str());
+	if (mxp && mxp->mType != kVDExtEncType_Mux) {
+		throw MyError(L"The external encoder set \"%s.\" does not have a valid multiplexer entry.", mEncSetName.c_str());
+	}
 
 	mpVidEncProfile = vep.release();
 	mpAudEncProfile = aep.release();

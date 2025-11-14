@@ -790,7 +790,7 @@ void VDInputFileANIM::Init(const wchar_t *filename) {
 				case 7:
 					break;
 				default:
-					throw MyError("The file \"%ls\" uses an unsupported compression mode (%d).", mFile.getFilenameForError(), mCompressionMode);
+					throw MyError(L"The file \"%s\" uses an unsupported compression mode (%d).", mFile.getFilenameForError(), mCompressionMode);
 				}
 			}
 			break;

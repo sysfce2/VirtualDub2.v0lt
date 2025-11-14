@@ -428,7 +428,7 @@ const void *VideoSourceImages::streamGetFrame(const void *inputBuffer, uint32 da
 		if (w != pFormat->biWidth || h != pFormat->biHeight) {
 			vdfastvector<wchar_t> errBuf;
 
-			throw MyError("Image \"%ls\" (%dx%d) doesn't match the image dimensions of the first image (%dx%d)."
+			throw MyError(L"Image \"%s\" (%dx%d) doesn't match the image dimensions of the first image (%dx%d)."
 					, mpParent->ComputeFilename(errBuf, frame_num), w, h, pFormat->biWidth, pFormat->biHeight);
 		}
 
@@ -504,7 +504,7 @@ const void *VideoSourceImages::streamGetFrame(const void *inputBuffer, uint32 da
 
 			vdfastvector<wchar_t> errBuf;
 
-			throw MyError("Error decoding \"%ls\": %ls\n", mpParent->ComputeFilename(errBuf, frame_num), VDLoadString(0, kVDST_PNGDecodeErrors, err));
+			throw MyError("Error decoding \"%s\": %s\n", mpParent->ComputeFilename(errBuf, frame_num), VDLoadString(0, kVDST_PNGDecodeErrors, err));
 		}
 
 		VDPixmapBlt(VDAsPixmap(mvbFrameBuffer), mpPNGDecoder->GetFrameBuffer());

@@ -162,7 +162,7 @@ void VDInputFileWAV::Init(const wchar_t *szFile) {
 		}
 	}
 
-	throw MyError("\"%ls\" is not a WAVE file.", mBufferedFile.GetNameForError());
+	throw MyError(L"\"%s\" is not a WAVE file.", mBufferedFile.GetNameForError());
 
 ok:
 	mBytesPerSample	= mWaveFormat->mBlockSize;
@@ -199,16 +199,18 @@ void VDInputFileWAV::ParseWAVE() {
 		uint32 ckinfo[2];
 
 		// read chunk and chunk id
-		if (8 != mBufferedFile.ReadData(ckinfo, 8))
-			throw MyError("\"%ls\" is incomplete and could not be opened as a WAVE file.", mBufferedFile.GetNameForError());
+		if (8 != mBufferedFile.ReadData(ckinfo, 8)) {
+			throw MyError(L"\"%s\" is incomplete and could not be opened as a WAVE file.", mBufferedFile.GetNameForError());
+		}
 
 		uint32 size = ckinfo[1];
 		uint32 sizeToSkip = (size + 1) & ~1;	// RIFF chunks are dword aligned.
 
 		switch(ckinfo[0]) {
 			case mmioFOURCC('f', 'm', 't', ' '):
-				if (size > 0x100000)
-					throw MyError("\"%ls\" contains a format block that is too large (%u bytes).", mBufferedFile.GetNameForError(), size);
+				if (size > 0x100000) {
+					throw MyError(L"\"%s\" contains a format block that is too large (%u bytes).", mBufferedFile.GetNameForError(), size);
+				}
 
 				mWaveFormat.resize(size);
 				mBufferedFile.Read(mWaveFormat.data(), size);
@@ -225,8 +227,10 @@ void VDInputFileWAV::ParseWAVE() {
 				break;
 
 			case mmioFOURCC('L', 'I', 'S', 'T'):
-				if (size < 4)
-					throw MyError("\"%ls\" contains a structural error at position %08llx and cannot be loaded.", mBufferedFile.GetNameForError(), mBufferedFile.Pos() - 8);
+				if (size < 4) {
+					throw MyError(L"\"%s\" contains a structural error at position %08llx and cannot be loaded.",
+						mBufferedFile.GetNameForError(), mBufferedFile.Pos() - 8);
+				}
 				sizeToSkip = 4;
 				break;
 		}
@@ -252,14 +256,18 @@ void VDInputFileWAV::ParseWAVE64() {
 			break;
 
 		// unlike RIFF, WAVE64 includes the chunk header in the chunk size.
-		if (ck.size < 24)
-			throw MyError("\"%ls\" contains a structural error at position %08llx and cannot be loaded.", mBufferedFile.GetNameForError(), mBufferedFile.Pos() - 8);
+		if (ck.size < 24) {
+			throw MyError(L"\"%s\" contains a structural error at position %08llx and cannot be loaded.",
+				mBufferedFile.GetNameForError(), mBufferedFile.Pos() - 8);
+		}
 
 		sint64 sizeToSkip = (ck.size + 7 - 24) & ~7;		// WAVE64 chunks are 8-byte aligned.
 
 		if (!memcmp(ck.guid, kGuidfmt, 16)) {
-			if (ck.size > 0x100000)
-				throw MyError("\"%ls\" contains a format block that is too large (%llu bytes).", mBufferedFile.GetNameForError(), (unsigned long long)ck.size);
+			if (ck.size > 0x100000) {
+				throw MyError(L"\"%s\" contains a format block that is too large (%llu bytes).",
+					mBufferedFile.GetNameForError(), (unsigned long long)ck.size);
+			}
 
 			mWaveFormat.resize((uint32)ck.size - 24);
 			mBufferedFile.Read(mWaveFormat.data(), mWaveFormat.size());

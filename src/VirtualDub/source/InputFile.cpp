@@ -403,8 +403,9 @@ IVDInputDriver::DetectionConfidence VDTestInputDriverForFile(VDXMediaInfo& info,
 	//
 	// is only 9 bytes...
 
-	if (!dwBegin)
-		throw MyError("Can't open \"%ls\": The file is empty.", fn);
+	if (!dwBegin) {
+		throw MyError(L"Can't open \"%s\": The file is empty.", fn);
+	}
 
 	file.closeNT();
 
@@ -451,8 +452,9 @@ int VDAutoselectInputDriverForFile(const wchar_t *fn, uint32 flags, tVDInputDriv
 	//
 	// is only 9 bytes...
 
-	if (!dwBegin)
-		throw MyError("Can't open \"%ls\": The file is empty.", fn);
+	if (!dwBegin) {
+		throw MyError(L"Can't open \"%s\": The file is empty.", fn);
+	}
 
 	file.closeNT();
 

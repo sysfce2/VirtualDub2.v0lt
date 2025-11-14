@@ -63,8 +63,9 @@ void VDShowHelp(HWND hwnd, const wchar_t *filename) {
 	try {
 		VDStringW helpFile(VDGetHelpPath());
 
-		if (!VDDoesPathExist(helpFile.c_str()))
-			throw MyError("Cannot find help file: %ls", helpFile.c_str());
+		if (!VDDoesPathExist(helpFile.c_str())) {
+			throw MyError(L"Cannot find help file: %s", helpFile.c_str());
+		}
 
 		// If we're on Windows NT, check for the ADS and/or network drive.
 		{

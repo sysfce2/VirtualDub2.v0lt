@@ -626,8 +626,10 @@ int VDVideoSourcePlugin::_read(VDPosition lStart, uint32 lCount, void *lpBuffer,
 		//if(lpBuffer) VDPROFILEEND();
 	}
 
-	if (actualBytes == 0xBAADF00D || actualSamples == 0xBAADF00D)
-		throw MyError("Error detected in plugin \"%ls\": A size query call to IVDXStreamSource::Read() returned uninitialized values for sample %u.", mpContext->mName.c_str(), (unsigned)lStart);
+	if (actualBytes == 0xBAADF00D || actualSamples == 0xBAADF00D) {
+		throw MyError(L"Error detected in plugin \"%s\": A size query call to IVDXStreamSource::Read() returned uninitialized values for sample %u.",
+			mpContext->mName.c_str(), (unsigned)lStart);
+	}
 
 	if (pBytesRead)
 		*pBytesRead = actualBytes;
@@ -894,11 +896,15 @@ const void *VDVideoSourcePlugin::getFrame(VDPosition frameNum) {
 					result = mpXS->Read(pos, 1, NULL, 0, &actualBytes, &actualSamples);
 				}
 
-				if (!result)
-					throw MyError("Error detected in plugin \"%ls\": A size query call to IVDXStreamSource::Read() returned false for sample %u.", mpContext->mName.c_str(), (unsigned)pos);
+				if (!result) {
+					throw MyError(L"Error detected in plugin \"%s\": A size query call to IVDXStreamSource::Read() returned false for sample %u.",
+						mpContext->mName.c_str(), (unsigned)pos);
+				}
 
-				if (actualBytes == 0xBAADF00D || actualSamples == 0xBAADF00D)
-					throw MyError("Error detected in plugin \"%ls\": A size query call to IVDXStreamSource::Read() returned uninitialized values for sample %u.", mpContext->mName.c_str(), (unsigned)pos);
+				if (actualBytes == 0xBAADF00D || actualSamples == 0xBAADF00D) {
+					throw MyError(L"Error detected in plugin \"%s\": A size query call to IVDXStreamSource::Read() returned uninitialized values for sample %u.",
+						mpContext->mName.c_str(), (unsigned)pos);
+				}
 
 				if (actualBytes==0) actualBytes = 1;
 				buffer.resize(actualBytes + padding);

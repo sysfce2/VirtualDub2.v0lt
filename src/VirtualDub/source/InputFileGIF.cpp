@@ -74,8 +74,9 @@ void VDInputFileGIFSharedData::Parse(const wchar_t *filename) {
 
 	sint64 len64 = file.size();
 
-	if (len64 > 0x3FFFFFFF)
-		throw MyError("The GIF image \"%ls\" is too large to read.", filename);
+	if (len64 > 0x3FFFFFFF) {
+		throw MyError(L"The GIF image \"%s\" is too large to read.", filename);
+	}
 
 	uint32 len = (uint32)len64;
 
@@ -85,13 +86,15 @@ void VDInputFileGIFSharedData::Parse(const wchar_t *filename) {
 	// check header
 	const uint8 *src = mImage.data();
 	uint32 pos = 0;
-	if (len - pos < 6 || src[0] != 'G' || src[1] != 'I' || src[2] != 'F')
-		throw MyError("File \"%ls\" is not a GIF file.", filename);
+	if (len - pos < 6 || src[0] != 'G' || src[1] != 'I' || src[2] != 'F') {
+		throw MyError(L"File \"%s\" is not a GIF file.", filename);
+	}
 	pos += 6;
 
 	// read logical screen descriptor
-	if (len - pos < 7)
-		throw MyError("File \"%ls\" is an invalid GIF file.", filename);
+	if (len - pos < 7) {
+		throw MyError(L"File \"%s\" is an invalid GIF file.", filename);
+	}
 
 	mWidth = VDReadUnalignedLEU16(&src[pos]);
 	mHeight = VDReadUnalignedLEU16(&src[pos + 2]);
@@ -109,8 +112,9 @@ void VDInputFileGIFSharedData::Parse(const wchar_t *filename) {
 	if (hasGlobalColorTable) {
 		mColors = 1 << globalColorTableBits;
 
-		if (len - pos < 3 * mColors)
-			throw MyError("File \"%ls\" is an invalid GIF file. (Unable to read global color table at position %x)", filename, pos);
+		if (len - pos < 3 * mColors) {
+			throw MyError(L"File \"%s\" is an invalid GIF file. (Unable to read global color table at position %x)", filename, pos);
+		}
 
 		for(uint32 i=0; i < mColors; ++i) {
 			mGlobalColorTable[i] = 0xFF000000 + ((uint32)src[pos+0] << 16) + ((uint32)src[pos+1] << 8) + (uint32)src[pos+2];
@@ -156,8 +160,9 @@ void VDInputFileGIFSharedData::Parse(const wchar_t *filename) {
 				break;
 
 			if (extensionCode == 0xF9) {
-				if (length != 4)
-					throw MyError("File \"%ls\" is an invalid GIF file. (Graphic Control Extension header size is not 4 bytes)", filename, pos);
+				if (length != 4) {
+					throw MyError(L"File \"%s\" is an invalid GIF file. (Graphic Control Extension header size is not 4 bytes)", filename, pos);
+				}
 
 				nextFrameDelay = VDReadUnalignedLEU16(&src[pos + 1]);
 
@@ -231,8 +236,9 @@ void VDInputFileGIFSharedData::Parse(const wchar_t *filename) {
 		if (hasLocalColorTable) {
 			uint32 localColorTableSize = 1 << localColorTableBits;
 
-			if (len - pos < 3 * localColorTableSize)
-				throw MyError("File \"%ls\" is an invalid GIF file. (Unable to read local color table at position %x)", filename, pos);
+			if (len - pos < 3 * localColorTableSize) {
+				throw MyError(L"File \"%s\" is an invalid GIF file. (Unable to read local color table at position %x)", filename, pos);
+			}
 
 			pos += 3*localColorTableSize;
 		}

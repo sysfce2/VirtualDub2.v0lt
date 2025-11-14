@@ -1558,8 +1558,9 @@ void VDProject::Open(const wchar_t *pFilename, IVDInputDriver *pSelectedDriver, 
 			}
 		}
 
-		if (!inputAVI->GetVideoSource(0, ~inputVideo))
-			throw MyError("File \"%ls\" does not have a video stream.", filename.c_str());
+		if (!inputAVI->GetVideoSource(0, ~inputVideo)) {
+			throw MyError(L"File \"%s\" does not have a video stream.", filename.c_str());
+		}
 
 
 		VDRenderSetVideoSourceInputFormat(inputVideo, g_dubOpts.video.mInputFormat);
@@ -1830,8 +1831,9 @@ void VDProject::OpenWAV(const wchar_t *szFile, IVDInputDriver *pSelectedDriver, 
 	ifile->Init(szFile);
 
 	vdrefptr<AudioSource> pNewAudio;
-	if (!ifile->GetAudioSource(0, ~pNewAudio))
-		throw MyError("The file \"%ls\" does not contain an audio track.", szFile);
+	if (!ifile->GetAudioSource(0, ~pNewAudio)) {
+		throw MyError(L"The file \"%s\" does not contain an audio track.", szFile);
+	}
 
 	pNewAudio->setDecodeErrorMode(g_audioErrorMode);
 

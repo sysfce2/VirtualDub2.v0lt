@@ -98,8 +98,9 @@ void VDInputFileAPNGSharedData::Parse(const wchar_t *filename)
 
 	sint64 len64 = file.size();
 
-	if (len64 > 0x3FFFFFFF)
-		throw MyError("The PNG image \"%ls\" is too large to read.", filename);
+	if (len64 > 0x3FFFFFFF) {
+		throw MyError(L"The PNG image \"%s\" is too large to read.", filename);
+	}
 
 	uint32 len = (uint32)len64;
 
@@ -111,19 +112,22 @@ void VDInputFileAPNGSharedData::Parse(const wchar_t *filename)
 
 	const uint8 *src = mImage.data();
 	uint32 pos = 0;
-	if (len - pos < 8 || src[0] != 137 || src[1] != 'P' || src[2] != 'N' || src[3] != 'G' || src[4] != 13 || src[5] != 10 || src[6] != 26 || src[7] != 10)
-		throw MyError("File \"%ls\" is not a PNG file.", filename);
+	if (len - pos < 8 || src[0] != 137 || src[1] != 'P' || src[2] != 'N' || src[3] != 'G' || src[4] != 13 || src[5] != 10 || src[6] != 26 || src[7] != 10) {
+		throw MyError(L"File \"%s\" is not a PNG file.", filename);
+	}
 
 	pos += 8;
 
-	if (len - pos < 25)
-		throw MyError("File \"%ls\" is an invalid PNG file.", filename);
+	if (len - pos < 25) {
+		throw MyError(L"File \"%s\" is an invalid PNG file.", filename);
+	}
 
 	uint32 length = VDReadUnalignedBEU32(&src[pos]);
 	uint32 chunk  = VDReadUnalignedBEU32(&src[pos+4]);
 
-	if ((length != 13) || (chunk != 'IHDR'))
-		throw MyError("IHDR missing in \"%ls\" file.", filename);
+	if ((length != 13) || (chunk != 'IHDR')) {
+		throw MyError(L"IHDR missing in \"%s\" file.", filename);
+	}
 
 	pos += 8;
 

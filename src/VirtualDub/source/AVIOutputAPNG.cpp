@@ -1378,7 +1378,7 @@ bool AVIOutputAPNG::init(const wchar_t *szFile)
 {
 	errno_t err = _wfopen_s(&mpFile, szFile, L"wb");
 	if (err) {
-		throw MyError("Cannot create \"%ls\"", szFile);
+		throw MyError(L"Cannot create \"%s\"", szFile);
 		return false;
 	}
 

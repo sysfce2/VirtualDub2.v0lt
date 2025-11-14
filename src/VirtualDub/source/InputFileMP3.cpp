@@ -440,8 +440,9 @@ void VDInputFileMP3::Init(const wchar_t *szFile) {
 			maxFrameSize = fi.mSize;
 	}
 
-	if (mFrames.empty())
-		throw MyError("No valid MPEG audio data was detected in file \"%ls.\"", szFile);
+	if (mFrames.empty()) {
+		throw MyError(L"No valid MPEG audio data was detected in file \"%s.\"", szFile);
+	}
 
 	// decide if we want to use CBR or VBR mode
 	double seconds = (double)totalSamplesDiv192 * 192.0 / (double)samplingRate;
