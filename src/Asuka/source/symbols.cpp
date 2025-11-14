@@ -250,7 +250,7 @@ void VDSymbolSourceLinkMap::Init(IVDStream *pStream) {
 		if (size_t(sec.mGroup) < groups.size()) {
 			sec.mAbsStart = groups[sec.mGroup] + sec.mStart;
 		} else {
-			printf("    warning: no symbol found for group %u\n", sec.mGroup);
+			printf("    warning: no symbol found for group %d\n", sec.mGroup);
 			sec.mAbsStart = 0;
 		}
 	}

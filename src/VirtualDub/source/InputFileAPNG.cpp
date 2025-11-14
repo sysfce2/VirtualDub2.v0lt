@@ -1192,7 +1192,7 @@ INT_PTR APIENTRY VDInputFileAPNG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM 
 					sprintf(s+strlen(s),".%02d)", (ticks/10)%100);
 					SetDlgItemTextA(hDlg, IDC_VIDEO_NUMFRAMES, buf);
 
-					s = buf + sprintf(buf, "%d bpp (", pvs->getPixelDepth());
+					s = buf + sprintf(buf, "%u bpp (", pvs->getPixelDepth());
 					uint8 col = pvs->getColorType();
 					if (col == 0) s = s + sprintf(s, "Grayscale"); else
 					if (col == 2) s = s + sprintf(s, "Truecolor"); else

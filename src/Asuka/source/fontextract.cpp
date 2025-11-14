@@ -319,10 +319,10 @@ void tool_fontextract(const vdfastvector<const wchar_t*>& args, const vdfastvect
 	fprintf(f, "\t%ls_FontGlyphArray,\n", args[5]);
 	fprintf(f, "\t%d, %d,\n", startChar, endChar);
 	fprintf(f, "\t%d, %d, %d, %d,\t// bounds (16:16)\n", minX, minY, maxX, maxY);
-	fprintf(f, "\t%d,\t// em square\n", metrics.m.otmEMSquare);
+	fprintf(f, "\t%u,\t// em square\n", metrics.m.otmEMSquare);
 	fprintf(f, "\t%d,\t// ascent\n", metrics.m.otmAscent);
 	fprintf(f, "\t%d,\t// descent\n", metrics.m.otmDescent);
-	fprintf(f, "\t%d,\t// line gap\n", metrics.m.otmLineGap);
+	fprintf(f, "\t%u,\t// line gap\n", metrics.m.otmLineGap);
 	fprintf(f, "};\n");
 
 	printf("Asuka: %d point bytes, %d command bytes, %d glyph info bytes.\n", (int)points.size(), (int)commands.size(), (endChar - startChar + 1) * 10);

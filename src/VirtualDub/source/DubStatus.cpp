@@ -377,7 +377,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 		sint64 kilobytes = (nProjSize+1023)>>10;
 
 		if (kilobytes < 65536)
-			wsprintfA(buf, "%ldK", kilobytes);
+			wsprintfA(buf, "%I64dK", kilobytes);
 		else {
 			kilobytes = (nProjSize*100) >> 20;
 			wsprintfA(buf, "%ld.%02dMB", (LONG)(kilobytes/100), (LONG)(kilobytes%100));
@@ -430,7 +430,8 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 		}
 	}
 
-	wsprintfA(buf, "%u.%02u fps", fps100/100, fps100%100);
+	div_t fps = std::div(fps100, 100);
+	wsprintfA(buf, "%d.%02d fps", fps.quot, fps.rem);
 	SetDlgItemTextA(hWnd, IDC_FPS, buf);
 
 	if (GetWindowLong(g_hWnd, GWL_STYLE) & WS_MINIMIZE) {

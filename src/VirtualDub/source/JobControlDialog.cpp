@@ -792,25 +792,25 @@ void VDUIJobControlDialog::GetJobListDispInfoW(NMLVDISPINFOW *nldi) {
 			if (vdj->mRunnerName.empty() || vdj->IsLocal())
 				nldi->item.pszText = (LPWSTR)L"In progress";
 			else
-				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"In progress (%s:%d)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
+				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"In progress (%s:%u)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
 			break;
 		case VDJob::kStateStarting:
 			if (vdj->mRunnerName.empty() || vdj->IsLocal())
 				nldi->item.pszText = (LPWSTR)L"Starting";
 			else
-				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Starting (%s:%d)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
+				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Starting (%s:%u)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
 			break;
 		case VDJob::kStateAborting:
 			if (vdj->mRunnerName.empty() || vdj->IsLocal())
 				nldi->item.pszText = (LPWSTR)L"Aborting";
 			else
-				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Aborting (%s:%d)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
+				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Aborting (%s:%u)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
 			break;
 		case VDJob::kStateCompleted:
 			if (vdj->mRunnerName.empty() || vdj->IsLocal())
 				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Done%hs", vdj->mLogEntries.empty() ? "" : " (warnings)");
 			else
-				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Done%hs (%s:%d)", vdj->mLogEntries.empty() ? "" : " (warnings)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
+				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Done%hs (%s:%u)", vdj->mLogEntries.empty() ? "" : " (warnings)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
 			break;
 		case VDJob::kStatePostponed:
 			nldi->item.pszText = (LPWSTR)L"Postponed";
@@ -819,13 +819,13 @@ void VDUIJobControlDialog::GetJobListDispInfoW(NMLVDISPINFOW *nldi) {
 			if (vdj->mRunnerName.empty() || vdj->IsLocal())
 				nldi->item.pszText = (LPWSTR)L"Aborted";
 			else
-				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Aborted (%s:%d)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
+				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Aborted (%s:%u)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
 			break;
 		case VDJob::kStateError:
 			if (vdj->mRunnerName.empty() || vdj->IsLocal())
 				nldi->item.pszText = (LPWSTR)L"Error";
 			else
-				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Error (%s:%d)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
+				swprintf(nldi->item.pszText, nldi->item.cchTextMax, L"Error (%s:%u)", vdj->mRunnerName.c_str(), (uint32)vdj->GetRunnerId());
 			break;
 		}
 		break;

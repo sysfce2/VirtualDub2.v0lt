@@ -261,20 +261,28 @@ static void AudioChooseDisplaySpecs(HWND hdlg, WAVEFORMATEX *pwfex) {
 	int blps;
 
 	if (pwfex) {
-		if (is_audio_pcm((VDWaveFormat*)pwfex))
+		if (is_audio_pcm((VDWaveFormat*)pwfex)) {
 			strcpy(buf, "PCM");
-		else if (is_audio_float((VDWaveFormat*)pwfex))
+		}
+		else if (is_audio_float((VDWaveFormat*)pwfex)) {
 			strcpy(buf, "PCM float");
-		else
+		}
+		else {
 			wsprintfA(buf, "0x%04x", pwfex->wFormatTag);
-	} else
+		}
+	} else {
 		buf[0] = 0;
+	}
 	SetDlgItemTextA(hdlg, IDC_STATIC_FORMATID, buf);
 
-	if (pwfex) wsprintfA(buf, "%ld bytes", pwfex->nBlockAlign);
+	if (pwfex) {
+		wsprintfA(buf, "%ld bytes", pwfex->nBlockAlign);
+	}
 	SetDlgItemTextA(hdlg, IDC_STATIC_BYTESPERBLOCK, buf);
 
-	if (pwfex) wsprintfA(buf, "%ld bytes/sec", pwfex->nAvgBytesPerSec);
+	if (pwfex) {
+		wsprintfA(buf, "%lu bytes/sec", pwfex->nAvgBytesPerSec);
+	}
 	SetDlgItemTextA(hdlg, IDC_STATIC_DATARATE, buf);
 
 	if (pwfex) {
@@ -354,13 +362,13 @@ void PluginReloadFormat(IVDXAudioEnc* plugin, ACMChooserData* thisPtr, ACMTagEnt
 		memcpy(f1->pwfex, plugin->GetOutputFormat(), dst_format_len);
 
 		if (f1->pwfex->nChannels == 1) {
-			wsprintfW(f1->afd.szFormat, L"%d Hz, Mono", f1->pwfex->nSamplesPerSec);
+			wsprintfW(f1->afd.szFormat, L"%u Hz, Mono", f1->pwfex->nSamplesPerSec);
 		}
 		if (f1->pwfex->nChannels == 2) {
-			wsprintfW(f1->afd.szFormat, L"%d Hz, Stereo", f1->pwfex->nSamplesPerSec);
+			wsprintfW(f1->afd.szFormat, L"%u Hz, Stereo", f1->pwfex->nSamplesPerSec);
 		}
 		if (f1->pwfex->nChannels > 2) {
-			wsprintfW(f1->afd.szFormat, L"%d Hz, %d ch", f1->pwfex->nSamplesPerSec, f1->pwfex->nChannels);
+			wsprintfW(f1->afd.szFormat, L"%u Hz, %d ch", f1->pwfex->nSamplesPerSec, f1->pwfex->nChannels);
 		}
 
 		entry->formats.AddTail(f1);

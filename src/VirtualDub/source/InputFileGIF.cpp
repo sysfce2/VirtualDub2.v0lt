@@ -837,9 +837,9 @@ INT_PTR APIENTRY VDInputFileGIF::_InfoDlgProc( HWND hDlg, UINT message, WPARAM w
 					sprintf(s+strlen(s),".%02d)", (ticks/10)%100);
 					SetDlgItemTextA(hDlg, IDC_VIDEO_NUMFRAMES, buf);
 
-					s = buf + sprintf(buf, "%d bpp", pvs->getPixelDepth());
+					s = buf + sprintf(buf, "%u bpp", pvs->getPixelDepth());
 					uint32 col = pvs->getColors();
-					if (col > 0) s = s + sprintf(s, " (%d colors palette)", col);
+					if (col > 0) s = s + sprintf(s, " (%u colors palette)", col);
 					SetDlgItemTextA(hDlg, IDC_VIDEO_COMPRESSION, buf);
 				}
 			}

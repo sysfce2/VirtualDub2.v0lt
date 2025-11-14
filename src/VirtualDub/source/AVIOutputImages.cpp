@@ -423,7 +423,7 @@ void AVIVideoImageOutputStream::WriteVideoImage(const VDPixmap *px) {
 
 	wchar_t szFileName[MAX_PATH];
 	if (mDigits > 0) {
-		swprintf(szFileName, MAX_PATH, L"%s%0*d%s", mpszPrefix, mDigits, dwFrame++, mpszSuffix);
+		swprintf(szFileName, MAX_PATH, L"%s%0*u%s", mpszPrefix, mDigits, dwFrame++, mpszSuffix);
 	} else {
 		swprintf(szFileName, MAX_PATH, L"%s%s", mpszPrefix, mpszSuffix);
 	}
@@ -465,7 +465,7 @@ void AVIVideoImageOutputStream::write(const void *pBuffer, uint32 cbBuffer, IVDX
 	}
 
 	if (mDigits > 0) {
-		swprintf(szFileName, MAX_PATH, L"%s%0*d%s", mpszPrefix, mDigits, dwFrame++, mpszSuffix);
+		swprintf(szFileName, MAX_PATH, L"%s%0*u%s", mpszPrefix, mDigits, dwFrame++, mpszSuffix);
 	} else {
 		swprintf(szFileName, MAX_PATH, L"%s%s", mpszPrefix, mpszSuffix);
 	}

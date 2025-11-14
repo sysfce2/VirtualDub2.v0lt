@@ -169,7 +169,7 @@ bool write_version(const char *tag) {
 	if (!tag)
 		tag = g_machineName.c_str();
 
-	printf("    incrementing to build %d (builds on '%s': %d)\n", g_version, tag, g_versionMap[tag]);
+	printf("    incrementing to build %d (builds on '%s': %u)\n", g_version, tag, g_versionMap[tag]);
 
 	for(;;) {
 		FILE* f = nullptr;
@@ -184,7 +184,7 @@ bool write_version(const char *tag) {
 				if (pad < 1)
 					pad = 1;
 
-				fprintf(f, "host: \"%s\"%*cbuilds: %d\n", val.first.c_str(), pad, ' ', val.second);
+				fprintf(f, "host: \"%s\"%*cbuilds: %u\n", val.first.c_str(), pad, ' ', val.second);
 			}
 
 			fclose(f);

@@ -1072,9 +1072,9 @@ void tool_fxc(const vdfastvector<const wchar_t*>& args, const vdfastvector<const
 		const D3DCAPS9& caps = pDevice->GetRequiredCaps();
 
 		fprintf(f, "static const TechniqueInfo g_technique_%s={\n", techDesc.Name);
-		fprintf(f, "\tg_technique_%s_passes, %d,\n", techDesc.Name, passCount);
-		fprintf(f, "\tD3DPS_VERSION(%d,%d),\n", maxPSVersion >> 8, maxPSVersion & 255);
-		fprintf(f, "\tD3DVS_VERSION(%d,%d),\n", maxVSVersion >> 8, maxVSVersion & 255);
+		fprintf(f, "\tg_technique_%s_passes, %u,\n", techDesc.Name, passCount);
+		fprintf(f, "\tD3DPS_VERSION(%u,%u),\n", maxPSVersion >> 8, maxPSVersion & 255);
+		fprintf(f, "\tD3DVS_VERSION(%u,%u),\n", maxVSVersion >> 8, maxVSVersion & 255);
 		fprintf(f, "\t0x%08x,\n", caps.PrimitiveMiscCaps);
 		fprintf(f, "\t0x%08x,\n", caps.MaxSimultaneousTextures);
 		fprintf(f, "\t0x%08x,\n", caps.MaxTextureBlendStages);

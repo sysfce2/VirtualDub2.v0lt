@@ -264,7 +264,7 @@ void WarpResizeFilter::GetSettingString(char *buf, int maxlen) {
 }
 
 void WarpResizeFilter::GetScriptString(char *buf, int maxlen) {
-	_snprintf(buf, maxlen, "Config(%u, %u, %d)", mTargetWidth, mTargetHeight, mbShowGradientMap);
+	_snprintf(buf, maxlen, "Config(%d, %d, %d)", mTargetWidth, mTargetHeight, mbShowGradientMap);
 	buf[maxlen - 1] = 0;
 }
 

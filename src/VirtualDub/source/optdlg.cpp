@@ -251,7 +251,7 @@ void VDDialogAudioConversionW32::ReinitDialog() {
 		char buf[128];
 
 		const VDWaveFormat *pwfex = mpSource->getWaveFormat();
-		wsprintfA(buf, "No change (%ldHz)", pwfex->mSamplingRate);
+		wsprintfA(buf, "No change (%uHz)", pwfex->mSamplingRate);
 		SetDlgItemTextA(mhdlg, IDC_SAMPLINGRATE_NOCHANGE, buf);
 
 		if (!mbSourcePrecisionKnown)

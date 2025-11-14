@@ -2421,7 +2421,7 @@ TreeNode *HexEditor::RIFFScan(RIFFScanInfo &rsi, sint64 pos, sint64 sizeleft) {
 
 	while(!rsi.abortPending) {
 		if ((sizeleft < 8 && pParentNode) || nodes-nodeBase >= 1000) {
-			sprintf(buf, "Chunks %u-%u (%08I64X-%08I64X)\n", nodeBase, nodes-1, startPos, pos-1);
+			sprintf(buf, "Chunks %d-%d (%08I64X-%08I64X)\n", nodeBase, nodes-1, startPos, pos-1);
 			size_t len = strlen(buf);
 			char *s = (char *)mChunkAllocator.Allocate(len+1);
 			memcpy(s, buf, len+1);
@@ -2469,7 +2469,7 @@ TreeNode *HexEditor::RIFFScan(RIFFScanInfo &rsi, sint64 pos, sint64 sizeleft) {
 		// quick validation tests
 
 		if (chunk.ckid == 'TSIL' || chunk.ckid == 'FFIR') {		// RIFF or LIST
-			char *dst = buf+sprintf(buf, "%08I64X [%-4.4s:%-4.4s:%8ld]: ", pos, (const char *)&chunk.ckid, (const char *)&chunk.listid, chunk.size);
+			char *dst = buf+sprintf(buf, "%08I64X [%-4.4s:%-4.4s:%8lu]: ", pos, (const char *)&chunk.ckid, (const char *)&chunk.listid, chunk.size);
 
 			if (sizeleft < 12 || chunk.size < 4 || chunk.size > sizeleft-8 || !isValidFOURCC(chunk.listid)) {
 				strcpy(dst, "invalid LIST/RIFF chunk");
@@ -2479,7 +2479,7 @@ TreeNode *HexEditor::RIFFScan(RIFFScanInfo &rsi, sint64 pos, sint64 sizeleft) {
 				bExpand = true;
 			}
 		} else {
-			char *dst = buf+sprintf(buf, "%08I64X [%-4.4s:%8ld]: ", pos, (const char *)&chunk.ckid, chunk.size);
+			char *dst = buf+sprintf(buf, "%08I64X [%-4.4s:%8lu]: ", pos, (const char *)&chunk.ckid, chunk.size);
 
 			if (!isValidFOURCC(chunk.ckid) || chunk.size > sizeleft-8) {
 				strcpy(dst, "invalid chunk");

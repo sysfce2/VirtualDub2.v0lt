@@ -3302,7 +3302,7 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
 				const VDWaveFormat *fmt = pInfo->mpAudio->getWaveFormat();
 				char buf[128];
 
-				sprintf(buf, "%ldHz, %s", fmt->mSamplingRate, fmt->mChannels>1 ? "Stereo" : "Mono");
+				sprintf(buf, "%uHz, %s", fmt->mSamplingRate, fmt->mChannels>1 ? "Stereo" : "Mono");
 				SetDlgItemTextA(hDlg, IDC_AUDIO_FORMAT, buf);
 
 				sprintf(buf, "%ld", thisPtr->aframes);
