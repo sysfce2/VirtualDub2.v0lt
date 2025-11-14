@@ -115,7 +115,7 @@ void VDVideoDecompressorVCM::Init(const void *srcFormat, uint32 srcFormatSize, H
 	if (rv >= sizeof info) {
 		mName = info.szDescription;
 		const wchar_t *pName = info.szDescription;
-		mDriverName = VDswprintf(L"Video codec \"%ls\"", 1, &pName);
+		mDriverName = VDswprintf(L"Video codec \"%s\"", 1, &pName);
 	}
 
 	fourcc_codec_info(bih->biCompression, mbUseAlpha);

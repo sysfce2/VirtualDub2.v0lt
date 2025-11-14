@@ -1802,7 +1802,7 @@ void VDCaptureProjectUI::UICaptureDriversUpdated() {
 
 		wchar_t buf[1024];
 
-		if ((unsigned)swprintf_s(buf, L"&%c %ls", '0'+i, name) < std::size(buf)) {
+		if ((unsigned)swprintf_s(buf, L"&%c %s", '0'+i, name) < std::size(buf)) {
 			VDAppendMenuW32(hmenu, MF_ENABLED, ID_VIDEO_CAPTURE_DRIVER+i, buf);
 			++driversFound;
 		}
@@ -1895,9 +1895,9 @@ void VDCaptureProjectUI::UICaptureAudioDriversUpdated() {
 		wchar_t buf[1024];
 		int r;
 		if (i < 10) {
-			r = swprintf_s(buf, L"&%d %ls", i, name);
+			r = swprintf_s(buf, L"&%d %s", i, name);
 		} else {
-			r = swprintf_s(buf, L"%d %ls", i, name);
+			r = swprintf_s(buf, L"%d %s", i, name);
 		}
 
 		if (r < (int)std::size(buf)) {
@@ -2072,7 +2072,7 @@ void VDCaptureProjectUI::UICaptureDriverChanged(int driver) {
 
 		const wchar_t *s = mpProject->GetDriverName(driver);
 		SetStatusImmediateF("Connected to capture device: %ls", s);
-		VDLog(kVDLogInfo, VDswprintf(L"Connected to capture device: %ls", 1, &s));
+		VDLog(kVDLogInfo, VDswprintf(L"Connected to capture device: %s", 1, &s));
 	} else
 		SetStatusImmediate("Disconnected");
 
@@ -2489,7 +2489,7 @@ void VDCaptureProjectUI::UICaptureStart(bool test) {
 	} else {
 		const VDStringW& s = mpProject->GetCaptureFile();
 		const wchar_t *t = s.c_str();
-		VDLog(kVDLogInfo, VDswprintf(L"Starting capture to: %ls", 1, &t));
+		VDLog(kVDLogInfo, VDswprintf(L"Starting capture to: %s", 1, &t));
 	}
 }
 

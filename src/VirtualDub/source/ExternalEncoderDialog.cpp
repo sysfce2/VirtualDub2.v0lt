@@ -1043,7 +1043,7 @@ bool VDUIDialogConfigureExternalEncoders::OnCommand(uint32 id, uint32 extcode) {
 					if (!overwriteConfirmed && VDGetExternalEncoderSetByName(eset->mName.c_str(), NULL)) {
 						VDStringW message;
 
-						message.sprintf(L"The file contains an external encoder set called \"%ls\" that already exists. Do you want to load the file anyway, replacing existing profiles with the same names?", eset->mName.c_str());
+						message.sprintf(L"The file contains an external encoder set called \"%s\" that already exists. Do you want to load the file anyway, replacing existing profiles with the same names?", eset->mName.c_str());
 
 						if (!Confirm(message.c_str(), g_szWarning))
 							throw MyUserAbortError();
@@ -1101,7 +1101,7 @@ bool VDUIDialogConfigureExternalEncoders::OnCommand(uint32 id, uint32 extcode) {
 					if (!overwriteConfirmed && VDGetExternalEncoderProfileByName(eprof->mName.c_str(), NULL)) {
 						VDStringW message;
 
-						message.sprintf(L"The file contains an external encoder profile called \"%ls\" that already exists. Do you want to load the file anyway, replacing existing profiles with the same names?", eprof->mName.c_str());
+						message.sprintf(L"The file contains an external encoder profile called \"%s\" that already exists. Do you want to load the file anyway, replacing existing profiles with the same names?", eprof->mName.c_str());
 
 						if (!Confirm(message.c_str(), g_szWarning))
 							throw MyUserAbortError();
@@ -1336,7 +1336,7 @@ void VDUIDialogConfigureExternalEncoders::OnLabelChanged(VDUIProxyListView *send
 			if (conflictingSet && conflictingSet != lsi->mpSet) {
 				VDStringW msg;
 
-				msg.sprintf(L"The name \"%ls\" is already in use by another set.", eventData->mpNewLabel);
+				msg.sprintf(L"The name \"%s\" is already in use by another set.", eventData->mpNewLabel);
 				ShowError(msg.c_str(), g_szError);
 				return;
 			}
@@ -1352,7 +1352,7 @@ void VDUIDialogConfigureExternalEncoders::OnLabelChanged(VDUIProxyListView *send
 			if (conflictingProfile && conflictingProfile != lpi->mpProfile) {
 				VDStringW msg;
 
-				msg.sprintf(L"The name \"%ls\" is already in use by another profile.", eventData->mpNewLabel);
+				msg.sprintf(L"The name \"%s\" is already in use by another profile.", eventData->mpNewLabel);
 				ShowError(msg.c_str(), g_szError);
 				return;
 			}

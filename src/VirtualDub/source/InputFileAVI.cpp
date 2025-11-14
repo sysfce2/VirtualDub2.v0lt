@@ -934,7 +934,7 @@ bool VDAVIFileInfoDialog::OnLoaded() {
 		else if (fmt->mChannels > 2)
 			buf.sprintf(L"%d", fmt->mChannels);
 		else
-			buf.sprintf(L"%d (%ls)", fmt->mChannels, fmt->mChannels>1 ? L"Stereo" : L"Mono");
+			buf.sprintf(L"%d (%s)", fmt->mChannels, fmt->mChannels>1 ? L"Stereo" : L"Mono");
 
 		SetControlText(IDC_AUDIO_CHANNELS, buf.c_str());
 

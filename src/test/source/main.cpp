@@ -82,7 +82,7 @@ int wmain(int argc, wchar_t **argv) {
 				}
 			}
 
-			wprintf(L"\nUnknown test: %ls\n", test);
+			wprintf(L"\nUnknown test: %s\n", test);
 			help();
 			exit(5);
 next:

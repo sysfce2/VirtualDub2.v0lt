@@ -272,7 +272,7 @@ bool VDConnectPluginDescriptions(const VDPluginInfo *const *ppInfos, VDExternalM
 			VDConnectPluginDescription(pInfo, pModule);
 		} catch(const MyError& e) {
 			VDStringW msg;
-			msg.sprintf(L"Error loading plugin \"%ls\" from module %ls: %s.", pInfo->mpName, VDFileSplitPath(pModule->GetFilename().c_str()), e.gets());
+			msg.sprintf(L"Error loading plugin \"%s\" from module %s: %s.", pInfo->mpName, VDFileSplitPath(pModule->GetFilename().c_str()), e.gets());
 
 			VDLog(kVDLogWarning, msg);
 			allOk = false;
@@ -594,7 +594,7 @@ void VDLoadPlugins(const VDStringW& path, int& succeeded, int& failed) {
 				else
 					++failed;
 			} catch(const MyError& e) {
-				VDLog(kVDLogWarning, VDStringW().sprintf(L"Plugins: Failed to load \"%ls\": %s", it.GetFullPath().c_str(), e.gets()));
+				VDLog(kVDLogWarning, VDStringW().sprintf(L"Plugins: Failed to load \"%s\": %s", it.GetFullPath().c_str(), e.gets()));
 				++failed;
 			}
 		}

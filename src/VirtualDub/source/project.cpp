@@ -2784,7 +2784,7 @@ void VDProject::RunOperation(IVDDubberOutputSystem *pOutputSystem, VideoOperatio
 
 	{
 		const wchar_t *pOpType = pOutputSystem->IsRealTime() ? L"preview" : L"dub";
-		VDLog(kVDLogMarker, VDswprintf(L"Beginning %ls operation.", 1, &pOpType));
+		VDLog(kVDLogMarker, VDswprintf(L"Beginning %s operation.", 1, &pOpType));
 	}
 
 	DubOptions tempOpts(op.opt ? *op.opt : g_dubOpts);

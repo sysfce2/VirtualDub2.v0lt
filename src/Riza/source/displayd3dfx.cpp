@@ -575,9 +575,9 @@ bool VDVideoDisplayMinidriverD3DFX::Init(HWND hwnd, HMONITOR hmonitor, const VDV
 
 	if (FAILED(hr)) {
 		if (pError)
-			mError.sprintf(L"Couldn't compile effect file %ls due to the following error:\r\n\r\n%hs\r\n\r\nIf you have Direct3D effects support enabled by mistake, it can be disabled under Options > Preferences > Display.", srcfile.c_str(), (const char *)pError->GetBufferPointer());
+			mError.sprintf(L"Couldn't compile effect file %s due to the following error:\r\n\r\n%hs\r\n\r\nIf you have Direct3D effects support enabled by mistake, it can be disabled under Options > Preferences > Display.", srcfile.c_str(), (const char *)pError->GetBufferPointer());
 		else
-			mError.sprintf(L"Couldn't compile effect file %ls.\r\n\r\nIf you have Direct3D effects support enabled by mistake, it can be disabled under Options > Preferences > Display.", srcfile.c_str());
+			mError.sprintf(L"Couldn't compile effect file %s.\r\n\r\nIf you have Direct3D effects support enabled by mistake, it can be disabled under Options > Preferences > Display.", srcfile.c_str());
 
 		if (pError)
 			pError->Release();
@@ -648,7 +648,7 @@ bool VDVideoDisplayMinidriverD3DFX::Init(HWND hwnd, HMONITOR hmonitor, const VDV
 
 	// check if we don't have any recognizable techniques
 	if (!hTechniqueLastValid) {
-		mError.sprintf(L"Couldn't find a valid technique in effect file %ls:\nMust be one of 'point', 'bilinear', or 'bicubic.'", srcfile.c_str());
+		mError.sprintf(L"Couldn't find a valid technique in effect file %s:\nMust be one of 'point', 'bilinear', or 'bicubic.'", srcfile.c_str());
 		DisplayError();
 		ShutdownEffect();
 		return true;
@@ -1742,7 +1742,7 @@ void VDVideoDisplayMinidriverD3DFX::CreateCustomTextureBindings() {
 					// error in this case)
 		#if 0
 					if (!mpEffect->GetFunctionByName(pName)) {
-						mError.sprintf(L"Couldn't create procedural texture '%hs' in effect file %ls:\nUnknown function '%hs'", parmDesc.Name, srcfile.c_str(), pName);
+						mError.sprintf(L"Couldn't create procedural texture '%hs' in effect file %s:\nUnknown function '%hs'", parmDesc.Name, srcfile.c_str(), pName);
 						if (pError)
 							pError->Release();
 						ShutdownEffect();

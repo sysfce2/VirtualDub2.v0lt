@@ -1297,7 +1297,7 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 							OpenJobWindow();
 							ShowWindow(g_hWnd, SW_SHOWMINNOACTIVE);
 						} else {
-							VDLog(kVDLogInfo, VDswprintf(L"Joining shared job queue in slave mode: %ls", 1, &token));
+							VDLog(kVDLogInfo, VDswprintf(L"Joining shared job queue in slave mode: %s", 1, &token));
 						}
 					}
 

@@ -422,10 +422,11 @@ void AVIVideoImageOutputStream::WriteVideoImage(const VDPixmap *px) {
 	}
 
 	wchar_t szFileName[MAX_PATH];
-	if (mDigits>0)
-		swprintf(szFileName, MAX_PATH, L"%ls%0*d%ls", mpszPrefix, mDigits, dwFrame++, mpszSuffix);
-	else
-		swprintf(szFileName, MAX_PATH, L"%ls%ls", mpszPrefix, mpszSuffix);
+	if (mDigits > 0) {
+		swprintf(szFileName, MAX_PATH, L"%s%0*d%s", mpszPrefix, mDigits, dwFrame++, mpszSuffix);
+	} else {
+		swprintf(szFileName, MAX_PATH, L"%s%s", mpszPrefix, mpszSuffix);
+	}
 
 	using namespace nsVDFile;
 	VDFile mFile(szFileName, kWrite | kDenyNone | kCreateAlways | kSequential);
@@ -463,10 +464,11 @@ void AVIVideoImageOutputStream::write(const void *pBuffer, uint32 cbBuffer, IVDX
 		throw MyError("Output settings must be 16/24/32-bit RGB, uncompressed in order to save a JPEG or PNG sequence.");
 	}
 
-	if (mDigits>0)
-		swprintf(szFileName, MAX_PATH, L"%ls%0*d%ls", mpszPrefix, mDigits, dwFrame++, mpszSuffix);
-	else
-		swprintf(szFileName, MAX_PATH, L"%ls%ls", mpszPrefix, mpszSuffix);
+	if (mDigits > 0) {
+		swprintf(szFileName, MAX_PATH, L"%s%0*d%s", mpszPrefix, mDigits, dwFrame++, mpszSuffix);
+	} else {
+		swprintf(szFileName, MAX_PATH, L"%s%s", mpszPrefix, mpszSuffix);
+	}
 
 	using namespace nsVDFile;
 	VDFile mFile(szFileName, kWrite | kDenyNone | kCreateAlways | kSequential);

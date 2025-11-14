@@ -723,7 +723,7 @@ namespace cap_dshow {
 
 									++collisionCounter;
 
-									name.sprintf(L"%ls #%d", nameTemplate.c_str(), collisionCounter);
+									name.sprintf(L"%s #%d", nameTemplate.c_str(), collisionCounter);
 									collisionDetected = true;
 									break;
 								}
