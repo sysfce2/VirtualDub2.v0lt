@@ -244,7 +244,7 @@ HRESULT  DbgUniqueProcessName(LPCTSTR inName, LPTSTR outName)
     if (dotPos < 0) 
     {
         //no extension in the input, appending process id to the input
-        hr = StringCchPrintf(outName, MAX_PATH, TEXT("%s_%d"), inName, dwProcessId);
+        hr = StringCchPrintf(outName, MAX_PATH, TEXT("%s_%u"), inName, dwProcessId);
     }
     else
     {
@@ -255,7 +255,7 @@ HRESULT  DbgUniqueProcessName(LPCTSTR inName, LPTSTR outName)
 
         //re-combine path, basename and extension with processId appended to a basename
         if (SUCCEEDED(hr))
-            hr = StringCchPrintf(outName, MAX_PATH, TEXT("%s_%d%s"), pathAndBasename, dwProcessId, inName + dotPos);
+            hr = StringCchPrintf(outName, MAX_PATH, TEXT("%s_%u%s"), pathAndBasename, dwProcessId, inName + dotPos);
     }
 
     return hr;
@@ -726,7 +726,7 @@ void WINAPI DbgLogInfo(DWORD Type,DWORD Level,__format_string LPCSTR pFormat,...
     va_start(va, pFormat);
 
     (void)StringCchPrintf(szInfo, NUMELMS(szInfo),
-             TEXT("%s(tid %x) %8d : "),
+             TEXT("%s(tid %x) %8u : "),
              m_ModuleName,
              GetCurrentThreadId(), timeGetTime() - dwTimeOffset);
 
@@ -854,7 +854,7 @@ void WINAPI DbgLogInfo(DWORD Type,DWORD Level,LPCTSTR pFormat,...)
     va_start(va, pFormat);
 
     (void)StringCchPrintf(szInfo, NUMELMS(szInfo),
-             TEXT("%s(tid %x) %8d : "),
+             TEXT("%s(tid %x) %8u : "),
              m_ModuleName,
              GetCurrentThreadId(), timeGetTime() - dwTimeOffset);
 
@@ -1018,15 +1018,15 @@ void WINAPI DbgDumpObjectRegister()
 
     while (pObject) {
         if(pObject->m_wszName) {
-            (void)StringCchPrintf(szInfo,NUMELMS(szInfo),TEXT("%5d (%p) %30ls"),pObject->m_dwCookie, &pObject, pObject->m_wszName);
+            (void)StringCchPrintf(szInfo,NUMELMS(szInfo),TEXT("%5u (%p) %30ls"),pObject->m_dwCookie, &pObject, pObject->m_wszName);
         } else {
-            (void)StringCchPrintf(szInfo,NUMELMS(szInfo),TEXT("%5d (%p) %30hs"),pObject->m_dwCookie, &pObject, pObject->m_szName);
+            (void)StringCchPrintf(szInfo,NUMELMS(szInfo),TEXT("%5u (%p) %30hs"),pObject->m_dwCookie, &pObject, pObject->m_szName);
         }
         DbgLog((LOG_MEMORY,2,szInfo));
         pObject = pObject->m_pNext;
     }
 
-    (void)StringCchPrintf(szInfo,NUMELMS(szInfo),TEXT("Total object count %5d"),m_dwObjectCount);
+    (void)StringCchPrintf(szInfo,NUMELMS(szInfo),TEXT("Total object count %5u"),m_dwObjectCount);
     DbgLog((LOG_MEMORY,2,TEXT("")));
     DbgLog((LOG_MEMORY,1,szInfo));
     LeaveCriticalSection(&m_CSDebug);
