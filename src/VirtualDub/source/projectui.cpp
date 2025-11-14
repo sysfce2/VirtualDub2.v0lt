@@ -5023,7 +5023,7 @@ void VDProjectUI::UISelectionUpdated(bool notifyUser) {
 
 void VDProjectUI::UINotifySelection() {
 	if (!inputAVI) {
-		guiSetStatusW(0, 255);
+		guiSetStatus("", 255);
 		return;
 	}
 
@@ -5034,15 +5034,14 @@ void VDProjectUI::UINotifySelection() {
 		VDPosition total = mVideoTimelineFrameRate.scale64ir(mTimeline.GetSubset().getTotalFrames() * 1000);
 		VDStringW t = GetTimeSpanString(time,total);
 
-		VDStringW s;
-		s.append_sprintf(L"Selecting frames %u-%u (%u frames, %s)", (unsigned)start, (unsigned)end, (unsigned)(end - start), t.c_str());
-		guiSetStatusW(s.c_str(), 255);
-	} else if (start==end) {
-		VDStringW s;
-		s.append_sprintf(L"Selecting frames %u-%u (0 frames)", (unsigned)start, (unsigned)end);
-		guiSetStatusW(s.c_str(), 255);
-	} else
-		guiSetStatusW(0, 255);
+		guiSetStatus("Selecting frames %u-%u (%u frames, %s)", 255, (unsigned)start, (unsigned)end, (unsigned)(end - start), t.c_str());
+	}
+	else if (start==end) {
+		guiSetStatus("Selecting frames %u-%u (0 frames)", 255, (unsigned)start, (unsigned)end);
+	}
+	else {
+		guiSetStatus("", 255);
+	}
 }
 
 void VDProjectUI::UIShuttleModeUpdated() {

@@ -1088,7 +1088,7 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 						VDInitAudioEnc();
 						VDInitTools();
 
-						guiSetStatus("Loaded external module: %s", 255, VDTextWToA(token).c_str());
+						guiSetStatus(L"Loaded external module: %s", 255, token);
 					}
 				}
 				else if (!wcscmp(token, L"edit")) {

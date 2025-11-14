@@ -926,7 +926,7 @@ void VDProject::DisplayFrame(bool bDispInput, bool bDispOutput, bool forceInput,
 		wchar_t* dst = _wcsdup(src);
 
 		if (!dst)
-			guiSetStatusW(e.gets(), 255);
+			guiSetStatus(e.gets(), 255);
 		else {
 			for (wchar_t* t = dst; *t; ++t) {
 				if (*t == L'\n') {
@@ -934,7 +934,7 @@ void VDProject::DisplayFrame(bool bDispInput, bool bDispOutput, bool forceInput,
 				}
 			}
 
-			guiSetStatusW(dst, 255);
+			guiSetStatus(dst, 255);
 			free(dst);
 		}
 		SceneShuttleStop();
@@ -1064,7 +1064,7 @@ bool VDProject::UpdateFrame(bool updateInputFrame) {
 			}
 		}
 	} catch(const MyError& e) {
-		guiSetStatus("%s", 255, e.gets());
+		guiSetStatus(L"%s", 255, e.gets());
 
 		SceneShuttleStop();
 		mDesiredOutputFrame = -1;
@@ -1086,7 +1086,7 @@ bool VDProject::RefilterFrame(VDPosition timelinePos) {
 		if (!filters.isRunning())
 			return false;
 	} catch(const MyError& e) {
-		guiSetStatus("%s", 255, e.gets());
+		guiSetStatus(L"%s", 255, e.gets());
 		return false;
 	}
 
@@ -1585,7 +1585,7 @@ void VDProject::Open(const wchar_t *pFilename, IVDInputDriver *pSelectedDriver, 
 			guiSetStatus("", 255);
 
 			if (nFiles > 1)
-				guiSetStatus("Autoloaded %d segments (last was \"%ls\")", 255, nFiles, pnode->NextFromTail()->name);
+				guiSetStatus(L"Autoloaded %d segments (last was \"%s\")", 255, nFiles, pnode->NextFromTail()->name);
 
 			if (nFiles==1 && fAutoscan==2) {
 				int flags = inputAVI->GetFileFlags();
@@ -1788,7 +1788,7 @@ void VDProject::InnerReopen() {
 
 	mpCB->UICurrentPositionUpdated();
 
-	guiSetStatus("Reloaded \"%ls\" (%I64d frames).", 255, filename.c_str(), newFrameCount);
+	guiSetStatus(L"Reloaded \"%s\" (%I64d frames).", 255, filename.c_str(), newFrameCount);
 }
 
 void VDProject::OpenWAV(const wchar_t *szFile, IVDInputDriver *pSelectedDriver, bool automated, bool extOpts, const void *optdata, int optlen) {

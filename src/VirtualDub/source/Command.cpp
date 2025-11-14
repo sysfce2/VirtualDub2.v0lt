@@ -211,7 +211,7 @@ void AppendAVIAutoscan(const wchar_t *pszFile, bool skip_first) {
 		VDLog(kVDLogWarning, e.gets());
 	}
 
-	guiSetStatus("Appended %d segments (last was \"%s\")", 255, count, VDTextWToA(last).c_str());
+	guiSetStatus(L"Appended %d segments (last was \"%s\")", 255, count, last.c_str());
 
 	if (count) {
 		FrameSubset& s = g_project->GetTimeline().GetSubset();

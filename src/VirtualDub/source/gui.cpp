@@ -407,6 +407,24 @@ void VDSetDialogDefaultIcons(HWND hdlg) {
 		SendMessage(hdlg, WM_SETICON, ICON_SMALL, (LPARAM)hSmallIcon);
 }
 
+void guiSetStatus(const wchar_t* format, int nPart, ...) {
+	wchar_t buf[1024];
+	buf[0] = 0;
+
+	va_list val;
+	va_start(val, nPart);
+	_vsnwprintf_s(buf, _TRUNCATE, format, val);
+	va_end(val);
+
+	// replace newlines with spaces
+	wchar_t* s = buf;
+	while (s = wcschr(s, L'\n')) {
+		*s++ = L' ';
+	}
+
+	SendMessageW(GetDlgItem(g_hWnd, IDC_STATUS_WINDOW), SB_SETTEXTW, nPart, (LPARAM)buf);
+}
+
 void guiSetStatus(const char *format, int nPart, ...) {
 	char buf[1024];
 	buf[0] = 0;
@@ -423,10 +441,6 @@ void guiSetStatus(const char *format, int nPart, ...) {
 	}
 
 	SendMessage(GetDlgItem(g_hWnd, IDC_STATUS_WINDOW), SB_SETTEXTA, nPart, (LPARAM)buf);
-}
-
-void guiSetStatusW(const wchar_t *text, int nPart) {
-	SendMessageW(GetDlgItem(g_hWnd, IDC_STATUS_WINDOW), SB_SETTEXTW, nPart, (LPARAM)text);
 }
 
 void guiSetTitle(HWND hWnd, UINT uID, ...) {
