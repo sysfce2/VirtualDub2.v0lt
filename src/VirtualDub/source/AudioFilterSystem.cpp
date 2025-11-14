@@ -771,7 +771,7 @@ bool VDAudioFilterInstance::Service() {
 	if (res & kVFARun_Finished) {
 		mbEnded = true;
 
-		VDDEBUG("AudioFilterSystem: Filter \"%ls\" has finished.\n", mpPluginInfo->mpName);
+		VDDEBUG(L"AudioFilterSystem: Filter \"%s\" has finished.\n", mpPluginInfo->mpName);
 	}
 
 	bool bAnyActivity = 0!=(res & kVFARun_InternalWork);

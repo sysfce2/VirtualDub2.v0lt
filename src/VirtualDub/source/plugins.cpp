@@ -586,7 +586,7 @@ void VDLoadPlugins(const VDStringW& path, int& succeeded, int& failed) {
 		VDDirectoryIterator it(VDMakePath(path.c_str(), extension).c_str());
 
 		while(it.Next()) {
-			VDDEBUG("Plugins: Attempting to load \"%ls\"\n", it.GetFullPath().c_str());
+			VDDEBUG(L"Plugins: Attempting to load \"%s\"\n", it.GetFullPath().c_str());
 			VDStringW path(it.GetFullPath());
 			try {
 				if (VDAddPluginModule(path.c_str()))
