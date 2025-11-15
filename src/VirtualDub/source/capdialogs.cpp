@@ -110,7 +110,7 @@ INT_PTR VDDialogCaptureDiskIO::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			for (unsigned i = 0; i < std::size(sizes); i++) {
 				SendMessageA(hwndItem, CB_ADDSTRING, 0, (LPARAM)size_names[i]);
 			}
-			SendMessage(hwndItem, CB_SETCURSEL, NearestLongValue(mDiskSettings.mDiskChunkSize, sizes, std::size(sizes)), 0);
+			SendMessageW(hwndItem, CB_SETCURSEL, NearestLongValue(mDiskSettings.mDiskChunkSize, sizes, std::size(sizes)), 0);
 
 			SendDlgItemMessage(mhdlg, IDC_CHUNKS_UPDOWN, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhdlg, IDC_CHUNKS), 0);
 			SendDlgItemMessage(mhdlg, IDC_CHUNKS_UPDOWN, UDM_SETRANGE, 0, MAKELONG(256, 1));
@@ -222,8 +222,8 @@ INT_PTR VDDialogCaptureNRThreshold::DlgProc(UINT msg, WPARAM wParam, LPARAM lPar
 				const VDCaptureFilterSetup& filtSetup = mpProject->GetFilterSetup();
 
 				hwndItem = GetDlgItem(mhdlg, IDC_THRESHOLD);
-				SendMessage(hwndItem, TBM_SETRANGE, FALSE, MAKELONG(0, 64));
-				SendMessage(hwndItem, TBM_SETPOS, TRUE, filtSetup.mNRThreshold);
+				SendMessageW(hwndItem, TBM_SETRANGE, FALSE, MAKELONG(0, 64));
+				SendMessageW(hwndItem, TBM_SETPOS, TRUE, filtSetup.mNRThreshold);
 				mDlgNode.hdlg = mhdlg;
 				guiAddModelessDialog(&mDlgNode);
 				g_pCapNRDialog = this;
@@ -251,7 +251,7 @@ INT_PTR VDDialogCaptureNRThreshold::DlgProc(UINT msg, WPARAM wParam, LPARAM lPar
 		case WM_HSCROLL:
 			{
 				VDCaptureFilterSetup filtSetup(mpProject->GetFilterSetup());
-				int thresh = SendMessage((HWND)lParam, TBM_GETPOS, 0, 0);
+				int thresh = SendMessageW((HWND)lParam, TBM_GETPOS, 0, 0);
 
 				if (filtSetup.mNRThreshold != thresh) {
 					filtSetup.mNRThreshold = thresh;
@@ -545,19 +545,19 @@ INT_PTR VDDialogCaptureStopPrefs::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam
 			return TRUE;
 
 		case IDC_TIMELIMIT:
-			EnableWindow(GetDlgItem(mhdlg, IDC_TIMELIMIT_SETTING), SendMessage((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED);
+			EnableWindow(GetDlgItem(mhdlg, IDC_TIMELIMIT_SETTING), SendMessageW((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED);
 			return TRUE;
 
 		case IDC_FILELIMIT:
-			EnableWindow(GetDlgItem(mhdlg, IDC_FILELIMIT_SETTING), SendMessage((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED);
+			EnableWindow(GetDlgItem(mhdlg, IDC_FILELIMIT_SETTING), SendMessageW((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED);
 			return TRUE;
 
 		case IDC_DISKLIMIT:
-			EnableWindow(GetDlgItem(mhdlg, IDC_DISKLIMIT_SETTING), SendMessage((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED);
+			EnableWindow(GetDlgItem(mhdlg, IDC_DISKLIMIT_SETTING), SendMessageW((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED);
 			return TRUE;
 
 		case IDC_DROPLIMIT:
-			EnableWindow(GetDlgItem(mhdlg, IDC_DROPLIMIT_SETTING), SendMessage((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED);
+			EnableWindow(GetDlgItem(mhdlg, IDC_DROPLIMIT_SETTING), SendMessageW((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED);
 			return TRUE;
 		}
 		break;
@@ -987,8 +987,8 @@ public:
 		{for(int i=0; i<8; i++){
 			HWND c0 = GetDlgItem(mhdlg,ch_ids[i]);
 			HWND c1 = GetDlgItem(mhdlg,ch_spin_ids[i]);
-			SendMessage(c1, UDM_SETRANGE, 0, (LPARAM)MAKELONG(3,0));
-			SendMessage(c1, UDM_SETPOS, 0, mix[i]);
+			SendMessageW(c1, UDM_SETRANGE, 0, (LPARAM)MAKELONG(3,0));
+			SendMessageW(c1, UDM_SETPOS, 0, mix[i]);
 			if (i>=channels) {
 				ShowWindow(c0, SW_HIDE);
 				ShowWindow(c1, SW_HIDE);

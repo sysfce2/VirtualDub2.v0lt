@@ -753,11 +753,11 @@ bool VDCaptureDriverVFW::CaptureStart() {
 }
 
 void VDCaptureDriverVFW::CaptureStop() {
-	SendMessage(mhwndEventSink, WM_APP+16, 0, 0);
+	SendMessageW(mhwndEventSink, WM_APP+16, 0, 0);
 }
 
 void VDCaptureDriverVFW::CaptureAbort() {
-	SendMessage(mhwndEventSink, WM_APP+17, 0, 0);
+	SendMessageW(mhwndEventSink, WM_APP+17, 0, 0);
 }
 
 void VDCaptureDriverVFW::SyncCaptureStop() {
@@ -1047,10 +1047,10 @@ LRESULT CALLBACK VDCaptureDriverVFW::StatusCallback(HWND hwnd, int nID, LPCSTR l
 	if (nID) {
 		buf[0] = 0;
 		_snprintf(buf, std::size(buf), "Status %d: %s", nID, lpsz);
-		SendMessage(GetDlgItem(GetParent(hWnd), IDC_STATUS_WINDOW), SB_SETTEXTA, 0, (LPARAM)buf);
+		SendMessageW(GetDlgItem(GetParent(hWnd), IDC_STATUS_WINDOW), SB_SETTEXTA, 0, (LPARAM)buf);
 		VDDEBUG("%s\n",buf);
 	} else {
-		SendMessage(GetDlgItem(GetParent(hWnd), IDC_STATUS_WINDOW), SB_SETTEXTA, 0, (LPARAM)"");
+		SendMessageW(GetDlgItem(GetParent(hWnd), IDC_STATUS_WINDOW), SB_SETTEXTA, 0, (LPARAM)"");
 	}
 
 	return 0;

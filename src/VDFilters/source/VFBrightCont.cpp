@@ -406,14 +406,14 @@ bool VDVFilterBrightContDialog::OnLoaded() {
 	HWND hWnd;
 
 	hWnd = GetDlgItem(mhdlg, IDC_BRIGHTNESS);
-	SendMessage(hWnd, TBM_SETTICFREQ, 16, 0);
-	SendMessage(hWnd, TBM_SETRANGE, (WPARAM)TRUE, MAKELONG(0, 512));
-	SendMessage(hWnd, TBM_SETPOS, (WPARAM)TRUE, mConfig.bright+256);
+	SendMessageW(hWnd, TBM_SETTICFREQ, 16, 0);
+	SendMessageW(hWnd, TBM_SETRANGE, (WPARAM)TRUE, MAKELONG(0, 512));
+	SendMessageW(hWnd, TBM_SETPOS, (WPARAM)TRUE, mConfig.bright+256);
 
 	hWnd = GetDlgItem(mhdlg, IDC_CONTRAST);
-	SendMessage(hWnd, TBM_SETTICFREQ, 4, 0);
-	SendMessage(hWnd, TBM_SETRANGE, (WPARAM)TRUE, MAKELONG(0, 32));
-	SendMessage(hWnd, TBM_SETPOS, (WPARAM)TRUE, mConfig.cont);
+	SendMessageW(hWnd, TBM_SETTICFREQ, 4, 0);
+	SendMessageW(hWnd, TBM_SETRANGE, (WPARAM)TRUE, MAKELONG(0, 32));
+	SendMessageW(hWnd, TBM_SETPOS, (WPARAM)TRUE, mConfig.cont);
 
 	hWnd = GetDlgItem(mhdlg, IDC_PREVIEW);
 	if (mpPreview) {
@@ -427,8 +427,8 @@ bool VDVFilterBrightContDialog::OnLoaded() {
 bool VDVFilterBrightContDialog::OnCommand(uint32 id, uint32 extcode) {
 	switch(id) {
 		case IDOK:
-			mConfig.bright = SendMessage(GetDlgItem(mhdlg, IDC_BRIGHTNESS), TBM_GETPOS, 0, 0)-256;
-			mConfig.cont = SendMessage(GetDlgItem(mhdlg, IDC_CONTRAST), TBM_GETPOS, 0, 0);
+			mConfig.bright = SendMessageW(GetDlgItem(mhdlg, IDC_BRIGHTNESS), TBM_GETPOS, 0, 0)-256;
+			mConfig.cont = SendMessageW(GetDlgItem(mhdlg, IDC_CONTRAST), TBM_GETPOS, 0, 0);
 
 			End(true);
 			return true;
@@ -456,7 +456,7 @@ INT_PTR VDVFilterBrightContDialog::DlgProc(UINT msg, WPARAM wParam, LPARAM lPara
 				UINT id = GetWindowLong(hwndScroll, GWL_ID);
 
 				if (id == IDC_BRIGHTNESS) {
-					int bright = SendMessage(hwndScroll, TBM_GETPOS, 0, 0)-256;
+					int bright = SendMessageW(hwndScroll, TBM_GETPOS, 0, 0)-256;
 					if (mConfig.bright != bright) {
 						mConfig.bright = bright;
 
@@ -466,7 +466,7 @@ INT_PTR VDVFilterBrightContDialog::DlgProc(UINT msg, WPARAM wParam, LPARAM lPara
 						}
 					}
 				} else if (id == IDC_CONTRAST) {
-					int cont = SendMessage(hwndScroll, TBM_GETPOS, 0, 0);
+					int cont = SendMessageW(hwndScroll, TBM_GETPOS, 0, 0);
 					if (mConfig.cont != cont) {
 						mConfig.cont = cont;
 

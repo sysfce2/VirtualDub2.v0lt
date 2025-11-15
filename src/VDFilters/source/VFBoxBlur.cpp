@@ -666,12 +666,12 @@ INT_PTR CALLBACK boxConfigDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPa
 			mfd = (BoxFilterData *)lParam;
 
 			hwndInit = GetDlgItem(hdlg, IDC_SLIDER_WIDTH);
-			SendMessage(hwndInit, TBM_SETRANGE, TRUE, MAKELONG(1,48));
-			SendMessage(hwndInit, TBM_SETPOS, TRUE, mfd->filter_width);
+			SendMessageW(hwndInit, TBM_SETRANGE, TRUE, MAKELONG(1,48));
+			SendMessageW(hwndInit, TBM_SETPOS, TRUE, mfd->filter_width);
 
 			hwndInit = GetDlgItem(hdlg, IDC_SLIDER_POWER);
-			SendMessage(hwndInit, TBM_SETRANGE, TRUE, MAKELONG(1,3));
-			SendMessage(hwndInit, TBM_SETPOS, TRUE, mfd->filter_power);
+			SendMessageW(hwndInit, TBM_SETRANGE, TRUE, MAKELONG(1,3));
+			SendMessageW(hwndInit, TBM_SETPOS, TRUE, mfd->filter_power);
 
 			mfd->ifp->InitButton((VDXHWND)GetDlgItem(hdlg, IDC_PREVIEW));
 

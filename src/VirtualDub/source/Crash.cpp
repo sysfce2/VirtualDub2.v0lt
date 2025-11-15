@@ -2096,8 +2096,8 @@ protected:
 
 		g_pcdw->DoInitListbox(hwndList1);
 
-		SendMessage(hwndList2, WM_SETFONT, SendMessage(hwndList1, WM_GETFONT, 0, 0), MAKELPARAM(TRUE, 0));
-		SendMessage(hwndList3, WM_SETFONT, SendMessage(hwndList1, WM_GETFONT, 0, 0), MAKELPARAM(TRUE, 0));
+		SendMessageW(hwndList2, WM_SETFONT, SendMessageW(hwndList1, WM_GETFONT, 0, 0), MAKELPARAM(TRUE, 0));
+		SendMessageW(hwndList3, WM_SETFONT, SendMessageW(hwndList1, WM_GETFONT, 0, 0), MAKELPARAM(TRUE, 0));
 
 		// stdc++ doesn't allow temporaries to be lvalues like VC++ does, so we
 		// have to declare all the output drivers out-of-band... @*&#$&(#*$

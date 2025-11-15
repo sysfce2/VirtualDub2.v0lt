@@ -1744,7 +1744,7 @@ void VDAudioDisplayControl::OnLButtonDown(int x, int y, uint32 modifiers) {
 		}
 	}
 
-  SendMessage(mhwnd,WM_SETCURSOR,0,HTCLIENT);
+  SendMessageW(mhwnd,WM_SETCURSOR,0,HTCLIENT);
 }
 
 void VDAudioDisplayControl::OnLButtonUp(int x, int y, uint32 modifiers) {

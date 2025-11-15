@@ -225,7 +225,7 @@ BOOL /*ACMFORMATTAGENUMCB*/ CALLBACK ACMFormatTagEnumerator(HACMDRIVERID hadid, 
 				}
 			}
 
-			SendMessage(pData->hwndDriverList, LB_SETITEMDATA, index, (LPARAM)pate);
+			SendMessageW(pData->hwndDriverList, LB_SETITEMDATA, index, (LPARAM)pate);
 		}
 	}
 
@@ -301,7 +301,7 @@ static void AudioChooseShowFormats(HWND hdlg, ACMTagEntry *pTag, bool fShowCompa
 	HWND hwndListFormats = GetDlgItem(hdlg, IDC_FORMAT);
 	int idx;
 
-	SendMessage(hwndListFormats, LB_RESETCONTENT, 0, 0);
+	SendMessageW(hwndListFormats, LB_RESETCONTENT, 0, 0);
 
 	if (!pTag) {
 		HWND hwndItem = GetDlgItem(hdlg, IDC_CONFIGURE);
@@ -451,8 +451,8 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 
 
 			if (!aed.pTagSelect) {
-				SendMessage(aed.hwndDriverList, LB_SETCURSEL, 0, 0);
-				SendMessage(hdlg, WM_COMMAND, LBN_SELCHANGE<<16, (LPARAM)aed.hwndDriverList);
+				SendMessageW(aed.hwndDriverList, LB_SETCURSEL, 0, 0);
+				SendMessageW(hdlg, WM_COMMAND, LBN_SELCHANGE<<16, (LPARAM)aed.hwndDriverList);
 			} else {
 				int cnt, i;
 				HWND hwndItem;
@@ -460,24 +460,24 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 				ACMFormatEntry *pFormat;
 
 				hwndItem = GetDlgItem(hdlg, IDC_FORMATTAG);
-				cnt = SendMessage(hwndItem, LB_GETCOUNT, 0, 0);
+				cnt = SendMessageW(hwndItem, LB_GETCOUNT, 0, 0);
 
 				for(i=0; i<cnt; i++) {
-					pTag = (ACMTagEntry *)SendMessage(hwndItem, LB_GETITEMDATA, i, 0);
+					pTag = (ACMTagEntry *)SendMessageW(hwndItem, LB_GETITEMDATA, i, 0);
 
 					if (pTag == aed.pTagSelect) {
-						SendMessage(hwndItem, LB_SETCURSEL, i, 0);
+						SendMessageW(hwndItem, LB_SETCURSEL, i, 0);
 						AudioChooseShowFormats(hdlg, pTag, !!thisPtr->pwfexSrc);
 
 						hwndItem = GetDlgItem(hdlg, IDC_FORMAT);
-						cnt = SendMessage(hwndItem, LB_GETCOUNT, 0, 0);
+						cnt = SendMessageW(hwndItem, LB_GETCOUNT, 0, 0);
 
 						for(i=0; i<cnt; i++) {
-							pFormat = (ACMFormatEntry *)SendMessage(hwndItem, LB_GETITEMDATA, i, 0);
+							pFormat = (ACMFormatEntry *)SendMessageW(hwndItem, LB_GETITEMDATA, i, 0);
 
 							if (pFormat == aed.pFormatSelect) {
-								SendMessage(hwndItem, LB_SETCURSEL, i, 0);
-								SendMessage(hdlg, WM_COMMAND, LBN_SELCHANGE<<16, (LPARAM)hwndItem);
+								SendMessageW(hwndItem, LB_SETCURSEL, i, 0);
+								SendMessageW(hdlg, WM_COMMAND, LBN_SELCHANGE<<16, (LPARAM)hwndItem);
 								break;
 							}
 						}
@@ -493,11 +493,11 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 	case WM_DESTROY:
 		{
 			HWND hwndList = GetDlgItem(hdlg, IDC_FORMATTAG);
-			int cnt = SendMessage(hwndList, LB_GETCOUNT, 0, 0);
+			int cnt = SendMessageW(hwndList, LB_GETCOUNT, 0, 0);
 			int i;
 
 			for(i=0; i<cnt; i++) {
-				ACMTagEntry *pTag = (ACMTagEntry *)SendMessage(hwndList, LB_GETITEMDATA, i, 0);
+				ACMTagEntry *pTag = (ACMTagEntry *)SendMessageW(hwndList, LB_GETITEMDATA, i, 0);
 
 				delete pTag;
 			}
@@ -549,21 +549,21 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 			case LBN_SELCHANGE:
 redisplay_formats:
 				{
-					int idx = SendMessage((HWND)lParam, LB_GETCURSEL, 0, 0);
+					int idx = SendMessageW((HWND)lParam, LB_GETCURSEL, 0, 0);
 
 					if (idx < 0) {
 						AudioChooseShowFormats(hdlg, NULL, false);
 						return TRUE;
 					}
 
-					ACMTagEntry *pTag = (ACMTagEntry *)SendMessage((HWND)lParam, LB_GETITEMDATA, idx, 0);
+					ACMTagEntry *pTag = (ACMTagEntry *)SendMessageW((HWND)lParam, LB_GETITEMDATA, idx, 0);
 
 					AudioChooseShowFormats(hdlg, pTag, !IsDlgButtonChecked(hdlg, IDC_SHOWALL));
 					HWND hwndItem = GetDlgItem(hdlg, IDC_FORMAT);
-					int cnt = SendMessage(hwndItem, LB_GETCOUNT, 0, 0);
+					int cnt = SendMessageW(hwndItem, LB_GETCOUNT, 0, 0);
 					if (cnt>0) {
-						SendMessage(hwndItem, LB_SETCURSEL, 0, 0);
-						SendMessage(hdlg, WM_COMMAND, LBN_SELCHANGE<<16, (LPARAM)hwndItem);
+						SendMessageW(hwndItem, LB_SETCURSEL, 0, 0);
+						SendMessageW(hdlg, WM_COMMAND, LBN_SELCHANGE<<16, (LPARAM)hwndItem);
 					}
 
 				}
@@ -574,7 +574,7 @@ redisplay_formats:
 			switch(HIWORD(wParam)) {
 			case LBN_SELCHANGE:
 				{
-					int idx = SendMessage((HWND)lParam, LB_GETCURSEL, 0, 0);
+					int idx = SendMessageW((HWND)lParam, LB_GETCURSEL, 0, 0);
 
 					if (idx < 0) {
 						if (!SendDlgItemMessage(hdlg, IDC_FORMATTAG, LB_GETCURSEL, 0, 0))
@@ -584,7 +584,7 @@ redisplay_formats:
 						return TRUE;
 					}
 
-					ACMFormatEntry *pFormat = (ACMFormatEntry *)SendMessage((HWND)lParam, LB_GETITEMDATA, idx, 0);
+					ACMFormatEntry *pFormat = (ACMFormatEntry *)SendMessageW((HWND)lParam, LB_GETITEMDATA, idx, 0);
 
 					AudioChooseDisplaySpecs(hdlg, pFormat->pwfex);
 				}
@@ -605,12 +605,12 @@ redisplay_formats:
 		case IDC_CONFIGURE:
 			{
 				HWND hwndItem = GetDlgItem(hdlg, IDC_FORMATTAG);
-				int idx = SendMessage(hwndItem, LB_GETCURSEL, 0, 0);
+				int idx = SendMessageW(hwndItem, LB_GETCURSEL, 0, 0);
 
 				if (idx < 0)
 					return TRUE;
 
-				ACMTagEntry *pTag = (ACMTagEntry *)SendMessage(hwndItem, LB_GETITEMDATA, idx, 0);
+				ACMTagEntry *pTag = (ACMTagEntry *)SendMessageW(hwndItem, LB_GETITEMDATA, idx, 0);
 
 				if (pTag && pTag->mbSupportsConfigure && pTag->driver) {
 					if (pTag->driver) {
@@ -624,14 +624,14 @@ redisplay_formats:
 						AudioChooseShowFormats(hdlg, pTag, !!thisPtr->pwfexSrc);
 
 						hwndItem = GetDlgItem(hdlg, IDC_FORMAT);
-						int cnt = SendMessage(hwndItem, LB_GETCOUNT, 0, 0);
+						int cnt = SendMessageW(hwndItem, LB_GETCOUNT, 0, 0);
 
 						for(int i=0; i<cnt; i++) {
-							ACMFormatEntry* pFormat = (ACMFormatEntry *)SendMessage(hwndItem, LB_GETITEMDATA, i, 0);
+							ACMFormatEntry* pFormat = (ACMFormatEntry *)SendMessageW(hwndItem, LB_GETITEMDATA, i, 0);
 
 							if (pFormat == pFormatSelect) {
-								SendMessage(hwndItem, LB_SETCURSEL, i, 0);
-								SendMessage(hdlg, WM_COMMAND, LBN_SELCHANGE<<16, (LPARAM)hwndItem);
+								SendMessageW(hwndItem, LB_SETCURSEL, i, 0);
+								SendMessageW(hdlg, WM_COMMAND, LBN_SELCHANGE<<16, (LPARAM)hwndItem);
 								break;
 							}
 						}
@@ -650,12 +650,12 @@ redisplay_formats:
 		case IDC_ABOUT:
 			{
 				HWND hwndItem = GetDlgItem(hdlg, IDC_FORMATTAG);
-				int idx = SendMessage(hwndItem, LB_GETCURSEL, 0, 0);
+				int idx = SendMessageW(hwndItem, LB_GETCURSEL, 0, 0);
 
 				if (idx < 0)
 					return TRUE;
 
-				ACMTagEntry *pTag = (ACMTagEntry *)SendMessage(hwndItem, LB_GETITEMDATA, idx, 0);
+				ACMTagEntry *pTag = (ACMTagEntry *)SendMessageW(hwndItem, LB_GETITEMDATA, idx, 0);
 
 				HACMDRIVER hDriver;
 				if (pTag && pTag->mbSupportsAbout && !acmDriverOpen(&hDriver, pTag->hadid, 0)) {

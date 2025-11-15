@@ -289,12 +289,14 @@ namespace {
 	BOOL CALLBACK SetApplicationIconOnDialog(HMODULE hModule, LPCTSTR lpszType, LPTSTR lpszName, LONG_PTR lParam) {
 		HWND hdlg = (HWND)lParam;
 		HANDLE hLargeIcon = LoadImage((HINSTANCE)hModule, lpszName, IMAGE_ICON, GetSystemMetrics(SM_CXICON), GetSystemMetrics(SM_CYICON), LR_SHARED);
-		if (hLargeIcon)
-			SendMessage(hdlg, WM_SETICON, ICON_BIG, (LPARAM)hLargeIcon);
+		if (hLargeIcon) {
+			SendMessageW(hdlg, WM_SETICON, ICON_BIG, (LPARAM)hLargeIcon);
+		}
 
 		HANDLE hSmallIcon = LoadImage((HINSTANCE)hModule, lpszName, IMAGE_ICON, GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON), LR_SHARED);
-		if (hSmallIcon)
-			SendMessage(hdlg, WM_SETICON, ICON_SMALL, (LPARAM)hSmallIcon);
+		if (hSmallIcon) {
+			SendMessageW(hdlg, WM_SETICON, ICON_SMALL, (LPARAM)hSmallIcon);
+		}
 
 		return FALSE;
 	}

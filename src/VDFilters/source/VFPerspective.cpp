@@ -237,7 +237,7 @@ namespace {
 						SendMessageA(hwndCombo, CB_ADDSTRING, 0, (LPARAM)filterMode);
 					}
 
-					SendMessage(hwndCombo, CB_SETCURSEL, mfd->filtermode, 0);
+					SendMessageW(hwndCombo, CB_SETCURSEL, mfd->filtermode, 0);
 
 					if (mfd->ifp) {
 						mfd->ifp->InitButton((VDXHWND)GetDlgItem(mhdlg, IDC_PREVIEW));
@@ -421,7 +421,7 @@ namespace {
 
 				case IDC_FILTER:
 					if (HIWORD(wParam) == CBN_SELCHANGE) {
-						mfd->filtermode = SendMessage((HWND)lParam, CB_GETCURSEL, 0, 0);
+						mfd->filtermode = SendMessageW((HWND)lParam, CB_GETCURSEL, 0, 0);
 						if (mfd->ifp)
 							mfd->ifp->RedoFrame();
 					}
@@ -429,7 +429,7 @@ namespace {
 
 				case IDC_UNPROJECT:
 					if (HIWORD(wParam) == BN_CLICKED) {
-						mfd->unproject = 0 != (SendMessage((HWND)lParam, BM_GETSTATE, 0, 0)&3);
+						mfd->unproject = 0 != (SendMessageW((HWND)lParam, BM_GETSTATE, 0, 0)&3);
 						if (mfd->ifp)
 							mfd->ifp->RedoFrame();
 					}

@@ -1099,14 +1099,14 @@ protected:
 bool VDVFilterDialogWarpSharp::OnLoaded() {
 	HWND hwndItem = GetDlgItem(mhdlg, IDC_DEPTH);
 
-	SendMessage(hwndItem, TBM_SETRANGE, TRUE, MAKELONG(0,1024));
-	SendMessage(hwndItem, TBM_SETPOS, (WPARAM)TRUE, mConfig.mDepth);
+	SendMessageW(hwndItem, TBM_SETRANGE, TRUE, MAKELONG(0,1024));
+	SendMessageW(hwndItem, TBM_SETPOS, (WPARAM)TRUE, mConfig.mDepth);
 	SetDlgItemInt(mhdlg, IDC_STATIC_DEPTH, MulDiv(mConfig.mDepth, 100, 256), FALSE);
 
 	hwndItem = GetDlgItem(mhdlg, IDC_BLUR);
 
-	SendMessage(hwndItem, TBM_SETRANGE, TRUE, MAKELONG(0,11));
-	SendMessage(hwndItem, TBM_SETPOS, (WPARAM)TRUE, mConfig.mBlurLevel);
+	SendMessageW(hwndItem, TBM_SETRANGE, TRUE, MAKELONG(0,11));
+	SendMessageW(hwndItem, TBM_SETPOS, (WPARAM)TRUE, mConfig.mBlurLevel);
 	SetDlgItemInt(mhdlg, IDC_STATIC_BLUR, mConfig.mBlurLevel+1, FALSE);
 
 	mifp->InitButton((VDXHWND)GetDlgItem(mhdlg, IDC_PREVIEW));
@@ -1143,14 +1143,14 @@ VDZINT_PTR VDVFilterDialogWarpSharp::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZL
 				switch(GetWindowLong((HWND)lParam, GWL_ID)) {
 				case IDC_DEPTH:
 					if ((int)wParam != mConfig.mDepth) {
-						mConfig.mDepth = SendMessage((HWND)lParam, TBM_GETPOS, 0, 0);
+						mConfig.mDepth = SendMessageW((HWND)lParam, TBM_GETPOS, 0, 0);
 						mifp->RedoFrame();
 						SetDlgItemInt(mhdlg, IDC_STATIC_DEPTH, MulDiv(mConfig.mDepth, 100, 256), TRUE);
 					}
 					break;
 				case IDC_BLUR:
 					if ((int)wParam != mConfig.mBlurLevel) {
-						mConfig.mBlurLevel = SendMessage((HWND)lParam, TBM_GETPOS, 0, 0);
+						mConfig.mBlurLevel = SendMessageW((HWND)lParam, TBM_GETPOS, 0, 0);
 						mifp->RedoFrame();
 						SetDlgItemInt(mhdlg, IDC_STATIC_BLUR, mConfig.mBlurLevel+1, TRUE);
 					}

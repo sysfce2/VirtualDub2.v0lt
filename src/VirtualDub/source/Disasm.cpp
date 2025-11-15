@@ -878,13 +878,15 @@ long CodeDisassemblyWindow::getInstruction(char *buf, long val) {
 }
 
 void CodeDisassemblyWindow::DoInitListbox(HWND hwndList) {
-//	SendMessage(hwndList, LB_SETCOUNT, num_ents, 0);
+//	SendMessageW(hwndList, LB_SETCOUNT, num_ents, 0);
 
-	for(int i=0; i<num_ents; ++i)
-		SendMessage(hwndList, LB_ADDSTRING, 0, (LPARAM)&lbents[i]);
+	for (int i = 0; i < num_ents; ++i) {
+		SendMessageW(hwndList, LB_ADDSTRING, 0, (LPARAM)&lbents[i]);
+	}
 
-	if (hFontMono)
-		SendMessage(hwndList, WM_SETFONT, (WPARAM)hFontMono, MAKELPARAM(TRUE, 0));
+	if (hFontMono) {
+		SendMessageW(hwndList, WM_SETFONT, (WPARAM)hFontMono, MAKELPARAM(TRUE, 0));
+	}
 }
 
 BOOL CodeDisassemblyWindow::DoMeasureItem(LPARAM lParam) {

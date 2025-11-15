@@ -727,7 +727,7 @@ BOOL FilterPreview::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 			}
 			return TRUE;
 		} else {
-			return SendMessage(mhwndVideoWindow,message,wParam,lParam);
+			return SendMessageW(mhwndVideoWindow,message,wParam,lParam);
 		}
 		break;
 
@@ -743,8 +743,9 @@ BOOL FilterPreview::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 		return 0;
 
 	case WM_MOUSEWHEEL:
-		if (mhwndPosition)
-			return SendMessage(mhwndPosition, WM_MOUSEWHEEL, wParam, lParam);
+		if (mhwndPosition) {
+			return SendMessageW(mhwndPosition, WM_MOUSEWHEEL, wParam, lParam);
+		}
 		break;
 
 	case WM_MOUSELEAVE:
@@ -820,7 +821,7 @@ BOOL FilterPreview::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 			RECT r;
 
 			if (::GetWindowRect(mhwndVideoWindow, &r) && ::PtInRect(&r, pt)) {
-				SendMessage(mhwndVideoWindow, WM_CONTEXTMENU, wParam, lParam);
+				SendMessageW(mhwndVideoWindow, WM_CONTEXTMENU, wParam, lParam);
 			}
 		}
 		break;
@@ -874,7 +875,7 @@ LRESULT WINAPI preview_pos_host_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM l
 	switch(msg){
 	case WM_NOTIFY:
 	case WM_COMMAND:
-		return SendMessage(owner->GetHwnd(),msg,wparam,lparam);
+		return SendMessageW(owner->GetHwnd(),msg,wparam,lparam);
 
 	case WM_KEYDOWN:
 	case WM_KEYUP:
@@ -1274,7 +1275,7 @@ void FilterPreview::OnVideoResize(bool bInitial) {
 	if (fResize)
 		mpVideoWindow->Resize();
 	if (mpVideoWindow->GetAutoSize())
-		SendMessage(mhwndVideoWindow,WM_COMMAND,ID_DISPLAY_ZOOM_AUTOSIZE,0);
+		SendMessageW(mhwndVideoWindow,WM_COMMAND,ID_DISPLAY_ZOOM_AUTOSIZE,0);
 
 	OnVideoRedraw();
 }
@@ -1404,7 +1405,7 @@ bool FilterPreview::OnCommand(UINT cmd) {
 		if (mbNoExit) {
 			if (mhwndFilter) {
 				SetActiveWindow(mhwndFilter);
-				SendMessage(mhwndFilter,WM_COMMAND,IDCANCEL,0);
+				SendMessageW(mhwndFilter,WM_COMMAND,IDCANCEL,0);
 			}
 			return true;
 		}
@@ -1528,18 +1529,18 @@ bool FilterPreview::OnCommand(UINT cmd) {
 		return true;
 
 	case ID_FILE_SAVEPROJECT:
-		SendMessage(mhwndFilterList,WM_COMMAND,IDC_FILTERS_SAVE,0);
+		SendMessageW(mhwndFilterList,WM_COMMAND,IDC_FILTERS_SAVE,0);
 		return true;
 
 	case ID_VIDEO_FILTERS:
 		SceneShuttleStop();
 		EnableWindow(mhwndParent,false);
-		SendMessage(mhwndFilterList,WM_COMMAND,ID_VIDEO_FILTERS,0);
+		SendMessageW(mhwndFilterList,WM_COMMAND,ID_VIDEO_FILTERS,0);
 		EnableWindow(mhwndParent,true);
 		return true;
 
 	case ID_PANELAYOUT_AUTOSIZE:
-		SendMessage(mhwndVideoWindow,WM_COMMAND,ID_DISPLAY_ZOOM_AUTOSIZE,0);
+		SendMessageW(mhwndVideoWindow,WM_COMMAND,ID_DISPLAY_ZOOM_AUTOSIZE,0);
 		return true;
 
 	case ID_OPTIONS_SHOWPROFILER:
@@ -1759,24 +1760,27 @@ void FilterPreview::Display(VDXHWND hwndParent, bool fDisplay) {
 }
 
 void FilterPreview::RedoFrame() {
-	if (mhdlg)
-		SendMessage(mhdlg, MYWM_INVALIDATE, 0, 0);
+	if (mhdlg) {
+		SendMessageW(mhdlg, MYWM_INVALIDATE, 0, 0);
+	}
 	SetRangeFrames();
 }
 
 void FilterPreview::RedoSystem() {
-	if (mhdlg)
-		SendMessage(mhdlg, MYWM_RESTART, 0, 0);
+	if (mhdlg) {
+		SendMessageW(mhdlg, MYWM_RESTART, 0, 0);
+	}
 	SetRangeFrames();
 }
 
 void FilterPreview::SampleRedoSystem() {
-	if (mhdlg)
-		SendMessage(mhdlg, MYWM_RESTART, 0, 0);
-	else {
+	if (mhdlg) {
+		SendMessageW(mhdlg, MYWM_RESTART, 0, 0);
+	} else {
 		try {
 			InitFilterSystem();
-		} catch(const MyError&){
+		}
+		catch(const MyError&){
 		}
 	}
 	SetRangeFrames();
@@ -2156,8 +2160,9 @@ long FilterPreview::SampleFrames(IFilterModPreviewSample* handler) {
 }
 
 void FilterPreview::RedrawFrame() {
-	if (mhdlg)
-		SendMessage(mhdlg, MYWM_REDRAW, 0, 0);
+	if (mhdlg) {
+		SendMessageW(mhdlg, MYWM_REDRAW, 0, 0);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2332,7 +2337,7 @@ BOOL PixmapView::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 			RECT r;
 
 			if (::GetWindowRect(mhwndVideoWindow, &r) && ::PtInRect(&r, pt)) {
-				SendMessage(mhwndVideoWindow, WM_CONTEXTMENU, wParam, lParam);
+				SendMessageW(mhwndVideoWindow, WM_CONTEXTMENU, wParam, lParam);
 			}
 		}
 		break;
@@ -2422,7 +2427,7 @@ bool PixmapView::OnCommand(UINT cmd) {
 		return true;
 
 	case ID_PANELAYOUT_AUTOSIZE:
-		SendMessage(mhwndVideoWindow,WM_COMMAND,ID_DISPLAY_ZOOM_AUTOSIZE,0);
+		SendMessageW(mhwndVideoWindow,WM_COMMAND,ID_DISPLAY_ZOOM_AUTOSIZE,0);
 		return true;
 
 	case ID_OPTIONS_SHOWPROFILER:

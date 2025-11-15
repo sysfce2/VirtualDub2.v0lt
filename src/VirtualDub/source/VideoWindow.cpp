@@ -259,13 +259,13 @@ void VDVideoWindow::ToggleFullscreen() {
 		SetBorder(0,0);
 		EnableWindow(mhwndMax,true);
 		ShowWindow(mhwndMax,SW_SHOW);
-		SendMessage(mhwndMax,WM_SIZE,0,0);
+		SendMessageW(mhwndMax,WM_SIZE,0,0);
 
 		NMHDR hdr;
 		hdr.hwndFrom = mhwnd;
 		hdr.idFrom = GetWindowLong(mhwnd, GWL_ID);
 		hdr.code = VWN_RESIZED;
-		SendMessage(mhwndParent, WM_NOTIFY, (WPARAM)hdr.idFrom, (LPARAM)&hdr);
+		SendMessageW(mhwndParent, WM_NOTIFY, (WPARAM)hdr.idFrom, (LPARAM)&hdr);
 
 		if (prev) {
 			IVDVideoWindow* window = VDGetIVideoWindow(prev);
@@ -747,7 +747,7 @@ LRESULT VDVideoWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 				hdr.hwndFrom = mhwnd;
 				hdr.idFrom = GetWindowLong(mhwnd, GWL_ID);
 				hdr.code = VWN_RESIZED;
-				SendMessage(GetParent(mhwnd), WM_NOTIFY, (WPARAM)hdr.idFrom, (LPARAM)&hdr);
+				SendMessageW(GetParent(mhwnd), WM_NOTIFY, (WPARAM)hdr.idFrom, (LPARAM)&hdr);
 			}
 		}
 		break;		// explicitly pass this through to DefWindowProc for WM_SIZE and WM_MOVE
@@ -978,7 +978,7 @@ void VDVideoWindow::OnCommand(int cmd) {
 			hdr.hwndFrom = mhwnd;
 			hdr.idFrom = GetWindowLong(mhwnd, GWL_ID);
 			hdr.code = VWN_REPOSITION;
-			SendMessage(GetParent(mhwnd), WM_NOTIFY, (WPARAM)hdr.idFrom, (LPARAM)&hdr);
+			SendMessageW(GetParent(mhwnd), WM_NOTIFY, (WPARAM)hdr.idFrom, (LPARAM)&hdr);
 		}
 		break;
 	case ID_DISPLAY_ZOOM_EXACT:

@@ -308,7 +308,7 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 			nmvltc.iTab			= lcd->iMovingTab;
 			nmvltc.iNewPos		= pos;
 
-			SendMessage(GetParent(hwnd), WM_NOTIFY, nmvltc.hdr.idFrom, (LPARAM)&nmvltc);
+			SendMessageW(GetParent(hwnd), WM_NOTIFY, nmvltc.hdr.idFrom, (LPARAM)&nmvltc);
 		}
 		break;
 
@@ -340,7 +340,7 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 			nmvltc.iTab			= LOWORD(wParam);
 			nmvltc.iNewPos		= lParam;
 
-			SendMessage(GetParent(hwnd), WM_NOTIFY, nmvltc.hdr.idFrom, (LPARAM)&nmvltc);
+			SendMessageW(GetParent(hwnd), WM_NOTIFY, nmvltc.hdr.idFrom, (LPARAM)&nmvltc);
 		}
 		break;
 

@@ -50,7 +50,7 @@ bool VDUIControlW32::CreateW32(IVDUIParameters *pParms, const wchar_t *pClass, D
 	if (!mhwnd)
 		return false;
 
-	SendMessage(mhwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
+	SendMessageW(mhwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
 
 	if (pPeer)
 		pPeer->RegisterCallbackW32(this);
@@ -58,9 +58,10 @@ bool VDUIControlW32::CreateW32(IVDUIParameters *pParms, const wchar_t *pClass, D
 	if (pParms->GetB(nsVDUI::kUIParam_Default, false)) {
 		HWND hwndBase = vdpoly_cast<IVDUIWindowW32 *>(mpBase)->GetHandleW32();
 
-		SendMessage(hwndBase, DM_SETDEFID, id, 0);
-		if (GetFocus() == hwndBase)
+		SendMessageW(hwndBase, DM_SETDEFID, id, 0);
+		if (GetFocus() == hwndBase) {
 			::SetFocus(mhwnd);
+		}
 	}
 
 	return true;
@@ -117,7 +118,7 @@ SIZE VDUIControlW32::SizeText(int nMaxWidth, int nPadWidth, int nPadHeight) {
 			if (nMaxWidth)
 				dwFlags |= DT_WORDBREAK;
 
-			hgoOldFont = SelectObject(hdc, (HGDIOBJ)SendMessage(mhwnd, WM_GETFONT, 0, 0));
+			hgoOldFont = SelectObject(hdc, (HGDIOBJ)SendMessageW(mhwnd, WM_GETFONT, 0, 0));
 
 			if (DrawTextW(hdc, caption.c_str(), -1, &r, dwFlags)) {
 				siz.cx = r.right - r.left;

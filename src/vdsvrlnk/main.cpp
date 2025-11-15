@@ -202,7 +202,7 @@ CVDubAnimConnection::CVDubAnimConnection(VDubPostedFrameserver* vdpf)
 CVDubAnimConnection::~CVDubAnimConnection()
 {
 	if (dwSessionID) {
-		SendMessage((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_CLOSE, 0, dwSessionID);
+		SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_CLOSE, 0, dwSessionID);
 	}
 	if (arena) {
 		UnmapViewOfFile(arena);
@@ -222,7 +222,7 @@ BOOL CVDubAnimConnection::init()
 
 	// find out how big of an arena we need
 
-	lArenaSize = SendMessage((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_BIGGEST, 0, 0);
+	lArenaSize = SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_BIGGEST, 0, 0);
 	if (!lArenaSize) {
 		return FALSE;
 	}
@@ -258,7 +258,7 @@ BOOL CVDubAnimConnection::init()
 
 	// hail the server
 
-	dwSessionID = SendMessage((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_OPEN, lArenaSize, mmapID);
+	dwSessionID = SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_OPEN, lArenaSize, mmapID);
 	if (!dwSessionID) {
 		return FALSE; // no response, Captain
 	}
@@ -267,7 +267,7 @@ BOOL CVDubAnimConnection::init()
 
 	// on screen!  get me the video format!
 
-	if (SendMessage((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_FORMAT, 0, dwSessionID) <= 0) {
+	if (SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_FORMAT, 0, dwSessionID) <= 0) {
 		return FALSE;
 	}
 
@@ -283,12 +283,12 @@ BOOL CVDubAnimConnection::init()
 
 BOOL CVDubAnimConnection::hasAudio()
 {
-	return VDSRVERR_OK == SendMessage((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_STREAMINFO, 1, dwSessionID);
+	return VDSRVERR_OK == SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_STREAMINFO, 1, dwSessionID);
 }
 
 BOOL CVDubAnimConnection::readStreamInfo(AVISTREAMINFO* lpsi, BOOL fAudio, long* lpFirst, long* lpLast)
 {
-	if (VDSRVERR_OK == SendMessage((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_STREAMINFO, !!fAudio, dwSessionID)) {
+	if (VDSRVERR_OK == SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_STREAMINFO, !!fAudio, dwSessionID)) {
 		if (lpsi) {
 			memcpy(lpsi, arena + 8, sizeof(AVISTREAMINFO));
 		}
@@ -305,7 +305,7 @@ BOOL CVDubAnimConnection::readStreamInfo(AVISTREAMINFO* lpsi, BOOL fAudio, long*
 
 int CVDubAnimConnection::readFormat(void* ptr, BOOL fAudio)
 {
-	int err = SendMessage((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_FORMAT, !!fAudio, dwSessionID);
+	int err = SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_FORMAT, !!fAudio, dwSessionID);
 	if (err < 0) {
 		return err;
 	}
@@ -320,7 +320,7 @@ int CVDubAnimConnection::readVideo(long lSample, void* lpBuffer)
 {
 	_RPT0(0, "Sending message...\n");
 
-	int err = SendMessage((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_FRAME, lSample, dwSessionID);
+	int err = SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_FRAME, lSample, dwSessionID);
 	if (VDSRVERR_OK != err) {
 		return err;
 	}
@@ -337,7 +337,7 @@ int CVDubAnimConnection::readAudio(long lSample, long lCount, void* lpBuffer, lo
 	*(long*)(arena + 0) = lCount;
 	*(long*)(arena + 4) = cbBuffer;
 
-	int err = SendMessage((HWND)LongToHandle(frameserver->hwndServer), lpBuffer ? VDSRVM_REQ_AUDIO : VDSRVM_REQ_AUDIOINFO, lSample, dwSessionID);
+	int err = SendMessageW((HWND)LongToHandle(frameserver->hwndServer), lpBuffer ? VDSRVM_REQ_AUDIO : VDSRVM_REQ_AUDIOINFO, lSample, dwSessionID);
 	if (VDSRVERR_OK != err) {
 		return err;
 	}

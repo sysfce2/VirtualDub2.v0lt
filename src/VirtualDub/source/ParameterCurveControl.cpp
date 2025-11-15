@@ -774,7 +774,7 @@ void VDParameterCurveControlW32::Notify(UINT code) {
 	nm.hwndFrom = mhwnd;
 	nm.idFrom	= GetWindowLong(mhwnd, GWL_ID);
 	nm.code		= code;
-	SendMessage(GetParent(mhwnd), WM_NOTIFY, nm.idFrom, (LPARAM)&nm);
+	SendMessageW(GetParent(mhwnd), WM_NOTIFY, nm.idFrom, (LPARAM)&nm);
 }
 
 double VDParameterCurveControlW32::ScreenToCurveX(int x) {

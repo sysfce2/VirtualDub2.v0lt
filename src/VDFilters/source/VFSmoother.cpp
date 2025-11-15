@@ -1178,8 +1178,8 @@ static INT_PTR CALLBACK FilterValueDlgProc( HWND hDlg, UINT message, WPARAM wPar
     {
         case WM_INITDIALOG:
 			mfd = (MyFilterData *)lParam;
-			SendMessage(GetDlgItem(hDlg, IDC_SLIDER), TBM_SETRANGE, (WPARAM)FALSE, MAKELONG(0, 100));
-			SendMessage(GetDlgItem(hDlg, IDC_SLIDER), TBM_SETPOS, (WPARAM)TRUE, (mfd->grad_threshold+100)/200); 
+			SendMessageW(GetDlgItem(hDlg, IDC_SLIDER), TBM_SETRANGE, (WPARAM)FALSE, MAKELONG(0, 100));
+			SendMessageW(GetDlgItem(hDlg, IDC_SLIDER), TBM_SETPOS, (WPARAM)TRUE, (mfd->grad_threshold+100)/200); 
 			CheckDlgButton(hDlg, IDC_PREFILTER, mfd->fBlurPass?BST_CHECKED:BST_UNCHECKED);
 			SetWindowLongPtr(hDlg, DWLP_USER, (LPARAM)mfd);
 			mfd->ifp->InitButton((VDXHWND)GetDlgItem(hDlg, IDC_PREVIEW));
@@ -1209,8 +1209,8 @@ static INT_PTR CALLBACK FilterValueDlgProc( HWND hDlg, UINT message, WPARAM wPar
 		case WM_NOTIFY:
 			{
 				HWND hwndItem = GetDlgItem(hDlg, IDC_SLIDER);
-				SetDlgItemInt(hDlg, IDC_VALUE, SendMessage(hwndItem, TBM_GETPOS, 0,0), FALSE);
-				mfd->grad_threshold = SendMessage(GetDlgItem(hDlg, IDC_SLIDER), TBM_GETPOS, 0,0)*200;
+				SetDlgItemInt(hDlg, IDC_VALUE, SendMessageW(hwndItem, TBM_GETPOS, 0,0), FALSE);
+				mfd->grad_threshold = SendMessageW(GetDlgItem(hDlg, IDC_SLIDER), TBM_GETPOS, 0,0)*200;
 				mfd->ifp->RedoFrame();
 			}
 			return TRUE;

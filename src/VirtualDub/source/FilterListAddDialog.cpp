@@ -161,7 +161,7 @@ void VDDialogFilterListW32::OnDestroy() {
 
 void VDDialogFilterListW32::OnSize() {
 	mResizer.Relayout();
-	SendMessage(mListView.GetHandle(), LVM_SETCOLUMNWIDTH, 2, LVSCW_AUTOSIZE_USEHEADER);
+	SendMessageW(mListView.GetHandle(), LVM_SETCOLUMNWIDTH, 2, LVSCW_AUTOSIZE_USEHEADER);
 }
 
 bool VDDialogFilterListW32::OnErase(VDZHDC hdc) {
@@ -305,7 +305,7 @@ void VDDialogFilterListW32::RebuildList() {
 		mListView.SetSelectedIndex(sel_idx);
 
 	EnableWindow(GetDlgItem(mhdlg,IDC_SHOWALL),hide_count>0 || !mShowModule.empty());
-	SendMessage(mListView.GetHandle(), LVM_SETCOLUMNWIDTH, 2, LVSCW_AUTOSIZE_USEHEADER);
+	SendMessageW(mListView.GetHandle(), LVM_SETCOLUMNWIDTH, 2, LVSCW_AUTOSIZE_USEHEADER);
 }
 
 void VDDialogFilterListW32::ReloadCheck() {

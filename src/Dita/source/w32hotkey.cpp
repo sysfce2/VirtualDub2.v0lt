@@ -60,7 +60,7 @@ void VDUIHotkeyW32::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) {
 
 void VDUIHotkeyW32::OnCommandCallback(UINT code) {
 	if (code == EN_CHANGE) {
-		mValue = SendMessage(mhwnd, HKM_GETHOTKEY, 0, 0);
+		mValue = SendMessageW(mhwnd, HKM_GETHOTKEY, 0, 0);
 		mpBase->ProcessActivation(this, mID);
 		mpBase->DispatchEvent(this, mID, IVDUICallback::kEventSelect, 0);
 	}
@@ -72,5 +72,5 @@ int VDUIHotkeyW32::GetValue() {
 
 void VDUIHotkeyW32::SetValue(int value) {
 	mValue = value;
-	SendMessage(mhwnd, HKM_SETHOTKEY, value, 0);
+	SendMessageW(mhwnd, HKM_SETHOTKEY, value, 0);
 }

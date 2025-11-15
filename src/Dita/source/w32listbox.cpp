@@ -68,11 +68,11 @@ void VDUIListBoxW32::PreLayoutBaseW32(const VDUILayoutSpecs& parentConstraints) 
 }
 
 void VDUIListBoxW32::Clear() {
-	SendMessage(mhwnd, LB_RESETCONTENT, 0, 0);
+	SendMessageW(mhwnd, LB_RESETCONTENT, 0, 0);
 }
 
 int VDUIListBoxW32::GetItemCount() {
-	LRESULT lr = SendMessage(mhwnd, LB_GETCOUNT, 0, 0);
+	LRESULT lr = SendMessageW(mhwnd, LB_GETCOUNT, 0, 0);
 
 	VDASSERT(lr != LB_ERR);
 
@@ -80,11 +80,11 @@ int VDUIListBoxW32::GetItemCount() {
 }
 
 uintptr VDUIListBoxW32::GetItemData(int index) {
-	return SendMessage(mhwnd, LB_GETITEMDATA, index, 0);
+	return SendMessageW(mhwnd, LB_GETITEMDATA, index, 0);
 }
 
 void VDUIListBoxW32::SetItemData(int index, uintptr data) {
-	SendMessage(mhwnd, LB_SETITEMDATA, index, (LPARAM)data);
+	SendMessageW(mhwnd, LB_SETITEMDATA, index, (LPARAM)data);
 }
 
 int VDUIListBoxW32::AddItem(const wchar_t *text, uintptr data) {
@@ -92,15 +92,16 @@ int VDUIListBoxW32::AddItem(const wchar_t *text, uintptr data) {
 
 	idx = (int)SendMessageW(mhwnd, LB_ADDSTRING, 0, (LPARAM)text);
 
-	if (idx >= 0)
-		SendMessage(mhwnd, LB_SETITEMDATA, (WPARAM)idx, (LPARAM)data);
+	if (idx >= 0) {
+		SendMessageW(mhwnd, LB_SETITEMDATA, (WPARAM)idx, (LPARAM)data);
+	}
 
 	return idx;
 }
 
 void VDUIListBoxW32::OnCommandCallback(UINT code) {
    	if (code == LBN_SELCHANGE) {
-   		int iSel = (int)SendMessage(mhwnd, LB_GETCURSEL, 0, 0);
+   		int iSel = (int)SendMessageW(mhwnd, LB_GETCURSEL, 0, 0);
 
    		if (iSel != mSelected) {
    			mSelected = iSel;
@@ -117,7 +118,7 @@ int VDUIListBoxW32::GetValue() {
 
 void VDUIListBoxW32::SetValue(int value) {
 	mSelected = value;		// prevents recursion
-	SendMessage(mhwnd, LB_SETCURSEL, value, 0);
+	SendMessageW(mhwnd, LB_SETCURSEL, value, 0);
 }
 
 
@@ -184,11 +185,11 @@ void VDUIComboBoxW32::PreLayoutBaseW32(const VDUILayoutSpecs& parentConstraints)
 }
 
 void VDUIComboBoxW32::Clear() {
-	SendMessage(mhwnd, CB_RESETCONTENT, 0, 0);
+	SendMessageW(mhwnd, CB_RESETCONTENT, 0, 0);
 }
 
 int VDUIComboBoxW32::GetItemCount() {
-	LRESULT lr = SendMessage(mhwnd, CB_GETCOUNT, 0, 0);
+	LRESULT lr = SendMessageW(mhwnd, CB_GETCOUNT, 0, 0);
 
 	VDASSERT(lr != CB_ERR);
 
@@ -196,27 +197,27 @@ int VDUIComboBoxW32::GetItemCount() {
 }
 
 uintptr VDUIComboBoxW32::GetItemData(int index) {
-	return (uintptr)SendMessage(mhwnd, CB_GETITEMDATA, index, 0);
+	return (uintptr)SendMessageW(mhwnd, CB_GETITEMDATA, index, 0);
 }
 
 void VDUIComboBoxW32::SetItemData(int index, uintptr data) {
-	SendMessage(mhwnd, CB_SETITEMDATA, index, (LPARAM)data);
+	SendMessageW(mhwnd, CB_SETITEMDATA, index, (LPARAM)data);
 }
 
-int VDUIComboBoxW32::AddItem(const wchar_t *text, uintptr data) {
-	int sel;
+int VDUIComboBoxW32::AddItem(const wchar_t *text, uintptr data)
+{
+	int sel = (int)SendMessageW(mhwnd, CB_ADDSTRING, 0, (LPARAM)text);
 
-	sel = (int)SendMessageW(mhwnd, CB_ADDSTRING, 0, (LPARAM)text);
-
-	if (sel >= 0)
-		SendMessage(mhwnd, CB_SETITEMDATA, (WPARAM)sel, (LPARAM)data);
+	if (sel >= 0) {
+		SendMessageW(mhwnd, CB_SETITEMDATA, (WPARAM)sel, (LPARAM)data);
+	}
 
 	return sel;
 }
 
 void VDUIComboBoxW32::OnCommandCallback(UINT code) {
    	if (code == CBN_SELCHANGE) {
-   		int iSel = (int)SendMessage(mhwnd, CB_GETCURSEL, 0, 0);
+   		int iSel = (int)SendMessageW(mhwnd, CB_GETCURSEL, 0, 0);
 
    		if (iSel != mSelected) {
    			mSelected = iSel;
@@ -233,6 +234,6 @@ int VDUIComboBoxW32::GetValue() {
 
 void VDUIComboBoxW32::SetValue(int value) {
 	mSelected = value;		// prevents recursion
-	SendMessage(mhwnd, CB_SETCURSEL, value, 0);
+	SendMessageW(mhwnd, CB_SETCURSEL, value, 0);
 }
 

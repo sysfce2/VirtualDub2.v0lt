@@ -66,15 +66,15 @@ void VDUITrackbarW32::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) {
 
 void VDUITrackbarW32::SetRange(sint32 mn, sint32 mx) {
 	mStep = 1;
-	SendMessage(mhwnd, TBM_SETRANGEMIN, FALSE, mn);
-	SendMessage(mhwnd, TBM_SETRANGEMAX, TRUE, mx);
+	SendMessageW(mhwnd, TBM_SETRANGEMIN, FALSE, mn);
+	SendMessageW(mhwnd, TBM_SETRANGEMAX, TRUE, mx);
 	OnScrollCallback(0);	// check for clip
 }
 
 void VDUITrackbarW32::SetRangeStep(sint32 mn, sint32 mx, sint32 step) {
 	mStep = step;
-	SendMessage(mhwnd, TBM_SETRANGEMIN, FALSE, mn/step);
-	SendMessage(mhwnd, TBM_SETRANGEMAX, TRUE, mx/step);
+	SendMessageW(mhwnd, TBM_SETRANGEMIN, FALSE, mn/step);
+	SendMessageW(mhwnd, TBM_SETRANGEMAX, TRUE, mx/step);
 	//OnScrollCallback(0);	// check for clip
 }
 
@@ -84,11 +84,11 @@ int VDUITrackbarW32::GetValue() {
 
 void VDUITrackbarW32::SetValue(int value) {
 	mValue = value;		// prevents recursion
-	SendMessage(mhwnd, TBM_SETPOS, TRUE, value/mStep);
+	SendMessageW(mhwnd, TBM_SETPOS, TRUE, value/mStep);
 }
 
 void VDUITrackbarW32::OnScrollCallback(UINT code) {
-	sint32 v = SendMessage(mhwnd, TBM_GETPOS, 0, 0)*mStep;
+	sint32 v = SendMessageW(mhwnd, TBM_GETPOS, 0, 0)*mStep;
 
 	if (mValue != v) {
 		mValue = v;

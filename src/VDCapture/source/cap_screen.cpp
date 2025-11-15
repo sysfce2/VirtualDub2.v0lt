@@ -818,11 +818,11 @@ bool VDCaptureDriverScreen::CaptureStart() {
 }
 
 void VDCaptureDriverScreen::CaptureStop() {
-	SendMessage(mhwnd, WM_APP+16, 0, 0);
+	SendMessageW(mhwnd, WM_APP+16, 0, 0);
 }
 
 void VDCaptureDriverScreen::CaptureAbort() {
-	SendMessage(mhwnd, WM_APP+17, 0, 0);
+	SendMessageW(mhwnd, WM_APP+17, 0, 0);
 	mbCapturing = false;
 }
 

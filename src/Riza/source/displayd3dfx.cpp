@@ -1403,7 +1403,7 @@ void VDVideoDisplayMinidriverD3DFX::DisplayError() {
 	mhwndError = CreateWindowW(L"EDIT", mError.c_str(), WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_MULTILINE | ES_READONLY, 0, 0, mrClient.right, mrClient.bottom, mhwnd, NULL, hInst, NULL);
 
 	if (mhwndError)
-		SendMessage(mhwndError, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), 0);
+		SendMessageW(mhwndError, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), 0);
 }
 
 void VDVideoDisplayMinidriverD3DFX::PreprocessEffectParameters() {

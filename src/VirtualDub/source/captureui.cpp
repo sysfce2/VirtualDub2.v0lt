@@ -716,9 +716,9 @@ bool VDCaptureProjectUI::Attach(VDGUIHandle hwnd, IVDCaptureProject *pProject) {
 		Detach();
 		return false;
 	}
-	SendMessage(mhwndStatus, SB_SIMPLE, (WPARAM)FALSE, 0);
-	SendMessage(mhwndStatus, SB_SETPARTS, (WPARAM)6, (LPARAM)(LPINT)kStatusPartWidths);
-	SendMessage(mhwndStatus, SB_SETTEXTA, 6 | SBT_NOBORDERS, (LPARAM)"");
+	SendMessageW(mhwndStatus, SB_SIMPLE, (WPARAM)FALSE, 0);
+	SendMessageW(mhwndStatus, SB_SETPARTS, (WPARAM)6, (LPARAM)(LPINT)kStatusPartWidths);
+	SendMessageW(mhwndStatus, SB_SETTEXTA, 6 | SBT_NOBORDERS, (LPARAM)"");
 
 	// subclass the status window
 	mStatusWndProc = (WNDPROC)GetWindowLongPtr(mhwndStatus, GWLP_WNDPROC);
@@ -2236,7 +2236,7 @@ void VDCaptureProjectUI::UICaptureAudioFormatUpdated() {
 		}
 	}
 
-	SendMessage(mhwndStatus, SB_SETTEXTA, 1 | SBT_POPOUT, (LPARAM)bufa);
+	SendMessageW(mhwndStatus, SB_SETTEXTA, 1 | SBT_POPOUT, (LPARAM)bufa);
 
 	RebuildPanel();
 }
@@ -2507,7 +2507,7 @@ void VDCaptureProjectUI::UICaptureStart(bool test) {
 	}
 
 	// reset preview rate status
-	SendMessage(mhwndStatus, SB_SETTEXTA, 3, (LPARAM)"");
+	SendMessageW(mhwndStatus, SB_SETTEXTA, 3, (LPARAM)"");
 
 	if (test) {
 		VDLog(kVDLogInfo, VDStringW(L"Starting test capture."));
@@ -2596,16 +2596,16 @@ LRESULT VDCaptureProjectUI::StatusWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 
 			for(int i=0; i<2; i++) {
 				RECT r2;
-				if (SendMessage(hwnd, SB_GETRECT, i+1, (LPARAM)&r2)) {
+				if (SendMessageW(hwnd, SB_GETRECT, i+1, (LPARAM)&r2)) {
 					if (PtInRect(&r2, pt)) {
 						MapWindowPoints(hwnd, NULL, (LPPOINT)&r2, 2);
 
-						unsigned len = LOWORD(SendMessage(hwnd, SB_GETTEXTLENGTHA, i+1, 0));
+						unsigned len = LOWORD(SendMessageW(hwnd, SB_GETTEXTLENGTHA, i+1, 0));
 
 						vdfastvector<char> str(len+1, 0);
 
-						SendMessage(hwnd, SB_GETTEXTA, i+1, (LPARAM)str.data());
-						SendMessage(hwnd, SB_SETTEXTA, (i+1), (LPARAM)str.data());
+						SendMessageW(hwnd, SB_GETTEXTA, i+1, (LPARAM)str.data());
+						SendMessageW(hwnd, SB_SETTEXTA, (i+1), (LPARAM)str.data());
 
 						bool enabled = true;
 						if (i==0) {
@@ -2623,7 +2623,7 @@ LRESULT VDCaptureProjectUI::StatusWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 									0, (HWND)mhwnd, NULL);
 						}
 
-						SendMessage(hwnd, SB_SETTEXTA, (i+1) | SBT_POPOUT, (LPARAM)str.data());
+						SendMessageW(hwnd, SB_SETTEXTA, (i+1) | SBT_POPOUT, (LPARAM)str.data());
 						PostMessage((HWND)mhwnd, WM_NULL, 0, 0);
 						break;
 					}
@@ -3070,7 +3070,7 @@ void VDCaptureProjectUI::OnSize() {
 
 	UpdateDisplayPos();
 
-	if ((nParts = SendMessage(mhwndStatus, SB_GETPARTS, 0, 0))>1) {
+	if ((nParts = SendMessageW(mhwndStatus, SB_GETPARTS, 0, 0))>1) {
 		int i;
 		INT xCoord = (rClient.right-rClient.left);
 
@@ -3087,7 +3087,7 @@ void VDCaptureProjectUI::OnSize() {
 		}
 		aWidth[nParts-1] = -1;
 
-		SendMessage(mhwndStatus, SB_SETPARTS, nParts, (LPARAM)aWidth);
+		SendMessageW(mhwndStatus, SB_SETPARTS, nParts, (LPARAM)aWidth);
 	}
 
 	InvalidateRect((HWND)mhwnd, NULL, FALSE);
@@ -3912,7 +3912,7 @@ void VDCaptureProjectUI::OnUpdateVumeter() {
 
 void VDCaptureProjectUI::OnUpdateStatus() {
 	if (!mbFullScreen &&mbInfoPanel && mhwndPanel)
-		SendMessage(mhwndPanel, WM_APP, 0, (LPARAM)&mCurStatus);
+		SendMessageW(mhwndPanel, WM_APP, 0, (LPARAM)&mCurStatus);
 
 	if (!mCurStatus.mFramesCaptured)
 		return;
@@ -4143,7 +4143,7 @@ void VDCaptureProjectUI::RebuildPanel() {
 	if (!mhwndPanel)
 		return;
 
-	SendMessage(mhwndPanel,WM_SETREDRAW,false,0);
+	SendMessageW(mhwndPanel,WM_SETREDRAW,false,0);
 
 	// Delete all the children
 	mInfoPanelItems.clear();
@@ -4168,7 +4168,7 @@ void VDCaptureProjectUI::RebuildPanel() {
 	VDCapturePreferences::InfoItems infoItems;
 	GetPanelItems(infoItems);
 
-	HFONT hfont = (HFONT)SendMessage(mhwndPanel, WM_GETFONT, 0, 0);
+	HFONT hfont = (HFONT)SendMessageW(mhwndPanel, WM_GETFONT, 0, 0);
 	if (mhPanelFont2) DeleteObject(mhPanelFont2);
 	if (mhPanelFont3) DeleteObject(mhPanelFont3);
 	LOGFONT lf;
@@ -4232,9 +4232,9 @@ void VDCaptureProjectUI::RebuildPanel() {
 
 			if (hwndLabel) {
 				if (extraBig) {
-					SendMessage(hwndLabel, WM_SETFONT, (WPARAM)mhPanelFont3, TRUE);
+					SendMessageW(hwndLabel, WM_SETFONT, (WPARAM)mhPanelFont3, TRUE);
 				} else {
-					SendMessage(hwndLabel, WM_SETFONT, (WPARAM)hfont, TRUE);
+					SendMessageW(hwndLabel, WM_SETFONT, (WPARAM)hfont, TRUE);
 				}
 
 				if (hwndChild) {
@@ -4264,7 +4264,7 @@ void VDCaptureProjectUI::RebuildPanel() {
 			}
 
 			if (hwndChild) {
-				SendMessage(hwndChild, WM_SETFONT, (WPARAM)hfont, TRUE);
+				SendMessageW(hwndChild, WM_SETFONT, (WPARAM)hfont, TRUE);
 				mInfoPanelItems.push_back(infoid);
 				mInfoPanelChildren.push_back(hwndChild);
 			} else {
@@ -4284,15 +4284,16 @@ void VDCaptureProjectUI::RebuildPanel() {
 			hwndGroup = CreateWindowW(L"BUTTON", groupLabel, WS_CHILD|WS_VISIBLE|BS_GROUPBOX, x1, groupY, x2-x1, y - groupY, mhwndPanel, (HMENU)-1, g_hInst, NULL);
 
 			if (hwndGroup) {
-				if (type==kVDCaptureInfoType_Flag)
-					SendMessage(hwndGroup, WM_SETFONT, (WPARAM)mhPanelFont2, TRUE);
-				else
-					SendMessage(hwndGroup, WM_SETFONT, (WPARAM)hfont, TRUE);
+				if (type == kVDCaptureInfoType_Flag) {
+					SendMessageW(hwndGroup, WM_SETFONT, (WPARAM)mhPanelFont2, TRUE);
+				} else {
+					SendMessageW(hwndGroup, WM_SETFONT, (WPARAM)hfont, TRUE);
+				}
 			}
 		}
 	}
 
-	SendMessage(mhwndPanel,WM_SETREDRAW,true,0);
+	SendMessageW(mhwndPanel,WM_SETREDRAW,true,0);
 	InvalidateRect(mhwndPanel,0,true);
 }
 
@@ -4676,7 +4677,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			for (i = 0; i < std::size(s_widths); i++) {
 				sprintf(buf, "%d", s_widths[i]);
 				ind = SendMessageA(hwndItem, LB_ADDSTRING, 0, (LPARAM)buf);
-				SendMessage(hwndItem, LB_SETITEMDATA, ind, i);
+				SendMessageW(hwndItem, LB_SETITEMDATA, ind, i);
 
 				if (s_widths[i] == w) {
 					found_w = i;
@@ -4687,7 +4688,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			for (i = 0; i < std::size(s_heights ); i++) {
 				sprintf(buf, "%d", s_heights[i]);
 				ind = SendMessageA(hwndItem, LB_ADDSTRING, 0, (LPARAM)buf);
-				SendMessage(hwndItem, LB_SETITEMDATA, ind, i);
+				SendMessageW(hwndItem, LB_SETITEMDATA, ind, i);
 
 				if (s_heights[i] == h) {
 					found_h = i;
@@ -4699,12 +4700,12 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			{
 				int tabw = 50;
 
-				SendMessage(hwndItem, LB_SETTABSTOPS, 1, (LPARAM)&tabw);
+				SendMessageW(hwndItem, LB_SETTABSTOPS, 1, (LPARAM)&tabw);
 			}
 
 			for (i = 0; i < std::size(s_formats ); i++) {
 				ind = SendMessageA(hwndItem, LB_ADDSTRING, 0, (LPARAM)s_formats[i].name);
-				SendMessage(hwndItem, LB_SETITEMDATA, ind, i + 1);
+				SendMessageW(hwndItem, LB_SETITEMDATA, ind, i + 1);
 
 				if (s_formats[i].fcc == s_fcc && s_formats[i].bpp == s_bpp) {
 					found_f = i;
@@ -4712,7 +4713,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			}
 
 			if (found_f >= 0) {
-				SendMessage(hwndItem, LB_SETCURSEL, found_f, 0);
+				SendMessageW(hwndItem, LB_SETCURSEL, found_f, 0);
 			} else {
 				union {
 					char fccbuf[5];
@@ -4725,8 +4726,8 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 				sprintf(buf, "[Current: %s, %d bits per pixel]", fccbuf, s_bpp);
 
 				ind = SendMessageA(hwndItem, LB_INSERTSTRING, 0, (LPARAM)buf);
-				SendMessage(hwndItem, LB_SETITEMDATA, ind, 0);
-				SendMessage(hwndItem, LB_SETCURSEL, 0, 0);
+				SendMessageW(hwndItem, LB_SETITEMDATA, ind, 0);
+				SendMessageW(hwndItem, LB_SETCURSEL, 0, 0);
 			}
 
 			if (found_w >=0 && found_h >=0) {
@@ -4833,7 +4834,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 
 		case IDC_CUSTOM:
 			{
-				BOOL fEnabled = SendMessage((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED;
+				BOOL fEnabled = SendMessageW((HWND)lParam, BM_GETSTATE, 0, 0) & BST_CHECKED;
 
 				EnableWindow(GetDlgItem(hdlg, IDC_WIDTH), fEnabled);
 				EnableWindow(GetDlgItem(hdlg, IDC_HEIGHT), fEnabled);

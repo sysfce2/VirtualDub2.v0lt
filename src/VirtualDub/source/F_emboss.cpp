@@ -55,9 +55,9 @@ static INT_PTR CALLBACK embossDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 				HWND hWnd;
 
 				hWnd = GetDlgItem(hDlg, IDC_HEIGHT);
-				SendMessage(hWnd, TBM_SETTICFREQ, 16, 0);
-				SendMessage(hWnd, TBM_SETRANGE, (WPARAM)TRUE, MAKELONG(1, 256));
-				SendMessage(hWnd, TBM_SETPOS, (WPARAM)TRUE, mfd->height);
+				SendMessageW(hWnd, TBM_SETTICFREQ, 16, 0);
+				SendMessageW(hWnd, TBM_SETRANGE, (WPARAM)TRUE, MAKELONG(1, 256));
+				SendMessageW(hWnd, TBM_SETPOS, (WPARAM)TRUE, mfd->height);
 				CheckDlgButton(hDlg, IDC_DIR_MIDDLERIGHT+mfd->direction, TRUE);
 				CheckDlgButton(hDlg, IDC_ROUNDED, !!mfd->rounded);
 
@@ -70,7 +70,7 @@ static INT_PTR CALLBACK embossDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 				MyFilterData *mfd = (struct MyFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
 				int i;
 
-				mfd->height = SendMessage(GetDlgItem(hDlg, IDC_HEIGHT), TBM_GETPOS, 0, 0);
+				mfd->height = SendMessageW(GetDlgItem(hDlg, IDC_HEIGHT), TBM_GETPOS, 0, 0);
 
 				for(i=0; i<8; i++)
 					if (IsDlgButtonChecked(hDlg, IDC_DIR_MIDDLERIGHT+i)) {

@@ -503,14 +503,14 @@ bool VDBackfaceConsole::OnCreate() {
 	if (!mhwndLog)
 		return false;
 
-	SendMessage(mhwndLog, WM_SETFONT, (WPARAM)mFont, NULL);
+	SendMessageW(mhwndLog, WM_SETFONT, (WPARAM)mFont, NULL);
 
 	mhwndEdit = CreateWindowExW(WS_EX_CLIENTEDGE, L"RICHEDIT", L"", WS_VISIBLE|WS_CHILD, 0, 0, 0, 0, mhwnd, (HMENU)100, g_hInst, NULL);
 	if (!mhwndEdit)
 		return false;
 
-	SendMessage(mhwndEdit, EM_SETEVENTMASK, 0, ENM_KEYEVENTS);
-	SendMessage(mhwndEdit, WM_SETFONT, (WPARAM)mFont, NULL);
+	SendMessageW(mhwndEdit, EM_SETEVENTMASK, 0, ENM_KEYEVENTS);
+	SendMessageW(mhwndEdit, WM_SETFONT, (WPARAM)mFont, NULL);
 
 	OnSize();
 
@@ -577,8 +577,8 @@ LRESULT VDBackfaceConsole::OnNotify(NMHDR *pHdr) {
 }
 
 void VDBackfaceConsole::operator<<(const char *s) {
-	SendMessage(mhwndLog, EM_SETSEL, -1, -1);
-	SendMessage(mhwndLog, EM_REPLACESEL, FALSE, (LPARAM)s);
+	SendMessageW(mhwndLog, EM_SETSEL, -1, -1);
+	SendMessageW(mhwndLog, EM_REPLACESEL, FALSE, (LPARAM)s);
 }
 
 ///////////////////////////////////////////////////////////////////////////

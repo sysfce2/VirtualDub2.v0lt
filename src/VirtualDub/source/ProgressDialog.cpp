@@ -124,7 +124,7 @@ INT_PTR CALLBACK ProgressDialog::ProgressDlgProc(HWND hDlg, UINT msg, WPARAM wPa
 			thisPtr = (ProgressDialog *)lParam;
 			thisPtr->hwndProgressBar = GetDlgItem(hDlg, IDC_PROGRESS);
 			thisPtr->hwndValue = GetDlgItem(hDlg, IDC_CURRENT_VALUE);
-			SendMessage(GetDlgItem(hDlg, IDC_PROGRESS), PBM_SETRANGE, 0, MAKELPARAM(0, 16384));
+			SendMessageW(GetDlgItem(hDlg, IDC_PROGRESS), PBM_SETRANGE, 0, MAKELPARAM(0, 16384));
 
 			if (!thisPtr->fAbortEnabled)
 				EnableWindow(GetDlgItem(hDlg, IDCANCEL), FALSE);
@@ -163,7 +163,7 @@ INT_PTR CALLBACK ProgressDialog::ProgressDlgProc(HWND hDlg, UINT msg, WPARAM wPa
 				if (newval2 > 16384) newval2 = 16384;
 				thisPtr->curval = newval2;
 
-				SendMessage(thisPtr->hwndProgressBar, PBM_SETPOS, (WPARAM)newval2, 0);
+				SendMessageW(thisPtr->hwndProgressBar, PBM_SETPOS, (WPARAM)newval2, 0);
 			}
 
 			if (thisPtr->lpszValueFormat) {

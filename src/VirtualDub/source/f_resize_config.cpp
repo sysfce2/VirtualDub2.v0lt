@@ -651,10 +651,10 @@ void VDDataExchangeDialogW32::ExchangeOption(uint32 id, uint32& value, uint32 op
 	}
 
 	if (mbWrite) {
-		SendMessage(hwnd, BM_SETCHECK, (value == optionValue) ? BST_CHECKED : BST_UNCHECKED, 0);
+		SendMessageW(hwnd, BM_SETCHECK, (value == optionValue) ? BST_CHECKED : BST_UNCHECKED, 0);
 	} else {
 		if (value != optionValue) {
-			if (SendMessage(hwnd, BM_GETCHECK, 0, 0) == BST_CHECKED) {
+			if (SendMessageW(hwnd, BM_GETCHECK, 0, 0) == BST_CHECKED) {
 				mbChangeDetected = true;
 				value = optionValue;
 			}
@@ -671,9 +671,9 @@ void VDDataExchangeDialogW32::ExchangeCombo(uint32 id, uint32& value) {
 	}
 
 	if (mbWrite) {
-		SendMessage(hwnd, CB_SETCURSEL, value, 0);
+		SendMessageW(hwnd, CB_SETCURSEL, value, 0);
 	} else {
-		int result = (int)SendMessage(hwnd, CB_GETCURSEL, 0, 0);
+		int result = (int)SendMessageW(hwnd, CB_GETCURSEL, 0, 0);
 
 		if (result != CB_ERR && (uint32)result != value) {
 			mbChangeDetected = true;
@@ -691,9 +691,9 @@ void VDDataExchangeDialogW32::ExchangeButton(uint32 id, bool& value) {
 	}
 
 	if (mbWrite) {
-		SendMessage(hwnd, BM_SETCHECK, value ? BST_CHECKED : BST_UNCHECKED, 0);
+		SendMessageW(hwnd, BM_SETCHECK, value ? BST_CHECKED : BST_UNCHECKED, 0);
 	} else {
-		bool result = (SendMessage(hwnd, BM_GETCHECK, 0, 0) == BST_CHECKED);
+		bool result = (SendMessageW(hwnd, BM_GETCHECK, 0, 0) == BST_CHECKED);
 
 		if (result != value) {
 			mbChangeDetected = true;
@@ -945,7 +945,7 @@ void VDVF1ResizeDlg::InitDialog() {
 	hwndItem = GetDlgItem(mhdlg, id);
 	if (hwndItem) {
 		SetFocus(hwndItem);
-		SendMessage(hwndItem, EM_SETSEL, 0, -1);
+		SendMessageW(hwndItem, EM_SETSEL, 0, -1);
 	}
 }
 
@@ -1265,7 +1265,7 @@ void VDVFCanvasDlg::InitDialog() {
 	HWND hwndItem = GetDlgItem(mhdlg, id);
 	if (hwndItem) {
 		SetFocus(hwndItem);
-		SendMessage(hwndItem, EM_SETSEL, 0, -1);
+		SendMessageW(hwndItem, EM_SETSEL, 0, -1);
 	}
 
 	SendDlgItemMessage(mhdlg, IDC_SPIN_XOFFSET, UDM_SETRANGE, 0, MAKELONG((short)-(UD_MINVAL-1/2), (short)+(UD_MINVAL-1/2)));

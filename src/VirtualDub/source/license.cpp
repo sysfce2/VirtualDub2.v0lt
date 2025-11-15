@@ -99,7 +99,7 @@ void Licensor::depack(HWND hDlg) {
 				}
 				*t = 0;
 
-				SendMessage(GetDlgItem(hDlg, IDC_LICENSE), WM_SETFONT, (WPARAM)GetStockObject(SYSTEM_FIXED_FONT), MAKELPARAM(TRUE, 0));
+				SendMessageW(GetDlgItem(hDlg, IDC_LICENSE), WM_SETFONT, (WPARAM)GetStockObject(SYSTEM_FIXED_FONT), MAKELPARAM(TRUE, 0));
 				SendMessageA(GetDlgItem(hDlg, IDC_LICENSE), WM_SETTEXT, 0, (LPARAM)textbuf);
 				return;
 			}

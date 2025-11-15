@@ -71,7 +71,7 @@ void VDDialogFrameW32::Destroy() {
 
 void VDDialogFrameW32::Close() {
 	if (mhdlg)
-		SendMessage(mhdlg, WM_CLOSE, 0, 0);
+		SendMessageW(mhdlg, WM_CLOSE, 0, 0);
 }
 
 sintptr VDDialogFrameW32::ShowDialog(VDGUIHandle parent) {
@@ -141,7 +141,7 @@ void VDDialogFrameW32::AdjustPosition() {
 	if (!mhdlg)
 		return;
 
-	SendMessage(mhdlg, DM_REPOSITION, 0, 0);
+	SendMessageW(mhdlg, DM_REPOSITION, 0, 0);
 }
 
 void VDDialogFrameW32::CenterOnParent() {
@@ -204,8 +204,9 @@ void VDDialogFrameW32::SetFocusToControl(uint32 id) {
 		return;
 
 	HWND hwnd = GetDlgItem(mhdlg, id);
-	if (hwnd)
-		SendMessage(mhdlg, WM_NEXTDLGCTL, (WPARAM)hwnd, TRUE);
+	if (hwnd) {
+		SendMessageW(mhdlg, WM_NEXTDLGCTL, (WPARAM)hwnd, TRUE);
+	}
 }
 
 void VDDialogFrameW32::EnableControl(uint32 id, bool enabled) {

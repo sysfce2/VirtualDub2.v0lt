@@ -761,7 +761,7 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 
 			case IDC_SCENEREV:
 				cmd = PCN_SCENEREV;
-				if (BST_UNCHECKED!=SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+				if (BST_UNCHECKED!=SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 					if (IsDlgButtonChecked(mhwnd, IDC_SCENEFWD))
 						CheckDlgButton(mhwnd, IDC_SCENEFWD, BST_UNCHECKED);
 				} else
@@ -769,7 +769,7 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 				break;
 			case IDC_SCENEFWD:
 				cmd = PCN_SCENEFWD;
-				if (BST_UNCHECKED!=SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+				if (BST_UNCHECKED!=SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 					if (IsDlgButtonChecked(mhwnd, IDC_SCENEREV))
 						CheckDlgButton(mhwnd, IDC_SCENEREV, BST_UNCHECKED);
 				} else
@@ -813,7 +813,7 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 				return 0;
 			}
 
-			LRESULT r = SendMessage(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLong(mhwnd, GWL_ID), cmd), (LPARAM)mhwnd);
+			LRESULT r = SendMessageW(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLong(mhwnd, GWL_ID), cmd), (LPARAM)mhwnd);
 			if(r==-1) switch(LOWORD(wParam)) {
 			case IDC_SCENEREV:
 			case IDC_SCENEFWD:

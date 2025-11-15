@@ -428,7 +428,7 @@ VDVideoDisplayWindow::~VDVideoDisplayWindow() {
 #define MYWM_SETDISPLAYMODE	(WM_USER + 0x109)
 
 void VDVideoDisplayWindow::SetSourceMessage(const wchar_t *msg) {
-	SendMessage(mhwnd, MYWM_SETSOURCEMSG, 0, (LPARAM)msg);
+	SendMessageW(mhwnd, MYWM_SETSOURCEMSG, 0, (LPARAM)msg);
 }
 
 void VDVideoDisplayWindow::SetSourcePalette(const uint32 *palette, int count) {
@@ -457,7 +457,7 @@ bool VDVideoDisplayWindow::SetSource(bool bAutoUpdate, const VDPixmap& src, void
 
 	params.mpCB				= this;
 
-	return 0 != SendMessage(mhwnd, MYWM_SETSOURCE, bAutoUpdate, (LPARAM)&params);
+	return 0 != SendMessageW(mhwnd, MYWM_SETSOURCE, bAutoUpdate, (LPARAM)&params);
 }
 
 bool VDVideoDisplayWindow::SetSourcePersistent(bool bAutoUpdate, const VDPixmap& src, bool bAllowConversion, bool bInterlaced) {
@@ -479,7 +479,7 @@ bool VDVideoDisplayWindow::SetSourcePersistent(bool bAutoUpdate, const VDPixmap&
 	params.bpr = (((src.w-1) >> info.qwbits)+1) * info.qsize;
 	params.mpCB				= this;
 
-	return 0 != SendMessage(mhwnd, MYWM_SETSOURCE, bAutoUpdate, (LPARAM)&params);
+	return 0 != SendMessageW(mhwnd, MYWM_SETSOURCE, bAutoUpdate, (LPARAM)&params);
 }
 
 void VDVideoDisplayWindow::SetSourceSubrect(const vdrect32 *r) {
@@ -496,7 +496,7 @@ void VDVideoDisplayWindow::SetSourceSubrect(const vdrect32 *r) {
 }
 
 void VDVideoDisplayWindow::SetSourceSolidColor(uint32 color) {
-	SendMessage(mhwnd, MYWM_SETSOLIDCOLOR, 0, (LPARAM)color);
+	SendMessageW(mhwnd, MYWM_SETSOLIDCOLOR, 0, (LPARAM)color);
 }
 
 void VDVideoDisplayWindow::SetReturnFocus(bool enable) {
@@ -625,19 +625,19 @@ void VDVideoDisplayWindow::FlushBuffers() {
 }
 
 void VDVideoDisplayWindow::Update(int fieldmode) {
-	SendMessage(mhwnd, MYWM_UPDATE, fieldmode, 0);
+	SendMessageW(mhwnd, MYWM_UPDATE, fieldmode, 0);
 }
 
 void VDVideoDisplayWindow::Cache() {
-	SendMessage(mhwnd, MYWM_CACHE, 0, 0);
+	SendMessageW(mhwnd, MYWM_CACHE, 0, 0);
 }
 
 void VDVideoDisplayWindow::Destroy() {
-	SendMessage(mhwnd, MYWM_DESTROY, 0, 0);
+	SendMessageW(mhwnd, MYWM_DESTROY, 0, 0);
 }
 
 void VDVideoDisplayWindow::Reset() {
-	SendMessage(mhwnd, MYWM_RESET, 0, 0);
+	SendMessageW(mhwnd, MYWM_RESET, 0, 0);
 }
 
 void VDVideoDisplayWindow::SetCallback(IVDVideoDisplayCallback *pCB) {
@@ -657,7 +657,7 @@ IVDVideoDisplay::FilterMode VDVideoDisplayWindow::GetFilterMode() {
 }
 
 void VDVideoDisplayWindow::SetFilterMode(FilterMode mode) {
-	SendMessage(mhwnd, MYWM_SETFILTERMODE, 0, (LPARAM)mode);
+	SendMessageW(mhwnd, MYWM_SETFILTERMODE, 0, (LPARAM)mode);
 }
 
 IVDVideoDisplay::DisplayMode VDVideoDisplayWindow::GetDisplayMode() {
@@ -665,7 +665,7 @@ IVDVideoDisplay::DisplayMode VDVideoDisplayWindow::GetDisplayMode() {
 }
 
 void VDVideoDisplayWindow::SetDisplayMode(DisplayMode mode) {
-	SendMessage(mhwnd, MYWM_SETDISPLAYMODE, 0, (LPARAM)mode);
+	SendMessageW(mhwnd, MYWM_SETDISPLAYMODE, 0, (LPARAM)mode);
 }
 
 void VDVideoDisplayWindow::ReleaseActiveFrame() {

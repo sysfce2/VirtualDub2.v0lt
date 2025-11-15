@@ -506,7 +506,7 @@ INT_PTR CALLBACK max_host_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		m.time = GetMessageTime();
 		VDUIFrame::TranslateAcceleratorMessage(m);
 		SetWindowLongPtr(wnd,DWLP_MSGRESULT,true);
-		SendMessage(g_hWnd,msg,wparam,lparam);
+		SendMessageW(g_hWnd,msg,wparam,lparam);
 		return true;
 	}
 
@@ -525,7 +525,7 @@ INT_PTR CALLBACK max_host_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 	case WM_CLOSE:
 		max_save_on_close(wnd);
-		SendMessage(g_hWnd,WM_CLOSE,0,0);
+		SendMessageW(g_hWnd,WM_CLOSE,0,0);
 		break;
 
 	case WM_WINDOWPOSCHANGING:
@@ -722,7 +722,7 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 	SetWindowLongPtr(mhwndStatus,GWLP_USERDATA,(LPARAM)this);
 	SetWindowLongPtr(mhwndStatus,GWLP_WNDPROC,(LPARAM)status_proc);
 
-	SendMessage(mhwndStatus, SB_SIMPLE, TRUE, 0);
+	SendMessageW(mhwndStatus, SB_SIMPLE, TRUE, 0);
 
 	mbPositionControlVisible = true;
 	mbStatusBarVisible = true;
@@ -2913,7 +2913,7 @@ void VDProjectUI::ShowMenuHelp(WPARAM wParam) {
 		VDStringW name;
 
 		if ((HIWORD(wParam) & MF_POPUP) || (HIWORD(wParam) & MF_SYSMENU)) {
-			SendMessage(hwndStatus, SB_SETTEXTA, 0, (LPARAM)"");
+			SendMessageW(hwndStatus, SB_SETTEXTA, 0, (LPARAM)"");
 			return;
 		}
 
@@ -2923,15 +2923,17 @@ void VDProjectUI::ShowMenuHelp(WPARAM wParam) {
 
 		if (!filename.empty()) {
 			name += filename;
-			SendMessage(hwndStatus, SB_SETTEXTW, 255, (LPARAM)name.c_str());
-		} else
-			SendMessage(hwndStatus, SB_SETTEXTA, 255, (LPARAM)"");
-	} else if (LOWORD(wParam) >= ID_MRU_FILE0 && LOWORD(wParam) <= (ID_MRU_FILE0+99)) {
+			SendMessageW(hwndStatus, SB_SETTEXTW, 255, (LPARAM)name.c_str());
+		} else {
+			SendMessageW(hwndStatus, SB_SETTEXTA, 255, (LPARAM)"");
+		}
+	}
+	else if (LOWORD(wParam) >= ID_MRU_FILE0 && LOWORD(wParam) <= (ID_MRU_FILE0+99)) {
 		HWND hwndStatus = GetDlgItem((HWND)mhwnd, IDC_STATUS_WINDOW);
 		VDStringW name;
 
 		if ((HIWORD(wParam) & MF_POPUP) || (HIWORD(wParam) & MF_SYSMENU)) {
-			SendMessage(hwndStatus, SB_SETTEXTA, 0, (LPARAM)"");
+			SendMessageW(hwndStatus, SB_SETTEXTA, 0, (LPARAM)"");
 			return;
 		}
 
@@ -2941,11 +2943,14 @@ void VDProjectUI::ShowMenuHelp(WPARAM wParam) {
 
 		if (!filename.empty()) {
 			name += filename;
-			SendMessage(hwndStatus, SB_SETTEXTW, 255, (LPARAM)name.c_str());
-		} else
-			SendMessage(hwndStatus, SB_SETTEXTA, 255, (LPARAM)"");
-	} else
+			SendMessageW(hwndStatus, SB_SETTEXTW, 255, (LPARAM)name.c_str());
+		} else {
+			SendMessageW(hwndStatus, SB_SETTEXTA, 255, (LPARAM)"");
+		}
+	}
+	else {
 		guiMenuHelp((HWND)mhwnd, wParam, 255, iMainMenuHelpTranslator);
+	}
 }
 
 void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
@@ -3461,7 +3466,7 @@ LRESULT VDProjectUI::MainWndProc( UINT msg, WPARAM wParam, LPARAM lParam) {
 		// Windows forwards all mouse wheel messages down to us, which we then forward
 		// to the position control.  Obviously for this to be safe the position control
 		// MUST eat the message, which it currently does.
-		return SendMessage(mhwndPosition, WM_MOUSEWHEEL, wParam, lParam);
+		return SendMessageW(mhwndPosition, WM_MOUSEWHEEL, wParam, lParam);
 
 	case WM_CLOSE:
 		if (VDPreferencesGetConfirmExit()) {
@@ -3823,7 +3828,7 @@ void VDProjectUI::OnSize() {
 
 	RepositionPanes(true);
 
-	int nParts = SendMessage(mhwndStatus, SB_GETPARTS, 0, 0);
+	int nParts = SendMessageW(mhwndStatus, SB_GETPARTS, 0, 0);
 	if (nParts > 1) {
 		enum { kMaxStatusParts = 8 };
 		INT aWidth[kMaxStatusParts];
@@ -3841,7 +3846,7 @@ void VDProjectUI::OnSize() {
 		}
 		aWidth[nParts-1] = -1;
 
-		SendMessage(mhwndStatus, SB_SETPARTS, nParts, (LPARAM)aWidth);
+		SendMessageW(mhwndStatus, SB_SETPARTS, nParts, (LPARAM)aWidth);
 	}
 }
 
@@ -4416,7 +4421,7 @@ LRESULT CALLBACK EditWndProc(HWND wnd,UINT msg,WPARAM wparam,LPARAM lparam)
 {
 	if(msg==WM_KILLFOCUS){
 		WPARAM id = GetWindowLong(wnd,GWL_ID);
-		SendMessage(GetParent(wnd),WM_EDIT_CHANGED,id,(LPARAM)wnd);
+		SendMessageW(GetParent(wnd),WM_EDIT_CHANGED,id,(LPARAM)wnd);
 	}
 
 	WNDPROC p = (WNDPROC)GetWindowLongPtr(wnd,GWLP_USERDATA);
@@ -4573,7 +4578,7 @@ void VDProjectUI::UpdateCurveList() {
 		pcSelected = mpCurveEditor->GetCurve();
 
 	HWND combo = GetDlgItem(mhwndCurveCtl,IDC_CURVE);
-	SendMessage(combo,CB_RESETCONTENT,0,0);
+	SendMessageW(combo,CB_RESETCONTENT,0,0);
 
 	if (combo) {
 		bool curvesFound = false;
@@ -4615,12 +4620,12 @@ void VDProjectUI::UpdateCurveList() {
 		EnableWindow(combo,curvesFound);
 
 		if (currentSelect >= 0) {
-			SendMessage(combo,CB_SETCURSEL,currentSelect,0);
-			int id = SendMessage(combo,CB_GETITEMDATA,currentSelect,0);
+			SendMessageW(combo,CB_SETCURSEL,currentSelect,0);
+			int id = SendMessageW(combo,CB_GETITEMDATA,currentSelect,0);
 			SelectCurve(id);
 		} else {
 			mpCurveEditor->SetCurve(NULL);
-			SendMessage(combo,CB_SETCURSEL,0,0);
+			SendMessageW(combo,CB_SETCURSEL,0,0);
 			SelectCurve(0);
 		}
 	}
@@ -5260,9 +5265,9 @@ void VDProjectUI::UpdateCaptureMRUList() {
 
 void VDProjectUI::SetStatus(const wchar_t *s) {
 	if (IsWindowUnicode(mhwndStatus)) {
-		SendMessage(mhwndStatus, SB_SETTEXTW, 255, (LPARAM)s);
+		SendMessageW(mhwndStatus, SB_SETTEXTW, 255, (LPARAM)s);
 	} else {
-		SendMessage(mhwndStatus, SB_SETTEXTA, 255, (LPARAM)VDTextWToA(s).c_str());
+		SendMessageW(mhwndStatus, SB_SETTEXTA, 255, (LPARAM)VDTextWToA(s).c_str());
 	}
 }
 

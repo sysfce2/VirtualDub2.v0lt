@@ -600,7 +600,7 @@ VDZINT_PTR VDUIJobControlDialog::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARA
 				case LVN_KEYDOWN:
 					switch(((LPNMLVKEYDOWN)lParam)->wVKey) {
 					case VK_DELETE:
-						SendMessage(mhdlg, WM_COMMAND, IDC_DELETE, (LPARAM)GetDlgItem(mhdlg, IDC_DELETE));
+						SendMessageW(mhdlg, WM_COMMAND, IDC_DELETE, (LPARAM)GetDlgItem(mhdlg, IDC_DELETE));
 					}
 					return TRUE;
 
@@ -658,7 +658,7 @@ VDZINT_PTR VDUIJobControlDialog::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARA
 							}
 							break;
 						default:
-							SendMessage(mhdlg, WM_COMMAND, MAKELONG(IDC_POSTPONE, BN_CLICKED), (LPARAM)GetDlgItem(mhdlg, IDC_POSTPONE));
+							SendMessageW(mhdlg, WM_COMMAND, MAKELONG(IDC_POSTPONE, BN_CLICKED), (LPARAM)GetDlgItem(mhdlg, IDC_POSTPONE));
 						}
 					}
 

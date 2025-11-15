@@ -243,10 +243,10 @@ public:
 				HWND w1 = GetDlgItem(hdlg, IDC_PROFILE);
 				HWND w2 = GetDlgItem(hdlg, IDC_PROFILE_LIST);
 				HWND w3 = GetDlgItem(hdlg, IDC_PROFILE_SUMMARY);
-				SendMessage(w2,LB_SETCOLUMNWIDTH,400,0);
-				SendMessage(w1,WM_USER+600,0,(LPARAM)w2);
-				SendMessage(w1,WM_USER+603,0,(LPARAM)w3);
-				SendMessage(w1,WM_USER+604,0,lParam);
+				SendMessageW(w2,LB_SETCOLUMNWIDTH,400,0);
+				SendMessageW(w1,WM_USER+600,0,(LPARAM)w2);
+				SendMessageW(w1,WM_USER+603,0,(LPARAM)w3);
+				SendMessageW(w1,WM_USER+604,0,lParam);
 				VDUIRestoreWindowPlacementW32(hdlg, "ProfileDisplay2", SW_SHOW);
 			}
 		case WM_SIZE:
@@ -260,7 +260,7 @@ public:
 				GetWindowRect(w3, &r3);
 				int x1 = r3.right-r3.left+4;
 				MINMAXINFO mmi;
-				SendMessage(w1,WM_GETMINMAXINFO,0,(LPARAM)&mmi);
+				SendMessageW(w1,WM_GETMINMAXINFO,0,(LPARAM)&mmi);
 				int h1 = mmi.ptMaxTrackSize.y;
 				if(r.bottom<h1) h1 = r.bottom;
 				SetWindowPos(w1, NULL, x1, 0, r.right-x1, h1, SWP_NOZORDER|SWP_NOACTIVATE);
@@ -285,11 +285,11 @@ public:
 			if (LOWORD(wParam) == IDC_PROFILE_LIST){
 				if(HIWORD(wParam) == LBN_SELCHANGE){
 					HWND w1 = GetDlgItem(hdlg, IDC_PROFILE);
-					SendMessage(w1,WM_USER+601,0,0);
+					SendMessageW(w1,WM_USER+601,0,0);
 				}
 				if(HIWORD(wParam) == LBN_DBLCLK){
 					HWND w1 = GetDlgItem(hdlg, IDC_PROFILE);
-					SendMessage(w1,WM_USER+602,0,0);
+					SendMessageW(w1,WM_USER+602,0,0);
 				}
 			}
 			return TRUE;
@@ -308,7 +308,7 @@ static VDProfileWindowThread profwin;
 extern void VDSetProfileMode(int mode) {
 	if (!g_hwndProfileWindow) return;
 	HWND w1 = GetDlgItem(g_hwndProfileWindow, IDC_PROFILE);
-	SendMessage(w1,WM_USER+604,0,mode);
+	SendMessageW(w1,WM_USER+604,0,mode);
 }
 
 extern void VDOpenProfileWindow(int mode) {
@@ -348,11 +348,11 @@ INT_PTR CALLBACK ShowTextDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM
 						if (ttl) {
 							memcpy(ttl, (char *)lpData, s - (char *)lpData);
 							ttl[s-(char*)lpData]=0;
-							SendMessage(hDlg, WM_SETTEXT, 0, (LPARAM)ttl);
+							SendMessageW(hDlg, WM_SETTEXT, 0, (LPARAM)ttl);
 							delete[] ttl;
 						}
 						s+=2;
-						SendMessage(GetDlgItem(hDlg, IDC_CHANGES), WM_SETFONT, (WPARAM)GetStockObject(SYSTEM_FIXED_FONT), MAKELPARAM(TRUE, 0));
+						SendMessageW(GetDlgItem(hDlg, IDC_CHANGES), WM_SETFONT, (WPARAM)GetStockObject(SYSTEM_FIXED_FONT), MAKELPARAM(TRUE, 0));
 						SendMessageA(GetDlgItem(hDlg, IDC_CHANGES), WM_SETTEXT, 0, (LPARAM)s);
 						return TRUE;
 					}
@@ -718,7 +718,7 @@ namespace {
 
 		rtf.push_back('}');
 
-		SendMessage(hwndText, EM_EXLIMITTEXT, 0, (LPARAM)rtf.size());
+		SendMessageW(hwndText, EM_EXLIMITTEXT, 0, (LPARAM)rtf.size());
 
 		EDITSTREAM_fixed es;
 
@@ -728,8 +728,8 @@ namespace {
 		es.dwError = 0;
 		es.pfnCallback = (EDITSTREAMCALLBACK)TextToRichTextControlCallback;
 
-		SendMessage(hwndText, EM_STREAMIN, SF_RTF, (LPARAM)&es);
-		SendMessage(hwndText, EM_SETSEL, 0, 0);
+		SendMessageW(hwndText, EM_STREAMIN, SF_RTF, (LPARAM)&es);
+		SendMessageW(hwndText, EM_SETSEL, 0, 0);
 		SetFocus(hwndText);
 	}
 }

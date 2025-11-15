@@ -426,8 +426,8 @@ static void LVDestroyEdit(bool write, bool sort) {
 		g_hwndEdit = NULL;
 
 		if (sort) {
-			SendMessage(g_hwndBox, LVM_REDRAWITEMS, g_index, g_index);
-			SendMessage(g_hwndBox, LVM_SORTITEMS, 0, (LPARAM)&LVSorter);
+			SendMessageW(g_hwndBox, LVM_REDRAWITEMS, g_index, g_index);
+			SendMessageW(g_hwndBox, LVM_SORTITEMS, 0, (LPARAM)&LVSorter);
 		}
 	}
 }
@@ -445,8 +445,9 @@ static LRESULT APIENTRY LVEditWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 				LVBeginEdit(g_hwndBox, g_index-1, g_csdItem);
 			return 0;
 		} else if (wParam == VK_DOWN) {
-			if (g_index < SendMessage(g_hwndBox, LVM_GETITEMCOUNT, 0, 0)-1)
-				LVBeginEdit(g_hwndBox, g_index+1, g_csdItem);
+			if (g_index < SendMessageW(g_hwndBox, LVM_GETITEMCOUNT, 0, 0) - 1) {
+				LVBeginEdit(g_hwndBox, g_index + 1, g_csdItem);
+			}
 			return 0;
 		} else if (wParam == VK_TAB) {
 			if ((SHORT)GetKeyState(VK_SHIFT) < 0) {
@@ -486,7 +487,7 @@ static void LVBeginEdit(HWND hwndLV, int index, int subitem) {
 	int i;
 
 	for(i=0; i<=subitem; i++) {
-		w2 += w = SendMessage(hwndLV, LVM_GETCOLUMNWIDTH, i, 0);
+		w2 += w = SendMessageW(hwndLV, LVM_GETCOLUMNWIDTH, i, 0);
 	}
 
 	LVDestroyEdit(true, false);
@@ -495,7 +496,7 @@ static void LVBeginEdit(HWND hwndLV, int index, int subitem) {
 
 	r.left = LVIR_BOUNDS;
 
-	SendMessage(hwndLV, LVM_GETITEMRECT, index, (LPARAM)&r);
+	SendMessageW(hwndLV, LVM_GETITEMRECT, index, (LPARAM)&r);
 
 	g_hwndBox = hwndLV;
 	g_hwndEdit = CreateWindowW(L"EDIT",
@@ -516,7 +517,7 @@ static void LVBeginEdit(HWND hwndLV, int index, int subitem) {
 		lvi.iSubItem = 0;
 		lvi.mask = LVIF_PARAM;
 
-		SendMessage(hwndLV, LVM_GETITEM, 0, (LPARAM)&lvi);
+		SendMessageW(hwndLV, LVM_GETITEM, 0, (LPARAM)&lvi);
 
 		g_csdPtr = pcsd = (CapSpillDrive *)lvi.lParam;
 		g_csdItem = subitem;
@@ -525,7 +526,7 @@ static void LVBeginEdit(HWND hwndLV, int index, int subitem) {
 			g_hwndSpin = CreateUpDownControl(WS_VISIBLE|WS_CHILD|UDS_ALIGNRIGHT|UDS_SETBUDDYINT, 0,0,0,0, hwndLV, 1, g_hInst, g_hwndEdit, 127, -128, 0);
 
 		guiSubclassWindow(g_hwndEdit, LVEditWndProc);
-		SendMessage(g_hwndEdit, WM_SETFONT, SendMessage(hwndLV, WM_GETFONT, 0, 0), MAKELPARAM(FALSE,0));
+		SendMessageW(g_hwndEdit, WM_SETFONT, SendMessageW(hwndLV, WM_GETFONT, 0, 0), MAKELPARAM(FALSE,0));
 
 		switch(subitem) {
 		case 0:

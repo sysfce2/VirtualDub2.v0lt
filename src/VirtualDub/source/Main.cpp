@@ -428,7 +428,7 @@ void VDOpenVideoDialogW32::ChangeFilename() {
 		driver_options.clear();
 
 	HWND w1 = GetDlgItem(mhdlg,IDC_DRIVER);
-	SendMessage(w1,CB_RESETCONTENT,0,0);
+	SendMessageW(w1,CB_RESETCONTENT,0,0);
 	if (driver) {
 		int select = 0;
 		if (detectList.empty())
@@ -441,7 +441,7 @@ void VDOpenVideoDialogW32::ChangeFilename() {
 			SendMessageW(w1,CB_ADDSTRING,0,(LPARAM)pDriver->GetSignatureName());
 		}
 
-		SendMessage(w1,CB_SETCURSEL,select,0);
+		SendMessageW(w1,CB_SETCURSEL,select,0);
 	} else {
 		tVDInputDrivers::const_iterator it(detectList.begin()), itEnd(detectList.end());
 		for(int i=0; it!=itEnd; ++it, i++) {
@@ -449,7 +449,7 @@ void VDOpenVideoDialogW32::ChangeFilename() {
 			SendMessageW(w1,CB_ADDSTRING,0,(LPARAM)pDriver->GetSignatureName());
 		}
 
-		SendMessage(w1,CB_SETCURSEL,-1,0);
+		SendMessageW(w1,CB_SETCURSEL,-1,0);
 	}
 	EnableWindow(w1,detectList.size()>1);
 	ChangeDriver();
@@ -635,7 +635,7 @@ INT_PTR VDOpenVideoDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 			return TRUE;
 		case IDC_DRIVER:
 			if(HIWORD(wParam) == CBN_SELCHANGE){
-				int i = SendMessage(GetDlgItem(mhdlg,IDC_DRIVER),CB_GETCURSEL,0,0);
+				int i = SendMessageW(GetDlgItem(mhdlg,IDC_DRIVER),CB_GETCURSEL,0,0);
 				ForceUseDriver(i);
 			}
 			return TRUE;
@@ -1051,7 +1051,7 @@ INT_PTR VDSaveVideoDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 			}
 			break;
 		case IDC_ENABLE_AUDIO:
-			removeAudio = !SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+			removeAudio = !SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 			InitCodec();
 			break;
 		case IDC_SAVE_DONOW:
@@ -1743,7 +1743,7 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 		UpdateChecks();
 		UpdateSlider();
 		SetFocus(GetDlgItem(mhdlg,IDC_FILENAME_PREFIX));
-		SendMessage(GetDlgItem(mhdlg,IDC_FILENAME_PREFIX),EM_SETSEL,0,mPrefix.length());
+		SendMessageW(GetDlgItem(mhdlg,IDC_FILENAME_PREFIX),EM_SETSEL,0,mPrefix.length());
 		return FALSE;
 
 	case WM_HSCROLL:
@@ -1810,7 +1810,7 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 		// There is a distinct sense of non-scalability here
 
 		case IDC_FORMAT_TGA:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatTGA;
 				UpdateChecks();
@@ -1819,7 +1819,7 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 			return TRUE;
 
 		case IDC_FORMAT_BMP:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatBMP;
 				ChangeExtension(L".bmp");
@@ -1827,7 +1827,7 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 			return TRUE;
 
 		case IDC_FORMAT_JPEG:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatJPEG;
 				ChangeExtension(L".jpeg");
@@ -1835,7 +1835,7 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 			return TRUE;
 
 		case IDC_FORMAT_PNG:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatPNG;
 				ChangeExtension(L".png");
@@ -1843,7 +1843,7 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 			return TRUE;
 
 		case IDC_FORMAT_TIFF:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatTIFF_ZIP;
 				UpdateChecks();
@@ -1852,12 +1852,12 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 			return TRUE;
 
 		case IDC_QUICK:
-			mbQuickCompress = !!SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+			mbQuickCompress = !!SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 			return TRUE;
 
 		case IDC_TARGA_RLE:
 			{
-				bool check = !!SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+				bool check = !!SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 				if (check)
 					mFormat = AVIOutputImages::kFormatTGA;
 				else
@@ -1867,7 +1867,7 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 
 		case IDC_TIFF_LZW:
 			{
-				bool check = !!SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+				bool check = !!SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 				if (check) {
 					mFormat = AVIOutputImages::kFormatTIFF_LZW;
 					CheckDlgButton(mhdlg, IDC_TIFF_ZIP, BST_UNCHECKED);
@@ -1878,7 +1878,7 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 
 		case IDC_TIFF_ZIP:
 			{
-				bool check = !!SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+				bool check = !!SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 				if (check) {
 					mFormat = AVIOutputImages::kFormatTIFF_ZIP;
 					CheckDlgButton(mhdlg, IDC_TIFF_LZW, BST_UNCHECKED);
@@ -1893,7 +1893,7 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 			break;
 
 		case IDC_START_SELECTION:
-			useTimeline = !!SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+			useTimeline = !!SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 			ChangeTimeline();
 			UpdateFilenames();
 			return TRUE;
@@ -2130,7 +2130,7 @@ INT_PTR VDSaveImageDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 		// There is a distinct sense of non-scalability here
 
 		case IDC_FORMAT_TGA:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatTGA;
 				UpdateChecks();
@@ -2139,7 +2139,7 @@ INT_PTR VDSaveImageDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 			return TRUE;
 
 		case IDC_FORMAT_BMP:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatBMP;
 				ChangeExtension(L".bmp");
@@ -2147,7 +2147,7 @@ INT_PTR VDSaveImageDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 			return TRUE;
 
 		case IDC_FORMAT_JPEG:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatJPEG;
 				ChangeExtension(L".jpeg");
@@ -2155,7 +2155,7 @@ INT_PTR VDSaveImageDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 			return TRUE;
 
 		case IDC_FORMAT_PNG:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatPNG;
 				ChangeExtension(L".png");
@@ -2163,7 +2163,7 @@ INT_PTR VDSaveImageDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 			return TRUE;
 
 		case IDC_FORMAT_TIFF:
-			if (SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)) {
+			if (SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)) {
 				UpdateEnables();
 				mFormat = AVIOutputImages::kFormatTIFF_ZIP;
 				UpdateChecks();
@@ -2172,12 +2172,12 @@ INT_PTR VDSaveImageDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 			return TRUE;
 
 		case IDC_QUICK:
-			mbQuickCompress = !!SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+			mbQuickCompress = !!SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 			return TRUE;
 
 		case IDC_TARGA_RLE:
 			{
-				bool check = !!SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+				bool check = !!SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 				if (check)
 					mFormat = AVIOutputImages::kFormatTGA;
 				else
@@ -2187,7 +2187,7 @@ INT_PTR VDSaveImageDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 
 		case IDC_TIFF_LZW:
 			{
-				bool check = !!SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+				bool check = !!SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 				if (check) {
 					mFormat = AVIOutputImages::kFormatTIFF_LZW;
 					CheckDlgButton(mhdlg, IDC_TIFF_ZIP, BST_UNCHECKED);
@@ -2198,7 +2198,7 @@ INT_PTR VDSaveImageDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 
 		case IDC_TIFF_ZIP:
 			{
-				bool check = !!SendMessage((HWND)lParam, BM_GETCHECK, 0, 0);
+				bool check = !!SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
 				if (check) {
 					mFormat = AVIOutputImages::kFormatTIFF_ZIP;
 					CheckDlgButton(mhdlg, IDC_TIFF_LZW, BST_UNCHECKED);
@@ -2298,7 +2298,7 @@ void SaveImage(HWND hwnd, VDPosition frame, VDPixmap* px, bool skip_dialog) {
 		AVIOutputImages::WriteSingleImage(name.c_str(),dlg.mFormat,dlg.mQuality,px);
 		VDStringW msg;
 		msg += L"Saved: "; msg += name;
-		SendMessage(GetDlgItem(g_hWnd, IDC_STATUS_WINDOW), SB_SETTEXTW, 255, (LPARAM)msg.c_str());
+		SendMessageW(GetDlgItem(g_hWnd, IDC_STATUS_WINDOW), SB_SETTEXTW, 255, (LPARAM)msg.c_str());
 		return;
 	}
 

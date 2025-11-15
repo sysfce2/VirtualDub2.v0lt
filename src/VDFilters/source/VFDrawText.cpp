@@ -117,10 +117,10 @@ void VDDrawTextDialog::ClipEditCallback(ClipEditInfo& info, void *pData) {
 	if (info.flags & info.init_size) {
 		dlg->mSourceWidth = info.w;
 		dlg->mSourceHeight = info.h;
-		SendMessage(GetDlgItem(dlg->mhdlg, IDC_CLIP_X0_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.w,0));
-		SendMessage(GetDlgItem(dlg->mhdlg, IDC_CLIP_X1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.w,0));
-		SendMessage(GetDlgItem(dlg->mhdlg, IDC_CLIP_Y0_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.h,0));
-		SendMessage(GetDlgItem(dlg->mhdlg, IDC_CLIP_Y1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.h,0));
+		SendMessageW(GetDlgItem(dlg->mhdlg, IDC_CLIP_X0_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.w,0));
+		SendMessageW(GetDlgItem(dlg->mhdlg, IDC_CLIP_X1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.w,0));
+		SendMessageW(GetDlgItem(dlg->mhdlg, IDC_CLIP_Y0_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.h,0));
+		SendMessageW(GetDlgItem(dlg->mhdlg, IDC_CLIP_Y1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.h,0));
 	}
 	if (info.flags & info.edit_update) {
 		dlg->param.x0 = float(info.x1);
@@ -184,7 +184,7 @@ bool VDDrawTextDialog::OnLoaded() {
 	init_crop();
 	init_font();
 	init_shadow_width();
-	SendMessage(GetDlgItem(mhdlg, IDC_SHADOW_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(100,0));
+	SendMessageW(GetDlgItem(mhdlg, IDC_SHADOW_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(100,0));
 
 	CheckDlgButton(mhdlg, IDC_ALIGN_LEFT,   param.align==0 ? BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(mhdlg, IDC_ALIGN_CENTER, param.align==1 ? BST_CHECKED:BST_UNCHECKED);

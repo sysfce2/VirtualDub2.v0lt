@@ -102,16 +102,16 @@ nsVDUI::CompressType VDUICheckboxW32::GetCompressType() {
 }
 
 int VDUICheckboxW32::GetValue() {
-	if (mhwnd)
-		return BST_CHECKED == SendMessage(mhwnd, BM_GETCHECK, 0, 0);
-
+	if (mhwnd) {
+		return BST_CHECKED == SendMessageW(mhwnd, BM_GETCHECK, 0, 0);
+	}
 	return false;
 }
 
 void VDUICheckboxW32::SetValue(int i) {
-	if (mhwnd)
-		SendMessage(mhwnd, BM_SETCHECK, i?BST_CHECKED:BST_UNCHECKED, 0);
-
+	if (mhwnd) {
+		SendMessageW(mhwnd, BM_SETCHECK, i ? BST_CHECKED : BST_UNCHECKED, 0);
+	}
 }
 
 void VDUICheckboxW32::OnCommandCallback(UINT code) {
@@ -181,11 +181,11 @@ bool VDUIOptionW32::Create(IVDUIParameters *pParams) {
 	if (CreateW32(pParams, L"BUTTON", mpBaseOption	? (BS_AUTORADIOBUTTON|BS_TOP|BS_MULTILINE|WS_TABSTOP)
 													: (BS_AUTORADIOBUTTON|BS_TOP|BS_MULTILINE|WS_GROUP)))
 	{
-		if (mpBaseOption)
+		if (mpBaseOption) {
 			++mpBaseOption->mnItems;
-		else
-			SendMessage(mhwnd, BM_SETCHECK, BST_CHECKED, 0);
-
+		} else {
+			SendMessageW(mhwnd, BM_SETCHECK, BST_CHECKED, 0);
+		}
 		return true;
 	}
 
@@ -232,14 +232,15 @@ void VDUIOptionW32::SetValue(int i) {
 
 		if (mhwnd) {
 			// change me
-			SendMessage(mhwnd, BM_SETCHECK, (i==0) ? BST_CHECKED : BST_UNCHECKED, 0);
+			SendMessageW(mhwnd, BM_SETCHECK, (i==0) ? BST_CHECKED : BST_UNCHECKED, 0);
 
 			// change others
 			for(IVDUIWindow *win = this; win; win = mpParent->GetNextChild(win)) {
 				VDUIOptionW32 *opt = vdpoly_cast<VDUIOptionW32 *>(win);
 
-				if (opt && opt->mpBaseOption == this)
-					SendMessage(opt->mhwnd, BM_SETCHECK, opt->mID - mID == i ? BST_CHECKED : BST_UNCHECKED, 0);
+				if (opt && opt->mpBaseOption == this) {
+					SendMessageW(opt->mhwnd, BM_SETCHECK, opt->mID - mID == i ? BST_CHECKED : BST_UNCHECKED, 0);
+				}
 			}
 		}
 	}
@@ -247,7 +248,7 @@ void VDUIOptionW32::SetValue(int i) {
 
 void VDUIOptionW32::OnCommandCallback(UINT code) {
 	if (code == BN_CLICKED) {
-		if (SendMessage(mhwnd, BM_GETCHECK, 0, 0) == BST_CHECKED) {
+		if (SendMessageW(mhwnd, BM_GETCHECK, 0, 0) == BST_CHECKED) {
 			int val = 0;
 			
 			if (mpBaseOption) {

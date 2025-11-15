@@ -31,13 +31,15 @@ void VDUIProxyControl::SetArea(const vdrect32& r) {
 void VDUIProxyControl::SetRedraw(bool redraw) {
 	if (redraw) {
 		if (!--mRedrawInhibitCount) {
-			if (mhwnd)
-				SendMessage(mhwnd, WM_SETREDRAW, TRUE, 0);
+			if (mhwnd) {
+				SendMessageW(mhwnd, WM_SETREDRAW, TRUE, 0);
+			}
 		}
 	} else {
 		if (!mRedrawInhibitCount++) {
-			if (mhwnd)
-				SendMessage(mhwnd, WM_SETREDRAW, FALSE, 0);
+			if (mhwnd) {
+				SendMessageW(mhwnd, WM_SETREDRAW, FALSE, 0);
+			}
 		}
 	}
 }
@@ -148,12 +150,12 @@ void VDUIProxyListView::Detach() {
 void VDUIProxyListView::AutoSizeColumns(bool expandlast) {
 	const int colCount = GetColumnCount();
 
-	SendMessage(mhwnd, WM_SETREDRAW, FALSE, 0);
+	SendMessageW(mhwnd, WM_SETREDRAW, FALSE, 0);
 
 	int colCacheCount = mColumnWidthCache.size();
 	while(colCacheCount < colCount) {
-		SendMessage(mhwnd, LVM_SETCOLUMNWIDTH, colCacheCount, LVSCW_AUTOSIZE_USEHEADER);
-		mColumnWidthCache.push_back(SendMessage(mhwnd, LVM_GETCOLUMNWIDTH, colCacheCount, 0));
+		SendMessageW(mhwnd, LVM_SETCOLUMNWIDTH, colCacheCount, LVSCW_AUTOSIZE_USEHEADER);
+		mColumnWidthCache.push_back(SendMessageW(mhwnd, LVM_GETCOLUMNWIDTH, colCacheCount, 0));
 		++colCacheCount;
 	}
 
@@ -161,8 +163,8 @@ void VDUIProxyListView::AutoSizeColumns(bool expandlast) {
 	for(int col=0; col<colCount; ++col) {
 		const int hdrWidth = mColumnWidthCache[col];
 
-		SendMessage(mhwnd, LVM_SETCOLUMNWIDTH, col, LVSCW_AUTOSIZE);
-		int dataWidth = SendMessage(mhwnd, LVM_GETCOLUMNWIDTH, col, 0);
+		SendMessageW(mhwnd, LVM_SETCOLUMNWIDTH, col, LVSCW_AUTOSIZE);
+		int dataWidth = SendMessageW(mhwnd, LVM_GETCOLUMNWIDTH, col, 0);
 
 		if (dataWidth < hdrWidth)
 			dataWidth = hdrWidth;
@@ -177,18 +179,19 @@ void VDUIProxyListView::AutoSizeColumns(bool expandlast) {
 			}
 		}
 
-		SendMessage(mhwnd, LVM_SETCOLUMNWIDTH, col, dataWidth);
+		SendMessageW(mhwnd, LVM_SETCOLUMNWIDTH, col, dataWidth);
 
 		totalWidth += dataWidth;
 	}
 
-	SendMessage(mhwnd, WM_SETREDRAW, TRUE, 0);
+	SendMessageW(mhwnd, WM_SETREDRAW, TRUE, 0);
 	InvalidateRect(mhwnd,0,true);
 }
 
 void VDUIProxyListView::Clear() {
-	if (mhwnd)
-		SendMessage(mhwnd, LVM_DELETEALLITEMS, 0, 0);
+	if (mhwnd) {
+		SendMessageW(mhwnd, LVM_DELETEALLITEMS, 0, 0);
+	}
 }
 
 void VDUIProxyListView::ClearExtraColumns() {
@@ -204,19 +207,19 @@ void VDUIProxyListView::ClearExtraColumns() {
 }
 
 void VDUIProxyListView::DeleteItem(int index) {
-	SendMessage(mhwnd, LVM_DELETEITEM, index, 0);
+	SendMessageW(mhwnd, LVM_DELETEITEM, index, 0);
 }
 
 int VDUIProxyListView::GetColumnCount() const {
-	HWND hwndHeader = (HWND)SendMessage(mhwnd, LVM_GETHEADER, 0, 0);
+	HWND hwndHeader = (HWND)SendMessageW(mhwnd, LVM_GETHEADER, 0, 0);
 	if (!hwndHeader)
 		return 0;
 
-	return (int)SendMessage(hwndHeader, HDM_GETITEMCOUNT, 0, 0);
+	return (int)SendMessageW(hwndHeader, HDM_GETITEMCOUNT, 0, 0);
 }
 
 int VDUIProxyListView::GetItemCount() const {
-	return (int)SendMessage(mhwnd, LVM_GETITEMCOUNT, 0, 0);
+	return (int)SendMessageW(mhwnd, LVM_GETITEMCOUNT, 0, 0);
 }
 
 int VDUIProxyListView::GetSelectedIndex() const {
@@ -303,8 +306,9 @@ IVDUIListViewVirtualItem *VDUIProxyListView::GetVirtualItem(int index) const {
 		itemw.mask = LVIF_PARAM;
 		itemw.iItem = index;
 		itemw.iSubItem = 0;
-		if (SendMessage(mhwnd, LVM_GETITEMA, 0, (LPARAM)&itemw))
-			return (IVDUIListViewVirtualItem *)itemw.lParam;
+		if (SendMessageW(mhwnd, LVM_GETITEMA, 0, (LPARAM)&itemw)) {
+			return (IVDUIListViewVirtualItem*)itemw.lParam;
+		}
 	}
 
 	return NULL;
@@ -366,14 +370,14 @@ int VDUIProxyListView::InsertVirtualItem(int item, IVDUIListViewVirtualItem *lvv
 }
 
 void VDUIProxyListView::RefreshItem(int item) {
-	SendMessage(mhwnd, LVM_REDRAWITEMS, item, item);
+	SendMessageW(mhwnd, LVM_REDRAWITEMS, item, item);
 }
 
 void VDUIProxyListView::RefreshAllItems() {
 	int n = GetItemCount();
 
 	if (n)
-		SendMessage(mhwnd, LVM_REDRAWITEMS, 0, n - 1);
+		SendMessageW(mhwnd, LVM_REDRAWITEMS, 0, n - 1);
 }
 
 void VDUIProxyListView::EditItemLabel(int item) {
@@ -443,8 +447,9 @@ bool VDUIProxyListView::GetItemScreenRect(int item, vdrect32& r) const {
 		return false;
 
 	RECT nr = {LVIR_BOUNDS};
-	if (!SendMessage(mhwnd, LVM_GETITEMRECT, (WPARAM)item, (LPARAM)&nr))
+	if (!SendMessageW(mhwnd, LVM_GETITEMRECT, (WPARAM)item, (LPARAM)&nr)) {
 		return false;
+	}
 
 	MapWindowPoints(mhwnd, NULL, (LPPOINT)&nr, 2);
 
@@ -472,7 +477,7 @@ int VDUIProxyListView::GetSortIcon(int col) {
 		item.mask = HDI_FORMAT | HDI_TEXT;
 		item.pszText = headerText;
 		item.cchTextMax = bufLen - 1;
-		SendMessage(headerWnd, HDM_GETITEMW, col, (LPARAM)&item);
+		SendMessageW(headerWnd, HDM_GETITEMW, col, (LPARAM)&item);
 
 		switch (item.fmt & (HDF_SORTUP | HDF_SORTDOWN)) {
 		case HDF_SORTDOWN:
@@ -496,7 +501,7 @@ void VDUIProxyListView::SetSortIcon(int col, int sortOrder) {
 		item.mask = HDI_FORMAT | HDI_TEXT;
 		item.pszText = headerText;
 		item.cchTextMax = bufLen - 1;
-		SendMessage(headerWnd, HDM_GETITEMW, curCol, (LPARAM)&item);
+		SendMessageW(headerWnd, HDM_GETITEMW, curCol, (LPARAM)&item);
 
 		if ((sortOrder != 0) && (curCol==col))
 		switch (sortOrder) {
@@ -513,7 +518,7 @@ void VDUIProxyListView::SetSortIcon(int col, int sortOrder) {
 		}
 		item.fmt |= HDF_STRING;
 		item.mask = HDI_FORMAT | HDI_TEXT;
-		SendMessage(headerWnd, HDM_SETITEMW, curCol, (LPARAM)&item);
+		SendMessageW(headerWnd, HDM_SETITEMW, curCol, (LPARAM)&item);
 	}
 }
 
@@ -714,7 +719,7 @@ bool VDUIProxyHotKeyControl::GetAccelerator(VDUIAccelerator& accel) const {
 	if (!mhwnd)
 		return false;
 
-	uint32 v = SendMessage(mhwnd, HKM_GETHOTKEY, 0, 0);
+	uint32 v = SendMessageW(mhwnd, HKM_GETHOTKEY, 0, 0);
 
 	accel.mVirtKey = (uint8)v;
 	accel.mModifiers = 0;
@@ -750,7 +755,7 @@ void VDUIProxyHotKeyControl::SetAccelerator(const VDUIAccelerator& accel) {
 	if (accel.mModifiers & VDUIAccelerator::kModExtended)
 		mods |= HOTKEYF_EXT;
 
-	SendMessage(mhwnd, HKM_SETHOTKEY, accel.mVirtKey + (mods << 8), 0);
+	SendMessageW(mhwnd, HKM_SETHOTKEY, accel.mVirtKey + (mods << 8), 0);
 }
 
 VDZLRESULT VDUIProxyHotKeyControl::On_WM_COMMAND(VDZWPARAM wParam, VDZLPARAM lParam) {
@@ -786,8 +791,9 @@ void VDUIProxyTabControl::AddItem(const wchar_t *s) {
 }
 
 void VDUIProxyTabControl::DeleteItem(int index) {
-	if (mhwnd)
-		SendMessage(mhwnd, TCM_DELETEITEM, index, 0);
+	if (mhwnd) {
+		SendMessageW(mhwnd, TCM_DELETEITEM, index, 0);
+	}
 }
 
 vdsize32 VDUIProxyTabControl::GetControlSizeForContent(const vdsize32& sz) const {
@@ -820,12 +826,13 @@ int VDUIProxyTabControl::GetSelection() const {
 	if (!mhwnd)
 		return -1;
 
-	return (int)SendMessage(mhwnd, TCM_GETCURSEL, 0, 0);
+	return (int)SendMessageW(mhwnd, TCM_GETCURSEL, 0, 0);
 }
 
 void VDUIProxyTabControl::SetSelection(int index) {
-	if (mhwnd)
-		SendMessage(mhwnd, TCM_SETCURSEL, index, 0);
+	if (mhwnd) {
+		SendMessageW(mhwnd, TCM_SETCURSEL, index, 0);
+	}
 }
 
 VDZLRESULT VDUIProxyTabControl::On_WM_NOTIFY(VDZWPARAM wParam, VDZLPARAM lParam) {
@@ -848,7 +855,7 @@ void VDUIProxyListBoxControl::Clear() {
 	if (!mhwnd)
 		return;
 
-	SendMessage(mhwnd, LB_RESETCONTENT, 0, 0);
+	SendMessageW(mhwnd, LB_RESETCONTENT, 0, 0);
 }
 
 int VDUIProxyListBoxControl::AddItem(const wchar_t *s, uintptr_t cookie) {
@@ -857,8 +864,9 @@ int VDUIProxyListBoxControl::AddItem(const wchar_t *s, uintptr_t cookie) {
 
 	int idx = SendMessageW(mhwnd, LB_ADDSTRING, 0, (LPARAM)s);
 
-	if (idx >= 0)
-		SendMessage(mhwnd, LB_SETITEMDATA, idx, (LPARAM)cookie);
+	if (idx >= 0) {
+		SendMessageW(mhwnd, LB_SETITEMDATA, idx, (LPARAM)cookie);
+	}
 
 	return idx;
 }
@@ -867,29 +875,31 @@ uintptr VDUIProxyListBoxControl::GetItemData(int index) const {
 	if (index < 0)
 		return 0;
 
-	return SendMessage(mhwnd, LB_GETITEMDATA, index, 0);
+	return SendMessageW(mhwnd, LB_GETITEMDATA, index, 0);
 }
 
 int VDUIProxyListBoxControl::GetSelection() const {
 	if (!mhwnd)
 		return -1;
 
-	return (int)SendMessage(mhwnd, LB_GETCURSEL, 0, 0);
+	return (int)SendMessageW(mhwnd, LB_GETCURSEL, 0, 0);
 }
 
 void VDUIProxyListBoxControl::SetSelection(int index) {
-	if (mhwnd)
-		SendMessage(mhwnd, LB_SETCURSEL, index, 0);
+	if (mhwnd) {
+		SendMessageW(mhwnd, LB_SETCURSEL, index, 0);
+	}
 }
 
 void VDUIProxyListBoxControl::MakeSelectionVisible() {
 	if (!mhwnd)
 		return;
 
-	int idx = SendMessage(mhwnd, LB_GETCURSEL, 0, 0);
+	int idx = SendMessageW(mhwnd, LB_GETCURSEL, 0, 0);
 
-	if (idx >= 0)
-		SendMessage(mhwnd, LB_SETCURSEL, idx, 0);
+	if (idx >= 0) {
+		SendMessageW(mhwnd, LB_SETCURSEL, idx, 0);
+	}
 }
 
 void VDUIProxyListBoxControl::SetTabStops(const int *units, uint32 n) {
@@ -901,7 +911,7 @@ void VDUIProxyListBoxControl::SetTabStops(const int *units, uint32 n) {
 	for(uint32 i=0; i<n; ++i)
 		v[i] = units[i];
 
-	SendMessage(mhwnd, LB_SETTABSTOPS, n, (LPARAM)v.data());
+	SendMessageW(mhwnd, LB_SETTABSTOPS, n, (LPARAM)v.data());
 }
 
 VDZLRESULT VDUIProxyListBoxControl::On_WM_COMMAND(VDZWPARAM wParam, VDZLPARAM lParam) {
@@ -936,12 +946,13 @@ int VDUIProxyComboBoxControl::GetSelection() const {
 	if (!mhwnd)
 		return -1;
 
-	return (int)SendMessage(mhwnd, CB_GETCURSEL, 0, 0);
+	return (int)SendMessageW(mhwnd, CB_GETCURSEL, 0, 0);
 }
 
 void VDUIProxyComboBoxControl::SetSelection(int index) {
-	if (mhwnd)
-		SendMessage(mhwnd, CB_SETCURSEL, index, 0);
+	if (mhwnd) {
+		SendMessageW(mhwnd, CB_SETCURSEL, index, 0);
+	}
 }
 
 VDZLRESULT VDUIProxyComboBoxControl::On_WM_COMMAND(VDZWPARAM wParam, VDZLPARAM lParam) {

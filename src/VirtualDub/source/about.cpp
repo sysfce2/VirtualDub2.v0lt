@@ -344,8 +344,8 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 							const char *pLimit = pData + SizeofResource(NULL, hrsrc);
 
-							SendMessage(hwndItem, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), MAKELPARAM(TRUE, 0));
-							SendMessage(hwndItem, LB_SETTABSTOPS, 1, (LPARAM)&tab);
+							SendMessageW(hwndItem, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), MAKELPARAM(TRUE, 0));
+							SendMessageW(hwndItem, LB_SETTABSTOPS, 1, (LPARAM)&tab);
 
 							while(pData < pLimit) {
 								char *t = buf;

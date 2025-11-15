@@ -1462,22 +1462,22 @@ static INT_PTR CALLBACK hsvDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPAR
 				SetWindowLongPtr(hDlg, DWLP_USER, (LPARAM)mfd);
 
 				hwnd = GetDlgItem(hDlg, IDC_HUE);
-				SendMessage(hwnd, TBM_SETRANGEMIN, (WPARAM)FALSE, 0);
-				SendMessage(hwnd, TBM_SETRANGEMAX, (WPARAM)FALSE, 4096);
-				SendMessage(hwnd, TBM_SETPOS, (WPARAM)TRUE, ((mfd->hue+0x8008) & 0xffff) >> 4);
-				SendMessage(hDlg, WM_HSCROLL, 0, (LPARAM)hwnd);		// force label update
+				SendMessageW(hwnd, TBM_SETRANGEMIN, (WPARAM)FALSE, 0);
+				SendMessageW(hwnd, TBM_SETRANGEMAX, (WPARAM)FALSE, 4096);
+				SendMessageW(hwnd, TBM_SETPOS, (WPARAM)TRUE, ((mfd->hue+0x8008) & 0xffff) >> 4);
+				SendMessageW(hDlg, WM_HSCROLL, 0, (LPARAM)hwnd);		// force label update
 
 				hwnd = GetDlgItem(hDlg, IDC_SATURATION);
-				SendMessage(hwnd, TBM_SETRANGEMIN, (WPARAM)FALSE, 0);
-				SendMessage(hwnd, TBM_SETRANGEMAX, (WPARAM)FALSE, 8192);
-				SendMessage(hwnd, TBM_SETPOS, (WPARAM)TRUE, (mfd->sat+8) >> 4);
-				SendMessage(hDlg, WM_HSCROLL, 0, (LPARAM)hwnd);		// force label update
+				SendMessageW(hwnd, TBM_SETRANGEMIN, (WPARAM)FALSE, 0);
+				SendMessageW(hwnd, TBM_SETRANGEMAX, (WPARAM)FALSE, 8192);
+				SendMessageW(hwnd, TBM_SETPOS, (WPARAM)TRUE, (mfd->sat+8) >> 4);
+				SendMessageW(hDlg, WM_HSCROLL, 0, (LPARAM)hwnd);		// force label update
 
 				hwnd = GetDlgItem(hDlg, IDC_VALUE);
-				SendMessage(hwnd, TBM_SETRANGEMIN, (WPARAM)FALSE, 0);
-				SendMessage(hwnd, TBM_SETRANGEMAX, (WPARAM)FALSE, 8192);
-				SendMessage(hwnd, TBM_SETPOS, (WPARAM)TRUE, ((mfd->val+8)>>4) + 4096);
-				SendMessage(hDlg, WM_HSCROLL, 0, (LPARAM)hwnd);		// force label update
+				SendMessageW(hwnd, TBM_SETRANGEMIN, (WPARAM)FALSE, 0);
+				SendMessageW(hwnd, TBM_SETRANGEMAX, (WPARAM)FALSE, 8192);
+				SendMessageW(hwnd, TBM_SETPOS, (WPARAM)TRUE, ((mfd->val+8)>>4) + 4096);
+				SendMessageW(hDlg, WM_HSCROLL, 0, (LPARAM)hwnd);		// force label update
 
 				mfd->ifp->InitButton((VDXHWND)GetDlgItem(hDlg, IDC_PREVIEW));
 			}
@@ -1502,7 +1502,7 @@ static INT_PTR CALLBACK hsvDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPAR
 		case WM_HSCROLL:
 			if (lParam) {
 				HWND hwndSlider = (HWND)lParam;
-				int val = SendMessage(hwndSlider, TBM_GETPOS, 0, 0);
+				int val = SendMessageW(hwndSlider, TBM_GETPOS, 0, 0);
 				int newval;
 				wchar_t buf[12];
 				bool redo = false;

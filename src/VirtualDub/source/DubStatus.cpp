@@ -824,7 +824,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				// setup timer, progress bar
 
 				thisPtr->statTimer = SetTimer(hdlg, 1, 500, NULL);
-				SendMessage(GetDlgItem(hdlg, IDC_PROGRESS), PBM_SETRANGE, 0, MAKELPARAM(0, 8192));
+				SendMessageW(GetDlgItem(hdlg, IDC_PROGRESS), PBM_SETRANGE, 0, MAKELPARAM(0, 8192));
 
 				CheckDlgButton(hdlg, IDC_DRAW_INPUT, thisPtr->opt->video.fShowInputFrame);
 				CheckDlgButton(hdlg, IDC_DRAW_OUTPUT, thisPtr->opt->video.fShowOutputFrame);
@@ -833,16 +833,16 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				CheckDlgButton(hdlg, IDC_BACKGROUND, thisPtr->pDubber->IsBackground());
 
 				hwndItem = GetDlgItem(hdlg, IDC_PRIORITY);
-				SendMessage(hwndItem, CB_RESETCONTENT,0,0);
+				SendMessageW(hwndItem, CB_RESETCONTENT,0,0);
 				for (unsigned i = 0; i < 8u; i++) {
 					SendMessageA(hwndItem, CB_ADDSTRING, 0, (LPARAM)g_szDubPriorities[i]);
 				}
 
-				SendMessage(hwndItem, CB_SETCURSEL, thisPtr->iPriority-1, 0);
+				SendMessageW(hwndItem, CB_SETCURSEL, thisPtr->iPriority-1, 0);
 
 				hwndItem = GetDlgItem(hdlg, IDC_LIMIT);
-				SendMessage(hwndItem, TBM_SETRANGE, TRUE, MAKELONG(0, 10));
-				SendMessage(hwndItem, TBM_SETPOS, TRUE, (thisPtr->opt->mThrottlePercent + 5) / 10);
+				SendMessageW(hwndItem, TBM_SETRANGE, TRUE, MAKELONG(0, 10));
+				SendMessageW(hwndItem, TBM_SETPOS, TRUE, (thisPtr->opt->mThrottlePercent + 5) / 10);
 
 				guiSetTitle(hdlg, IDS_TITLE_STATUS, VDFileSplitPath(g_szInputAVIFile));
 
@@ -872,7 +872,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				thisPtr->SetLastPosition(thisPtr->pvinfo->cur_proc_src, false);
 
 			if (thisPtr->hwndStatusChild)
-				SendMessage(thisPtr->hwndStatusChild, WM_TIMER, 0, 0);
+				SendMessageW(thisPtr->hwndStatusChild, WM_TIMER, 0, 0);
 
 			{
 				sint64	totalVSamples	= thisPtr->pvinfo->end_proc_dst;
@@ -897,7 +897,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 
 				thisPtr->mProgress = nProgress;
 
-				SendMessage(GetDlgItem(hdlg, IDC_PROGRESS), PBM_SETPOS,	(WPARAM)nProgress, 0);
+				SendMessageW(GetDlgItem(hdlg, IDC_PROGRESS), PBM_SETPOS,	(WPARAM)nProgress, 0);
 			}
 
 			thisPtr->pDubber->UpdateFrames();
@@ -926,22 +926,22 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
         case WM_COMMAND:
 			switch(LOWORD(wParam)) {
 			case IDC_DRAW_INPUT:
-				thisPtr->opt->video.fShowInputFrame = SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)==BST_CHECKED;
+				thisPtr->opt->video.fShowInputFrame = SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)==BST_CHECKED;
 				break;
 
 			case IDC_DRAW_OUTPUT:
-				thisPtr->opt->video.fShowOutputFrame = SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)==BST_CHECKED;
+				thisPtr->opt->video.fShowOutputFrame = SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)==BST_CHECKED;
 				break;
 
 			case IDC_DRAW_DOUTPUT:
-				thisPtr->opt->video.fShowDecompressedFrame = SendMessage((HWND)lParam, BM_GETCHECK, 0, 0)==BST_CHECKED;
+				thisPtr->opt->video.fShowDecompressedFrame = SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)==BST_CHECKED;
 				break;
 
 			case IDC_PRIORITY:
 				if (HIWORD(wParam) == CBN_SELCHANGE) {
 					LRESULT index;
 
-					if (CB_ERR != (index = SendMessage((HWND)lParam, CB_GETCURSEL, 0, 0))) {
+					if (CB_ERR != (index = SendMessageW((HWND)lParam, CB_GETCURSEL, 0, 0))) {
 						thisPtr->pDubber->SetPriority(index);
 					}
 				}
@@ -983,7 +983,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				switch(GetWindowLong(hwndScroll, GWL_ID)) {
 				case IDC_LIMIT:
 					{
-						int pos = SendMessage(hwndScroll, TBM_GETPOS, 0, 0);
+						int pos = SendMessageW(hwndScroll, TBM_GETPOS, 0, 0);
 
 						thisPtr->pDubber->SetThrottleFactor(pos / 10.0f);
 					}
@@ -1051,7 +1051,7 @@ namespace {
 					if (hwndEdit) {
 						::SetFocus(hwndEdit);
 						::SetWindowTextA(hwndEdit, (const char *)lParam);
-						::SendMessage(hwndEdit, EM_SETSEL, 0, 0);
+						::SendMessageW(hwndEdit, EM_SETSEL, 0, 0);
 					}
 				}
 				return FALSE;

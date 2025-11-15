@@ -707,7 +707,7 @@ LRESULT HexViewer::Handle_WM_KEYDOWN(WPARAM wParam, LPARAM lParam) {
 		MoveToByte(i64Position);
 		break;
 	default:
-		return SendMessage(GetParent(hwnd), WM_KEYDOWN, wParam, lParam);
+		return SendMessageW(GetParent(hwnd), WM_KEYDOWN, wParam, lParam);
 	}
 
 	return 0;
@@ -750,7 +750,7 @@ LRESULT HexViewer::Handle_WM_CHAR(WPARAM wParam, LPARAM lParam) {
 
 	// Advance right one char
 
-	SendMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
+	SendMessageW(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
 
 	return 0;
 }
@@ -1648,7 +1648,7 @@ LRESULT HexEditor::Handle_WM_COMMAND(WPARAM wParam, LPARAM lParam) {
 
 	case ID_EDIT_FINDNEXT:
 		if (hwndFind) {
-			SendMessage(hwndFind, WM_COMMAND, IDC_FIND, 0);
+			SendMessageW(hwndFind, WM_COMMAND, IDC_FIND, 0);
 			break;
 		} else if (pszFindString) {
 			Find(hwnd);
@@ -1997,7 +1997,7 @@ void HexEditor::Extract() {
 
 void HexEditor::Find(HWND hwndParent) {
 	if (!nFindLength || !pszFindString) {
-		SendMessage(hwnd, WM_COMMAND, ID_EDIT_FIND, 0);
+		SendMessageW(hwnd, WM_COMMAND, ID_EDIT_FIND, 0);
 		return;
 	}
 
@@ -2373,7 +2373,7 @@ INT_PTR CALLBACK HexEditor::FindDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 								}
 
 								if (s == s2) {
-									SendMessage(hwndEdit, EM_SETSEL, s-text, s-text);
+									SendMessageW(hwndEdit, EM_SETSEL, s-text, s-text);
 									SetFocus(hwndEdit);
 									MessageBeep(MB_ICONEXCLAMATION);
 
@@ -2549,7 +2549,7 @@ void HexEditor::RIFFTree(HWND hwndTV) {
 	} catch(MyUserAbortError) {
 	}
 
-	SendMessage(hwndTV, WM_SETFONT, (WPARAM)hfont, TRUE);
+	SendMessageW(hwndTV, WM_SETFONT, (WPARAM)hfont, TRUE);
 }
 
 INT_PTR CALLBACK HexEditor::TreeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {

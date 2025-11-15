@@ -92,8 +92,9 @@ bool VDUITextAreaW32::Create(IVDUIParameters *pParameters) {
 	if (!CreateW32(pParameters, L"RichEdit", dwStyle))
 		return false;
 
-	if (dwStyle & ES_READONLY)
-		SendMessage(mhwnd, EM_SETBKGNDCOLOR, FALSE, GetSysColor(COLOR_3DFACE));
+	if (dwStyle & ES_READONLY) {
+		SendMessageW(mhwnd, EM_SETBKGNDCOLOR, FALSE, GetSysColor(COLOR_3DFACE));
+	}
 
 	return true;
 }

@@ -190,7 +190,7 @@ bool VDFilterClippingDialog::OnLoaded()  {
 	mMinSizeW = newW;
 	mMinSizeH = newH;
 
-	SendMessage(mhdlg, DM_REPOSITION, 0, 0);
+	SendMessageW(mhdlg, DM_REPOSITION, 0, 0);
 
 	// render first frame
 	UpdateFrame(mpPosCtrl->GetPosition());
@@ -283,8 +283,9 @@ INT_PTR VDFilterClippingDialog::DlgProc(UINT message, WPARAM wParam, LPARAM lPar
 			// MUST eat the message, which it currently does.
 			{
 				HWND hwndClipping = GetDlgItem(mhdlg, IDC_BORDERS);
-				if (hwndClipping)
-					return SendMessage(hwndClipping, WM_MOUSEWHEEL, wParam, lParam);
+				if (hwndClipping) {
+					return SendMessageW(hwndClipping, WM_MOUSEWHEEL, wParam, lParam);
+				}
 			}
 			break;
 

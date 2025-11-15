@@ -571,7 +571,7 @@ public:
 	static void edit_changed(HWND wnd)
 	{
 		WPARAM id = GetWindowLong(wnd,GWL_ID);
-		SendMessage(GetParent(wnd),WM_EDIT_CHANGED,id,(LPARAM)wnd);
+		SendMessageW(GetParent(wnd),WM_EDIT_CHANGED,id,(LPARAM)wnd);
 	}
 
 	static LRESULT CALLBACK EditWndProc(HWND wnd,UINT msg,WPARAM wparam,LPARAM lparam)

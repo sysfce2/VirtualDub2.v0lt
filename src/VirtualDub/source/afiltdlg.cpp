@@ -136,7 +136,7 @@ bool VDDialogAddAudioFilterW32::OnLoaded() {
 	HWND hwndList = GetDlgItem(mhdlg, IDC_FILTER_LIST);
 
 	INT tabs[]={ 175 };
-	SendMessage(hwndList, LB_SETTABSTOPS, 1, (LPARAM)tabs);
+	SendMessageW(hwndList, LB_SETTABSTOPS, 1, (LPARAM)tabs);
 
 	for(std::vector<VDPluginDescription *>::const_iterator it(mAudioFilters.begin()), itEnd(mAudioFilters.end()); it!=itEnd; ++it) {
 		const VDPluginDescription& b = **it;
@@ -170,11 +170,11 @@ void VDDialogAddAudioFilterW32::OnDestroy() {
 void VDDialogAddAudioFilterW32::UpdateDescription() {
 	HWND hwndList = GetDlgItem(mhdlg, IDC_FILTER_LIST);
 
-	int sel = SendMessage(hwndList, LB_GETCURSEL, 0, 0);
+	int sel = SendMessageW(hwndList, LB_GETCURSEL, 0, 0);
 
 	mpSelectedFilter = NULL;
 	if (sel >= 0)
-		if (const VDPluginDescription *pb = (const VDPluginDescription *)SendMessage(hwndList, LB_GETITEMDATA, sel, 0)) {
+		if (const VDPluginDescription *pb = (const VDPluginDescription *)SendMessageW(hwndList, LB_GETITEMDATA, sel, 0)) {
 			SetDlgItemTextW(mhdlg, IDC_FILTER_INFO, pb->mDescription.c_str());
 			mpSelectedFilter = pb;
 		}
@@ -412,12 +412,12 @@ INT_PTR VDDialogAudioFiltersW32::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 			case IDC_AUTOARRANGE:
 				if (HIWORD(wParam) == BN_CLICKED)
-					mpGraphControl->EnableAutoArrange(BST_CHECKED == (3&SendMessage((HWND)lParam, BM_GETSTATE, 0, 0)));
+					mpGraphControl->EnableAutoArrange(BST_CHECKED == (3&SendMessageW((HWND)lParam, BM_GETSTATE, 0, 0)));
 				return TRUE;
 
 			case IDC_AUTOCONNECT:
 				if (HIWORD(wParam) == BN_CLICKED)
-					mpGraphControl->EnableAutoConnect(BST_CHECKED == (3&SendMessage((HWND)lParam, BM_GETSTATE, 0, 0)));
+					mpGraphControl->EnableAutoConnect(BST_CHECKED == (3&SendMessageW((HWND)lParam, BM_GETSTATE, 0, 0)));
 				return TRUE;
 
 			case IDOK:

@@ -209,7 +209,7 @@ INT_PTR CALLBACK CaptureBT848TweakerDlgProc(HWND hdlg, UINT msg, WPARAM wParam, 
 			break;
 		case IDC_WHITE_POINT:
 			g_dTVDriver.memoryWriteBYTE(0x44, (g_dTVDriver.memoryReadBYTE(0x44)&0x3f)
-				+ (SendMessage((HWND)lParam, CB_GETCURSEL, 0, 0)<<6));
+				+ (SendMessageW((HWND)lParam, CB_GETCURSEL, 0, 0)<<6));
 			break;
 		case IDC_REASSERT:
 			// this is, admittedly, goofy
@@ -250,7 +250,7 @@ INT_PTR CALLBACK CaptureBT848TweakerDlgProc(HWND hdlg, UINT msg, WPARAM wParam, 
 
 	case WM_HSCROLL:
 		if (lParam) {
-			int pos = SendMessage((HWND)lParam, TBM_GETPOS, 0, 0);
+			int pos = SendMessageW((HWND)lParam, TBM_GETPOS, 0, 0);
 
 			switch(GetWindowLong((HWND)lParam, GWL_ID)) {
 			case IDC_SLIDER_LUMAPEAKEVEN:

@@ -168,7 +168,7 @@ LRESULT VDClippingControlOverlay::WndProc(UINT msg, WPARAM wParam, LPARAM lParam
 			ccb.y2 = VDRoundToLong(mSourceHeight * (1.0 - mYBounds[1]));
 
 			HWND hwndParent = GetParent(mhwnd);
-			SendMessage(hwndParent, CCM_SETCLIPBOUNDS, 0, (LPARAM)&ccb);
+			SendMessageW(hwndParent, CCM_SETCLIPBOUNDS, 0, (LPARAM)&ccb);
 
 			mDragPoleX = mDragPoleY = -1;
 			ReleaseCapture();
@@ -351,7 +351,7 @@ void VDClippingControlOverlay::OnMouseMove(int x, int y, int mods) {
 		ccb.y2 = VDRoundToLong(mSourceHeight * (1.0 - mYBounds[1]));
 
 		HWND hwndParent = GetParent(mhwnd);
-		SendMessage(hwndParent, CCM_SETCLIPBOUNDS, 0, (LPARAM)&ccb);
+		SendMessageW(hwndParent, CCM_SETCLIPBOUNDS, 0, (LPARAM)&ccb);
 
 		long ny0 = VDCeilToInt(mYBounds[0] * mHeight - 0.5) - 1;
 		long ny1 = VDCeilToInt(mYBounds[1] * mHeight - 0.5);
@@ -636,14 +636,14 @@ void VDClippingControl::SetBitmapSize(int sourceW, int sourceH) {
 	mInvSourceWidth		= sourceW ? 1.0 / sourceW : 0.0;
 	mInvSourceHeight	= sourceH ? 1.0 / sourceH : 0.0;
 
-	SendMessage(GetDlgItem(mhwnd, kIDC_X1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(sourceW,0));
-	SendMessage(GetDlgItem(mhwnd, kIDC_Y1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(0,sourceH));
+	SendMessageW(GetDlgItem(mhwnd, kIDC_X1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(sourceW,0));
+	SendMessageW(GetDlgItem(mhwnd, kIDC_Y1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(0,sourceH));
 
 	hwndItem = GetDlgItem(mhwnd, kIDC_X2_SPIN);
-	SendMessage(hwndItem, UDM_SETRANGE, 0, (LPARAM)MAKELONG(sourceW,0));
+	SendMessageW(hwndItem, UDM_SETRANGE, 0, (LPARAM)MAKELONG(sourceW,0));
 
 	hwndItem = GetDlgItem(mhwnd, kIDC_Y2_SPIN);
-	SendMessage(hwndItem, UDM_SETRANGE, 0, (LPARAM)MAKELONG(sourceH,0));
+	SendMessageW(hwndItem, UDM_SETRANGE, 0, (LPARAM)MAKELONG(sourceH,0));
 
 	EnumChildWindows(mhwnd, ShowChildrenProc, 0);
 
@@ -726,7 +726,7 @@ void VDClippingControl::BlitFrame(const VDPixmap *px) {
 }
 
 BOOL CALLBACK VDClippingControl::InitChildrenProc(HWND hwnd, LPARAM lParam) {
-	SendMessage(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), (LPARAM)MAKELONG(FALSE, 0));
+	SendMessageW(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), (LPARAM)MAKELONG(FALSE, 0));
 
 	switch(GetWindowLong(hwnd, GWL_ID)) {
 	case kIDC_X1_STATIC:		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"X1 offset");
@@ -811,10 +811,11 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 	if ((msg >= CCM__FIRST && msg < CCM__LAST) || msg == WM_SETTEXT) {
 		HWND hWndPosition = GetDlgItem(mhwnd, kIDC_POSITION);
 
-		if (hWndPosition)
-			return SendMessage(hWndPosition, msg, wParam, lParam);
-		else
+		if (hWndPosition) {
+			return SendMessageW(hWndPosition, msg, wParam, lParam);
+		} else {
 			return 0;
+		}
 	}
 
 	switch(msg) {
@@ -860,9 +861,9 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			SetWindowLong(hwndDisplay, GWL_ID, kIDC_VIDEODISPLAY);
 
 			HWND hwndItem = GetDlgItem(mhwnd, kIDC_X2_SPIN);
-			SendMessage(hwndItem, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhwnd, kIDC_X2_EDIT), 0);
+			SendMessageW(hwndItem, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhwnd, kIDC_X2_EDIT), 0);
 			hwndItem = GetDlgItem(mhwnd, kIDC_Y2_SPIN);
-			SendMessage(hwndItem, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhwnd, kIDC_Y2_EDIT), 0);
+			SendMessageW(hwndItem, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhwnd, kIDC_Y2_EDIT), 0);
 
 			if (GetWindowLong(mhwnd, GWL_STYLE) & CCS_POSITION)
 				CreateWindowEx(0,POSITIONCONTROLCLASS,NULL,WS_CHILD									,0,0,0,64,mhwnd,(HMENU)kIDC_POSITION,g_hInst,NULL);
@@ -945,7 +946,7 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 				}
 			return 0;
 		case kIDC_POSITION:
-			SendMessage(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLong(mhwnd, GWL_ID), HIWORD(wParam)), (LPARAM)mhwnd);
+			SendMessageW(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLong(mhwnd, GWL_ID), HIWORD(wParam)), (LPARAM)mhwnd);
 			return 0;
 		}
 		break;
@@ -957,7 +958,7 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			nm.idFrom = GetWindowLong(mhwnd, GWL_ID);
 			nm.hwndFrom = mhwnd;
 
-			SendMessage(GetParent(mhwnd), WM_NOTIFY, nm.idFrom, (LPARAM)&nm);
+			SendMessageW(GetParent(mhwnd), WM_NOTIFY, nm.idFrom, (LPARAM)&nm);
 		}
 		return 0;
 
@@ -976,7 +977,7 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			HWND hwndPosition = GetDlgItem(mhwnd, kIDC_POSITION);
 
 			if (hwndPosition) {
-				SendMessage(hwndPosition, WM_MOUSEWHEEL, wParam, lParam);
+				SendMessageW(hwndPosition, WM_MOUSEWHEEL, wParam, lParam);
 				return TRUE;
 			}
 		}
@@ -1021,7 +1022,7 @@ void VDClippingControl::DisplayRequestUpdate(IVDVideoDisplay *pDisp) {
 	nm.idFrom = GetWindowLong(mhwnd, GWL_ID);
 	nm.code = CCN_REFRESHFRAME;
 
-	SendMessage(GetParent(mhwnd), WM_NOTIFY, (WPARAM)nm.idFrom, (LPARAM)&nm);
+	SendMessageW(GetParent(mhwnd), WM_NOTIFY, (WPARAM)nm.idFrom, (LPARAM)&nm);
 }
 
 void VDClippingControl::OnSize(int w, int h) {
@@ -1099,10 +1100,10 @@ void VDClippingDialog2::ClipEditCallback(ClipEditInfo& info, void *pData) {
 	if (info.flags & info.init_size) {
 		dlg->mSourceWidth = info.w;
 		dlg->mSourceHeight = info.h;
-		SendMessage(GetDlgItem(dlg->mhdlg, IDC_CLIP_X0_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.w,0));
-		SendMessage(GetDlgItem(dlg->mhdlg, IDC_CLIP_X1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.w,0));
-		SendMessage(GetDlgItem(dlg->mhdlg, IDC_CLIP_Y0_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.h,0));
-		SendMessage(GetDlgItem(dlg->mhdlg, IDC_CLIP_Y1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.h,0));
+		SendMessageW(GetDlgItem(dlg->mhdlg, IDC_CLIP_X0_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.w,0));
+		SendMessageW(GetDlgItem(dlg->mhdlg, IDC_CLIP_X1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.w,0));
+		SendMessageW(GetDlgItem(dlg->mhdlg, IDC_CLIP_Y0_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.h,0));
+		SendMessageW(GetDlgItem(dlg->mhdlg, IDC_CLIP_Y1_SPIN), UDM_SETRANGE, 0, (LPARAM)MAKELONG(info.h,0));
 	}
 	if (info.flags & info.edit_update) {
 		dlg->x1 = info.x1;

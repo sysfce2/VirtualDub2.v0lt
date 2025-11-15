@@ -909,7 +909,7 @@ LRESULT VDRTProfileDisplay2::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 		case WM_USER+601: // list selection change
 			{
-				int x = SendMessage(mhwndList, LB_GETCURSEL, 0, 0);
+				int x = SendMessageW(mhwndList, LB_GETCURSEL, 0, 0);
 				if(selection)
 					InvalidateEventRect(*selection);
 				if(x<mSortedList.size())
@@ -1172,7 +1172,7 @@ void VDRTProfileDisplay2::GoToEvent(int px, int py) {
 			InvalidateEventRect(*selection);
 		selection = mSortedList[next];
 		InvalidateEventRect(*selection);
-		SendMessage(mhwndList,LB_SETCURSEL,next,0);
+		SendMessageW(mhwndList,LB_SETCURSEL,next,0);
 	}
 }
 
@@ -1501,9 +1501,9 @@ void VDRTProfileDisplay2::UpdateSummary() {
 	std::sort(list.begin(), list.end(), EventSortId());
 
 	HWND wnd = mhwndSummary;
-	SendMessage(wnd, LB_RESETCONTENT, 0, 0);
+	SendMessageW(wnd, LB_RESETCONTENT, 0, 0);
 	int tabs[] = {30,80,130,180};
-	SendMessage(wnd, LB_SETTABSTOPS, 4, (LPARAM)tabs);
+	SendMessageW(wnd, LB_SETTABSTOPS, 4, (LPARAM)tabs);
 	SendMessageA(wnd, LB_ADDSTRING, 0, (LPARAM)"num\t min\t average\t rms\t id");
 
 	std::vector<uint32> scope_comment;
@@ -1583,10 +1583,10 @@ void VDRTProfileDisplay2::UpdateSummary() {
 }
 
 void VDRTProfileDisplay2::UpdateList() {
-	SendMessage(mhwndList, WM_SETREDRAW, false, 0);
-	SendMessage(mhwndList, LB_RESETCONTENT, 0, 0);
+	SendMessageW(mhwndList, WM_SETREDRAW, false, 0);
+	SendMessageW(mhwndList, LB_RESETCONTENT, 0, 0);
 	int tabs[] = {50,90,130,200};
-	SendMessage(mhwndList, LB_SETTABSTOPS, 4, (LPARAM)tabs);
+	SendMessageW(mhwndList, LB_SETTABSTOPS, 4, (LPARAM)tabs);
 
 	size_t threadCount = mThreadProfiles.size();
 	double msPerTick = VDGetPreciseSecondsPerTick()*1000;
@@ -1657,7 +1657,7 @@ void VDRTProfileDisplay2::UpdateList() {
 	if (mSortedList.size()>=list_max)
 		SendMessageA(mhwndList, LB_ADDSTRING, 0, (LPARAM)"\t\t\t truncated...");
 
-	SendMessage(mhwndList, WM_SETREDRAW, true, 0);
+	SendMessageW(mhwndList, WM_SETREDRAW, true, 0);
 	InvalidateRect(mhwndList,0,true);
 	UpdateSummary();
 
@@ -1665,7 +1665,7 @@ void VDRTProfileDisplay2::UpdateList() {
 }
 
 void VDRTProfileDisplay2::UpdateListTop(bool sync) {
-	int x = SendMessage(mhwndList,LB_GETTOPINDEX,0,0);
+	int x = SendMessageW(mhwndList,LB_GETTOPINDEX,0,0);
 	if (x!=list_top) {
 		list_top = x;
 
@@ -1695,7 +1695,7 @@ void VDRTProfileDisplay2::OnTimer() {
 		if (event_count!=display_event_count || event_count>0){
 			InvalidateRect(mhwnd, NULL, TRUE);
 			UpdateWindow(mhwnd);
-			SendMessage(GetParent(mhwnd),WM_SIZE,0,0);
+			SendMessageW(GetParent(mhwnd),WM_SIZE,0,0);
 		}
 		if (event_count!=list_event_count || event_count>0){
 			UpdateList();
@@ -1717,7 +1717,7 @@ void VDRTProfileDisplay2::OnTimer() {
 			if (use_range_end) SetDisplayAutoZoom();
 			InvalidateRect(mhwnd, NULL, TRUE);
 			UpdateWindow(mhwnd);
-			SendMessage(GetParent(mhwnd),WM_SIZE,0,0);
+			SendMessageW(GetParent(mhwnd),WM_SIZE,0,0);
 			VDPROFILEEND();
 		}
 
@@ -1794,8 +1794,8 @@ void VDRTProfileDisplay2::Clear() {
 	mBaseTimeOffset = 0;
 	mBasePixelOffset = 0;
 	InvalidateRect(mhwnd, NULL, TRUE);
-	SendMessage(mhwndList, LB_RESETCONTENT, 0, 0);
-	SendMessage(mhwndSummary, LB_RESETCONTENT, 0, 0);
+	SendMessageW(mhwndList, LB_RESETCONTENT, 0, 0);
+	SendMessageW(mhwndSummary, LB_RESETCONTENT, 0, 0);
 
 	selection = 0;
 	list_top = 0;

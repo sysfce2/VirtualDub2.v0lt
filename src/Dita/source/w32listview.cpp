@@ -273,7 +273,7 @@ void VDUIListViewW32::OnNotifyCallback(const NMHDR *pHdr) {
    		const NMLISTVIEW *plvn = (const NMLISTVIEW *)pHdr;
    
    		if ((plvn->uOldState|plvn->uNewState) & LVIS_SELECTED) {
-   			int iSel = (int)SendMessage(mhwnd, LVM_GETNEXTITEM, -1, LVNI_ALL|LVNI_SELECTED);
+   			int iSel = (int)SendMessageW(mhwnd, LVM_GETNEXTITEM, -1, LVNI_ALL|LVNI_SELECTED);
    
    			if (iSel != mSelected) {
    				mSelected = iSel;

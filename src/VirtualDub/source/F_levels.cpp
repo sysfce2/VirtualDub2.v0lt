@@ -719,23 +719,23 @@ static INT_PTR APIENTRY levelsDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 
 				hwndItem = GetDlgItem(hDlg, IDC_INPUT_LEVELS);
 
-				SendMessage(hwndItem, VLCM_SETTABCOUNT, FALSE, 3);
-				SendMessage(hwndItem, VLCM_SETTABCOLOR, MAKELONG(0, FALSE), 0x000000);
-				SendMessage(hwndItem, VLCM_SETTABCOLOR, MAKELONG(1, FALSE), 0x808080);
-				SendMessage(hwndItem, VLCM_SETTABCOLOR, MAKELONG(2, FALSE), 0xFFFFFF);
-				SendMessage(hwndItem, VLCM_MOVETABPOS, MAKELONG(0, FALSE), mfd->iInputLo);
-				SendMessage(hwndItem, VLCM_MOVETABPOS, MAKELONG(1, FALSE), (int)(mfd->iInputLo + (mfd->iInputHi-mfd->iInputLo)*mfd->rHalfPt));
-				SendMessage(hwndItem, VLCM_MOVETABPOS, MAKELONG(2,  TRUE), mfd->iInputHi);
-				SendMessage(hwndItem, VLCM_SETGRADIENT, 0x000000, 0xFFFFFF);
+				SendMessageW(hwndItem, VLCM_SETTABCOUNT, FALSE, 3);
+				SendMessageW(hwndItem, VLCM_SETTABCOLOR, MAKELONG(0, FALSE), 0x000000);
+				SendMessageW(hwndItem, VLCM_SETTABCOLOR, MAKELONG(1, FALSE), 0x808080);
+				SendMessageW(hwndItem, VLCM_SETTABCOLOR, MAKELONG(2, FALSE), 0xFFFFFF);
+				SendMessageW(hwndItem, VLCM_MOVETABPOS, MAKELONG(0, FALSE), mfd->iInputLo);
+				SendMessageW(hwndItem, VLCM_MOVETABPOS, MAKELONG(1, FALSE), (int)(mfd->iInputLo + (mfd->iInputHi-mfd->iInputLo)*mfd->rHalfPt));
+				SendMessageW(hwndItem, VLCM_MOVETABPOS, MAKELONG(2,  TRUE), mfd->iInputHi);
+				SendMessageW(hwndItem, VLCM_SETGRADIENT, 0x000000, 0xFFFFFF);
 
 				hwndItem = GetDlgItem(hDlg, IDC_OUTPUT_LEVELS);
 
-				SendMessage(hwndItem, VLCM_SETTABCOUNT, FALSE, 2);
-				SendMessage(hwndItem, VLCM_SETTABCOLOR, MAKELONG(0, FALSE), 0x000000);
-				SendMessage(hwndItem, VLCM_SETTABCOLOR, MAKELONG(1, FALSE), 0xFFFFFF);
-				SendMessage(hwndItem, VLCM_MOVETABPOS, MAKELONG(0, FALSE), mfd->iOutputLo);
-				SendMessage(hwndItem, VLCM_MOVETABPOS, MAKELONG(1,  TRUE), mfd->iOutputHi);
-				SendMessage(hwndItem, VLCM_SETGRADIENT, 0x000000, 0xFFFFFF);
+				SendMessageW(hwndItem, VLCM_SETTABCOUNT, FALSE, 2);
+				SendMessageW(hwndItem, VLCM_SETTABCOLOR, MAKELONG(0, FALSE), 0x000000);
+				SendMessageW(hwndItem, VLCM_SETTABCOLOR, MAKELONG(1, FALSE), 0xFFFFFF);
+				SendMessageW(hwndItem, VLCM_MOVETABPOS, MAKELONG(0, FALSE), mfd->iOutputLo);
+				SendMessageW(hwndItem, VLCM_MOVETABPOS, MAKELONG(1,  TRUE), mfd->iOutputHi);
+				SendMessageW(hwndItem, VLCM_SETGRADIENT, 0x000000, 0xFFFFFF);
 
 				CheckDlgButton(hDlg, IDC_LUMA, mfd->bLuma ? BST_CHECKED : BST_UNCHECKED);
 

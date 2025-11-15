@@ -732,7 +732,7 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 					SendMessageA(hwndItem, CB_ADDSTRING, 0, (LPARAM)szMode);
 				}
 
-				SendMessage(hwndItem, CB_SETCURSEL, mfd->filtmode, 0);
+				SendMessageW(hwndItem, CB_SETCURSEL, mfd->filtmode, 0);
 
 				CheckDlgButton(hDlg, IDC_EXPANDBOUNDS, mfd->fExpandBounds);
 

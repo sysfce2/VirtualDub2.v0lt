@@ -237,7 +237,7 @@ bool VDUIFrame::TranslateAcceleratorMessage(MSG& msg) {
 }
 
 BOOL CALLBACK BroadcastMsgProc(HWND hWnd, LPARAM lParam) {
-	SendMessage(hWnd, lParam, 0, 0);
+	SendMessageW(hWnd, lParam, 0, 0);
 	return TRUE;
 }
 
