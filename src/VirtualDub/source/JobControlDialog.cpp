@@ -223,7 +223,7 @@ bool VDUIJobControlDialog::OnLoaded() {
 
 	CheckButton(IDC_AUTOSTART, g_VDJobQueue.IsAutoRunEnabled());
 
-	SendDlgItemMessage(mhdlg, IDC_PROGRESS, PBM_SETRANGE, 0, MAKELPARAM(0, 16384));
+	SendDlgItemMessageW(mhdlg, IDC_PROGRESS, PBM_SETRANGE, 0, MAKELPARAM(0, 16384));
 
 	if (g_dubber || g_VDJobQueue.IsRunInProgress()) {
 		EnableControl(IDC_PROGRESS, false);
@@ -939,14 +939,14 @@ void VDUIJobControlDialog::OnJobStarted(const VDJob& job) {
 void VDUIJobControlDialog::OnJobEnded(const VDJob& job) {
 	EnableControl(IDC_PROGRESS, false);
 	EnableControl(IDC_PERCENT, false);
-	SendDlgItemMessage(mhdlg, IDC_PROGRESS, PBM_SETPOS, 0, 0);
+	SendDlgItemMessageW(mhdlg, IDC_PROGRESS, PBM_SETPOS, 0, 0);
 }
 
 void VDUIJobControlDialog::OnJobProgressUpdate(const VDJob& job, float completion) {
 	if (!mhdlg)
 		return;
 
-	SendDlgItemMessage(mhdlg, IDC_PROGRESS, PBM_SETPOS, (int)(completion*16384.0f + 0.5f), 0);
+	SendDlgItemMessageW(mhdlg, IDC_PROGRESS, PBM_SETPOS, (int)(completion*16384.0f + 0.5f), 0);
 	SetControlTextF(IDC_PERCENT, L"%.0f%%", completion * 100.0f);
 }
 

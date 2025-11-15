@@ -144,21 +144,21 @@ INT_PTR CALLBACK CaptureBT848TweakerDlgProc(HWND hdlg, UINT msg, WPARAM wParam, 
 		for(i=0; s_bits[i].id; ++i)
 			CheckDlgButton(hdlg, s_bits[i].id, (g_dTVDriver.memoryReadBYTE(s_bits[i].offset) & s_bits[i].bit) ? BST_CHECKED:BST_UNCHECKED);
 
-		SendDlgItemMessage(hdlg, IDC_SLIDER_LUMAPEAKEVEN, TBM_SETRANGE, TRUE, MAKELONG(0, 3));
-		SendDlgItemMessage(hdlg, IDC_SLIDER_LUMAPEAKODD, TBM_SETRANGE, TRUE, MAKELONG(0, 3));
-		SendDlgItemMessage(hdlg, IDC_SLIDER_CORING, TBM_SETRANGE, TRUE, MAKELONG(0, 3));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_LUMAPEAKEVEN, TBM_SETRANGE, TRUE, MAKELONG(0, 3));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_LUMAPEAKODD, TBM_SETRANGE, TRUE, MAKELONG(0, 3));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_CORING, TBM_SETRANGE, TRUE, MAKELONG(0, 3));
 
-		SendDlgItemMessage(hdlg, IDC_SLIDER_LUMAPEAKEVEN, TBM_SETPOS, TRUE, (g_dTVDriver.memoryReadBYTE(0x040)&0x18)>>3);
-		SendDlgItemMessage(hdlg, IDC_SLIDER_LUMAPEAKODD, TBM_SETPOS, TRUE, (g_dTVDriver.memoryReadBYTE(0x0c0)&0x18)>>3);
-		SendDlgItemMessage(hdlg, IDC_SLIDER_CORING, TBM_SETPOS, TRUE, (g_dTVDriver.memoryReadBYTE(0x048)&0x60)>>5);
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_LUMAPEAKEVEN, TBM_SETPOS, TRUE, (g_dTVDriver.memoryReadBYTE(0x040)&0x18)>>3);
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_LUMAPEAKODD, TBM_SETPOS, TRUE, (g_dTVDriver.memoryReadBYTE(0x0c0)&0x18)>>3);
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_CORING, TBM_SETPOS, TRUE, (g_dTVDriver.memoryReadBYTE(0x048)&0x60)>>5);
 
-		SendDlgItemMessage(hdlg, IDC_SLIDER_LEFT, TBM_SETRANGE, TRUE, MAKELONG(0, 10239));
-		SendDlgItemMessage(hdlg, IDC_SLIDER_RIGHT, TBM_SETRANGE, TRUE, MAKELONG(0, 10239));
-		SendDlgItemMessage(hdlg, IDC_SLIDER_VDELAY, TBM_SETRANGE, TRUE, MAKELONG(0, 256));
-		SendDlgItemMessage(hdlg, IDC_SLIDER_AGCDELAY, TBM_SETRANGE, TRUE, MAKELONG(0, 255));
-		SendDlgItemMessage(hdlg, IDC_SLIDER_BURSTDELAY, TBM_SETRANGE, TRUE, MAKELONG(0, 255));
-		SendDlgItemMessage(hdlg, IDC_SLIDER_WHITEUP, TBM_SETRANGE, TRUE, MAKELONG(0, 63));
-		SendDlgItemMessage(hdlg, IDC_SLIDER_WHITEDOWN, TBM_SETRANGE, TRUE, MAKELONG(0, 63));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_LEFT, TBM_SETRANGE, TRUE, MAKELONG(0, 10239));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_RIGHT, TBM_SETRANGE, TRUE, MAKELONG(0, 10239));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_VDELAY, TBM_SETRANGE, TRUE, MAKELONG(0, 256));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_AGCDELAY, TBM_SETRANGE, TRUE, MAKELONG(0, 255));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_BURSTDELAY, TBM_SETRANGE, TRUE, MAKELONG(0, 255));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_WHITEUP, TBM_SETRANGE, TRUE, MAKELONG(0, 63));
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_WHITEDOWN, TBM_SETRANGE, TRUE, MAKELONG(0, 63));
 
 		{
 			// grab from the currently captured field
@@ -170,29 +170,30 @@ INT_PTR CALLBACK CaptureBT848TweakerDlgProc(HWND hdlg, UINT msg, WPARAM wParam, 
 			int left = MulDiv(hdelay,hscale,512);
 			int right = left + MulDiv(hactive, hscale,512);
 
-			SendDlgItemMessage(hdlg, IDC_SLIDER_LEFT, TBM_SETPOS, TRUE,	left);
-			SendDlgItemMessage(hdlg, IDC_SLIDER_RIGHT, TBM_SETPOS, TRUE, right);
+			SendDlgItemMessageW(hdlg, IDC_SLIDER_LEFT, TBM_SETPOS, TRUE,	left);
+			SendDlgItemMessageW(hdlg, IDC_SLIDER_RIGHT, TBM_SETPOS, TRUE, right);
 		}
 
-		SendDlgItemMessage(hdlg, IDC_SLIDER_VDELAY, TBM_SETPOS, TRUE,
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_VDELAY, TBM_SETPOS, TRUE,
 			((g_dTVDriver.memoryReadBYTE(0x00C)&0xc0)<<2)+g_dTVDriver.memoryReadBYTE(0x010));
 
-		SendDlgItemMessage(hdlg, IDC_SLIDER_AGCDELAY, TBM_SETPOS, TRUE,
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_AGCDELAY, TBM_SETPOS, TRUE,
 			g_dTVDriver.memoryReadBYTE(0x60));
 
-		SendDlgItemMessage(hdlg, IDC_SLIDER_BURSTDELAY, TBM_SETPOS, TRUE,
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_BURSTDELAY, TBM_SETPOS, TRUE,
 			g_dTVDriver.memoryReadBYTE(0x64));
 
-		SendDlgItemMessage(hdlg, IDC_SLIDER_WHITEDOWN, TBM_SETPOS, TRUE,
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_WHITEDOWN, TBM_SETPOS, TRUE,
 			g_dTVDriver.memoryReadBYTE(0x78)&0x3f);
 
-		SendDlgItemMessage(hdlg, IDC_SLIDER_WHITEUP, TBM_SETPOS, TRUE,
+		SendDlgItemMessageW(hdlg, IDC_SLIDER_WHITEUP, TBM_SETPOS, TRUE,
 			g_dTVDriver.memoryReadBYTE(0x44)&0x3f);
 
-		for(i=0; i<4; ++i)
+		for (i = 0; i < 4; ++i) {
 			SendDlgItemMessageA(hdlg, IDC_WHITE_POINT, CB_ADDSTRING, 0, (LPARAM)s_whitept_types[i]);
+		}
 
-		SendDlgItemMessage(hdlg, IDC_WHITE_POINT, CB_SETCURSEL, g_dTVDriver.memoryReadBYTE(0x44)>>6, 0);
+		SendDlgItemMessageW(hdlg, IDC_WHITE_POINT, CB_SETCURSEL, g_dTVDriver.memoryReadBYTE(0x44)>>6, 0);
 
 		return TRUE;
 	case WM_DESTROY:
@@ -265,8 +266,8 @@ INT_PTR CALLBACK CaptureBT848TweakerDlgProc(HWND hdlg, UINT msg, WPARAM wParam, 
 			case IDC_SLIDER_LEFT:
 			case IDC_SLIDER_RIGHT:
 				{
-					int left = SendDlgItemMessage(hdlg, IDC_SLIDER_LEFT, TBM_GETPOS, 0, 0);
-					int right = SendDlgItemMessage(hdlg, IDC_SLIDER_RIGHT, TBM_GETPOS, 0, 0);
+					int left = SendDlgItemMessageW(hdlg, IDC_SLIDER_LEFT, TBM_GETPOS, 0, 0);
+					int right = SendDlgItemMessageW(hdlg, IDC_SLIDER_RIGHT, TBM_GETPOS, 0, 0);
 
 					if (right < left)
 						right = left;

@@ -803,7 +803,7 @@ INT_PTR CALLBACK FrameServerSetupDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPA
 	case WM_COMMAND:
 		switch(LOWORD(wParam)) {
 		case IDOK:
-			SendDlgItemMessage(hDlg, IDC_FSNAME, WM_GETTEXT, 128, GetWindowLongPtr(hDlg, DWLP_USER));
+			SendDlgItemMessageW(hDlg, IDC_FSNAME, WM_GETTEXT, 128, GetWindowLongPtr(hDlg, DWLP_USER));
 			EndDialog(hDlg, TRUE);
 			break;
 		case IDCANCEL:

@@ -1691,7 +1691,7 @@ void VDSaveImageSeqDialogW32::UpdateChecks() {
 }
 
 void VDSaveImageSeqDialogW32::UpdateSlider() {
-	mQuality = SendDlgItemMessage(mhdlg, IDC_QUALITY, TBM_GETPOS, 0, 0);
+	mQuality = SendDlgItemMessageW(mhdlg, IDC_QUALITY, TBM_GETPOS, 0, 0);
 	SetDlgItemInt(mhdlg, IDC_STATIC_QUALITY, mQuality, FALSE);
 }
 
@@ -1728,8 +1728,8 @@ INT_PTR VDSaveImageSeqDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 		CheckDlgButton(mhdlg,IDC_SAVE_MAKEJOB, addJob ? BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(mhdlg, IDC_START_SELECTION, useTimeline ? BST_CHECKED : BST_UNCHECKED);
 		ChangeTimeline();
-		SendDlgItemMessage(mhdlg, IDC_QUALITY, TBM_SETRANGE, TRUE, MAKELONG(0,100));
-		SendDlgItemMessage(mhdlg, IDC_QUALITY, TBM_SETPOS, TRUE, mQuality);
+		SendDlgItemMessageW(mhdlg, IDC_QUALITY, TBM_SETRANGE, TRUE, MAKELONG(0,100));
+		SendDlgItemMessageW(mhdlg, IDC_QUALITY, TBM_SETPOS, TRUE, mQuality);
 		VDSetWindowTextW32(GetDlgItem(mhdlg, IDC_FILENAME_PREFIX), mPrefix.c_str());
 		VDSetWindowTextW32(GetDlgItem(mhdlg, IDC_FILENAME_SUFFIX), mPostfix.c_str());
 		SetDlgItemInt(mhdlg, IDC_FILENAME_DIGITS, digits, FALSE);
@@ -2046,7 +2046,7 @@ void VDSaveImageDialogW32::UpdateChecks() {
 }
 
 void VDSaveImageDialogW32::UpdateSlider() {
-	mQuality = SendDlgItemMessage(mhdlg, IDC_QUALITY, TBM_GETPOS, 0, 0);
+	mQuality = SendDlgItemMessageW(mhdlg, IDC_QUALITY, TBM_GETPOS, 0, 0);
 	SetDlgItemInt(mhdlg, IDC_STATIC_QUALITY, mQuality, FALSE);
 }
 
@@ -2114,8 +2114,8 @@ void VDSaveImageDialogW32::InitFormat() {
 INT_PTR VDSaveImageDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 	switch(message) {
 	case WM_INITDIALOG:
-		SendDlgItemMessage(mhdlg, IDC_QUALITY, TBM_SETRANGE, TRUE, MAKELONG(0,100));
-		SendDlgItemMessage(mhdlg, IDC_QUALITY, TBM_SETPOS, TRUE, mQuality);
+		SendDlgItemMessageW(mhdlg, IDC_QUALITY, TBM_SETRANGE, TRUE, MAKELONG(0,100));
+		SendDlgItemMessageW(mhdlg, IDC_QUALITY, TBM_SETPOS, TRUE, mQuality);
 		CheckDlgButton(mhdlg, IDC_QUICK, mbQuickCompress ? BST_CHECKED : BST_UNCHECKED);
 		InitFormat();
 		UpdateChecks();

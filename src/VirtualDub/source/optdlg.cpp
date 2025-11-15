@@ -2040,7 +2040,7 @@ INT_PTR VDDialogAudioVolumeW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPar
 			switch(LOWORD(wParam)) {
 			case IDOK:
 				if (IsDlgButtonChecked(mhdlg, IDC_ADJUSTVOL)) {
-					int pos = SendDlgItemMessage(mhdlg, IDC_SLIDER_VOLUME, TBM_GETPOS, 0, 0);
+					int pos = SendDlgItemMessageW(mhdlg, IDC_SLIDER_VOLUME, TBM_GETPOS, 0, 0);
 
 					mOpts.audio.mVolume = SliderPositionToFactor(pos);
 				} else
@@ -2077,7 +2077,7 @@ int VDDialogAudioVolumeW32::FactorToSliderPosition(float factor) {
 
 void VDDialogAudioVolumeW32::UpdateVolumeText() {
 	char buf[64];
-	int pos = SendDlgItemMessage(mhdlg, IDC_SLIDER_VOLUME, TBM_GETPOS, 0, 0);
+	int pos = SendDlgItemMessageW(mhdlg, IDC_SLIDER_VOLUME, TBM_GETPOS, 0, 0);
 
 	float factor = SliderPositionToFactor(pos);
 	sprintf(buf, "%+.1fdB (%.1f%%)", (float)(pos - 300) * 0.1f, 100.0f*factor);
@@ -2302,11 +2302,11 @@ INT_PTR VDDialogJumpToPositionW32::DlgProc(UINT msg, WPARAM wParam, LPARAM lPara
 			break;
 		case IDC_JUMPTOFRAME:
 			SetFocus(GetDlgItem(mhdlg, IDC_FRAMENUMBER));
-			SendDlgItemMessage(mhdlg, IDC_FRAMENUMBER, EM_SETSEL, 0, -1);
+			SendDlgItemMessageW(mhdlg, IDC_FRAMENUMBER, EM_SETSEL, 0, -1);
 			break;
 		case IDC_JUMPTOTIME:
 			SetFocus(GetDlgItem(mhdlg, IDC_FRAMETIME));
-			SendDlgItemMessage(mhdlg, IDC_FRAMETIME, EM_SETSEL, 0, -1);
+			SendDlgItemMessageW(mhdlg, IDC_FRAMETIME, EM_SETSEL, 0, -1);
 			break;
 		}
 		return TRUE;
@@ -2358,10 +2358,10 @@ void VDDialogJumpToPositionW32::ReinitEdit() {
 
 void VDDialogJumpToPositionW32::ReinitDialog() {
 	if (title) SetWindowTextW(mhdlg, title);
-	SendDlgItemMessage(mhdlg, IDC_FRAMETIME, EM_LIMITTEXT, 30, 0);
+	SendDlgItemMessageW(mhdlg, IDC_FRAMETIME, EM_LIMITTEXT, 30, 0);
 	ReinitEdit();
 	SetFocus(GetDlgItem(mhdlg, IDC_FRAMENUMBER));
-	SendDlgItemMessage(mhdlg, IDC_FRAMENUMBER, EM_SETSEL, 0, -1);
+	SendDlgItemMessageW(mhdlg, IDC_FRAMENUMBER, EM_SETSEL, 0, -1);
 
 	CheckDlgButton(mhdlg, IDC_JUMPTOFRAME, BST_CHECKED);
 	CheckDlgButton(mhdlg, IDC_JUMPTOTIME, BST_UNCHECKED);

@@ -4731,8 +4731,8 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			}
 
 			if (found_w >=0 && found_h >=0) {
-				SendDlgItemMessage(hdlg, IDC_FRAME_WIDTH, LB_SETCURSEL, found_w, 0);
-				SendDlgItemMessage(hdlg, IDC_FRAME_HEIGHT, LB_SETCURSEL, found_h, 0);
+				SendDlgItemMessageW(hdlg, IDC_FRAME_WIDTH, LB_SETCURSEL, found_w, 0);
+				SendDlgItemMessageW(hdlg, IDC_FRAME_HEIGHT, LB_SETCURSEL, found_h, 0);
 				SetFocus(GetDlgItem(hdlg, IDC_FRAME_WIDTH));
 			} else {
 				SetDlgItemInt(hdlg, IDC_WIDTH, w, FALSE);
@@ -4773,8 +4773,8 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 					}
 
 				} else {
-					int widthIdx = SendDlgItemMessage(hdlg, IDC_FRAME_WIDTH, LB_GETCURSEL, 0, 0);
-					int heightIdx = SendDlgItemMessage(hdlg, IDC_FRAME_HEIGHT, LB_GETCURSEL, 0, 0);
+					int widthIdx = SendDlgItemMessageW(hdlg, IDC_FRAME_WIDTH, LB_GETCURSEL, 0, 0);
+					int heightIdx = SendDlgItemMessageW(hdlg, IDC_FRAME_HEIGHT, LB_GETCURSEL, 0, 0);
 
 					if ((unsigned)widthIdx >= std::size(s_widths)) {
 						MessageBeep(MB_ICONEXCLAMATION);
@@ -4792,8 +4792,8 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 					h = s_heights[heightIdx];
 				}
 
-				f = SendDlgItemMessage(hdlg, IDC_FORMATS, LB_GETITEMDATA,
-						SendDlgItemMessage(hdlg, IDC_FORMATS, LB_GETCURSEL, 0, 0), 0);
+				f = SendDlgItemMessageW(hdlg, IDC_FORMATS, LB_GETITEMDATA,
+						SendDlgItemMessageW(hdlg, IDC_FORMATS, LB_GETCURSEL, 0, 0), 0);
 
 				vdstructex<VDAVIBitmapInfoHeader> pbih;
 				pbih.resize(sizeof(VDAVIBitmapInfoHeader));

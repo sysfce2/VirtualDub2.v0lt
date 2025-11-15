@@ -784,7 +784,7 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 			case IDC_FILTERMODE:
 				if (HIWORD(wParam) == CBN_SELCHANGE) {
 					mfd->ifp->UndoSystem();
-					mfd->filtmode = SendDlgItemMessage(hDlg, IDC_FILTERMODE, CB_GETCURSEL, 0, 0);
+					mfd->filtmode = SendDlgItemMessageW(hDlg, IDC_FILTERMODE, CB_GETCURSEL, 0, 0);
 					mfd->ifp->RedoSystem();
 				}
 				return TRUE;

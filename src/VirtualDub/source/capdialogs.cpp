@@ -112,8 +112,8 @@ INT_PTR VDDialogCaptureDiskIO::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			}
 			SendMessageW(hwndItem, CB_SETCURSEL, NearestLongValue(mDiskSettings.mDiskChunkSize, sizes, std::size(sizes)), 0);
 
-			SendDlgItemMessage(mhdlg, IDC_CHUNKS_UPDOWN, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhdlg, IDC_CHUNKS), 0);
-			SendDlgItemMessage(mhdlg, IDC_CHUNKS_UPDOWN, UDM_SETRANGE, 0, MAKELONG(256, 1));
+			SendDlgItemMessageW(mhdlg, IDC_CHUNKS_UPDOWN, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhdlg, IDC_CHUNKS), 0);
+			SendDlgItemMessageW(mhdlg, IDC_CHUNKS_UPDOWN, UDM_SETRANGE, 0, MAKELONG(256, 1));
 
 			SetDlgItemInt(mhdlg, IDC_CHUNKS, mDiskSettings.mDiskChunkCount, FALSE);
 			CheckDlgButton(mhdlg, IDC_DISABLEBUFFERING, mDiskSettings.mbDisableWriteCache ? BST_CHECKED : BST_UNCHECKED);
@@ -137,7 +137,7 @@ INT_PTR VDDialogCaptureDiskIO::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 				}
 
 				mDiskSettings.mDiskChunkCount = chunks;
-				mDiskSettings.mDiskChunkSize = sizes[SendDlgItemMessage(mhdlg, IDC_CHUNKSIZE, CB_GETCURSEL, 0, 0)];
+				mDiskSettings.mDiskChunkSize = sizes[SendDlgItemMessageW(mhdlg, IDC_CHUNKSIZE, CB_GETCURSEL, 0, 0)];
 				mDiskSettings.mbDisableWriteCache = !!IsDlgButtonChecked(mhdlg, IDC_DISABLEBUFFERING);
 
 				if (LOWORD(wParam) == IDOK) {
@@ -166,7 +166,7 @@ INT_PTR VDDialogCaptureDiskIO::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 				if (fOk) {
 					char buf[64];
 
-					cs = SendDlgItemMessage(mhdlg, IDC_CHUNKSIZE, CB_GETCURSEL, 0, 0);
+					cs = SendDlgItemMessageW(mhdlg, IDC_CHUNKSIZE, CB_GETCURSEL, 0, 0);
 
 					sprintf(buf, "Total buffer: %ldK", sizes[cs] * chunks);
 					SetDlgItemTextA(mhdlg, IDC_STATIC_BUFFERSIZE, buf);

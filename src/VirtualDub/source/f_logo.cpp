@@ -142,8 +142,8 @@ bool VDVFLogoDialog::OnLoaded() {
 	SetControlTextF(IDC_XPOS, L"%d", mConfig.pos_x);
 	SetControlTextF(IDC_YPOS, L"%d", mConfig.pos_y);
 
-	SendDlgItemMessage(mhdlg, IDC_SPIN_XOFFSET, UDM_SETRANGE, 0, MAKELONG((short)-(UD_MINVAL-1/2), (short)+(UD_MINVAL-1/2)));
-	SendDlgItemMessage(mhdlg, IDC_SPIN_YOFFSET, UDM_SETRANGE, 0, MAKELONG((short)+(UD_MINVAL-1/2), (short)-(UD_MINVAL-1/2)));
+	SendDlgItemMessageW(mhdlg, IDC_SPIN_XOFFSET, UDM_SETRANGE, 0, MAKELONG((short)-(UD_MINVAL-1/2), (short)+(UD_MINVAL-1/2)));
+	SendDlgItemMessageW(mhdlg, IDC_SPIN_YOFFSET, UDM_SETRANGE, 0, MAKELONG((short)+(UD_MINVAL-1/2), (short)-(UD_MINVAL-1/2)));
 
 	TBSetRange(IDC_OPACITY, 0, 100);
 	TBSetValue(IDC_OPACITY, VDRoundToInt(mConfig.opacity * (100 / 65536.0)));

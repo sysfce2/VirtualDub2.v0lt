@@ -1793,19 +1793,19 @@ INT_PTR CALLBACK HexEditor::AskForValuesDlgProc(HWND hdlg, UINT msg, WPARAM wPar
 		SetWindowTextA(hdlg, pData->title);
 		sprintf(buf, "%I64X", pData->v1);
 		SetDlgItemTextA(hdlg, IDC_EDIT_ADDRESS1, buf);
-		SendDlgItemMessage(hdlg, IDC_EDIT_ADDRESS1, EM_LIMITTEXT, 16, 0);
+		SendDlgItemMessageW(hdlg, IDC_EDIT_ADDRESS1, EM_LIMITTEXT, 16, 0);
 		SetDlgItemTextA(hdlg, IDC_STATIC_ADDRESS1, pData->name1);
 		if (pData->name2) {
 			sprintf(buf, "%I64X", pData->v2);
 			SetDlgItemTextA(hdlg, IDC_EDIT_ADDRESS2, buf);
-			SendDlgItemMessage(hdlg, IDC_EDIT_ADDRESS1, EM_LIMITTEXT, 16, 0);
+			SendDlgItemMessageW(hdlg, IDC_EDIT_ADDRESS1, EM_LIMITTEXT, 16, 0);
 			SetDlgItemTextA(hdlg, IDC_STATIC_ADDRESS2, pData->name2);
 		} else {
 			ShowWindow(GetDlgItem(hdlg, IDC_EDIT_ADDRESS2), SW_HIDE);
 			ShowWindow(GetDlgItem(hdlg, IDC_STATIC_ADDRESS2), SW_HIDE);
 		}
 
-		SendDlgItemMessage(hdlg, IDC_EDIT_ADDRESS1, EM_SETSEL, 0, -1);
+		SendDlgItemMessageW(hdlg, IDC_EDIT_ADDRESS1, EM_SETSEL, 0, -1);
 		SetFocus(GetDlgItem(hdlg, IDC_EDIT_ADDRESS1));
 
 		return FALSE;

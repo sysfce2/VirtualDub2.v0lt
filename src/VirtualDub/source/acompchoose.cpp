@@ -391,7 +391,7 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 
 			tabs[0] = 140;
 
-			SendDlgItemMessage(hdlg, IDC_FORMAT, LB_SETTABSTOPS, 1, (LPARAM)tabs);
+			SendDlgItemMessageW(hdlg, IDC_FORMAT, LB_SETTABSTOPS, 1, (LPARAM)tabs);
 
 			acmMetrics(NULL, ACM_METRIC_MAX_SIZE_FORMAT, &aed.cbwfex);
 
@@ -427,7 +427,7 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 					entry->driver = driver;
 					entry->mbSupportsAbout = driver->GetDriver()->HasAbout();
 					entry->mbSupportsConfigure = driver->GetDriver()->HasConfig();
-					SendDlgItemMessage(hdlg, IDC_FORMATTAG, LB_SETITEMDATA, idx, (LPARAM)entry);
+					SendDlgItemMessageW(hdlg, IDC_FORMATTAG, LB_SETITEMDATA, idx, (LPARAM)entry);
 
 					IVDXAudioEnc* plugin = driver->GetDriver();
 					if (*thisPtr->pHint==driver->GetSignatureName()) {
@@ -446,8 +446,9 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 
 			int idx = SendDlgItemMessageA(hdlg, IDC_FORMATTAG, LB_INSERTSTRING, 0, (LPARAM)"<No compression (PCM)>");
 
-			if (idx >= 0)
-				SendDlgItemMessage(hdlg, IDC_FORMATTAG, LB_SETITEMDATA, idx, NULL);
+			if (idx >= 0) {
+				SendDlgItemMessageW(hdlg, IDC_FORMATTAG, LB_SETITEMDATA, idx, NULL);
+			}
 
 
 			if (!aed.pTagSelect) {
@@ -513,14 +514,14 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 		switch(GetWindowLong((HWND)lParam, GWL_ID)) {
 		case IDOK:
 			{
-				int idx = SendDlgItemMessage(hdlg, IDC_FORMAT, LB_GETCURSEL, 0, 0);
+				int idx = SendDlgItemMessageW(hdlg, IDC_FORMAT, LB_GETCURSEL, 0, 0);
 				thisPtr->pConfig->clear();
 
 				if (idx < 0) {
 					thisPtr->pwfex = NULL;
 					thisPtr->pHint->clear();
 				} else {
-					ACMFormatEntry *pFormat = (ACMFormatEntry *)SendDlgItemMessage(hdlg, IDC_FORMAT, LB_GETITEMDATA, idx, 0);
+					ACMFormatEntry *pFormat = (ACMFormatEntry *)SendDlgItemMessageW(hdlg, IDC_FORMAT, LB_GETITEMDATA, idx, 0);
 
 					thisPtr->pwfex = pFormat->pwfex;
 					pFormat->pwfex = NULL;
@@ -577,10 +578,11 @@ redisplay_formats:
 					int idx = SendMessageW((HWND)lParam, LB_GETCURSEL, 0, 0);
 
 					if (idx < 0) {
-						if (!SendDlgItemMessage(hdlg, IDC_FORMATTAG, LB_GETCURSEL, 0, 0))
+						if (!SendDlgItemMessageW(hdlg, IDC_FORMATTAG, LB_GETCURSEL, 0, 0)) {
 							AudioChooseDisplaySpecs(hdlg, thisPtr->pwfexSrc);
-						else
+						} else {
 							AudioChooseDisplaySpecs(hdlg, NULL);
+						}
 						return TRUE;
 					}
 

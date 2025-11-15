@@ -1269,8 +1269,8 @@ void VDVFCanvasDlg::InitDialog() {
 		SendMessageW(hwndItem, EM_SETSEL, 0, -1);
 	}
 
-	SendDlgItemMessage(mhdlg, IDC_SPIN_XOFFSET, UDM_SETRANGE, 0, MAKELONG((short)-(UD_MINVAL-1/2), (short)+(UD_MINVAL-1/2)));
-	SendDlgItemMessage(mhdlg, IDC_SPIN_YOFFSET, UDM_SETRANGE, 0, MAKELONG((short)+(UD_MINVAL-1/2), (short)-(UD_MINVAL-1/2)));
+	SendDlgItemMessageW(mhdlg, IDC_SPIN_XOFFSET, UDM_SETRANGE, 0, MAKELONG((short)-(UD_MINVAL-1/2), (short)+(UD_MINVAL-1/2)));
+	SendDlgItemMessageW(mhdlg, IDC_SPIN_YOFFSET, UDM_SETRANGE, 0, MAKELONG((short)+(UD_MINVAL-1/2), (short)-(UD_MINVAL-1/2)));
 
 	static const uint32 idbypos[3][3]={
 		IDC_DIR_TOPLEFT,

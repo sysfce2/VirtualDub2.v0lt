@@ -32,8 +32,8 @@ VDZINT_PTR VDUIShutdownDialog::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARAM 
 }
 
 bool VDUIShutdownDialog::OnLoaded() {
-	SendDlgItemMessage(mhdlg, IDC_PROGRESS, PBM_SETRANGE, TRUE, MAKELONG(0, 40));
-	SendDlgItemMessage(mhdlg, IDC_PROGRESS, PBM_SETSTEP, 1, 0);
+	SendDlgItemMessageW(mhdlg, IDC_PROGRESS, PBM_SETRANGE, TRUE, MAKELONG(0, 40));
+	SendDlgItemMessageW(mhdlg, IDC_PROGRESS, PBM_SETSTEP, 1, 0);
 	SetTimer(mhdlg, 1, 250, NULL);
 
 	mPos = 0;
@@ -42,7 +42,7 @@ bool VDUIShutdownDialog::OnLoaded() {
 }
 
 bool VDUIShutdownDialog::OnTimer() {
-	SendDlgItemMessage(mhdlg, IDC_PROGRESS, PBM_STEPIT, 0, 0);
+	SendDlgItemMessageW(mhdlg, IDC_PROGRESS, PBM_STEPIT, 0, 0);
 
 	if (++mPos >= 40)
 		End(true);

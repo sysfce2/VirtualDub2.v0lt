@@ -360,7 +360,7 @@ static INT_PTR CALLBACK timesmoothDlgProc( HWND hDlg, UINT message, WPARAM wPara
 			break;
 
 		case WM_HSCROLL:
-			mfd->strength = SendDlgItemMessage(hDlg, IDC_STRENGTH, TBM_GETPOS, 0, 0);
+			mfd->strength = SendDlgItemMessageW(hDlg, IDC_STRENGTH, TBM_GETPOS, 0, 0);
 			mfd->ifp->RedoFrame();
 			break;
 

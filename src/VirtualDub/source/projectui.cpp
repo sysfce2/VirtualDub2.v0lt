@@ -4448,8 +4448,8 @@ INT_PTR CALLBACK CurveProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		switch (LOWORD(wParam)) {
 		case IDC_CURVE:
 			if(HIWORD(wParam)==CBN_SELCHANGE){
-				int sel = (int)SendDlgItemMessage(wnd, IDC_CURVE, CB_GETCURSEL, 0, 0);
-				int id = (int)SendDlgItemMessage(wnd, IDC_CURVE, CB_GETITEMDATA, sel, 0);
+				int sel = (int)SendDlgItemMessageW(wnd, IDC_CURVE, CB_GETCURSEL, 0, 0);
+				int id = (int)SendDlgItemMessageW(wnd, IDC_CURVE, CB_GETITEMDATA, sel, 0);
 				VDProjectUI* project = (VDProjectUI*)GetWindowLongPtr(wnd,DWLP_USER);
 				project->SelectCurve(id);
 				return TRUE;
@@ -4676,9 +4676,9 @@ VDPosition VDProjectUI::CurveToTimeline(double x, FilterInstance* fa) {
 
 void VDProjectUI::UpdateCurveEditorPosition() {
 	if (!mpCurveEditor)	return;
-	int selIndex = (int)SendDlgItemMessage(mhwndCurveCtl, IDC_CURVE, CB_GETCURSEL, 0, 0);
+	int selIndex = (int)SendDlgItemMessageW(mhwndCurveCtl, IDC_CURVE, CB_GETCURSEL, 0, 0);
 	if (selIndex==-1) return;
-	int id = (int)SendDlgItemMessage(mhwndCurveCtl, IDC_CURVE, CB_GETITEMDATA, selIndex, 0);
+	int id = (int)SendDlgItemMessageW(mhwndCurveCtl, IDC_CURVE, CB_GETITEMDATA, selIndex, 0);
 	if (id==-1) return;
 	FilterInstance* fa = FilterForCurve(id);
 	if (!fa) return;
@@ -4713,9 +4713,9 @@ void VDProjectUI::CurveMoveToNext(int d) {
 	if (!mpCurveEditor) return;
 	VDParameterCurve* pc = mpCurveEditor->GetCurve();
 	if (!pc) return;
-	int selIndex = (int)SendDlgItemMessage(mhwndCurveCtl, IDC_CURVE, CB_GETCURSEL, 0, 0);
+	int selIndex = (int)SendDlgItemMessageW(mhwndCurveCtl, IDC_CURVE, CB_GETCURSEL, 0, 0);
 	if (selIndex==-1) return;
-	int id = (int)SendDlgItemMessage(mhwndCurveCtl, IDC_CURVE, CB_GETITEMDATA, selIndex, 0);
+	int id = (int)SendDlgItemMessageW(mhwndCurveCtl, IDC_CURVE, CB_GETITEMDATA, selIndex, 0);
 	if (id==-1) return;
 	FilterInstance* fa = FilterForCurve(id);
 	if (!fa) return;

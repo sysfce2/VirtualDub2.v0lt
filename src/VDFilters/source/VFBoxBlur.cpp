@@ -685,8 +685,8 @@ INT_PTR CALLBACK boxConfigDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPa
 				static const char *const szPowers[]={ "1 - box", "2 - quadratic", "3 - cubic" };
 				int new_width, new_power;
 
-				new_width = SendDlgItemMessage(hdlg, IDC_SLIDER_WIDTH, TBM_GETPOS, 0, 0);
-				new_power = SendDlgItemMessage(hdlg, IDC_SLIDER_POWER, TBM_GETPOS, 0, 0);
+				new_width = SendDlgItemMessageW(hdlg, IDC_SLIDER_WIDTH, TBM_GETPOS, 0, 0);
+				new_power = SendDlgItemMessageW(hdlg, IDC_SLIDER_POWER, TBM_GETPOS, 0, 0);
 
 				if (new_width != mfd->filter_width || new_power != mfd->filter_power) {
 					mfd->filter_width = new_width;

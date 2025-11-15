@@ -575,15 +575,15 @@ int VDDialogFrameW32::ActivatePopupMenu(int x, int y, const wchar_t *const *item
 }
 
 void VDDialogFrameW32::LBClear(uint32 id) {
-	SendDlgItemMessage(mhdlg, id, LB_RESETCONTENT, 0, 0);
+	SendDlgItemMessageW(mhdlg, id, LB_RESETCONTENT, 0, 0);
 }
 
 sint32 VDDialogFrameW32::LBGetSelectedIndex(uint32 id) {
-	return SendDlgItemMessage(mhdlg, id, LB_GETCURSEL, 0, 0);
+	return SendDlgItemMessageW(mhdlg, id, LB_GETCURSEL, 0, 0);
 }
 
 void VDDialogFrameW32::LBSetSelectedIndex(uint32 id, sint32 idx) {
-	SendDlgItemMessage(mhdlg, id, LB_SETCURSEL, idx, 0);
+	SendDlgItemMessageW(mhdlg, id, LB_SETCURSEL, idx, 0);
 }
 
 void VDDialogFrameW32::LBAddString(uint32 id, const wchar_t *s) {
@@ -602,15 +602,15 @@ void VDDialogFrameW32::LBAddStringF(uint32 id, const wchar_t *format, ...) {
 }
 
 void VDDialogFrameW32::CBClear(uint32 id) {
-	SendDlgItemMessage(mhdlg, id, CB_RESETCONTENT, 0, 0);
+	SendDlgItemMessageW(mhdlg, id, CB_RESETCONTENT, 0, 0);
 }
 
 sint32 VDDialogFrameW32::CBGetSelectedIndex(uint32 id) {
-	return SendDlgItemMessage(mhdlg, id, CB_GETCURSEL, 0, 0);
+	return SendDlgItemMessageW(mhdlg, id, CB_GETCURSEL, 0, 0);
 }
 
 void VDDialogFrameW32::CBSetSelectedIndex(uint32 id, sint32 idx) {
-	SendDlgItemMessage(mhdlg, id, CB_SETCURSEL, idx, 0);
+	SendDlgItemMessageW(mhdlg, id, CB_SETCURSEL, idx, 0);
 }
 
 void VDDialogFrameW32::CBAddString(uint32 id, const wchar_t *s) {
@@ -618,24 +618,24 @@ void VDDialogFrameW32::CBAddString(uint32 id, const wchar_t *s) {
 }
 
 sint32 VDDialogFrameW32::TBGetValue(uint32 id) {
-	return SendDlgItemMessage(mhdlg, id, TBM_GETPOS, 0, 0);
+	return SendDlgItemMessageW(mhdlg, id, TBM_GETPOS, 0, 0);
 }
 
 void VDDialogFrameW32::TBSetValue(uint32 id, sint32 value) {
-	SendDlgItemMessage(mhdlg, id, TBM_SETPOS, TRUE, value);
+	SendDlgItemMessageW(mhdlg, id, TBM_SETPOS, TRUE, value);
 }
 
 void VDDialogFrameW32::TBSetRange(uint32 id, sint32 minval, sint32 maxval) {
-	SendDlgItemMessage(mhdlg, id, TBM_SETRANGEMIN, FALSE, minval);
-	SendDlgItemMessage(mhdlg, id, TBM_SETRANGEMAX, TRUE, maxval);
+	SendDlgItemMessageW(mhdlg, id, TBM_SETRANGEMIN, FALSE, minval);
+	SendDlgItemMessageW(mhdlg, id, TBM_SETRANGEMAX, TRUE, maxval);
 }
 
 void VDDialogFrameW32::TBSetPageStep(uint32 id, sint32 pageStep) {
-	SendDlgItemMessage(mhdlg, id, TBM_SETPAGESIZE, 0, pageStep);
+	SendDlgItemMessageW(mhdlg, id, TBM_SETPAGESIZE, 0, pageStep);
 }
 
 void VDDialogFrameW32::UDSetRange(uint32 id, sint32 minval, sint32 maxval) {
-	SendDlgItemMessage(mhdlg, id, UDM_SETRANGE32, minval, maxval);
+	SendDlgItemMessageW(mhdlg, id, UDM_SETRANGE32, minval, maxval);
 }
 
 void VDDialogFrameW32::OnDataExchange(bool write) {

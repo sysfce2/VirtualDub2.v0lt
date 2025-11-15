@@ -360,7 +360,7 @@ INT_PTR APIENTRY InputFileAVIOptions::SetupDlgProc( HWND hDlg, UINT message, WPA
 		case WM_INITDIALOG:
 			thisPtr = (InputFileAVIOptions *)lParam;
 			SetWindowLongPtr(hDlg, DWLP_USER, lParam);
-			SendDlgItemMessage(hDlg, IDC_FORCE_FOURCC, EM_LIMITTEXT, 4, 0);
+			SendDlgItemMessageW(hDlg, IDC_FORCE_FOURCC, EM_LIMITTEXT, 4, 0);
 			CheckDlgButton(hDlg, IDC_IF_NORMAL, BST_CHECKED);
 			CheckDlgButton(hDlg, IDC_AVI_INTERNALDECODER, thisPtr->opts.fInternalDecoder);
 			CheckDlgButton(hDlg, IDC_AVI_REKEY, (thisPtr->opts.indexFlags&1)!=0);
