@@ -2671,7 +2671,7 @@ void VDDialogFileTextInfoW32::BeginEdit(int index) {
 
 	r.left = LVIR_BOUNDS;
 
-	LVITEM lvi;
+	LVITEMW lvi;
 	lvi.mask = LVIF_PARAM;
 	lvi.iItem = index;
 	lvi.iSubItem = 0;
@@ -2826,7 +2826,7 @@ LRESULT VDDialogFileTextInfoW32::LVWndProc(HWND hwnd, UINT msg, WPARAM wParam, L
 	case WM_LBUTTONDOWN:
 		{
 			LVHITTESTINFO htinfo;
-			LVITEM lvi;
+			LVITEMW lvi;
 			int index;
 
 			// if this isn't done, the control doesn't gain focus properly...

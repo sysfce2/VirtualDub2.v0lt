@@ -900,12 +900,12 @@ void VDUIJobControlDialog::OnJobAdded(const VDJob& job, int index) {
 	if (!mhdlg)
 		return;
 
-	LVITEM li;
+	LVITEMW li;
 
 	li.mask		= LVIF_TEXT;
 	li.iSubItem	= 0;
 	li.iItem	= index;
-	li.pszText	= LPSTR_TEXTCALLBACK;
+	li.pszText	= LPSTR_TEXTCALLBACKW;
 
 	ListView_InsertItem(GetDlgItem(mhdlg, IDC_JOBS), &li);
 }
@@ -974,12 +974,12 @@ void VDUIJobControlDialog::OnJobQueueReloaded() {
 	ListView_DeleteAllItems(hwndItem);
 	int n = g_VDJobQueue.ListSize();
 	for(int i=0; i<n; i++) {
-		LVITEM li;
+		LVITEMW li;
 
 		li.mask		= LVIF_TEXT;
 		li.iSubItem	= 0;
 		li.iItem	= i;
-		li.pszText	= LPSTR_TEXTCALLBACK;
+		li.pszText	= LPSTR_TEXTCALLBACKW;
 
 		ListView_InsertItem(hwndItem, &li);
 	}

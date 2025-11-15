@@ -2518,13 +2518,13 @@ TreeNode *HexEditor::RIFFScan(RIFFScanInfo &rsi, sint64 pos, sint64 sizeleft) {
 
 namespace {
 	void CreateTreeNode(HWND hwndTV, HTREEITEM htiParent, TreeNode *ptn) {
-		TVINSERTSTRUCT tvis;
+		TVINSERTSTRUCTW tvis;
 
 		tvis.hParent		= htiParent;
 		tvis.hInsertAfter	= TVI_FIRST;
 		tvis.item.mask		= TVIF_TEXT | TVIF_PARAM | TVIF_STATE | TVIF_CHILDREN;
 		tvis.item.lParam	= (LPARAM)ptn;
-		tvis.item.pszText	= LPSTR_TEXTCALLBACK;
+		tvis.item.pszText	= LPSTR_TEXTCALLBACKW;
 		tvis.item.state		= 0;
 		tvis.item.stateMask	= TVIS_EXPANDED;
 		tvis.item.cChildren	= I_CHILDRENCALLBACK;
