@@ -1227,11 +1227,11 @@ void HexEditor::Open(const wchar_t *pszFile, bool bRW) {
 		return;
 	}
 
-	char buf[512];
+	wchar_t buf[512];
 
-	_snprintf(buf, 512, "VirtualDub2 Hex Editor - [%ls]%s", pszFile, bRW ? "" : " (read only)");
-	buf[511] = 0;
-	SetWindowTextA(hwnd, buf);
+	_snwprintf_s(buf, _TRUNCATE, L"VirtualDub2 Hex Editor - [%s]%s", pszFile, bRW ? L"" : L" (read only)");
+	buf[std::size(buf) - 1] = 0;
+	SetWindowTextW(hwnd, buf);
 
 	i64RowCacheAddr	= -1;
 	i64FileCacheAddr	= -1;
