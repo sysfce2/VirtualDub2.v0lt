@@ -768,7 +768,7 @@ void VDVideoDisplayMinidriverOpenGL::Refresh(UpdateMode updateMode) {
 			VDVERIFY(SetTimer(mhwndOGL, kTimerId_Refresh, 1000, NULL));
 		}
 
-		PostMessage(mhwndOGL, WM_TIMER, kTimerId_Refresh, 0);
+		PostMessageW(mhwndOGL, WM_TIMER, kTimerId_Refresh, 0);
 	}
 }
 

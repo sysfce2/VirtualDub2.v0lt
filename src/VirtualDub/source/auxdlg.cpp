@@ -102,7 +102,7 @@ extern void ShutdownLogWindow() {
 	if (!g_hwndLogWindow) return;
 	DWORD thid = GetWindowThreadProcessId(g_hwndLogWindow,0);
 	HANDLE h = OpenThread(SYNCHRONIZE,false,thid);
-	PostMessage(g_hwndLogWindow,WM_CLOSE,0,0);
+	PostMessageW(g_hwndLogWindow, WM_CLOSE, 0, 0);
 	WaitForSingleObject(h,1000);
 }
 
@@ -186,7 +186,7 @@ extern void ShutdownStatusWindow() {
 	if (!g_hwndStatusWindow) return;
 	DWORD thid = GetWindowThreadProcessId(g_hwndStatusWindow,0);
 	HANDLE h = OpenThread(SYNCHRONIZE,false,thid);
-	PostMessage(g_hwndStatusWindow,WM_CLOSE,0,0);
+	PostMessageW(g_hwndStatusWindow, WM_CLOSE, 0, 0);
 	WaitForSingleObject(h,1000);
 }
 

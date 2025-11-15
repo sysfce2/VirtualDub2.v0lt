@@ -88,9 +88,10 @@ public:
 		cmd->fileName = s;
 		cmd->object = object;
 		cmd->userData = userData;
-		if (driverName)
+		if (driverName) {
 			cmd->driverName = driverName;
-		PostMessage(g_projectui->GetHwnd(),MYWM_DEFERRED_FILECOMMAND,0,(LPARAM)cmd);
+		}
+		PostMessageW(g_projectui->GetHwnd(), MYWM_DEFERRED_FILECOMMAND, 0, (LPARAM)cmd);
 	}
 
 	void Reopen(void* userData) {
@@ -102,9 +103,13 @@ public:
 		cmd->object = object;
 		cmd->userData = userData;
 		cmd->reopen = true;
-		if (fileName) cmd->fileName = fileName;
-		if (driverName) cmd->fileName = driverName;
-		PostMessage(g_projectui->GetHwnd(),MYWM_DEFERRED_FILECOMMAND,0,(LPARAM)cmd);
+		if (fileName) {
+			cmd->fileName = fileName;
+		}
+		if (driverName) {
+			cmd->fileName = driverName;
+		}
+		PostMessageW(g_projectui->GetHwnd(), MYWM_DEFERRED_FILECOMMAND, 0, (LPARAM)cmd);
 	}
 
 	IVDTimeline* GetTimeline() {

@@ -2604,7 +2604,7 @@ INT_PTR CALLBACK HexEditor::TreeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPAR
 						const TreeNode *ptn = (const TreeNode *)tvi.lParam;
 
 						pcd->mpView->MoveToByte(ptn->mPos);
-						PostMessage(hdlg, WM_APP, 0, 0);
+						PostMessageW(hdlg, WM_APP, 0, 0);
 					}
 				}
 

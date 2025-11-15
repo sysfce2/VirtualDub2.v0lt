@@ -184,7 +184,7 @@ IVDLogWindowControl *VDGetILogWindowControl(HWND hwnd) {
 void VDLogWindowControl::AttachAsLogger(bool bThisThreadOnly) {
 	if (!mbAttachedToLogSystem) {
 		VDAttachLogger(this, bThisThreadOnly, !bThisThreadOnly);
-		PostMessage(mhwnd, WM_TIMER, 1, 0);
+		PostMessageW(mhwnd, WM_TIMER, 1, 0);
 	}
 
 	mbAttachedToLogSystem = true;

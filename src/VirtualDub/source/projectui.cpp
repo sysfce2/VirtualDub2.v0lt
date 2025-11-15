@@ -1128,13 +1128,13 @@ bool VDProjectUI::Tick() {
 		for(; it!=itEnd; ++it) {
 			int id = *it;
 
-			PostMessage((HWND)mhwnd, MYWM_DEFERRED_COMMAND, id, 0);
+			PostMessageW((HWND)mhwnd, MYWM_DEFERRED_COMMAND, id, 0);
 		}
 		mPendingCommands.clear();
 	}
 
 	if (mPreviewRestartMode && !mbLockPreviewRestart) {
-		PostMessage((HWND)mhwnd, MYWM_DEFERRED_PREVIEWRESTART, 0, 0);
+		PostMessageW((HWND)mhwnd, MYWM_DEFERRED_PREVIEWRESTART, 0, 0);
 	}
 
 	return activity;
@@ -5272,7 +5272,7 @@ void VDProjectUI::SetStatus(const wchar_t *s) {
 }
 
 void VDProjectUI::DisplayRequestUpdate(IVDVideoDisplay *pDisp) {
-	PostMessage((HWND)mhwnd, WM_USER + 100, pDisp == mpOutputDisplay, 0);
+	PostMessageW((HWND)mhwnd, WM_USER + 100, pDisp == mpOutputDisplay, 0);
 }
 
 void VDProjectUI::RefreshInputPane() {

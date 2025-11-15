@@ -161,8 +161,9 @@ void VDVideoDisplayManager::Shutdown() {
 }
 
 void VDVideoDisplayManager::SetBackgroundFallbackEnabled(bool enabled) {
-	if (mhwnd)
-		PostMessage(mhwnd, WM_USER+101, enabled, 0);
+	if (mhwnd) {
+		PostMessageW(mhwnd, WM_USER + 101, enabled, 0);
+	}
 }
 
 void VDVideoDisplayManager::RemoteCall(void (*function)(void *), void *data) {
@@ -391,7 +392,7 @@ void VDVideoDisplayManager::DispatchTicks() {
 
 void VDVideoDisplayManager::PostTick() {
 	if (!mOutstandingTicks.xchg(1)) {
-		PostMessage(mhwnd, WM_TIMER, kTimerID_Tick, 0);
+		PostMessageW(mhwnd, WM_TIMER, kTimerID_Tick, 0);
 	}
 }
 
@@ -551,7 +552,7 @@ void VDVideoDisplayManager::CheckForegroundState() {
 		mbAppActive = appActive;
 
 		// Don't handle this synchronously in case we're handling a message in the minidriver!
-		PostMessage(mhwnd, WM_USER + 100, 0, 0);
+		PostMessageW(mhwnd, WM_USER + 100, 0, 0);
 	}
 }
 

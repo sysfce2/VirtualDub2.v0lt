@@ -1629,7 +1629,7 @@ bool VDVideoFiltersDialog::ConfigureFilter(FilterInstance *fa) {
 		VDXFilterPreviewThunk thunk;
 		thunk.editor = editor;
 		thunk.pFiltInst = fa;
-		PostMessage(mhdlg,WM_COMMAND,ID_VIDEO_FILTERS_HIDE,0);
+		PostMessageW(mhdlg, WM_COMMAND, ID_VIDEO_FILTERS_HIDE, 0);
 		fRemove = !fa->Configure((VDXHWND)mhdlg, &thunk, 0);
 		ShowWindow(mhdlg,SW_SHOW);
 

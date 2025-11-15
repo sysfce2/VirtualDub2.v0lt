@@ -127,7 +127,7 @@ public:
 	void SetLastPosition(VDPosition pos, bool fast_update);
 	void NotifyPositionChange(VDPosition pos) {
 		pvinfo->cur_proc_src = pos;
-		PostMessage(hwndStatus, MYWM_NOTIFY_POSITION_CHANGE,0,0);
+		PostMessageW(hwndStatus, MYWM_NOTIFY_POSITION_CHANGE, 0, 0);
 	}
 	void Freeze(bool, bool);
 	bool isVisible();
@@ -856,7 +856,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 			thisPtr->hwndStatus = NULL;
 			if (thisPtr->statTimer)
 				KillTimer(hdlg, thisPtr->statTimer);
-			PostMessage(GetParent(hdlg), MYWM_NULL, 0, 0);
+			PostMessageW(GetParent(hdlg), MYWM_NULL, 0, 0);
 			return TRUE;
 
 		case MYWM_NOTIFY_POSITION_CHANGE:
@@ -1175,16 +1175,18 @@ bool DubStatus::isFrameVisible(bool fOutput) {
 
 bool DubStatus::ToggleFrame(bool fFrameOutput) {
 	if (fFrameOutput) {
-		if (hwndStatus)
-			PostMessage(GetDlgItem(hwndStatus, IDC_DRAW_OUTPUT), BM_SETCHECK, !opt->video.fShowOutputFrame ? BST_CHECKED : BST_UNCHECKED, 0);
+		if (hwndStatus) {
+			PostMessageW(GetDlgItem(hwndStatus, IDC_DRAW_OUTPUT), BM_SETCHECK, !opt->video.fShowOutputFrame ? BST_CHECKED : BST_UNCHECKED, 0);
+		}
 		return opt->video.fShowOutputFrame = !opt->video.fShowOutputFrame;
 	} else {
-		if (hwndStatus)
-			PostMessage(GetDlgItem(hwndStatus, IDC_DRAW_INPUT), BM_SETCHECK, !opt->video.fShowInputFrame ? BST_CHECKED : BST_UNCHECKED, 0);
+		if (hwndStatus) {
+			PostMessageW(GetDlgItem(hwndStatus, IDC_DRAW_INPUT), BM_SETCHECK, !opt->video.fShowInputFrame ? BST_CHECKED : BST_UNCHECKED, 0);
+		}
 		return opt->video.fShowInputFrame = !opt->video.fShowInputFrame;
 	}
 }
 
 void DubStatus::OnBackgroundStateUpdated() {
-	PostMessage(hwndStatus, MYWM_UPDATE_BACKGROUND_STATE, 0, 0);
+	PostMessageW(hwndStatus, MYWM_UPDATE_BACKGROUND_STATE, 0, 0);
 }

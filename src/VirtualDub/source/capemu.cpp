@@ -667,7 +667,7 @@ void VDCaptureDriverEmulation::OpenInputFile(const wchar_t *fn, IVDInputDriver* 
 }
 
 void VDCaptureDriverEmulation::TimerCallback() {
-	//PostMessage(mhwndMessages, WM_APP, 0, 0);
+	//PostMessageW(mhwndMessages, WM_APP, 0, 0);
 	SetTimer(mhwndMessages,100,0,0);
 }
 

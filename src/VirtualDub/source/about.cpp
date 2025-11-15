@@ -281,7 +281,7 @@ static BOOL CALLBACK HideAllButOKCANCELProc(HWND hwnd, LPARAM lParam) {
 }
 
 static void CALLBACK AboutTimerProc(UINT uID, UINT, DWORD_PTR dwUser, DWORD_PTR, DWORD_PTR) {
-	PostMessage((HWND)dwUser, WM_APP+0, 0, 0);
+	PostMessageW((HWND)dwUser, WM_APP+0, 0, 0);
 }
 */
 

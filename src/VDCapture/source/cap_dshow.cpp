@@ -4919,8 +4919,9 @@ void VDCaptureDriverDS::CapProcessData(int stream, const void *data, uint32 size
 			if (!mCaptureStopQueued) {
 				if (mCaptureThread) {
 					if (!mpCB->CapEvent(kEventCapturing, 0)) {
-						if (!mCaptureStopQueued.xchg(1))
-							PostMessage(mhwndEventSink, WM_APP+1, 0, 0);
+						if (!mCaptureStopQueued.xchg(1)) {
+							PostMessageW(mhwndEventSink, WM_APP + 1, 0, 0);
+						}
 
 						goto skip_processing;
 					}
@@ -4935,8 +4936,9 @@ skip_processing:
 			e2->TransferFrom(e);
 			delete mpCaptureError.xchg(e2);
 
-			if (!mCaptureStopQueued.xchg(1))
-				PostMessage(mhwndEventSink, WM_APP+1, 0, 0);
+			if (!mCaptureStopQueued.xchg(1)) {
+				PostMessageW(mhwndEventSink, WM_APP + 1, 0, 0);
+			}
 		}
 	}
 }

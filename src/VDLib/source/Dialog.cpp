@@ -166,10 +166,11 @@ void VDDialogFrameW32::End(sintptr result) {
 	if (!mhdlg)
 		return;
 
-	if (mbIsModal)
+	if (mbIsModal) {
 		EndDialog(mhdlg, result);
-	else
-		PostMessage(mhdlg, WM_CLOSE, 0, 0);
+	} else {
+		PostMessageW(mhdlg, WM_CLOSE, 0, 0);
+	}
 }
 
 void VDDialogFrameW32::AddProxy(VDUIProxyControl *proxy, uint32 id) {

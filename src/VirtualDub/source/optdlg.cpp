@@ -1050,7 +1050,7 @@ bool VDDialogVideoDepthW32::OnCommand(uint32 id, uint32 extcode) {
 				// There are some weird issues with BN_CLICKED being sent multiple times with
 				// keyboard selection (mouse selection is OK).
 				mbInputBrowsePending = true;
-				PostMessage(mhdlg, WM_USER + 200, 0, 0);
+				PostMessageW(mhdlg, WM_USER + 200, 0, 0);
 				return TRUE;
 
 			case IDC_CS_NONE:

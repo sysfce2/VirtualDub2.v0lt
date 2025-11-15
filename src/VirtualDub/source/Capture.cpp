@@ -2624,7 +2624,7 @@ bool VDCaptureProject::CapEvent(DriverEvent event, int data) {
 			mPendingEvents.push_back(event);
 		}
 
-		PostMessage((HWND)mhwnd, VDWM_ENGINE_EVENT, 0, 0);
+		PostMessageW((HWND)mhwnd, VDWM_ENGINE_EVENT, 0, 0);
 		break;
 
 	case kEventVideoFramesDropped:

@@ -856,8 +856,9 @@ void VDCaptureDriverScreen::ReceiveFrame(uint64 timestamp, const void *data, ptr
 }
 
 void VDCaptureDriverScreen::ReceiveAudioDataWASAPI() {
-	if (mbAudioMessagePosted.compareExchange(true, false) == false)
-		::PostMessage(this->mhwnd, WM_APP + 19, 0, 0);
+	if (mbAudioMessagePosted.compareExchange(true, false) == false) {
+		::PostMessageW(this->mhwnd, WM_APP + 19, 0, 0);
+	}
 }
 
 void VDCaptureDriverScreen::SyncCaptureStop() {
@@ -1317,7 +1318,7 @@ void VDCaptureDriverScreen::SaveSettings() {
 void VDCaptureDriverScreen::TimerCallback() {
 	if (GetTickCount() - mResponsivenessCounter < 2000) {
 		mbCaptureFramePending = true;
-		PostMessage(mhwnd, WM_APP+18, 0, 0);
+		PostMessageW(mhwnd, WM_APP + 18, 0, 0);
 	}
 }
 

@@ -709,7 +709,7 @@ void VDVideoDisplayWindow::ReleaseActiveFrame() {
 }
 
 void VDVideoDisplayWindow::RequestNextFrame() {
-	PostMessage(mhwnd, MYWM_PROCESSNEXTFRAME, 0, 0);
+	PostMessageW(mhwnd, MYWM_PROCESSNEXTFRAME, 0, 0);
 }
 
 void VDVideoDisplayWindow::SyncProcessNext() {

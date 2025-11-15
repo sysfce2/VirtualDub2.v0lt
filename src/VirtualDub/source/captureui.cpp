@@ -2440,7 +2440,7 @@ void VDCaptureProjectUI::UICaptureAudioPeaksUpdated(int count, float* peak) {
 	peak_count = count;
 	memcpy(this->peak,peak,count*sizeof(float));
 
-	PostMessage((HWND)mhwnd, WM_APP+1, 0, 0);
+	PostMessageW((HWND)mhwnd, WM_APP + 1, 0, 0);
 }
 
 void VDCaptureProjectUI::UICaptureStart(bool test) {
@@ -2529,7 +2529,7 @@ bool VDCaptureProjectUI::UICapturePreroll() {
 void VDCaptureProjectUI::UICaptureStatusUpdated(VDCaptureStatus& status) {
 	mCurStatus = status;
 
-	PostMessage((HWND)mhwnd, WM_APP, 0, 0);
+	PostMessageW((HWND)mhwnd, WM_APP, 0, 0);
 }
 
 void VDCaptureProjectUI::UICaptureEnd(bool success) {
@@ -2624,7 +2624,7 @@ LRESULT VDCaptureProjectUI::StatusWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 						}
 
 						SendMessageW(hwnd, SB_SETTEXTA, (i+1) | SBT_POPOUT, (LPARAM)str.data());
-						PostMessage((HWND)mhwnd, WM_NULL, 0, 0);
+						PostMessageW((HWND)mhwnd, WM_NULL, 0, 0);
 						break;
 					}
 				}
@@ -3275,7 +3275,7 @@ bool VDCaptureProjectUI::OnCaptureSafeCommand(UINT id) {
 	case ID_FILE_EXITCAPTUREMODE:
 		if (mbCaptureActive) {
 			mpProject->CaptureStop();
-			PostMessage((HWND)mhwnd,WM_COMMAND,id,0);
+			PostMessageW((HWND)mhwnd, WM_COMMAND, id, 0);
 		}
 		return 0;
 	}
@@ -4742,7 +4742,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 				CheckDlgButton(hdlg, IDC_CUSTOM, BST_CHECKED);
 			}
 
-			PostMessage(hdlg, WM_COMMAND, IDC_CUSTOM, (LPARAM)GetDlgItem(hdlg, IDC_CUSTOM));
+			PostMessageW(hdlg, WM_COMMAND, IDC_CUSTOM, (LPARAM)GetDlgItem(hdlg, IDC_CUSTOM));
 		}
 
 		return FALSE;

@@ -477,7 +477,7 @@ void VDScreenGrabberDXGI12::UpdateFrame(const DXGI_OUTDUPL_FRAME_INFO& frameInfo
 
 	if (mhwndDisplay && !mbDisplayFramePending) {
 		mbDisplayFramePending = true;
-		PostMessage(mhwndDisplay, WM_USER + 100, 0, 0);
+		PostMessageW(mhwndDisplay, WM_USER + 100, 0, 0);
 	}
 }
 

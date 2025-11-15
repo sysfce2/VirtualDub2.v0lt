@@ -642,20 +642,23 @@ INT_PTR VDOpenVideoDialogW32::DlgProc(UINT message, WPARAM wParam, LPARAM lParam
 		case IDC_OPEN_SINGLE:
 			if (IsDlgButtonChecked(mhdlg,IDC_OPEN_SINGLE)) select_mode = 0;
 			ChangeSelection();
-			if(HIWORD(wParam) == BN_DBLCLK)
-				PostMessage(GetParent(mhdlg),WM_COMMAND,IDOK,0);
+			if (HIWORD(wParam) == BN_DBLCLK) {
+				PostMessageW(GetParent(mhdlg), WM_COMMAND, IDOK, 0);
+			}
 			return TRUE;
 		case IDC_OPEN_SEGMENTS:
 			if (IsDlgButtonChecked(mhdlg,IDC_OPEN_SEGMENTS)) select_mode = 1;
 			ChangeSelection();
-			if(HIWORD(wParam) == BN_DBLCLK)
-				PostMessage(GetParent(mhdlg),WM_COMMAND,IDOK,0);
+			if (HIWORD(wParam) == BN_DBLCLK) {
+				PostMessageW(GetParent(mhdlg), WM_COMMAND, IDOK, 0);
+			}
 			return TRUE;
 		case IDC_OPEN_SEQUENCE:
 			if (IsDlgButtonChecked(mhdlg,IDC_OPEN_SEQUENCE)) select_mode = 2;
 			ChangeSelection();
-			if(HIWORD(wParam) == BN_DBLCLK)
-				PostMessage(GetParent(mhdlg),WM_COMMAND,IDOK,0);
+			if (HIWORD(wParam) == BN_DBLCLK) {
+				PostMessageW(GetParent(mhdlg), WM_COMMAND, IDOK, 0);
+			}
 			return TRUE;
 		}
 		break;

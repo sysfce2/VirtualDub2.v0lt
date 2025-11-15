@@ -215,7 +215,7 @@ void VDDialogCaptureCropping::UICaptureAnalyzeFrame(const VDPixmap& format) {
 		mDisplayBuffer.assign(format);
 	}
 
-	PostMessage(mhdlg, WM_USER+100, 0, 0);
+	PostMessageW(mhdlg, WM_USER + 100, 0, 0);
 }
 
 void VDShowCaptureCroppingDialog(VDGUIHandle hParent, IVDCaptureProject *pProject) {
