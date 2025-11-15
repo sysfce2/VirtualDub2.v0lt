@@ -297,16 +297,16 @@ IVDUIListViewVirtualItem *VDUIProxyListView::GetSelectedVirtualItem() const {
 	return GetVirtualItem(index);
 }
 
-IVDUIListViewVirtualItem *VDUIProxyListView::GetVirtualItem(int index) const {
+IVDUIListViewVirtualItem* VDUIProxyListView::GetVirtualItem(int index) const {
 	if (index < 0)
 		return NULL;
 
 	{
-		LVITEMW itemw={};
+		LVITEMW itemw = {};
 		itemw.mask = LVIF_PARAM;
 		itemw.iItem = index;
 		itemw.iSubItem = 0;
-		if (SendMessageW(mhwnd, LVM_GETITEMA, 0, (LPARAM)&itemw)) {
+		if (SendMessageW(mhwnd, LVM_GETITEMW, 0, (LPARAM)&itemw)) {
 			return (IVDUIListViewVirtualItem*)itemw.lParam;
 		}
 	}
