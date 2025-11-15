@@ -11,3 +11,4 @@ ECHO Building the VirtualDub2 Release x64.
 
 ENDLOCAL
 TIMEOUT /T 5
+EXIT /B
