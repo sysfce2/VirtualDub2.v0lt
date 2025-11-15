@@ -728,15 +728,19 @@ void VDClippingControl::BlitFrame(const VDPixmap *px) {
 BOOL CALLBACK VDClippingControl::InitChildrenProc(HWND hwnd, LPARAM lParam) {
 	SendMessageW(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), (LPARAM)MAKELONG(FALSE, 0));
 
-	switch(GetWindowLong(hwnd, GWL_ID)) {
-	case kIDC_X1_STATIC:		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"X1 offset");
-							break;
-	case kIDC_Y1_STATIC:		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"Y1 offset");
-							break;
-	case kIDC_X2_STATIC:		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"X2 offset");
-							break;
-	case kIDC_Y2_STATIC:		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"Y2 offset");
-							break;
+	switch (GetWindowLong(hwnd, GWL_ID)) {
+	case kIDC_X1_STATIC:
+		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"X1 offset");
+		break;
+	case kIDC_Y1_STATIC:
+		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"Y1 offset");
+		break;
+	case kIDC_X2_STATIC:
+		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"X2 offset");
+		break;
+	case kIDC_Y2_STATIC:
+		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"Y2 offset");
+		break;
 	}
 
 	return TRUE;

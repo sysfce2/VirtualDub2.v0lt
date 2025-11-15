@@ -1158,7 +1158,9 @@ void DubStatus::Freeze(bool failed, bool completed) {
 		EnableWindow(GetDlgItem(hwndStatus,IDC_DRAW_INPUT),false);
 		EnableWindow(GetDlgItem(hwndStatus,IDC_BACKGROUND),false);
 		EnableWindow(GetDlgItem(hwndStatus,IDC_LIMIT),false);
-		if (failed) SendMessageA(hwndStatus, WM_SETTEXT, 0, (LPARAM)"Error...");
+		if (failed) {
+			SendMessageA(hwndStatus, WM_SETTEXT, 0, (LPARAM)"Error...");
+		}
 		SendMessageA(GetDlgItem(hwndStatus,IDC_ABORT), WM_SETTEXT, 0, (LPARAM)"Close");
 	}
 }

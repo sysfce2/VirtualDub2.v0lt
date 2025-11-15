@@ -1654,8 +1654,9 @@ void VDRTProfileDisplay2::UpdateList() {
 		SendMessageA(mhwndList, LB_ADDSTRING, 0, (LPARAM)mTempStr.c_str());
 	}
 
-	if (mSortedList.size()>=list_max)
+	if (mSortedList.size() >= list_max) {
 		SendMessageA(mhwndList, LB_ADDSTRING, 0, (LPARAM)"\t\t\t truncated...");
+	}
 
 	SendMessageW(mhwndList, WM_SETREDRAW, true, 0);
 	InvalidateRect(mhwndList,0,true);

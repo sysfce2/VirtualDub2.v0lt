@@ -5267,7 +5267,7 @@ void VDProjectUI::SetStatus(const wchar_t *s) {
 	if (IsWindowUnicode(mhwndStatus)) {
 		SendMessageW(mhwndStatus, SB_SETTEXTW, 255, (LPARAM)s);
 	} else {
-		SendMessageW(mhwndStatus, SB_SETTEXTA, 255, (LPARAM)VDTextWToA(s).c_str());
+		SendMessageA(mhwndStatus, SB_SETTEXTA, 255, (LPARAM)VDTextWToA(s).c_str());
 	}
 }
 

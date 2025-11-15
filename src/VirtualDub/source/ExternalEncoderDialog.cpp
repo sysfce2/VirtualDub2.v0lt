@@ -352,13 +352,13 @@ void VDUIDialogExtEncVideo::OnDataExchange(bool write) {
 		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"yuv420p     :   8 bit YUV 4:2:0");
 		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"yuv422p     :   8 bit YUV 4:2:2");
 		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"yuv444p     :   8 bit YUV 4:4:4");
-		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"yuv420p16le :   16 bit YUV 4:2:0");
-		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"yuv422p16le :   16 bit YUV 4:2:2");
-		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"yuv444p16le :   16 bit YUV 4:4:4");
+		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"yuv420p16le :  16 bit YUV 4:2:0");
+		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"yuv422p16le :  16 bit YUV 4:2:2");
+		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"yuv444p16le :  16 bit YUV 4:4:4");
 		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"bgr24       :   8 bit RGB");
 		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"bgra        :   8 bit RGBA");
 		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"bgra64le    :  16 bit RGBA");
-		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"gray8       :  8 bit Y");
+		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"gray8       :   8 bit Y");
 		SendMessageA(cb,CB_ADDSTRING, 0, (LPARAM)"gray16le    :  16 bit Y");
 
 		int sel = 0;

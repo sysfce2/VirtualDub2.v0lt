@@ -469,7 +469,7 @@ void guiMenuHelp(HWND hwnd, WPARAM wParam, WPARAM part, const UINT *iTranslator)
 		while(idPtr[0]) {
 			if (idPtr[0] == LOWORD(wParam)) {
 				if (LoadStringA(g_hInst, idPtr[1], msgbuf, std::size(msgbuf))) {
-					SendMessageA(hwndStatus, SB_SETTEXTA, part, (LPARAM)msgbuf);
+					SendMessageW(hwndStatus, SB_SETTEXTA, part, (LPARAM)msgbuf);
 					return;
 				}
 			}
@@ -966,7 +966,7 @@ int guiListboxInsertSortedString(HWND hwnd, const char* pszStr)
 	char* activebufalloc = nullptr;
 	int activebuflen = std::size(buf);
 
-	int cnt = SendMessageA(hwnd, LB_GETCOUNT, 0, 0);
+	int cnt = SendMessageW(hwnd, LB_GETCOUNT, 0, 0);
 
 	if (cnt == LB_ERR) {
 		return -1;

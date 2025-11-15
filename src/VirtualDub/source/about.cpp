@@ -358,8 +358,9 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 								*t = 0;
 
-								if (t > buf)
+								if (t > buf) {
 									SendMessageA(GetDlgItem(hDlg, IDC_CREDITS), LB_ADDSTRING, 0, (LPARAM)buf);
+								}
 							}
 						}
 					}

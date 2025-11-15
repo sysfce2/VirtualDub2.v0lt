@@ -362,6 +362,6 @@ void VDUIListViewW32::OnResize() {
 			width += extra;
 		}	
 
-		SendMessageA(mhwnd, LVM_SETCOLUMNWIDTH, i, MAKELPARAM((int)width, 0));
+		SendMessageW(mhwnd, LVM_SETCOLUMNWIDTH, i, MAKELPARAM((int)width, 0));
 	}
 }

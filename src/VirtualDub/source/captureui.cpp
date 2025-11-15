@@ -2267,9 +2267,9 @@ void VDCaptureProjectUI::UICaptureParmsUpdated() {
 	if (framePeriod) {
 		double fps = 10000000.0f / (double)framePeriod;
 		sprintf(bufv, "%.02f fps", fps);
-		SendMessageA(mhwndStatus, SB_SETTEXTA, 2 | SBT_POPOUT, (LPARAM)bufv);
+		SendMessageW(mhwndStatus, SB_SETTEXTA, 2 | SBT_POPOUT, (LPARAM)bufv);
 	} else {
-		SendMessageA(mhwndStatus, SB_SETTEXTA, 2 | SBT_POPOUT, (LPARAM)"VFR");
+		SendMessageW(mhwndStatus, SB_SETTEXTA, 2 | SBT_POPOUT, (LPARAM)"VFR");
 	}
 
 	vdstructex<VDAVIBitmapInfoHeader> bih;
@@ -2295,7 +2295,7 @@ void VDCaptureProjectUI::UICaptureParmsUpdated() {
 	}
 
 	wsprintfA(bufv, "%ldKB/s", (bandwidth+1023)>>10);
-	SendMessageA(mhwndStatus, SB_SETTEXTA, 4, (LPARAM)bufv);
+	SendMessageW(mhwndStatus, SB_SETTEXTA, 4, (LPARAM)bufv);
 }
 
 bool VDCaptureProjectUI::UICaptureAnalyzeBegin(const VDPixmap& px) {
@@ -2885,11 +2885,11 @@ void VDCaptureProjectUI::OnTimer() {
 
 	if (!fc || fc < mLastPreviewFrameCount) {
 		if (mLastPreviewFrameCount)
-			SendMessageA(mhwndStatus, SB_SETTEXTA, 3, (LPARAM)"");
+			SendMessageW(mhwndStatus, SB_SETTEXTA, 3, (LPARAM)"");
 	} else {
 		char buf[64];
 		wsprintfA(buf, "%u fps", fc - mLastPreviewFrameCount);
-		SendMessageA(mhwndStatus, SB_SETTEXTA, 3, (LPARAM)buf);
+		SendMessageW(mhwndStatus, SB_SETTEXTA, 3, (LPARAM)buf);
 	}
 
 	mLastPreviewFrameCount = fc;
