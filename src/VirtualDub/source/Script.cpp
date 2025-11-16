@@ -84,28 +84,30 @@ extern IVDInputDriver *VDCreateInputDriverTest();
 
 ///////////////////////////////////////////////
 
-void RunScript(const wchar_t *name, void *hwnd) {
-	static const wchar_t fileFilters[]=
-				L"All scripts\0"							L"*.vdscript;*.vcf;*.syl;*.jobs;*.vdproject\0"
-				L"VirtualDub configuration file\0"			L"*.vcf\0"
-				L"VirtualDub script\0"						L"*.vdscript;*.syl\0"
-				L"VirtualDub job queue\0"					L"*.jobs\0"
-				L"VirtualDub project\0"						L"*.vdproject\0"
-				L"All Files (*.*)\0"						L"*.*\0"
-				;
+void RunScript(const wchar_t* name, void* hwnd)
+{
+	static const wchar_t fileFilters[] =
+		L"All scripts\0"							L"*.vdscript;*.vcf;*.syl;*.jobs;*.vdproject\0"
+		L"VirtualDub configuration file (*.vcf)\0"	L"*.vcf\0"
+		L"VirtualDub script (*.vdscript,*.syl)\0"	L"*.vdscript;*.syl\0"
+		L"VirtualDub job queue (*.jobs)\0"			L"*.jobs\0"
+		L"VirtualDub project (*.vdproject)\0"		L"*.vdproject\0"
+		L"All Files (*.*)\0"						L"*.*\0"
+		;
 
 	VDStringW filenameW;
 
 	if (!name) {
-		filenameW = VDGetLoadFileName(VDFSPECKEY_SCRIPT, (VDGUIHandle)hwnd, L"Load configuration script", fileFilters, L"vdscript", 0, 0);
+		VDStringW filenameW = VDGetLoadFileName(VDFSPECKEY_SCRIPT, (VDGUIHandle)hwnd, L"Load configuration script", fileFilters, L"vdscript", 0, 0);
 
-		if (filenameW.empty())
+		if (filenameW.empty()) {
 			return;
+		}
 
 		name = filenameW.c_str();
 	}
 
-	const char *line = NULL;
+	const char* line = NULL;
 	int lineno = 1;
 
 	VDTextInputFile f(name);
@@ -117,42 +119,46 @@ void RunScript(const wchar_t *name, void *hwnd) {
 	try {
 		isi->SetRootHandler(RootHandler, NULL);
 
-		while(line = f.GetNextLine())
+		while (line = f.GetNextLine()) {
 			isi->ExecuteLine(line);
-	} catch(const VDScriptError& cse) {
+		}
+	}
+	catch (const VDScriptError& cse) {
 		int pos = isi->GetErrorLocation();
 		int prelen = std::min<int>(pos, 50);
-		const char *s = line ? line : "";
+		const char* s = line ? line : "";
 
 		throw MyError("Error during script execution at line %d, column %d: %s\n\n"
-						"    %.*s<!>%.50s"
-					, lineno
-					, pos+1
-					, isi->TranslateScriptError(cse)
-					, prelen
-					, s + pos - prelen
-					, s + pos);
+			"    %.*s<!>%.50s"
+			, lineno
+			, pos + 1
+			, isi->TranslateScriptError(cse)
+			, prelen
+			, s + pos - prelen
+			, s + pos);
 	}
 
 	g_project->EndTimelineUpdate();
 	g_project->UpdateFilterList();
 }
 
-void RunProject(const wchar_t *name, void *hwnd) {
-	static const wchar_t projectFilters[]=
-				L"Project scripts\0"						L"*.jobs;*.vdproject\0"
-				L"VirtualDub job queue\0"					L"*.jobs\0"
-				L"VirtualDub project\0"						L"*.vdproject\0"
-				L"All Files (*.*)\0"						L"*.*\0"
-				;
+void RunProject(const wchar_t* name, void* hwnd)
+{
+	static const wchar_t projectFilters[] =
+		L"Project scripts\0"					L"*.jobs;*.vdproject\0"
+		L"VirtualDub job queue (*.jobs)\0"		L"*.jobs\0"
+		L"VirtualDub project (*.vdproject)\0"	L"*.vdproject\0"
+		L"All Files (*.*)\0"					L"*.*\0"
+		;
 
 	VDStringW filenameW;
 
 	if (!name) {
 		filenameW = VDGetLoadFileName('proj', (VDGUIHandle)hwnd, L"Load Project", projectFilters, L"vdproject", 0, 0);
 
-		if (filenameW.empty())
+		if (filenameW.empty()) {
 			return;
+		}
 
 		name = filenameW.c_str();
 	}
