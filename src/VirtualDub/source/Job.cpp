@@ -789,7 +789,7 @@ void JobAddConfigurationImages(JobRequestImages& req) {
 
 	JobAddClose(output);
 
-	req.fileOutput.sprintf(L"%s*%s", req.filePrefix, req.fileSuffix);
+	req.fileOutput.sprintf(L"%s*%s", req.filePrefix.c_str(), req.fileSuffix.c_str());
 	JobCreateEntry(output, req);
 }
 
