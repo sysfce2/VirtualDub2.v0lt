@@ -23,11 +23,11 @@
 
 void Draw3DRect(VDZHDC hDC, int x, int y, int dx, int dy, bool inverted);
 
-void VDShowHelp(VDZHWND hwnd, const wchar_t *filename = 0);
+void VDShowHelp(HWND hwnd, const wchar_t* filename = 0);
 
 bool IsFilenameOnFATVolume(const wchar_t *pszFilename);
 
-VDZHWND VDGetAncestorW32(VDZHWND hwnd, uint32 gaFlags);
+VDZHWND VDGetAncestorW32(HWND hwnd, uint32 gaFlags);
 VDStringW VDLoadStringW32(uint32 uID, bool doSubstitutions);
 void VDSubstituteStrings(VDStringW& s);
 

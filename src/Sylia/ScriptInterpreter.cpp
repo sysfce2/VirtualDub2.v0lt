@@ -257,12 +257,12 @@ const char *VDScriptInterpreter::TranslateScriptError(const VDScriptError& cse) 
 					case VDScriptValue::T_VOID:		strveccat(mError, "void"); break;
 					case VDScriptValue::T_INT:		strveccat(mError, "int"); break;
 					case VDScriptValue::T_LONG:		strveccat(mError, "long"); break;
-					case VDScriptValue::T_DOUBLE:		strveccat(mError, "double"); break;
+					case VDScriptValue::T_DOUBLE:	strveccat(mError, "double"); break;
 					case VDScriptValue::T_STR:		strveccat(mError, "string"); break;
 					case VDScriptValue::T_OBJECT:	strveccat(mError, "object"); break;
-					case VDScriptValue::T_FNAME:		strveccat(mError, "method"); break;
+					case VDScriptValue::T_FNAME:	strveccat(mError, "method"); break;
 					case VDScriptValue::T_FUNCTION:	strveccat(mError, "function"); break;
-					case VDScriptValue::T_VARLV:		strveccat(mError, "var"); break;
+					case VDScriptValue::T_VARLV:	strveccat(mError, "var"); break;
 					}
 				}
 			}
