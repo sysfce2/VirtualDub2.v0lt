@@ -133,7 +133,7 @@ uint32 VDAudioFilterSymmetricFIR::Prepare() {
 	GenerateFilter(inFormat.mSamplingRate);
 	mFilterBank.resize((mFilterBank.size() + 3) & ~3, 0);
 
-	mpContext->mpInputs[0]->mDelay			= (uint32)((sint64)(mFilterSize*1000000) * inFormat.mBlockSize / inFormat.mDataRate);
+	mpContext->mpInputs[0]->mDelay = (uint32)((sint64)mFilterSize * 1000000 * inFormat.mBlockSize / inFormat.mDataRate);
 
 	VDXWaveFormat *pwf = mpContext->mpAudioCallbacks->CopyWaveFormat(&inFormat);
 
@@ -271,8 +271,8 @@ uint32 VDAudioFilterPolyphase::Prepare() {
 	pwf->mBlockSize		= (uint16)(2 * pwf->mChannels);
 	pwf->mDataRate		= pwf->mSamplingRate * pwf->mBlockSize;
 
-	mpContext->mpInputs[0]->mGranularity	= 1;
-	mpContext->mpInputs[0]->mDelay		= (uint32)((sint64)(mFilterSize*1000000) * inFormat.mBlockSize / inFormat.mDataRate);
+	mpContext->mpInputs[0]->mGranularity = 1;
+	mpContext->mpInputs[0]->mDelay = (uint32)((sint64)mFilterSize * 1000000 * inFormat.mBlockSize / inFormat.mDataRate);
 	mpContext->mpOutputs[0]->mGranularity = 1;
 
 	// must set ratios here as they may be overridden by subclasses

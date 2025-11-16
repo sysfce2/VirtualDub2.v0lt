@@ -311,9 +311,6 @@ public:
 	VDVFilterFillDialog()
 		: VDDialogFrameW32(IDD_FILTER_FILL)
 	{
-		hbrColor = 0;
-		fa = 0;
-		filter = 0;
 	}
 	~VDVFilterFillDialog() {
 		if (hbrColor) {
@@ -325,12 +322,12 @@ public:
 	bool OnCommand(uint32 id, uint32 extcode);
 	VDZINT_PTR DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARAM lParam);
 
-	FilterActivation* fa;
-	VDVideoFilterFill* filter;
-	HBRUSH hbrColor;
+	FilterActivation* fa = nullptr;
+	VDVideoFilterFill* filter = nullptr;
+	HBRUSH hbrColor = NULL;
 
-	sint32 mSourceWidth;
-	sint32 mSourceHeight;
+	sint32 mSourceWidth  = 0;
+	sint32 mSourceHeight = 0;
 
 	static void ClipEditCallback(ClipEditInfo& info, void *pData);
 	void SetClipEdit();

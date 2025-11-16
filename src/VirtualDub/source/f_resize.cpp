@@ -825,24 +825,18 @@ void VDVideoFilterResize::StartAccel(IVDXAContext *vdxa) {
 
 	switch(mConfig.mFilterMode) {
 		case VDResizeFilterData::FILTER_BILINEAR:
-			horizFilter = new VDResamplerLinearFilter(horiz_twofc);
-			vertFilter = new VDResamplerLinearFilter(vert_twofc);
-			break;
-		case VDResizeFilterData::FILTER_BICUBIC:
-			horizFilter = new VDResamplerCubicFilter(horiz_twofc, -0.75f);
-			vertFilter = new VDResamplerCubicFilter(vert_twofc, -0.75f);
-			break;
 		case VDResizeFilterData::FILTER_TABLEBILINEAR:
 			horizFilter = new VDResamplerLinearFilter(horiz_twofc);
 			vertFilter = new VDResamplerLinearFilter(vert_twofc);
 			break;
-		case VDResizeFilterData::FILTER_TABLEBICUBIC060:
-			horizFilter = new VDResamplerCubicFilter(horiz_twofc, -0.60f);
-			vertFilter = new VDResamplerCubicFilter(vert_twofc, -0.60f);
-			break;
+		case VDResizeFilterData::FILTER_BICUBIC:
 		case VDResizeFilterData::FILTER_TABLEBICUBIC075:
 			horizFilter = new VDResamplerCubicFilter(horiz_twofc, -0.75f);
 			vertFilter = new VDResamplerCubicFilter(vert_twofc, -0.75f);
+			break;
+		case VDResizeFilterData::FILTER_TABLEBICUBIC060:
+			horizFilter = new VDResamplerCubicFilter(horiz_twofc, -0.60f);
+			vertFilter = new VDResamplerCubicFilter(vert_twofc, -0.60f);
 			break;
 		case VDResizeFilterData::FILTER_TABLEBICUBIC100:
 			horizFilter = new VDResamplerCubicFilter(horiz_twofc, -1.0f);
