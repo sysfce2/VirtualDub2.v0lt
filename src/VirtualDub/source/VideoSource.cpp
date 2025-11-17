@@ -2214,8 +2214,9 @@ const void *VideoSourceAVI::streamGetFrame(const void *inputBuffer, uint32 data_
 					}
 				}
 			} catch(const MyError& e) {
-				if (mErrorMode == kErrorModeReportAll)
-					throw MyError("Error decompressing video frame %u:\n\n%s", (unsigned)frame_num, e.gets());
+				if (mErrorMode == kErrorModeReportAll) {
+					throw MyError(L"Error decompressing video frame %u:\n\n%s", (unsigned)frame_num, e.gets());
+				}
 				else {
 					const unsigned frame = (unsigned)frame_num;
 					VDLogAppMessage(kVDLogWarning, kVDST_VideoSource, kVDM_DecodingError, 1, &frame);

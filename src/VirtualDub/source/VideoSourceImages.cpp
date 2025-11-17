@@ -504,7 +504,7 @@ const void *VideoSourceImages::streamGetFrame(const void *inputBuffer, uint32 da
 
 			vdfastvector<wchar_t> errBuf;
 
-			throw MyError("Error decoding \"%s\": %s\n", mpParent->ComputeFilename(errBuf, frame_num), VDLoadString(0, kVDST_PNGDecodeErrors, err));
+			throw MyError(L"Error decoding \"%s\": %s\n", mpParent->ComputeFilename(errBuf, frame_num), VDLoadString(0, kVDST_PNGDecodeErrors, err));
 		}
 
 		VDPixmapBlt(VDAsPixmap(mvbFrameBuffer), mpPNGDecoder->GetFrameBuffer());

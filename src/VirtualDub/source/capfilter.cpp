@@ -839,10 +839,11 @@ bool VDCaptureFilterChainAdapter::ProcessOut(VDPixmap& px) {
 	if (!mpRequest->IsSuccessful()) {
 		VDFilterFrameRequestError *err = mpRequest->GetError();
 
-		if (err)
-			throw MyError("%s", err);
-		else
+		if (err) {
+			throw MyError("%s", err->mError.c_str());
+		} else {
 			throw MyError("Unknown error occurred while running video filters.");
+		}
 	}
 
 	VDFilterFrameBuffer *buf = mpRequest->GetResultBuffer();

@@ -3293,8 +3293,9 @@ void VDProject::UpdateDubParameters(bool forceUpdate) {
 		} catch(const MyError& e) {
 			// The input stream may throw an error here trying to obtain the nearest key.
 			// If so, bail.
-			if (forceUpdate)
-				throw MyError("Cannot initialize rendering parameters: %s", e.c_str());
+			if (forceUpdate) {
+				throw MyError(L"Cannot initialize rendering parameters: %s", e.c_str());
+			}
 		}
 	}
 

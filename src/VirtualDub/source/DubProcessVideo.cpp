@@ -1188,10 +1188,11 @@ VDDubVideoProcessor::VideoWriteResult VDDubVideoProcessor::ProcessVideoFrame() {
 	if (!pOutputReq->IsSuccessful()) {
 		const VDFilterFrameRequestError *err = pOutputReq->GetError();
 
-		if (err)
+		if (err) {
 			throw MyError("%s", err->mError.c_str());
-		else
+		} else {
 			throw MyError("An unknown error occurred during video filtering.");
+		}
 	}
 
 	VDDubVideoProcessor::VideoWriteResult getOutputResult = GetVideoOutputBuffer(~pBuffer);

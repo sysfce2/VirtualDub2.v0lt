@@ -462,13 +462,13 @@ bool VDAudioCodecW32::Convert(bool flush, bool requireOutput) {
 				const VDWaveFormat& wfsrc = *mSrcFormat;
 				const VDWaveFormat& wfdst = *mDstFormat;
 
-				throw MyError("The operation cannot continue as the target audio codec has jammed and is not %scompressing data.\n"
+				throw MyError(L"The operation cannot continue as the target audio codec has jammed and is not %scompressing data.\n"
 								"Codec state for driver \"%.64s\":\n"
 								"    source buffer size: %d bytes\n"
 								"    destination buffer size: %d bytes\n"
 								"    source format: tag %04x, %dHz/%dch/%d-bit, %d bytes/sec\n"
 								"    destination format: tag %04x, %dHz/%dch/%d-bit, %d bytes/sec\n"
-								, isCompression ? "" : "de"
+								, isCompression ? L"" : L"de"
 								, mDriverName
 								, mBufferHdr.cbSrcLength
 								, mBufferHdr.cbDstLength

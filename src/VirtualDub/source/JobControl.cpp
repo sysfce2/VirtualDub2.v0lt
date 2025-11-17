@@ -536,8 +536,9 @@ void VDJobQueue::ListLoad(const wchar_t *fileName, bool merge) {
 			mbModified = false;
 		}
 	} catch(const MyError& e) {
-		if (!usingGlobalFile)
-			throw MyError("Failure loading job list: %s.", e.c_str());
+		if (!usingGlobalFile) {
+			throw MyError(L"Failure loading job list: %s.", e.c_str());
+		}
 	}
 }
 

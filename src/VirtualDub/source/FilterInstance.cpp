@@ -914,7 +914,7 @@ FilterInstance::FilterInstance(FilterDefinitionInstance *fdi)
 
 				mpAutoDeinit = autoDeinit.release();
 			} catch(const MyError& e) {
-				throw MyError("Cannot initialize filter '%s': %s", filter->name, e.gets());
+				throw MyError(L"Cannot initialize filter '%hs': %s", filter->name, e.gets());
 			}
 		}
 
@@ -924,7 +924,7 @@ FilterInstance::FilterInstance(FilterDefinitionInstance *fdi)
 				VDFilterThreadContextSwapper autoContextSwap(&mThreadContext);
 				fma.filterMod->activateProc(&fma, &g_VDFilterCallbacks);
 			} catch(const MyError& e) {
-				throw MyError("Cannot initialize filter '%s': %s", filter->name, e.gets());
+				throw MyError(L"Cannot initialize filter '%hs': %s", filter->name, e.gets());
 			}
 		}
 
@@ -1555,7 +1555,7 @@ void FilterInstance::StartInner() {
 				rcode = filter->startProc(AsVDXFilterActivation(), &g_VDFilterCallbacks);
 			}
 		} catch(const MyError& e) {
-			throw MyError("Cannot start filter '%s': %s", filter->name, e.gets());
+			throw MyError(L"Cannot start filter '%hs': %s", filter->name, e.gets());
 		}
 
 		if (rcode)
