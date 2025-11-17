@@ -520,23 +520,23 @@ void VDCLIProcessW32::Run(const char *name, const wchar_t *cmdLine, const wchar_
 /*
 #if 0	// This requires at least WinSDK 6.0, which we can't switch to yet.
 	{
-		PROC_THREAD_ATTRIBUTE_LIST attList;
 		SIZE_T attListSize;
 		InitializeProcThreadAttributeList(NULL, 1, 0, &attListSize);
 
-		PROC_THREAD_ATTRIBUTE_LIST *attList = (PROC_THREAD_ATTRIBUTE_LIST *)malloc(attListSize);
-		if (!attList)
+		LPPROC_THREAD_ATTRIBUTE_LIST attList = (LPPROC_THREAD_ATTRIBUTE_LIST)malloc(attListSize);
+		if (!attList) {
 			throw MyMemoryError();
+		}
 
 		InitializeProcThreadAttributeList(attList, 1, 0, NULL);
 
 		STARTUPINFOEXW si = { sizeof(STARTUPINFOEXW) };
-		si.StartupInfo.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
-		si.StartupInfo.hStdInput = hStdInput;
-		si.StartupInfo.hStdOutput = hStdOutput;
-		si.StartupInfo.hStdError = hStdError;
+		si.StartupInfo.dwFlags     = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
+		si.StartupInfo.hStdInput   = hStdInput;
+		si.StartupInfo.hStdOutput  = hStdOutput;
+		si.StartupInfo.hStdError   = hStdError;
 		si.StartupInfo.wShowWindow = SW_SHOWMINNOACTIVE;
-		si.lpAttributeList = attList;
+		si.lpAttributeList         = attList;
 
 		HANDLE hInheritList[3] = { hStdInput, hStdOutput, hStdError };
 		UpdateProcThreadAttribute(attList, 0, PROC_THREAD_ATTRIBUTE_HANDLE_LIST, hInheritList, sizeof(hInheritList), NULL, NULL);
@@ -546,8 +546,9 @@ void VDCLIProcessW32::Run(const char *name, const wchar_t *cmdLine, const wchar_
 
 		DeleteProcThreadAttributeList(attList);
 
-		if (!success)
+		if (!success) {
 			throw MyWin32Error("CLI: Unable to launch %s: %%s.", err, name);
+		}
 
 		CloseHandle(pi.hThread);
 		mProcessHandle.Attach(pi.hProcess);
