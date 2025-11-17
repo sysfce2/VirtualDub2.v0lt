@@ -786,7 +786,9 @@ static BOOL InitServerDLL()
 	return FALSE;
 }
 
-INT_PTR CALLBACK FrameServerSetupDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+INT_PTR CALLBACK FrameServerSetupDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	// char szServerName[128] --> lParam --> DWLP_USER
 	switch(msg) {
 	case WM_INITDIALOG:
 		{
@@ -798,12 +800,12 @@ INT_PTR CALLBACK FrameServerSetupDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPA
 			SetDlgItemTextA(hDlg, IDC_COMPUTER_NAME, buf);
 		}
 		SetDlgItemTextW(hDlg, IDC_FSNAME,VDFileSplitPath(g_szInputAVIFile));
-		SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+		SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 		return TRUE;
 	case WM_COMMAND:
 		switch(LOWORD(wParam)) {
 		case IDOK:
-			SendDlgItemMessageW(hDlg, IDC_FSNAME, WM_GETTEXT, 128, GetWindowLongPtr(hDlg, DWLP_USER));
+			SendDlgItemMessageA(hDlg, IDC_FSNAME, WM_GETTEXT, 128, GetWindowLongPtrW(hDlg, DWLP_USER));
 			EndDialog(hDlg, TRUE);
 			break;
 		case IDCANCEL:
@@ -830,7 +832,7 @@ void ActivateFrameServerDialog(HWND hwnd, const char *server) {
 		ivdsl->GetComputerName(szServerName);
 		vdstrlcpy(szServerName, server, 128);
 	} else {
-		if (!DialogBoxParamW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDD_SERVER_SETUP), hwnd, FrameServerSetupDlgProc, (LPARAM)szServerName)) {
+		if (!DialogBoxParamA(GetModuleHandleW(NULL), MAKEINTRESOURCEA(IDD_SERVER_SETUP), hwnd, FrameServerSetupDlgProc, (LPARAM)szServerName)) {
 			return;
 		}
 	}
