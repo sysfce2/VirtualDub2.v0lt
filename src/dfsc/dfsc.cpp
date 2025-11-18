@@ -351,9 +351,9 @@ DWORD DfscInstance::Decompress(ICDECOMPRESS* icinfo, DWORD dwSize) {
       }
       if (!varFile) {
         DWORD stream = ((DWORD*)icinfo->lpInput)[1];
-        char str[64] = "DfscData";
-        _ultoa(stream, str + strlen(str), 10);
-        varFile = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(DfscData), str);
+        wchar_t str[64] = L"DfscData";
+        _ultow(stream, str + wcslen(str), 10);
+        varFile = CreateFileMappingW(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(DfscData), str);
         if (GetLastError() != ERROR_ALREADY_EXISTS) {
           CloseHandle(varFile);
           varFile = NULL;
