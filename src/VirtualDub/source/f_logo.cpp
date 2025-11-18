@@ -92,9 +92,9 @@ static const wchar_t* logoOpenImage(HWND hwnd, const wchar_t* oldfn) {
 	ofn.lpstrCustomFilter	= NULL;
 	ofn.nFilterIndex		= 1;
 	ofn.lpstrFile			= szFile;
-	ofn.nMaxFile			= sizeof szFile;
+	ofn.nMaxFile			= std::size(szFile);
 	ofn.lpstrFileTitle		= szFileTitle;
-	ofn.nMaxFileTitle		= sizeof szFileTitle;
+	ofn.nMaxFileTitle		= std::size(szFileTitle);
 	ofn.lpstrInitialDir		= NULL;
 	ofn.lpstrTitle			= L"Select image";
 	ofn.Flags				= OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY | OFN_ENABLESIZING;

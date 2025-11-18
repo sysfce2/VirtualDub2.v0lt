@@ -1931,7 +1931,7 @@ void HexEditor::Extract() {
 		ofn.lpstrCustomFilter	= NULL;
 		ofn.nFilterIndex		= 1;
 		ofn.lpstrFile			= szName;
-		ofn.nMaxFile			= sizeof szName;
+		ofn.nMaxFile			= std::size(szName);
 		ofn.lpstrFileTitle		= NULL;
 		ofn.lpstrInitialDir		= NULL;
 		ofn.lpstrTitle			= NULL;

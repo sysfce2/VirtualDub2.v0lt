@@ -206,7 +206,7 @@ MyWin32Error::MyWin32Error(const char *format, uint32 err, ...)
 	}
 
 	char *t = szTemp;
-	char *end = szTemp + (sizeof szTemp) - 1;
+	char *end = szTemp + std::size(szTemp) - 1;
 	const char *s = szError;
 
 	while(char c = *s++) {
@@ -233,7 +233,7 @@ MyWin32Error::MyWin32Error(const char *format, uint32 err, ...)
 			err,
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 			szError,
-			sizeof szError,
+			std::size(szError),
 			NULL))
 	{
 		szError[0] = 0;

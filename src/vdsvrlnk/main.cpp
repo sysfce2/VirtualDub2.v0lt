@@ -58,8 +58,8 @@ static void InitComputerAlias()
 		if (fpNetServerGetInfo && !((LPNETSERVERGETINFONT)fpNetServerGetInfo)(NULL, 100, (LPBYTE*)&psi100)) {
 
 			WideCharToMultiByte(CP_ACP, 0, (LPWSTR)psi100->sv100_name, -1, heap->comp_name, sizeof(heap->comp_name), NULL, NULL);
-			//strncpy(heap->comp_name, psi100->sv100_name, sizeof heap->comp_name);
-			//heap->comp_name[sizeof heap->comp_name-1] = 0;
+			//strncpy(heap->comp_name, psi100->sv100_name, std::size(heap->comp_name));
+			//heap->comp_name[std::size(heap->comp_name)-1] = 0;
 
 			void* lpNetApiBufferFree;
 

@@ -318,13 +318,15 @@ static const char *CrashGetModuleBaseName(HMODULE hmod, char *pszBaseName) {
 		DWORD dw;
 		char *pszFile, *period = NULL;
 
-		if (!GetModuleFileNameA(hmod, szPath1, std::size(szPath1)))
+		if (!GetModuleFileNameA(hmod, szPath1, std::size(szPath1))) {
 			return NULL;
+		}
 
-		dw = GetFullPathNameA(szPath1, sizeof szPath2, szPath2, &pszFile);
+		dw = GetFullPathNameA(szPath1, std::size(szPath2), szPath2, &pszFile);
 
-		if (!dw || dw>sizeof szPath2)
+		if (!dw || dw > std::size(szPath2)) {
 			return NULL;
+		}
 
 		strcpy(pszBaseName, pszFile);
 

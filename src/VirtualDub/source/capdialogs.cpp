@@ -320,7 +320,7 @@ INT_PTR VDDialogCaptureSettings::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 					double dFrameRate;
 					char buf[32]={0};
 
-					SendMessageA(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_GETTEXT, sizeof buf - 1, (LPARAM)buf);
+					SendMessageA(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_GETTEXT, std::size(buf), (LPARAM)buf);
 					if (1!=sscanf(buf, " %lg ", &dFrameRate) || dFrameRate<=0.01 || dFrameRate>1000.0) {
 						MessageBeep(MB_ICONQUESTION);
 						SetFocus(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE));
@@ -338,7 +338,7 @@ INT_PTR VDDialogCaptureSettings::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 					double dFrameRate;
 					char buf[32];
 
-					SendMessageA(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_GETTEXT, sizeof buf, (LPARAM)buf);
+					SendMessageA(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE), WM_GETTEXT, std::size(buf), (LPARAM)buf);
 					if (1!=sscanf(buf, " %lg ", &dFrameRate) || dFrameRate<=0.01 || dFrameRate>1000.0) {
 						MessageBeep(MB_ICONQUESTION);
 						SetFocus(GetDlgItem(mhdlg, IDC_CAPTURE_FRAMERATE));

@@ -399,7 +399,7 @@ INT_PTR APIENTRY InputFileAVIOptions::SetupDlgProc( HWND hDlg, UINT message, WPA
 					};
 					int i;
 
-					i = SendDlgItemMessageA(hDlg, IDC_FOURCC, WM_GETTEXT, sizeof c, (LPARAM)c);
+					i = SendDlgItemMessageA(hDlg, IDC_FOURCC, WM_GETTEXT, std::size(c), (LPARAM)c);
 
 					memset(c+i, ' ', 5-i);
 
@@ -417,7 +417,7 @@ INT_PTR APIENTRY InputFileAVIOptions::SetupDlgProc( HWND hDlg, UINT message, WPA
 					};
 					int i;
 
-					i = SendDlgItemMessageA(hDlg, IDC_FOURCC2, WM_GETTEXT, sizeof c, (LPARAM)c);
+					i = SendDlgItemMessageA(hDlg, IDC_FOURCC2, WM_GETTEXT, std::size(c), (LPARAM)c);
 
 					memset(c+i, ' ', 5-i);
 
