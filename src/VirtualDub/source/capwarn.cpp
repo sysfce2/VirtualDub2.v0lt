@@ -71,7 +71,7 @@ void CaptureWarnCheckDrivers(HWND hwnd) {
 	wchar_t szPath[MAX_PATH], *s;
 
 	if (!(g_capwarnFlags & CWF_ZORAN)) {
-		GetWindowsDirectoryW(szPath, sizeof szPath);
+		GetWindowsDirectoryW(szPath, std::size(szPath));
 		s = szPath;
 		while(*s) ++s;
 		if (s[-1] != '\\')
@@ -79,12 +79,12 @@ void CaptureWarnCheckDrivers(HWND hwnd) {
 
 		wcscpy(s, L"system\\h20capt.dll");
 
-		hFind = FindFirstFile(szPath, &wfd);
+		hFind = FindFirstFileW(szPath, &wfd);
 
 		if (hFind == INVALID_HANDLE_VALUE) {
 			wcscpy(s, L"system\\h22capt.dll");
 
-			hFind = FindFirstFile(szPath, &wfd);
+			hFind = FindFirstFileW(szPath, &wfd);
 		}
 
 		if (hFind != INVALID_HANDLE_VALUE) {
@@ -107,7 +107,7 @@ void CaptureWarnCheckDrivers(HWND hwnd) {
 	}
 
 	if (!(g_capwarnFlags & CWF_BROOKTREE)) {
-		GetWindowsDirectoryW(szPath, sizeof szPath);
+		GetWindowsDirectoryW(szPath, std::size(szPath));
 		s = szPath;
 		while(*s) ++s;
 		if (s[-1] != '\\')
