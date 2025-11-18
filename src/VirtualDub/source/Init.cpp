@@ -1163,7 +1163,7 @@ int ProcessCommandLine::scan(const VDCommandLine& cmdLine, const bool execute) {
 					// not that we care.
 
 					if (execute) {
-						HMODULE hmodKernel32 = GetModuleHandleA("kernel32");
+						HMODULE hmodKernel32 = GetModuleHandleW(L"kernel32");
 						FARPROC fpIDP = GetProcAddress(hmodKernel32, "IsDebuggerPresent");
 
 						DWORD oldProtect;

@@ -366,7 +366,7 @@ namespace {
 	struct TestHarness {
 		TestHarness() {
 			RegisterRTProfileDisplayControl();
-			HWND foo = CreateWindow(RTPROFILEDISPLAYCONTROLCLASS, "Profile window", WS_OVERLAPPEDWINDOW|WS_VISIBLE, 0, 0, 400, 300, NULL, NULL, (HINSTANCE)GetModuleHandle(NULL), 0);
+			HWND foo = CreateWindow(RTPROFILEDISPLAYCONTROLCLASS, "Profile window", WS_OVERLAPPEDWINDOW|WS_VISIBLE, 0, 0, 400, 300, NULL, NULL, (HINSTANCE)GetModuleHandleW(nullptr), 0);
 			SendMessageW(foo, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
 
 			VDRTProfiler mProfiler;

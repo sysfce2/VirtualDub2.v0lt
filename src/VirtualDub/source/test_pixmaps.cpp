@@ -82,7 +82,7 @@ void VDTestPixmaps() {
 
 	VDRegisterVideoDisplayControl();
 
-	HWND hwndDisp = CreateWindow(VIDEODISPLAYCONTROLCLASS, "Kasumi onee-sama", WS_VISIBLE|WS_POPUP, 0, 0, 1024, 768, NULL, NULL, GetModuleHandle(NULL), NULL);
+	HWND hwndDisp = CreateWindow(VIDEODISPLAYCONTROLCLASS, "Kasumi onee-sama", WS_VISIBLE|WS_POPUP, 0, 0, 1024, 768, NULL, NULL, GetModuleHandleW(nullptr), NULL);
 
 	IVDVideoDisplay *pDisp = VDGetIVideoDisplay(hwndDisp);
 

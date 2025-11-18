@@ -976,7 +976,7 @@ void VDParameterCurveControlW32::InvalidateRange(VDParameterCurve::PointList::it
 void VDTestParameterCurveControl() {
 	VDRegisterParameterCurveControl();
 
-	HWND hwnd = CreateWindow(g_VDParameterCurveControlClass, "", WS_OVERLAPPEDWINDOW|WS_VISIBLE, 160, 1000, 800, 100, NULL, NULL, GetModuleHandle(NULL), NULL);
+	HWND hwnd = CreateWindow(g_VDParameterCurveControlClass, "", WS_OVERLAPPEDWINDOW|WS_VISIBLE, 160, 1000, 800, 100, NULL, NULL, GetModuleHandleW(nullptr), NULL);
 
 	VDParameterCurveControlW32 *p = (VDParameterCurveControlW32 *)GetWindowLongPtr(hwnd, 0);
 

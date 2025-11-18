@@ -334,7 +334,7 @@ bool VDInitiateSystemShutdownWithUITimeout(VDSystemShutdownMode mode, const wcha
 	if (mode != kVDSystemShutdownMode_Shutdown)
 		return false;
 
-	HMODULE hmodK32 = GetModuleHandleA("advapi32");
+	HMODULE hmodK32 = GetModuleHandleW(L"advapi32");
 	if (!hmodK32)
 		return false;
 

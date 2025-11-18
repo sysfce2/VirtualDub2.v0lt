@@ -273,7 +273,7 @@ void VDPatchSetUnhandledExceptionFilter() {
 
 	// don't attempt to patch system DLLs on Windows 98
 	{
-		HMODULE hmodKernel32 = GetModuleHandleA("kernel32");
+		HMODULE hmodKernel32 = GetModuleHandleW(L"kernel32");
 		FARPROC fpSUEF = GetProcAddress(hmodKernel32, "SetUnhandledExceptionFilter");
 
 		DWORD oldProtect;
@@ -291,7 +291,7 @@ void VDUnpatchSetUnhandledExceptionFilter() {
 
 	g_VDSUEFPatched = false;
 
-	HMODULE hmodKernel32 = GetModuleHandleA("kernel32");
+	HMODULE hmodKernel32 = GetModuleHandleW(L"kernel32");
 	FARPROC fpSUEF = GetProcAddress(hmodKernel32, "SetUnhandledExceptionFilter");
 
 	DWORD oldProtect;
