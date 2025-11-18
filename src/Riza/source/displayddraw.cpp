@@ -164,14 +164,11 @@ namespace {
 	struct VDDDGuidFinder {
 		VDDDGuidFinder(HMONITOR hMonitor)
 			: mhMonitor(hMonitor)
-			, mbFound(false)
-			, mbFoundDefault(false)
-			, mbFoundDefaultGuid(false)
 		{
 		}
 
-		static BOOL WINAPI EnumCallback(GUID FAR *lpGUID, LPSTR lpDriverDescription, LPSTR lpDriverName, LPVOID lpContext, HMONITOR hm) {
-			VDDDGuidFinder *finder = (VDDDGuidFinder *)lpContext;
+		static BOOL WINAPI EnumCallback(GUID FAR* lpGUID, LPSTR lpDriverDescription, LPSTR lpDriverName, LPVOID lpContext, HMONITOR hm) {
+			VDDDGuidFinder* finder = (VDDDGuidFinder*)lpContext;
 
 			if (hm == finder->mhMonitor) {
 				finder->mGuid = *lpGUID;
@@ -192,15 +189,16 @@ namespace {
 		}
 
 		HMONITOR mhMonitor;
-		GUID mGuid;
-		GUID mDefaultGuid;
-		bool mbFound;
-		bool mbFoundDefault;
-		bool mbFoundDefaultGuid;
+		GUID mGuid              = {};
+		GUID mDefaultGuid       = {};
+		bool mbFound            = false;
+		bool mbFoundDefault     = false;
+		bool mbFoundDefaultGuid = false;
 	};
 }
 
-bool VDDirectDrawManager::Init(IVDDirectDrawClient *pClient) {
+bool VDDirectDrawManager::Init(IVDDirectDrawClient *pClient)
+{
 	if (mInitCount) {
 		++mInitCount;
 		mClients.push_back(pClient);
@@ -221,8 +219,9 @@ bool VDDirectDrawManager::Init(IVDDirectDrawClient *pClient) {
 	}
 
 	mhmodDD = VDLoadSystemLibraryW32("ddraw");
-	if (!mhmodDD)
+	if (!mhmodDD) {
 		return false;
+	}
 
 	do {
 		typedef HRESULT (WINAPI *tpDirectDrawCreate)(GUID FAR *lpGUID, LPDIRECTDRAW FAR *lplpDD, IUnknown FAR *pUnkOuter);
@@ -236,22 +235,25 @@ bool VDDirectDrawManager::Init(IVDDirectDrawClient *pClient) {
 
 		if (mhMonitor) {
 			// NOTE: This is a DX6 function.
-			typedef HRESULT (WINAPI *tpDirectDrawEnumerateEx)(LPDDENUMCALLBACKEXA callback, LPVOID context, DWORD dwFlags);
-			tpDirectDrawEnumerateEx pDirectDrawEnumerateEx = (tpDirectDrawEnumerateEx)GetProcAddress(mhmodDD, "DirectDrawEnumerateExA");
+			// We use DirectDrawEnumerateExA because DirectDrawEnumerateExW doesn't work.
+			typedef HRESULT(WINAPI* tpDirectDrawEnumerateExA)(LPDDENUMCALLBACKEXA callback, LPVOID context, DWORD dwFlags);
+			tpDirectDrawEnumerateExA pDirectDrawEnumerateExA = (tpDirectDrawEnumerateExA)GetProcAddress(mhmodDD, "DirectDrawEnumerateExA");
 
-			if (pDirectDrawEnumerateEx) {
+			if (pDirectDrawEnumerateExA) {
 				VDDDGuidFinder finder(mhMonitor);
-				pDirectDrawEnumerateEx(VDDDGuidFinder::EnumCallback, &finder, DDENUM_ATTACHEDSECONDARYDEVICES);
+				[[maybe_unused]] HRESULT hr = pDirectDrawEnumerateExA(VDDDGuidFinder::EnumCallback, &finder, DDENUM_ATTACHEDSECONDARYDEVICES);
 
 				if (finder.mbFound) {
 					guid = finder.mGuid;
 					pguid = &guid;
-				} else if (isDefaultMonitor && finder.mbFoundDefault) {
+				}
+				else if (isDefaultMonitor && finder.mbFoundDefault) {
 					if (finder.mbFoundDefaultGuid) {
 						guid = finder.mDefaultGuid;
 						pguid = &guid;
 					}
-				} else {
+				}
+				else {
 					break;
 				}
 			}
@@ -270,8 +272,9 @@ bool VDDirectDrawManager::Init(IVDDirectDrawClient *pClient) {
 		hr = pdd->QueryInterface(IID_IDirectDraw2, (void **)&mpdd);
 		pdd->Release();
 
-		if (FAILED(hr))
+		if (FAILED(hr)) {
 			break;
+		}
 
 		// get caps
 		memset(&mCaps, 0, sizeof mCaps);
@@ -290,8 +293,9 @@ bool VDDirectDrawManager::Init(IVDDirectDrawClient *pClient) {
 		}
 
 		// attempt to create primary surface
-		if (!InitPrimary())
+		if (!InitPrimary()) {
 			break;
+		}
 
 		mInitCount = 1;
 		mClients.push_back(pClient);
