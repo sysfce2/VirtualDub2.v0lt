@@ -259,14 +259,14 @@ bool VDCaptureDriverVFW::Init(VDGUIHandle hParent) {
 		return false;
 	}
 
-	typedef HWND (VFWAPI *tpcapCreateCaptureWindow)(LPCSTR lpszWindowName, DWORD dwStyle, int x, int y, int nWidth, int nHeight, HWND hwnd, int nID);
-	const tpcapCreateCaptureWindow pcapCreateCaptureWindow = (tpcapCreateCaptureWindow)GetProcAddress(mhmodAVICap, "capCreateCaptureWindowA");
-	if (!VDINLINEASSERT(pcapCreateCaptureWindow)) {
+	typedef HWND (VFWAPI *tpcapCreateCaptureWindowW)(LPCWSTR lpszWindowName, DWORD dwStyle, int x, int y, int nWidth, int nHeight, HWND hwnd, int nID);
+	const tpcapCreateCaptureWindowW pcapCreateCaptureWindowW = (tpcapCreateCaptureWindowW)GetProcAddress(mhmodAVICap, "capCreateCaptureWindowW");
+	if (!VDINLINEASSERT(pcapCreateCaptureWindowW)) {
 		Shutdown();
 		return false;
 	}
 
-	mhwnd = pcapCreateCaptureWindow("", WS_CHILD, 0, 0, 0, 0, mhwndParent, 0);
+	mhwnd = pcapCreateCaptureWindowW(L"", WS_CHILD, 0, 0, 0, 0, mhwndParent, 0);
 	if (!mhwnd) {
 		Shutdown();
 		return false;
@@ -1207,16 +1207,16 @@ void VDCaptureSystemVFW::EnumerateDrivers() {
 	if (!mhmodAVICap)
 		return;
 
-	typedef BOOL (VFWAPI *tpcapGetDriverDescriptionA)(UINT wDriverIndex, LPSTR lpszName, INT cbName, LPSTR lpszVer, INT cbVer);
+	typedef BOOL (VFWAPI *tpcapGetDriverDescriptionW)(UINT wDriverIndex, LPWSTR lpszName, INT cbName, LPWSTR lpszVer, INT cbVer);
 
-	const tpcapGetDriverDescriptionA pcapGetDriverDescriptionA = (tpcapGetDriverDescriptionA)GetProcAddress(mhmodAVICap, "capGetDriverDescriptionA");
+	const tpcapGetDriverDescriptionW pcapGetDriverDescriptionW = (tpcapGetDriverDescriptionW)GetProcAddress(mhmodAVICap, "capGetDriverDescriptionW");
 
-	if (pcapGetDriverDescriptionA) {
-		char buf[256], ver[256];
+	if (pcapGetDriverDescriptionW) {
+		wchar_t buf[256], ver[256];
 
 		mDriverCount = 0;
-		while(mDriverCount < 10 && pcapGetDriverDescriptionA(mDriverCount, buf, sizeof buf, ver, sizeof ver)) {
-			mDrivers[mDriverCount] = VDTextAToW(buf) + L" (VFW)";
+		while(mDriverCount < 10 && pcapGetDriverDescriptionW(mDriverCount, buf, sizeof buf, ver, sizeof ver)) {
+			mDrivers[mDriverCount] = VDStringW(buf) + L" (VFW)";
 			++mDriverCount;
 		}
 	}
