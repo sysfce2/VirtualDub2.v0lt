@@ -194,7 +194,7 @@ static char g_szStripeFile[MAX_PATH];
 extern COMPVARS2 g_compression;
 extern VDPixmapFormatEx g_compformat;
 
-extern WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *pwfexOld, WAVEFORMATEX *pwfexSrc, VDStringW& shortNameHint, vdblock<char>& config, bool enable_plugin=false);
+extern WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *pwfexOld, WAVEFORMATEX *pwfexSrc, VDStringW& shortNameHint, vdblock<uint8>& config, bool enable_plugin=false);
 extern void ChooseCaptureCompressor(HWND hwndParent, COMPVARS2 *lpCompVars, BITMAPINFOHEADER *bihInput);
 
 static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -3462,7 +3462,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 				VDWaveFormat *pwfexSrc = NULL;
 				VDWaveFormat *pwfexOld = NULL;
 				VDStringW hint;
-				vdblock<char> config;
+				vdblock<uint8> config;
 
 				if (mpProject->GetAudioCompFormat(wfex, hint)) {
 					size_t len = wfex.size();

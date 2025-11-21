@@ -54,7 +54,7 @@ protected:
 	};
 
 	vdfastvector<Event> mEvents;
-	vdblock<char> mDummyData;
+	vdblock<uint8> mDummyData;
 };
 
 VDCaptureReplayDriver::VDCaptureReplayDriver() {

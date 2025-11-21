@@ -46,7 +46,7 @@ private:
 
 HRESULT STDMETHODCALLTYPE FXC10IncludeHandler::Open(D3D10_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID *ppData, UINT *pBytes) {
 	try {
-		vdblock<char> buf;
+		vdblock<uint8> buf;
 
 		const VDStringW& path = VDFileResolvePath(mBasePath.c_str(), VDTextAToW(pFileName).c_str());
 
@@ -99,7 +99,7 @@ void tool_fxc10(const vdfastvector<const wchar_t*>& args, const vdfastvector<con
 
 		uint32 len = VDClampToUint32(f.size());
 
-		vdblock<char> buf(len);
+		vdblock<uint8> buf(len);
 		f.read(buf.data(), len);
 		f.close();
 

@@ -670,7 +670,7 @@ protected:
 	uint32		mAccum;
 	vdblock<sint16>	mInputBuffer;
 	vdblock<sint16>	mOutputBuffer;
-	vdblock<char>	mEncodingBuffer;
+	vdblock<uint8>	mEncodingBuffer;
 
 	MovingAverage<double, 8>	mCurrentLatencyAverage;
 	MovingAverage<double, 8>	mAudioStartAverage;

@@ -251,7 +251,7 @@ public:
 
 protected:
 	IVDRandomAccessStream *mpSrc;
-	vdblock<char>	mBuffer;
+	vdblock<uint8>	mBuffer;
 	sint64		mBasePosition;
 	uint32		mBufferOffset;
 	uint32		mBufferValidSize;

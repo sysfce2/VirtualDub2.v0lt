@@ -1472,7 +1472,7 @@ bool AudioStreamResampler::_isEnd() {
 //
 ///////////////////////////////////////////////////////////////////////////
 
-AudioCompressor::AudioCompressor(AudioStream *src, const VDWaveFormat *dst_format, long dst_format_len, const wchar_t* pShortNameHint, vdblock<char>& config) : AudioStream() {
+AudioCompressor::AudioCompressor(AudioStream *src, const VDWaveFormat *dst_format, long dst_format_len, const wchar_t* pShortNameHint, vdblock<uint8>& config) : AudioStream() {
 	VDWaveFormat *iFormat = src->GetFormat();
 
 	SetSource(src);
@@ -1553,7 +1553,7 @@ void AudioCompressor::SkipSource(long samples) {
 	if (samples && !source->Skip(samples)) {
 		int maxRead = bytesPerInputSample > 16384 ? 1 : 16384 / bytesPerInputSample;
 
-		vdblock<char> tempBuf(bytesPerInputSample * maxRead);
+		vdblock<uint8> tempBuf(bytesPerInputSample * maxRead);
 		void *dst = tempBuf.data();
 
 		long actualBytes, actualSamples;

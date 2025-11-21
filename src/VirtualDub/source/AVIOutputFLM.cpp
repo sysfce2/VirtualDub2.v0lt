@@ -75,7 +75,7 @@ public:
 
 private:
 	IVDFileAsync *mpAsync;
-	vdblock<char> mPackBuffer;
+	vdblock<uint8>	mPackBuffer;
 	uint32			mFrameSize;
 	uint32			mExtraLeader;
 	uint32			mFrameCount;

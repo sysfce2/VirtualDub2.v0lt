@@ -148,9 +148,9 @@ protected:
 
 	COMPVARS2 *mpCompVars;
 	BITMAPINFOHEADER *mpSrcFormat;
-	EncoderHIC*	mhCodec;
-	int	mSelect;
-	vdblock<char>	mCodecState;
+	EncoderHIC* mhCodec;
+	int mSelect;
+	vdblock<uint8> mCodecState;
 	int mCodecStateId;
 	CodecInfo *mpCurrent;
 

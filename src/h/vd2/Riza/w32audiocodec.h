@@ -66,8 +66,8 @@ protected:
 	bool			mbFlushing;
 	bool			mbEnded;
 
-	vdblock<char>	mInputBuffer;
-	vdblock<char>	mOutputBuffer;
+	vdblock<uint8>	mInputBuffer;
+	vdblock<uint8>	mOutputBuffer;
 };
 
 #endif

@@ -860,7 +860,7 @@ const void *VDVideoSourcePlugin::getFrame(VDPosition frameNum) {
 	}
 
 	// decode frames until we get to the desired point
-	vdblock<char> buffer;
+	vdblock<uint8> buffer;
 
 	bool is_preroll;
 	do {

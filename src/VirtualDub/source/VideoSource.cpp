@@ -2279,7 +2279,7 @@ const void *VideoSourceAVI::getFrame(VDPosition lFrameDesired) {
 	lLastFrame = -1;		// In case we encounter an exception.
 	stream_current_frame	= -1;	// invalidate streaming frame
 
-	vdblock<char>	dataBuffer;
+	vdblock<uint8> dataBuffer;
 	uint32 decodePadding = streamGetDecodePadding();
 	do {
 		uint32 lBytesRead, lSamplesRead;

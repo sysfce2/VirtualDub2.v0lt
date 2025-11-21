@@ -525,7 +525,7 @@ VDAudioEncPlugin::~VDAudioEncPlugin() {
 	VDUnlockPlugin(mpDesc);
 }
 
-IVDAudioCodec *VDCreateAudioCompressorPlugin(const VDWaveFormat *srcFormat, const wchar_t* pSignatureName, vdblock<char>& config, bool throwIfNotFound) {
+IVDAudioCodec *VDCreateAudioCompressorPlugin(const VDWaveFormat *srcFormat, const wchar_t* pSignatureName, vdblock<uint8>& config, bool throwIfNotFound) {
 	VDAudioEncPlugin* driver = (VDAudioEncPlugin*)VDGetAudioEncByName(pSignatureName);
 	if (!driver) {
 		if (throwIfNotFound) throw MyError(

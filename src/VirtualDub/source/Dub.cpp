@@ -451,7 +451,7 @@ private:
 
 	vdstructex<WAVEFORMATEX> mAudioCompressionFormat;
 	VDStringW			mAudioCompressionFormatHint;
-	vdblock<char>		mAudioCompressionConfig;
+	vdblock<uint8>		mAudioCompressionConfig;
 
 	VDPixmapLayout		mVideoFilterOutputPixmapLayout;
 
@@ -478,7 +478,7 @@ public:
 	Dubber(DubOptions *);
 	~Dubber();
 
-	void SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const wchar_t* pShortNameHint, vdblock<char>& config);
+	void SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const wchar_t* pShortNameHint, vdblock<uint8>& config);
 	void SetInputDisplay(IVDVideoDisplay *);
 	void SetOutputDisplay(IVDVideoDisplay *);
 	void SetAudioFilterGraph(const VDAudioFilterGraph& graph);
@@ -584,7 +584,7 @@ Dubber::~Dubber() {
 
 /////////////////////////////////////////////////
 
-void Dubber::SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const wchar_t* pShortNameHint, vdblock<char>& config) {
+void Dubber::SetAudioCompression(const VDWaveFormat *wf, uint32 cb, const wchar_t* pShortNameHint, vdblock<uint8>& config) {
 	mAudioCompressionFormat.assign((const WAVEFORMATEX *)wf, cb);
 	if (pShortNameHint)
 		mAudioCompressionFormatHint = pShortNameHint;

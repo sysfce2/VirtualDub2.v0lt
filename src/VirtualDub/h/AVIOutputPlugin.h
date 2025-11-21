@@ -50,6 +50,6 @@ public:
 };
 
 IVDMediaOutputPlugin *VDCreateMediaOutputPlugin(IVDOutputDriver* driver, const char* format);
-IVDAudioCodec *VDCreateAudioCompressorPlugin(const VDWaveFormat *srcFormat, const wchar_t* pSignatureName, vdblock<char>& config, bool throwIfNotFound);
+IVDAudioCodec *VDCreateAudioCompressorPlugin(const VDWaveFormat *srcFormat, const wchar_t* pSignatureName, vdblock<uint8>& config, bool throwIfNotFound);
 
 #endif

@@ -1689,7 +1689,7 @@ void VDCaptureProject::PreallocateCaptureFile(sint64 size) {
 
 	// zap the first 64K of the file so it isn't recognized as a valid anything
 	if (size) {
-		vdblock<char> tmp(65536);
+		vdblock<uint8> tmp(65536);
 		memset(tmp.data(), 0, tmp.size());
 
 		file.seek(0);

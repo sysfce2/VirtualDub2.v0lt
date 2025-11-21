@@ -118,7 +118,7 @@ struct ACMEnumeratorData {
 struct ACMChooserData {
 	WAVEFORMATEX *pwfex, *pwfexSrc;
 	VDStringW* pHint;
-	vdblock<char> *pConfig;
+	vdblock<uint8> *pConfig;
 	bool enable_plugin;
 };
 
@@ -675,7 +675,7 @@ redisplay_formats:
 	return FALSE;
 }
 
-WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *pwfexOld, WAVEFORMATEX *pwfexSrc, VDStringW& shortNameHint, vdblock<char>& config, bool enable_plugin) {
+WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *pwfexOld, WAVEFORMATEX *pwfexSrc, VDStringW& shortNameHint, vdblock<uint8>& config, bool enable_plugin) {
 	ACMChooserData data;
 
 	data.pwfex = pwfexOld;

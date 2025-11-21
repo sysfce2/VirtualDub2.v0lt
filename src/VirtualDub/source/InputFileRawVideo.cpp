@@ -413,7 +413,7 @@ const void *VDVideoSourceRawVideo::getFrame(VDPosition frameNum) {
 	}
 
 	if (!read(frameNum, 1, NULL, 0x7FFFFFFF, &lBytes, NULL) && lBytes) {
-		vdblock<char> buffer(lBytes);
+		vdblock<uint8> buffer(lBytes);
 		uint32 lReadBytes;
 
 		read(frameNum, 1, buffer.data(), lBytes, &lReadBytes, NULL);

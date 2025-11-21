@@ -173,8 +173,8 @@ protected:
 	uint32			mAudioSampleSize;
 	uint32			mAudioSampleRate;
 	uint32			mAudioClientPosition;
-	vdblock<char>	mAudioClientBuffer;
-	VDRingBuffer<char>	mAudioRecordBuffer;
+	vdblock<uint8>	mAudioClientBuffer;
+	VDRingBuffer<uint8>	mAudioRecordBuffer;
 
 	VDAtomicInt		mPreviewFrameCount;
 	MyError			mCaptureError;
@@ -805,7 +805,7 @@ LRESULT CALLBACK VDCaptureDriverEmulation::StaticMessageWndProc(HWND hwnd, UINT 
 							if (pThis->mbAudioCaptureEnabled) {
 								VDTime clk = (VDTime)(VDGetAccurateTick() - pThis->mCaptureStart) * 1000;
 								const uint32 size = pThis->mAudioClientBuffer.size();
-								char *data = pThis->mAudioClientBuffer.data();
+								uint8* data = pThis->mAudioClientBuffer.data();
 								pThis->mAudioRecordBuffer.Read(data, size);
 								pThis->mAudioClientPosition += size;
 
@@ -821,7 +821,7 @@ LRESULT CALLBACK VDCaptureDriverEmulation::StaticMessageWndProc(HWND hwnd, UINT 
 							VDDEBUG("CaptureEmulation: Audio capture buffer overflow detected.\n");
 
 							const uint32 size = pThis->mAudioClientBuffer.size();
-							char *data = pThis->mAudioClientBuffer.data();
+							uint8* data = pThis->mAudioClientBuffer.data();
 							pThis->mAudioRecordBuffer.Read(data, size);
 
 							pThis->mAudioClientPosition += size;
@@ -851,7 +851,7 @@ LRESULT CALLBACK VDCaptureDriverEmulation::StaticMessageWndProc(HWND hwnd, UINT 
 			while(pos > pThis->mAudioClientPosition) {
 				uint32 limit = pThis->mAudioClientBuffer.size();
 				uint32 tc = pos - pThis->mAudioClientPosition;
-				char *data = pThis->mAudioClientBuffer.data();
+				uint8* data = pThis->mAudioClientBuffer.data();
 
 				if (tc > limit)
 					tc = limit;

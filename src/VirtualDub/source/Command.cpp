@@ -70,7 +70,7 @@ COMPVARS2			g_Vcompression;
 VDWaveFormat		*g_ACompressionFormat		= NULL;
 uint32				g_ACompressionFormatSize	= 0;
 VDStringW			g_ACompressionFormatHint;
-vdblock<char>		g_ACompressionConfig;
+vdblock<uint8>		g_ACompressionConfig;
 
 VDAudioFilterGraph	g_audioFilterGraph;
 
@@ -375,7 +375,7 @@ void ScanForUnreadableFrames(FrameSubset *pSubset, IVDVideoSource *pVideoSource)
 	const VDPosition lFirst = pVSS->getStart();
 	const VDPosition lLast = pVSS->getEnd();
 	VDPosition lFrame = lFirst;
-	vdblock<char>	buffer;
+	vdblock<uint8> buffer;
 
 	IVDStreamSource::ErrorMode oldErrorMode(pVSS->getDecodeErrorMode());
 	pVSS->setDecodeErrorMode(IVDStreamSource::kErrorModeReportAll);
