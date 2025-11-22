@@ -1900,6 +1900,14 @@ bool VDCaptureProject::SelectDriver(int nDriver) {
 
 	mpDriver->UnlockUpdates();
 
+	if (mDisplayMode == kDisplayHardware) {
+		// HACK: The display mode can't be applied inside the LockUpdates-UnlockUpdates block,
+		// but VirtualDub thinks everything is fine. So we just switch display modes.
+		SetDisplayMode(kDisplayNone);
+		SetDisplayMode(kDisplayHardware);
+		// TODO: This should be done more correctly.
+	}
+
 	return true;
 }
 
