@@ -1120,11 +1120,11 @@ LRESULT CALLBACK VDCaptureDriverVFW::WaveCallback(HWND hwnd, LPWAVEHDR lpWHdr) {
 LRESULT CALLBACK VDCaptureDriverVFW::StaticMessageSinkWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch(msg) {
 		case WM_NCCREATE:
-			SetWindowLongPtr(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+			SetWindowLongPtrW(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
 			break;
 		case MM_WIM_DATA:
 			{
-				VDCaptureDriverVFW *pThis = (VDCaptureDriverVFW *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverVFW *pThis = (VDCaptureDriverVFW *)GetWindowLongPtrW(hwnd, 0);
 
 				if (pThis->mpCB) {
 					WAVEHDR& hdr = *(WAVEHDR *)lParam;
@@ -1146,26 +1146,26 @@ LRESULT CALLBACK VDCaptureDriverVFW::StaticMessageSinkWndProc(HWND hwnd, UINT ms
 			return 0;
 		case WM_APP+16:
 			{
-				VDCaptureDriverVFW *pThis = (VDCaptureDriverVFW *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverVFW *pThis = (VDCaptureDriverVFW *)GetWindowLongPtrW(hwnd, 0);
 				pThis->SyncCaptureStop();
 			}
 			return 0;
 		case WM_APP+17:
 			{
-				VDCaptureDriverVFW *pThis = (VDCaptureDriverVFW *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverVFW *pThis = (VDCaptureDriverVFW *)GetWindowLongPtrW(hwnd, 0);
 				pThis->SyncCaptureAbort();
 			}
 			return 0;
 		case WM_TIMER:
 			{
-				VDCaptureDriverVFW *pThis = (VDCaptureDriverVFW *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverVFW *pThis = (VDCaptureDriverVFW *)GetWindowLongPtrW(hwnd, 0);
 				if (pThis->mDisplayMode == kDisplayAnalyze && !pThis->mbCapturing)
 					capGrabFrameNoStop(pThis->mhwnd);
 			}
 			return 0;
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 ///////////////////////////////////////////////////////////////////////////

@@ -1451,7 +1451,7 @@ static int hsv_init(VDXFilterActivation *fa, const VDXFilterFunctions *ff) {
 }
 
 static INT_PTR CALLBACK hsvDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	HSVFilterData *mfd = (HSVFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+	HSVFilterData* mfd = (HSVFilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
     switch (message)
     {
@@ -1459,7 +1459,7 @@ static INT_PTR CALLBACK hsvDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPAR
 			{
 				HWND hwnd;
 				mfd = (HSVFilterData *)lParam;
-				SetWindowLongPtr(hDlg, DWLP_USER, (LPARAM)mfd);
+				SetWindowLongPtrW(hDlg, DWLP_USER, (LPARAM)mfd);
 
 				hwnd = GetDlgItem(hDlg, IDC_HUE);
 				SendMessageW(hwnd, TBM_SETRANGEMIN, (WPARAM)FALSE, 0);
@@ -1507,7 +1507,7 @@ static INT_PTR CALLBACK hsvDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPAR
 				wchar_t buf[12];
 				bool redo = false;
 
-				switch(GetWindowLong(hwndSlider, GWL_ID)) {
+				switch(GetWindowLongW(hwndSlider, GWL_ID)) {
 				case IDC_HUE:
 					swprintf_s(buf, L"%+.1f\u00B0", (val-0x800) * (360.0 / 4096.0));
 					SetDlgItemTextW(hDlg, IDC_STATIC_HUE, buf);

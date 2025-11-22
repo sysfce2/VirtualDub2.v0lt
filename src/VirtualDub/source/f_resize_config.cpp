@@ -574,7 +574,7 @@ void VDDataExchangeDialogW32::ExchangeEdit(uint32 id, sint32& value) {
 				mbChangeDetected = true;
 			}
 		} else {
-			if (!mErrorPos && !(GetWindowLong(hwnd, GWL_STYLE) & WS_DISABLED))
+			if (!mErrorPos && !(GetWindowLongW(hwnd, GWL_STYLE) & WS_DISABLED))
 				mErrorPos = id;
 		}
 	}
@@ -601,7 +601,7 @@ void VDDataExchangeDialogW32::ExchangeEdit(uint32 id, uint32& value) {
 				mbChangeDetected = true;
 			}
 		} else {
-			if (!mErrorPos && !(GetWindowLong(hwnd, GWL_STYLE) & WS_DISABLED))
+			if (!mErrorPos && !(GetWindowLongW(hwnd, GWL_STYLE) & WS_DISABLED))
 				mErrorPos = id;
 		}
 	}
@@ -628,7 +628,7 @@ void VDDataExchangeDialogW32::ExchangeEdit(uint32 id, double& value) {
 				mbChangeDetected = true;
 			}
 		} else {
-			if (!mErrorPos && !(GetWindowLong(hwnd, GWL_STYLE) & WS_DISABLED))
+			if (!mErrorPos && !(GetWindowLongW(hwnd, GWL_STYLE) & WS_DISABLED))
 				mErrorPos = id;
 		}
 	}
@@ -905,8 +905,9 @@ INT_PTR VDVF1ResizeDlg::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		break;
 
 	case WM_CTLCOLORSTATIC:
-		if (GetWindowLong((HWND)lParam, GWL_ID) == IDC_COLOR)
+		if (GetWindowLongW((HWND)lParam, GWL_ID) == IDC_COLOR) {
 			return (INT_PTR)mhbrColor;
+		}
 		break;
 
 	case WM_DESTROY:
@@ -1224,8 +1225,9 @@ INT_PTR VDVFCanvasDlg::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		break;
 
 	case WM_CTLCOLORSTATIC:
-		if (GetWindowLong((HWND)lParam, GWL_ID) == IDC_COLOR)
+		if (GetWindowLongW((HWND)lParam, GWL_ID) == IDC_COLOR) {
 			return (INT_PTR)mhbrColor;
+		}
 		break;
 
 	case WM_DESTROY:

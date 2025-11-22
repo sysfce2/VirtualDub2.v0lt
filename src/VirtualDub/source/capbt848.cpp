@@ -253,7 +253,7 @@ INT_PTR CALLBACK CaptureBT848TweakerDlgProc(HWND hdlg, UINT msg, WPARAM wParam, 
 		if (lParam) {
 			int pos = SendMessageW((HWND)lParam, TBM_GETPOS, 0, 0);
 
-			switch(GetWindowLong((HWND)lParam, GWL_ID)) {
+			switch(GetWindowLongW((HWND)lParam, GWL_ID)) {
 			case IDC_SLIDER_LUMAPEAKEVEN:
 				g_dTVDriver.memoryWriteBYTE(0x40, (g_dTVDriver.memoryReadBYTE(0x40)&~0x18) + ((pos&3)<<3));
 				return TRUE;

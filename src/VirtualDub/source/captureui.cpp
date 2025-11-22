@@ -721,9 +721,9 @@ bool VDCaptureProjectUI::Attach(VDGUIHandle hwnd, IVDCaptureProject *pProject) {
 	SendMessageW(mhwndStatus, SB_SETTEXTA, 6 | SBT_NOBORDERS, (LPARAM)"");
 
 	// subclass the status window
-	mStatusWndProc = (WNDPROC)GetWindowLongPtr(mhwndStatus, GWLP_WNDPROC);
-	SetWindowLongPtr(mhwndStatus, GWLP_USERDATA, (LONG_PTR)this);
-	SetWindowLongPtr(mhwndStatus, GWLP_WNDPROC, (LONG_PTR)StaticStatusWndProc);
+	mStatusWndProc = (WNDPROC)GetWindowLongPtrW(mhwndStatus, GWLP_WNDPROC);
+	SetWindowLongPtrW(mhwndStatus, GWLP_USERDATA, (LONG_PTR)this);
+	SetWindowLongPtrW(mhwndStatus, GWLP_WNDPROC, (LONG_PTR)StaticStatusWndProc);
 
 	// create the side panel
 	CreateDialogParam(g_hInst, MAKEINTRESOURCE(IDD_CAPTURE_PANEL), (HWND)mhwnd, StaticPanelDlgProc, (LPARAM)this);
@@ -732,7 +732,7 @@ bool VDCaptureProjectUI::Attach(VDGUIHandle hwnd, IVDCaptureProject *pProject) {
 		return false;
 	}
 
-	SetWindowLong(mhwndPanel, GWL_ID, IDC_CAPTURE_PANEL);
+	SetWindowLongW(mhwndPanel, GWL_ID, IDC_CAPTURE_PANEL);
 
 	VDSetThreadExecutionStateW32(ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED | ES_CONTINUOUS);
 	OnSize();
@@ -1029,11 +1029,11 @@ void VDCaptureProjectUI::SetFullScreen(bool fs) {
 
 	mbFullScreen = fs;
 
-	DWORD currentStyle = GetWindowLong((HWND)mhwnd, GWL_STYLE);
+	DWORD currentStyle = GetWindowLongW((HWND)mhwnd, GWL_STYLE);
 	if (fs) {
 		currentStyle &= ~(WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
 		currentStyle |= WS_POPUP;
-		SetWindowLong((HWND)mhwnd, GWL_STYLE, currentStyle);
+		SetWindowLongW((HWND)mhwnd, GWL_STYLE, currentStyle);
 		SetWindowPos((HWND)mhwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_FRAMECHANGED);
 		if (IsZoomed((HWND)mhwnd))
 			ShowWindow((HWND)mhwnd, SW_RESTORE);
@@ -1047,7 +1047,7 @@ void VDCaptureProjectUI::SetFullScreen(bool fs) {
 	} else {
 		currentStyle &= ~WS_POPUP;
 		currentStyle |= WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
-		SetWindowLong((HWND)mhwnd, GWL_STYLE, currentStyle);
+		SetWindowLongW((HWND)mhwnd, GWL_STYLE, currentStyle);
 		SetWindowPos((HWND)mhwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_FRAMECHANGED);
 		ShowWindow((HWND)mhwnd, mbMaximize ? SW_MAXIMIZE:SW_RESTORE);
 		SetMenu((HWND)mhwnd, mhMenuCapture);
@@ -2583,7 +2583,7 @@ void VDCaptureProjectUI::UICaptureEnd(bool success) {
 }
 
 LRESULT CALLBACK VDCaptureProjectUI::StaticStatusWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDCaptureProjectUI *pThis = (VDCaptureProjectUI *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	VDCaptureProjectUI* pThis = (VDCaptureProjectUI*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 
 	return pThis->StatusWndProc(hwnd, msg, wParam, lParam);
 }
@@ -2633,7 +2633,7 @@ LRESULT VDCaptureProjectUI::StatusWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 		break;
 	}
 
-	return CallWindowProc(mStatusWndProc, hwnd, msg, wParam, lParam);
+	return CallWindowProcW(mStatusWndProc, hwnd, msg, wParam, lParam);
 }
 
 LRESULT VDCaptureProjectUI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -2645,8 +2645,8 @@ LRESULT VDCaptureProjectUI::CommonWndProc(UINT msg, WPARAM wParam, LPARAM lParam
 		case WM_WINDOWPOSCHANGING:
 			// seems to fix borderless sizing issues
 			if(!(((WINDOWPOS*)lParam)->flags & SWP_NOMOVE) && !mbMaximizeChanging && !mbFullScreen){
-				int style = GetWindowLong((HWND)mhwnd,GWL_STYLE);
-				SetWindowLong((HWND)mhwnd,GWL_STYLE,style | WS_CAPTION);
+				int style = GetWindowLongW((HWND)mhwnd,GWL_STYLE);
+				SetWindowLongW((HWND)mhwnd,GWL_STYLE,style | WS_CAPTION);
 			}
 			break;
 
@@ -2953,7 +2953,7 @@ bool VDCaptureProjectUI::OnKeyDown(int key) {
 }
 
 void VDCaptureProjectUI::UpdateMaximize() {
-	int style0 = GetWindowLong((HWND)mhwnd,GWL_STYLE);
+	int style0 = GetWindowLongW((HWND)mhwnd,GWL_STYLE);
 	int style1 = style0;
 
 	if(mbMaximize && IsZoomed((HWND)mhwnd)){
@@ -2972,7 +2972,7 @@ void VDCaptureProjectUI::UpdateMaximize() {
 		int w = rr.right-rr.left;
 		int h = rr.bottom-rr.top;
 		mbMaximizeChanging = true;
-		SetWindowLong((HWND)mhwnd,GWL_STYLE,style1);
+		SetWindowLongW((HWND)mhwnd,GWL_STYLE,style1);
 		SetWindowPos((HWND)mhwnd,0,x,y,w,h,SWP_NOACTIVATE|SWP_NOZORDER|SWP_FRAMECHANGED);
 		mbMaximizeChanging = false;
 	}
@@ -4543,11 +4543,12 @@ INT_PTR CALLBACK VDCaptureProjectUI::StaticPanelDlgProc(HWND hwnd, UINT msg, WPA
 	VDCaptureProjectUI *pThis;
 
 	if (msg == WM_INITDIALOG) {
-		SetWindowLongPtr(hwnd, DWLP_USER, lParam);
+		SetWindowLongPtrW(hwnd, DWLP_USER, lParam);
 		pThis = (VDCaptureProjectUI *)lParam;
 		pThis->mhwndPanel = hwnd;
-	} else
-		pThis = (VDCaptureProjectUI *)GetWindowLongPtr(hwnd, DWLP_USER);
+	} else {
+		pThis = (VDCaptureProjectUI*)GetWindowLongPtrW(hwnd, DWLP_USER);
+	}
 
 	if (!pThis)
 		return FALSE;
@@ -4660,7 +4661,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 			int w = 320, h = 240;
 			int found_w = -1, found_h = -1, found_f = -1;
 
-			SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 
 			pProject = (IVDCaptureProject *)lParam;
 
@@ -4754,7 +4755,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 				int w, h, f;
 				BOOL b;
 
-				pProject = (IVDCaptureProject *)GetWindowLongPtr(hdlg, DWLP_USER);
+				pProject = (IVDCaptureProject*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
 				if (IsDlgButtonChecked(hdlg, IDC_CUSTOM)) {
 

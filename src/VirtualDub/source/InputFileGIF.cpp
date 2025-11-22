@@ -807,7 +807,7 @@ namespace {
 
 INT_PTR APIENTRY VDInputFileGIF::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	MyFileInfo *pInfo = (MyFileInfo *)GetWindowLongPtr(hDlg, DWLP_USER);
+	MyFileInfo* pInfo = (MyFileInfo*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
 	switch (message)
 	{
@@ -815,7 +815,7 @@ INT_PTR APIENTRY VDInputFileGIF::_InfoDlgProc( HWND hDlg, UINT message, WPARAM w
 			{
 				char buf[128];
 
-				SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+				SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 				pInfo = (MyFileInfo *)lParam;
 
 				if (pInfo->mpVideo)

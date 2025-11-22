@@ -83,10 +83,10 @@ void VDUIControlW32::PreLayoutBase(const VDUILayoutSpecs& specs) {
 
 	RECT r = {0,0,mLayoutSpecs.minsize.w,mLayoutSpecs.minsize.h};
 
-	DWORD dwStyle = GetWindowLong(mhwnd, GWL_STYLE);
+	DWORD dwStyle = GetWindowLongW(mhwnd, GWL_STYLE);
 	bool bMenu = !(dwStyle & WS_CHILD) && GetMenu(mhwnd);
 
-	AdjustWindowRectEx(&r, dwStyle, bMenu, GetWindowLong(mhwnd, GWL_EXSTYLE));
+	AdjustWindowRectEx(&r, dwStyle, bMenu, GetWindowLongW(mhwnd, GWL_EXSTYLE));
 
 	mLayoutSpecs.minsize.w = r.right-r.left;
 	mLayoutSpecs.minsize.h = r.bottom-r.top;
@@ -268,9 +268,10 @@ LRESULT CALLBACK VDUICustomControlW32::StaticWndProc(HWND hwnd, UINT msg, WPARAM
 		pThis = (VDUICustomControlW32 *)lParam;
 		pThis->mhwnd = hwnd;
 
-		SetWindowLongPtr(hwnd, DLGWINDOWEXTRA, (LONG_PTR)pThis);
-	} else
-		pThis = (VDUICustomControlW32 *)GetWindowLongPtr(hwnd, DLGWINDOWEXTRA);
+		SetWindowLongPtrW(hwnd, DLGWINDOWEXTRA, (LONG_PTR)pThis);
+	} else {
+		pThis = (VDUICustomControlW32*)GetWindowLongPtrW(hwnd, DLGWINDOWEXTRA);
+	}
 
 	return pThis ? pThis->WndProc(msg, wParam, lParam) : DefDlgProcW(hwnd, msg, wParam, lParam);
 }
@@ -283,7 +284,7 @@ namespace {
 
 	static BOOL CALLBACK ValidateEnumerator(HWND hwnd, LPARAM pData) {
 		VDUIControlDialogW32ValidateData& data = *(VDUIControlDialogW32ValidateData *)pData;
-		HBRUSH hbrBackground = (HBRUSH)GetClassLongPtr(hwnd, GCLP_HBRBACKGROUND);
+		HBRUSH hbrBackground = (HBRUSH)GetClassLongPtrW(hwnd, GCLP_HBRBACKGROUND);
 
 		if (hbrBackground) {
 			RECT r;
@@ -302,7 +303,7 @@ LRESULT VDUICustomControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 	case WM_SIZE:
 		OnResize();
 
-		if (!(GetWindowLong(mhwnd, GWL_STYLE) & WS_CHILD)) {
+		if (!(GetWindowLongW(mhwnd, GWL_STYLE) & WS_CHILD)) {
 			vduirect r(GetClientArea());
 
 			tChildren::iterator it(mChildren.begin()), itEnd(mChildren.end());

@@ -58,11 +58,11 @@ bool VDUIRegisterHotKeyExControl() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= VDUIHOTKEYEXCLASS;
 
-	return RegisterClass(&wc) != 0;
+	return RegisterClassW(&wc) != 0;
 }
 
 IVDUIHotKeyExControl *VDGetUIHotKeyExControl(VDGUIHandle h) {
-	return vdpoly_cast<IVDUIHotKeyExControl *>((IVDUnknown *)GetWindowLongPtr((HWND)h, 0));
+	return vdpoly_cast<IVDUIHotKeyExControl*>((IVDUnknown*)GetWindowLongPtrW((HWND)h, 0));
 }
 
 VDUIHotKeyExControlW32::VDUIHotKeyExControlW32(HWND hwnd)
@@ -106,7 +106,7 @@ void VDUIHotKeyExControlW32::Clear() {
 }
 
 LRESULT CALLBACK VDUIHotKeyExControlW32::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDUIHotKeyExControlW32 *pThis = (VDUIHotKeyExControlW32 *)GetWindowLongPtr(hwnd, 0);
+	VDUIHotKeyExControlW32* pThis = (VDUIHotKeyExControlW32*)GetWindowLongPtrW(hwnd, 0);
 
 	if (msg == WM_NCCREATE) {
 		pThis = new VDUIHotKeyExControlW32(hwnd);
@@ -115,10 +115,11 @@ LRESULT CALLBACK VDUIHotKeyExControlW32::StaticWndProc(HWND hwnd, UINT msg, WPAR
 			return FALSE;
 
 		pThis->AddRef();
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pThis);
-	} else if (msg == WM_NCDESTROY) {
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
+	}
+	else if (msg == WM_NCDESTROY) {
 		pThis->Release();
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 
 	return pThis->WndProc(msg, wParam, lParam);
@@ -211,7 +212,7 @@ LRESULT VDUIHotKeyExControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) 
 			return 0;
 	}
 
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDUIHotKeyExControlW32::OnPaint() {

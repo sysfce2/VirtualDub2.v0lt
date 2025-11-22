@@ -975,12 +975,12 @@ BOOL CodeDisassemblyWindow::DoDrawItem(LPARAM lParam) {
 }
 
 INT_PTR CALLBACK CodeDisassemblyWindow::DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
-	CodeDisassemblyWindow *thisPtr = (CodeDisassemblyWindow *)GetWindowLongPtr(hDlg, DWLP_USER);
+	CodeDisassemblyWindow* thisPtr = (CodeDisassemblyWindow*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
 	switch(msg) {
 
 		case WM_INITDIALOG:
-			SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 			thisPtr = (CodeDisassemblyWindow *)lParam;
 
 			{

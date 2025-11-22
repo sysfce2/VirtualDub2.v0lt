@@ -572,7 +572,7 @@ VDZINT_PTR VDUIJobControlDialog::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARA
 					GetJobListDispInfoW(nldiW);
 					return TRUE;
 				case LVN_ENDLABELEDITA:
-					SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, TRUE);
+					SetWindowLongPtrW(mhdlg, DWLP_MSGRESULT, TRUE);
 					vdj = g_VDJobQueue.ListGet(nldiA->item.iItem);
 
 					if (vdj && nldiA->item.pszText) {
@@ -580,7 +580,7 @@ VDZINT_PTR VDUIJobControlDialog::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARA
 					}
 					return TRUE;
 				case LVN_ENDLABELEDITW:
-					SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, TRUE);
+					SetWindowLongPtrW(mhdlg, DWLP_MSGRESULT, TRUE);
 					vdj = g_VDJobQueue.ListGet(nldiW->item.iItem);
 
 					if (vdj && nldiW->item.pszText)

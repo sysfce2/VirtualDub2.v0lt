@@ -755,8 +755,9 @@ bool InitInstance( HANDLE hInstance, int nCmdShow, bool topmost) {
     // Make the window visible; update its client area; and return "success".
 	pFrame->RestorePlacement(nCmdShow);
 
-	if (nCmdShow != SW_HIDE && !(GetWindowLong(g_hWnd, GWL_STYLE) & WS_VISIBLE))
+	if (nCmdShow != SW_HIDE && !(GetWindowLongW(g_hWnd, GWL_STYLE) & WS_VISIBLE)) {
 		ShowWindow(g_hWnd, nCmdShow);
+	}
 
     UpdateWindow(g_hWnd);
 

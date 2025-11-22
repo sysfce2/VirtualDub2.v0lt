@@ -261,7 +261,7 @@ HWND DubStatus::Display(HWND hwndParent, int iInitialPriority) {
 		fShowStatusWindow = opt->fShowStatus || opt->mbForceShowStatus;
 
 		if (fShowStatusWindow) {
-			SetWindowLong(hwndStatus, GWL_STYLE, GetWindowLong(hwndStatus, GWL_STYLE) & ~WS_POPUP);
+			SetWindowLongW(hwndStatus, GWL_STYLE, GetWindowLongW(hwndStatus, GWL_STYLE) & ~WS_POPUP);
 
 			// Check the status of the main window. If it is minimized, minimize the status
 			// window too. This is a bit of an illegal tunnel but it is useful for now.
@@ -434,7 +434,7 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 	wsprintfA(buf, "%d.%02d fps", fps.quot, fps.rem);
 	SetDlgItemTextA(hWnd, IDC_FPS, buf);
 
-	if (GetWindowLong(g_hWnd, GWL_STYLE) & WS_MINIMIZE) {
+	if (GetWindowLongW(g_hWnd, GWL_STYLE) & WS_MINIMIZE) {
 		long lNewProgress = (nProgress*25)/2048;
 
 		if (iLastTitleMode != TITLE_MINIMIZED || lLastTitleProgress != lNewProgress) {
@@ -454,13 +454,13 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 ///////////////////////////////////
 
 INT_PTR CALLBACK DubStatus::StatusMainDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	DubStatus *thisPtr = (DubStatus *)GetWindowLongPtr(hdlg, DWLP_USER);
+	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
     switch (message)
     {
         case WM_INITDIALOG:
 			{
-				SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+				SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 				thisPtr = (DubStatus *)lParam;
 				SetWindowPos(hdlg, HWND_TOP, thisPtr->rStatusChild.left, thisPtr->rStatusChild.top, 0, 0, SWP_NOSIZE|SWP_NOACTIVATE);
 
@@ -479,13 +479,13 @@ INT_PTR CALLBACK DubStatus::StatusMainDlgProc( HWND hdlg, UINT message, WPARAM w
 
 
 INT_PTR CALLBACK DubStatus::StatusVideoDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	DubStatus *thisPtr = (DubStatus *)GetWindowLongPtr(hdlg, DWLP_USER);
+	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
     switch (message)
     {
         case WM_INITDIALOG:
 			{
-				SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+				SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 				thisPtr = (DubStatus *)lParam;
 				SetWindowPos(hdlg, HWND_TOP, thisPtr->rStatusChild.left, thisPtr->rStatusChild.top, 0, 0, SWP_NOSIZE|SWP_NOACTIVATE);
 
@@ -654,13 +654,13 @@ INT_PTR CALLBACK DubStatus::StatusVideoDlgProc( HWND hdlg, UINT message, WPARAM 
 }
 
 INT_PTR CALLBACK DubStatus::StatusPerfDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	DubStatus *thisPtr = (DubStatus *)GetWindowLongPtr(hdlg, DWLP_USER);
+	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
     switch (message)
     {
         case WM_INITDIALOG:
 			{
-				SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+				SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 				thisPtr = (DubStatus *)lParam;
 				SetWindowPos(hdlg, HWND_TOP, thisPtr->rStatusChild.left, thisPtr->rStatusChild.top, 0, 0, SWP_NOSIZE|SWP_NOACTIVATE);
 
@@ -692,13 +692,13 @@ INT_PTR CALLBACK DubStatus::StatusPerfDlgProc( HWND hdlg, UINT message, WPARAM w
 }
 
 INT_PTR CALLBACK DubStatus::StatusLogDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	DubStatus *thisPtr = (DubStatus *)GetWindowLongPtr(hdlg, DWLP_USER);
+	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
     switch (message)
     {
         case WM_INITDIALOG:
 			{
-				SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+				SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 				thisPtr = (DubStatus *)lParam;
 				SetWindowPos(hdlg, HWND_TOP, thisPtr->rStatusChild.left, thisPtr->rStatusChild.top, 0, 0, SWP_NOSIZE|SWP_NOACTIVATE);
 
@@ -740,7 +740,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 		{	MAKEINTRESOURCE(IDD_DUBBING_LOG),	L"Log",		StatusLogDlgProc	},
 	};
 
-	DubStatus *thisPtr = (DubStatus *)GetWindowLongPtr(hdlg, DWLP_USER);
+	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
 	HWND hwndItem;
 	RECT r, r2;
 
@@ -752,7 +752,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 			{
 				long xoffset, yoffset;
 
-				SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+				SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 				thisPtr = (DubStatus *)lParam;
 
 				thisPtr->hwndStatus = hdlg;
@@ -980,7 +980,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 		case WM_HSCROLL:
 			if (lParam) {
 				HWND hwndScroll = (HWND)lParam;
-				switch(GetWindowLong(hwndScroll, GWL_ID)) {
+				switch(GetWindowLongW(hwndScroll, GWL_ID)) {
 				case IDC_LIMIT:
 					{
 						int pos = SendMessageW(hwndScroll, TBM_GETPOS, 0, 0);
@@ -1111,10 +1111,10 @@ bool DubStatus::ToggleStatus() {
 
 	if (hwndStatus) {
 		if (fShowStatusWindow) {
-			SetWindowLong(hwndStatus, GWL_STYLE, GetWindowLong(hwndStatus, GWL_STYLE) & ~WS_POPUP);
+			SetWindowLongW(hwndStatus, GWL_STYLE, GetWindowLongW(hwndStatus, GWL_STYLE) & ~WS_POPUP);
 			ShowWindow(hwndStatus, SW_SHOW);
 		} else {
-			SetWindowLong(hwndStatus, GWL_STYLE, GetWindowLong(hwndStatus, GWL_STYLE) | WS_POPUP);
+			SetWindowLongW(hwndStatus, GWL_STYLE, GetWindowLongW(hwndStatus, GWL_STYLE) | WS_POPUP);
 			ShowWindow(hwndStatus, SW_HIDE);
 		}
 	}

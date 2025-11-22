@@ -69,7 +69,7 @@ ATOM RegisterLevelControl() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= VIDEOLEVELCONTROLCLASS;
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 static void LevelControlResize(HWND hwnd, LevelControlData *const lcd) {
@@ -102,7 +102,7 @@ static int LevelPixelToRatio(int pix, int w) {
 }
 
 static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	LevelControlData *lcd = (LevelControlData *)GetWindowLongPtr(hwnd, 0);
+	LevelControlData* lcd = (LevelControlData*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 
@@ -118,7 +118,7 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 		lcd->rgbHigh	= 0xFFFFFF;
 		lcd->iMovingTab	= -1;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)lcd);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)lcd);
 		return TRUE;
 
 	case WM_CREATE:
@@ -128,7 +128,7 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 
 	case WM_DESTROY:
 		delete lcd;
-		SetWindowLongPtr(hwnd, 0, 0);
+		SetWindowLongPtrW(hwnd, 0, 0);
 		break;
 
 	case WM_PAINT:
@@ -304,7 +304,7 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 
 			nmvltc.hdr.code		= VLCN_TABCHANGE;
 			nmvltc.hdr.hwndFrom	= hwnd;
-			nmvltc.hdr.idFrom	= GetWindowLong(hwnd, GWL_ID);
+			nmvltc.hdr.idFrom	= GetWindowLongW(hwnd, GWL_ID);
 			nmvltc.iTab			= lcd->iMovingTab;
 			nmvltc.iNewPos		= pos;
 
@@ -336,7 +336,7 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 
 			nmvltc.hdr.code		= VLCN_TABCHANGE;
 			nmvltc.hdr.hwndFrom	= hwnd;
-			nmvltc.hdr.idFrom	= GetWindowLong(hwnd, GWL_ID);
+			nmvltc.hdr.idFrom	= GetWindowLongW(hwnd, GWL_ID);
 			nmvltc.iTab			= LOWORD(wParam);
 			nmvltc.iNewPos		= lParam;
 
@@ -351,7 +351,7 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 		break;
 
 	default:
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 	return FALSE;
 }

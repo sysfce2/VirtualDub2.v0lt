@@ -1325,11 +1325,11 @@ void VDCaptureDriverScreen::TimerCallback() {
 LRESULT CALLBACK VDCaptureDriverScreen::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch(msg) {
 		case WM_NCCREATE:
-			SetWindowLongPtr(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+			SetWindowLongPtrW(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
 			break;
 		case MM_WIM_DATA:
 			{
-				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtrW(hwnd, 0);
 
 				if (pThis->mpCB) {
 					WAVEHDR& hdr = *(WAVEHDR *)lParam;
@@ -1362,20 +1362,20 @@ LRESULT CALLBACK VDCaptureDriverScreen::StaticWndProc(HWND hwnd, UINT msg, WPARA
 			return 0;
 		case WM_APP+16:
 			{
-				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtrW(hwnd, 0);
 				pThis->SyncCaptureStop();
 			}
 			return 0;
 		case WM_APP+17:
 			{
-				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtrW(hwnd, 0);
 				pThis->SyncCaptureAbort();
 			}
 			return 0;
 
 		case WM_APP+18:
 			{
-				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtrW(hwnd, 0);
 				if (pThis->mbCaptureFramePending && pThis->mbCapturing) {
 					pThis->mbCaptureFramePending = false;
 
@@ -1393,7 +1393,7 @@ LRESULT CALLBACK VDCaptureDriverScreen::StaticWndProc(HWND hwnd, UINT msg, WPARA
 
 		case WM_APP+19:
 			{
-				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtrW(hwnd, 0);
 
 				if (pThis->mbAudioMessagePosted.compareExchange(false, true) == (int)true) {
 					uint8 buf[4096];
@@ -1426,7 +1426,7 @@ LRESULT CALLBACK VDCaptureDriverScreen::StaticWndProc(HWND hwnd, UINT msg, WPARA
 
 		case WM_TIMER:
 			{
-				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtr(hwnd, 0);
+				VDCaptureDriverScreen *pThis = (VDCaptureDriverScreen *)GetWindowLongPtrW(hwnd, 0);
 				if (wParam == kPreviewTimerID) {
 					if (!pThis->mbCapturing && pThis->mpGrabber) {
 						pThis->UpdateTracking();
@@ -1444,7 +1444,7 @@ LRESULT CALLBACK VDCaptureDriverScreen::StaticWndProc(HWND hwnd, UINT msg, WPARA
 			return 0;
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 ///////////////////////////////////////////////////////////////////////////

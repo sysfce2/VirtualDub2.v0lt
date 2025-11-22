@@ -72,8 +72,9 @@ VDClippingControlOverlay::~VDClippingControlOverlay() {
 VDClippingControlOverlay *VDClippingControlOverlay::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
 	HWND hwnd = CreateWindowExW(0, szClippingControlOverlayName, L"", WS_VISIBLE|WS_CHILD|WS_CLIPSIBLINGS, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
-	if (hwnd)
-		return (VDClippingControlOverlay *)GetWindowLongPtr(hwnd, 0);
+	if (hwnd) {
+		return (VDClippingControlOverlay*)GetWindowLongPtrW(hwnd, 0);
+	}
 
 	return NULL;
 }
@@ -114,19 +115,19 @@ void VDClippingControlOverlay::SetDisplayPos(int x, int y, int w, int h) {
 /////////////////////////////////////////////////////////////////////////////
 
 LRESULT CALLBACK VDClippingControlOverlay::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDClippingControlOverlay *pThis = (VDClippingControlOverlay *)GetWindowLongPtr(hwnd, 0);
+	VDClippingControlOverlay* pThis = (VDClippingControlOverlay*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 	case WM_NCCREATE:
 		if (!(pThis = new_nothrow VDClippingControlOverlay(hwnd)))
 			return FALSE;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pThis);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
 		break;
 
 	case WM_NCDESTROY:
 		delete pThis;
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 
 	return pThis->WndProc(msg, wParam, lParam);
@@ -177,7 +178,7 @@ LRESULT VDClippingControlOverlay::WndProc(UINT msg, WPARAM wParam, LPARAM lParam
 	case WM_SETCURSOR:
 		return OnSetCursor(LOWORD(lParam), HIWORD(lParam));
 	}
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDClippingControlOverlay::PreparePaint(IVDVideoDisplayMinidriver* driver) {
@@ -559,7 +560,7 @@ private:
 };
 
 ATOM RegisterClippingControl() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= 0;
 	wc.lpfnWndProc	= VDClippingControlOverlay::StaticWndProc;
@@ -572,7 +573,7 @@ ATOM RegisterClippingControl() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= szClippingControlOverlayName;
 
-	if (!RegisterClass(&wc))
+	if (!RegisterClassW(&wc))
 		return 0;
 
 	wc.style		= 0;
@@ -586,7 +587,7 @@ ATOM RegisterClippingControl() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= CLIPPINGCONTROLCLASS;
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 VDClippingControl::VDClippingControl(HWND hwnd)
@@ -610,7 +611,7 @@ VDClippingControl::~VDClippingControl() {
 }
 
 IVDClippingControl *VDGetIClippingControl(VDGUIHandle h) {
-	return static_cast<IVDClippingControl *>((VDClippingControl *)GetWindowLongPtr((HWND)h, 0));
+	return static_cast<IVDClippingControl*>((VDClippingControl*)GetWindowLongPtrW((HWND)h, 0));
 }
 
 IVDPositionControl *VDGetIPositionControlFromClippingControl(VDGUIHandle h) {
@@ -728,7 +729,7 @@ void VDClippingControl::BlitFrame(const VDPixmap *px) {
 BOOL CALLBACK VDClippingControl::InitChildrenProc(HWND hwnd, LPARAM lParam) {
 	SendMessageW(hwnd, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), (LPARAM)MAKELONG(FALSE, 0));
 
-	switch (GetWindowLong(hwnd, GWL_ID)) {
+	switch (GetWindowLongW(hwnd, GWL_ID)) {
 	case kIDC_X1_STATIC:
 		SendMessageA(hwnd, WM_SETTEXT, 0, (LPARAM)"X1 offset");
 		break;
@@ -794,7 +795,7 @@ bool VDClippingControl::VerifyParams() {
 }
 
 LRESULT CALLBACK VDClippingControl::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDClippingControl *pThis = (VDClippingControl *)GetWindowLongPtr(hwnd, 0);
+	VDClippingControl* pThis = (VDClippingControl*)GetWindowLongPtrW(hwnd, 0);
 
 	if (msg == WM_NCCREATE) {
 		pThis = new VDClippingControl(hwnd);
@@ -802,10 +803,11 @@ LRESULT CALLBACK VDClippingControl::StaticWndProc(HWND hwnd, UINT msg, WPARAM wP
 		if (!pThis)
 			return FALSE;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pThis);
-	} else if (msg == WM_NCDESTROY) {
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
+	}
+	else if (msg == WM_NCDESTROY) {
 		delete pThis;
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 
 	return pThis->WndProc(msg, wParam, lParam);
@@ -862,17 +864,17 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			CreateWindowExA(WS_EX_CLIENTEDGE ,UPDOWN_CLASSA  ,""  ,WS_CHILD | UDS_NOTHOUSANDS | UDS_ALIGNRIGHT   | UDS_SETBUDDYINT   ,0         , 0         , ( 2*duX)/4, (10*duY)/8, mhwnd, (HMENU)kIDC_Y2_SPIN , g_hInst, NULL);
 
 			HWND hwndDisplay = (HWND)VDCreateDisplayWindowW32(0, WS_CHILD, 0, 0, 0, 0, (VDGUIHandle)mhwnd);
-			SetWindowLong(hwndDisplay, GWL_ID, kIDC_VIDEODISPLAY);
+			SetWindowLongW(hwndDisplay, GWL_ID, kIDC_VIDEODISPLAY);
 
 			HWND hwndItem = GetDlgItem(mhwnd, kIDC_X2_SPIN);
 			SendMessageW(hwndItem, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhwnd, kIDC_X2_EDIT), 0);
 			hwndItem = GetDlgItem(mhwnd, kIDC_Y2_SPIN);
 			SendMessageW(hwndItem, UDM_SETBUDDY, (WPARAM)GetDlgItem(mhwnd, kIDC_Y2_EDIT), 0);
 
-			if (GetWindowLong(mhwnd, GWL_STYLE) & CCS_POSITION)
-				CreateWindowEx(0,POSITIONCONTROLCLASS,NULL,WS_CHILD									,0,0,0,64,mhwnd,(HMENU)kIDC_POSITION,g_hInst,NULL);
+			if (GetWindowLongW(mhwnd, GWL_STYLE) & CCS_POSITION)
+				CreateWindowExW(0,POSITIONCONTROLCLASS,NULL,WS_CHILD									,0,0,0,64,mhwnd,(HMENU)kIDC_POSITION,g_hInst,NULL);
 
-			SetWindowLong(mhwnd, GWL_EXSTYLE, GetWindowLong(mhwnd, GWL_EXSTYLE) | WS_EX_CONTROLPARENT);
+			SetWindowLongW(mhwnd, GWL_EXSTYLE, GetWindowLongW(mhwnd, GWL_EXSTYLE) | WS_EX_CONTROLPARENT);
 
 			EnumChildWindows(mhwnd, InitChildrenProc, 0);
 
@@ -896,7 +898,7 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 	case WM_ERASEBKGND:
 		{
-			HBRUSH hbrBackground = (HBRUSH)GetClassLongPtr(mhwnd, GCLP_HBRBACKGROUND);
+			HBRUSH hbrBackground = (HBRUSH)GetClassLongPtrW(mhwnd, GCLP_HBRBACKGROUND);
 			HDC hdc = (HDC)wParam;
 			RECT r, r2;
 
@@ -950,7 +952,7 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 				}
 			return 0;
 		case kIDC_POSITION:
-			SendMessageW(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLong(mhwnd, GWL_ID), HIWORD(wParam)), (LPARAM)mhwnd);
+			SendMessageW(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLongW(mhwnd, GWL_ID), HIWORD(wParam)), (LPARAM)mhwnd);
 			return 0;
 		}
 		break;
@@ -959,7 +961,7 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		{
 			NMHDR nm = *(NMHDR *)lParam;
 
-			nm.idFrom = GetWindowLong(mhwnd, GWL_ID);
+			nm.idFrom = GetWindowLongW(mhwnd, GWL_ID);
 			nm.hwndFrom = mhwnd;
 
 			SendMessageW(GetParent(mhwnd), WM_NOTIFY, nm.idFrom, (LPARAM)&nm);
@@ -1016,14 +1018,14 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		return 0;
 	}
 
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDClippingControl::DisplayRequestUpdate(IVDVideoDisplay *pDisp) {
 	NMHDR nm;
 
 	nm.hwndFrom = mhwnd;
-	nm.idFrom = GetWindowLong(mhwnd, GWL_ID);
+	nm.idFrom = GetWindowLongW(mhwnd, GWL_ID);
 	nm.code = CCN_REFRESHFRAME;
 
 	SendMessageW(GetParent(mhwnd), WM_NOTIFY, (WPARAM)nm.idFrom, (LPARAM)&nm);

@@ -46,7 +46,7 @@ void VDTestVideoFilters() {
 
 	VDRegisterVideoDisplayControl();
 
-	HWND hwndDisp = CreateWindow(VIDEODISPLAYCONTROLCLASS, "Kasumi onee-sama", WS_VISIBLE|WS_POPUP, 0, 0, 1024, 768, NULL, NULL, GetModuleHandleW(nullptr), NULL);
+	HWND hwndDisp = CreateWindowW(VIDEODISPLAYCONTROLCLASS, L"Kasumi onee-sama", WS_VISIBLE|WS_POPUP, 0, 0, 1024, 768, NULL, NULL, GetModuleHandleW(nullptr), NULL);
 	IVDVideoDisplay *pDisp = VDGetIVideoDisplay(hwndDisp);
 
 	IVDInputDriver *pInputDriver = VDGetInputDriverByName(L"MPEG-1 input driver (internal)");

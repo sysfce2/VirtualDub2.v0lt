@@ -297,7 +297,7 @@ static void AudioChooseDisplaySpecs(HWND hdlg, WAVEFORMATEX *pwfex) {
 }
 
 static void AudioChooseShowFormats(HWND hdlg, ACMTagEntry *pTag, bool fShowCompatibleOnly) {
-	ACMChooserData *thisPtr = (ACMChooserData *)GetWindowLongPtr(hdlg, DWLP_USER);
+	ACMChooserData* thisPtr = (ACMChooserData*)GetWindowLongPtrW(hdlg, DWLP_USER);
 	HWND hwndListFormats = GetDlgItem(hdlg, IDC_FORMAT);
 	int idx;
 
@@ -378,7 +378,7 @@ void PluginReloadFormat(IVDXAudioEnc* plugin, ACMChooserData* thisPtr, ACMTagEnt
 }
 
 static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {
-	ACMChooserData *thisPtr = (ACMChooserData *)GetWindowLongPtr(hdlg, DWLP_USER);
+	ACMChooserData* thisPtr = (ACMChooserData*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
 	switch(msg) {
 	case WM_INITDIALOG:
@@ -387,7 +387,7 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 			INT tabs[1];
 
 			thisPtr = (ACMChooserData *)lParam;
-			SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 
 			tabs[0] = 140;
 
@@ -511,7 +511,7 @@ static INT_PTR CALLBACK AudioChooseCompressionDlgProc(HWND hdlg, UINT msg, WPARA
 		return TRUE;
 
 	case WM_COMMAND:
-		switch(GetWindowLong((HWND)lParam, GWL_ID)) {
+		switch(GetWindowLongW((HWND)lParam, GWL_ID)) {
 		case IDOK:
 			{
 				int idx = SendDlgItemMessageW(hdlg, IDC_FORMAT, LB_GETCURSEL, 0, 0);

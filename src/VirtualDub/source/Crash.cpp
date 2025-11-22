@@ -2007,12 +2007,12 @@ protected:
 	}
 
 	static INT_PTR CALLBACK StaticDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {
-		VDCrashDialog *pThis = (VDCrashDialog *)GetWindowLongPtr(hdlg, DWLP_USER);
+		VDCrashDialog* pThis = (VDCrashDialog*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
 		switch(msg) {
 		case WM_INITDIALOG:
 			pThis = (VDCrashDialog *)lParam;
-			SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 			pThis->mhdlg = hdlg;
 			pThis->OnInit();
 			return true;

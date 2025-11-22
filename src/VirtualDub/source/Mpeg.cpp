@@ -245,11 +245,11 @@ int InputFileMPEGOptions::write(char *buf, int buflen) const {
 ///////
 
 INT_PTR APIENTRY InputFileMPEGOptions::SetupDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	InputFileMPEGOptions *thisPtr = (InputFileMPEGOptions *)GetWindowLongPtr(hDlg, DWLP_USER);
+	InputFileMPEGOptions* thisPtr = (InputFileMPEGOptions*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
 	switch(message) {
 		case WM_INITDIALOG:
-			SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 			CheckDlgButton(hDlg, IDC_MPEG_ALL_FRAMES, TRUE);
 			return TRUE;
 
@@ -3078,11 +3078,11 @@ void InputFileMPEG::ReadStream(void *buffer, __int64 pos, long len, bool fAudio)
 }
 
 INT_PTR CALLBACK InputFileMPEG::ParseDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	InputFileMPEG *thisPtr = (InputFileMPEG *)GetWindowLongPtr(hDlg, DWLP_USER);
+	InputFileMPEG* thisPtr = (InputFileMPEG*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
 	switch(uMsg) {
 	case WM_INITDIALOG:
-		SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+		SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 		thisPtr = (InputFileMPEG *)lParam;
 
 		SendMessageA(hDlg, WM_SETTEXT, 0, (LPARAM)"MPEG Import Filter");
@@ -3267,7 +3267,7 @@ void InputFileMPEG::_InfoDlgThread(void *pvInfo) {
 }
 
 INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	MyFileInfo *pInfo = (MyFileInfo *)GetWindowLongPtr(hDlg, DWLP_USER);
+	MyFileInfo* pInfo = (MyFileInfo*)GetWindowLongPtrW(hDlg, DWLP_USER);
 	InputFileMPEG *thisPtr;
 
 	if (pInfo)
@@ -3276,7 +3276,7 @@ INT_PTR APIENTRY InputFileMPEG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM wP
     switch (message)
     {
         case WM_INITDIALOG:
-			SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 			pInfo = (MyFileInfo *)lParam;
 			thisPtr = pInfo->thisPtr;
 

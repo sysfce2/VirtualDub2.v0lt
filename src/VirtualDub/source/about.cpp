@@ -272,7 +272,7 @@ void RenderTriangle(Pixel16 *dst, long dstpitch, Pixel16 *tex, TriPt *pt1, TriPt
 #pragma optimize("s", on)
 
 static BOOL CALLBACK HideAllButOKCANCELProc(HWND hwnd, LPARAM lParam) {
-	UINT id = GetWindowLong(hwnd, GWL_ID);
+	UINT id = GetWindowLongW(hwnd, GWL_ID);
 
 	if (id != IDOK && id != IDCANCEL)
 		ShowWindow(hwnd, SW_HIDE);
@@ -520,7 +520,7 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 		case WM_ERASEBKGND:
 			if (g_pvAboutDisplayBack) {
-				SetWindowLongPtr(hDlg, DWLP_MSGRESULT, 0);
+				SetWindowLongPtrW(hDlg, DWLP_MSGRESULT, 0);
 				return TRUE;
 			} else
 				return FALSE;

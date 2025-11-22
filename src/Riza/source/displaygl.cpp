@@ -842,17 +842,17 @@ ATOM VDVideoDisplayMinidriverOpenGL::Register() {
 }
 
 LRESULT CALLBACK VDVideoDisplayMinidriverOpenGL::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDVideoDisplayMinidriverOpenGL *pThis = (VDVideoDisplayMinidriverOpenGL *)GetWindowLongPtr(hwnd, 0);
+	VDVideoDisplayMinidriverOpenGL *pThis = (VDVideoDisplayMinidriverOpenGL *)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 	case WM_NCCREATE:
 		pThis = (VDVideoDisplayMinidriverOpenGL *)((LPCREATESTRUCT)lParam)->lpCreateParams;
-		SetWindowLongPtr(hwnd, 0, (DWORD_PTR)pThis);
+		SetWindowLongPtrW(hwnd, 0, (DWORD_PTR)pThis);
 		pThis->mhwndOGL = hwnd;
 		break;
 	}
 
-	return pThis ? pThis->WndProc(msg, wParam, lParam) : DefWindowProc(hwnd, msg, wParam, lParam);
+	return pThis ? pThis->WndProc(msg, wParam, lParam) : DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 LRESULT VDVideoDisplayMinidriverOpenGL::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -882,7 +882,7 @@ LRESULT VDVideoDisplayMinidriverOpenGL::WndProc(UINT msg, WPARAM wParam, LPARAM 
 		break;
 	}
 
-	return DefWindowProc(mhwndOGL, msg, wParam, lParam);
+	return DefWindowProcW(mhwndOGL, msg, wParam, lParam);
 }
 
 bool VDVideoDisplayMinidriverOpenGL::OnOpenGLInit() {

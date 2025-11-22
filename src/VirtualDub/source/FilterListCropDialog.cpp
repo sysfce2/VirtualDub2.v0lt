@@ -269,7 +269,7 @@ INT_PTR VDFilterClippingDialog::DlgProc(UINT message, WPARAM wParam, LPARAM lPar
             break;
 
 		case WM_NOTIFY:
-			if (GetWindowLong(((NMHDR *)lParam)->hwndFrom, GWL_ID) == IDC_BORDERS) {
+			if (GetWindowLongW(((NMHDR *)lParam)->hwndFrom, GWL_ID) == IDC_BORDERS) {
 				VDPosition pos = guiPositionHandleNotify(lParam, mpPosCtrl);
 
 				if (pos >= 0)

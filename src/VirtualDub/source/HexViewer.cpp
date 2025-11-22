@@ -955,7 +955,7 @@ LRESULT HexViewer::Handle_WM_PAINT(WPARAM wParam, LPARAM lParam) {
 }
 
 LRESULT APIENTRY HexViewer::HexViewerWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	HexViewer *pcd = (HexViewer *)GetWindowLongPtr(hwnd, 0);
+	HexViewer* pcd = (HexViewer*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 
@@ -963,8 +963,8 @@ LRESULT APIENTRY HexViewer::HexViewerWndProc(HWND hwnd, UINT msg, WPARAM wParam,
 		if (!(pcd = new HexViewer(hwnd)))
 			return FALSE;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pcd);
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pcd);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 
 	case WM_CREATE:
 		pcd->Init();
@@ -975,7 +975,7 @@ LRESULT APIENTRY HexViewer::HexViewerWndProc(HWND hwnd, UINT msg, WPARAM wParam,
 
 	case WM_DESTROY:
 		delete pcd;
-		SetWindowLongPtr(hwnd, 0, 0);
+		SetWindowLongPtrW(hwnd, 0, 0);
 		break;
 
 	case WM_MOUSEWHEEL:
@@ -1011,7 +1011,7 @@ LRESULT APIENTRY HexViewer::HexViewerWndProc(HWND hwnd, UINT msg, WPARAM wParam,
 		return pcd->Handle_WM_PAINT(wParam, lParam);
 
 	default:
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 	return 0;
 }
@@ -1183,7 +1183,7 @@ void HexEditor::Init() {
 		g_hInst,
 		NULL);
 
-	mpView = (HexViewer *)GetWindowLongPtr(hwndView, 0);
+	mpView = (HexViewer*)GetWindowLongPtrW(hwndView, 0);
 
 	DragAcceptFiles(hwnd, TRUE);
 }
@@ -1782,13 +1782,13 @@ struct HexEditorAskData {
 };
 
 INT_PTR CALLBACK HexEditor::AskForValuesDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {
-	HexEditorAskData *pData = (HexEditorAskData *)GetWindowLongPtr(hdlg, DWLP_USER);
+	HexEditorAskData* pData = (HexEditorAskData*)GetWindowLongPtrW(hdlg, DWLP_USER);
 	char buf[32];
 
 	switch(msg) {
 	case WM_INITDIALOG:
 		pData = (HexEditorAskData *)lParam;
-		SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+		SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 
 		SetWindowTextA(hdlg, pData->title);
 		sprintf(buf, "%I64X", pData->v1);
@@ -2215,7 +2215,7 @@ xit:
 ////////////////////////////
 
 LRESULT APIENTRY HexEditor::HexEditorWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	HexEditor *pcd = (HexEditor *)GetWindowLongPtr(hwnd, 0);
+	HexEditor* pcd = (HexEditor*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 
@@ -2223,8 +2223,8 @@ LRESULT APIENTRY HexEditor::HexEditorWndProc(HWND hwnd, UINT msg, WPARAM wParam,
 		if (!(pcd = new HexEditor(hwnd)))
 			return FALSE;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pcd);
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pcd);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 
 	case WM_CREATE:
 		pcd->Init();
@@ -2235,7 +2235,7 @@ LRESULT APIENTRY HexEditor::HexEditorWndProc(HWND hwnd, UINT msg, WPARAM wParam,
 
 	case WM_DESTROY:
 		delete pcd;
-		SetWindowLongPtr(hwnd, 0, 0);
+		SetWindowLongPtrW(hwnd, 0, 0);
 		break;
 
 	case WM_SETFOCUS:
@@ -2279,17 +2279,17 @@ LRESULT APIENTRY HexEditor::HexEditorWndProc(HWND hwnd, UINT msg, WPARAM wParam,
 		return pcd->Handle_WM_DROPFILES(wParam, lParam);
 
 	default:
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 	return 0;
 }
 
 INT_PTR CALLBACK HexEditor::FindDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	HexEditor *pcd = (HexEditor *)GetWindowLongPtr(hwnd, DWLP_USER);
+	HexEditor* pcd = (HexEditor*)GetWindowLongPtrW(hwnd, DWLP_USER);
 
 	switch(msg) {
 	case WM_INITDIALOG:
-		SetWindowLongPtr(hwnd, DWLP_USER, lParam);
+		SetWindowLongPtrW(hwnd, DWLP_USER, lParam);
 		pcd = (HexEditor *)lParam;
 		pcd->hwndFind = hwnd;
 		pcd->mdnFind.hdlg = hwnd;
@@ -2553,14 +2553,14 @@ void HexEditor::RIFFTree(HWND hwndTV) {
 }
 
 INT_PTR CALLBACK HexEditor::TreeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {
-	HexEditor *pcd = (HexEditor *)GetWindowLongPtr(hdlg, DWLP_USER);
+	HexEditor* pcd = (HexEditor*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
 	if (!pcd && msg != WM_INITDIALOG)
 		return FALSE;
 
 	switch(msg) {
 	case WM_INITDIALOG:
-		SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+		SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 		pcd = (HexEditor *)lParam;
 		pcd->hwndTree = hdlg;
 		pcd->mhwndTreeView = GetDlgItem(hdlg, IDC_TREE);
@@ -2608,8 +2608,9 @@ INT_PTR CALLBACK HexEditor::TreeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPAR
 					}
 				}
 
-				SetWindowLongPtr(hdlg, DWLP_MSGRESULT, 1);
-			} else if (pnmh->code == TVN_ITEMEXPANDING) {
+				SetWindowLongPtrW(hdlg, DWLP_MSGRESULT, 1);
+			}
+			else if (pnmh->code == TVN_ITEMEXPANDING) {
 				const NMTREEVIEW& ntv = *(const NMTREEVIEW *)lParam;
 
 				if (ntv.action & TVE_EXPAND) {
@@ -2618,12 +2619,14 @@ INT_PTR CALLBACK HexEditor::TreeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPAR
 					for(; ptn; ptn = ptn->mpNext)
 						CreateTreeNode(pcd->mhwndTreeView, ntv.itemNew.hItem, ptn);
 				}
-			} else if (pnmh->code == TVN_ITEMEXPANDED) {
+			}
+			else if (pnmh->code == TVN_ITEMEXPANDED) {
 				const NMTREEVIEW& ntv = *(const NMTREEVIEW *)lParam;
 
 				if (ntv.action & TVE_COLLAPSE)
 					TreeView_Expand(pcd->mhwndTreeView, ntv.itemNew.hItem, TVE_COLLAPSE | TVE_COLLAPSERESET);
-			} else if (pnmh->code == TVN_GETDISPINFO) {
+			}
+			else if (pnmh->code == TVN_GETDISPINFO) {
 				NMTVDISPINFO& ndi = *(NMTVDISPINFO*)lParam;
 				const TreeNode *ptn = (const TreeNode *)ndi.item.lParam;
 
@@ -2692,7 +2695,7 @@ void HexEdit(HWND hwndParent, const wchar_t *filename, bool readonly) {
 		NULL);
 
 	if (filename && hwndEdit) {
-		HexEditor *pcd = (HexEditor *)GetWindowLongPtr(hwndEdit, 0);
+		HexEditor* pcd = (HexEditor*)GetWindowLongPtrW(hwndEdit, 0);
 
 		pcd->Open(filename, !readonly);
 	}

@@ -453,7 +453,7 @@ INT_PTR VDVFilterBrightContDialog::DlgProc(UINT msg, WPARAM wParam, LPARAM lPara
 		case WM_HSCROLL:
 			if (lParam) {
 				HWND hwndScroll = (HWND)lParam;
-				UINT id = GetWindowLong(hwndScroll, GWL_ID);
+				UINT id = GetWindowLongW(hwndScroll, GWL_ID);
 
 				if (id == IDC_BRIGHTNESS) {
 					int bright = SendMessageW(hwndScroll, TBM_GETPOS, 0, 0)-256;
@@ -478,7 +478,7 @@ INT_PTR VDVFilterBrightContDialog::DlgProc(UINT msg, WPARAM wParam, LPARAM lPara
 				}
 					
 
-				SetWindowLong(mhdlg, DWLP_MSGRESULT, 0);
+				SetWindowLongW(mhdlg, DWLP_MSGRESULT, 0);
 				return TRUE;
 			}
 			break;

@@ -1140,7 +1140,7 @@ VDZINT_PTR VDVFilterDialogWarpSharp::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZL
 	switch (msg) {
 		case WM_HSCROLL:
 			if (lParam) {
-				switch(GetWindowLong((HWND)lParam, GWL_ID)) {
+				switch(GetWindowLongW((HWND)lParam, GWL_ID)) {
 				case IDC_DEPTH:
 					if ((int)wParam != mConfig.mDepth) {
 						mConfig.mDepth = SendMessageW((HWND)lParam, TBM_GETPOS, 0, 0);

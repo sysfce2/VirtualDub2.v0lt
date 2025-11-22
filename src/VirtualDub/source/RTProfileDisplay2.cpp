@@ -823,14 +823,15 @@ VDRTProfileDisplay2::~VDRTProfileDisplay2() {
 VDRTProfileDisplay2 *VDRTProfileDisplay2::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
 	HWND hwnd = CreateWindowW(MAKEINTATOM(sWndClass), L"", WS_VISIBLE|WS_CHILD, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
-	if (hwnd)
-		return (VDRTProfileDisplay2 *)GetWindowLongPtr(hwnd, 0);
+	if (hwnd) {
+		return (VDRTProfileDisplay2*)GetWindowLongPtrW(hwnd, 0);
+	}
 
 	return NULL;
 }
 
 bool VDRegisterRTProfileDisplayControl2() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= 0;
 	wc.lpfnWndProc	= VDRTProfileDisplay2::StaticWndProc;
@@ -843,44 +844,45 @@ bool VDRegisterRTProfileDisplayControl2() {
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= g_szRTProfileDisplayControl2Name;
 
-	VDRTProfileDisplay2::sWndClass = RegisterClass(&wc);
+	VDRTProfileDisplay2::sWndClass = RegisterClassW(&wc);
 	return VDRTProfileDisplay2::sWndClass != 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 LRESULT CALLBACK VDRTProfileDisplay2::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDRTProfileDisplay2 *pThis = (VDRTProfileDisplay2 *)GetWindowLongPtr(hwnd, 0);
+	VDRTProfileDisplay2* pThis = (VDRTProfileDisplay2*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 	case WM_NCCREATE:
 		if (!(pThis = new_nothrow VDRTProfileDisplay2(hwnd)))
 			return FALSE;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pThis);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
 		break;
 
 	case WM_NCDESTROY:
 		delete pThis;
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 
-	if (pThis)
+	if (pThis) {
 		return pThis->WndProc(msg, wParam, lParam);
-	else
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+	} else {
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
+	}
 }
 
 LRESULT CALLBACK VDRTProfileDisplay2::StaticListWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDRTProfileDisplay2* pthis = (VDRTProfileDisplay2*)GetWindowLongPtr(hwnd,GWLP_USERDATA);
+	VDRTProfileDisplay2* pthis = (VDRTProfileDisplay2*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 	if (msg==WM_DESTROY) {
-		SetWindowLongPtr(hwnd,GWLP_WNDPROC,(LPARAM)pthis->old_list_proc);
+		SetWindowLongPtrW(hwnd, GWLP_WNDPROC, (LPARAM)pthis->old_list_proc);
 	}
 	if (msg==WM_HSCROLL) {
 		pthis->UpdateListTop(true);
 	}
 
-	return CallWindowProc((WNDPROC)pthis->old_list_proc, hwnd, msg, wParam, lParam);
+	return CallWindowProcW((WNDPROC)pthis->old_list_proc, hwnd, msg, wParam, lParam);
 }
 
 LRESULT VDRTProfileDisplay2::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -903,8 +905,8 @@ LRESULT VDRTProfileDisplay2::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 		case WM_USER+600: // set list
 			mhwndList = (HWND)lParam;
-			old_list_proc = (void*)SetWindowLongPtr(mhwndList,GWLP_WNDPROC,(LPARAM)StaticListWndProc);
-			SetWindowLongPtr(mhwndList,GWLP_USERDATA,(LPARAM)this);
+			old_list_proc = (void*)SetWindowLongPtrW(mhwndList, GWLP_WNDPROC, (LPARAM)StaticListWndProc);
+			SetWindowLongPtrW(mhwndList, GWLP_USERDATA, (LPARAM)this);
 			return 0;
 
 		case WM_USER+601: // list selection change
@@ -1094,7 +1096,7 @@ LRESULT VDRTProfileDisplay2::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 				return 0;
 			break;
 	}
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDRTProfileDisplay2::OnSize(int w, int h) {
@@ -1218,7 +1220,7 @@ void VDRTProfileDisplay2::InvalidateEventRect(const VDProfileTrackedEvent& ev) {
 void VDRTProfileDisplay2::OnPaint() {
 	PAINTSTRUCT ps;
 	if (HDC hdc = BeginPaint(mhwnd, &ps)) {
-		HBRUSH hbrBackground = (HBRUSH)GetClassLongPtr(mhwnd, GCLP_HBRBACKGROUND);
+		HBRUSH hbrBackground = (HBRUSH)GetClassLongPtrW(mhwnd, GCLP_HBRBACKGROUND);
 		HGDIOBJ hOldFont = 0;
 		if (mhfont)
 			hOldFont = SelectObject(hdc, mhfont);

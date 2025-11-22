@@ -66,7 +66,7 @@ BOOL APIENTRY fieldbobConfigDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPAR
         case WM_INITDIALOG:
 			{
 				fieldbobFilterData *sfd = (fieldbobFilterData *)lParam;
-				SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+				SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 
 				switch(sfd->evenmode) {
 				case 0:		CheckDlgButton(hDlg, IDC_EVEN_NONE, BST_CHECKED); break;
@@ -88,7 +88,7 @@ BOOL APIENTRY fieldbobConfigDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPAR
 
             case IDOK:
 				{
-					fieldbobFilterData *sfd = (fieldbobFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+					fieldbobFilterData* sfd = (fieldbobFilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
 					if (IsDlgButtonChecked(hDlg, IDC_EVEN_NONE)) sfd->evenmode = 0;
 					if (IsDlgButtonChecked(hDlg, IDC_EVEN_SMOOTH)) sfd->evenmode = 1;

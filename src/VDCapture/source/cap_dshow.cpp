@@ -4879,12 +4879,13 @@ void VDCaptureDriverDS::DoEvents() {
 }
 
 LRESULT CALLBACK VDCaptureDriverDS::StaticMessageSinkWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	if (msg == WM_NCCREATE)
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+	if (msg == WM_NCCREATE) {
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+	}
 
-	VDCaptureDriverDS *pThis = (VDCaptureDriverDS *)GetWindowLongPtr(hwnd, 0);
+	VDCaptureDriverDS *pThis = (VDCaptureDriverDS *)GetWindowLongPtrW(hwnd, 0);
 
-	return pThis ? pThis->MessageSinkWndProc(hwnd, msg, wParam, lParam) : DefWindowProc(hwnd, msg, wParam, lParam);
+	return pThis ? pThis->MessageSinkWndProc(hwnd, msg, wParam, lParam) : DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 LRESULT VDCaptureDriverDS::MessageSinkWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -4901,7 +4902,7 @@ LRESULT VDCaptureDriverDS::MessageSinkWndProc(HWND hwnd, UINT msg, WPARAM wParam
 		}
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 bool VDCaptureDriverDS::CapTryEnterCriticalSection() {

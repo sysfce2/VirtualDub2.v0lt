@@ -187,7 +187,7 @@ int VDUIBaseWindowW32::DoModal() {
 	data.mhwndOwner = hwndParent;
 
 	if (data.mhwndOwner) {
-		data.mbOwnerWasEnabled = !(GetWindowLong(data.mhwndOwner, GWL_STYLE) & WS_DISABLED);
+		data.mbOwnerWasEnabled = !(GetWindowLongW(data.mhwndOwner, GWL_STYLE) & WS_DISABLED);
 
 		if (data.mbOwnerWasEnabled)
 			EnableWindow(data.mhwndOwner, FALSE);
@@ -236,7 +236,7 @@ void VDUIBaseWindowW32::EndModal(int value) {
 	if (mhwnd) {
 		// Set the popup flag on the window so it has a valid parent. This is needed so
 		// that on destruction the window manager reactivates the owner.
-		SetWindowLong(mhwnd, GWL_STYLE, GetWindowLong(mhwnd, GWL_STYLE) | WS_POPUP);
+		SetWindowLongW(mhwnd, GWL_STYLE, GetWindowLongW(mhwnd, GWL_STYLE) | WS_POPUP);
 	}
 
 	mpModal->mReturnValue = value;
@@ -316,10 +316,10 @@ LRESULT VDUIBaseWindowW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 				DispatchEvent(this, mID, IVDUICallback::kEventCreate, 0);
 
-				DWORD dwStyle = GetWindowLong(mhwnd, GWL_STYLE);
+				DWORD dwStyle = GetWindowLongW(mhwnd, GWL_STYLE);
 
 				if (dwStyle & WS_THICKFRAME) {
-					EnumResourceNames(VDGetLocalModuleHandleW32(), RT_GROUP_ICON, SetApplicationIconOnDialog, (LONG_PTR)mhwnd);
+					EnumResourceNamesW(VDGetLocalModuleHandleW32(), RT_GROUP_ICON, SetApplicationIconOnDialog, (LONG_PTR)mhwnd);
 				}
 
 				if (!(dwStyle & DS_CONTROL))
@@ -345,7 +345,7 @@ LRESULT VDUIBaseWindowW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			return 0;
 
 		case WM_SIZE:
-			if (!(GetWindowLong(mhwnd, GWL_STYLE) & WS_CHILD)) {
+			if (!(GetWindowLongW(mhwnd, GWL_STYLE) & WS_CHILD)) {
 				vduirect r(GetClientArea());
 
 				if (r.size() != GetArea().size()) {
@@ -427,7 +427,7 @@ void VDUIBaseWindowW32::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) 
 	VDUILayoutSpecs rcConstraints(parentConstraints);
 	RECT rcBorders = {0,0,0,0};
 	RECT rcPad = {mPadding,mPadding,mPadding,mPadding};
-	bool bModeless = (0 != (GetWindowLong(mhwnd, GWL_STYLE) & DS_CONTROL));
+	bool bModeless = (0 != (GetWindowLongW(mhwnd, GWL_STYLE) & DS_CONTROL));
 
 	// If the dialog is modal, compute the insets for the dialog.
 
@@ -436,7 +436,7 @@ void VDUIBaseWindowW32::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) 
 
 		mInsets = rcPad;
 
-		AdjustWindowRectEx(&rcBorders, GetWindowLong(mhwnd, GWL_STYLE), GetMenu(mhwnd) != NULL, GetWindowLong(mhwnd, GWL_STYLE));
+		AdjustWindowRectEx(&rcBorders, GetWindowLongW(mhwnd, GWL_STYLE), GetMenu(mhwnd) != NULL, GetWindowLongW(mhwnd, GWL_STYLE));
 
 		// enlarge borders by pads
 		rcBorders.left		= rcBorders.left   - rcPad.left;

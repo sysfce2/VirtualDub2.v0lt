@@ -236,7 +236,7 @@ bool VDCaptureDriverEmulation::Init(VDGUIHandle hParent) {
 	if (!mhwndMessages)
 		return false;
 
-	SetWindowLongPtr(mhwndMessages, 0, (LONG_PTR)this);
+	SetWindowLongPtrW(mhwndMessages, 0, (LONG_PTR)this);
 
 	mhwnd = (HWND)VDCreateDisplayWindowW32(0, WS_CHILD|WS_VISIBLE|WS_CLIPSIBLINGS, 0, 0, 64, 64, (VDGUIHandle)mhwndParent);
 	if (!mhwnd) {
@@ -749,15 +749,17 @@ void VDCaptureDriverEmulation::OnTick() {
 }
 
 LRESULT CALLBACK VDCaptureDriverEmulation::StaticMessageWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	if (msg == WM_NCCREATE)
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+	if (msg == WM_NCCREATE) {
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+	}
 	else if (msg == WM_APP) {
-		VDCaptureDriverEmulation *const pThis = (VDCaptureDriverEmulation *)GetWindowLongPtr(hwnd, 0);
+		VDCaptureDriverEmulation* const pThis = (VDCaptureDriverEmulation*)GetWindowLongPtrW(hwnd, 0);
 
 		pThis->OnTick();
 		return 0;
-	} else if (msg == WM_TIMER) {
-		VDCaptureDriverEmulation *const pThis = (VDCaptureDriverEmulation *)GetWindowLongPtr(hwnd, 0);
+	}
+	else if (msg == WM_TIMER) {
+		VDCaptureDriverEmulation* const pThis = (VDCaptureDriverEmulation*)GetWindowLongPtrW(hwnd, 0);
 
 		if (wParam==100) {
 			KillTimer(hwnd,100);
@@ -875,7 +877,7 @@ LRESULT CALLBACK VDCaptureDriverEmulation::StaticMessageWndProc(HWND hwnd, UINT 
 		}
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 ///////////////////////////////////////////////////////////////////////////

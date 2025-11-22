@@ -241,25 +241,25 @@ ATOM RegisterFilterGraphControl() {
 }
 
 IVDFilterGraphControl *VDGetIFilterGraphControl(HWND hwnd) {
-	return static_cast<IVDFilterGraphControl *>(reinterpret_cast<VDFilterGraphControl *>(GetWindowLongPtr(hwnd, 0)));
+	return static_cast<IVDFilterGraphControl*>(reinterpret_cast<VDFilterGraphControl*>(GetWindowLongPtrW(hwnd, 0)));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 LRESULT CALLBACK VDFilterGraphControl::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDFilterGraphControl *pThis = (VDFilterGraphControl *)GetWindowLongPtr(hwnd, 0);
+	VDFilterGraphControl* pThis = (VDFilterGraphControl*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 	case WM_NCCREATE:
 		if (!(pThis = new_nothrow VDFilterGraphControl(hwnd)))
 			return FALSE;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pThis);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
 		break;
 
 	case WM_NCDESTROY:
 		delete pThis;
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 
 	return pThis->WndProc(msg, wParam, lParam);
@@ -337,7 +337,7 @@ LRESULT VDFilterGraphControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		}
 		return 0;
 	}
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 int VDFilterGraphControl::OnScroll(int type, int action) {

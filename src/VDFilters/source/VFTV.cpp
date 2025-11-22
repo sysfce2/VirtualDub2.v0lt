@@ -583,7 +583,7 @@ static INT_PTR CALLBACK YIQConfigDlgProc(HWND hDlg, UINT message, WPARAM wParam,
     switch (message)
     {
         case WM_INITDIALOG:
-			SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 			CheckDlgButton(hDlg, IDC_MODE_Y, ((YIQFilterData *)lParam)->mode == YIQMODE_Y);
 			CheckDlgButton(hDlg, IDC_MODE_I, ((YIQFilterData *)lParam)->mode == YIQMODE_I);
 			CheckDlgButton(hDlg, IDC_MODE_Q, ((YIQFilterData *)lParam)->mode == YIQMODE_Q);
@@ -599,7 +599,7 @@ static INT_PTR CALLBACK YIQConfigDlgProc(HWND hDlg, UINT message, WPARAM wParam,
 
             case IDOK:
 				{
-					YIQFilterData *mfd = (YIQFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+					YIQFilterData* mfd = (YIQFilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
 					if (IsDlgButtonChecked(hDlg, IDC_MODE_Y)) mfd->mode = YIQMODE_Y;
 					if (IsDlgButtonChecked(hDlg, IDC_MODE_I)) mfd->mode = YIQMODE_I;

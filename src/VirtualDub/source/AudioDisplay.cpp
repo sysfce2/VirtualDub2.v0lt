@@ -470,7 +470,7 @@ void VDUISpriteBasedControlW32::ReleaseIC(IVDUIDrawContext *pdc) {
 
 template<class T>
 LRESULT APIENTRY VDUISpriteBasedControlW32::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDUISpriteBasedControlW32 *pThis = (VDUISpriteBasedControlW32 *)GetWindowLongPtr(hwnd, 0);
+	VDUISpriteBasedControlW32* pThis = (VDUISpriteBasedControlW32*)GetWindowLongPtrW(hwnd, 0);
 
 	if (msg == WM_NCCREATE) {
 		pThis = new T(hwnd);
@@ -478,17 +478,18 @@ LRESULT APIENTRY VDUISpriteBasedControlW32::StaticWndProc(HWND hwnd, UINT msg, W
 		if (!pThis)
 			return FALSE;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pThis);
-	} else if (msg == WM_NCDESTROY) {
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
+	}
+	else if (msg == WM_NCDESTROY) {
 		pThis->Release();
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 
 	return pThis->WndProc(msg, wParam, lParam);
 }
 
 LRESULT VDUISpriteBasedControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -764,7 +765,7 @@ ATOM RegisterAudioDisplayControl() {
 }
 
 IVDUIAudioDisplayControl *VDGetIUIAudioDisplayControl(VDGUIHandle h) {
-	return vdpoly_cast<IVDUIAudioDisplayControl *>((IVDUnknown *)GetWindowLongPtr((HWND)h, 0));
+	return vdpoly_cast<IVDUIAudioDisplayControl*>((IVDUnknown*)GetWindowLongPtrW((HWND)h, 0));
 }
 
 VDAudioDisplayControl::VDAudioDisplayControl(HWND hwnd)
@@ -1514,7 +1515,7 @@ LRESULT VDAudioDisplayControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		break;
 	}
 
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDAudioDisplayControl::OnCommand(int command) {

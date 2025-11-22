@@ -188,7 +188,7 @@ void VDVideoFilterPreviewZoomPopup::UpdateText() {
 VDZINT_PTR VDVideoFilterPreviewZoomPopup::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARAM lParam) {
 	switch(msg) {
 		case WM_NCHITTEST:
-			SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, HTTRANSPARENT);
+			SetWindowLongPtrW(mhdlg, DWLP_MSGRESULT, HTTRANSPARENT);
 			return TRUE;
 
 		case WM_PAINT:
@@ -205,7 +205,7 @@ VDZINT_PTR VDVideoFilterPreviewZoomPopup::DlgProc(VDZUINT msg, VDZWPARAM wParam,
 			break;
 
 		case WM_ERASEBKGND:
-			SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, OnEraseBkgnd((HDC)wParam));
+			SetWindowLongPtrW(mhdlg, DWLP_MSGRESULT, OnEraseBkgnd((HDC)wParam));
 			return TRUE;
 	}
 
@@ -235,7 +235,7 @@ bool VDVideoFilterPreviewZoomPopup::OnEraseBkgnd(HDC hdc) {
 		ExcludeClipRect(hdc, mBitmapRect.left, mBitmapRect.top, mBitmapRect.right, mBitmapRect.bottom);
 
 		GetClientRect(mhdlg, &r);
-		//FillRect(hdc, &r, (HBRUSH)GetClassLongPtr(mhdlg, GCLP_HBRBACKGROUND));
+		//FillRect(hdc, &r, (HBRUSH)GetClassLongPtrW(mhdlg, GCLP_HBRBACKGROUND));
 		FillRect(hdc, &r, (HBRUSH) (COLOR_BTNFACE+1));
 		RestoreDC(hdc, saveHandle);
 		return true;
@@ -335,9 +335,9 @@ public:
 	void FMSetPositionCallback(FilterModPreviewPositionCallback, void *);
 	void FMSetZoomCallback(FilterModPreviewZoomCallback, void *);
 	void SetClipEditCallback(FilterModPreviewClipEditCallback, void *);
-	int FMTranslateAccelerator(MSG* msg){ return TranslateAccelerator(mhdlg, mDlgNode.mhAccel, msg); }
+	int FMTranslateAccelerator(MSG* msg) { return TranslateAcceleratorW(mhdlg, mDlgNode.mhAccel, msg); }
 	HWND GetHwnd(){ return mhdlg; }
-	int TranslateAcceleratorMessage(MSG* msg){ return TranslateAccelerator(mhdlg, mDlgNode.mhAccel, msg); }
+	int TranslateAcceleratorMessage(MSG* msg) { return TranslateAcceleratorW(mhdlg, mDlgNode.mhAccel, msg); }
 	void StartShuttleReverse(bool sticky);
 	void StartShuttleForward(bool sticky);
 	void SceneShuttleStop();
@@ -601,10 +601,10 @@ void FilterPreview::ShowZoomMode(int px, int py) {
 }
 
 INT_PTR CALLBACK FilterPreview::StaticDlgProc(HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	FilterPreview *fpd = (FilterPreview *)GetWindowLongPtr(hdlg, DWLP_USER);
+	FilterPreview* fpd = (FilterPreview*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
 	if (message == WM_INITDIALOG) {
-		SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+		SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 		fpd = (FilterPreview *)lParam;
 		fpd->mhdlg = hdlg;
 	}
@@ -651,7 +651,7 @@ BOOL FilterPreview::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 	case WM_GETMINMAXINFO:
 		{
 			MINMAXINFO& mmi = *(MINMAXINFO *)lParam;
-			DefWindowProc(mhdlg, message, wParam, lParam);
+			DefWindowProcW(mhdlg, message, wParam, lParam);
 
 			if (mWorkArea.right) {
 				RECT rParent;
@@ -699,7 +699,7 @@ BOOL FilterPreview::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 				}
 
 				RECT r1 = {0,0,maxw,maxh};
-				AdjustWindowRectEx(&r1, GetWindowLong(mhdlg, GWL_STYLE), FALSE, GetWindowLong(mhdlg, GWL_EXSTYLE));
+				AdjustWindowRectEx(&r1, GetWindowLongW(mhdlg, GWL_STYLE), FALSE, GetWindowLongW(mhdlg, GWL_EXSTYLE));
 				RECT r2 = {0,0,maxw*2-r1.right+r1.left,maxh*2-r1.bottom+r1.top};
 				mpVideoWindow->SetWorkArea(r2);
 				return TRUE;
@@ -787,7 +787,7 @@ BOOL FilterPreview::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 							RECT r;
 							GetWindowRect(mhdlg,&r);
 							RECT r1 = {0,0,0,0};
-							AdjustWindowRectEx(&r1, GetWindowLong(mhdlg, GWL_STYLE), FALSE, GetWindowLong(mhdlg, GWL_EXSTYLE));
+							AdjustWindowRectEx(&r1, GetWindowLongW(mhdlg, GWL_STYLE), FALSE, GetWindowLongW(mhdlg, GWL_EXSTYLE));
 							int w = mWorkArea.right-r.left - (r1.right-r1.left);
 							int h = mWorkArea.bottom-r.top - (r1.bottom-r1.top);
 							mpVideoWindow->SetZoom(mpVideoWindow->GetMaxZoomForArea(w, h), false);
@@ -799,7 +799,7 @@ BOOL FilterPreview::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 							RECT r;
 							GetWindowRect(mhwndVideoWindow, &r);
 
-							AdjustWindowRectEx(&r, GetWindowLong(mhdlg, GWL_STYLE), FALSE, GetWindowLong(mhdlg, GWL_EXSTYLE));
+							AdjustWindowRectEx(&r, GetWindowLongW(mhdlg, GWL_STYLE), FALSE, GetWindowLongW(mhdlg, GWL_EXSTYLE));
 							SetWindowPos(mhdlg, NULL, 0, 0, r.right-r.left, r.bottom-r.top, SWP_NOZORDER|SWP_NOMOVE|SWP_NOACTIVATE);
 						}
 						break;
@@ -867,10 +867,10 @@ LRESULT WINAPI preview_pos_host_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM l
 {
 	if(msg==WM_NCCREATE || msg==WM_CREATE){
 		CREATESTRUCT* create = (CREATESTRUCT*)lparam;
-		SetWindowLongPtr(wnd,GWLP_USERDATA,(LPARAM)create->lpCreateParams);
+		SetWindowLongPtrW(wnd, GWLP_USERDATA, (LPARAM)create->lpCreateParams);
 	}
 
-	FilterPreview* owner = (FilterPreview*)GetWindowLongPtr(wnd,GWLP_USERDATA);
+	FilterPreview* owner = (FilterPreview*)GetWindowLongPtrW(wnd, GWLP_USERDATA);
 
 	switch(msg){
 	case WM_NOTIFY:
@@ -939,7 +939,7 @@ void FilterPreview::OnInit() {
 	VDRenderSetVideoSourceInputFormat(inputVideo, g_dubOpts.video.mInputFormat);
 	inputVideo->streamRestart();
 
-	mhwndVideoWindow = CreateWindow(VIDEOWINDOWCLASS, NULL, WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN, 0, 0, 0, 0, mhdlg, (HMENU)100, g_hInst, NULL);
+	mhwndVideoWindow = CreateWindowW(VIDEOWINDOWCLASS, NULL, WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN, 0, 0, 0, 0, mhdlg, (HMENU)100, g_hInst, NULL);
 	mhwndDisplay = (HWND)VDCreateDisplayWindowW32(0, WS_CHILD|WS_VISIBLE|WS_CLIPSIBLINGS, 0, 0, 0, 0, (VDGUIHandle)mhwndVideoWindow);
 	if (mhwndDisplay)
 		mpDisplay = VDGetIVideoDisplay((VDGUIHandle)mhwndDisplay);
@@ -1202,7 +1202,7 @@ void FilterPreview::OnVideoResize(bool bInitial) {
 		WINDOWPLACEMENT wpos = {sizeof(wpos)};
 		GetWindowPlacement(mhdlg,&wpos);
 		RECT r1 = {0,0,0,0};
-		AdjustWindowRectEx(&r1, GetWindowLong(mhdlg, GWL_STYLE), FALSE, GetWindowLong(mhdlg, GWL_EXSTYLE));
+		AdjustWindowRectEx(&r1, GetWindowLongW(mhdlg, GWL_STYLE), FALSE, GetWindowLongW(mhdlg, GWL_EXSTYLE));
 
 		wpos.ptMinPosition.x = mWorkArea.left + 16;
 		wpos.ptMinPosition.y = mWorkArea.bottom-(r1.bottom-r1.top);
@@ -2245,10 +2245,10 @@ void PixmapView::Destroy() {
 }
 
 INT_PTR CALLBACK PixmapView::StaticDlgProc(HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	PixmapView *fpd = (PixmapView *)GetWindowLongPtr(hdlg, DWLP_USER);
+	PixmapView* fpd = (PixmapView*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
 	if (message == WM_INITDIALOG) {
-		SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+		SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 		fpd = (PixmapView *)lParam;
 		fpd->mhdlg = hdlg;
 	}
@@ -2305,7 +2305,7 @@ BOOL PixmapView::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 							RECT r;
 							GetWindowRect(mhdlg,&r);
 							RECT r1 = {0,0,0,0};
-							AdjustWindowRectEx(&r1, GetWindowLong(mhdlg, GWL_STYLE), FALSE, GetWindowLong(mhdlg, GWL_EXSTYLE));
+							AdjustWindowRectEx(&r1, GetWindowLongW(mhdlg, GWL_STYLE), FALSE, GetWindowLongW(mhdlg, GWL_EXSTYLE));
 							MONITORINFO info = {sizeof(info)};
 							GetMonitorInfoW(MonitorFromWindow(mhdlg,MONITOR_DEFAULTTONEAREST), &info);
 							int w = info.rcWork.right-r.left - (r1.right-r1.left);
@@ -2319,7 +2319,7 @@ BOOL PixmapView::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 							RECT r;
 							GetWindowRect(mhwndVideoWindow, &r);
 
-							AdjustWindowRectEx(&r, GetWindowLong(mhdlg, GWL_STYLE), FALSE, GetWindowLong(mhdlg, GWL_EXSTYLE));
+							AdjustWindowRectEx(&r, GetWindowLongW(mhdlg, GWL_STYLE), FALSE, GetWindowLongW(mhdlg, GWL_EXSTYLE));
 							SetWindowPos(mhdlg, NULL, 0, 0, r.right-r.left, r.bottom-r.top, SWP_NOZORDER|SWP_NOMOVE|SWP_NOACTIVATE);
 						}
 						break;
@@ -2347,7 +2347,7 @@ BOOL PixmapView::DlgProc(UINT message, WPARAM wParam, LPARAM lParam) {
 }
 
 void PixmapView::OnInit() {
-	mhwndVideoWindow = CreateWindow(VIDEOWINDOWCLASS, NULL, WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN, 0, 0, 0, 0, mhdlg, (HMENU)100, g_hInst, NULL);
+	mhwndVideoWindow = CreateWindowW(VIDEOWINDOWCLASS, NULL, WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN, 0, 0, 0, 0, mhdlg, (HMENU)100, g_hInst, NULL);
 	mhwndDisplay = (HWND)VDCreateDisplayWindowW32(0, WS_CHILD|WS_VISIBLE|WS_CLIPSIBLINGS, 0, 0, 0, 0, (VDGUIHandle)mhwndVideoWindow);
 	if (mhwndDisplay)
 		mpDisplay = VDGetIVideoDisplay((VDGUIHandle)mhwndDisplay);

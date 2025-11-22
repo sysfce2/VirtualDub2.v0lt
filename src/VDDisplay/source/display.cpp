@@ -353,7 +353,7 @@ ATOM VDVideoDisplayWindow::Register() {
 }
 
 IVDVideoDisplay *VDGetIVideoDisplay(VDGUIHandle hwnd) {
-	return static_cast<IVDVideoDisplay *>(reinterpret_cast<VDVideoDisplayWindow*>(GetWindowLongPtr((HWND)hwnd, 0)));
+	return static_cast<IVDVideoDisplay *>(reinterpret_cast<VDVideoDisplayWindow*>(GetWindowLongPtrW((HWND)hwnd, 0)));
 }
 
 bool VDRegisterVideoDisplayControl() {
@@ -786,20 +786,20 @@ bool VDVideoDisplayWindow::DispatchActiveFrame() {
 ///////////////////////////////////////////////////////////////////////////
 
 LRESULT CALLBACK VDVideoDisplayWindow::StaticChildWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDVideoDisplayWindow *pThis = (VDVideoDisplayWindow *)GetWindowLongPtr(hwnd, 0);
+	VDVideoDisplayWindow* pThis = (VDVideoDisplayWindow*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 	case WM_NCCREATE:
 		pThis = (VDVideoDisplayWindow *)(((LPCREATESTRUCT)lParam)->lpCreateParams);
 		pThis->mhwndChild = hwnd;
-		SetWindowLongPtr(hwnd, 0, (DWORD_PTR)pThis);
+		SetWindowLongPtrW(hwnd, 0, (DWORD_PTR)pThis);
 		break;
 	case WM_NCDESTROY:
-		SetWindowLongPtr(hwnd, 0, (DWORD_PTR)NULL);
+		SetWindowLongPtrW(hwnd, 0, (DWORD_PTR)NULL);
 		break;
 	}
 
-	return pThis ? pThis->ChildWndProc(msg, wParam, lParam) : DefWindowProc(hwnd, msg, wParam, lParam);
+	return pThis ? pThis->ChildWndProc(msg, wParam, lParam) : DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 LRESULT VDVideoDisplayWindow::ChildWndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -835,7 +835,7 @@ LRESULT VDVideoDisplayWindow::ChildWndProc(UINT msg, WPARAM wParam, LPARAM lPara
 		break;
 	}
 
-	return DefWindowProc(mhwndChild, msg, wParam, lParam);
+	return DefWindowProcW(mhwndChild, msg, wParam, lParam);
 }
 
 void VDVideoDisplayWindow::OnChildPaint() {
@@ -914,23 +914,23 @@ void VDVideoDisplayWindow::OnChildPaint() {
 ///////////////////////////////////////////////////////////////////////////
 
 LRESULT CALLBACK VDVideoDisplayWindow::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDVideoDisplayWindow *pThis = (VDVideoDisplayWindow *)GetWindowLongPtr(hwnd, 0);
+	VDVideoDisplayWindow* pThis = (VDVideoDisplayWindow*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 	case WM_NCCREATE:
 		pThis = new VDVideoDisplayWindow(hwnd, *(const CREATESTRUCT *)lParam);
-		SetWindowLongPtr(hwnd, 0, (DWORD_PTR)pThis);
+		SetWindowLongPtrW(hwnd, 0, (DWORD_PTR)pThis);
 		break;
 	case WM_NCDESTROY:
 		if (pThis)
 			pThis->SyncReset();
 		delete pThis;
 		pThis = NULL;
-		SetWindowLongPtr(hwnd, 0, 0);
+		SetWindowLongPtrW(hwnd, 0, 0);
 		break;
 	}
 
-	return pThis ? pThis->WndProc(msg, wParam, lParam) : DefWindowProc(hwnd, msg, wParam, lParam);
+	return pThis ? pThis->WndProc(msg, wParam, lParam) : DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 LRESULT VDVideoDisplayWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -1010,7 +1010,7 @@ LRESULT VDVideoDisplayWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		break;
 	case WM_NCHITTEST:
 		if (mbIgnoreMouse) {
-			LRESULT lr = DefWindowProc(mhwnd, msg, wParam, lParam);
+			LRESULT lr = DefWindowProcW(mhwnd, msg, wParam, lParam);
 
 			if (lr != HTCLIENT)
 				return lr;
@@ -1026,7 +1026,7 @@ LRESULT VDVideoDisplayWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		break;
 	}
 
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDVideoDisplayWindow::OnPaint() {
@@ -1523,7 +1523,7 @@ bool VDVideoDisplayWindow::CheckForMonitorChange() {
 
 	HWND hwndTest = mhwnd; 
 
-	while(GetWindowLong(hwndTest, GWL_STYLE) & WS_CHILD) {
+	while(GetWindowLongW(hwndTest, GWL_STYLE) & WS_CHILD) {
 		HWND hwndParent = GetParent(hwndTest);
 		if (!hwndParent)
 			break;

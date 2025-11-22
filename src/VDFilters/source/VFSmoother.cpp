@@ -1172,7 +1172,7 @@ static int smoother_end(VDXFilterActivation *fa, const VDXFilterFunctions *ff) {
 }
 
 static INT_PTR CALLBACK FilterValueDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	MyFilterData *mfd = (MyFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+	MyFilterData* mfd = (MyFilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
     switch (message)
     {
@@ -1181,7 +1181,7 @@ static INT_PTR CALLBACK FilterValueDlgProc( HWND hDlg, UINT message, WPARAM wPar
 			SendMessageW(GetDlgItem(hDlg, IDC_SLIDER), TBM_SETRANGE, (WPARAM)FALSE, MAKELONG(0, 100));
 			SendMessageW(GetDlgItem(hDlg, IDC_SLIDER), TBM_SETPOS, (WPARAM)TRUE, (mfd->grad_threshold+100)/200); 
 			CheckDlgButton(hDlg, IDC_PREFILTER, mfd->fBlurPass?BST_CHECKED:BST_UNCHECKED);
-			SetWindowLongPtr(hDlg, DWLP_USER, (LPARAM)mfd);
+			SetWindowLongPtrW(hDlg, DWLP_USER, (LPARAM)mfd);
 			mfd->ifp->InitButton((VDXHWND)GetDlgItem(hDlg, IDC_PREVIEW));
             return (TRUE);
 

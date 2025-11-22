@@ -447,14 +447,14 @@ public:
 
 LRESULT WINAPI status_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	VDProjectUI* owner = (VDProjectUI*)GetWindowLongPtr(wnd,GWLP_USERDATA);
+	VDProjectUI* owner = (VDProjectUI*)GetWindowLongPtrW(wnd, GWLP_USERDATA);
 
 	switch(msg){
 	case WM_SIZE:
 		return 0;
 	}
 
-	return CallWindowProc(owner->prevStatusProc,wnd,msg,wparam,lparam);
+	return CallWindowProcW(owner->prevStatusProc, wnd, msg, wparam, lparam);
 }
 
 struct max_enum_data{
@@ -505,7 +505,7 @@ INT_PTR CALLBACK max_host_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		m.lParam = lparam;
 		m.time = GetMessageTime();
 		VDUIFrame::TranslateAcceleratorMessage(m);
-		SetWindowLongPtr(wnd,DWLP_MSGRESULT,true);
+		SetWindowLongPtrW(wnd, DWLP_MSGRESULT, true);
 		SendMessageW(g_hWnd,msg,wparam,lparam);
 		return true;
 	}
@@ -718,9 +718,9 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 		return false;
 	}
 
-	prevStatusProc = (WNDPROC)GetWindowLongPtr(mhwndStatus,GWLP_WNDPROC);
-	SetWindowLongPtr(mhwndStatus,GWLP_USERDATA,(LPARAM)this);
-	SetWindowLongPtr(mhwndStatus,GWLP_WNDPROC,(LPARAM)status_proc);
+	prevStatusProc = (WNDPROC)GetWindowLongPtrW(mhwndStatus, GWLP_WNDPROC);
+	SetWindowLongPtrW(mhwndStatus, GWLP_USERDATA, (LPARAM)this);
+	SetWindowLongPtrW(mhwndStatus, GWLP_WNDPROC, (LPARAM)status_proc);
 
 	SendMessageW(mhwndStatus, SB_SIMPLE, TRUE, 0);
 
@@ -756,7 +756,7 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 		Detach();
 		return false;
 	}
-	SetWindowLong(mhwndMaxDisplay,GWL_STYLE,WS_CLIPCHILDREN);
+	SetWindowLongW(mhwndMaxDisplay,GWL_STYLE,WS_CLIPCHILDREN);
 	max_dlg_node.hdlg = mhwndMaxDisplay;
 	max_dlg_node.mhAccel = 0;
 	max_dlg_node.hook = true;
@@ -800,7 +800,7 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 
 	// HACK
 	HWND hwndBase = vdpoly_cast<IVDUIWindowW32 *>(mpUIBase)->GetHandleW32();
-	SetWindowLong(hwndBase, GWL_STYLE, GetWindowLong(hwndBase, GWL_STYLE) | WS_CLIPCHILDREN);
+	SetWindowLongW(hwndBase, GWL_STYLE, GetWindowLongW(hwndBase, GWL_STYLE) | WS_CLIPCHILDREN);
 
 	mpUISplitSet = VDCreateUISplitSet();
 	mpUIBase->AddChild(mpUISplitSet);
@@ -3384,8 +3384,8 @@ LRESULT VDProjectUI::MainWndProc( UINT msg, WPARAM wParam, LPARAM lParam) {
 	case WM_WINDOWPOSCHANGING:
 		// seems to fix borderless sizing issues
 		if(!(((WINDOWPOS*)lParam)->flags & SWP_NOMOVE) && !mbMaximizeChanging){
-			int style = GetWindowLong((HWND)mhwnd,GWL_STYLE);
-			SetWindowLong((HWND)mhwnd,GWL_STYLE,style | WS_CAPTION);
+			int style = GetWindowLongW((HWND)mhwnd,GWL_STYLE);
+			SetWindowLongW((HWND)mhwnd,GWL_STYLE,style | WS_CAPTION);
 		}
 		break;
 
@@ -3575,8 +3575,8 @@ LRESULT VDProjectUI::DubWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_WINDOWPOSCHANGING:
 		// seems to fix borderless sizing issues
 		if(!(((WINDOWPOS*)lParam)->flags & SWP_NOMOVE) && !mbMaximizeChanging){
-			int style = GetWindowLong((HWND)mhwnd,GWL_STYLE);
-			SetWindowLong((HWND)mhwnd,GWL_STYLE,style | WS_CAPTION);
+			int style = GetWindowLongW((HWND)mhwnd,GWL_STYLE);
+			SetWindowLongW((HWND)mhwnd,GWL_STYLE,style | WS_CAPTION);
 		}
 		break;
 
@@ -3750,7 +3750,7 @@ void VDProjectUI::OnGetMinMaxInfo(MINMAXINFO& mmi) {
 	r2.right = 0;
 	r2.top = 0;
 	r2.bottom = minHeight;
-	AdjustWindowRect(&r2, ::GetWindowLong((HWND)mhwnd, GWL_STYLE), ::GetMenu((HWND)mhwnd) != NULL);
+	AdjustWindowRect(&r2, ::GetWindowLongW((HWND)mhwnd, GWL_STYLE), ::GetMenu((HWND)mhwnd) != NULL);
 
 	minHeight = r2.bottom - r2.top;
 
@@ -3759,7 +3759,7 @@ void VDProjectUI::OnGetMinMaxInfo(MINMAXINFO& mmi) {
 }
 
 void VDProjectUI::UpdateMaximize() {
-	int style0 = GetWindowLong((HWND)mhwnd,GWL_STYLE);
+	int style0 = GetWindowLongW((HWND)mhwnd,GWL_STYLE);
 	int style1 = style0;
 
 	if(mbMaximize && IsZoomed((HWND)mhwnd)){
@@ -3778,7 +3778,7 @@ void VDProjectUI::UpdateMaximize() {
 		int w = rr.right-rr.left;
 		int h = rr.bottom-rr.top;
 		mbMaximizeChanging = true;
-		SetWindowLong((HWND)mhwnd,GWL_STYLE,style1);
+		SetWindowLongW((HWND)mhwnd,GWL_STYLE,style1);
 		SetWindowPos((HWND)mhwnd,0,x,y,w,h,SWP_NOACTIVATE|SWP_NOZORDER|SWP_FRAMECHANGED);
 		mbMaximizeChanging = false;
 	}
@@ -4420,27 +4420,27 @@ const UINT WM_EDIT_CHANGED = WM_USER+666;
 LRESULT CALLBACK EditWndProc(HWND wnd,UINT msg,WPARAM wparam,LPARAM lparam)
 {
 	if(msg==WM_KILLFOCUS){
-		WPARAM id = GetWindowLong(wnd,GWL_ID);
+		WPARAM id = GetWindowLongW(wnd,GWL_ID);
 		SendMessageW(GetParent(wnd),WM_EDIT_CHANGED,id,(LPARAM)wnd);
 	}
 
-	WNDPROC p = (WNDPROC)GetWindowLongPtr(wnd,GWLP_USERDATA);
-	return CallWindowProc(p,wnd,msg,wparam,lparam);
+	WNDPROC p = (WNDPROC)GetWindowLongPtrW(wnd, GWLP_USERDATA);
+	return CallWindowProcW(p, wnd, msg, wparam, lparam);
 }
 
 void init_edit(HWND mhdlg, int id)
 {
 	HWND hWnd = GetDlgItem(mhdlg,id);
-	LPARAM p = GetWindowLongPtr(hWnd,GWLP_WNDPROC);
-	SetWindowLongPtr(hWnd,GWLP_USERDATA,p);
-	SetWindowLongPtr(hWnd,GWLP_WNDPROC,(LPARAM)EditWndProc);
+	LPARAM p = GetWindowLongPtrW(hWnd, GWLP_WNDPROC);
+	SetWindowLongPtrW(hWnd, GWLP_USERDATA, p);
+	SetWindowLongPtrW(hWnd, GWLP_WNDPROC, (LPARAM)EditWndProc);
 }
 
 INT_PTR CALLBACK CurveProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg) {
 	case WM_INITDIALOG:
-		SetWindowLongPtr(wnd,DWLP_USER,lParam);
+		SetWindowLongPtrW(wnd, DWLP_USER, lParam);
 		init_edit(wnd,IDC_CURVE_VALUE);
 		break;
 
@@ -4450,28 +4450,28 @@ INT_PTR CALLBACK CurveProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			if(HIWORD(wParam)==CBN_SELCHANGE){
 				int sel = (int)SendDlgItemMessageW(wnd, IDC_CURVE, CB_GETCURSEL, 0, 0);
 				int id = (int)SendDlgItemMessageW(wnd, IDC_CURVE, CB_GETITEMDATA, sel, 0);
-				VDProjectUI* project = (VDProjectUI*)GetWindowLongPtr(wnd,DWLP_USER);
+				VDProjectUI* project = (VDProjectUI*)GetWindowLongPtrW(wnd, DWLP_USER);
 				project->SelectCurve(id);
 				return TRUE;
 			}
 			break;
 		case IDC_CURVE_NEXT:
 			{
-				VDProjectUI* project = (VDProjectUI*)GetWindowLongPtr(wnd,DWLP_USER);
+				VDProjectUI* project = (VDProjectUI*)GetWindowLongPtrW(wnd, DWLP_USER);
 				project->CurveMoveToNext(1);
 				return TRUE;
 			}
 			break;
 		case IDC_CURVE_PREV:
 			{
-				VDProjectUI* project = (VDProjectUI*)GetWindowLongPtr(wnd,DWLP_USER);
+				VDProjectUI* project = (VDProjectUI*)GetWindowLongPtrW(wnd, DWLP_USER);
 				project->CurveMoveToNext(-1);
 				return TRUE;
 			}
 			break;
 		case IDC_CURVE_DELETE:
 			{
-				VDProjectUI* project = (VDProjectUI*)GetWindowLongPtr(wnd,DWLP_USER);
+				VDProjectUI* project = (VDProjectUI*)GetWindowLongPtrW(wnd, DWLP_USER);
 				project->CurveDeleteSelected();
 				return TRUE;
 			}
@@ -4481,7 +4481,7 @@ INT_PTR CALLBACK CurveProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_EDIT_CHANGED:
 		{
-			VDProjectUI* project = (VDProjectUI*)GetWindowLongPtr(wnd,DWLP_USER);
+			VDProjectUI* project = (VDProjectUI*)GetWindowLongPtrW(wnd, DWLP_USER);
 			char buf[512];
 			if (GetDlgItemTextA(wnd, IDC_CURVE_VALUE, buf, std::size(buf))) {
 				double v;

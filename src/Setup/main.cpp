@@ -84,7 +84,7 @@ BOOL Init(HINSTANCE hInstance, int nCmdShow)
 	wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)(COLOR_3DFACE + 1);
 	wc.lpszMenuName  = NULL;             // Name of menu resource in .RC file.
-	wc.lpszClassName = szAppName;        // Name used in call to CreateWindow.
+	wc.lpszClassName = szAppName;        // Name used in call to CreateWindowW.
 
 	if (!RegisterClassW(&wc)) {
 		return FALSE;

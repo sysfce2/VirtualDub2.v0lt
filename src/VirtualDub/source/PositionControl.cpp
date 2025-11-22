@@ -295,7 +295,7 @@ protected:
 };
 
 ATOM VDPositionControlW32::Register() {
-	WNDCLASS wc;
+	WNDCLASSW wc;
 
 	wc.style		= 0;
 	wc.lpfnWndProc	= StaticWndProc;
@@ -652,7 +652,7 @@ BOOL CALLBACK VDPositionControlW32::InitChildrenProc(HWND hWnd, LPARAM lParam) {
 }
 
 LRESULT APIENTRY VDPositionControlW32::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDPositionControlW32 *pcd = (VDPositionControlW32 *)GetWindowLongPtr(hwnd, 0);
+	VDPositionControlW32* pcd = (VDPositionControlW32*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 	case WM_NCCREATE:
@@ -670,7 +670,7 @@ LRESULT APIENTRY VDPositionControlW32::StaticWndProc(HWND hwnd, UINT msg, WPARAM
 		break;
 	}
 
-	return pcd ? pcd->WndProc(msg, wParam, lParam) : DefWindowProc(hwnd, msg, wParam, lParam);
+	return pcd ? pcd->WndProc(msg, wParam, lParam) : DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -813,7 +813,7 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 				return 0;
 			}
 
-			LRESULT r = SendMessageW(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLong(mhwnd, GWL_ID), cmd), (LPARAM)mhwnd);
+			LRESULT r = SendMessageW(GetParent(mhwnd), WM_COMMAND, MAKELONG(GetWindowLongW(mhwnd, GWL_ID), cmd), (LPARAM)mhwnd);
 			if(r==-1) switch(LOWORD(wParam)) {
 			case IDC_SCENEREV:
 			case IDC_SCENEFWD:

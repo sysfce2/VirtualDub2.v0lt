@@ -69,7 +69,7 @@ public:
 
 	static VDUIFrame *GetFrame(HWND hwnd) {
 		VDASSERT(IsWindow(hwnd));
-		VDUIFrame *p = (VDUIFrame *)GetWindowLongPtr(hwnd, 0);
+		VDUIFrame *p = (VDUIFrame *)GetWindowLongPtrW(hwnd, 0);
 		VDASSERTPTR(p);
 		return p;
 	}

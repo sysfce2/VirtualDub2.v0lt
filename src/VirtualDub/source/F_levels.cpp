@@ -699,7 +699,7 @@ static void levelsSampleDisplay(LevelsFilterData *mfd, HWND hdlg) {
 }
 
 static INT_PTR APIENTRY levelsDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	LevelsFilterData *mfd = (struct LevelsFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+	LevelsFilterData* mfd = (struct LevelsFilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 	char buf[32];
 
     switch (message)
@@ -709,7 +709,7 @@ static INT_PTR APIENTRY levelsDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 				HWND hwndItem;
 
 				mfd = (struct LevelsFilterData *)lParam;
-				SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+				SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 
 				GetWindowRect(GetDlgItem(hDlg, IDC_HISTOGRAM), &mfd->rHisto);
 				ScreenToClient(hDlg, (POINT *)&mfd->rHisto + 0);

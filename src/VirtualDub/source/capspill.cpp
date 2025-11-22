@@ -433,11 +433,11 @@ static void LVDestroyEdit(bool write, bool sort) {
 }
 
 static LRESULT APIENTRY LVEditWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	WNDPROC wpOld = (WNDPROC)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	WNDPROC wpOld = (WNDPROC)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 
 	switch(msg) {
 	case WM_GETDLGCODE:
-		return CallWindowProc(wpOld, hwnd, msg, wParam, lParam) | DLGC_WANTALLKEYS;
+		return CallWindowProcW(wpOld, hwnd, msg, wParam, lParam) | DLGC_WANTALLKEYS;
 		break;
 	case WM_KEYDOWN:
 		if (wParam == VK_UP) {
@@ -478,7 +478,7 @@ static LRESULT APIENTRY LVEditWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 				LVDestroyEdit(true, true);
 		break;
 	}
-	return CallWindowProc(wpOld, hwnd, msg, wParam, lParam);
+	return CallWindowProcW(wpOld, hwnd, msg, wParam, lParam);
 }
 
 static void LVBeginEdit(HWND hwndLV, int index, int subitem) {
@@ -547,7 +547,7 @@ static void LVBeginEdit(HWND hwndLV, int index, int subitem) {
 }
 
 static LRESULT APIENTRY LVWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	WNDPROC wpOld = (WNDPROC)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	WNDPROC wpOld = (WNDPROC)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 
 	switch(msg) {
 	case WM_DESTROY:
@@ -555,14 +555,15 @@ static LRESULT APIENTRY LVWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 		break;
 
 	case WM_GETDLGCODE:
-		if (g_hwndEdit)
-			return CallWindowProc(wpOld, hwnd, msg, wParam, lParam) | DLGC_WANTALLKEYS;
-		else
-			return CallWindowProc(wpOld, hwnd, msg, wParam, lParam) | DLGC_DEFPUSHBUTTON;
+		if (g_hwndEdit) {
+			return CallWindowProcW(wpOld, hwnd, msg, wParam, lParam) | DLGC_WANTALLKEYS;
+		} else {
+			return CallWindowProcW(wpOld, hwnd, msg, wParam, lParam) | DLGC_DEFPUSHBUTTON;
+		}
 
 	case WM_CHAR:
 		if (wParam == '\r') {
-			int index = CallWindowProc(wpOld, hwnd, LVM_GETNEXTITEM, -1, MAKELPARAM(LVNI_ALL|LVNI_SELECTED,0));
+			int index = CallWindowProcW(wpOld, hwnd, LVM_GETNEXTITEM, -1, MAKELPARAM(LVNI_ALL|LVNI_SELECTED,0));
 
 			if (index>=0) {
 				LVBeginEdit(hwnd, index, 0);
@@ -578,12 +579,12 @@ static LRESULT APIENTRY LVWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 
 			// if this isn't done, the control doesn't gain focus properly...
 
-			CallWindowProc(wpOld, hwnd, msg, wParam, lParam);
+			CallWindowProcW(wpOld, hwnd, msg, wParam, lParam);
 
 			htinfo.pt.x	= 2;
 			htinfo.pt.y = HIWORD(lParam);
 
-			index = CallWindowProc(wpOld, hwnd, LVM_HITTEST, 0, (LPARAM)&htinfo);
+			index = CallWindowProcW(wpOld, hwnd, LVM_HITTEST, 0, (LPARAM)&htinfo);
 
 			if (index >= 0) {
 				int x = LOWORD(lParam);
@@ -591,10 +592,10 @@ static LRESULT APIENTRY LVWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 				int i=-1;
 
 				lvi.state = lvi.stateMask = LVIS_SELECTED | LVIS_FOCUSED;
-				CallWindowProc(wpOld, hwnd, LVM_SETITEMSTATE, index, (LPARAM)&lvi);
+				CallWindowProcW(wpOld, hwnd, LVM_SETITEMSTATE, index, (LPARAM)&lvi);
 
 				for(i=0; i<3; i++) {
-					w2 += w = CallWindowProc(wpOld, hwnd, LVM_GETCOLUMNWIDTH, i, 0);
+					w2 += w = CallWindowProcW(wpOld, hwnd, LVM_GETCOLUMNWIDTH, i, 0);
 					if (x<w2) {
 						LVBeginEdit(hwnd, index, i);
 
@@ -606,5 +607,5 @@ static LRESULT APIENTRY LVWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 		}
 		return 0;
 	}
-	return CallWindowProc(wpOld, hwnd, msg, wParam, lParam);
+	return CallWindowProcW(wpOld, hwnd, msg, wParam, lParam);
 }

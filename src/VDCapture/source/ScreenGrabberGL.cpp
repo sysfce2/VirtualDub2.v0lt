@@ -1516,7 +1516,7 @@ GLuint VDScreenGrabberGL::GetOcclusionQueryPixelCountSafe(GLuint query) {
 }
 
 LRESULT CALLBACK VDScreenGrabberGL::StaticWndProcGL(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 ///////////////////////////////////////////////////////////////////////////

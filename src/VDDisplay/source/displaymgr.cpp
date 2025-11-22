@@ -560,15 +560,15 @@ LRESULT CALLBACK VDVideoDisplayManager::StaticWndProc(HWND hwnd, UINT msg, WPARA
 	if (msg == WM_NCCREATE) {
 		const CREATESTRUCT& cs = *(const CREATESTRUCT *)lParam;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)cs.lpCreateParams);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)cs.lpCreateParams);
 	} else {
-		VDVideoDisplayManager *pThis = (VDVideoDisplayManager *)GetWindowLongPtr(hwnd, 0);
+		VDVideoDisplayManager* pThis = (VDVideoDisplayManager*)GetWindowLongPtrW(hwnd, 0);
 
 		if (pThis)
 			return pThis->WndProc(hwnd, msg, wParam, lParam);
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 LRESULT CALLBACK VDVideoDisplayManager::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -658,6 +658,6 @@ LRESULT CALLBACK VDVideoDisplayManager::WndProc(HWND hwnd, UINT msg, WPARAM wPar
 			break;
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 

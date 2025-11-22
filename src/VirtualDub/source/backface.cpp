@@ -450,9 +450,9 @@ LRESULT CALLBACK VDBackfaceConsole::StaticWndProc(HWND hwnd, UINT msg, WPARAM wP
 		pThis = (VDBackfaceConsole *)(((const CREATESTRUCT *)lParam)->lpCreateParams);
 		pThis->AddRef();
 		pThis->mhwnd = hwnd;
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pThis);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
 	} else {
-		pThis = (VDBackfaceConsole *)GetWindowLongPtr(hwnd, 0);
+		pThis = (VDBackfaceConsole*)GetWindowLongPtrW(hwnd, 0);
 
 		if (pThis) {
 			if (msg != WM_NCCREATE) {
@@ -467,7 +467,7 @@ LRESULT CALLBACK VDBackfaceConsole::StaticWndProc(HWND hwnd, UINT msg, WPARAM wP
 		}
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 LRESULT VDBackfaceConsole::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -487,7 +487,7 @@ LRESULT VDBackfaceConsole::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		return 0;
 	}
 
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 bool VDBackfaceConsole::OnCreate() {

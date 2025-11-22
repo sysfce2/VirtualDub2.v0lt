@@ -361,9 +361,9 @@ bool VDScreenGrabberGDI::InitDisplay(HWND hwndParent, bool preview) {
 		_snwprintf(buf, 64, L"VDScreenGrabberGDI[%p])", this);
 		buf[63] = 0;
 
-		WNDCLASS wc = { 0, StaticWndProc, 0, sizeof(VDScreenGrabberGDI *), hInst, NULL, NULL, NULL, NULL, buf };
+		WNDCLASSW wc = { 0, StaticWndProc, 0, sizeof(VDScreenGrabberGDI *), hInst, NULL, NULL, NULL, NULL, buf };
 
-		mWndClass = RegisterClass(&wc);
+		mWndClass = RegisterClassW(&wc);
 
 		if (!mWndClass)
 			return false;
@@ -425,7 +425,7 @@ sint64 VDScreenGrabberGDI::ComputeGlobalTime() {
 LRESULT CALLBACK VDScreenGrabberGDI::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch(msg) {
 		case WM_NCCREATE:
-			SetWindowLongPtr(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+			SetWindowLongPtrW(hwnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
 			break;
 
 		case WM_PAINT:
@@ -440,7 +440,7 @@ LRESULT CALLBACK VDScreenGrabberGDI::StaticWndProc(HWND hwnd, UINT msg, WPARAM w
 			return 0;
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 ///////////////////////////////////////////////////////////////////////////

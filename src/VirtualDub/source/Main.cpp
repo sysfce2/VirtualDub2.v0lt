@@ -674,7 +674,7 @@ UINT_PTR CALLBACK OpenVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 		{
 			OPENFILENAMEW* fn = (OPENFILENAMEW*)lParam;
 			VDOpenVideoDialogW32* dlg = (VDOpenVideoDialogW32*)fn->lCustData;
-			SetWindowLongPtr(hdlg, DWLP_USER, (LONG_PTR)dlg);
+			SetWindowLongPtrW(hdlg, DWLP_USER, (LONG_PTR)dlg);
 			dlg->mhdlg = hdlg;
 			dlg->filename = fn->lpstrFile;
 			dlg->DlgProc(msg,wParam,lParam);
@@ -686,7 +686,7 @@ UINT_PTR CALLBACK OpenVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 	case WM_SIZE:
 	case WM_COMMAND:
 		{
-			VDOpenVideoDialogW32* dlg = (VDOpenVideoDialogW32*)GetWindowLongPtr(hdlg, DWLP_USER);
+			VDOpenVideoDialogW32* dlg = (VDOpenVideoDialogW32*)GetWindowLongPtrW(hdlg, DWLP_USER);
 			dlg->DlgProc(msg,wParam,lParam);
 			return TRUE;
 		}
@@ -705,7 +705,7 @@ UINT_PTR CALLBACK OpenVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 			return TRUE;
 		}
 		if (wParam==1) {
-			VDOpenVideoDialogW32* dlg = (VDOpenVideoDialogW32*)GetWindowLongPtr(hdlg, DWLP_USER);
+			VDOpenVideoDialogW32* dlg = (VDOpenVideoDialogW32*)GetWindowLongPtrW(hdlg, DWLP_USER);
 			dlg->UpdateFilename();
 			if (dlg->init_error) {
 				MyError* e = dlg->init_error;
@@ -716,7 +716,7 @@ UINT_PTR CALLBACK OpenVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 		}
 
 	case WM_NOTIFY:
-		VDOpenVideoDialogW32* dlg = (VDOpenVideoDialogW32*)GetWindowLongPtr(hdlg, DWLP_USER);
+		VDOpenVideoDialogW32* dlg = (VDOpenVideoDialogW32*)GetWindowLongPtrW(hdlg, DWLP_USER);
 		OFNOTIFY* data = (OFNOTIFY*)lParam;
 		if(data->hdr.code==CDN_SELCHANGE){
 			dlg->UpdateFilename();
@@ -730,7 +730,7 @@ UINT_PTR CALLBACK OpenVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 			if (dlg->FileOk()) {
 				return 0;
 			} else {
-				SetWindowLong(hdlg,DWLP_MSGRESULT,1);
+				SetWindowLongW(hdlg,DWLP_MSGRESULT,1);
 				return 1;
 			}
 		}
@@ -1075,7 +1075,7 @@ UINT_PTR CALLBACK SaveVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 		{
 			OPENFILENAMEW* fn = (OPENFILENAMEW*)lParam;
 			VDSaveVideoDialogW32* dlg = (VDSaveVideoDialogW32*)fn->lCustData;
-			SetWindowLongPtr(hdlg, DWLP_USER, (LONG_PTR)dlg);
+			SetWindowLongPtrW(hdlg, DWLP_USER, (LONG_PTR)dlg);
 			dlg->mhdlg = hdlg;
 			dlg->nFilterIndex = fn->nFilterIndex;
 			dlg->DlgProc(msg,wParam,lParam);
@@ -1099,13 +1099,13 @@ UINT_PTR CALLBACK SaveVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 	case WM_SIZE:
 	case WM_COMMAND:
 		{
-			VDSaveVideoDialogW32* dlg = (VDSaveVideoDialogW32*)GetWindowLongPtr(hdlg, DWLP_USER);
+			VDSaveVideoDialogW32* dlg = (VDSaveVideoDialogW32*)GetWindowLongPtrW(hdlg, DWLP_USER);
 			dlg->DlgProc(msg,wParam,lParam);
 			return TRUE;
 		}
 
 	case WM_NOTIFY:
-		VDSaveVideoDialogW32* dlg = (VDSaveVideoDialogW32*)GetWindowLongPtr(hdlg, DWLP_USER);
+		VDSaveVideoDialogW32* dlg = (VDSaveVideoDialogW32*)GetWindowLongPtrW(hdlg, DWLP_USER);
 		OFNOTIFY* data = (OFNOTIFY*)lParam;
 
 		if(data->hdr.code==CDN_TYPECHANGE){
@@ -1122,7 +1122,7 @@ UINT_PTR CALLBACK SaveVideoProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 				err.post(hdlg,g_szError);
 			}*/
 
-			SetWindowLong(hdlg,DWLP_MSGRESULT,1);
+			SetWindowLongW(hdlg,DWLP_MSGRESULT,1);
 			return 1;
 		}
 		break;
@@ -2052,8 +2052,8 @@ void VDSaveImageDialogW32::UpdateSlider() {
 
 void VDSaveImageDialogW32::ChangeExtension(const wchar_t *newExtension) {
 	wchar_t buf[MAX_PATH];
-	HWND parent = (HWND)GetWindowLongPtr(mhdlg,GWLP_HWNDPARENT);
-	CommDlg_OpenSave_GetSpec(parent,buf,MAX_PATH);
+	HWND parent = (HWND)GetWindowLongPtrW(mhdlg, GWLP_HWNDPARENT);
+	CommDlg_OpenSave_GetSpecW(parent, buf, MAX_PATH);
 	VDStringW name(buf);
 	VDStringW base = VDFileSplitExtLeft(name);
 	VDStringW new_name = base+newExtension;
@@ -2227,7 +2227,7 @@ UINT_PTR CALLBACK SaveImageProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 		{
 			OPENFILENAMEW* fn = (OPENFILENAMEW*)lParam;
 			VDSaveImageDialogW32* dlg = (VDSaveImageDialogW32*)fn->lCustData;
-			SetWindowLongPtr(hdlg, DWLP_USER, (LONG_PTR)dlg);
+			SetWindowLongPtrW(hdlg, DWLP_USER, (LONG_PTR)dlg);
 			dlg->mhdlg = hdlg;
 			dlg->DlgProc(msg,wParam,lParam);
 			return TRUE;
@@ -2249,14 +2249,14 @@ UINT_PTR CALLBACK SaveImageProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 
 	case WM_HSCROLL:
 		{
-			VDSaveImageDialogW32* dlg = (VDSaveImageDialogW32*)GetWindowLongPtr(hdlg, DWLP_USER);
+			VDSaveImageDialogW32* dlg = (VDSaveImageDialogW32*)GetWindowLongPtrW(hdlg, DWLP_USER);
 			dlg->DlgProc(msg,wParam,lParam);
 			return TRUE;
 		}
 
 	case WM_COMMAND:
 		{
-			VDSaveImageDialogW32* dlg = (VDSaveImageDialogW32*)GetWindowLongPtr(hdlg, DWLP_USER);
+			VDSaveImageDialogW32* dlg = (VDSaveImageDialogW32*)GetWindowLongPtrW(hdlg, DWLP_USER);
 			dlg->DlgProc(msg,wParam,lParam);
 			return TRUE;
 		}
@@ -2265,8 +2265,8 @@ UINT_PTR CALLBACK SaveImageProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lPara
 		OFNOTIFY* data = (OFNOTIFY*)lParam;
 		if(data->hdr.code==CDN_SELCHANGE){
 			wchar_t buf[MAX_PATH];
-			CommDlg_OpenSave_GetSpec(data->hdr.hwndFrom,buf,MAX_PATH);
-			VDSaveImageDialogW32* dlg = (VDSaveImageDialogW32*)GetWindowLongPtr(hdlg, DWLP_USER);
+			CommDlg_OpenSave_GetSpecW(data->hdr.hwndFrom, buf, MAX_PATH);
+			VDSaveImageDialogW32* dlg = (VDSaveImageDialogW32*)GetWindowLongPtrW(hdlg, DWLP_USER);
 			dlg->ChangeFilename(buf);
 		}
 		break;

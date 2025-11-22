@@ -321,7 +321,7 @@ static void timesmooth_string2(const VDXFilterActivation *fa, const VDXFilterFun
 }
 
 static INT_PTR CALLBACK timesmoothDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-	timesmoothFilterData *mfd = (timesmoothFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+	timesmoothFilterData* mfd = (timesmoothFilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
     switch (message)
     {
@@ -331,7 +331,7 @@ static INT_PTR CALLBACK timesmoothDlgProc( HWND hDlg, UINT message, WPARAM wPara
 
 				mfd = (timesmoothFilterData *)lParam;
 
-				SetWindowLongPtr(hDlg, DWLP_USER, (LPARAM)mfd);
+				SetWindowLongPtrW(hDlg, DWLP_USER, (LPARAM)mfd);
 
 				hwndItem = GetDlgItem(hDlg, IDC_STRENGTH);
 				SendMessageW(hwndItem, TBM_SETRANGE, TRUE, MAKELONG(0, 10));

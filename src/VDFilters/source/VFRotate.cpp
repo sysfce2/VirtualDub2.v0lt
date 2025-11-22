@@ -149,7 +149,7 @@ static INT_PTR APIENTRY rotateDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
         case WM_INITDIALOG:
 			{
 				MyFilterData *mfd = (MyFilterData *)lParam;
-				SetWindowLongPtr(hDlg, DWLP_USER, (LPARAM)mfd);
+				SetWindowLongPtrW(hDlg, DWLP_USER, (LPARAM)mfd);
 
 				switch(mfd->mode) {
 				case MODE_LEFT90:	CheckDlgButton(hDlg, IDC_ROTATE_LEFT, BST_CHECKED); break;
@@ -161,7 +161,7 @@ static INT_PTR APIENTRY rotateDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 
         case WM_COMMAND:                      
             if (LOWORD(wParam) == IDOK) {
-				MyFilterData *mfd = (struct MyFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+				MyFilterData* mfd = (struct MyFilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
 				if (IsDlgButtonChecked(hDlg, IDC_ROTATE_LEFT)) mfd->mode = MODE_LEFT90;
 				if (IsDlgButtonChecked(hDlg, IDC_ROTATE_RIGHT)) mfd->mode = MODE_RIGHT90;

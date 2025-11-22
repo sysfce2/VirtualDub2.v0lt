@@ -88,8 +88,9 @@ VDRTProfileDisplay::~VDRTProfileDisplay() {
 VDRTProfileDisplay *VDRTProfileDisplay::Create(HWND hwndParent, int x, int y, int cx, int cy, UINT id) {
 	HWND hwnd = CreateWindowW(g_szRTProfileDisplayControlName, L"", WS_VISIBLE|WS_CHILD, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
-	if (hwnd)
-		return (VDRTProfileDisplay *)GetWindowLongPtr(hwnd, 0);
+	if (hwnd) {
+		return (VDRTProfileDisplay*)GetWindowLongPtrW(hwnd, 0);
+	}
 
 	return NULL;
 }
@@ -112,7 +113,7 @@ ATOM RegisterRTProfileDisplayControl() {
 }
 
 IVDRTProfileDisplay *VDGetIRTProfileDisplayControl(HWND hwnd) {
-	return static_cast<IVDRTProfileDisplay *>(reinterpret_cast<VDRTProfileDisplay *>(GetWindowLongPtr(hwnd, 0)));
+	return static_cast<IVDRTProfileDisplay*>(reinterpret_cast<VDRTProfileDisplay*>(GetWindowLongPtrW(hwnd, 0)));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -131,25 +132,26 @@ void VDRTProfileDisplay::SetProfiler(VDRTProfiler *pProfiler) {
 /////////////////////////////////////////////////////////////////////////////
 
 LRESULT CALLBACK VDRTProfileDisplay::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDRTProfileDisplay *pThis = (VDRTProfileDisplay *)GetWindowLongPtr(hwnd, 0);
+	VDRTProfileDisplay* pThis = (VDRTProfileDisplay*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 	case WM_NCCREATE:
 		if (!(pThis = new_nothrow VDRTProfileDisplay(hwnd)))
 			return FALSE;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pThis);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
 		break;
 
 	case WM_NCDESTROY:
 		delete pThis;
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 
-	if (pThis)
+	if (pThis) {
 		return pThis->WndProc(msg, wParam, lParam);
-	else
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+	} else {
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
+	}
 }
 
 LRESULT VDRTProfileDisplay::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -182,7 +184,7 @@ LRESULT VDRTProfileDisplay::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 	case WM_GETDLGCODE:
 		return DLGC_WANTARROWS;
 	}
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDRTProfileDisplay::OnSize(int w, int h) {
@@ -191,7 +193,7 @@ void VDRTProfileDisplay::OnSize(int w, int h) {
 void VDRTProfileDisplay::OnPaint() {
 	PAINTSTRUCT ps;
 	if (HDC hdc = BeginPaint(mhwnd, &ps)) {
-		HBRUSH hbrBackground = (HBRUSH)GetClassLongPtr(mhwnd, GCLP_HBRBACKGROUND);
+		HBRUSH hbrBackground = (HBRUSH)GetClassLongPtrW(mhwnd, GCLP_HBRBACKGROUND);
 		HGDIOBJ hOldFont = 0;
 		if (mhfont)
 			hOldFont = SelectObject(hdc, mhfont);
@@ -366,7 +368,7 @@ namespace {
 	struct TestHarness {
 		TestHarness() {
 			RegisterRTProfileDisplayControl();
-			HWND foo = CreateWindow(RTPROFILEDISPLAYCONTROLCLASS, "Profile window", WS_OVERLAPPEDWINDOW|WS_VISIBLE, 0, 0, 400, 300, NULL, NULL, (HINSTANCE)GetModuleHandleW(nullptr), 0);
+			HWND foo = CreateWindowW(RTPROFILEDISPLAYCONTROLCLASS, L"Profile window", WS_OVERLAPPEDWINDOW|WS_VISIBLE, 0, 0, 400, 300, NULL, NULL, (HINSTANCE)GetModuleHandleW(nullptr), 0);
 			SendMessageW(foo, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
 
 			VDRTProfiler mProfiler;

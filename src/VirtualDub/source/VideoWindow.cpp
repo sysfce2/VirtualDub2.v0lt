@@ -148,7 +148,7 @@ ATOM RegisterVideoWindow() {
 }
 
 IVDVideoWindow *VDGetIVideoWindow(HWND hwnd) {
-	return (IVDVideoWindow *)(VDVideoWindow *)GetWindowLongPtr(hwnd, 0);
+	return (IVDVideoWindow*)(VDVideoWindow*)GetWindowLongPtrW(hwnd, 0);
 }
 
 VDVideoWindow::VDVideoWindow(HWND hwnd)
@@ -182,7 +182,7 @@ VDVideoWindow::VDVideoWindow(HWND hwnd)
 	, mbFullscreen(false)
 	, mpDisplay(NULL)
 {
-	SetWindowLongPtr(mhwnd, 0, (LONG_PTR)this);
+	SetWindowLongPtrW(mhwnd, 0, (LONG_PTR)this);
 
 	mSourcePARTextPattern = VDGetMenuItemTextByCommandW32(mhmenu, ID_DISPLAY_AR_PIXEL_SOURCE);
 	UpdateSourcePARMenuItem();
@@ -214,7 +214,7 @@ ATOM VDVideoWindow::RegisterControl() {
 	wc.lpszMenuName		= NULL;
 	wc.lpszClassName	= g_szVideoWindowClass;
 
-	return RegisterClass(&wc);
+	return RegisterClassW(&wc);
 }
 
 void VDVideoWindow::SetMouseTransparent(bool trans) {
@@ -263,7 +263,7 @@ void VDVideoWindow::ToggleFullscreen() {
 
 		NMHDR hdr;
 		hdr.hwndFrom = mhwnd;
-		hdr.idFrom = GetWindowLong(mhwnd, GWL_ID);
+		hdr.idFrom = GetWindowLongW(mhwnd, GWL_ID);
 		hdr.code = VWN_RESIZED;
 		SendMessageW(mhwndParent, WM_NOTIFY, (WPARAM)hdr.idFrom, (LPARAM)&hdr);
 
@@ -593,10 +593,10 @@ LRESULT CALLBACK VDVideoWindow::WndProcStatic(HWND hwnd, UINT msg, WPARAM wParam
 		if (!pvw)
 			return FALSE;
 	} else if (msg == WM_NCDESTROY) {
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 
-	return reinterpret_cast<VDVideoWindow *>(GetWindowLongPtr(hwnd, 0))->WndProc(msg, wParam, lParam);
+	return reinterpret_cast<VDVideoWindow*>(GetWindowLongPtrW(hwnd, 0))->WndProc(msg, wParam, lParam);
 }
 
 LRESULT VDVideoWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -614,7 +614,7 @@ LRESULT VDVideoWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 			delete this;
 
-			return DefWindowProc(hwnd, msg, wParam, lParam);
+			return DefWindowProcW(hwnd, msg, wParam, lParam);
 		}
 	case WM_NCHITTEST:
 		return mLastHitTest = HitTest((SHORT)LOWORD(lParam), (SHORT)HIWORD(lParam));
@@ -745,12 +745,12 @@ LRESULT VDVideoWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			if (!mbFullscreen) {
 				NMHDR hdr;
 				hdr.hwndFrom = mhwnd;
-				hdr.idFrom = GetWindowLong(mhwnd, GWL_ID);
+				hdr.idFrom = GetWindowLongW(mhwnd, GWL_ID);
 				hdr.code = VWN_RESIZED;
 				SendMessageW(GetParent(mhwnd), WM_NOTIFY, (WPARAM)hdr.idFrom, (LPARAM)&hdr);
 			}
 		}
-		break;		// explicitly pass this through to DefWindowProc for WM_SIZE and WM_MOVE
+		break;		// explicitly pass this through to DefWindowProcW for WM_SIZE and WM_MOVE
 
 	case WM_CONTEXTMENU:
 		OnContextMenu((sint16)LOWORD(lParam), (sint16)HIWORD(lParam));
@@ -763,7 +763,7 @@ LRESULT VDVideoWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 	case WM_GETMINMAXINFO:
 		{
 			MINMAXINFO& mmi = *(MINMAXINFO *)lParam;
-			DefWindowProc(mhwnd, msg, wParam, lParam);
+			DefWindowProcW(mhwnd, msg, wParam, lParam);
 
 			if (mmi.ptMinTrackSize.x < 9)
 				mmi.ptMinTrackSize.x = 9;
@@ -830,7 +830,7 @@ LRESULT VDVideoWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 		return TRUE;
 	}
 
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDVideoWindow::NCPaint(HRGN hrgn) {
@@ -845,7 +845,7 @@ void VDVideoWindow::NCPaint(HRGN hrgn) {
 	// succeed" flag. ^^;
 	//
 	// WINE's source code documents it as DCX_USESTYLE, which makes more sense,
-	// and that is the way WINE's DefWindowProc() handles WM_NCPAINT.  This is
+	// and that is the way WINE's DefWindowProcW() handles WM_NCPAINT. This is
 	// a cleaner solution than using DCX_CACHE, which also works but overrides
 	// CS_OWNDC and CS_PARENTDC.  I'm not going to argue with years of reverse
 	// engineering.
@@ -976,7 +976,7 @@ void VDVideoWindow::OnCommand(int cmd) {
 		if (!mbFullscreen){
 			NMHDR hdr;
 			hdr.hwndFrom = mhwnd;
-			hdr.idFrom = GetWindowLong(mhwnd, GWL_ID);
+			hdr.idFrom = GetWindowLongW(mhwnd, GWL_ID);
 			hdr.code = VWN_REPOSITION;
 			SendMessageW(GetParent(mhwnd), WM_NOTIFY, (WPARAM)hdr.idFrom, (LPARAM)&hdr);
 		}

@@ -175,8 +175,9 @@ bool guiCheckDialogs(LPMSG pMsg) {
 	while(pmdn_next = pmdn->NextFromHead()) {
 		if (hwndAncestor == pmdn->hdlg) {
 			if (pmdn->mhAccel)
-				if (TranslateAccelerator(pmdn->hdlg, pmdn->mhAccel, pMsg))
+				if (TranslateAcceleratorW(pmdn->hdlg, pmdn->mhAccel, pMsg)) {
 					return true;
+				}
 
 			if (pmdn->hook) {
 				if(pMsg->message>=WM_KEYFIRST && pMsg->message<=WM_KEYLAST) {
@@ -514,8 +515,8 @@ void guiResizeDlgItem(HWND hdlg, UINT id, LONG x, LONG y, LONG dx, LONG dy) {
 }
 
 void guiSubclassWindow(HWND hwnd, WNDPROC newproc) {
-	SetWindowLongPtr(hwnd, GWLP_USERDATA, GetWindowLongPtr(hwnd, GWLP_WNDPROC));
-	SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LPARAM)newproc);
+	SetWindowLongPtrW(hwnd, GWLP_USERDATA, GetWindowLongPtrW(hwnd, GWLP_WNDPROC));
+	SetWindowLongPtrW(hwnd, GWLP_WNDPROC, (LPARAM)newproc);
 }
 
 ///////////////////////////////////////
@@ -750,7 +751,7 @@ static BOOL CALLBACK ReposInitFunc(HWND hwnd, LPARAM lParam) {
 	const struct reposInitData *rid = (struct reposInitData *)lParam;
 	const struct ReposItem *lpri = rid->lpri;
 	POINT *lppt = rid->lppt;
-	UINT uiID = GetWindowLong(hwnd, GWL_ID);
+	UINT uiID = GetWindowLongW(hwnd, GWL_ID);
 	RECT rc;
 
 	while(lpri->uiCtlID) {
@@ -795,7 +796,7 @@ static BOOL CALLBACK ReposResizeFunc(HWND hwnd, LPARAM lParam) {
 	reposInitData *rid = (struct reposInitData *)lParam;
 	const ReposItem *lpri = rid->lpri;
 	POINT *lppt = rid->lppt;
-	UINT uiID = GetWindowLong(hwnd, GWL_ID);
+	UINT uiID = GetWindowLongW(hwnd, GWL_ID);
 	RECT rc;
 
 	while(lpri->uiCtlID) {
@@ -1111,18 +1112,19 @@ VDDialogBaseW32::~VDDialogBaseW32()
 }
 
 INT_PTR CALLBACK VDDialogBaseW32::StaticDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDDialogBaseW32 *pThis = (VDDialogBaseW32 *)GetWindowLongPtr(hwnd, DWLP_USER);
+	VDDialogBaseW32* pThis = (VDDialogBaseW32*)GetWindowLongPtrW(hwnd, DWLP_USER);
 
 	if (msg == WM_INITDIALOG) {
-		SetWindowLongPtr(hwnd, DWLP_USER, lParam);
+		SetWindowLongPtrW(hwnd, DWLP_USER, lParam);
 		pThis = (VDDialogBaseW32 *)lParam;
 		pThis->mhdlg = hwnd;
-	} else if (msg == WM_NCDESTROY) {
+	}
+	else if (msg == WM_NCDESTROY) {
 		if (pThis) {
 			bool deleteMe = pThis->PreNCDestroy();
 
 			pThis->mhdlg = NULL;
-			SetWindowLongPtr(hwnd, DWLP_USER, (LONG_PTR)(void *)NULL);
+			SetWindowLongPtrW(hwnd, DWLP_USER, (LONG_PTR)(void *)NULL);
 
 			if (deleteMe)
 				delete pThis;

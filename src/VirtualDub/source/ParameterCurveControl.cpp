@@ -167,7 +167,7 @@ bool VDRegisterParameterCurveControl() {
 }
 
 IVDUIParameterCurveControl *VDGetIUIParameterCurveControl(VDGUIHandle h) {
-	return vdpoly_cast<IVDUIParameterCurveControl *>((IVDUnknown *)GetWindowLongPtr((HWND)h, 0));
+	return vdpoly_cast<IVDUIParameterCurveControl*>((IVDUnknown*)GetWindowLongPtrW((HWND)h, 0));
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -269,7 +269,7 @@ void VDParameterCurveControlW32::SetPosition(VDPosition pos) {
 ///////////////////////////////////////////////////////////////////////////
 
 LRESULT APIENTRY VDParameterCurveControlW32::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDParameterCurveControlW32 *pcd = static_cast<VDParameterCurveControlW32 *>((IVDUnknown *)GetWindowLongPtr(hwnd, 0));
+	VDParameterCurveControlW32* pcd = static_cast<VDParameterCurveControlW32*>((IVDUnknown*)GetWindowLongPtrW(hwnd, 0));
 
 	switch(msg) {
 	case WM_NCCREATE:
@@ -277,17 +277,17 @@ LRESULT APIENTRY VDParameterCurveControlW32::StaticWndProc(HWND hwnd, UINT msg, 
 			return FALSE;
 
 		pcd->AddRef();
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)static_cast<IVDUnknown *>(pcd));
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)static_cast<IVDUnknown*>(pcd));
 		break;
 	case WM_NCDESTROY:
 		pcd->mhwnd = NULL;
 		pcd->Release();
-		SetWindowLongPtr(hwnd, 0, 0);
+		SetWindowLongPtrW(hwnd, 0, 0);
 		pcd = NULL;
 		break;
 	}
 
-	return pcd ? pcd->WndProc(msg, wParam, lParam) : DefWindowProc(hwnd, msg, wParam, lParam);
+	return pcd ? pcd->WndProc(msg, wParam, lParam) : DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 LRESULT CALLBACK VDParameterCurveControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -328,7 +328,7 @@ LRESULT CALLBACK VDParameterCurveControlW32::WndProc(UINT msg, WPARAM wParam, LP
 		return 0;
 	}
 
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDParameterCurveControlW32::OnCreate() {
@@ -772,7 +772,7 @@ void VDParameterCurveControlW32::OnSetCursor(HWND hwnd, UINT htCode, UINT msg) {
 void VDParameterCurveControlW32::Notify(UINT code) {
 	NMHDR nm;
 	nm.hwndFrom = mhwnd;
-	nm.idFrom	= GetWindowLong(mhwnd, GWL_ID);
+	nm.idFrom	= GetWindowLongW(mhwnd, GWL_ID);
 	nm.code		= code;
 	SendMessageW(GetParent(mhwnd), WM_NOTIFY, nm.idFrom, (LPARAM)&nm);
 }
@@ -976,9 +976,9 @@ void VDParameterCurveControlW32::InvalidateRange(VDParameterCurve::PointList::it
 void VDTestParameterCurveControl() {
 	VDRegisterParameterCurveControl();
 
-	HWND hwnd = CreateWindow(g_VDParameterCurveControlClass, "", WS_OVERLAPPEDWINDOW|WS_VISIBLE, 160, 1000, 800, 100, NULL, NULL, GetModuleHandleW(nullptr), NULL);
+	HWND hwnd = CreateWindowW(g_VDParameterCurveControlClass, L"", WS_OVERLAPPEDWINDOW|WS_VISIBLE, 160, 1000, 800, 100, NULL, NULL, GetModuleHandleW(nullptr), NULL);
 
-	VDParameterCurveControlW32 *p = (VDParameterCurveControlW32 *)GetWindowLongPtr(hwnd, 0);
+	VDParameterCurveControlW32* p = (VDParameterCurveControlW32*)GetWindowLongPtrW(hwnd, 0);
 
 	VDParameterCurve c;
 

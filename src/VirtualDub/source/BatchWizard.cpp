@@ -124,7 +124,7 @@ VDUIBatchWizard::~VDUIBatchWizard() {
 VDZINT_PTR VDUIBatchWizard::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARAM lParam) {
 	switch(msg) {
 	case WM_NOTIFY:
-		SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, mMsgDispatcher.Dispatch_WM_NOTIFY(wParam, lParam));
+		SetWindowLongPtrW(mhdlg, DWLP_MSGRESULT, mMsgDispatcher.Dispatch_WM_NOTIFY(wParam, lParam));
 		return TRUE;
 	}
 
@@ -132,7 +132,7 @@ VDZINT_PTR VDUIBatchWizard::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARAM lPa
 }
 
 LRESULT VDUIBatchWizard::ListProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDUIBatchWizard* p = (VDUIBatchWizard*)GetWindowLongPtr(hwnd,GWLP_USERDATA);
+	VDUIBatchWizard* p = (VDUIBatchWizard*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 	switch(msg) {
 	case WM_GETDLGCODE:
 		{
@@ -151,7 +151,7 @@ LRESULT VDUIBatchWizard::ListProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 		break;
 	}
 
-	return CallWindowProc(p->list_proc, hwnd, msg, wParam, lParam);
+	return CallWindowProcW(p->list_proc, hwnd, msg, wParam, lParam);
 }
 
 bool VDUIBatchWizard::OnLoaded() {
@@ -170,9 +170,9 @@ bool VDUIBatchWizard::OnLoaded() {
 
 	AddProxy(&mList, IDC_LIST);
 	mList.SetFullRowSelectEnabled(true);
-	list_proc = (WNDPROC)GetWindowLongPtr(GetDlgItem(mhdlg,IDC_LIST), GWLP_WNDPROC);
-	SetWindowLongPtr(GetDlgItem(mhdlg,IDC_LIST), GWLP_USERDATA, (LPARAM)this);
-	SetWindowLongPtr(GetDlgItem(mhdlg,IDC_LIST), GWLP_WNDPROC, (LPARAM)ListProc);
+	list_proc = (WNDPROC)GetWindowLongPtrW(GetDlgItem(mhdlg, IDC_LIST), GWLP_WNDPROC);
+	SetWindowLongPtrW(GetDlgItem(mhdlg, IDC_LIST), GWLP_USERDATA, (LPARAM)this);
+	SetWindowLongPtrW(GetDlgItem(mhdlg, IDC_LIST), GWLP_WNDPROC, (LPARAM)ListProc);
 
 	mList.InsertColumn(0, L"Source file", 100);
 	mList.InsertColumn(1, L"Output name", 100);

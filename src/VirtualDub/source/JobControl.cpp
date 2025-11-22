@@ -403,7 +403,7 @@ void VDJobQueue::Reload(VDJob *job) {
 	mbRunning	= true;
 	mbRunAllStop		= false;
 
-	bool wasEnabled = !(GetWindowLong(g_hwndJobs, GWL_STYLE) & WS_DISABLED);
+	bool wasEnabled = !(GetWindowLongW(g_hwndJobs, GWL_STYLE) & WS_DISABLED);
 	if (g_hwndJobs)
 		EnableWindow(g_hwndJobs, FALSE);
 

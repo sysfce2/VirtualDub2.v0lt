@@ -352,7 +352,7 @@ LRESULT VDUICaptureVideoHistogramW32::WndProc(UINT msg, WPARAM wParam, LPARAM lP
 
 			r.top += (unsigned)(r.bottom - r.top) >> 1;
 
-			FillRect(hdc, &r, (HBRUSH)GetClassLongPtr(mhwnd, GCLP_HBRBACKGROUND));
+			FillRect(hdc, &r, (HBRUSH)GetClassLongPtrW(mhwnd, GCLP_HBRBACKGROUND));
 		}
 		return TRUE;
 	}

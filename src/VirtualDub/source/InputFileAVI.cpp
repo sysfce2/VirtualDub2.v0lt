@@ -354,12 +354,12 @@ int InputFileAVIOptions::write(char *buf, int buflen) const {
 ///////
 
 INT_PTR APIENTRY InputFileAVIOptions::SetupDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
- 	InputFileAVIOptions *thisPtr = (InputFileAVIOptions *)GetWindowLongPtr(hDlg, DWLP_USER);
+	InputFileAVIOptions* thisPtr = (InputFileAVIOptions*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
 	switch(message) {
 		case WM_INITDIALOG:
 			thisPtr = (InputFileAVIOptions *)lParam;
-			SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 			SendDlgItemMessageW(hDlg, IDC_FORCE_FOURCC, EM_LIMITTEXT, 4, 0);
 			CheckDlgButton(hDlg, IDC_IF_NORMAL, BST_CHECKED);
 			CheckDlgButton(hDlg, IDC_AVI_INTERNALDECODER, thisPtr->opts.fInternalDecoder);

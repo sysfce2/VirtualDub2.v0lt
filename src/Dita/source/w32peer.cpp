@@ -122,7 +122,7 @@ HWND VDUIPeerW32::GetParentW32() const {
 }
 
 bool VDUIPeerW32::IsOwnerW32() const {
-	return !(GetWindowLong(mhwnd, GWL_STYLE) & WS_CHILD);
+	return !(GetWindowLongW(mhwnd, GWL_STYLE) & WS_CHILD);
 }
 
 void VDUIPeerW32::RegisterCallbackW32(VDUIPeerW32 *pChild) {

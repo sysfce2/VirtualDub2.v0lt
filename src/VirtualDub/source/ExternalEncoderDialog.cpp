@@ -788,8 +788,8 @@ bool VDUIDialogConfigureExternalEncoders::OnLoaded() {
 	AddProxy(&mListView, IDC_LIST);
 
 	HWND hwndTC = mTabControl.GetHandle();
-	SetWindowLongPtr(hwndTC, GWLP_USERDATA, GetWindowLongPtr(hwndTC, GWLP_WNDPROC));
-	SetWindowLongPtr(hwndTC, GWLP_WNDPROC, (LONG_PTR)TabSubclassProc);
+	SetWindowLongPtrW(hwndTC, GWLP_USERDATA, GetWindowLongPtrW(hwndTC, GWLP_WNDPROC));
+	SetWindowLongPtrW(hwndTC, GWLP_WNDPROC, (LONG_PTR)TabSubclassProc);
 
 	mListView.SetFullRowSelectEnabled(true);
 	mListView.InsertColumn(0, L"Name", 10);
@@ -1406,7 +1406,7 @@ void VDUIDialogConfigureExternalEncoders::ResortList() {
 }
 
 LRESULT CALLBACK VDUIDialogConfigureExternalEncoders::TabSubclassProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	WNDPROC wp = (WNDPROC)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	WNDPROC wp = (WNDPROC)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 
 	if (msg == WM_ERASEBKGND) {
 		HWND hwndParent = GetParent(hwnd);
@@ -1429,7 +1429,7 @@ LRESULT CALLBACK VDUIDialogConfigureExternalEncoders::TabSubclassProc(HWND hwnd,
 		}
 	}
 
-	return CallWindowProc(wp, hwnd, msg, wParam, lParam);
+	return CallWindowProcW(wp, hwnd, msg, wParam, lParam);
 }
 
 void VDUIDisplayDialogConfigureExternalEncoders(VDGUIHandle h) {

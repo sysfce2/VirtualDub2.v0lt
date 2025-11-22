@@ -444,7 +444,7 @@ INT_PTR VDDialogAudioFiltersW32::DlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 			{
 				const NMHDR& hdr = *(const NMHDR *)lParam;
 
-				if (GetWindowLong(hdr.hwndFrom, GWL_ID) == IDC_POSITION) {
+				if (GetWindowLongW(hdr.hwndFrom, GWL_ID) == IDC_POSITION) {
 					switch(hdr.code) {
 					case PCN_BEGINTRACK:
 						mbPreviewWasActive = false;

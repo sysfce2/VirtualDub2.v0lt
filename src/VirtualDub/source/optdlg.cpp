@@ -307,12 +307,12 @@ void AudioInterleaveDlgEnableStuff(HWND hDlg, BOOL en) {
 
 INT_PTR CALLBACK AudioInterleaveDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	DubOptions *dopt = (DubOptions *)GetWindowLongPtr(hDlg, DWLP_USER);
+	DubOptions* dopt = (DubOptions*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
     switch (message)
     {
         case WM_INITDIALOG:
-			SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 			dopt = (DubOptions *)lParam;
 
 			CheckDlgButton(hDlg, IDC_INTERLEAVE, dopt->audio.enabled);
@@ -1528,12 +1528,12 @@ void VDShowPerformanceDialog(VDGUIHandle hParent) {
 
 INT_PTR CALLBACK DynamicCompileOptionsDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	DubOptions *dopt = (DubOptions *)GetWindowLongPtr(hDlg, DWLP_USER);
+	DubOptions* dopt = (DubOptions*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
     switch (message)
     {
         case WM_INITDIALOG:
-			SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 			dopt = (DubOptions *)lParam;
 
 			CheckDlgButton(hDlg, IDC_ENABLE, dopt->perf.dynamicEnable);
@@ -2608,7 +2608,7 @@ void VDDialogFileTextInfoW32::ReinitDialog() {
 
 	mhwndList = hwndList;
 
-	SetWindowLong(mhwndList, GWL_STYLE, GetWindowLong(mhwndList, GWL_STYLE) | WS_CLIPCHILDREN);
+	SetWindowLongW(mhwndList, GWL_STYLE, GetWindowLongW(mhwndList, GWL_STYLE) | WS_CLIPCHILDREN);
 
 	LVCOLUMNW lvc;
 
@@ -2792,7 +2792,7 @@ INT_PTR VDDialogFileTextInfoW32::DlgProc(UINT message, WPARAM wParam, LPARAM lPa
 }
 
 LRESULT CALLBACK VDDialogFileTextInfoW32::LVStaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDDialogFileTextInfoW32 *p = (VDDialogFileTextInfoW32 *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	VDDialogFileTextInfoW32* p = (VDDialogFileTextInfoW32*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 
 	return p->LVWndProc(hwnd, msg, wParam, lParam);
 }
@@ -2868,7 +2868,7 @@ LRESULT VDDialogFileTextInfoW32::LVWndProc(HWND hwnd, UINT msg, WPARAM wParam, L
 }
 
 LRESULT CALLBACK VDDialogFileTextInfoW32::LVStaticEditProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDDialogFileTextInfoW32 *p = (VDDialogFileTextInfoW32 *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	VDDialogFileTextInfoW32* p = (VDDialogFileTextInfoW32*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 
 	return p->LVEditProc(hwnd, msg, wParam, lParam);
 }

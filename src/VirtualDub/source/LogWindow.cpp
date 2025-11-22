@@ -153,7 +153,7 @@ VDLogWindowControl *VDLogWindowControl::Create(HWND hwndParent, int x, int y, in
 	HWND hwnd = CreateWindowW(g_szLogWindowControlName, L"", WS_VISIBLE|WS_CHILD|WS_VSCROLL, x, y, cx, cy, hwndParent, (HMENU)(UINT_PTR)id, g_hInst, NULL);
 
 	if (hwnd)
-		return (VDLogWindowControl *)GetWindowLongPtr(hwnd, 0);
+		return (VDLogWindowControl*)GetWindowLongPtrW(hwnd, 0);
 
 	return NULL;
 }
@@ -176,7 +176,7 @@ ATOM RegisterLogWindowControl() {
 }
 
 IVDLogWindowControl *VDGetILogWindowControl(HWND hwnd) {
-	return static_cast<IVDLogWindowControl *>(reinterpret_cast<VDLogWindowControl *>(GetWindowLongPtr(hwnd, 0)));
+	return static_cast<IVDLogWindowControl*>(reinterpret_cast<VDLogWindowControl*>(GetWindowLongPtrW(hwnd, 0)));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -209,25 +209,26 @@ void VDLogWindowControl::AddEntry(int severity, const VDStringW& s) {
 /////////////////////////////////////////////////////////////////////////////
 
 LRESULT CALLBACK VDLogWindowControl::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	VDLogWindowControl *pThis = (VDLogWindowControl *)GetWindowLongPtr(hwnd, 0);
+	VDLogWindowControl* pThis = (VDLogWindowControl*)GetWindowLongPtrW(hwnd, 0);
 
 	switch(msg) {
 	case WM_NCCREATE:
 		if (!(pThis = new_nothrow VDLogWindowControl(hwnd)))
 			return FALSE;
 
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)pThis);
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
 		break;
 
 	case WM_NCDESTROY:
 		delete pThis;
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}
 
-	if (pThis)
+	if (pThis) {
 		return pThis->WndProc(msg, wParam, lParam);
-	else
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+	} else {
+		return DefWindowProcW(hwnd, msg, wParam, lParam);
+	}
 }
 
 LRESULT VDLogWindowControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -278,7 +279,7 @@ LRESULT VDLogWindowControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			TrackPopupMenu(GetSubMenu(mhmenu, 0), TPM_LEFTALIGN|TPM_TOPALIGN|TPM_RIGHTBUTTON, (short)LOWORD(lParam), (short)HIWORD(lParam), 0, mhwnd, NULL);
 		return 0;
 	}
-	return DefWindowProc(mhwnd, msg, wParam, lParam);
+	return DefWindowProcW(mhwnd, msg, wParam, lParam);
 }
 
 void VDLogWindowControl::OnSize(int w, int h) {
@@ -301,7 +302,7 @@ void VDLogWindowControl::OnSize(int w, int h) {
 void VDLogWindowControl::OnPaint() {
 	PAINTSTRUCT ps;
 	if (HDC hdc = BeginPaint(mhwnd, &ps)) {
-		HBRUSH hbrBackground = (HBRUSH)GetClassLongPtr(mhwnd, GCLP_HBRBACKGROUND);
+		HBRUSH hbrBackground = (HBRUSH)GetClassLongPtrW(mhwnd, GCLP_HBRBACKGROUND);
 		HGDIOBJ hOldFont = 0;
 		if (mhfont)
 			hOldFont = SelectObject(hdc, mhfont);
@@ -821,7 +822,7 @@ namespace {
 	struct TestHarness {
 		TestHarness() {
 			RegisterLogWindowControl();
-			HWND foo = CreateWindow(LOGWINDOWCONTROLCLASS, "Log window", WS_OVERLAPPEDWINDOW|WS_VISIBLE|WS_VSCROLL, 0, 0, 400, 300, NULL, NULL, (HINSTANCE)GetModuleHandleW(nullptr), 0);
+			HWND foo = CreateWindowW(LOGWINDOWCONTROLCLASS, L"Log window", WS_OVERLAPPEDWINDOW|WS_VISIBLE|WS_VSCROLL, 0, 0, 400, 300, NULL, NULL, (HINSTANCE)GetModuleHandleW(nullptr), 0);
 			SendMessageW(foo, WM_SETFONT, (WPARAM)GetStockObject(DEFAULT_GUI_FONT), TRUE);
 
 			MSG msg;

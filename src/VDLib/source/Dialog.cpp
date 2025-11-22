@@ -711,10 +711,10 @@ bool VDDialogFrameW32::PreNCDestroy() {
 }
 
 VDZINT_PTR VDZCALLBACK VDDialogFrameW32::StaticDlgProc(VDZHWND hwnd, VDZUINT msg, VDZWPARAM wParam, VDZLPARAM lParam) {
-	VDDialogFrameW32 *pThis = (VDDialogFrameW32 *)GetWindowLongPtr(hwnd, DWLP_USER);
+	VDDialogFrameW32* pThis = (VDDialogFrameW32*)GetWindowLongPtrW(hwnd, DWLP_USER);
 
 	if (msg == WM_INITDIALOG) {
-		SetWindowLongPtr(hwnd, DWLP_USER, lParam);
+		SetWindowLongPtrW(hwnd, DWLP_USER, lParam);
 		pThis = (VDDialogFrameW32 *)lParam;
 		pThis->mhdlg = hwnd;
 	} else if (msg == WM_NCDESTROY) {
@@ -722,7 +722,7 @@ VDZINT_PTR VDZCALLBACK VDDialogFrameW32::StaticDlgProc(VDZHWND hwnd, VDZUINT msg
 			bool deleteMe = pThis->PreNCDestroy();
 
 			pThis->mhdlg = NULL;
-			SetWindowLongPtr(hwnd, DWLP_USER, (LONG_PTR)(void *)NULL);
+			SetWindowLongPtrW(hwnd, DWLP_USER, (LONG_PTR)(void*)NULL);
 
 			if (deleteMe)
 				delete pThis;
@@ -766,11 +766,11 @@ VDZINT_PTR VDDialogFrameW32::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARAM lP
 				}
 			}
 
-			SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, mMsgDispatcher.Dispatch_WM_COMMAND(wParam, lParam));
+			SetWindowLongPtrW(mhdlg, DWLP_MSGRESULT, mMsgDispatcher.Dispatch_WM_COMMAND(wParam, lParam));
 			return TRUE;
 
 		case WM_NOTIFY:
-			SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, mMsgDispatcher.Dispatch_WM_NOTIFY(wParam, lParam));
+			SetWindowLongPtrW(mhdlg, DWLP_MSGRESULT, mMsgDispatcher.Dispatch_WM_NOTIFY(wParam, lParam));
 			return TRUE;
 
 		case WM_CLOSE:
@@ -794,16 +794,16 @@ VDZINT_PTR VDDialogFrameW32::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARAM lP
 			return 0;
 
 		case WM_HSCROLL:
-			OnHScroll(lParam ? GetWindowLong((HWND)lParam, GWL_ID) : 0, LOWORD(wParam));
+			OnHScroll(lParam ? GetWindowLongW((HWND)lParam, GWL_ID) : 0, LOWORD(wParam));
 			return 0;
 
 		case WM_VSCROLL:
-			OnVScroll(lParam ? GetWindowLong((HWND)lParam, GWL_ID) : 0, LOWORD(wParam));
+			OnVScroll(lParam ? GetWindowLongW((HWND)lParam, GWL_ID) : 0, LOWORD(wParam));
 			return 0;
 
 		case WM_ERASEBKGND:
 			if (OnErase((HDC)wParam)) {
-				SetWindowLongPtr(mhdlg, DWLP_MSGRESULT, TRUE);
+				SetWindowLongPtrW(mhdlg, DWLP_MSGRESULT, TRUE);
 				return TRUE;
 			}
 			break;
@@ -835,7 +835,7 @@ VDZINT_PTR VDDialogFrameW32::DlgProc(VDZUINT msg, VDZWPARAM wParam, VDZLPARAM lP
 				uint32 id = 0;
 
 				if (wParam)
-					id = GetWindowLong((HWND)wParam, GWL_ID);
+					id = GetWindowLongW((HWND)wParam, GWL_ID);
 
 				int x = (short)LOWORD(lParam);
 				int y = (short)HIWORD(lParam);

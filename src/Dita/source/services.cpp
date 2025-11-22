@@ -305,12 +305,12 @@ void VDClearFilespecSystemData() {
 
 struct VDGetFileNameHook {
 	static UINT_PTR CALLBACK HookFn(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam) {
-		VDGetFileNameHook *pThis = (VDGetFileNameHook *)GetWindowLongPtr(hdlg, DWLP_USER);
+		VDGetFileNameHook *pThis = (VDGetFileNameHook *)GetWindowLongPtrW(hdlg, DWLP_USER);
 
 		switch(uiMsg) {
 		case WM_INITDIALOG:
 			pThis = (VDGetFileNameHook *)(((const OPENFILENAMEW*)lParam)->lCustData);
-			SetWindowLongPtr(hdlg, DWLP_USER, (LONG_PTR)pThis);
+			SetWindowLongPtrW(hdlg, DWLP_USER, (LONG_PTR)pThis);
 			pThis->Init(hdlg);
 			return 0;
 
@@ -671,7 +671,7 @@ void VDSetLastLoadSaveFileName(long nKey, const wchar_t *fileName) {
 
 VDStringW OpenSave_GetFileName(HWND dlg) {
 	wchar_t buf[MAX_PATH];
-	CommDlg_OpenSave_GetSpec(GetParent(dlg),buf,MAX_PATH);
+	CommDlg_OpenSave_GetSpecW(GetParent(dlg), buf, MAX_PATH);
 	VDStringW s(buf);
 	if (s.length()>=2 && s[0]=='"') {
 		int x0 = 1;

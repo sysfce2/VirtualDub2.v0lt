@@ -656,13 +656,13 @@ long boxParamProc(VDXFilterActivation *fa, const VDXFilterFunctions *ff) {
 
 
 INT_PTR CALLBACK boxConfigDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {
-	BoxFilterData *mfd = (BoxFilterData *)GetWindowLongPtr(hdlg, DWLP_USER);
+	BoxFilterData* mfd = (BoxFilterData*)GetWindowLongPtrW(hdlg, DWLP_USER);
 	HWND hwndInit;
 	char buf[64];
 
 	switch(msg) {
 		case WM_INITDIALOG:
-			SetWindowLongPtr(hdlg, DWLP_USER, lParam);
+			SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 			mfd = (BoxFilterData *)lParam;
 
 			hwndInit = GetDlgItem(hdlg, IDC_SLIDER_WIDTH);

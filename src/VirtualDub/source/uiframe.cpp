@@ -168,7 +168,7 @@ void VDUIFrame::RestorePlacement(int nCmdShow) {
 LPARAM VDUIFrame::DefProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	VDASSERT(mNestCount);
 
-	// We decrement the nesting count here to allow DefWindowProc() to call DestroyWindow()
+	// We decrement the nesting count here to allow DefWindowProcW() to call DestroyWindow()
 	// without triggering our asserts. Otherwise, we think it is an unsafe detach.
 
 	--mNestCount;
@@ -212,15 +212,16 @@ bool VDUIFrame::TranslateAcceleratorMessage(MSG& msg) {
 
 	HWND hwnd = VDGetAncestorW32(msg.hwnd, GA_ROOT);
 
-	ATOM a = (ATOM)GetClassLongPtr(hwnd, GCW_ATOM);
+	ATOM a = (ATOM)GetClassLongPtrW(hwnd, GCW_ATOM);
 
 	if (a != sClass)
 		return false;
 
-	VDUIFrame *p = (VDUIFrame *)GetWindowLongPtr(hwnd, 0);
+	VDUIFrame* p = (VDUIFrame*)GetWindowLongPtrW(hwnd, 0);
 
-	if (p->mhAccel && TranslateAccelerator(hwnd, p->mhAccel, &msg))
+	if (p->mhAccel && TranslateAcceleratorW(hwnd, p->mhAccel, &msg)) {
 		return true;
+	}
 
 	// check for frame-specific intercept
 	if (p->mpClient) {
@@ -246,11 +247,13 @@ LRESULT CALLBACK VDUIFrame::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 
 	if (msg == WM_NCCREATE) {
 		p = new_nothrow VDUIFrame(hwnd);
-		if (!p)
+		if (!p) {
 			return FALSE;
-		SetWindowLongPtr(hwnd, 0, (LONG_PTR)p);
+		}
+		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)p);
 		p->mpDefWindowProc = IsWindowUnicode(hwnd) ? DefWindowProcW : DefWindowProcA;
-	} else if (p = (VDUIFrame *)GetWindowLongPtr(hwnd, 0)) {
+	}
+	else if (p = (VDUIFrame*)GetWindowLongPtrW(hwnd, 0)) {
 		switch (msg) {
 		case WM_DESTROY:
 			p->SavePlacement();
@@ -262,7 +265,7 @@ LRESULT CALLBACK VDUIFrame::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 			VDASSERT(sFrameList.find(p) != sFrameList.end());
 			sFrameList.erase(p);
 			p->mhwnd = NULL;
-			SetWindowLongPtr(hwnd, 0, NULL);
+			SetWindowLongPtrW(hwnd, 0, NULL);
 			if (!--p->mRefCount)
 				delete p;
 			p = NULL;
@@ -272,7 +275,7 @@ LRESULT CALLBACK VDUIFrame::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 			break;
 		case WM_SYSCOMMAND:
 			if (wParam == ID_SYSTEM_ALWAYSONTOP) {
-				bool isOnTop = (GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
+				bool isOnTop = (GetWindowLongW(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
 
 				if (isOnTop)
 					SetWindowPos(hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
@@ -284,7 +287,7 @@ LRESULT CALLBACK VDUIFrame::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 			break;
 		case WM_INITMENUPOPUP:
 			if (HIWORD(lParam)) {
-				VDCheckMenuItemByCommandW32((HMENU)wParam, ID_SYSTEM_ALWAYSONTOP, (GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0);
+				VDCheckMenuItemByCommandW32((HMENU)wParam, ID_SYSTEM_ALWAYSONTOP, (GetWindowLongW(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0);
 			}
 			break;
 
@@ -314,7 +317,7 @@ LRESULT CALLBACK VDUIFrame::StaticWndProc(HWND hwnd, UINT msg, WPARAM wParam, LP
 
 	if (p->mpClient) {
 		// This refcount prevents the object from going away if a destroy occurs from
-		// DefWindowProc(), so that the outgoing refcount adjustments in DefProc() don't
+		// DefWindowProcW(), so that the outgoing refcount adjustments in DefProc() don't
 		// trash memory.
 		++p->mRefCount;
 

@@ -711,7 +711,7 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 		"Bicubic - 4x4",
 	};
 
-	VDRotate2FilterData *mfd = (struct VDRotate2FilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+	VDRotate2FilterData* mfd = (struct VDRotate2FilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 	HWND hwndItem;
 
 	switch (message)
@@ -721,7 +721,7 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 				char buf[32];
 
 				mfd = (struct VDRotate2FilterData *)lParam;
-				SetWindowLongPtr(hDlg, DWLP_USER, lParam);
+				SetWindowLongPtrW(hDlg, DWLP_USER, lParam);
 
 				sprintf(buf, "%.3f", (double)mfd->angle * (360.0 / 4294967296.0));
 				SetDlgItemTextA(hDlg, IDC_ANGLE, buf);
@@ -809,7 +809,7 @@ static INT_PTR CALLBACK rotate2DlgProc( HWND hDlg, UINT message, WPARAM wParam, 
 			break;
 
 		case WM_CTLCOLORSTATIC:
-			if (GetWindowLong((HWND)lParam, GWL_ID) == IDC_COLOR)
+			if (GetWindowLongW((HWND)lParam, GWL_ID) == IDC_COLOR)
 				return (INT_PTR)mfd->hbrColor;
 			break;
 	}

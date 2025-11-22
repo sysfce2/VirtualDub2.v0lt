@@ -570,7 +570,7 @@ public:
 	static const UINT WM_EDIT_CHANGED = WM_USER+666;
 	static void edit_changed(HWND wnd)
 	{
-		WPARAM id = GetWindowLong(wnd,GWL_ID);
+		WPARAM id = GetWindowLongW(wnd,GWL_ID);
 		SendMessageW(GetParent(wnd),WM_EDIT_CHANGED,id,(LPARAM)wnd);
 	}
 
@@ -584,16 +584,16 @@ public:
 		}
 		if(msg==WM_KILLFOCUS) edit_changed(wnd);
 
-		WNDPROC p = (WNDPROC)GetWindowLongPtr(wnd,GWLP_USERDATA);
-		return CallWindowProc(p,wnd,msg,wparam,lparam);
+		WNDPROC p = (WNDPROC)GetWindowLongPtrW(wnd,GWLP_USERDATA);
+		return CallWindowProcW(p, wnd, msg, wparam, lparam);
 	}
 
 	void init_edit(int id)
 	{
 		HWND hWnd = GetDlgItem(mhdlg,id);
-		LPARAM p = GetWindowLongPtr(hWnd,GWLP_WNDPROC);
-		SetWindowLongPtr(hWnd,GWLP_USERDATA,p);
-		SetWindowLongPtr(hWnd,GWLP_WNDPROC,(LPARAM)EditWndProc);
+		LPARAM p = GetWindowLongPtrW(hWnd, GWLP_WNDPROC);
+		SetWindowLongPtrW(hWnd, GWLP_USERDATA, p);
+		SetWindowLongPtrW(hWnd, GWLP_WNDPROC, (LPARAM)EditWndProc);
 	}
 };
 

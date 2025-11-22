@@ -203,7 +203,7 @@ void VDDialogCaptureCropping::Layout() {
 
 	RECT rNew = { 0, 0, (rc.right - rc.left) + hborder*2, y + (rccancel.bottom - rccancel.top) + yPad };
 
-	AdjustWindowRect(&rNew, GetWindowLong(mhdlg, GWL_STYLE), FALSE);
+	AdjustWindowRect(&rNew, GetWindowLongW(mhdlg, GWL_STYLE), FALSE);
 
 	SetWindowPos(mhdlg, NULL, 0, 0, rNew.right - rNew.left, rNew.bottom - rNew.top, SWP_NOZORDER|SWP_NOACTIVATE|SWP_NOMOVE);
 	SetWindowPos(hwndCancel, NULL, rc.right - (rccancel.right-rccancel.left), y, 0,0,SWP_NOZORDER|SWP_NOACTIVATE|SWP_NOSIZE);

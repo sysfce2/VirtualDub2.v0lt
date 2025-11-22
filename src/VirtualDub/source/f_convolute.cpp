@@ -242,13 +242,13 @@ static INT_PTR CALLBACK convoluteDlgProc( HWND hDlg, UINT message, WPARAM wParam
 				for(i=0; i<9; i++)
 					SetDlgItemInt(hDlg, IDC_MATRIX_1+i, cfd->m[i], TRUE);
 
-				SetWindowLongPtr(hDlg, DWLP_USER, (LPARAM)cfd);
+				SetWindowLongPtrW(hDlg, DWLP_USER, (LPARAM)cfd);
 			}
             return (TRUE);
 
         case WM_COMMAND:
             if (LOWORD(wParam) == IDOK) {
-				struct ConvoluteFilterData *cfd = (struct ConvoluteFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+				struct ConvoluteFilterData* cfd = (struct ConvoluteFilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 
 				cfd->fClip = !!IsDlgButtonChecked(hDlg, IDC_ENABLE_CLIPPING);
 				cfd->bias = GetDlgItemInt(hDlg, IDC_BIAS, NULL, TRUE)*256 + 128;

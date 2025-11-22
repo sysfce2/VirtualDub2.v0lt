@@ -61,13 +61,13 @@ static INT_PTR CALLBACK embossDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 				CheckDlgButton(hDlg, IDC_DIR_MIDDLERIGHT+mfd->direction, TRUE);
 				CheckDlgButton(hDlg, IDC_ROUNDED, !!mfd->rounded);
 
-				SetWindowLongPtr(hDlg, DWLP_USER, (LPARAM)mfd);
+				SetWindowLongPtrW(hDlg, DWLP_USER, (LPARAM)mfd);
 			}
             return (TRUE);
 
         case WM_COMMAND:
             if (LOWORD(wParam) == IDOK) {
-				MyFilterData *mfd = (struct MyFilterData *)GetWindowLongPtr(hDlg, DWLP_USER);
+				MyFilterData* mfd = (struct MyFilterData*)GetWindowLongPtrW(hDlg, DWLP_USER);
 				int i;
 
 				mfd->height = SendMessageW(GetDlgItem(hDlg, IDC_HEIGHT), TBM_GETPOS, 0, 0);
