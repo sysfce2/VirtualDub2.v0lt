@@ -8,6 +8,7 @@ Set "activeCodePage=UTF-8" in the application manifest. This will add support fo
 API change: The VDXAudioEncDefinition structure has been replaced with VDXAudioEncDefinition2, whose mpDriverTagName field points to a wide string.
 Added the ability to load processing setting files (.vdscript) using drag-and-drop.
 Updated x264 video encoders (libx264 core 165 r3215 32c3b80). Thanks to autodidact from https://forum.videohelp.com/.
+Fixed display of video window in capture mode.
 Minor optimizations and cosmetic changes.
 
 
