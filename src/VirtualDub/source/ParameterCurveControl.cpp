@@ -991,9 +991,9 @@ void VDTestParameterCurveControl() {
 	p->SetCurve(&c);
 
 	MSG msg;
-	while(GetMessage(&msg, NULL, 0, 0)) {
+	while(GetMessageW(&msg, NULL, 0, 0)) {
 		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		DispatchMessageW(&msg);
 	}
 }
 

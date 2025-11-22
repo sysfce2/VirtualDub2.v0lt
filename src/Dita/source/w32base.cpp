@@ -195,7 +195,7 @@ int VDUIBaseWindowW32::DoModal() {
 
 	MSG msg;
 	while(mpModal) {
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+		if (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
 			if (msg.message == WM_QUIT) {
 				PostQuitMessage(msg.wParam);
 				break;
@@ -204,7 +204,7 @@ int VDUIBaseWindowW32::DoModal() {
 			if (IsDialogMessage(mhwnd, &msg))
 				continue;
 			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			DispatchMessageW(&msg);
 			continue;
 		}
 

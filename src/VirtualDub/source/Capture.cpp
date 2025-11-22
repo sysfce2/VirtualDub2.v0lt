@@ -2379,7 +2379,7 @@ unknown_PCM_format:
 				MSG msg;
 
 				for(;;) {
-					BOOL result = GetMessage(&msg, NULL, 0, 0);
+					BOOL result = GetMessageW(&msg, NULL, 0, 0);
 
 					if (result == (BOOL)-1)
 						break;
@@ -2394,7 +2394,7 @@ unknown_PCM_format:
 
 					if (!guiCheckDialogs(&msg) && !VDUIFrame::TranslateAcceleratorMessage(msg)) {
 						TranslateMessage(&msg);
-						DispatchMessage(&msg);
+						DispatchMessageW(&msg);
 					}
 				}
 			}
@@ -3207,7 +3207,7 @@ void VDCaptureData::ThreadRun() {
 	for(;;) {
 		bool fSuccess = false;
 
-		while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+		while(PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
 			if (msg.message == VDCM_EXIT)
 				return;
 			else if (msg.message == VDCM_SWITCH_FIN) {

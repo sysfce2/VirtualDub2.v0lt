@@ -940,7 +940,7 @@ bool JobRunList() {
 	while(g_VDJobQueue.IsRunAllInProgress()) {
 		MSG msg;
 
-		while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
+		while (PeekMessageW(&msg, 0, 0, 0, PM_REMOVE)) {
 			if (msg.message == WM_QUIT) {
 				g_VDJobQueue.RunAllStop();
 				PostQuitMessage(msg.wParam);
@@ -954,7 +954,7 @@ bool JobRunList() {
 				continue;
 
 			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			DispatchMessageW(&msg);
 		}
 
 		if (!JobPollAutoRun()) {

@@ -4914,12 +4914,12 @@ bool VDProjectUI::UIRunDubMessageLoop() {
 			// process until posted buffers are actually painted on screen
 		}
 
-		if(!PeekMessage(&msg,0,0,0,PM_NOREMOVE)){
+		if(!PeekMessageW(&msg,0,0,0,PM_NOREMOVE)){
 			WaitMessage();
 		}
 
-		while(PeekMessage(&msg,0,0,0,PM_NOREMOVE)){
-			BOOL result = GetMessage(&msg, (HWND) NULL, 0, 0);
+		while(PeekMessageW(&msg,0,0,0,PM_NOREMOVE)){
+			BOOL result = GetMessageW(&msg, (HWND) NULL, 0, 0);
 
 			if (result == (BOOL)-1)
 				break;
@@ -4936,7 +4936,7 @@ bool VDProjectUI::UIRunDubMessageLoop() {
 				continue;
 
 			::TranslateMessage(&msg);
-			::DispatchMessage(&msg);
+			::DispatchMessageW(&msg);
 		}
 	}
 

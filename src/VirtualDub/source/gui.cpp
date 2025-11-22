@@ -141,7 +141,7 @@ void guiOpenDebug() {
 bool guiDlgMessageLoop(HWND hDlg, int *errorCode) {
 	MSG msg;
 
-	while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+	while(PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
 		if (msg.message == WM_QUIT) {
 			if (errorCode)
 				*errorCode = msg.wParam;
@@ -150,7 +150,7 @@ bool guiDlgMessageLoop(HWND hDlg, int *errorCode) {
 
 		if (!hDlg || !IsWindow(hDlg) || !IsDialogMessage(hDlg, &msg)) {
 			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			DispatchMessageW(&msg);
 		}
 	}
 
@@ -201,7 +201,7 @@ bool guiCheckDialogs(LPMSG pMsg) {
 					}
 
 					TranslateMessage(pMsg);
-					DispatchMessage(pMsg);
+					DispatchMessageW(pMsg);
 					return true;
 				} else {
 					if (pMsg->message==WM_KEYDOWN) {

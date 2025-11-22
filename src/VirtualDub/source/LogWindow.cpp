@@ -826,15 +826,15 @@ namespace {
 
 			MSG msg;
 #if 0
-			while(GetMessage(&msg, 0, 0, 0)) {
+			while(GetMessageW(&msg, 0, 0, 0)) {
 				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				DispatchMessageW(&msg);
 			}
 #else
 			for(;;) {
-				while(PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
+				while(PeekMessageW(&msg, 0, 0, 0, PM_REMOVE)) {
 					TranslateMessage(&msg);
-					DispatchMessage(&msg);
+					DispatchMessageW(&msg);
 				}
 				static DWORD dwLastTime = 0;
 				DWORD dwCurTime = GetTickCount()/100;

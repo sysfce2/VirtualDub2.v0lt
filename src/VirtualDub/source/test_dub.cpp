@@ -25,12 +25,12 @@
 namespace {
 	bool pump() {
 		MSG msg;
-		while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
+		while (PeekMessageW(&msg, 0, 0, 0, PM_REMOVE)) {
 			if (msg.message == WM_QUIT)
 				return false;
 
 			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			DispatchMessageW(&msg);
 		}
 
 		return true;

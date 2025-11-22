@@ -2888,7 +2888,7 @@ void VDProject::RunOperation(IVDDubberOutputSystem *pOutputSystem, VideoOperatio
 		else {
 			MSG msg;
 			while(g_dubber->isRunning()) {
-				BOOL result = GetMessage(&msg, NULL, 0, 0);
+				BOOL result = GetMessageW(&msg, NULL, 0, 0);
 
 				if (result == (BOOL)-1)
 					break;
@@ -2899,7 +2899,7 @@ void VDProject::RunOperation(IVDDubberOutputSystem *pOutputSystem, VideoOperatio
 				}
 
 				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				DispatchMessageW(&msg);
 			}
 		}
 

@@ -406,7 +406,7 @@ bool VDAudioCodecW32::Convert(bool flush, bool requireOutput) {
 	MSG msg;
 	int messageCount = 0;
 	for(; messageCount < 500; ++messageCount) {
-		if (!PeekMessage(&msg, (HWND)-1, MM_STREAM_DONE, MM_STREAM_DONE, PM_REMOVE | PM_NOYIELD))
+		if (!PeekMessageW(&msg, (HWND)-1, MM_STREAM_DONE, MM_STREAM_DONE, PM_REMOVE | PM_NOYIELD))
 			break;
 	}
 

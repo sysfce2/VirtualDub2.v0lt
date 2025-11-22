@@ -977,7 +977,7 @@ LRESULT VDVideoDisplayWindow::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 	case MYWM_PROCESSNEXTFRAME:
 		{
 			MSG msg;
-			BOOL have_input = PeekMessage(&msg,0,0,0,PM_NOREMOVE|PM_QS_INPUT);
+			BOOL have_input = PeekMessageW(&msg,0,0,0,PM_NOREMOVE|PM_QS_INPUT);
 			if(have_input)
 				SetTimer(mhwnd,kProcessNextFrameId,0,0);
 			else

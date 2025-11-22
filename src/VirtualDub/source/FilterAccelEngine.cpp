@@ -129,9 +129,9 @@ void VDFilterAccelEngineDispatchQueue::Run(VDScheduler *sch) {
 					break;
 
 				MSG msg;
-				while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+				while(PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE)) {
 					TranslateMessage(&msg);
-					DispatchMessage(&msg);
+					DispatchMessageW(&msg);
 				}
 			}
 
@@ -230,9 +230,9 @@ void VDFilterAccelEngineDispatchQueue::Wait(Message *msg, VDFilterAccelEngineDis
 		DWORD waitResult = ::MsgWaitForMultipleObjects(n, h, FALSE, INFINITE, QS_SENDMESSAGE);
 		if (waitResult == WAIT_OBJECT_0 + n) {
 			MSG msg;
-			while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE | PM_QS_SENDMESSAGE)) {
+			while(PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE | PM_QS_SENDMESSAGE)) {
 				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				DispatchMessageW(&msg);
 			}
 
 			continue;

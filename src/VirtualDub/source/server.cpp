@@ -306,7 +306,7 @@ void Frameserver::Go(IVDubServerLink *ivdsl, char *name) {
 				MSG msg;
 
 				while(!mbExit) {
-					BOOL result = GetMessage(&msg, NULL, 0, 0);
+					BOOL result = GetMessageW(&msg, NULL, 0, 0);
 
 					if (result == (BOOL)-1)
 						break;
@@ -317,7 +317,7 @@ void Frameserver::Go(IVDubServerLink *ivdsl, char *name) {
 					}
 
 					TranslateMessage(&msg);
-					DispatchMessage(&msg);
+					DispatchMessageW(&msg);
 				}
 			}
 

@@ -145,7 +145,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	bool bCommandLineProcessed = false;
 
 	for(;;) {
-		while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
+		while (PeekMessageW(&msg, 0, 0, 0, PM_REMOVE)) {
 			if (msg.message == WM_QUIT) {
 				PostQuitMessage(msg.wParam);
 				goto wm_quit_detected;
@@ -158,7 +158,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 				continue;
 
 			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			DispatchMessageW(&msg);
 		}
 
 		if (!bCommandLineProcessed) {

@@ -88,7 +88,7 @@ void ProgressDialog::check() {
 
 	dwLastTime = dwTime;
 
-	while(PeekMessage(&msg, mhwndParent ? NULL : hwndDialog, 0, 0, PM_REMOVE)) {
+	while(PeekMessageW(&msg, mhwndParent ? NULL : hwndDialog, 0, 0, PM_REMOVE)) {
 		if (msg.message == WM_QUIT && fAbortEnabled) {
 			PostQuitMessage(msg.wParam);
 			throw MyUserAbortError();
@@ -96,7 +96,7 @@ void ProgressDialog::check() {
 
 		if (!IsWindow(hwndDialog) || !IsDialogMessage(hwndDialog, &msg)) {
 			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			DispatchMessageW(&msg);
 		}
 	}
 
