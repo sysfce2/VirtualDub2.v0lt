@@ -393,8 +393,6 @@ protected:
 	} mPreviewRestartMode;
 	VDPosition mPreviewRestartPosition;
 
-	//vdblock<uint>	mVideoSampleBuffer;
-
 	VDFraction		mVideoInputFrameRate;
 	VDFraction		mVideoOutputFrameRate;
 	VDFraction		mVideoTimelineFrameRate;

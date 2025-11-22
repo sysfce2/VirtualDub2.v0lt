@@ -223,7 +223,7 @@ public:
 
 protected:
 	uint32				mSampleSize;
-	VDRingBuffer<char>	mBuffer;
+	VDRingBuffer<uint8>	mBuffer;
 	VDSignal			msigRead;
 	VDSignal			msigWrite;
 	bool				mbVBRModeEnabled;

@@ -412,7 +412,7 @@ void VDAudioPipeline::Shutdown() {
 }
 
 int VDAudioPipeline::ReadPartial(void *pBuffer, int bytes) {
-	int actual = mBuffer.Read((char *)pBuffer, bytes);
+	int actual = mBuffer.Read((uint8*)pBuffer, bytes);
 
 	if (actual)
 		msigRead.signal();

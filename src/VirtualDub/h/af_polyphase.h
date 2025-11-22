@@ -44,8 +44,6 @@ protected:
 	int mFIRBufferWritePoint;
 	int mFIRBufferLimit;
 	int mMaxQuantum;
-
-	VDRingBuffer<char>		mOutputBuffer;
 };
 
 class VDAudioFilterPolyphase : public VDAudioFilterBase {
@@ -69,8 +67,6 @@ protected:
 	int mFIRBufferChannelStride;
 	int mFIRBufferPoint;
 	int mFIRBufferLimit;
-
-	VDRingBuffer<char>		mOutputBuffer;
 
 	uint64		mRatio;		// 32:32
 };

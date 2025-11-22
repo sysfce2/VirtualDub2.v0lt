@@ -187,7 +187,7 @@ protected:
 	vdfastvector<char, vdaligned_alloc<char> >		mFilterData;
 	vdblock<VDAudioFilterPin *>		mPinPtrs;
 	std::vector<VDAudioFilterPinImpl>	mPins;
-	std::vector<VDRingBuffer<char> > mOutputBuffers;
+	std::vector<VDRingBuffer<uint8>> mOutputBuffers;
 
 	VDStringA	mDebugName;
 
@@ -603,12 +603,12 @@ uint32 VDAudioFilterInstance::ReadData(unsigned nPin, void *dst, uint32 samples,
 		const int srcFormat = pin.GetFormat();
 
 		if (srcFormat == nFormat || nFormat == kVFARead_Native) {
-			VDRingBuffer<char>& buffer = mOutputBuffers[nPin];
+			VDRingBuffer<uint8>& buffer = mOutputBuffers[nPin];
 
 			actual = std::min<uint32>(samples, buffer.getLevel() / format.mBlockSize);
 
 			if (dst) {
-				buffer.Read((char *)dst, actual * format.mBlockSize);
+				buffer.Read((uint8*)dst, actual * format.mBlockSize);
 				pin.mCurrentLevel = buffer.getLevel() / format.mBlockSize;
 			}
 		} else if (pin.GetFormat() != kVFARead_Native) {
@@ -620,7 +620,7 @@ uint32 VDAudioFilterInstance::ReadData(unsigned nPin, void *dst, uint32 samples,
 			const uint32 dblksize	= sBlkSize[nFormat] * ch;
 
 			const tpVDConvertPCMVtbl vtbl = VDGetPCMConversionVtable();
-			VDRingBuffer<char>& buffer = mOutputBuffers[nPin];
+			VDRingBuffer<uint8>& buffer = mOutputBuffers[nPin];
 
 			uint32 left = samples;
 			while(left > 0) {
@@ -639,7 +639,7 @@ uint32 VDAudioFilterInstance::ReadData(unsigned nPin, void *dst, uint32 samples,
 
 				left -= actual;
 				total += actual;
-				dst = (char *)dst + dblksize * actual;
+				dst = (uint8*)dst + dblksize * actual;
 			}
 
 			actual = total;
@@ -789,7 +789,7 @@ bool VDAudioFilterInstance::Service() {
 
 	for(int j=0; j<mpDefinition->mOutputPins; ++j) {
 		VDAudioFilterPinImpl& outpin = OutputPin(j);
-		VDRingBuffer<char>& buffer = mOutputBuffers[j];
+		VDRingBuffer<uint8>& buffer = mOutputBuffers[j];
 
 		outpin.mbEnded = mbEnded;
 
@@ -892,7 +892,7 @@ void VDAudioFilterInstance::DumpStatus() {
 	VDDEBUG2("        Filter \"%s\":\n", mDebugName.c_str());
 
 	for(unsigned j=0; j<mpDefinition->mOutputPins; ++j) {
-		const VDRingBuffer<char>& buffer = mOutputBuffers[j];
+		const VDRingBuffer<uint8>& buffer = mOutputBuffers[j];
 		const VDAudioFilterPinImpl& pin = OutputPin(j);
 
 		VDDEBUG2("            Output pin %d: %d/%d bytes (%s)\n", j, buffer.getLevel(), buffer.getSize(), pin.mbEnded ? "ended" : "active");

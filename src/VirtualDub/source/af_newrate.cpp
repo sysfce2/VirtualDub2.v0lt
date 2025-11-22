@@ -99,7 +99,6 @@ public:
 	void *GetConfigPtr() { return &mConfig; }
 
 	VDAudioFilterNewRateConfig	mConfig;
-	VDRingBuffer<char>			mOutputBuffer;
 	VDFraction					mRatio;
 };
 
@@ -153,7 +152,6 @@ uint32 VDAudioFilterNewRate::Run() {
 }
 
 sint64 VDAudioFilterNewRate::Seek(sint64 us) {
-	mOutputBuffer.Flush();
 	mpContext->mpOutputs[0]->mCurrentLevel = 0;
 	return mRatio.scale64r(us);
 }

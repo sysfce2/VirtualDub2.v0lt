@@ -38,7 +38,7 @@ public:
 	sint64 GetLength();
 	bool IsEnded();
 
-	VDRingBuffer<char> mOutputBuffer;
+	VDRingBuffer<uint8> mOutputBuffer;
 };
 
 VDAudioFilterSink::VDAudioFilterSink()
@@ -66,7 +66,7 @@ uint32 VDAudioFilterSink::Run() {
 
 	int samples;
 
-	char *dst = mOutputBuffer.LockWrite(mOutputBuffer.getSize(), samples);
+	uint8* dst = mOutputBuffer.LockWrite(mOutputBuffer.getSize(), samples);
 
 	samples /= format.mBlockSize;
 
@@ -89,7 +89,7 @@ uint32 VDAudioFilterSink::ReadSamples(void *dst, uint32 samples) {
 	samples = std::min<uint32>(samples, mOutputBuffer.getLevel() / format.mBlockSize);
 
 	if (dst) {
-		mOutputBuffer.Read((char *)dst, samples * format.mBlockSize);
+		mOutputBuffer.Read((uint8*)dst, samples * format.mBlockSize);
 		if (samples > 0)
 			mpContext->mpAudioCallbacks->Wake(mpContext);
 	}
