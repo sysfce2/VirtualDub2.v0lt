@@ -496,7 +496,7 @@ public:
 		return tmp;
 	}
 
-	vdlist_iterator& operator--(int) {
+	vdlist_iterator operator--(int) {
 		vdlist_iterator tmp(*this);
 		mp = mp->mListNodePrev;
 		return tmp;
