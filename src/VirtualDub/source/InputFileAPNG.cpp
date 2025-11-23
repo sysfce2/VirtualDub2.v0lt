@@ -1,21 +1,13 @@
-//	VirtualDub - Video processing and capture application
-//	Copyright (C) 1998-2009 Avery Lee
+// VirtualDub - Video processing and capture application
 //
-//	Animated PNG support by Max Stepin
+// Copyright (C) 1998-2009 Avery Lee
+// Copyright (C) 2016-2020 Anton Shekhovtsov
+// Copyright (C) 2025 v0lt
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+// Animated PNG support by Max Stepin
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+// SPDX-License-Identifier: GPL-2.0-or-later
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "stdafx.h"
 
@@ -1178,7 +1170,7 @@ INT_PTR APIENTRY VDInputFileAPNG::_InfoDlgProc( HWND hDlg, UINT message, WPARAM 
 					char *s;
 					VDVideoSourceAPNG *pvs = static_cast<VDVideoSourceAPNG *>(&*pInfo->mpVideo);
 
-					sprintf(buf, "%dx%d, %.3f fps (%ld µs)",
+					sprintf(buf, "%dx%d, %.3f fps (%ld ï¿½s)",
 								pvs->getImageFormat()->biWidth,
 								pvs->getImageFormat()->biHeight,
 								pvs->getRate().asDouble(),

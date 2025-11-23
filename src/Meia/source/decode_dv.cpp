@@ -1,20 +1,12 @@
-//	VirtualDub - Video processing and capture application
-//	Video decoding library
-//	Copyright (C) 1998-2004 Avery Lee
+// VirtualDub - Video processing and capture application
+// Video decoding library
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+// Copyright (C) 1998-2004 Avery Lee
+// Copyright (C) 2016 Anton Shekhovtsov
+// Copyright (C) 2024-2025 v0lt
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+// SPDX-License-Identifier: GPL-2.0-or-later
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/debug.h>
@@ -598,7 +590,7 @@ output:
 }
 
 #if defined(NDEBUG) && defined(_M_AMD64) && _MSC_VER >= 1930 && _MSC_VER <= 1943
-// Îptimization of this function for x64 does not work correctly.
+// ï¿½ptimization of this function for x64 does not work correctly.
 // The issue has been confirmed for Visual Studio 2022 17.10.5 and 17.11.4.
 // The issue was not detected in Visual Studio 2022 17.14.10.
 #pragma optimize("", off)
