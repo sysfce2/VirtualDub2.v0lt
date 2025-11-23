@@ -4598,6 +4598,7 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 		848,
 		960,
 		1280,
+		1920,
 	};
 
 	static const int s_heights[]={
@@ -4612,6 +4613,8 @@ static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM 
 		576,
 		600,
 		720,
+		960,
+		1080,
 	};
 
 #define RV(x) ((((x)>>24)&0xff) | (((x)>>8)&0xff00) | (((x)<<8)&0xff0000) | (((x)<<24)&0xff000000))
