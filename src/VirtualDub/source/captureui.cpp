@@ -4583,33 +4583,35 @@ INT_PTR VDCaptureProjectUI::PanelDlgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 static INT_PTR CALLBACK CaptureCustomVidSizeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 	static const int s_widths[]={
-		160,
-		176,
-		180,
-		192,
-		240,
 		320,
 		352,
 		360,
 		384,
 		400,
+		424,
 		480,
 		640,
 		704,
 		720,
 		768,
+		800,
+		848,
+		960,
+		1280,
 	};
 
 	static const int s_heights[]={
-		120,
-		144,
-		180,
 		240,
 		288,
 		300,
 		360,
+		448,
 		480,
+		540,
+		544,
 		576,
+		600,
+		720,
 	};
 
 #define RV(x) ((((x)>>24)&0xff) | (((x)>>8)&0xff00) | (((x)<<8)&0xff0000) | (((x)<<24)&0xff000000))
