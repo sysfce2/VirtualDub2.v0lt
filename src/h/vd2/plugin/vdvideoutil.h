@@ -1,3 +1,11 @@
+// VirtualDub - Video processing and capture application
+// Plugin headers
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: Zlib
+//
+
 #ifndef f_VD2_PLUGIN_VDVIDEOUTIL_H
 #define f_VD2_PLUGIN_VDVIDEOUTIL_H
 

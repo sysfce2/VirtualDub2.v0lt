@@ -1,3 +1,12 @@
+// VirtualDub - Video processing and capture application
+// System library component
+//
+// Copyright (C) 2013 Avery Lee
+// Copyright (C) 2023 v0lt
+//
+// SPDX-License-Identifier: Zlib
+//
+
 #include <stdafx.h>
 #include <vd2/system/process.h>
 #include <vd2/system/VDString.h>

@@ -1,3 +1,10 @@
+// Sylia is scripting language for the scripting/job system in VirtualDub
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #include <assert.h>
 #include <stddef.h>
 #include <malloc.h>

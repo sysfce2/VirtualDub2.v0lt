@@ -1,3 +1,11 @@
+// VirtualDub - Video processing and capture application
+// System library component
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: Zlib
+//
+
 class vdint2 {
 public:
 	typedef vdint2 self_type;

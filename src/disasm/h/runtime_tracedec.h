@@ -1,3 +1,10 @@
+// disasm - Disassembly module compiler for VirtualDub
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #ifndef f_VD2_DISASM_RUNTIME_TRACEDEC_H
 #define f_VD2_DISASM_RUNTIME_TRACEDEC_H
 

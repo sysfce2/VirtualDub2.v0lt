@@ -1,3 +1,10 @@
+// VirtualDub - Video processing and capture application
+//
+// Copyright (C) 2016-2019 Anton Shekhovtsov
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #ifndef TOOL_H
 #define TOOL_H
 

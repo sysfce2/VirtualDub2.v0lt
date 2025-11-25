@@ -1,3 +1,11 @@
+// VirtualDub - Video processing and capture application
+// System library component
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: Zlib
+//
+
 class vdfloat2 {
 public:
 	typedef vdfloat2 self_type;

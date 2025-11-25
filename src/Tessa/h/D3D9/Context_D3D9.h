@@ -1,3 +1,12 @@
+// VirtualDub - Video processing and capture application
+// 3D acceleration library
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
+//
+
 #ifndef f_D3D9_CONTEXT_D3D9_H
 #define f_D3D9_CONTEXT_D3D9_H
 

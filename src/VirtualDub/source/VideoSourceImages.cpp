@@ -1,3 +1,12 @@
+// VirtualDub - Video processing and capture application
+//
+// Copyright (C) 2013 Avery Lee
+// Copyright (C) 2015-2019 Anton Shekhovtsov
+// Copyright (C) 2025 v0lt
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #include "stdafx.h"
 #include <ctype.h>
 
@@ -95,7 +104,7 @@ INT_PTR APIENTRY VDInputFileImages::_InfoDlgProc( HWND hDlg, UINT message, WPARA
 				VideoSourceImages *pvs = (VideoSourceImages *)lParam;
 				char *s;
 
-				sprintf(buf, "%dx%d, %.3f fps (%ld µs)",
+				sprintf(buf, "%dx%d, %.3f fps (%ld ï¿½s)",
 							pvs->getImageFormat()->biWidth,
 							pvs->getImageFormat()->biHeight,
 							pvs->getRate().asDouble(),

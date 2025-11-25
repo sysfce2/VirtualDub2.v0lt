@@ -1,3 +1,10 @@
+// Lina - HTML compiler for VirtualDub help system
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #ifndef f_LINA_PARSER_H
 #define f_LINA_PARSER_H
 

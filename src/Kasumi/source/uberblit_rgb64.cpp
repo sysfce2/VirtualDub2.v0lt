@@ -1,3 +1,11 @@
+// VirtualDub - Video processing and capture application
+// Graphics support library
+//
+// Copyright (C) 2015-2019 Anton Shekhovtsov
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #include <stdafx.h>
 #include <vd2/system/math.h>
 #include <vd2/Kasumi/pixmaputils.h>

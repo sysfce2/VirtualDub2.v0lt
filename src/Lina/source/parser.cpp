@@ -1,3 +1,11 @@
+// Lina - HTML compiler for VirtualDub help system
+//
+// Copyright (C) 2013 Avery Lee
+// Copyright (C) 2024 v0lt
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #pragma warning(disable: 4786)	// STFU
 
 #include <string>

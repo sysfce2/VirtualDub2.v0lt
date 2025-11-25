@@ -1,3 +1,11 @@
+// VirtualDub - Video processing and capture application
+//
+// Copyright (C) 2013 Avery Lee
+// Copyright (C) 2018 Anton Shekhovtsov
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #ifndef f_VD2_VDLIB_UIPROXIES_H
 #define f_VD2_VDLIB_UIPROXIES_H
 

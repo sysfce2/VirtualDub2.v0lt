@@ -1,3 +1,10 @@
+// TIFF image decoder
+//
+// Copyright (C) 2015-2016 Anton Shekhovtsov
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #ifndef tiff_image_h
 #define tiff_image_h
 

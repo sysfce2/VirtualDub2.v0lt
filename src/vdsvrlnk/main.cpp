@@ -1,3 +1,12 @@
+// VirtualDub - Video processing and capture application
+//
+// Copyright (C) 2013 Avery Lee
+// Copyright (C) 2016 Anton Shekhovtsov
+// Copyright (C) 2025 v0lt
+//
+// SPDX-License-Identifier: Zlib
+//
+
 #include <crtdbg.h>
 
 #include <windows.h>

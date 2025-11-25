@@ -1,3 +1,11 @@
+// VirtualDub - Video processing and capture application
+// Graphics support library
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #include "resample_stages_x64.h"
 
 extern "C" long vdasm_resize_table_col_SSE2(uint32 *out, const uint32 *const*in_table, const int *filter, int filter_width, uint32 w);

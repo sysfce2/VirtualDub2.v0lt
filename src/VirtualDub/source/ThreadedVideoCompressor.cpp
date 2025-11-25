@@ -1,3 +1,11 @@
+// VirtualDub - Video processing and capture application
+//
+// Copyright (C) 2013 Avery Lee
+// Copyright (C) 2016-2018 Anton Shekhovtsov
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #include "stdafx.h"
 #include <vd2/system/profile.h>
 #include <vd2/Riza/videocodec.h>

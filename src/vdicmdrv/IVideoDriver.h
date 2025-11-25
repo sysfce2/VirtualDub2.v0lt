@@ -1,3 +1,11 @@
+// VirtualDub - Video processing and capture application
+//
+// Copyright (C) 2013 Avery Lee
+// Copyright (C) 2024 v0lt
+//
+// SPDX-License-Identifier: Zlib
+//
+
 #ifndef _f_IVIDEODRIVER_H
 #define _f_IVIDEODRIVER_H
 

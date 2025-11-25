@@ -1,3 +1,11 @@
+// VirtualDub - Video processing and capture application
+// Graphics support library
+//
+// Copyright (C) 2015-2019 Anton Shekhovtsov
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #ifndef f_VD2_KASUMI_UBERBLIT_RGB64_H
 #define f_VD2_KASUMI_UBERBLIT_RGB64_H
 

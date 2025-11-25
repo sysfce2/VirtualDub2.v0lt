@@ -1,3 +1,10 @@
+// disasm - Disassembly module compiler for VirtualDub
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #include "runtime_tracedec.h"
 
 namespace {

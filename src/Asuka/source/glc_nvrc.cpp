@@ -1,3 +1,10 @@
+// Asuka - VirtualDub Build/Post-Mortem Utility
+//
+// Copyright (C) 2013 Avery Lee
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #include "stdafx.h"
 #include "glc.h"
 #include <vd2/system/vdalloc.h>

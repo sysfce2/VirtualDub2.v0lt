@@ -1,3 +1,12 @@
+// VirtualDub - Video processing and capture application
+// Graphics support library
+//
+// Copyright (C) 2013 Avery Lee
+// Copyright (C) 2016 Anton Shekhovtsov
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #ifndef f_VD2_KASUMI_RESAMPLE_STAGES_REFERENCE_H
 #define f_VD2_KASUMI_RESAMPLE_STAGES_REFERENCE_H
 

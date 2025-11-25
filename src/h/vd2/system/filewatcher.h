@@ -1,3 +1,12 @@
+// VirtualDub - Video processing and capture application
+// System library component
+//
+// Copyright (C) 2013 Avery Lee
+// Copyright (C) 2025 v0lt
+//
+// SPDX-License-Identifier: Zlib
+//
+
 #ifndef f_VD2_SYSTEM_FILEWATCHER_H
 #define f_VD2_SYSTEM_FILEWATCHER_H
 

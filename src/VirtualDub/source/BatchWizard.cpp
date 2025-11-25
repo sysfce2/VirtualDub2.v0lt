@@ -1,3 +1,12 @@
+// VirtualDub - Video processing and capture application
+//
+// Copyright (C) 2013-2014 Avery Lee
+// Copyright (C) 2015-2018 Anton Shekhovtsov
+// Copyright (C) 2023-2025 v0lt
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+
 #include "stdafx.h"
 #include <unordered_map>
 #include <shellapi.h>
