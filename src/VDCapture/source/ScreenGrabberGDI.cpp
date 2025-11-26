@@ -56,7 +56,11 @@ VDScreenGrabberGDI::VDScreenGrabberGDI()
 	, mCaptureHeight(240)
 {
 	mbExcludeSelf = true;
-	cap_cursor = LoadCursor(g_hInst, MAKEINTRESOURCE(IDC_CAP_POINT));
+	mhCursor = LoadCursor(g_hInst, MAKEINTRESOURCE(IDC_CAP_POINT));
+	ICONINFO ii;
+	if (::GetIconInfo(mhCursor, &ii)) {
+		capCursorHotspot = { (LONG)ii.xHotspot, (LONG)ii.yHotspot };
+	}
 }
 
 VDScreenGrabberGDI::~VDScreenGrabberGDI() {
@@ -181,7 +185,7 @@ bool VDScreenGrabberGDI::AcquireFrame(bool dispatch) {
 	// Check for cursor update.
 	CURSORINFO ci = {sizeof(CURSORINFO)};
 	bool cursorImageUpdated = false;
-	POINT cursorPt;
+	POINT cursorPt = {};
 
 	if (mbDrawMousePointer) {
 		if (!::GetCursorInfo(&ci)) {
@@ -206,6 +210,8 @@ bool VDScreenGrabberGDI::AcquireFrame(bool dispatch) {
 			}
 
 			cursorPt = ci.ptScreenPos;
+			cursorPt.x -= capCursorHotspot.x;
+			cursorPt.y -= capCursorHotspot.y;
 			ci.ptScreenPos.x -= mCachedCursorHotspotX;
 			ci.ptScreenPos.y -= mCachedCursorHotspotY;
 		}
@@ -292,12 +298,6 @@ bool VDScreenGrabberGDI::AcquireFrame(bool dispatch) {
 				if (srcy < 0)
 					srcy = 0;
 
-				ICONINFO ii;
-				if (::GetIconInfo(cap_cursor, &ii)) {
-					cursorPt.x -= ii.xHotspot;
-					cursorPt.y -= ii.yHotspot;
-				}
-
 				if (mbExcludeSelf) {
 					POINT p0 = {0,0};
 					MapWindowPoints(mhwnd,0,&p0,1);
@@ -322,16 +322,18 @@ bool VDScreenGrabberGDI::AcquireFrame(bool dispatch) {
 					DeleteObject(rgn1);
 					SelectClipRgn(hdc, 0);
 
-					if (ci.hCursor)
-						DrawIcon(hdc, cursorPt.x - srcx, cursorPt.y - srcy, cap_cursor);
+					if (ci.hCursor) {
+						DrawIcon(hdc, cursorPt.x - srcx, cursorPt.y - srcy, mhCursor);
+					}
 
 					ReleaseDC(mhwnd, hdc);
 					ValidateRect(mhwnd,0);
 				} else {
 					BitBlt(hdc, 0, 0, w, h, hdcScreen, srcx, srcy, SRCCOPY);
 
-					if (ci.hCursor)
-						DrawIcon(hdc, cursorPt.x - srcx, cursorPt.y - srcy, cap_cursor);
+					if (ci.hCursor) {
+						DrawIcon(hdc, cursorPt.x - srcx, cursorPt.y - srcy, mhCursor);
+					}
 
 					ReleaseDC(mhwnd, hdc);
 				}

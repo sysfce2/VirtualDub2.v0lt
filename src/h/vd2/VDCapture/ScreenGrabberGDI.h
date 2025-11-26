@@ -3,6 +3,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2017-2018 Anton Shekhovtsov
+// Copyright (C) 2025 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -73,7 +74,8 @@ protected:
 	HBITMAP	mhbmCursorBuffer;
 	HGDIOBJ	mhbmCursorBufferOld;
 	uint32	*mpCursorBuffer;
-	HCURSOR cap_cursor;
+	HCURSOR	mhCursor = NULL;
+	POINT	capCursorHotspot = {};
 
 	bool	mbVisible;
 	bool	mbDisplayPreview;
