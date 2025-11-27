@@ -5606,21 +5606,17 @@ void VDProjectUI::LoadSettings() {
 
 	// these are only saved from the Video Depth dialog.
 	VDRegistryAppKey keyPrefs("Preferences");
-	int format;
 
-	format = keyPrefs.getInt("Input format", g_dubOpts.video.mInputFormat);
-	if ((unsigned)format < nsVDPixmap::kPixFormat_Max_Standard)
-		g_dubOpts.video.mInputFormat = format;
+	auto& ifmt = g_dubOpts.video.mInputFormat;
+	ifmt.format = keyPrefs.getEnumInt("Input format", nsVDPixmap::kPixFormat_Max_Standard, ifmt.format);
+	ifmt.colorSpaceMode = (vd2::ColorSpaceMode)keyPrefs.getEnumInt("Input space", vd2::kColorSpaceModeCount, ifmt.colorSpaceMode);
+	ifmt.colorRangeMode = (vd2::ColorRangeMode)keyPrefs.getEnumInt("Input range", vd2::kColorRangeModeCount, ifmt.colorRangeMode);
 
-	format = keyPrefs.getInt("Output format", g_dubOpts.video.mOutputFormat);
-	if ((unsigned)format < nsVDPixmap::kPixFormat_Max_Standard)
-		g_dubOpts.video.mOutputFormat = format;
+	auto& ofmt = g_dubOpts.video.mOutputFormat;
+	ofmt.format = keyPrefs.getEnumInt("Output format", nsVDPixmap::kPixFormat_Max_Standard, ofmt.format);
+	ofmt.colorSpaceMode = (vd2::ColorSpaceMode)keyPrefs.getEnumInt("Output space", vd2::kColorSpaceModeCount, ofmt.colorSpaceMode);
+	ofmt.colorRangeMode = (vd2::ColorRangeMode)keyPrefs.getEnumInt("Output range", vd2::kColorRangeModeCount, ofmt.colorRangeMode);
 
-	g_dubOpts.video.mInputFormat.colorSpaceMode = (vd2::ColorSpaceMode)keyPrefs.getInt("Input space", g_dubOpts.video.mInputFormat.colorSpaceMode);
-	g_dubOpts.video.mInputFormat.colorRangeMode = (vd2::ColorRangeMode)keyPrefs.getInt("Input range", g_dubOpts.video.mInputFormat.colorRangeMode);
-
-	g_dubOpts.video.mOutputFormat.colorSpaceMode = (vd2::ColorSpaceMode)keyPrefs.getInt("Output space", g_dubOpts.video.mOutputFormat.colorSpaceMode);
-	g_dubOpts.video.mOutputFormat.colorRangeMode = (vd2::ColorRangeMode)keyPrefs.getInt("Output range", g_dubOpts.video.mOutputFormat.colorRangeMode);
 	g_dubOpts.video.outputReference = keyPrefs.getInt("Output reference", 1);
 }
 
