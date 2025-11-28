@@ -5604,20 +5604,38 @@ void VDProjectUI::LoadSettings() {
 	mbShowAudio = key.getBool("Show audio", mbShowAudio);
 	mbShowCurve = key.getBool("Show curve", mbShowCurve);
 
-	// these are only saved from the Video Depth dialog.
 	VDRegistryAppKey keyPrefs("Preferences");
+	VDStringW str;
 
-	auto& ifmt = g_dubOpts.video.mInputFormat;
-	ifmt.format = keyPrefs.getEnumInt("Input format", nsVDPixmap::kPixFormat_Max_Standard, ifmt.format);
-	ifmt.colorSpaceMode = (vd2::ColorSpaceMode)keyPrefs.getEnumInt("Input space", vd2::kColorSpaceModeCount, ifmt.colorSpaceMode);
-	ifmt.colorRangeMode = (vd2::ColorRangeMode)keyPrefs.getEnumInt("Input range", vd2::kColorRangeModeCount, ifmt.colorRangeMode);
+	if (keyPrefs.getString("File:VideoFileFormat", str)) {
+		size_t pos = str.find('|');
+		if (pos != VDStringW::npos ) {
+			g_FileOutDriver = str.subspan(0, pos);
+			g_FileOutFormat = VDTextWToA(&str[pos+1]);
+		}
+	}
+	if (keyPrefs.getString("File:AudioFileFormat", str)) {
+		size_t pos = str.find('|');
+		if (pos != VDStringW::npos) {
+			g_AudioOutDriver = str.subspan(0, pos);
+			g_AudioOutFormat = VDTextWToA(&str[pos + 1]);
+		}
+	}
 
-	auto& ofmt = g_dubOpts.video.mOutputFormat;
-	ofmt.format = keyPrefs.getEnumInt("Output format", nsVDPixmap::kPixFormat_Max_Standard, ofmt.format);
-	ofmt.colorSpaceMode = (vd2::ColorSpaceMode)keyPrefs.getEnumInt("Output space", vd2::kColorSpaceModeCount, ofmt.colorSpaceMode);
-	ofmt.colorRangeMode = (vd2::ColorRangeMode)keyPrefs.getEnumInt("Output range", vd2::kColorRangeModeCount, ofmt.colorRangeMode);
+	{
+		// these are only saved from the Video Depth dialog.
+		auto& ifmt = g_dubOpts.video.mInputFormat;
+		ifmt.format = keyPrefs.getEnumInt("Input format", nsVDPixmap::kPixFormat_Max_Standard, ifmt.format);
+		ifmt.colorSpaceMode = (vd2::ColorSpaceMode)keyPrefs.getEnumInt("Input space", vd2::kColorSpaceModeCount, ifmt.colorSpaceMode);
+		ifmt.colorRangeMode = (vd2::ColorRangeMode)keyPrefs.getEnumInt("Input range", vd2::kColorRangeModeCount, ifmt.colorRangeMode);
 
-	g_dubOpts.video.outputReference = keyPrefs.getInt("Output reference", 1);
+		auto& ofmt = g_dubOpts.video.mOutputFormat;
+		ofmt.format = keyPrefs.getEnumInt("Output format", nsVDPixmap::kPixFormat_Max_Standard, ofmt.format);
+		ofmt.colorSpaceMode = (vd2::ColorSpaceMode)keyPrefs.getEnumInt("Output space", vd2::kColorSpaceModeCount, ofmt.colorSpaceMode);
+		ofmt.colorRangeMode = (vd2::ColorRangeMode)keyPrefs.getEnumInt("Output range", vd2::kColorRangeModeCount, ofmt.colorRangeMode);
+
+		g_dubOpts.video.outputReference = keyPrefs.getInt("Output reference", 1);
+	}
 }
 
 void VDProjectUI::SaveSettings() {
@@ -5643,6 +5661,23 @@ void VDProjectUI::SaveSettings() {
 	key.setBool("Maximize main layout", mbMaximize);
 	key.setBool("Show audio", mbShowAudio);
 	key.setBool("Show curve", mbShowCurve);
+
+	VDRegistryAppKey keyPrefs("Preferences");
+	VDStringW str;
+
+	if (g_FileOutDriver.length() && g_FileOutFormat.length()) {
+		str.sprintf(L"%s|%hs", g_FileOutDriver.c_str(), g_FileOutFormat.c_str());
+		keyPrefs.setString("File:VideoFileFormat", str.c_str());
+	} else {
+		keyPrefs.removeValue("File:VideoFileFormat");
+	}
+
+	if (g_AudioOutDriver.length() && g_AudioOutFormat.length()) {
+		str.sprintf(L"%s|%hs", g_AudioOutDriver.c_str(), g_AudioOutFormat.c_str());
+		keyPrefs.setString("File:AudioFileFormat", str.c_str());
+	} else {
+		keyPrefs.removeValue("File:AudioFileFormat");
+	}
 }
 
 bool VDProjectUI::HandleUIEvent(IVDUIBase *pBase, IVDUIWindow *pWin, uint32 id, eEventType type, int item) {
