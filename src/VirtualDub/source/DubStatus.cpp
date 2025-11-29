@@ -448,9 +448,9 @@ void DubStatus::StatusTimerProc(HWND hWnd) {
 INT_PTR CALLBACK DubStatus::StatusMainDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
 	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
-    switch (message)
-    {
-        case WM_INITDIALOG:
+	switch (message)
+	{
+		case WM_INITDIALOG:
 			{
 				SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 				thisPtr = (DubStatus *)lParam;
@@ -458,14 +458,14 @@ INT_PTR CALLBACK DubStatus::StatusMainDlgProc( HWND hdlg, UINT message, WPARAM w
 
 				thisPtr->StatusTimerProc(hdlg);
 			}
-            return FALSE;
+			return FALSE;
 
 		case WM_TIMER:
 			thisPtr->StatusTimerProc(hdlg);
 			return TRUE;
 
-    }
-    return FALSE;
+	}
+	return FALSE;
 }
 
 
@@ -473,9 +473,9 @@ INT_PTR CALLBACK DubStatus::StatusMainDlgProc( HWND hdlg, UINT message, WPARAM w
 INT_PTR CALLBACK DubStatus::StatusVideoDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
 	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
-    switch (message)
-    {
-        case WM_INITDIALOG:
+	switch (message)
+	{
+		case WM_INITDIALOG:
 			{
 				SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 				thisPtr = (DubStatus *)lParam;
@@ -484,7 +484,7 @@ INT_PTR CALLBACK DubStatus::StatusVideoDlgProc( HWND hdlg, UINT message, WPARAM 
 				thisPtr->lFrameLobound = 0;
 				thisPtr->lFrameHibound = 10240;
 			}
-            return FALSE;
+			return FALSE;
 
 		case WM_TIMER:
 			{
@@ -641,23 +641,23 @@ INT_PTR CALLBACK DubStatus::StatusVideoDlgProc( HWND hdlg, UINT message, WPARAM 
 			}
 			return TRUE;
 
-    }
-    return FALSE;
+	}
+	return FALSE;
 }
 
 INT_PTR CALLBACK DubStatus::StatusPerfDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
 	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
-    switch (message)
-    {
-        case WM_INITDIALOG:
+	switch (message)
+	{
+		case WM_INITDIALOG:
 			{
 				SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 				thisPtr = (DubStatus *)lParam;
 				SetWindowPos(hdlg, HWND_TOP, thisPtr->rStatusChild.left, thisPtr->rStatusChild.top, 0, 0, SWP_NOSIZE|SWP_NOACTIVATE);
 
 			}
-            return FALSE;
+			return FALSE;
 
 		case WM_TIMER:
 			{
@@ -679,16 +679,16 @@ INT_PTR CALLBACK DubStatus::StatusPerfDlgProc( HWND hdlg, UINT message, WPARAM w
 			}
 			break;
 
-    }
-    return FALSE;
+	}
+	return FALSE;
 }
 
 INT_PTR CALLBACK DubStatus::StatusLogDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
 	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
 
-    switch (message)
-    {
-        case WM_INITDIALOG:
+	switch (message)
+	{
+		case WM_INITDIALOG:
 			{
 				SetWindowLongPtrW(hdlg, DWLP_USER, lParam);
 				thisPtr = (DubStatus *)lParam;
@@ -697,13 +697,13 @@ INT_PTR CALLBACK DubStatus::StatusLogDlgProc( HWND hdlg, UINT message, WPARAM wP
 				IVDLogWindowControl *pLogWin = VDGetILogWindowControl(GetDlgItem(hdlg, IDC_LOG));
 				pLogWin->AttachAsLogger(false);
 			}
-            return FALSE;
+			return FALSE;
 
 		case WM_TIMER:
 			return TRUE;
 
-    }
-    return FALSE;
+	}
+	return FALSE;
 }
 
 ///////////////////////////////////
@@ -722,14 +722,14 @@ const char * const g_szDubPriorities[]={
 INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wParam, LPARAM lParam) {
 
 	static struct DubStatusTabs {
-		LPTSTR rsrc;
+		LPWSTR rsrc;
 		const wchar_t *name;
 		DLGPROC dProc;
 	} tabs[]={
-		{	MAKEINTRESOURCE(IDD_DUBBING_MAIN),	L"Main",		StatusMainDlgProc	},
-		{	MAKEINTRESOURCE(IDD_DUBBING_VIDEO),	L"Video",	StatusVideoDlgProc	},
-		{	MAKEINTRESOURCE(IDD_DUBBING_PERF),	L"Perf",		StatusPerfDlgProc	},
-		{	MAKEINTRESOURCE(IDD_DUBBING_LOG),	L"Log",		StatusLogDlgProc	},
+		{ MAKEINTRESOURCEW(IDD_DUBBING_MAIN),  L"Main",  StatusMainDlgProc  },
+		{ MAKEINTRESOURCEW(IDD_DUBBING_VIDEO), L"Video", StatusVideoDlgProc },
+		{ MAKEINTRESOURCEW(IDD_DUBBING_PERF),  L"Perf",  StatusPerfDlgProc  },
+		{ MAKEINTRESOURCEW(IDD_DUBBING_LOG),   L"Log",   StatusLogDlgProc   },
 	};
 
 	DubStatus* thisPtr = (DubStatus*)GetWindowLongPtrW(hdlg, DWLP_USER);
@@ -738,9 +738,9 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 
 #define MYWM_NULL (WM_APP + 0)
 
-    switch (message)
-    {
-        case WM_INITDIALOG:
+	switch (message)
+	{
+		case WM_INITDIALOG:
 			{
 				long xoffset, yoffset;
 
@@ -915,7 +915,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 			}
 			}break;
 
-        case WM_COMMAND:
+		case WM_COMMAND:
 			switch(LOWORD(wParam)) {
 			case IDC_DRAW_INPUT:
 				thisPtr->opt->video.fShowInputFrame = SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0)==BST_CHECKED;
@@ -966,8 +966,8 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 				_RPT0(0,"Received cancel\n");
 				thisPtr->ToggleStatus();
 				break;
-            }
-            break;
+			}
+			break;
 
 		case WM_HSCROLL:
 			if (lParam) {
@@ -987,8 +987,8 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 		case MYWM_UPDATE_BACKGROUND_STATE:
 			CheckDlgButton(hdlg, IDC_BACKGROUND, thisPtr->pDubber->IsBackground());
 			return TRUE;
-    }
-    return FALSE;
+	}
+	return FALSE;
 }
 
 namespace {

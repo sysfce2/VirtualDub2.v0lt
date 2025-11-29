@@ -1645,20 +1645,20 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Current video frame:",-1,7,7,74,8
     LTEXT           "Current audio sample:",-1,7,18,74,8
+    LTEXT           "Video data:",-1,7,29,74,8
+    LTEXT           "Audio data:",-1,7,40,74,8
+    LTEXT           "Projected file size:",-1,7,51,74,8
+    LTEXT           "Video rendering rate:",-1,7,62,74,8
     LTEXT           "Time elapsed:",-1,7,73,74,8
     LTEXT           "Total time (estimated):",-1,7,84,74,8
     RTEXT           "0/0",IDC_CURRENT_VFRAME,81,7,84,10,SS_SUNKEN
     RTEXT           "0/0",IDC_CURRENT_ASAMPLE,81,18,84,10,SS_SUNKEN
-    RTEXT           "N/A",IDC_TIME_REMAINING,81,84,84,10,SS_SUNKEN
-    RTEXT           "N/A",IDC_TIME_ELAPSED,81,73,84,10,SS_SUNKEN
-    LTEXT           "Video data:",-1,7,29,74,8
-    LTEXT           "Audio data:",-1,7,40,74,8
-    LTEXT           "Projected file size:",-1,7,51,74,8
     RTEXT           "0K",IDC_CURRENT_VSIZE,81,29,84,10,SS_SUNKEN
     RTEXT           "0K",IDC_CURRENT_ASIZE,81,40,84,10,SS_SUNKEN
     RTEXT           "0KB",IDC_PROJECTED_FSIZE,81,51,84,10,SS_SUNKEN
     RTEXT           "0 fps",IDC_FPS,81,62,84,10,SS_SUNKEN
-    LTEXT           "Video rendering rate:",-1,7,62,74,8
+    RTEXT           "N/A",IDC_TIME_ELAPSED,81,73,84,10,SS_SUNKEN
+    RTEXT           "N/A",IDC_TIME_REMAINING,81,84,84,10,SS_SUNKEN
 END
 
 IDD_DUBBING_VIDEO DIALOG  0, 0, 172, 102
