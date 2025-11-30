@@ -1283,13 +1283,7 @@
     <None Include="autogen\FilterAccelEngine.inl">
       <Filter>Filters\Compiled Pixel Shaders</Filter>
     </None>
-    <None Include="manifest\comctl6.manifest">
-      <Filter>Manifest Files</Filter>
-    </None>
-    <None Include="manifest\comctl6_x64.manifest">
-      <Filter>Manifest Files</Filter>
-    </None>
-    <None Include="manifest\win7.manifest">
+    <None Include="manifest\VirtualDub2.manifest">
       <Filter>Manifest Files</Filter>
     </None>
     <None Include="res\mod2.ico">

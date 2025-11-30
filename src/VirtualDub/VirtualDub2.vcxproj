@@ -68,6 +68,11 @@
     <PreBuildEvent>
       <Command>..\..\update_revision.cmd</Command>
     </PreBuildEvent>
+    <Manifest>
+      <InputResourceManifests>
+      </InputResourceManifests>
+      <AdditionalManifestFiles>manifest\VirtualDub2.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PixelShaderAssembler>
@@ -121,11 +126,6 @@ yasm -g cv8 -f win32 -o "$(IntDir)verstub.obj" verstub.asm
       <Message>Compiling function location database...</Message>
       <Command>$(VDOutputPath)\Asuka mapconv $(VDOutputPath)\$(TargetName).map $(VDOutputPath)\$(TargetName).vdi res\ia32.vdi</Command>
     </PostBuildEvent>
-    <Manifest>
-      <InputResourceManifests>
-      </InputResourceManifests>
-      <AdditionalManifestFiles>manifest\win7.manifest;manifest\comctl6.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
-    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PixelShaderAssembler>
@@ -178,11 +178,6 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
       <Message>Compiling function location database...</Message>
       <Command>$(VDOutputPath)\Asuka mapconv $(VDOutputPath)\$(TargetName).map $(VDOutputPath)\$(TargetName).vdi res\amd64.vdi</Command>
     </PostBuildEvent>
-    <Manifest>
-      <InputResourceManifests>
-      </InputResourceManifests>
-      <AdditionalManifestFiles>manifest\win7.manifest;manifest\comctl6_x64.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
-    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PixelShaderAssembler>
@@ -236,11 +231,6 @@ yasm -g cv8 -f win32 -o "$(IntDir)verstub.obj" verstub.asm
       <Message>Compiling function location database...</Message>
       <Command>$(VDOutputPath)\Asuka mapconv $(VDOutputPath)\$(TargetName).map $(VDOutputPath)\$(TargetName).vdi res\ia32.vdi</Command>
     </PostBuildEvent>
-    <Manifest>
-      <InputResourceManifests>
-      </InputResourceManifests>
-      <AdditionalManifestFiles>manifest\win7.manifest;manifest\comctl6.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
-    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PixelShaderAssembler>
@@ -294,11 +284,6 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
       <Message>Compiling function location database...</Message>
       <Command>$(VDOutputPath)\Asuka mapconv $(VDOutputPath)\$(TargetName).map $(VDOutputPath)\$(TargetName).vdi res\amd64.vdi</Command>
     </PostBuildEvent>
-    <Manifest>
-      <InputResourceManifests>
-      </InputResourceManifests>
-      <AdditionalManifestFiles>manifest\win7.manifest;manifest\comctl6_x64.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
-    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\about.cpp" />
@@ -871,15 +856,7 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
     <PixelShaderAssembler Include="source\FilterAccelEngine.vdshaders" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="manifest\comctl6.manifest">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="manifest\comctl6_x64.manifest">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </None>
-    <None Include="manifest\win7.manifest" />
+    <None Include="manifest\VirtualDub2.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ami\Ami.vcxproj">
