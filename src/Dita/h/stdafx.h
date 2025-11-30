@@ -1,9 +1,7 @@
 #ifndef f_DITA_STDAFX_H
 #define f_DITA_STDAFX_H
 
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0600
-#elif _WIN32_WINNT < 0x0500
+#if _WIN32_WINNT < 0x0500
 #error _WIN32_WINNT is less than 5.0. This will break the places bar on the load/save dialog.
 #endif
 
