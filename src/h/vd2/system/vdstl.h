@@ -106,12 +106,6 @@ T *vdmove_backward(T *src1, T *src2, T *dst) {
 
 ///////////////////////////////////////////////////////////////////////////
 
-template<class T, size_t N> char (&VDCountOfHelper(const T(&)[N]))[N];
-
-#define vdcountof(array) (sizeof(VDCountOfHelper(array)))
-
-///////////////////////////////////////////////////////////////////////////
-
 class vdallocator_base {
 protected:
 	void VDNORETURN throw_oom(size_t n, size_t elsize);

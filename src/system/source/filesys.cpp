@@ -808,7 +808,7 @@ void VDGetRootPaths(vdvector<VDStringW>& paths) {
 	{
 		vdfastvector<WCHAR> heapbufw;
 		WCHAR *pw = buf;
-		DWORD wlen = vdcountof(buf);
+		DWORD wlen = std::size(buf);
 
 		for(;;) {
 			*pw = 0;
@@ -841,8 +841,9 @@ VDStringW VDGetRootVolumeLabel(const wchar_t *rootPath) {
 	VDStringW name;
 
 	{
-		if (GetVolumeInformationW(rootPath, buf, vdcountof(buf), NULL, &maxComponentLength, &fsFlags, NULL, 0))
+		if (GetVolumeInformationW(rootPath, buf, std::size(buf), NULL, &maxComponentLength, &fsFlags, NULL, 0)) {
 			name = buf;
+		}
 	}
 
 	return name;
