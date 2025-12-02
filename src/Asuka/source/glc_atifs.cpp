@@ -145,7 +145,7 @@ namespace {
 
 					for(int j=0; j<4; ++j) {
 						char buf[512];
-						sprintf(buf, "%g", mConstants[i+j]);
+						sprintf_s(buf, "%g", mConstants[i+j]);
 						if (strchr(buf, '.'))
 							fprintf(f, " %sf", buf);
 						else

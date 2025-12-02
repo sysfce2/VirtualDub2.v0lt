@@ -389,8 +389,8 @@ void GLCCompiler::Compile(const char *sourceName, const char *src, uint32 len, F
 	const int fragmentShaderCount = mFragmentShaders.size();
 
 	for(int i=0; i<fragmentShaderCount; ++i) {
-		char buf[64];
-		sprintf(buf, "g_fragmentShader%d", i);
+		char buf[32];
+		sprintf_s(buf, "g_fragmentShader%d", i);
 
 		mFragmentShaders[i]->Write(mpOutput, buf);
 	}

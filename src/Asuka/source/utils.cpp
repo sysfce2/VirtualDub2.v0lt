@@ -120,7 +120,7 @@ bool read_version() {
 
 	while(fgets(linebuf, sizeof linebuf, f)) {
 		int local_builds, local_name_start, local_name_end;
-		if (1==sscanf(linebuf, "host: \"%n%*[^\"]%n\" builds: %d", &local_name_start, &local_name_end, &local_builds)) {
+		if (1==sscanf_s(linebuf, "host: \"%n%*[^\"]%n\" builds: %d", &local_name_start, &local_name_end, &local_builds)) {
 			std::string name(linebuf+local_name_start, local_name_end - local_name_start);
 
 			canonicalize_name(name);

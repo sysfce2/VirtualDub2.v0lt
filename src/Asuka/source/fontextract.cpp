@@ -49,7 +49,7 @@ void tool_fontextract(const vdfastvector<const wchar_t*>& args, const vdfastvect
 	int startChar;
 	int endChar;
 
-	if (1 != swscanf(args[2], L"%d", &startChar) || 1 != swscanf(args[3], L"%d", &endChar)) {
+	if (1 != swscanf_s(args[2], L"%d", &startChar) || 1 != swscanf_s(args[3], L"%d", &endChar)) {
 		help_fontextract();
 	}
 

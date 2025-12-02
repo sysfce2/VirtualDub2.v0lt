@@ -117,7 +117,7 @@ void VDSymbolSourceLinkMap::Init(IVDStream *pStream) {
 	while(const char *line = textStream.GetNextLine()) {
 		long grp, start, len;
 
-		if (3!=sscanf(line, "%lx:%lx %lx", &grp, &start, &len))
+		if (3!=sscanf_s(line, "%lx:%lx %lx", &grp, &start, &len))
 			break;
 
 		if (strstr(line+49, "CODE")) {
@@ -153,7 +153,7 @@ void VDSymbolSourceLinkMap::Init(IVDStream *pStream) {
 			continue;
 		}
 
-		if (4!=sscanf(line, "%lx:%lx %s %I64x", &grp, &start, symname, &rva))
+		if (4!=sscanf_s(line, "%lx:%lx %s %I64x", &grp, &start, symname, (unsigned)std::size(symname), &rva))
 			break;
 
 		if (!(mCodeSegments & (1<<grp)))
@@ -180,7 +180,7 @@ void VDSymbolSourceLinkMap::Init(IVDStream *pStream) {
 			sint64 rva;
 			char symname[4096];
 
-			if (4!=sscanf(line, "%lx:%lx %s %I64x", &grp, &start, symname, &rva))
+			if (4!=sscanf_s(line, "%lx:%lx %s %I64x", &grp, &start, symname, (unsigned)std::size(symname), &rva))
 				break;
 
 			if (!(mCodeSegments & (1<<grp)))
@@ -236,7 +236,7 @@ void VDSymbolSourceLinkMap::Init(IVDStream *pStream) {
 		if (linefn && line[0] == ' ') {
 			int lineno[4], grp[4], offset[4];
 
-			int count = sscanf(line, "%d %x:%x %d %x:%x %d %x:%x %d %x:%x"
+			int count = sscanf_s(line, "%d %x:%x %d %x:%x %d %x:%x %d %x:%x"
 				, &lineno[0], &grp[0], &offset[0]
 				, &lineno[1], &grp[1], &offset[1]
 				, &lineno[2], &grp[2], &offset[2]
