@@ -25,6 +25,7 @@ DWORD WINAPI CopyThread(LPVOID p)
 {
 	CopyHandles ch = *(const CopyHandles *)p;
 	char buf[256];
+	wchar_t bufw[256];
 
 	for(;;) {
 		DWORD actual;
@@ -32,13 +33,20 @@ DWORD WINAPI CopyThread(LPVOID p)
 			break;
 		}
 
-		if (ch.pWriteLock) {
-			EnterCriticalSection(ch.pWriteLock);
+		BOOL writeOk = FALSE;
+		int len = MultiByteToWideChar(CP_ACP, 0, buf, actual, bufw, std::size(bufw));
+		if (len) {
+			if (ch.pWriteLock) {
+				EnterCriticalSection(ch.pWriteLock);
+			}
+
+			writeOk = WriteConsoleW(ch.hWrite, bufw, len, &actual, NULL);
+
+			if (ch.pWriteLock) {
+				LeaveCriticalSection(ch.pWriteLock);
+			}
 		}
-		BOOL writeOk = WriteFile(ch.hWrite, buf, actual, &actual, NULL);
-		if (ch.pWriteLock) {
-			LeaveCriticalSection(ch.pWriteLock);
-		}
+		
 		if (!writeOk) {
 			break;
 		}
