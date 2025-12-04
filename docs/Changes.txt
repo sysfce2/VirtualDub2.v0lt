@@ -10,6 +10,7 @@ Added the ability to load processing setting files (.vdscript) using drag-and-dr
 Updated x264 video encoders (libx264 core 165 r3215 32c3b80). Thanks to autodidact from https://forum.videohelp.com/.
 Fixed display of video window in capture mode.
 Added remembering of video and audio file formats in save dialogs.
+Fixed opening of ACM codec settings.
 Minor optimizations and cosmetic changes.
 
 

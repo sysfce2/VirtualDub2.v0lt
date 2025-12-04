@@ -606,7 +606,7 @@ redisplay_formats:
 
 				ACMTagEntry *pTag = (ACMTagEntry *)SendMessageW(hwndItem, LB_GETITEMDATA, idx, 0);
 
-				if (pTag && pTag->mbSupportsConfigure && pTag->driver) {
+				if (pTag && pTag->mbSupportsConfigure) {
 					if (pTag->driver) {
 						pTag->driver->GetDriver()->ShowConfig((VDXHWND)hdlg);
 						pTag->clearFormats();
@@ -629,8 +629,8 @@ redisplay_formats:
 								break;
 							}
 						}
-
-					} else {
+					}
+					else {
 						HACMDRIVER hDriver;
 						if (!acmDriverOpen(&hDriver, pTag->hadid, 0)) {
 							acmDriverMessage(hDriver, DRV_CONFIGURE, (LPARAM)hdlg, NULL);
