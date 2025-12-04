@@ -103,13 +103,6 @@ namespace {
 
 namespace {
 	typedef BOOL (WINAPI *tpD3DXCheckVersion)(UINT D3DSDKVersion, UINT D3DXSDKVersion);
-	typedef HRESULT (WINAPI *tpD3DXCreateEffectCompilerFromFileA)(
-				LPCSTR pSrcFile,
-				const D3DXMACRO *pDefines,
-				LPD3DXINCLUDE pInclude,
-				DWORD Flags,
-				ID3DXEffectCompilerVersion25 **ppEffect,
-				ID3DXBuffer **ppCompilationErrors);
 	typedef HRESULT (WINAPI *tpD3DXCreateEffectCompilerFromFileW)(
 				LPCWSTR pSrcFile,
 				const D3DXMACRO *pDefines,
