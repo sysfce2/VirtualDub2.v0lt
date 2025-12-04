@@ -264,7 +264,7 @@ bool VDAudioOutputWaveOutW32::CheckBuffers() {
 			mBlockHead = 0;
 		--mBlocksPending;
 		mBytesQueued -= hdr.dwBufferLength;
-		VDASSERT(mBlocksPending >= 0);
+		VDASSERT((sint32)mBlocksPending >= 0);
 		found = true;
 	}
 }
