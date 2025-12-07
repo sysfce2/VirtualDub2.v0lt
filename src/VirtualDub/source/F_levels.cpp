@@ -1061,10 +1061,11 @@ static int levels_config(FilterActivation *fa, const FilterFunctions *ff, VDXHWN
 	mfd->mpHisto = histo;
 	mfd->mHistoMax = -1;
 
-	ret = DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_LEVELS), (HWND)hWnd, levelsDlgProc, (LPARAM)mfd);
+	ret = DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_LEVELS), (HWND)hWnd, levelsDlgProc, (LPARAM)mfd);
 
-	if (ret)
+	if (ret) {
 		*mfd = mfd2;
+	}
 
 	return ret;
 }

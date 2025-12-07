@@ -1979,7 +1979,7 @@ long FilterPreview::SampleFrames() {
 			return -1;
 	}
 
-	int mode = DialogBox(g_hInst, MAKEINTRESOURCE(IDD_FILTER_SAMPLE), parent, SampleFramesDlgProc);
+	int mode = DialogBoxW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_SAMPLE), parent, SampleFramesDlgProc);
 	if (!mode)
 		return -1;
 

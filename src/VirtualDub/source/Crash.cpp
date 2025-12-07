@@ -1995,7 +1995,7 @@ protected:
 	}
 
 	bool Display2(LPCTSTR dlgid, HWND hwndParent) {
-		return 0 != DialogBoxParam(g_hInst, dlgid, hwndParent, StaticDlgProc, (LPARAM)this);
+		return 0 != DialogBoxParamW(g_hInst, dlgid, hwndParent, StaticDlgProc, (LPARAM)this);
 	}
 
 	static INT_PTR CALLBACK StaticDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -2124,7 +2124,7 @@ public:
 		: VDCrashDialog(hThread, pExc, pszScopeInfo, allowForcedExit) {}
 
 	VDCrashResponse Display(HWND hwndParent) {
-		return (VDCrashResponse)DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_CRASH), hwndParent, StaticDlgProc, (LPARAM)static_cast<VDCrashDialog *>(this));
+		return (VDCrashResponse)DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_CRASH), hwndParent, StaticDlgProc, (LPARAM)static_cast<VDCrashDialog *>(this));
 	}
 
 protected:

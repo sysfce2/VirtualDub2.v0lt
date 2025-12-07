@@ -3396,7 +3396,7 @@ void InputFileMPEG::InfoDialog(VDGUIHandle hwndParent) {
 	GetVideoSource(0, ~mai.mpVideo);
 	GetAudioSource(0, ~mai.mpAudio);
 
-	DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_MPEG_INFO), (HWND)hwndParent, _InfoDlgProc, (LPARAM)&mai);
+	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_MPEG_INFO), (HWND)hwndParent, _InfoDlgProc, (LPARAM)&mai);
 }
 
 bool InputFileMPEG::GetVideoSource(int index, IVDVideoSource **ppSrc) {

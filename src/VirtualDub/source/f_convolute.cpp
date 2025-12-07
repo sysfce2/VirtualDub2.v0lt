@@ -260,7 +260,7 @@ static INT_PTR CALLBACK convoluteDlgProc( HWND hDlg, UINT message, WPARAM wParam
 }
 
 static int convolute_config(FilterActivation *fa, const FilterFunctions *ff, VDXHWND hWnd) {
-	return DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_CONVOLUTE), (HWND)hWnd, convoluteDlgProc, (LPARAM)fa->filter_data);
+	return DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_CONVOLUTE), (HWND)hWnd, convoluteDlgProc, (LPARAM)fa->filter_data);
 }
 
 static void convolute_script_config(IScriptInterpreter *isi, void *lpVoid, CScriptValue *argv, int argc) {

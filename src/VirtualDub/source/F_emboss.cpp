@@ -99,7 +99,7 @@ static int emboss_config(VDXFilterActivation *fa, const VDXFilterFunctions *ff, 
 		mfd->height = 16;
 	}
 
-	ret = DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_EMBOSS), (HWND)hWnd, embossDlgProc, (LPARAM)fa->filter_data);
+	ret = DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_EMBOSS), (HWND)hWnd, embossDlgProc, (LPARAM)fa->filter_data);
 
 	memset(mfd->cfd.m, 0, sizeof mfd->cfd.m);
 	mfd->cfd.bias	= 128*256 + 128;

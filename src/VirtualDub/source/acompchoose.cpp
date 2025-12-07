@@ -676,12 +676,13 @@ WAVEFORMATEX *AudioChooseCompressor(HWND hwndParent, WAVEFORMATEX *pwfexOld, WAV
 	data.pConfig = &config;
 	data.enable_plugin = enable_plugin;
 
-	if (!DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_AUDIOCOMPRESSION), hwndParent, AudioChooseCompressionDlgProc, (LPARAM)&data))
+	if (!DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_AUDIOCOMPRESSION), hwndParent, AudioChooseCompressionDlgProc, (LPARAM)&data)) {
 		return pwfexOld;
+	}
 	else {
-		if (pwfexOld)
+		if (pwfexOld) {
 			freemem(pwfexOld);
-
+		}
 		return data.pwfex;
 	}
 }

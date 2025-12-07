@@ -1062,7 +1062,7 @@ void VDAutoLogDisplay::Post(VDGUIHandle hParent) {
 	const VDAutoLogger::tEntries& ents = mLogger.GetEntries();
 
 	if (!ents.empty()) {
-		DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_WITHERRORS), (HWND)hParent, DlgProc, (LPARAM)&ents);
+		DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_WITHERRORS), (HWND)hParent, DlgProc, (LPARAM)&ents);
 	}
 }
 

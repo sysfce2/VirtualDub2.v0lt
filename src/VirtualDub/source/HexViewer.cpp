@@ -1872,7 +1872,7 @@ bool HexEditor::AskForValues(const char *title, const char *name1, const char *n
 	hvad.v2 = v2;
 	hvad.verifier = verifier;
 
-	if (DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_HEXVIEWER), hwnd, AskForValuesDlgProc, (LPARAM)&hvad)) {
+	if (DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_HEXVIEWER), hwnd, AskForValuesDlgProc, (LPARAM)&hvad)) {
 		v1 = hvad.v1;
 		v2 = hvad.v2;
 		return true;

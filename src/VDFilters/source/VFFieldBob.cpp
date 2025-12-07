@@ -105,7 +105,7 @@ BOOL APIENTRY fieldbobConfigDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPAR
 }
 
 int fieldbob_config(VDXFilterActivation *fa, const VDXFilterFunctions *ff, VDXHWND hWnd) {
-	return !DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_FIELDBOB), (HWND)hWnd, (DLGPROC)fieldbobConfigDlgProc, (LPARAM)fa->filter_data);
+	return !DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_FIELDBOB), (HWND)hWnd, (DLGPROC)fieldbobConfigDlgProc, (LPARAM)fa->filter_data);
 }
 
 /////////////////////////////////////////////////////////////

@@ -171,7 +171,7 @@ static INT_PTR APIENTRY rotateDlgProc( HWND hDlg, UINT message, WPARAM wParam, L
 }
 
 static int rotate_config(VDXFilterActivation *fa, const VDXFilterFunctions *ff, VDXHWND hWnd) {
-	return DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_ROTATE), (HWND)hWnd, rotateDlgProc, (LPARAM)fa->filter_data);
+	return DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_ROTATE), (HWND)hWnd, rotateDlgProc, (LPARAM)fa->filter_data);
 }
 
 static void rotate_string2(const VDXFilterActivation *fa, const VDXFilterFunctions *ff, char *buf, int maxlen) {

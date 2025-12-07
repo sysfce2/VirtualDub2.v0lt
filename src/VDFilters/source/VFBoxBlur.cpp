@@ -720,8 +720,8 @@ int boxConfigProc(VDXFilterActivation *fa, const VDXFilterFunctions *ff, VDXHWND
 	int filter_power = mfd->filter_power;
 	mfd->ifp = fa->ifp;
 
-	res = DialogBoxParam(g_hInst,
-			MAKEINTRESOURCE(IDD_FILTER_BOX), (HWND)hwnd,
+	res = DialogBoxParamW(g_hInst,
+			MAKEINTRESOURCEW(IDD_FILTER_BOX), (HWND)hwnd,
 			boxConfigDlgProc, (LPARAM)mfd);
 
 	if (res) {

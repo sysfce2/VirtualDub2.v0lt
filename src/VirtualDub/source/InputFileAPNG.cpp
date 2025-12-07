@@ -1219,7 +1219,7 @@ void VDInputFileAPNG::InfoDialog(VDGUIHandle hwndParent)
 	memset(&mai, 0, sizeof mai);
 	GetVideoSource(0, ~mai.mpVideo);
 
-	DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_APNG_INFO), (HWND)hwndParent, _InfoDlgProc, (LPARAM)&mai);
+	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_APNG_INFO), (HWND)hwndParent, _InfoDlgProc, (LPARAM)&mai);
 }
 
 ///////////////////////////////////////////////////////////////////////////

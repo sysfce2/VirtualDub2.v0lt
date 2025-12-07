@@ -56,8 +56,9 @@ void ActivateDubDialog(HINSTANCE hInst, LPCTSTR lpResource, HWND hDlg, DLGPROC d
 	DubOptions duh;
 
 	duh = g_dubOpts;
-	if (DialogBoxParam(hInst, lpResource, hDlg, dlgProc, (LPARAM)&duh))
+	if (DialogBoxParamW(hInst, lpResource, hDlg, dlgProc, (LPARAM)&duh)) {
 		g_dubOpts = duh;
+	}
 }
 
 ///////////////////////////////////////////

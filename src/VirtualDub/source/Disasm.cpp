@@ -816,9 +816,11 @@ void CodeDisassemblyWindow::parse() {
 }
 
 BOOL CodeDisassemblyWindow::post(HWND hWnd) {
-	if (!lbents) return FALSE;
+	if (!lbents) {
+		return FALSE;
+	}
 
-	DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_DISASM), hWnd, CodeDisassemblyWindow::DlgProc, (LPARAM)this);
+	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_DISASM), hWnd, CodeDisassemblyWindow::DlgProc, (LPARAM)this);
 
 	return TRUE;
 }

@@ -82,7 +82,7 @@ BOOL CCompRemote::AboutProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 LRESULT CCompRemote::About(HWND hwnd) {
 	if (hwnd != (HWND)-1L) {
-		DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUT), hwnd, (DLGPROC)CCompRemote::AboutProc);
+		DialogBoxW(g_hInst, MAKEINTRESOURCEW(IDD_ABOUT), hwnd, (DLGPROC)CCompRemote::AboutProc);
 	}
 
 	return ICERR_OK;

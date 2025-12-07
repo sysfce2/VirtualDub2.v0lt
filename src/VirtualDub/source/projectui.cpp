@@ -2832,7 +2832,7 @@ bool VDProjectUI::MenuHit(UINT id) {
 			VDShowHelp((HWND)mhwnd);
 			break;
 		case ID_HELP_ABOUT:
-			DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUT), (HWND)mhwnd, AboutDlgProc);
+			DialogBoxW(g_hInst, MAKEINTRESOURCEW(IDD_ABOUT), (HWND)mhwnd, AboutDlgProc);
 			break;
 
 		case ID_DUBINPROGRESS_ABORT:			AbortOperation();			break;

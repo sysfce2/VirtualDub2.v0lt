@@ -1217,7 +1217,7 @@ static int smoother_config(VDXFilterActivation *fa, const VDXFilterFunctions *ff
 
 	mfd->ifp = fa->ifp;
 
-	if (DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_SMOOTHER), (HWND)hWnd, FilterValueDlgProc, (LPARAM)mfd)) {
+	if (DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_SMOOTHER), (HWND)hWnd, FilterValueDlgProc, (LPARAM)mfd)) {
 		mfd->grad_threshold = grad_threshold;
 		mfd->fBlurPass = fBlurPass;
 		return 1;

@@ -148,7 +148,7 @@ void VDInputFileImages::InfoDialog(VDGUIHandle hwndParent)
 	GetVideoSource(0, &vs);
 	VideoSourceImages* images = static_cast<VideoSourceImages*>(vs);
 
-	DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_IMAGES_INFO), (HWND)hwndParent, _InfoDlgProc, (LPARAM)images);
+	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_IMAGES_INFO), (HWND)hwndParent, _InfoDlgProc, (LPARAM)images);
 	vs->Release();
 }
 

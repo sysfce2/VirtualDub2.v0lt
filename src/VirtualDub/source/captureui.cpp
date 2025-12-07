@@ -3518,10 +3518,11 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 		case ID_VIDEO_FORMAT:
 		case ID_VIDEO_CUSTOMFORMAT:
 			SuspendDisplay();
-			if (id == ID_VIDEO_CUSTOMFORMAT)
-				DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_CAPTURE_CUSTOMVIDEO), (HWND)mhwnd, CaptureCustomVidSizeDlgProc, (LPARAM)static_cast<IVDCaptureProject *>(mpProject));
-			else
+			if (id == ID_VIDEO_CUSTOMFORMAT) {
+				DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_CAPTURE_CUSTOMVIDEO), (HWND)mhwnd, CaptureCustomVidSizeDlgProc, (LPARAM)static_cast<IVDCaptureProject*>(mpProject));
+			} else {
 				mpProject->DisplayDriverDialog(kDialogVideoFormat);
+			}
 			ResumeDisplay();
 			break;
 
@@ -3730,7 +3731,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 
 		case ID_CAPTURE_SPILLSYSTEM:
 			SuspendDisplay();
-			DialogBox(g_hInst, MAKEINTRESOURCE(IDD_CAPTURE_SPILLSETUP), (HWND)mhwnd, CaptureSpillDlgProc);
+			DialogBoxW(g_hInst, MAKEINTRESOURCEW(IDD_CAPTURE_SPILLSETUP), (HWND)mhwnd, CaptureSpillDlgProc);
 			ResumeDisplay();
 			break;
 

@@ -1544,10 +1544,11 @@ static int hsv_config(VDXFilterActivation *fa, const VDXFilterFunctions *ff, VDX
 
 	mfd->ifp = fa->ifp;
 
-	ret = DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_HSV), (HWND)hWnd, hsvDlgProc, (LPARAM)mfd);
+	ret = DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_HSV), (HWND)hWnd, hsvDlgProc, (LPARAM)mfd);
 
-	if (ret)
+	if (ret) {
 		*mfd = mfd2;
+	}
 
 	return ret;
 }

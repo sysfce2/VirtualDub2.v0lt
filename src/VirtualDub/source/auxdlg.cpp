@@ -51,7 +51,7 @@ public:
 		// There is a race condition here that can allow two log windows to appear,
 		// but that is not a big deal.
 		if (!g_hwndLogWindow) {
-			DialogBox(g_hInst, MAKEINTRESOURCE(IDD_LOG), NULL, LogDlgProc);
+			DialogBoxW(g_hInst, MAKEINTRESOURCEW(IDD_LOG), NULL, LogDlgProc);
 			g_hwndLogWindow = 0;
 		} else
 			SetWindowPos(g_hwndLogWindow, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE);
@@ -111,7 +111,7 @@ public:
 		// There is a race condition here that can allow two log windows to appear,
 		// but that is not a big deal.
 		if (!g_hwndStatusWindow) {
-			DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_DUMPSTATUS), NULL, StatusDlgProc, (LPARAM)s.c_str());
+			DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_DUMPSTATUS), NULL, StatusDlgProc, (LPARAM)s.c_str());
 			g_hwndStatusWindow = 0;
 		} else {
 			SetText(g_hwndStatusWindow,s.c_str());
@@ -215,7 +215,7 @@ public:
 			VDInitProfilingSystem();
 			sample.close = 0;
 			sample.ThreadStart();
-			DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_PROFILER), NULL, ProfileDlgProc, start_mode);
+			DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_PROFILER), NULL, ProfileDlgProc, start_mode);
 			g_hwndProfileWindow = 0;
 
 			if(sample.isThreadActive()){
@@ -385,7 +385,7 @@ void Welcome() {
 	VDRegistryAppKey key;
 
 	if (!key.getInt("SeenWelcome", 0)) {
-		DialogBox(g_hInst, MAKEINTRESOURCE(IDD_WELCOME), NULL, WelcomeDlgProc);
+		DialogBoxW(g_hInst, MAKEINTRESOURCEW(IDD_WELCOME), NULL, WelcomeDlgProc);
 
 		key.setInt("SeenWelcome", 1);
 	}
@@ -414,7 +414,7 @@ void AnnounceExperimental() {
 	DWORD dwSeenIt;
 
 	if (!QueryConfigDword(NULL, "SeenExperimental 1.9.X", &dwSeenIt) || !dwSeenIt) {
-		DialogBox(g_hInst, MAKEINTRESOURCE(IDD_EXPERIMENTAL), NULL, AnnounceExperimentalDlgProc);
+		DialogBoxW(g_hInst, MAKEINTRESOURCEW(IDD_EXPERIMENTAL), NULL, AnnounceExperimentalDlgProc);
 
 		SetConfigDword(NULL, "SeenExperimental 1.9.X", 1);
 	}
@@ -509,7 +509,7 @@ void DetectDivX() {
 
 	if (!key.getInt("SeenDivXWarning", 0)) {
 		if (DetectDriver(L"divxc32.dll") || DetectDriver(L"divxc32f.dll")) {
-			DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_DIVX_WARNING), NULL, DivXWarningDlgProc, (LPARAM)g_szDivXWarning);
+			DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_DIVX_WARNING), NULL, DivXWarningDlgProc, (LPARAM)g_szDivXWarning);
 
 			key.setInt("SeenDivXWarning", 1);
 		}
@@ -517,7 +517,7 @@ void DetectDivX() {
 	if (!key.getInt("SeenAngelPotionWarning", 0)) {
 		if (DetectDriver(L"APmpg4v1.dll")) {
 
-			DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_DIVX_WARNING), NULL, DivXWarningDlgProc, (LPARAM)g_szAPWarning);
+			DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_DIVX_WARNING), NULL, DivXWarningDlgProc, (LPARAM)g_szAPWarning);
 
 			key.setInt("SeenAngelPotionWarning", 1);
 		}
@@ -745,18 +745,18 @@ INT_PTR CALLBACK VDShowChangeLogDlgProcW32(HWND hdlg, UINT msg, WPARAM wParam, L
 
 void VDShowChangeLog(VDGUIHandle hParent) {
 	HMODULE hmod = VDLoadSystemLibraryW32("riched32.dll");
-	DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_CHANGE_LOG), (HWND)hParent, VDShowChangeLogDlgProcW32, (LPARAM)MAKEINTRESOURCE(IDR_CHANGES));
+	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_CHANGE_LOG), (HWND)hParent, VDShowChangeLogDlgProcW32, (LPARAM)MAKEINTRESOURCE(IDR_CHANGES));
 	FreeLibrary(hmod);
 }
 
 void VDShowReleaseNotes(VDGUIHandle hParent) {
 	HMODULE hmod = VDLoadSystemLibraryW32("riched32.dll");
-	DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_CHANGE_LOG), (HWND)hParent, VDShowChangeLogDlgProcW32, (LPARAM)MAKEINTRESOURCE(IDR_RELEASE_NOTES));
+	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_CHANGE_LOG), (HWND)hParent, VDShowChangeLogDlgProcW32, (LPARAM)MAKEINTRESOURCE(IDR_RELEASE_NOTES));
 	FreeLibrary(hmod);
 }
 
 void VDDumpChangeLog() {
-	HRSRC hResource = FindResourceW(NULL, MAKEINTRESOURCE(IDR_CHANGES), L"STUFF");
+	HRSRC hResource = FindResourceW(NULL, MAKEINTRESOURCEW(IDR_CHANGES), L"STUFF");
 
 	if (!hResource)
 		return;

@@ -615,7 +615,7 @@ static INT_PTR CALLBACK YIQConfigDlgProc(HWND hDlg, UINT message, WPARAM wParam,
 }
 
 static int yiq_config(VDXFilterActivation *fa, const VDXFilterFunctions *ff, VDXHWND hWnd) {
-	return DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_TV), (HWND)hWnd, YIQConfigDlgProc, (LPARAM)fa->filter_data);
+	return DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_TV), (HWND)hWnd, YIQConfigDlgProc, (LPARAM)fa->filter_data);
 }
 
 /////////////////////////////////////////////////////////////

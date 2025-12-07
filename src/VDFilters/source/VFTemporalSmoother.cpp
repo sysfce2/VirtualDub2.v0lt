@@ -367,10 +367,11 @@ static int timesmooth_config(VDXFilterActivation *fa, const VDXFilterFunctions *
 
 	mfd->ifp = fa->ifp;
 
-	ret = DialogBoxParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_TIMESMOOTH), (HWND)hWnd, timesmoothDlgProc, (LPARAM)mfd);
+	ret = DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_TIMESMOOTH), (HWND)hWnd, timesmoothDlgProc, (LPARAM)mfd);
 
-	if (ret)
+	if (ret) {
 		mfd->strength = strength;
+	}
 
 	return ret;
 }
