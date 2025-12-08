@@ -52,7 +52,7 @@ void VDSavePreferences();
 
 ///////////////////////////////////////////
 
-void ActivateDubDialog(HINSTANCE hInst, LPCTSTR lpResource, HWND hDlg, DLGPROC dlgProc) {
+void ActivateDubDialog(HINSTANCE hInst, LPCWSTR lpResource, HWND hDlg, DLGPROC dlgProc) {
 	DubOptions duh;
 
 	duh = g_dubOpts;

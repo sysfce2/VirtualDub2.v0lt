@@ -608,7 +608,7 @@ namespace {
 		}
 	}
 
-	void TextToRichTextControl(LPCTSTR resName, HWND hdlg, HWND hwndText) {
+	void TextToRichTextControl(LPCWSTR resName, HWND hdlg, HWND hwndText) {
 		HRSRC hResource = FindResourceW(NULL, resName, L"STUFF");
 
 		if (!hResource)
@@ -729,7 +729,7 @@ namespace {
 INT_PTR CALLBACK VDShowChangeLogDlgProcW32(HWND hdlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch(msg) {
 	case WM_INITDIALOG:
-		TextToRichTextControl((LPCTSTR)lParam, hdlg, GetDlgItem(hdlg, IDC_TEXT));
+		TextToRichTextControl((LPCWSTR)lParam, hdlg, GetDlgItem(hdlg, IDC_TEXT));
 		return FALSE;
 	case WM_COMMAND:
 		switch(LOWORD(wParam)) {

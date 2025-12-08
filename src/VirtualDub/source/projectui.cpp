@@ -1924,7 +1924,7 @@ void VDProjectUI::SetAudioConversionOptionsAsk() {
 }
 
 void VDProjectUI::SetAudioInterleaveOptionsAsk() {
-	ActivateDubDialog(g_hInst, MAKEINTRESOURCE(IDD_INTERLEAVE), (HWND)mhwnd, AudioInterleaveDlgProc);
+	ActivateDubDialog(g_hInst, MAKEINTRESOURCEW(IDD_INTERLEAVE), (HWND)mhwnd, AudioInterleaveDlgProc);
 	UIAudioSourceUpdated();
 }
 

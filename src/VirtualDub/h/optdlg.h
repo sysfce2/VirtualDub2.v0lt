@@ -2,6 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2017-2018 Anton Shekhovtsov
+// Copyright (C) 2025 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -16,7 +17,7 @@ struct COMPVARS2;
 
 /////////////////
 
-void ActivateDubDialog(HINSTANCE hInst, LPCTSTR lpResource, HWND hDlg, DLGPROC dlgProc);
+void ActivateDubDialog(HINSTANCE hInst, LPCWSTR lpResource, HWND hDlg, DLGPROC dlgProc);
 INT_PTR CALLBACK AudioConversionDlgProc	( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 INT_PTR CALLBACK AudioInterleaveDlgProc	( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 INT_PTR CALLBACK VideoDepthDlgProc			( HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

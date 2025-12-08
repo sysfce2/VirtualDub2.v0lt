@@ -277,7 +277,7 @@ bool VDUIBaseWindowW32::DispatchEvent(IVDUIWindow *pWin, uint32 id, IVDUICallbac
 }
 
 namespace {
-	BOOL CALLBACK SetApplicationIconOnDialog(HMODULE hModule, LPCTSTR lpszType, LPTSTR lpszName, LONG_PTR lParam) {
+	BOOL CALLBACK SetApplicationIconOnDialog(HMODULE hModule, LPCWSTR lpszType, LPTSTR lpszName, LONG_PTR lParam) {
 		HWND hdlg = (HWND)lParam;
 		HANDLE hLargeIcon = LoadImageW((HINSTANCE)hModule, lpszName, IMAGE_ICON, GetSystemMetrics(SM_CXICON), GetSystemMetrics(SM_CYICON), LR_SHARED);
 		if (hLargeIcon) {

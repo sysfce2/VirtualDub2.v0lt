@@ -1994,7 +1994,7 @@ protected:
 	{
 	}
 
-	bool Display2(LPCTSTR dlgid, HWND hwndParent) {
+	bool Display2(LPCWSTR dlgid, HWND hwndParent) {
 		return 0 != DialogBoxParamW(g_hInst, dlgid, hwndParent, StaticDlgProc, (LPARAM)this);
 	}
 
@@ -2052,7 +2052,7 @@ public:
 		: VDCrashDialog(hThread, pExc, pszScopeInfo, allowForcedExit) {}
 
 	bool Display(HWND hwndParent) {
-		return Display2(MAKEINTRESOURCE(IDD_DISASM_CRASH), hwndParent);
+		return Display2(MAKEINTRESOURCEW(IDD_DISASM_CRASH), hwndParent);
 	}
 
 protected:

@@ -422,7 +422,7 @@ bool VDClippingControlOverlay::OnSetCursor(UINT htcode, UINT mousemsg) {
 	if (mDragPoleX>=0) x = mDragPoleX;
 	if (mDragPoleY>=0) y = mDragPoleY;
 
-	static const LPCTSTR sCursor[3][3]={
+	static const LPCWSTR sCursor[3][3]={
 		{ IDC_ARROW,  IDC_SIZENS, IDC_SIZENS },
 		{ IDC_SIZEWE, IDC_SIZENWSE, IDC_SIZENESW },
 		{ IDC_SIZEWE, IDC_SIZENESW, IDC_SIZENWSE },
