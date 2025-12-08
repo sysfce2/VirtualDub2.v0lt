@@ -49,16 +49,16 @@ typedef struct LevelControlData {
 ATOM RegisterLevelControl() {
 	WNDCLASSW wc;
 
-	wc.style		= 0;
-	wc.lpfnWndProc	= LevelControlWndProc;
-	wc.cbClsExtra	= 0;
-	wc.cbWndExtra	= sizeof(LevelControlData *);
-	wc.hInstance	= g_hInst;
-	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground= (HBRUSH)(COLOR_3DFACE+1);	//GetStockObject(LTGRAY_BRUSH);
-	wc.lpszMenuName	= NULL;
-	wc.lpszClassName= VIDEOLEVELCONTROLCLASS;
+	wc.style         = 0;
+	wc.lpfnWndProc   = LevelControlWndProc;
+	wc.cbClsExtra    = 0;
+	wc.cbWndExtra    = sizeof(LevelControlData *);
+	wc.hInstance     = g_hInst;
+	wc.hIcon         = NULL;
+	wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)(COLOR_3DFACE+1);    //GetStockObject(LTGRAY_BRUSH);
+	wc.lpszMenuName  = NULL;
+	wc.lpszClassName = VIDEOLEVELCONTROLCLASS;
 
 	return RegisterClassW(&wc);
 }

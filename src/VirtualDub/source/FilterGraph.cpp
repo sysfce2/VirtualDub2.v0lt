@@ -223,7 +223,7 @@ ATOM RegisterFilterGraphControl() {
 	wc.cbWndExtra	= sizeof(VDFilterGraphControl *);
 	wc.hInstance	= g_hInst;
 	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor		= LoadCursorW(NULL, IDC_ARROW);
 	wc.hbrBackground= (HBRUSH)(COLOR_3DFACE+1);
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= g_szFilterGraphControlName;

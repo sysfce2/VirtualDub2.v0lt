@@ -787,7 +787,7 @@ VDRTProfileDisplay2::VDRTProfileDisplay2(HWND hwnd)
 	br3 = CreateSolidBrush(RGB(255,200,200));
 	br4 = CreateSolidBrush(RGB(255,255,0));
 	br5 = CreateSolidBrush(RGB(90,255,90));
-	cr_hand = LoadCursor(0,IDC_HAND);
+	cr_hand = LoadCursorW(NULL, IDC_HAND);
 }
 
 VDRTProfileDisplay2::~VDRTProfileDisplay2() {
@@ -825,16 +825,16 @@ VDRTProfileDisplay2 *VDRTProfileDisplay2::Create(HWND hwndParent, int x, int y, 
 bool VDRegisterRTProfileDisplayControl2() {
 	WNDCLASSW wc;
 
-	wc.style		= 0;
-	wc.lpfnWndProc	= VDRTProfileDisplay2::StaticWndProc;
-	wc.cbClsExtra	= 0;
-	wc.cbWndExtra	= sizeof(VDRTProfileDisplay2 *);
-	wc.hInstance	= g_hInst;
-	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground= (HBRUSH)(COLOR_WINDOW+1);
-	wc.lpszMenuName	= NULL;
-	wc.lpszClassName= g_szRTProfileDisplayControl2Name;
+	wc.style         = 0;
+	wc.lpfnWndProc   = VDRTProfileDisplay2::StaticWndProc;
+	wc.cbClsExtra    = 0;
+	wc.cbWndExtra    = sizeof(VDRTProfileDisplay2 *);
+	wc.hInstance     = g_hInst;
+	wc.hIcon         = NULL;
+	wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
+	wc.lpszMenuName  = NULL;
+	wc.lpszClassName = g_szRTProfileDisplayControl2Name;
 
 	VDRTProfileDisplay2::sWndClass = RegisterClassW(&wc);
 	return VDRTProfileDisplay2::sWndClass != 0;
@@ -1033,7 +1033,7 @@ LRESULT VDRTProfileDisplay2::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			mDragOffsetX = (short)LOWORD(lParam);
 			mDragOffsetY = (short)HIWORD(lParam);
 			::SetCapture(mhwnd);
-			::SetCursor(::LoadCursor(NULL, IDC_SIZEALL));
+			::SetCursor(::LoadCursorW(NULL, IDC_SIZEALL));
 			::SetFocus(mhwnd);
 			break;
 
@@ -1063,7 +1063,7 @@ LRESULT VDRTProfileDisplay2::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 		case WM_SETCURSOR:
 			if (::GetCapture() == mhwnd) {
-				::SetCursor(::LoadCursor(NULL, IDC_SIZEALL));
+				::SetCursor(::LoadCursorW(NULL, IDC_SIZEALL));
 				return TRUE;
 			} else {
 				POINT pt;

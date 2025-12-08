@@ -126,7 +126,7 @@ VDLogWindowControl::VDLogWindowControl(HWND hwnd)
 	mBrushes[2] = CreateSolidBrush(RGB(255,224,0));
 	mBrushes[3] = CreateSolidBrush(RGB(255,0,0));
 
-	mhmenu = LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_LOG_MENU));
+	mhmenu = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_LOG_MENU));
 }
 
 VDLogWindowControl::~VDLogWindowControl() {
@@ -153,16 +153,16 @@ VDLogWindowControl *VDLogWindowControl::Create(HWND hwndParent, int x, int y, in
 ATOM RegisterLogWindowControl() {
 	WNDCLASSW wc;
 
-	wc.style		= 0;
-	wc.lpfnWndProc	= VDLogWindowControl::StaticWndProc;
-	wc.cbClsExtra	= 0;
-	wc.cbWndExtra	= sizeof(VDLogWindowControl *);
-	wc.hInstance	= g_hInst;
-	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground= (HBRUSH)(COLOR_WINDOW+1);
-	wc.lpszMenuName	= NULL;
-	wc.lpszClassName= g_szLogWindowControlName;
+	wc.style         = 0;
+	wc.lpfnWndProc   = VDLogWindowControl::StaticWndProc;
+	wc.cbClsExtra    = 0;
+	wc.cbWndExtra    = sizeof(VDLogWindowControl *);
+	wc.hInstance     = g_hInst;
+	wc.hIcon         = NULL;
+	wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
+	wc.lpszMenuName  = NULL;
+	wc.lpszClassName = g_szLogWindowControlName;
 
 	return RegisterClassW(&wc);
 }

@@ -62,7 +62,7 @@ bool VDUIRegisterHotKeyExControl() {
 	wc.cbWndExtra	= sizeof(IVDUnknown *);
 	wc.hInstance	= VDGetLocalModuleHandleW32();
 	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_IBEAM);
+	wc.hCursor		= LoadCursorW(NULL, IDC_IBEAM);
 	wc.hbrBackground= (HBRUSH)(COLOR_3DFACE + 1);
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= VDUIHOTKEYEXCLASS;

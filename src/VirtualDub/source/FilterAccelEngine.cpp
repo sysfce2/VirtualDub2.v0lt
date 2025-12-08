@@ -304,7 +304,7 @@ bool VDFilterAccelEngine::InitCallback2(bool visibleDebugWindow) {
     wc.cbWndExtra		= sizeof(VDFilterAccelEngine *);
 	wc.hInstance		= VDGetLocalModuleHandleW32();
     wc.hIcon			= NULL;
-    wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
+    wc.hCursor			= LoadCursorW(NULL, IDC_ARROW);
     wc.hbrBackground	= NULL;
     wc.lpszMenuName		= NULL;
 

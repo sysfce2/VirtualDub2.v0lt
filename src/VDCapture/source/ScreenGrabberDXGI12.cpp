@@ -1537,15 +1537,15 @@ bool VDScreenGrabberDXGI12::InitDisplayInternal(VDZHWND hwndParent) {
 	className.sprintf(L"VDScreenGrabberDXGI12_%p", this);
 
 	WNDCLASSW wc = {};
-	wc.style = 0;
-	wc.lpfnWndProc = mDisplayWndProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = VDGetLocalModuleHandleW32();
-	wc.hIcon = NULL;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.style         = 0;
+	wc.lpfnWndProc   = mDisplayWndProc;
+	wc.cbClsExtra    = 0;
+	wc.cbWndExtra    = 0;
+	wc.hInstance     = VDGetLocalModuleHandleW32();
+	wc.hIcon         = NULL;
+	wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
 	wc.hbrBackground = NULL;
-	wc.lpszMenuName = NULL;
+	wc.lpszMenuName  = NULL;
 	wc.lpszClassName = className.c_str();
 
 	mDisplayWndClass = RegisterClassW(&wc);

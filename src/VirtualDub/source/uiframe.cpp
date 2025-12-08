@@ -85,7 +85,7 @@ VDUIFrame::VDUIFrame(HWND hwnd)
 	VDASSERT(sFrameList.find(this) == sFrameList.end());
 	sFrameList.push_back(this);
 
-	HMENU hsysmenuapp = LoadMenu(VDGetLocalModuleHandleW32(), MAKEINTRESOURCE(IDR_FRAME_SYSTEM_MENU));
+	HMENU hsysmenuapp = LoadMenuW(VDGetLocalModuleHandleW32(), MAKEINTRESOURCEW(IDR_FRAME_SYSTEM_MENU));
 
 	if (hsysmenuapp) {
 		HMENU hsysmenu = GetSystemMenu(hwnd, FALSE);
@@ -187,8 +187,8 @@ ATOM VDUIFrame::Register()
     wc.cbClsExtra		= 0;
     wc.cbWndExtra		= sizeof(void *)*2;
     wc.hInstance		= g_hInst;
-    wc.hIcon			= LoadIcon(g_hInst, MAKEINTRESOURCE(IDI_VIRTUALDUB));
-    wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
+    wc.hIcon			= LoadIconW(g_hInst, MAKEINTRESOURCEW(IDI_VIRTUALDUB));
+    wc.hCursor			= LoadCursorW(NULL, IDC_ARROW);
     wc.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1); //GetStockObject(LTGRAY_BRUSH);
 	wc.lpszMenuName		= MAKEINTRESOURCEW(IDR_MAIN_MENU);
 	wc.lpszClassName	= szAppNameW;

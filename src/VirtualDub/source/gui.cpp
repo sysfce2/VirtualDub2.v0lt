@@ -392,12 +392,12 @@ void VDUISetListViewColumnsW32(HWND hwnd, const float *relwidths, int count) {
 void VDSetDialogDefaultIcons(HWND hdlg) {
 	HINSTANCE hInst = VDGetLocalModuleHandleW32();
 
-	HANDLE hLargeIcon = LoadImage(hInst, MAKEINTRESOURCE(IDI_VIRTUALDUB), IMAGE_ICON, GetSystemMetrics(SM_CXICON), GetSystemMetrics(SM_CYICON), LR_SHARED);
+	HANDLE hLargeIcon = LoadImageW(hInst, MAKEINTRESOURCEW(IDI_VIRTUALDUB), IMAGE_ICON, GetSystemMetrics(SM_CXICON), GetSystemMetrics(SM_CYICON), LR_SHARED);
 	if (hLargeIcon) {
 		SendMessageW(hdlg, WM_SETICON, ICON_BIG, (LPARAM)hLargeIcon);
 	}
 
-	HANDLE hSmallIcon = LoadImage(hInst, MAKEINTRESOURCE(IDI_VIRTUALDUB), IMAGE_ICON, GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON), LR_SHARED);
+	HANDLE hSmallIcon = LoadImageW(hInst, MAKEINTRESOURCEW(IDI_VIRTUALDUB), IMAGE_ICON, GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON), LR_SHARED);
 	if (hSmallIcon) {
 		SendMessageW(hdlg, WM_SETICON, ICON_SMALL, (LPARAM)hSmallIcon);
 	}

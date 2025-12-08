@@ -950,7 +950,7 @@ bool VDVideoFiltersDialog::OnLoaded() {
 		editor->mOldFrameCount	= editor->mFiltSys.GetOutputFrameCount();
 	}
 
-	mhContextMenus = LoadMenu(NULL, MAKEINTRESOURCE(IDR_FILTER_LIST_CONTEXT));
+	mhContextMenus = LoadMenuW(NULL, MAKEINTRESOURCEW(IDR_FILTER_LIST_CONTEXT));
 
 	SetFocusToControl(IDC_FILTER_LIST);
 	VDUIRestoreWindowPlacementW32(mhdlg, "VideoFilters", SW_SHOW);

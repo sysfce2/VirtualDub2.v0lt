@@ -2,6 +2,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2018 Anton Shekhovtsov
+// Copyright (C) 2025 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -126,7 +127,7 @@ LRESULT VDUISplitterW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 			POINT pt;
 			GetCursorPos(&pt);
 			ScreenToClient(mhwnd, &pt);
-			SetCursor(LoadCursor(NULL, PtInRect(&mSplitter, pt) ? mbIsVertical ? IDC_SIZEWE : IDC_SIZENS : IDC_ARROW));
+			SetCursor(LoadCursorW(NULL, PtInRect(&mSplitter, pt) ? mbIsVertical ? IDC_SIZEWE : IDC_SIZENS : IDC_ARROW));
 			return TRUE;
 		}
 		break;
@@ -414,7 +415,7 @@ LRESULT VDUISplitBarW32::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 	case WM_SETCURSOR:
 		if ((HWND)wParam == mhwnd && LOWORD(lParam) == HTCLIENT) {
-			SetCursor(LoadCursor(NULL, mbIsVertical ? IDC_SIZEWE : IDC_SIZENS));
+			SetCursor(LoadCursorW(NULL, mbIsVertical ? IDC_SIZEWE : IDC_SIZENS));
 			return TRUE;
 		}
 		break;

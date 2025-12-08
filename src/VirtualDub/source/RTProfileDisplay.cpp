@@ -90,16 +90,16 @@ VDRTProfileDisplay *VDRTProfileDisplay::Create(HWND hwndParent, int x, int y, in
 ATOM RegisterRTProfileDisplayControl() {
 	WNDCLASSW wc;
 
-	wc.style		= 0;
-	wc.lpfnWndProc	= VDRTProfileDisplay::StaticWndProc;
-	wc.cbClsExtra	= 0;
-	wc.cbWndExtra	= sizeof(VDRTProfileDisplay *);
-	wc.hInstance	= g_hInst;
-	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground= (HBRUSH)(COLOR_WINDOW+1);
-	wc.lpszMenuName	= NULL;
-	wc.lpszClassName= g_szRTProfileDisplayControlName;
+	wc.style         = 0;
+	wc.lpfnWndProc   = VDRTProfileDisplay::StaticWndProc;
+	wc.cbClsExtra    = 0;
+	wc.cbWndExtra    = sizeof(VDRTProfileDisplay *);
+	wc.hInstance     = g_hInst;
+	wc.hIcon         = NULL;
+	wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
+	wc.lpszMenuName  = NULL;
+	wc.lpszClassName = g_szRTProfileDisplayControlName;
 
 	return RegisterClassW(&wc);
 }

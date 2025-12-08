@@ -474,7 +474,7 @@ FilterPreview::FilterPreview(FilterSystem *pFiltSys, VDFilterChainDesc *pFilterC
 	, mpClipEditCallback(NULL)
 {
 	mode_cursor = 0;
-	cross_cursor = LoadCursor(0,IDC_CROSS);
+	cross_cursor = LoadCursorW(NULL, IDC_CROSS);
 	mWorkArea.left = 0;
 	mWorkArea.top = 0;
 	mWorkArea.right = 0;

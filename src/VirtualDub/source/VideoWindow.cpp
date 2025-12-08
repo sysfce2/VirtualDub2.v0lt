@@ -148,7 +148,7 @@ VDVideoWindow::VDVideoWindow(HWND hwnd)
 	, mhwndChild(NULL)
 	, mhwndMax(NULL)
 	, mhwndParent(NULL)
-	, mhmenu(LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_DISPLAY_MENU)))
+	, mhmenu(LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_DISPLAY_MENU)))
 	, mInhibitParamUpdateLocks(0)
 	, mInhibitWorkArea(0)
 	, mSourceWidth(0)
@@ -201,7 +201,7 @@ ATOM VDVideoWindow::RegisterControl() {
 	wc.cbWndExtra		= sizeof(VDVideoWindow *);
 	wc.hInstance		= g_hInst;
 	wc.hIcon			= NULL;
-	wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor			= LoadCursorW(NULL, IDC_ARROW);
 	wc.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1);
 	wc.lpszMenuName		= NULL;
 	wc.lpszClassName	= g_szVideoWindowClass;

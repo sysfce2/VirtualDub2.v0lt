@@ -742,16 +742,16 @@ protected:
 ATOM RegisterAudioDisplayControl() {
 	WNDCLASSW wc;
 
-	wc.style		= CS_VREDRAW | CS_HREDRAW | CS_DBLCLKS;
-	wc.lpfnWndProc	= VDUISpriteBasedControlW32::StaticWndProc<VDAudioDisplayControl>;
-	wc.cbClsExtra	= 0;
-	wc.cbWndExtra	= sizeof(IVDUnknown *);
-	wc.hInstance	= g_hInst;
-	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground= (HBRUSH)(COLOR_3DFACE+1);		//GetStockObject(LTGRAY_BRUSH);
-	wc.lpszMenuName	= NULL;
-	wc.lpszClassName= AUDIODISPLAYCONTROLCLASS;
+	wc.style         = CS_VREDRAW | CS_HREDRAW | CS_DBLCLKS;
+	wc.lpfnWndProc   = VDUISpriteBasedControlW32::StaticWndProc<VDAudioDisplayControl>;
+	wc.cbClsExtra    = 0;
+	wc.cbWndExtra    = sizeof(IVDUnknown *);
+	wc.hInstance     = g_hInst;
+	wc.hIcon         = NULL;
+	wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)(COLOR_3DFACE+1);        //GetStockObject(LTGRAY_BRUSH);
+	wc.lpszMenuName  = NULL;
+	wc.lpszClassName = AUDIODISPLAYCONTROLCLASS;
 
 	return RegisterClassW(&wc);
 }
@@ -822,7 +822,7 @@ VDAudioDisplayControl::VDAudioDisplayControl(HWND hwnd)
 	mbihSpectrumMinorMarker.hdr = mbihSpectrum.hdr;
 	mbihSpectrumMajorMarker.hdr = mbihSpectrum.hdr;
 
-  cr_hand = LoadCursor(0,IDC_HAND);
+	cr_hand = LoadCursorW(NULL, IDC_HAND);
 	mhfont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	mFontDigitWidth = 12;
 	mFontHeight = 16;
@@ -839,7 +839,7 @@ VDAudioDisplayControl::VDAudioDisplayControl(HWND hwnd)
 		ReleaseDC(hwnd, hdc);
 	}
 
-	mhmenuPopup = LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_AUDIODISPLAY_MENU));
+	mhmenuPopup = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_AUDIODISPLAY_MENU));
 	if (mhmenuPopup)
 		mhmenuPopup = GetSubMenu(mhmenuPopup, 0);
 }
@@ -1492,7 +1492,7 @@ LRESULT VDAudioDisplayControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 	case WM_SETCURSOR:
 		if (mDragMode==kDragModeView) {
-			SetCursor(LoadCursor(NULL, IDC_SIZEALL));
+			SetCursor(LoadCursorW(NULL, IDC_SIZEALL));
 			return true;
 		}
 		if (mDragMode==0) {

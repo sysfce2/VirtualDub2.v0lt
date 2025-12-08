@@ -427,7 +427,7 @@ ATOM VDBackfaceConsole::RegisterWindowClass() {
 	wc.cbWndExtra		= sizeof(void *);
 	wc.hInstance		= g_hInst;
 	wc.hIcon			= NULL;
-	wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor			= LoadCursorW(NULL, IDC_ARROW);
 	wc.hbrBackground	= NULL;
 	wc.lpszMenuName		= NULL;
 	wc.lpszClassName	= L"Backface";

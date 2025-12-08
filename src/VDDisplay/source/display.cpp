@@ -320,7 +320,7 @@ ATOM VDVideoDisplayWindow::Register() {
 		wc.cbWndExtra		= sizeof(VDVideoDisplayWindow *);
 		wc.hInstance		= hInst;
 		wc.hIcon			= 0;
-		wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
+		wc.hCursor			= LoadCursorW(NULL, IDC_ARROW);
 		wc.hbrBackground	= (HBRUSH)(BLACK_BRUSH + 1);
 		wc.lpszMenuName		= 0;
 		wc.lpszClassName	= L"phaeronVideoDisplayChild";
@@ -336,7 +336,7 @@ ATOM VDVideoDisplayWindow::Register() {
 	wc.cbWndExtra		= sizeof(VDVideoDisplayWindow *);
 	wc.hInstance		= hInst;
 	wc.hIcon			= 0;
-	wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor			= LoadCursorW(NULL, IDC_ARROW);
 	wc.hbrBackground	= (HBRUSH)(COLOR_3DFACE + 1);
 	wc.lpszMenuName		= 0;
 	wc.lpszClassName	= g_szVideoDisplayControlName;

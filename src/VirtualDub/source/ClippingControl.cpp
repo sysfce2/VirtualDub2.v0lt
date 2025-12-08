@@ -428,7 +428,7 @@ bool VDClippingControlOverlay::OnSetCursor(UINT htcode, UINT mousemsg) {
 		{ IDC_SIZEWE, IDC_SIZENESW, IDC_SIZENWSE },
 	};
 
-	SetCursor(LoadCursor(NULL, sCursor[x+1][y+1]));
+	SetCursor(LoadCursorW(NULL, sCursor[x+1][y+1]));
 	return true;
 }
 
@@ -574,7 +574,7 @@ ATOM RegisterClippingControl() {
 	wc.cbWndExtra	= sizeof(VDClippingControl *);
 	wc.hInstance	= g_hInst;
 	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor		= LoadCursorW(NULL, IDC_ARROW);
 	wc.hbrBackground= (HBRUSH)(COLOR_3DFACE+1);		//GetStockObject(LTGRAY_BRUSH);
 	wc.lpszMenuName	= NULL;
 	wc.lpszClassName= CLIPPINGCONTROLCLASS;
@@ -962,7 +962,7 @@ LRESULT VDClippingControl::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 	case WM_SETCURSOR:
 		if ((HWND)wParam != mhwnd) {
-			SetCursor(LoadCursor(NULL, IDC_ARROW));
+			SetCursor(LoadCursorW(NULL, IDC_ARROW));
 			return TRUE;
 		}
 		break;

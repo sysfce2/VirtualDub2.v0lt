@@ -651,18 +651,18 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 	LoadSettings();
 
 	// Load menus.
-	if (!(mhMenuNormal	= LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_MAIN_MENU    )))) {
+	if (!(mhMenuNormal = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_MAIN_MENU    )))) {
 		Detach();
 		return false;
 	}
 
-	mhMenuExport = LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_FILE_EXPORTMENU));
+	mhMenuExport = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_FILE_EXPORTMENU));
 	if (!mhMenuExport) {
 		Detach();
 		return false;
 	}
 
-	mhMenuTools = LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_TOOLS_MENU));
+	mhMenuTools = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_TOOLS_MENU));
 	if (!mhMenuTools) {
 		Detach();
 		return false;
@@ -686,11 +686,11 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 
 	UpdateAudioSourceMenu();
 
-	if (!(mhMenuDub		= LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_DUB_MENU     )))) {
+	if (!(mhMenuDub = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_DUB_MENU     )))) {
 		Detach();
 		return false;
 	}
-	if (!(mhMenuDisplay = LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_DISPLAY_MENU )))) {
+	if (!(mhMenuDisplay = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_DISPLAY_MENU )))) {
 		Detach();
 		return false;
 	}
@@ -861,7 +861,7 @@ void VDProjectUI::DestroyPositionControl() {
 }
 
 void VDProjectUI::UpdateAccelMain() {
-	HACCEL haccel = LoadAccelerators(g_hInst, MAKEINTRESOURCE(IDR_IDLE_KEYS));
+	HACCEL haccel = LoadAcceleratorsW(g_hInst, MAKEINTRESOURCEW(IDR_IDLE_KEYS));
 
 	if (haccel)
 		VDUIExtractAcceleratorTableW32(mAccelTableDefault, haccel, kCommandList.begin(), kCommandList.size());
@@ -934,7 +934,7 @@ void VDProjectUI::UpdateAccelPreview() {
 		ID_EDIT_SELECTALL,
 	};
 
-	HACCEL haccel = LoadAccelerators(g_hInst, MAKEINTRESOURCE(IDR_PREVIEW_KEYS));
+	HACCEL haccel = LoadAcceleratorsW(g_hInst, MAKEINTRESOURCEW(IDR_PREVIEW_KEYS));
 	VDAccelTableDefinition def;
 	VDUIMergeAcceleratorTableW32(def, haccel, merge_list, std::size(merge_list), mAccelTableDef);
 	mhAccelPreview = VDUIBuildAcceleratorTableW32(def);
@@ -982,7 +982,7 @@ void VDProjectUI::UpdateAccelDub() {
 		ID_VIEW_FULLSCREEN,
 	};
 
-	HACCEL haccel = LoadAccelerators(g_hInst, MAKEINTRESOURCE(IDR_DUB_KEYS));
+	HACCEL haccel = LoadAcceleratorsW(g_hInst, MAKEINTRESOURCEW(IDR_DUB_KEYS));
 	VDAccelTableDefinition def;
 	VDUIMergeAcceleratorTableW32(def, haccel, merge_list, std::size(merge_list), mAccelTableDef);
 	mhAccelDub = VDUIBuildAcceleratorTableW32(def);
@@ -3079,7 +3079,7 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 	{
 		if (mhMenuTools)
 			DestroyMenu(mhMenuTools);
-		mhMenuTools = LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_TOOLS_MENU));
+		mhMenuTools = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_TOOLS_MENU));
 		HMENU hmenuTools = GetSubMenu(mhMenuTools, 0);
 		{for(int i=0; i<GetMenuItemCount(hmenuTools); i++){
 			if (GetMenuItemID(hmenuTools,i)==ID_TOOLS_PLUGIN) {

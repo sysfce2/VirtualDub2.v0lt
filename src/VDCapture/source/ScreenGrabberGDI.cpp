@@ -56,7 +56,7 @@ VDScreenGrabberGDI::VDScreenGrabberGDI()
 	, mCaptureHeight(240)
 {
 	mbExcludeSelf = true;
-	mhCursor = LoadCursor(g_hInst, MAKEINTRESOURCE(IDC_CAP_POINT));
+	mhCursor = LoadCursorW(g_hInst, MAKEINTRESOURCEW(IDC_CAP_POINT));
 	ICONINFO ii;
 	if (::GetIconInfo(mhCursor, &ii)) {
 		capCursorHotspot = { (LONG)ii.xHotspot, (LONG)ii.yHotspot };

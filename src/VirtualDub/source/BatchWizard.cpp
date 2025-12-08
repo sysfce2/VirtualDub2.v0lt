@@ -121,7 +121,7 @@ protected:
 VDUIBatchWizard::VDUIBatchWizard()
 	: VDDialogFrameW32(IDD_BATCH_WIZARD)
 	, mbOutputRelative(false)
-	, mhmenuPopups(LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_BATCHWIZARD_MENU)))
+	, mhmenuPopups(LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_BATCHWIZARD_MENU)))
 {
 }
 

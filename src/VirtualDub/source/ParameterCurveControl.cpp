@@ -144,16 +144,16 @@ protected:
 bool VDRegisterParameterCurveControl() {
 	WNDCLASSW wc;
 
-	wc.style		= CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc	= VDParameterCurveControlW32::StaticWndProc;
-	wc.cbClsExtra	= 0;
-	wc.cbWndExtra	= sizeof(IVDUnknown *);
-	wc.hInstance	= g_hInst;
-	wc.hIcon		= NULL;
-	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground= NULL;
-	wc.lpszMenuName	= NULL;
-	wc.lpszClassName= g_VDParameterCurveControlClass;
+	wc.style         = CS_HREDRAW | CS_VREDRAW;
+	wc.lpfnWndProc   = VDParameterCurveControlW32::StaticWndProc;
+	wc.cbClsExtra    = 0;
+	wc.cbWndExtra    = sizeof(IVDUnknown *);
+	wc.hInstance     = g_hInst;
+	wc.hIcon         = NULL;
+	wc.hCursor       = LoadCursorW(NULL, IDC_ARROW);
+	wc.hbrBackground = NULL;
+	wc.lpszMenuName  = NULL;
+	wc.lpszClassName = g_VDParameterCurveControlClass;
 
 	return !!RegisterClassW(&wc);
 }
@@ -178,10 +178,10 @@ VDParameterCurveControlW32::VDParameterCurveControlW32(HWND hwnd)
 	, mhpenLine(CreatePen(PS_SOLID, 0, RGB(128,255,192)))
 	, mhpenEndLine(CreatePen(PS_SOLID, 0, RGB(224,224,128)))
 	, mhpenCurrentPos(CreatePen(PS_SOLID, 0, RGB(100, 100, 255)))
-	, mhcurMove(LoadCursor(g_hInst, MAKEINTRESOURCE(IDC_DRAGPOINT)))
-	, mhcurAdd(LoadCursor(g_hInst, MAKEINTRESOURCE(IDC_ADDPOINT)))
-	, mhcurRemove(LoadCursor(g_hInst, MAKEINTRESOURCE(IDC_REMOVEPOINT)))
-	, mhcurModify(LoadCursor(g_hInst, MAKEINTRESOURCE(IDC_MODIFYPOINT)))
+	, mhcurMove(LoadCursorW(g_hInst, MAKEINTRESOURCEW(IDC_DRAGPOINT)))
+	, mhcurAdd(LoadCursorW(g_hInst, MAKEINTRESOURCEW(IDC_ADDPOINT)))
+	, mhcurRemove(LoadCursorW(g_hInst, MAKEINTRESOURCEW(IDC_REMOVEPOINT)))
+	, mhcurModify(LoadCursorW(g_hInst, MAKEINTRESOURCEW(IDC_MODIFYPOINT)))
 {
 	mPosX = 0.0;
 	mPosY = 0.5;
@@ -746,19 +746,25 @@ void VDParameterCurveControlW32::OnPaint() {
 }
 
 void VDParameterCurveControlW32::OnSetCursor(HWND hwnd, UINT htCode, UINT msg) {
-	if (hwnd != mhwnd || htCode != HTCLIENT || !mpCurve)
-		SetCursor(LoadCursor(NULL, IDC_ARROW));
-	else if (mDragPart)
+	if (hwnd != mhwnd || htCode != HTCLIENT || !mpCurve) {
+		SetCursor(LoadCursorW(NULL, IDC_ARROW));
+	}
+	else if (mDragPart) {
 		SetCursor(mhcurMove);
+	}
 	else if (GetKeyState(VK_SHIFT) < 0) {
 		SetCursor(mhcurAdd);
-	} else if (mHighlightedPart) {
-		if (GetKeyState(VK_CONTROL) < 0)
+	}
+	else if (mHighlightedPart) {
+		if (GetKeyState(VK_CONTROL) < 0) {
 			SetCursor(mhcurRemove);
-		else
+		} else {
 			SetCursor(mhcurMove);
-	} else
-		SetCursor(LoadCursor(NULL, IDC_ARROW));
+		}
+	}
+	else {
+		SetCursor(LoadCursorW(NULL, IDC_ARROW));
+	}
 }
 
 void VDParameterCurveControlW32::Notify(UINT code) {

@@ -745,13 +745,13 @@ INT_PTR CALLBACK VDShowChangeLogDlgProcW32(HWND hdlg, UINT msg, WPARAM wParam, L
 
 void VDShowChangeLog(VDGUIHandle hParent) {
 	HMODULE hmod = VDLoadSystemLibraryW32("riched32.dll");
-	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_CHANGE_LOG), (HWND)hParent, VDShowChangeLogDlgProcW32, (LPARAM)MAKEINTRESOURCE(IDR_CHANGES));
+	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_CHANGE_LOG), (HWND)hParent, VDShowChangeLogDlgProcW32, (LPARAM)MAKEINTRESOURCEW(IDR_CHANGES));
 	FreeLibrary(hmod);
 }
 
 void VDShowReleaseNotes(VDGUIHandle hParent) {
 	HMODULE hmod = VDLoadSystemLibraryW32("riched32.dll");
-	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_CHANGE_LOG), (HWND)hParent, VDShowChangeLogDlgProcW32, (LPARAM)MAKEINTRESOURCE(IDR_RELEASE_NOTES));
+	DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(IDD_CHANGE_LOG), (HWND)hParent, VDShowChangeLogDlgProcW32, (LPARAM)MAKEINTRESOURCEW(IDR_RELEASE_NOTES));
 	FreeLibrary(hmod);
 }
 

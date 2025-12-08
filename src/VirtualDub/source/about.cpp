@@ -325,7 +325,7 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 				AboutSetCompilerBuild(GetDlgItem(hDlg, IDC_STATIC_VERSION));
 
-				HRSRC hrsrc = FindResourceW(NULL, MAKEINTRESOURCE(IDR_CREDITS), L"STUFF");
+				HRSRC hrsrc = FindResourceW(NULL, MAKEINTRESOURCEW(IDR_CREDITS), L"STUFF");
 				if (hrsrc) {
 					HGLOBAL hGlobal = LoadResource(NULL, hrsrc);
 					if (hGlobal) {
@@ -415,7 +415,7 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
 									// Grab the VirtualDub icon.
 
-									HICON hico = LoadIcon(g_hInst, MAKEINTRESOURCE(IDI_VIRTUALDUB));
+									HICON hico = LoadIconW(g_hInst, MAKEINTRESOURCEW(IDI_VIRTUALDUB));
 
 									RECT rFill = {0,0,32,32};
 									FillRect(g_hdcAboutDisplay, &rFill, (HBRUSH)(COLOR_3DFACE+1));

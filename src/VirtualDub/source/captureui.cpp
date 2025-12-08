@@ -677,9 +677,9 @@ bool VDCaptureProjectUI::Attach(VDGUIHandle hwnd, IVDCaptureProject *pProject) {
 	mUIPeer.Attach((HWND)mhwnd);
 
 	// load menus & accelerators
-	if (   !(mhMenuAuxCapture	= LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_CAPTURE_AUXMENU)))
-		|| !(mhMenuCapture		= LoadMenu(g_hInst, MAKEINTRESOURCE(IDR_CAPTURE_MENU)))
-		|| !(mhAccelCapture		= LoadAccelerators(g_hInst, MAKEINTRESOURCE(IDR_CAPTURE_KEYS)))
+	if (   !(mhMenuAuxCapture = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_CAPTURE_AUXMENU)))
+		|| !(mhMenuCapture    = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_CAPTURE_MENU)))
+		|| !(mhAccelCapture   = LoadAcceleratorsW(g_hInst, MAKEINTRESOURCEW(IDR_CAPTURE_KEYS)))
 		)
 	{
 		Detach();
@@ -2688,7 +2688,7 @@ LRESULT VDCaptureProjectUI::CommonWndProc(UINT msg, WPARAM wParam, LPARAM lParam
 
 		case WM_SETCURSOR:
 			if (IsFullScreen()) {
-				SetCursor(LoadCursor(NULL, IDC_ARROW));
+				SetCursor(LoadCursorW(NULL, IDC_ARROW));
 				return TRUE;
 			}
 			break;

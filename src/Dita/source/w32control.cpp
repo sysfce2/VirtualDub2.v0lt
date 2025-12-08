@@ -202,7 +202,7 @@ bool VDUICustomControlW32::Create(IVDUIParameters *pParms, bool forceNonChild, D
 			wc.cbClsExtra		= 0;
 			wc.cbWndExtra		= DLGWINDOWEXTRA + sizeof(VDUICustomControlW32 *);
 			wc.hbrBackground	= (HBRUSH)(COLOR_3DFACE+1);
-			wc.hCursor			= LoadCursor(NULL, IDC_ARROW);
+			wc.hCursor			= LoadCursorW(NULL, IDC_ARROW);
 			wc.hIcon			= 0;
 			wc.hInstance		= GetModuleHandleW(NULL);
 			wc.lpfnWndProc		= StaticWndProc;
