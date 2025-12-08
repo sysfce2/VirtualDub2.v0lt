@@ -96,7 +96,7 @@ extern const unsigned char fht_tab[]={ 0xfc,0xc3,0xd8,0xde,0xdf,0xcb,0xc6,0xee,0
 
 void guiOpenDebug() {
 	if (!g_hwndDebugWindow)
-		g_hwndDebugWindow = CreateDialog(g_hInst, MAKEINTRESOURCE(IDD_DEBUGVAL), NULL, DebugDlgProc);
+		g_hwndDebugWindow = CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_DEBUGVAL), NULL, DebugDlgProc, 0);
 #pragma vdpragma_TODO("improve this")
 #ifndef _M_AMD64
 	else if (GetKeyState(VK_CONTROL)<0) {

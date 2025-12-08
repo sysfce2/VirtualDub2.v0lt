@@ -718,7 +718,7 @@ bool VDCaptureProjectUI::Attach(VDGUIHandle hwnd, IVDCaptureProject *pProject) {
 	SetWindowLongPtrW(mhwndStatus, GWLP_WNDPROC, (LONG_PTR)StaticStatusWndProc);
 
 	// create the side panel
-	CreateDialogParam(g_hInst, MAKEINTRESOURCE(IDD_CAPTURE_PANEL), (HWND)mhwnd, StaticPanelDlgProc, (LPARAM)this);
+	CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_CAPTURE_PANEL), (HWND)mhwnd, StaticPanelDlgProc, (LPARAM)this);
 	if (!mhwndPanel) {
 		Detach();
 		return false;

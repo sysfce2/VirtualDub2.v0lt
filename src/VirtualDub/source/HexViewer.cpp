@@ -1652,14 +1652,14 @@ LRESULT HexEditor::Handle_WM_COMMAND(WPARAM wParam, LPARAM lParam) {
 		if (hwndFind)
 			SetForegroundWindow(hwndFind);
 		else
-			CreateDialogParam(g_hInst, MAKEINTRESOURCE(IDD_HEXVIEWER_FIND), hwnd, FindDlgProc, (LPARAM)this);
+			CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_HEXVIEWER_FIND), hwnd, FindDlgProc, (LPARAM)this);
 		break;
 
 	case ID_EDIT_RIFFTREE:
 		if (hwndTree)
 			DestroyWindow(hwndTree);
 		else
-			CreateDialogParam(g_hInst, MAKEINTRESOURCE(IDD_HEXVIEWER_RIFFLIST), hwnd, TreeDlgProc, (LPARAM)this);
+			CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_HEXVIEWER_RIFFLIST), hwnd, TreeDlgProc, (LPARAM)this);
 		break;
 
 	case ID_EDIT_AVIASSIST:

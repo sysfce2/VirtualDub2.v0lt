@@ -101,7 +101,7 @@ BOOL Init(HINSTANCE hInstance, int nCmdShow)
 
 	g_hInst = hInstance; // Store instance handle in our global variable
 
-	g_hwnd = CreateDialogW(hInstance, MAKEINTRESOURCEW(IDD_MAINWINDOW), NULL, (DLGPROC)NULL);
+	g_hwnd = CreateDialogParamW(hInstance, MAKEINTRESOURCEW(IDD_MAINWINDOW), NULL, (DLGPROC)NULL, 0);
 
 	if (!g_hwnd) {
 		return (FALSE);

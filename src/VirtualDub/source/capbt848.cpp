@@ -353,7 +353,7 @@ void CaptureDisplayBT848Tweaker(HWND hwndParent) {
 
 		// Display the dialog.
 
-		g_hwndTweaker = CreateDialog(g_hInst, MAKEINTRESOURCE(IDD_CAPTURE_BT8X8), hwndParent, CaptureBT848TweakerDlgProc);
+		g_hwndTweaker = CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_CAPTURE_BT8X8), hwndParent, CaptureBT848TweakerDlgProc, 0);
 
 	} catch(const MyError& e) {
 		e.post(hwndParent, g_szError);

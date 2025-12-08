@@ -811,7 +811,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 
 				// open up child dialog
 
-				thisPtr->hwndStatusChild = CreateDialogParam(g_hInst, tabs[0].rsrc, hdlg, tabs[0].dProc, (LPARAM)thisPtr);
+				thisPtr->hwndStatusChild = CreateDialogParamW(g_hInst, tabs[0].rsrc, hdlg, tabs[0].dProc, (LPARAM)thisPtr);
 
 				// setup timer, progress bar
 
@@ -908,7 +908,7 @@ INT_PTR CALLBACK DubStatus::StatusDlgProc( HWND hdlg, UINT message, WPARAM wPara
 						if (thisPtr->hwndStatusChild)
 							DestroyWindow(thisPtr->hwndStatusChild);
 
-						thisPtr->hwndStatusChild = CreateDialogParam(g_hInst, tabs[iTab].rsrc, hdlg, tabs[iTab].dProc, (LPARAM)thisPtr);
+						thisPtr->hwndStatusChild = CreateDialogParamW(g_hInst, tabs[iTab].rsrc, hdlg, tabs[iTab].dProc, (LPARAM)thisPtr);
 					}
 				}
 				return TRUE;

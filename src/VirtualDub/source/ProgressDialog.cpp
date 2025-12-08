@@ -37,7 +37,7 @@ ProgressDialog::ProgressDialog(HWND hwndParent, const char *szTitle, const char 
 {
 	dwLastTime = GetTickCount();
 
-	CreateDialogParam(g_hInst, MAKEINTRESOURCE(IDD_PROGRESS), hwndParent, ProgressDlgProc, (LPARAM)this);
+	CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_PROGRESS), hwndParent, ProgressDlgProc, (LPARAM)this);
 }
 
 ProgressDialog::~ProgressDialog() {

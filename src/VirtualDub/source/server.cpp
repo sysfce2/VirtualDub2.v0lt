@@ -276,7 +276,7 @@ void Frameserver::Go(IVDubServerLink *ivdsl, char *name) {
 
 	mbExit = false;
 
-	if (hwndStatus = CreateDialogParam(g_hInst, MAKEINTRESOURCE(IDD_SERVER), hwnd, Frameserver::StatusDlgProc, (LPARAM)this)) {
+	if (hwndStatus = CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_SERVER), hwnd, Frameserver::StatusDlgProc, (LPARAM)this)) {
 
 		// hide the main window
 

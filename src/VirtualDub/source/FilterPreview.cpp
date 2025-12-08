@@ -1741,7 +1741,7 @@ void FilterPreview::Display(VDXHWND hwndParent, bool fDisplay) {
 		UndoSystem();
 	} else if (mpFilterChainDesc) {
 		mhwndParent = (HWND)hwndParent;
-		mhdlg = CreateDialogParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_PREVIEW), (HWND)hwndParent, StaticDlgProc, (LPARAM)this);
+		mhdlg = CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_PREVIEW), (HWND)hwndParent, StaticDlgProc, (LPARAM)this);
 		g_projectui->DisplayPreview(true);
 	}
 
@@ -2223,7 +2223,7 @@ PixmapView::~PixmapView() {
 
 void PixmapView::Display(VDXHWND hwndParent, const wchar_t* title) {
 	mhwndParent = (HWND)hwndParent;
-	mhdlg = CreateDialogParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_PREVIEW), (HWND)hwndParent, StaticDlgProc, (LPARAM)this);
+	mhdlg = CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_PREVIEW), (HWND)hwndParent, StaticDlgProc, (LPARAM)this);
 	SetWindowTextW(mhdlg,title);
 	ShowWindow(mhdlg,SW_SHOW);
 }

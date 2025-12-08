@@ -743,7 +743,7 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 		return false;
 	}
 
-	mhwndMaxDisplay = CreateDialogParam(g_hInst, MAKEINTRESOURCE(IDD_FILTER_PREVIEW), (HWND)mhwnd, max_host_proc, (LPARAM)this);
+	mhwndMaxDisplay = CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(IDD_FILTER_PREVIEW), (HWND)mhwnd, max_host_proc, (LPARAM)this);
 	if (!mhwndMaxDisplay) {
 		Detach();
 		return false;
