@@ -200,7 +200,7 @@ bool WarpResizeFilter::Configure(VDXHWND hwnd) {
 	int saveW = mTargetWidth;
 	int saveH = mTargetHeight;
 
-	bool success = 0 != Show(VDGetLocalModuleHandleW32(), MAKEINTRESOURCE(IDD_FILTER_WARPRESIZE), (HWND)hwnd);
+	bool success = 0 != Show(VDGetLocalModuleHandleW32(), MAKEINTRESOURCEW(IDD_FILTER_WARPRESIZE), (HWND)hwnd);
 	if (!success) {
 		mbShowGradientMap = saveGrad;
 		mTargetWidth = saveW;

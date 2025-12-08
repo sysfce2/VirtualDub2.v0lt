@@ -2653,9 +2653,9 @@ ATOM RegisterHexEditor() {
 	wc1.cbWndExtra		= sizeof(HexEditor *);
 	wc1.hInstance		= g_hInst;
 	wc1.hIcon			= NULL;
-    wc1.hCursor			= LoadCursorW(NULL, IDC_ARROW);
+	wc1.hCursor			= LoadCursorW(NULL, IDC_ARROW);
 	wc1.hbrBackground	= NULL; //(HBRUSH)(COLOR_WINDOW+1);
-	wc1.lpszMenuName	= MAKEINTRESOURCE(IDR_HEXVIEWER_MENU);
+	wc1.lpszMenuName	= MAKEINTRESOURCEW(IDR_HEXVIEWER_MENU);
 	wc1.lpszClassName	= HEXEDITORCLASS;
 
 	wc2.style			= 0;
@@ -2664,7 +2664,7 @@ ATOM RegisterHexEditor() {
 	wc2.cbWndExtra		= sizeof(HexViewer *);
 	wc2.hInstance		= g_hInst;
 	wc2.hIcon			= NULL;
-    wc2.hCursor			= LoadCursorW(NULL, IDC_ARROW);
+	wc2.hCursor			= LoadCursorW(NULL, IDC_ARROW);
 	wc2.hbrBackground	= NULL; //(HBRUSH)(COLOR_WINDOW+1);
 	wc2.lpszMenuName	= NULL;
 	wc2.lpszClassName	= szHexViewerClassName;

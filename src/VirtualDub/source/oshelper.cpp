@@ -143,7 +143,7 @@ VDStringW VDLoadStringW32(uint32 uID, bool doSubstitutions) {
 
 	VDStringW str;
 
-	HRSRC hrsrc = FindResourceEx(NULL, RT_STRING, MAKEINTRESOURCE(1 + (uID >> 4)), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL));
+	HRSRC hrsrc = FindResourceExW(NULL, RT_STRING, MAKEINTRESOURCEW(1 + (uID >> 4)), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL));
 	if (hrsrc) {
 		HGLOBAL hglob = LoadResource(NULL, hrsrc);
 		if (hglob) {
