@@ -317,7 +317,7 @@ extern void VDOpenProfileWindow(int mode) {
 
 extern void VDCloseProfileWindow() {
 	if(profwin.isThreadActive()){
-		PostThreadMessage(profwin.getThreadID(),WM_QUIT,0,0);
+		PostThreadMessageW(profwin.getThreadID(),WM_QUIT,0,0);
 		profwin.ThreadWait();
 	}
 }

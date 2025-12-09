@@ -4165,11 +4165,11 @@ void VDCaptureProjectUI::RebuildPanel() {
 	if (mhPanelFont2) DeleteObject(mhPanelFont2);
 	if (mhPanelFont3) DeleteObject(mhPanelFont3);
 	LOGFONT lf;
-	GetObject(hfont, sizeof(lf), &lf);
+	GetObjectW(hfont, sizeof(lf), &lf);
 	lf.lfWeight = 800;
-	mhPanelFont2 = CreateFontIndirect(&lf);
+	mhPanelFont2 = CreateFontIndirectW(&lf);
 	lf.lfHeight = lf.lfHeight*3;
-	mhPanelFont3 = CreateFontIndirect(&lf);
+	mhPanelFont3 = CreateFontIndirectW(&lf);
 
 	for(int type=0; type<kVDCaptureInfoType_Count; ++type) {
 		VDCapturePreferences::InfoItems::const_iterator it(infoItems.begin()), itEnd(infoItems.end());

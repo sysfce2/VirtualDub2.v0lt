@@ -45,7 +45,7 @@ void tool_fontencode(const vdfastvector<const wchar_t*>& args, const vdfastvecto
 	HBITMAP hbm = (HBITMAP)LoadImageW(NULL, args[0], IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
 	BITMAP bm = {0};
 
-	if (!hbm || !GetObject(hbm, sizeof bm, &bm)) {
+	if (!hbm || !GetObjectW(hbm, sizeof bm, &bm)) {
 		printf("Asuka: Unable to load font bitmap %ls: error code %u.\n", args[0], GetLastError());
 		exit(10);
 	}

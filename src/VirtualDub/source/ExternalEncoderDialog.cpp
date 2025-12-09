@@ -118,7 +118,7 @@ bool VDUIDialogExtEncMain::OnLoaded() {
 
 		if (hfontDlg) {
 			LOGFONT lf = {0};
-			if (GetObject(hfontDlg, sizeof lf, &lf)) {
+			if (GetObjectW(hfontDlg, sizeof lf, &lf)) {
 				mhFontMarlett = CreateFontW(lf.lfHeight, 0, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Marlett");
 			}
 		}

@@ -250,7 +250,7 @@ VDFilterSystemMessageLoopScheduler::VDFilterSystemMessageLoopScheduler()
 }
 
 void VDFilterSystemMessageLoopScheduler::Reschedule() {
-	PostThreadMessage(mThreadId, WM_NULL, 0, 0);
+	PostThreadMessageW(mThreadId, WM_NULL, 0, 0);
 }
 
 bool VDFilterSystemMessageLoopScheduler::Block() {

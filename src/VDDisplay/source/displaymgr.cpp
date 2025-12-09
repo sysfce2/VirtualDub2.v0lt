@@ -136,7 +136,7 @@ void VDVideoDisplayManager::Shutdown() {
 	VDASSERT(mClients.empty());
 
 	if (isThreadAttached()) {
-		PostThreadMessage(getThreadID(), WM_QUIT, 0, 0);
+		PostThreadMessageW(getThreadID(), WM_QUIT, 0, 0);
 		ThreadWait();
 	}
 
@@ -171,7 +171,7 @@ void VDVideoDisplayManager::RemoteCall(void (*function)(void *), void *data) {
 		mRemoteCalls.push_back(&node);
 	}
 
-	PostThreadMessage(getThreadID(), WM_NULL, 0, 0);
+	PostThreadMessageW(getThreadID(), WM_NULL, 0, 0);
 
 	HANDLE h = node.mSignal.getHandle();
 	for(;;) {
@@ -215,7 +215,7 @@ void VDVideoDisplayManager::ModifyPreciseMode(bool enabled) {
 				EnterPreciseMode();
 			else {
 				ReaffirmPreciseMode();
-				PostThreadMessage(getThreadID(), WM_NULL, 0, 0);
+				PostThreadMessageW(getThreadID(), WM_NULL, 0, 0);
 			}
 		}
 	} else {
@@ -233,7 +233,7 @@ void VDVideoDisplayManager::ModifyTicksEnabled(bool enabled) {
 		VDASSERT(rc < 100000);
 
 		if (rc == 1) {
-			PostThreadMessage(getThreadID(), WM_NULL, 0, 0);
+			PostThreadMessageW(getThreadID(), WM_NULL, 0, 0);
 			if (!mbMultithreaded)
 				mTickTimerId = SetTimer(mhwnd, kTimerID_Tick, 10, NULL);
 		}

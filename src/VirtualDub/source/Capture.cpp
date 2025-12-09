@@ -425,10 +425,10 @@ public:
 	~VDCaptureData();
 
 	void PostFinalizeRequest() {
-		PostThreadMessage(getThreadID(), VDCM_SWITCH_FIN, 0, 0);
+		PostThreadMessageW(getThreadID(), VDCM_SWITCH_FIN, 0, 0);
 	}
 	void PostExitRequest() {
-		PostThreadMessage(getThreadID(), VDCM_EXIT, 0, 0);
+		PostThreadMessageW(getThreadID(), VDCM_EXIT, 0, 0);
 	}
 
 	void createOutputBlitter(bool flush=false);
@@ -2578,7 +2578,7 @@ void VDCaptureProject::CapEnd(const MyError *pError) {
 			mpCaptureData->mpError = new MyError(*pError);
 	}
 
-	PostThreadMessage(mMainThreadId, WM_APP+100, 0, 0);
+	PostThreadMessageW(mMainThreadId, WM_APP+100, 0, 0);
 }
 
 bool VDCaptureProject::CapEvent(DriverEvent event, int data) {

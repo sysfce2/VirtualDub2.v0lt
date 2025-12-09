@@ -132,7 +132,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     // Acquire and dispatch messages until a WM_QUIT message is received.
 
-	PostThreadMessage(GetCurrentThreadId(), WM_NULL, 0, 0);
+	PostThreadMessageW(GetCurrentThreadId(), WM_NULL, 0, 0);
 
 	bool bCommandLineProcessed = false;
 

@@ -389,7 +389,7 @@ bool VDAudioCodecW32::Convert(bool flush, bool requireOutput) {
 	//
 	//	do {
 	//		Sleep(10);
-	//	} while(!PostThreadMessage(GetCurrentThreadId(), MM_STREAM_DONE, id, 0));
+	//	} while(!PostThreadMessageW(GetCurrentThreadId(), MM_STREAM_DONE, id, 0));
 	//
 	// Since we're not required to run a message pump to use ACM without a window handle,
 	// this causes the window message queue to fill up.

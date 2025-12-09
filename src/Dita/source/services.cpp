@@ -230,7 +230,7 @@ struct tester {
 		builder.AddLabel(1, 7, 7, 50, 14, L"hellow");
 		builder.AddLabel(1, 7, 21, 50, 14, L"byebye");
 
-		DialogBoxIndirect(GetModuleHandleW(nullptr), (LPCDLGTEMPLATE)&builder.data.front(), NULL, dlgproc);
+		DialogBoxIndirectW(GetModuleHandleW(nullptr), (LPCDLGTEMPLATE)&builder.data.front(), NULL, (DLGPROC)dlgproc);
 	}
 } g;
 #endif

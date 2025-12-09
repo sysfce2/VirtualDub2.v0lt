@@ -4939,7 +4939,7 @@ bool VDProjectUI::UIRunDubMessageLoop() {
 }
 
 void VDProjectUI::UIAbortDubMessageLoop() {
-	PostThreadMessage(mThreadId, WM_NULL, 0, 0);
+	PostThreadMessageW(mThreadId, WM_NULL, 0, 0);
 }
 
 void VDProjectUI::UICurrentPositionUpdated(bool fast_update) {
