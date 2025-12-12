@@ -1,7 +1,7 @@
 VirtualDub2.x change log
 
-2.5.0.x dev
-----------------------
+2.5.1.1095 - 2025-12-12
+-----------------------
 Improved Unicode support.
 Script, job, project and settings files are now saved in UTF-8 encoding.
 Set "activeCodePage=UTF-8" in the application manifest. This will add support for AviSynth+ scripts with Unicode character paths for Windows 10 v1903 or later.
@@ -13,15 +13,29 @@ Added remembering of video and audio file formats in save dialogs.
 Fixed opening of ACM codec settings.
 Minor optimizations and cosmetic changes.
 
+Updated avlib-1.vdplugin to version 1.1.1.438.
+    Updated FFmpeg 8.0.1.
+    Closed GOPs is used for the "x265 - HEVC lossless" encoder.
+    API change: The mpDriverTagName field for audio encoders now contains a wide string (see VDXAudioEncDefinition2 in VirtualDub2 v2.5).
+    Added "Rate control" parameter for ProRes video encoder.
+    Fixed a crash when opening AviSynth+ scripts in some rare situations.
+    Added "Load defaults" button for audio encoders.
+    Fixed muting of the first audio samples for some media files.
+
+Updated scripted.vdplugin to version 0.3.3.136.
+    Fixed a crash when opening AviSynth+ scripts in some rare situations.
+
 
 2.4.3.944 - 2025-10-14
 ----------------------
 Fixed error text display in UTF-8, system ANSI, or mixed encoding (different encodings in different strings). This fixes the display of AviSynth+ errors.
 Cosmetic changes.
+
 Updated avlib-1.vdplugin to version 1.0.3.410.
     Fixed a temporary freeze in the file open window when selecting certain .avs files. AviSynth script files are now identified by extension.
     Fixed frame navigation for Avisynth script files.
     Added display of FFmpeg error text when attempting to open a file fails.
+
 Updated scripted.vdplugin to version 0.3.1.123.
     Settings are now saved in HKEY_CURRENT_USER\SOFTWARE\VirtualDub2\Script Editor.
     Implemented the ability to save scripts opened in other programs with read access.
