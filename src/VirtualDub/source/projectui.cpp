@@ -5031,10 +5031,10 @@ void VDProjectUI::UINotifySelection() {
 		VDPosition total = mVideoTimelineFrameRate.scale64ir(mTimeline.GetSubset().getTotalFrames() * 1000);
 		VDStringW t = GetTimeSpanString(time,total);
 
-		guiSetStatus("Selecting frames %u-%u (%u frames, %s)", 255, (unsigned)start, (unsigned)end, (unsigned)(end - start), t.c_str());
+		guiSetStatus(L"Selecting frames %u-%u (%u frames, %s)", 255, (unsigned)start, (unsigned)end, (unsigned)(end - start), t.c_str());
 	}
 	else if (start==end) {
-		guiSetStatus("Selecting frames %u-%u (0 frames)", 255, (unsigned)start, (unsigned)end);
+		guiSetStatus(L"Selecting frames %u-%u (0 frames)", 255, (unsigned)start, (unsigned)end);
 	}
 	else {
 		guiSetStatus("", 255);
