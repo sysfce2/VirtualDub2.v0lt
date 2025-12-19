@@ -2107,7 +2107,7 @@ void AVIReadHandler::DisableStreaming(int stream) {
 	fStreamsActive &= ~(1<<stream);
 
 	if (!fStreamsActive) {
-		delete streamBuffer;
+		delete[] streamBuffer;
 		streamBuffer = NULL;
 	}
 	--nActiveStreamers;

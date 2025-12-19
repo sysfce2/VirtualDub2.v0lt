@@ -2785,7 +2785,7 @@ void InputFileMPEG::StartScan() {
 }
 
 void InputFileMPEG::EndScan() {
-	delete pScanBuffer;
+	delete[] pScanBuffer;
 	pScanBuffer = NULL;
 }
 
