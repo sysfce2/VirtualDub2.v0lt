@@ -508,7 +508,7 @@ wchar_t VDJSONReader::GetCharSlow() {
 
 						// validate code point
 						if ((c - 0xD800) < 0x0800 || c >= 0x110000) {
-							encodingError;
+							encodingError = true;
 							break;
 						}
 
