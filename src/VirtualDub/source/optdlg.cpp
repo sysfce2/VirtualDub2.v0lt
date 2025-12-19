@@ -123,18 +123,21 @@ void VDDialogAudioConversionW32::RecomputeBandwidth() {
 		bps = GetDlgItemInt(mhdlg, IDC_SAMPLINGRATE_CUSTOM_VAL, NULL, FALSE);
 
 	// prevent UI overflows (this big of a value won't pass validation anyway)
-	if (bps >= 0x0FFFFFFF)
+	if (bps >= 0x0FFFFFFF) {
 		bps = 0;
+	}
 
 	if (IsDlgButtonChecked(mhdlg, IDC_PRECISION_NOCHANGE)) {
-		if (mbSourcePrecisionKnown && mbSourceFloat)
+		if (mbSourcePrecisionKnown && mbSourceFloat) {
 			bps *= 4;
-		else if (mbSourcePrecisionKnown && mbSource16Bit)
+		} else if (mbSourcePrecisionKnown && mbSource16Bit) {
 			bps *= 2;
-		else
+		} else {
 			bps = 0;
-	} if (IsDlgButtonChecked(mhdlg, IDC_PRECISION_16BIT))
+		}
+	} else if (IsDlgButtonChecked(mhdlg, IDC_PRECISION_16BIT)) {
 		bps *= 2;
+	}
 
 	if (IsDlgButtonChecked(mhdlg, IDC_CHANNELS_NOCHANGE)) {
 		bps *= sourceChannels;
@@ -143,10 +146,11 @@ void VDDialogAudioConversionW32::RecomputeBandwidth() {
 	}
 
 	char buf[128];
-	if (bps)
-		wsprintfA(buf, "Bandwidth required: %ldKB/s", (bps+1023)>>10);
-	else
-		strcpy(buf,"Bandwidth required: (unknown)");
+	if (bps) {
+		wsprintfA(buf, "Bandwidth required: %ldKB/s", (bps + 1023) >> 10);
+	} else {
+		strcpy(buf, "Bandwidth required: (unknown)");
+	}
 
 	SetDlgItemTextA(mhdlg, IDC_BANDWIDTH_REQD, buf);
 }
