@@ -648,8 +648,9 @@ LRESULT APIENTRY VDPositionControlW32::StaticWndProc(HWND hwnd, UINT msg, WPARAM
 
 	switch(msg) {
 	case WM_NCCREATE:
-		if (!(pcd = new VDPositionControlW32(hwnd)))
+		if (!(pcd = new(std::nothrow) VDPositionControlW32(hwnd))) {
 			return FALSE;
+		}
 
 		pcd->AddRef();
 		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pcd);

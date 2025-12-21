@@ -70,9 +70,10 @@ static DriverPtrTranslator *create_translation() {
 	do {
 		if (cur_id != BOGUS_DRIVER_ID && cur_id) {
 			if (!find_xlator_by_id16(cur_id)) {
-				DriverPtrTranslator *dpt;
-
-				if (!(dpt = new DriverPtrTranslator)) return 0;
+				DriverPtrTranslator* dpt = new(std::nothrow) DriverPtrTranslator;
+				if (!dpt) {
+					return 0;
+				}
 
 				dpt->prev = NULL;
 				dpt->next = active_opens;

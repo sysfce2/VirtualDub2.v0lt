@@ -143,9 +143,10 @@ DataVector::~DataVector() {
 
 void DataVector::_Add(void *pp) {
 	if (!last || last->index > DataVectorBlock::BLOCK_SIZE - item_size) {
-		DataVectorBlock *ib = new DataVectorBlock();
-
-		if (!ib) throw MyMemoryError();
+		DataVectorBlock *ib = new(std::nothrow) DataVectorBlock();
+		if (!ib) {
+			throw MyMemoryError();
+		}
 
 		if (last)		last->next = ib;
 		else			first = ib;
@@ -159,10 +160,13 @@ void DataVector::_Add(void *pp) {
 }
 
 void *DataVector::MakeArray() {
-	char *array = new char[count * item_size], *ptr = array;
+	char* array = new(std::nothrow) char[count * item_size];
+	if (!array) {
+		throw MyMemoryError();
+	}
+	
+	char* ptr = array;
 	DataVectorBlock *dvb = first;
-
-	if (!array) throw MyMemoryError();
 
 	while(dvb) {
 		memcpy(ptr, dvb->heap, dvb->index);
@@ -2318,13 +2322,15 @@ void InputFileMPEG::Init(const wchar_t *szFile) {
 
 	AddFilename(szFile);
 
-    // allocate packet buffer
+	// allocate packet buffer
 
-	if (!(video_packet_buffer = new char[VIDEO_PACKET_BUFFER_SIZE]))
+	if (!(video_packet_buffer = new(std::nothrow) char[VIDEO_PACKET_BUFFER_SIZE])) {
 		throw MyMemoryError();
+	}
 
-	if (!(audio_packet_buffer = new char[AUDIO_PACKET_BUFFER_SIZE]))
+	if (!(audio_packet_buffer = new(std::nothrow) char[AUDIO_PACKET_BUFFER_SIZE])) {
 		throw MyMemoryError();
+	}
 
 	// see if we can open the file
 
@@ -2777,8 +2783,9 @@ InputFileMPEG::~InputFileMPEG() {
 }
 
 void InputFileMPEG::StartScan() {
-	if (!(pScanBuffer = new char[SCAN_BUFFER_SIZE]))
+	if (!(pScanBuffer = new(std::nothrow) char[SCAN_BUFFER_SIZE])) {
 		throw MyMemoryError();
+	}
 
 	pScan = pScanLimit = pScanBuffer;
 	i64ScanCpos = 0;
@@ -3125,9 +3132,10 @@ void InputFileMPEG::setOptions(InputFileOptions *_ifo) {
 }
 
 InputFileOptions *InputFileMPEG::createOptions(const void *buf, uint32 len) {
-	InputFileMPEGOptions *ifo = new InputFileMPEGOptions();
-
-	if (!ifo) throw MyMemoryError();
+	InputFileMPEGOptions* ifo = new(std::nothrow) InputFileMPEGOptions();
+	if (!ifo) {
+		throw MyMemoryError();
+	}
 
 	if (!ifo->read((const char *)buf)) {
 		delete ifo;

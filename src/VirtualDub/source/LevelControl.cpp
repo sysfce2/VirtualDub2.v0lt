@@ -98,8 +98,10 @@ static LRESULT APIENTRY LevelControlWndProc(HWND hwnd, UINT msg, WPARAM wParam, 
 	switch(msg) {
 
 	case WM_NCCREATE:
-		if (!(lcd = new LevelControlData))
+		if (!(lcd = new(std::nothrow) LevelControlData)) {
 			return FALSE;
+		}
+
 		memset(lcd,0,sizeof(LevelControlData));
 
 		lcd->nTabs		= 3;

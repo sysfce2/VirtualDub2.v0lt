@@ -580,10 +580,10 @@ void VDVideoWindow::SetSourcePAR(const VDFraction& fr) {
 
 LRESULT CALLBACK VDVideoWindow::WndProcStatic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	if (msg == WM_NCCREATE) {
-		VDVideoWindow *pvw = new VDVideoWindow(hwnd);
-
-		if (!pvw)
+		VDVideoWindow *pvw = new(std::nothrow) VDVideoWindow(hwnd);
+		if (!pvw) {
 			return FALSE;
+		}
 	} else if (msg == WM_NCDESTROY) {
 		return DefWindowProcW(hwnd, msg, wParam, lParam);
 	}

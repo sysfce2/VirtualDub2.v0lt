@@ -465,10 +465,10 @@ LRESULT APIENTRY VDUISpriteBasedControlW32::StaticWndProc(HWND hwnd, UINT msg, W
 	VDUISpriteBasedControlW32* pThis = (VDUISpriteBasedControlW32*)GetWindowLongPtrW(hwnd, 0);
 
 	if (msg == WM_NCCREATE) {
-		pThis = new T(hwnd);
-
-		if (!pThis)
+		pThis = new(std::nothrow) T(hwnd);
+		if (!pThis) {
 			return FALSE;
+		}
 
 		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
 	}

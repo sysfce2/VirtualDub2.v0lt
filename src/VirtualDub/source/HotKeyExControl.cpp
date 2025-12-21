@@ -118,10 +118,10 @@ LRESULT CALLBACK VDUIHotKeyExControlW32::StaticWndProc(HWND hwnd, UINT msg, WPAR
 	VDUIHotKeyExControlW32* pThis = (VDUIHotKeyExControlW32*)GetWindowLongPtrW(hwnd, 0);
 
 	if (msg == WM_NCCREATE) {
-		pThis = new VDUIHotKeyExControlW32(hwnd);
-
-		if (!pThis)
+		pThis = new(std::nothrow) VDUIHotKeyExControlW32(hwnd);
+		if (!pThis) {
 			return FALSE;
+		}
 
 		pThis->AddRef();
 		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);

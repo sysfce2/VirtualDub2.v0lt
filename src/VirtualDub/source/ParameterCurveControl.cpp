@@ -265,8 +265,9 @@ LRESULT APIENTRY VDParameterCurveControlW32::StaticWndProc(HWND hwnd, UINT msg, 
 
 	switch(msg) {
 	case WM_NCCREATE:
-		if (!(pcd = new VDParameterCurveControlW32(hwnd)))
+		if (!(pcd = new(std::nothrow) VDParameterCurveControlW32(hwnd))) {
 			return FALSE;
+		}
 
 		pcd->AddRef();
 		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)static_cast<IVDUnknown*>(pcd));

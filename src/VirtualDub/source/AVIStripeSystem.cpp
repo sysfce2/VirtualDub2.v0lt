@@ -47,8 +47,9 @@ void AVIStripeSystem::_construct(int nStripes) {
 
 	this->nStripes = nStripes;
 
-	if (!(stripe = new AVIStripe *[nStripes]))
+	if (!(stripe = new(std::nothrow) AVIStripe*[nStripes])) {
 		throw MyMemoryError();
+	}
 
 	for(i=0; i<nStripes; i++)
 		stripe[i] = NULL;
@@ -214,8 +215,9 @@ AVIStripeIndexLookup::AVIStripeIndexLookup(IAVIReadStream *pasIndex) {
 
 		index_table_size = lEnd - lStart;
 
-		if (!(index_table = new AVIStripeIndexEntry[index_table_size]))
+		if (!(index_table = new(std::nothrow) AVIStripeIndexEntry[index_table_size])) {
 			throw MyMemoryError();
+		}
 
 		asieptr = index_table;
 

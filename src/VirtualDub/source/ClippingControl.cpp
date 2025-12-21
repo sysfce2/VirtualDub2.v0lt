@@ -790,10 +790,10 @@ LRESULT CALLBACK VDClippingControl::StaticWndProc(HWND hwnd, UINT msg, WPARAM wP
 	VDClippingControl* pThis = (VDClippingControl*)GetWindowLongPtrW(hwnd, 0);
 
 	if (msg == WM_NCCREATE) {
-		pThis = new VDClippingControl(hwnd);
-
-		if (!pThis)
+		pThis = new(std::nothrow) VDClippingControl(hwnd);
+		if (!pThis) {
 			return FALSE;
+		}
 
 		SetWindowLongPtrW(hwnd, 0, (LONG_PTR)pThis);
 	}

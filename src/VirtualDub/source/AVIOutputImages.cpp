@@ -144,9 +144,10 @@ void TGAEncoder::Save(VDFile& mFile, const VDPixmap& px, bool comp, bool alpha) 
 	int packrowsize = 129 * ((px.w * 4 + 127)>>7);
 
 	if (!mpPackBuffer) {
-		mpPackBuffer = new char[(px.h + 2) * packrowsize];
-		if (!mpPackBuffer)
+		mpPackBuffer = new(std::nothrow) char[(px.h + 2) * packrowsize];
+		if (!mpPackBuffer) {
 			throw MyMemoryError();
+		}
 	}
 
 	// Begin RLE packing.

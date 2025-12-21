@@ -92,7 +92,9 @@ static int emboss_config(VDXFilterActivation *fa, const VDXFilterFunctions *ff, 
 	int ret;
 
 	if (!(mfd = (MyFilterData *)fa->filter_data)) {
-		if (!(fa->filter_data = (void *)new MyFilterData)) return 0;
+		if (!(fa->filter_data = (void*)new(std::nothrow) MyFilterData)) {
+			return 0;
+		}
 		mfd = (MyFilterData *)fa->filter_data;
 
 		memset(mfd, 0, sizeof MyFilterData);

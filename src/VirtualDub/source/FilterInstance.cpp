@@ -958,9 +958,10 @@ void *FilterInstance::AsInterface(uint32 iid) {
 }
 
 FilterInstance *FilterInstance::Clone() {
-	FilterInstance *fi = new FilterInstance(*this);
-
-	if (!fi) throw MyMemoryError();
+	FilterInstance* fi = new(std::nothrow) FilterInstance(*this);
+	if (!fi) {
+		throw MyMemoryError();
+	}
 
 	if (fi->filter_data) {
 		const VDXFilterDefinition *def = fi->filter;

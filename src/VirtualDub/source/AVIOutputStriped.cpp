@@ -2,6 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2017 Anton Shekhovtsov
+// Copyright (C) 2025 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -118,15 +119,17 @@ AVIOutputStriped::~AVIOutputStriped() {
 
 IVDMediaOutputStream *AVIOutputStriped::createVideoStream() {
 	VDASSERT(!videoOut);
-	if (!(videoOut = new AVIStripedVideoOutputStream(this)))
+	if (!(videoOut = new(std::nothrow) AVIStripedVideoOutputStream(this))) {
 		throw MyMemoryError();
+	}
 	return videoOut;
 }
 
 IVDMediaOutputStream *AVIOutputStriped::createAudioStream() {
 	VDASSERT(!audioOut);
-	if (!(audioOut = new AVIStripedAudioOutputStream(this)))
+	if (!(audioOut = new(std::nothrow) AVIStripedAudioOutputStream(this))) {
 		throw MyMemoryError();
+	}
 	return audioOut;
 }
 
@@ -139,13 +142,15 @@ bool AVIOutputStriped::init(const wchar_t *szFile) {
 
 	stripe_count = stripesys->getStripeCount();
 
-	if (!(stripe_data = new AVIOutputStripeState [stripe_count]))
+	if (!(stripe_data = new(std::nothrow) AVIOutputStripeState[stripe_count])) {
 		throw MyMemoryError();
+	}
 
 	memset(stripe_data, 0, sizeof(AVIOutputStripeState)*stripe_count);
 
-	if (!(stripe_files = new IVDMediaOutputAVIFile *[stripe_count]))
+	if (!(stripe_files = new(std::nothrow) IVDMediaOutputAVIFile*[stripe_count])) {
 		throw MyMemoryError();
+	}
 
 	bool fFoundIndex = false;
 

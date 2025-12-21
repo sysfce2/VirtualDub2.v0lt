@@ -1288,8 +1288,9 @@ void AVIReadHandler::_parseFile(List2<AVIStreamNode>& streamlist) {
 
 			case 'mges':			// VirtualDub segment hint block
 				delete[] pSegmentHint;
-				if (!(pSegmentHint = new char[dwLength+1]))
+				if (!(pSegmentHint = new(std::nothrow) char[dwLength + 1])) {
 					throw MyMemoryError();
+				}
 
 				mpCurrentFile->mFile.read(pSegmentHint, dwLength);
 				pSegmentHint[dwLength] = 0;
@@ -2093,8 +2094,9 @@ void AVIReadHandler::GetTextInfoEncoding(int& codePage, int& countryCode, int& l
 
 void AVIReadHandler::EnableStreaming(int stream) {
 	if (!fStreamsActive) {
-		if (!(streamBuffer = new char[STREAM_SIZE]))
+		if (!(streamBuffer = new(std::nothrow) char[STREAM_SIZE])) {
 			throw MyMemoryError();
+		}
 
 		i64StreamPosition = -1;
 		sbPosition = sbSize = 0;

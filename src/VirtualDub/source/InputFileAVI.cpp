@@ -462,9 +462,10 @@ void InputFileAVI::setOptions(InputFileOptions *_ifo) {
 }
 
 InputFileOptions *InputFileAVI::createOptions(const void *buf, uint32 len) {
-	InputFileAVIOptions *ifo = new InputFileAVIOptions();
-
-	if (!ifo) throw MyMemoryError();
+	InputFileAVIOptions *ifo = new(std::nothrow) InputFileAVIOptions();
+	if (!ifo) {
+		throw MyMemoryError();
+	}
 
 	if (!ifo->read((const char *)buf)) {
 		delete ifo;
@@ -475,9 +476,10 @@ InputFileOptions *InputFileAVI::createOptions(const void *buf, uint32 len) {
 }
 
 InputFileOptions *InputFileAVI::promptForOptions(VDGUIHandle hwnd) {
-	InputFileAVIOptions *ifo = new InputFileAVIOptions();
-
-	if (!ifo) throw MyMemoryError();
+	InputFileAVIOptions *ifo = new(std::nothrow) InputFileAVIOptions();
+	if (!ifo) {
+		throw MyMemoryError();
+	}
 
 	DialogBoxParamW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDD_EXTOPENOPTS_AVI),
 			(HWND)hwnd, InputFileAVIOptions::SetupDlgProc, (LPARAM)ifo);

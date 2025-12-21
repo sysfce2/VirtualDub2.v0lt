@@ -1404,8 +1404,9 @@ bool VideoSourceAVI::_construct(int streamIndex) {
 		}
 
 		if (mjpeg_mode) {
-			if (!(mjpeg_splits = new long[(size_t)(mSampleLast - mSampleFirst)]))
+			if (!(mjpeg_splits = new(std::nothrow) long[(size_t)(mSampleLast - mSampleFirst)])) {
 				throw MyMemoryError();
+			}
 
 			for(int i=0; i<mSampleLast-mSampleFirst; i++)
 				mjpeg_splits[i] = -1;
@@ -1471,10 +1472,10 @@ void VideoSourceAVI::Reinit() {
 		if (nNewFrames > (size_t)-1)
 			throw MyMemoryError();
 
-		long *pNewSplits = new long[(size_t)nNewFrames];
-
-		if (!pNewSplits)
+		long *pNewSplits = new(std::nothrow) long[(size_t)nNewFrames];
+		if (!pNewSplits) {
 			throw MyMemoryError();
+		}
 
 		VDPosition i;
 
