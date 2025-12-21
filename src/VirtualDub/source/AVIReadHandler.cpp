@@ -2001,10 +2001,11 @@ void AVIReadHandler::_parseExtendedIndexBlock(List2<AVIStreamNode>& streamlist, 
 void AVIReadHandler::_destruct() {
 	AVIStreamNode *pasn;
 
-	while(pasn = listStreams.RemoveTail())
+	while (pasn = listStreams.RemoveTail()) {
 		delete pasn;
+	}
 
-	delete streamBuffer;
+	delete[] streamBuffer;
 
 	while(!mFiles.empty()) {
 		AVIFileDesc *desc = mFiles.back();
