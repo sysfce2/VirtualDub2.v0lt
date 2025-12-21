@@ -78,12 +78,6 @@ typedef enum {
  */
 #define MT_QUEUE  (1UL<<31)
 
-/* UCHAR is defined in Win32 but not Win16 MS* Windows headers.
- */
-#if !defined UCHAR
-typedef unsigned char UCHAR;
-#endif
-
 /* A flag is false if it is zero, otherwise it is true.
  */
 typedef DWORD R4_FLAG;
