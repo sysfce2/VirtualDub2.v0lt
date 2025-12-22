@@ -2,6 +2,8 @@ VirtualDub2.x change log
 
 2.5.2.x dev
 -----------------------
+Fixed display of the duration of the selected range in the status.
+Potential memory leaks have been fixed.
 
 
 2.5.1.1095 - 2025-12-12
