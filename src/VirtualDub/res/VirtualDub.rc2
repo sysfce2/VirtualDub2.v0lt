@@ -26,15 +26,16 @@ BEGIN
       VALUE "ProductName", "VirtualDub2"
       VALUE "ProductVersion", VERSION_STR
       VALUE "FileVersion", VERSION_STR
-      #ifdef _WIN64
+	  VALUE "LegalCopyright", VERSION_COPYRIGHT
+#ifdef _WIN64
       VALUE "FileDescription", "VirtualDub2 (x64)"
-      #else
+#else
       VALUE "FileDescription", "VirtualDub2 (x86)"
-      #endif
+#endif
       VALUE "OriginalFilename", "VirtualDub2.exe"	  
-      #if defined(_DEBUG)
+#if defined(_DEBUG)
       VALUE "SpecialBuild", "Debug build (i.e. big, fat, and slow)"
-      #endif
+#endif
     END
   END
   BLOCK "VarFileInfo"

@@ -44,7 +44,7 @@ END
 
 3 TEXTINCLUDE 
 BEGIN
-    "#include ""version.rc""\r\n"
+    "#include ""VirtualDub.rc2""\r\n"
     "IDR_RESOURCES      STUFF   DISCARDABLE     ""virtualdub.vdres""\r\n"
     "\r\0"
 END
@@ -4292,7 +4292,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#include "version.rc"
+#include "VirtualDub.rc2"
 IDR_RESOURCES      STUFF   DISCARDABLE     "virtualdub.vdres"
 
 /////////////////////////////////////////////////////////////////////////////
