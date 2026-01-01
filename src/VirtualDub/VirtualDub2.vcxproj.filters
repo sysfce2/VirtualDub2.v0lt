@@ -1292,6 +1292,9 @@
     <None Include="res\cap_point.cur">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\VirtualDub.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\VirtualDub.rc">
