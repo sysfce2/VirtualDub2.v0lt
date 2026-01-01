@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2017-2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -237,10 +237,10 @@ void VDUICaptureVumeterW32::OnPaint() {
 		int x_3db	= VDRoundToIntFast(r.right * (37.0f/40.0f));
 
 		if (HGDIOBJ hOldFont = SelectObject(hdc, GetStockObject(DEFAULT_GUI_FONT))) {
-			TEXTMETRIC tm;
+			TEXTMETRICW tm;
 			int y3 = (y2+r.bottom)>>1;
 
-			if (GetTextMetrics(hdc, &tm))
+			if (GetTextMetricsW(hdc, &tm))
 				y3 = r.bottom - tm.tmHeight;
 
 			// draw -10db, -6db, and -3db notches

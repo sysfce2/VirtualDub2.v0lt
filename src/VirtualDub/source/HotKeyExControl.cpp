@@ -2,7 +2,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2019 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -270,9 +270,9 @@ void VDUIHotKeyExControlW32::SetFont(HFONT font) {
 	if (hdc) {
 		HGDIOBJ holdFont = SelectObject(hdc, mhfont);
 		if (holdFont) {
-			TEXTMETRIC tm = {0};
+			TEXTMETRICW tm = {0};
 
-			if (GetTextMetrics(hdc, &tm))
+			if (GetTextMetricsW(hdc, &tm))
 				mFontHeight = tm.tmHeight;
 
 			SelectObject(hdc, holdFont);

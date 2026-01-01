@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2006 Avery Lee
 // Copyright (C) 2017-2020 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -191,8 +191,8 @@ VDParameterCurveControlW32::VDParameterCurveControlW32(HWND hwnd)
 	mhfont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	mFontHeight = 16;
 	if (HDC hdc = GetDC(hwnd)) {
-		TEXTMETRIC tm;
-		if (SelectObject(hdc, mhfont) && GetTextMetrics(hdc, &tm)) {
+		TEXTMETRICW tm;
+		if (SelectObject(hdc, mhfont) && GetTextMetricsW(hdc, &tm)) {
 			mFontHeight = tm.tmHeight;
 		}
 		ReleaseDC(hwnd, hdc);

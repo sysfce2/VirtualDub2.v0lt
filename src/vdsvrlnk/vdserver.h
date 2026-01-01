@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 2013 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: Zlib
 //
@@ -21,7 +21,7 @@
 class IVDubAnimConnection {
 public:
 	virtual BOOL hasAudio() = 0;
-	virtual BOOL readStreamInfo(AVISTREAMINFO* lpsi, BOOL fAudio, long* lpFirst, long* lpLast) = 0;
+	virtual BOOL readStreamInfo(AVISTREAMINFOW* lpsi, BOOL fAudio, long* lpFirst, long* lpLast) = 0;
 	virtual int readFormat(void* ptr, BOOL fAudio) = 0;
 	virtual int readVideo(long lSample, void* lpBuffer) = 0;
 	virtual int readAudio(long lSample, long lCount, void* lpBuffer, long cbBuffer, long* lplBytes, long* lplSamples) = 0;

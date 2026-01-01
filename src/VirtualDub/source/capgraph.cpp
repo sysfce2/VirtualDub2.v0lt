@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2001 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -190,8 +190,8 @@ void VDUICaptureGraphW32::OnPaint() {
 		if (ps.rcPaint.left < 300) {
 			SelectObject(hdc, (HFONT)GetStockObject(DEFAULT_GUI_FONT));
 
-			TEXTMETRIC tm;
-			GetTextMetrics(hdc, &tm);
+			TEXTMETRICW tm;
+			GetTextMetricsW(hdc, &tm);
 			SetTextAlign(hdc, TA_LEFT | TA_TOP);
 			SetBkMode(hdc, TRANSPARENT);
 			SetTextColor(hdc, RGB(255, 255, 255));

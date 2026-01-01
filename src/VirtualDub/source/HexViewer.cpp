@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2018 Anton Shekhovtsov
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -391,19 +391,19 @@ void HexViewer::Init() {
 
 	HDC hdc = GetDC(hwnd);
 	if (hdc) {
-		TEXTMETRIC tm;
+		TEXTMETRICW tm;
 		HGDIOBJ hfOld;
 
 		hfOld = SelectObject(hdc, GetStockObject(SYSTEM_FIXED_FONT));
 
-		GetTextMetrics(hdc, &tm);
+		GetTextMetricsW(hdc, &tm);
 
 		hfont = CreateFontW(tm.tmHeight, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET,
 			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH|FF_DONTCARE, L"Lucida Console");
 
 		SelectObject(hdc, hfont ? hfont : GetStockObject(SYSTEM_FIXED_FONT));
 
-		GetTextMetrics(hdc, &tm);
+		GetTextMetricsW(hdc, &tm);
 		nCharWidth	= tm.tmAveCharWidth;
 		nLineHeight = tm.tmHeight;
 
@@ -1149,12 +1149,12 @@ void HexEditor::Init() {
 
 	HDC hdc = GetDC(hwnd);
 	if (hdc) {
-		TEXTMETRIC tm;
+		TEXTMETRICW tm;
 		HGDIOBJ hfOld;
 
 		hfOld = SelectObject(hdc, GetStockObject(SYSTEM_FIXED_FONT));
 
-		GetTextMetrics(hdc, &tm);
+		GetTextMetricsW(hdc, &tm);
 
 		hfont = CreateFontW(tm.tmHeight, 0, 0, 0, 0, FALSE, FALSE, FALSE, ANSI_CHARSET,
 			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH|FF_DONTCARE, L"Lucida Console");
@@ -2335,7 +2335,7 @@ INT_PTR CALLBACK HexEditor::FindDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 		case IDC_FIND:
 			{
 				HWND hwndEdit = GetDlgItem(hwnd, IDC_STRING);
-				int l = GetWindowTextLength(hwndEdit);
+				int l = GetWindowTextLengthW(hwndEdit);
 
 				pcd->bFindHex = !!IsDlgButtonChecked(hwnd, IDC_HEX);
 				pcd->bFindCaseInsensitive = !!IsDlgButtonChecked(hwnd, IDC_CASELESS);
@@ -2605,8 +2605,8 @@ INT_PTR CALLBACK HexEditor::TreeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPAR
 
 				SetWindowLongPtrW(hdlg, DWLP_MSGRESULT, 1);
 			}
-			else if (pnmh->code == TVN_ITEMEXPANDING) {
-				const NMTREEVIEW& ntv = *(const NMTREEVIEW *)lParam;
+			else if (pnmh->code == TVN_ITEMEXPANDINGW) {
+				const NMTREEVIEWW& ntv = *(const NMTREEVIEWW*)lParam;
 
 				if (ntv.action & TVE_EXPAND) {
 					TreeNode *ptn = ((TreeNode *)ntv.itemNew.lParam)->mpChildren;
@@ -2615,14 +2615,14 @@ INT_PTR CALLBACK HexEditor::TreeDlgProc(HWND hdlg, UINT msg, WPARAM wParam, LPAR
 						CreateTreeNode(pcd->mhwndTreeView, ntv.itemNew.hItem, ptn);
 				}
 			}
-			else if (pnmh->code == TVN_ITEMEXPANDED) {
-				const NMTREEVIEW& ntv = *(const NMTREEVIEW *)lParam;
+			else if (pnmh->code == TVN_ITEMEXPANDEDW) {
+				const NMTREEVIEWW& ntv = *(const NMTREEVIEWW*)lParam;
 
 				if (ntv.action & TVE_COLLAPSE)
 					TreeView_Expand(pcd->mhwndTreeView, ntv.itemNew.hItem, TVE_COLLAPSE | TVE_COLLAPSERESET);
 			}
-			else if (pnmh->code == TVN_GETDISPINFO) {
-				NMTVDISPINFO& ndi = *(NMTVDISPINFO*)lParam;
+			else if (pnmh->code == TVN_GETDISPINFOW) {
+				NMTVDISPINFOW& ndi = *(NMTVDISPINFOW*)lParam;
 				const TreeNode *ptn = (const TreeNode *)ndi.item.lParam;
 
 				if (ndi.item.mask & TVIF_TEXT) {

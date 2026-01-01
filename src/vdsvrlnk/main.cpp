@@ -2,7 +2,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2016 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: Zlib
 //
@@ -195,7 +195,7 @@ public:
 
 	// IVDubAnimConnection
 	BOOL hasAudio() override;
-	BOOL readStreamInfo(AVISTREAMINFO* lpsi, BOOL fAudio, long* lpFirst, long* lpLast) override;
+	BOOL readStreamInfo(AVISTREAMINFOW* lpsi, BOOL fAudio, long* lpFirst, long* lpLast) override;
 	int readFormat(void* ptr, BOOL fAudio) override;
 	int readVideo(long lSample, void* lpBuffer) override;
 	int readAudio(long lSample, long lCount, void* lpBuffer, long cbBuffer, long* lplBytes, long* lplSamples) override;
@@ -295,11 +295,11 @@ BOOL CVDubAnimConnection::hasAudio()
 	return VDSRVERR_OK == SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_STREAMINFO, 1, dwSessionID);
 }
 
-BOOL CVDubAnimConnection::readStreamInfo(AVISTREAMINFO* lpsi, BOOL fAudio, long* lpFirst, long* lpLast)
+BOOL CVDubAnimConnection::readStreamInfo(AVISTREAMINFOW* lpsi, BOOL fAudio, long* lpFirst, long* lpLast)
 {
 	if (VDSRVERR_OK == SendMessageW((HWND)LongToHandle(frameserver->hwndServer), VDSRVM_REQ_STREAMINFO, !!fAudio, dwSessionID)) {
 		if (lpsi) {
-			memcpy(lpsi, arena + 8, sizeof(AVISTREAMINFO));
+			memcpy(lpsi, arena + 8, sizeof(AVISTREAMINFOW));
 		}
 		if (lpFirst) {
 			*lpFirst = *(long*)(arena + 0);

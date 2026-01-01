@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2003 Avery Lee
 // Copyright (C) 2016 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -405,8 +405,8 @@ void VDLogWindowControl::OnSetFont(HFONT hfont, bool bRedraw) {
 		if (mhfont)
 			hOldFont = SelectObject(hdc, mhfont);
 
-		TEXTMETRIC tm;
-		if (GetTextMetrics(hdc, &tm)) {
+		TEXTMETRICW tm;
+		if (GetTextMetricsW(hdc, &tm)) {
 			mFontHeight				= tm.tmHeight;
 			mFontAscent				= tm.tmAscent;
 			mFontInternalLeading	= tm.tmInternalLeading;

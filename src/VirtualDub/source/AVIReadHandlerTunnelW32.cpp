@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2007 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -31,7 +31,7 @@ namespace {
 		kVDM_NonZeroStart			// AVI: Stream %u (%s) has a start position of %lld samples (%+lld ms). VirtualDub does not currently support a non-zero start time and the stream will be interpreted as starting from zero.
 	};
 
-	void ConvertAVIStreamInfo(VDAVIStreamInfo& streamInfo, const AVISTREAMINFO& streamInfoW32) {
+	void ConvertAVIStreamInfo(VDAVIStreamInfo& streamInfo, const AVISTREAMINFOW& streamInfoW32) {
 		streamInfo.fccType					= streamInfoW32.fccType;
 		streamInfo.fccHandler				= streamInfoW32.fccHandler;
 		streamInfo.dwFlags					= streamInfoW32.dwFlags;
@@ -118,11 +118,12 @@ sint32 AVIReadTunnelStream::EndStreaming() {
 }
 
 sint32 AVIReadTunnelStream::Info(VDAVIStreamInfo *pasi) {
-	AVISTREAMINFO streamInfoW32;
-	HRESULT hr = AVIStreamInfo(pas, &streamInfoW32, sizeof(streamInfoW32));
+	AVISTREAMINFOW streamInfoW32;
+	HRESULT hr = AVIStreamInfoW(pas, &streamInfoW32, sizeof(streamInfoW32));
 
-	if (FAILED(hr))
+	if (FAILED(hr)) {
 		return hr;
+	}
 
 	ConvertAVIStreamInfo(*pasi, streamInfoW32);
 	return S_OK;
@@ -217,17 +218,19 @@ bool AVIReadTunnelStream::isKeyframeOnly() {
 }
 
 VDPosition AVIReadTunnelStream::TimeToPosition(VDTime timeInUs) {
-	AVISTREAMINFO asi;
-	if (AVIStreamInfo(pas, &asi, sizeof asi))
+	AVISTREAMINFOW asi;
+	if (AVIStreamInfoW(pas, &asi, sizeof asi)) {
 		return 0;
+	}
 
 	return VDRoundToInt64(timeInUs * (double)asi.dwRate / (double)asi.dwScale * (1.0 / 1000000.0));
 }
 
 VDTime AVIReadTunnelStream::PositionToTime(VDPosition pos) {
-	AVISTREAMINFO asi;
-	if (AVIStreamInfo(pas, &asi, sizeof asi))
+	AVISTREAMINFOW asi;
+	if (AVIStreamInfoW(pas, &asi, sizeof asi)) {
 		return 0;
+	}
 
 	return VDRoundToInt64(pos * (double)asi.dwScale / (double)asi.dwRate * 1000000.0);
 }

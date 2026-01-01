@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 2013 Avery Lee
-// Copyright (C) 2024 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -15,17 +15,17 @@ VDCaptureAutoPriority::VDCaptureAutoPriority() {
 	BOOL fLowPowerState;
 	BOOL fPowerOffState;
 
-	SystemParametersInfo(SPI_GETSCREENSAVEACTIVE, 0, &fScreenSaverState, FALSE);
-	SystemParametersInfo(SPI_GETLOWPOWERACTIVE, 0, &fLowPowerState, FALSE);
-	SystemParametersInfo(SPI_GETPOWEROFFACTIVE, 0, &fPowerOffState, FALSE);
+	SystemParametersInfoW(SPI_GETSCREENSAVEACTIVE, 0, &fScreenSaverState, FALSE);
+	SystemParametersInfoW(SPI_GETLOWPOWERACTIVE, 0, &fLowPowerState, FALSE);
+	SystemParametersInfoW(SPI_GETPOWEROFFACTIVE, 0, &fPowerOffState, FALSE);
 
 	mbScreenSaverState = 0!=fScreenSaverState;
 	mbLowPowerState = 0!=fLowPowerState;
 	mbPowerOffState = 0!=fPowerOffState;
 
-	SystemParametersInfo(SPI_SETPOWEROFFACTIVE, FALSE, NULL, FALSE);
-	SystemParametersInfo(SPI_SETLOWPOWERACTIVE, FALSE, NULL, FALSE);
-	SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, FALSE, NULL, FALSE);
+	SystemParametersInfoW(SPI_SETPOWEROFFACTIVE, FALSE, NULL, FALSE);
+	SystemParametersInfoW(SPI_SETLOWPOWERACTIVE, FALSE, NULL, FALSE);
+	SystemParametersInfoW(SPI_SETSCREENSAVEACTIVE, FALSE, NULL, FALSE);
 
 	HANDLE hProcess = GetCurrentProcess();
 	HANDLE hThread = GetCurrentThread();
@@ -47,9 +47,9 @@ VDCaptureAutoPriority::~VDCaptureAutoPriority() {
 	if (GetPriorityClass(hProcess) == HIGH_PRIORITY_CLASS)
 		SetPriorityClass(hProcess, mPreviousPriorityClass);
 
-	SystemParametersInfo(SPI_SETPOWEROFFACTIVE, mbPowerOffState, NULL, FALSE);
-	SystemParametersInfo(SPI_SETLOWPOWERACTIVE, mbLowPowerState, NULL, FALSE);
-	SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, mbScreenSaverState, NULL, FALSE);
+	SystemParametersInfoW(SPI_SETPOWEROFFACTIVE, mbPowerOffState, NULL, FALSE);
+	SystemParametersInfoW(SPI_SETLOWPOWERACTIVE, mbLowPowerState, NULL, FALSE);
+	SystemParametersInfoW(SPI_SETSCREENSAVEACTIVE, mbScreenSaverState, NULL, FALSE);
 }
 
 namespace {

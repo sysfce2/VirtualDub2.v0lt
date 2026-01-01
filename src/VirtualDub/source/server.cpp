@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2015-2018 Anton Shekhovtsov
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -351,7 +351,7 @@ LRESULT Frameserver::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 
 	case VDSRVM_BIGGEST:
 		{
-			uint32 size = sizeof(AVISTREAMINFO);
+			uint32 size = sizeof(AVISTREAMINFOW);
 
 			if (vSrc) {
 				if (size < sizeof(BITMAPINFOHEADER))
@@ -515,7 +515,7 @@ LRESULT Frameserver::SessionStreamInfo(LPARAM lParam, WPARAM stream) {
 	if (stream<0 || stream>2) return VDSRVERR_NOSTREAM;
 
 	if (stream==0) {
-		AVISTREAMINFO *lpasi = (AVISTREAMINFO *)(fs->arena+8);
+		AVISTREAMINFOW* lpasi = (AVISTREAMINFOW*)(fs->arena + 8);
 
 		if (!vSrc) return VDSRVERR_NOSTREAM;
 
@@ -542,9 +542,9 @@ LRESULT Frameserver::SessionStreamInfo(LPARAM lParam, WPARAM stream) {
 
 		*(long *)(fs->arena+0) = 0;
 		*(long *)(fs->arena+4) = lAudioSamples;
-		memcpy(fs->arena+8, &aSrc->getStreamInfo(), sizeof(AVISTREAMINFO));
+		memcpy(fs->arena + 8, &aSrc->getStreamInfo(), sizeof(AVISTREAMINFOW));
 
-		((AVISTREAMINFO *)(fs->arena+8))->dwLength = lAudioSamples;
+		((AVISTREAMINFOW*)(fs->arena + 8))->dwLength = lAudioSamples;
 	}
 
 	return VDSRVERR_OK;

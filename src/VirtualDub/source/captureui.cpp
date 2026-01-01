@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2016-2019 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -3005,8 +3005,8 @@ void VDCaptureProjectUI::OnSize() {
 			HFONT hfont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 
 			if (HGDIOBJ hOldFont = SelectObject(hdc, hfont)) {
-				TEXTMETRIC tm;
-				if (GetTextMetrics(hdc, &tm)) {
+				TEXTMETRICW tm;
+				if (GetTextMetricsW(hdc, &tm)) {
 					vumeterHt = tm.tmHeight*4;
 				}
 

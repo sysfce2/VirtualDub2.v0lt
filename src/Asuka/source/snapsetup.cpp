@@ -1,6 +1,7 @@
 // Asuka - VirtualDub Build/Post-Mortem Utility
 //
 // Copyright (C) 2005 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -22,8 +23,8 @@ void tool_snapsetup() {
 	BOOL fontSmoothing;
 
 	// disable font smoothing
-	SystemParametersInfo(SPI_GETFONTSMOOTHING, 0, &fontSmoothing, 0);
-	SystemParametersInfo(SPI_SETFONTSMOOTHING, FALSE, NULL, 0);
+	SystemParametersInfoW(SPI_GETFONTSMOOTHING, 0, &fontSmoothing, 0);
+	SystemParametersInfoW(SPI_SETFONTSMOOTHING, FALSE, NULL, 0);
 
 	// disable title bar gradient
 	const INT kColorsToSet[]={ COLOR_GRADIENTACTIVECAPTION, COLOR_GRADIENTINACTIVECAPTION };
@@ -42,7 +43,7 @@ void tool_snapsetup() {
 	SetSysColors(2, kColorsToSet, oldColorValues);
 
 	// restore font smoothing
-	SystemParametersInfo(SPI_SETFONTSMOOTHING, fontSmoothing, NULL, 0);
+	SystemParametersInfoW(SPI_SETFONTSMOOTHING, fontSmoothing, NULL, 0);
 
 	// refresh screen
 	InvalidateRect(NULL, NULL, TRUE);
