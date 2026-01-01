@@ -2,6 +2,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2016 Anton Shekhovtsov
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -149,19 +150,19 @@ protected:
 	virtual void OnContextMenu(uint32 id, int x, int y);
 	virtual bool PreNCDestroy();
 
-	bool	mbValidationFailed;
-	bool	mbIsModal;
-	VDZHWND	mhdlg;
-	int		mMinWidth;
-	int		mMinHeight;
-	int		mMaxWidth;
-	int		mMaxHeight;
+	bool	mbValidationFailed = false;
+	bool	mbIsModal  = false;
+	VDZHWND	mhdlg      = NULL;
+	int		mMinWidth  = 0;
+	int		mMinHeight = 0;
+	int		mMaxWidth  = 0;
+	int		mMaxHeight = 0;
 
 private:
 	static VDZINT_PTR VDZCALLBACK StaticDlgProc(VDZHWND hwnd, VDZUINT msg, VDZWPARAM wParam, VDZLPARAM lParam);
 
-	const char *mpDialogResourceName;
-	uint32	mFailedId;
+	uint32	mpDialogResourceID;
+	uint32	mFailedId = 0;
 
 protected:
 	VDUIProxyMessageDispatcherW32 mMsgDispatcher;

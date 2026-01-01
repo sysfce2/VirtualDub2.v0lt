@@ -2,7 +2,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2016 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -53,13 +53,7 @@ bool VDUIDropFileListW32::GetFileName(int index, VDStringW& fileName) {
 ///////////////////////////////////////////////////////////////////////////////
 
 VDDialogFrameW32::VDDialogFrameW32(uint32 dlgid)
-	: mpDialogResourceName(MAKEINTRESOURCEA(dlgid))
-	, mbIsModal(false)
-	, mhdlg(NULL)
-	, mMinWidth(0)
-	, mMinHeight(0)
-	, mMaxWidth(0)
-	, mMaxHeight(0)
+	: mpDialogResourceID(dlgid)
 {
 }
 
@@ -67,7 +61,7 @@ bool VDDialogFrameW32::Create(VDGUIHandle parent) {
 	if (!mhdlg) {
 		mbIsModal = false;
 
-		CreateDialogParamW(g_hInst, IS_INTRESOURCE(mpDialogResourceName) ? (LPCWSTR)mpDialogResourceName : VDTextAToW(mpDialogResourceName).c_str(), (HWND)parent, StaticDlgProc, (LPARAM)this);
+		CreateDialogParamW(g_hInst, MAKEINTRESOURCEW(mpDialogResourceID), (HWND)parent, StaticDlgProc, (LPARAM)this);
 	}
 
 	return mhdlg != NULL;
@@ -85,7 +79,7 @@ void VDDialogFrameW32::Close() {
 
 sintptr VDDialogFrameW32::ShowDialog(VDGUIHandle parent) {
 	mbIsModal = true;
-	return DialogBoxParamW(g_hInst, IS_INTRESOURCE(mpDialogResourceName) ? (LPCWSTR)mpDialogResourceName : VDTextAToW(mpDialogResourceName).c_str(), (HWND)parent, StaticDlgProc, (LPARAM)this);
+	return DialogBoxParamW(g_hInst, MAKEINTRESOURCEW(mpDialogResourceID), (HWND)parent, StaticDlgProc, (LPARAM)this);
 }
 
 void VDDialogFrameW32::Show() {
