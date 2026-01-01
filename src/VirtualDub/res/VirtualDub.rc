@@ -15,13 +15,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -57,7 +55,7 @@ END
 // Menu
 //
 
-IDR_MAIN_MENU MENU 
+IDR_MAIN_MENU MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -265,7 +263,7 @@ BEGIN
     END
 END
 
-IDR_DUB_MENU MENU 
+IDR_DUB_MENU MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -300,7 +298,7 @@ BEGIN
     END
 END
 
-IDR_CAPTURE_MENU MENU 
+IDR_CAPTURE_MENU MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -451,7 +449,7 @@ BEGIN
     END
 END
 
-IDR_CAPTURE_AUXMENU MENU 
+IDR_CAPTURE_AUXMENU MENU
 BEGIN
     POPUP "audio"
     BEGIN
@@ -509,7 +507,7 @@ BEGIN
     END
 END
 
-IDR_JOBS_MENU MENU 
+IDR_JOBS_MENU MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -544,7 +542,7 @@ BEGIN
     END
 END
 
-IDR_DISPLAY_MENU MENU 
+IDR_DISPLAY_MENU MENU
 BEGIN
     POPUP "display"
     BEGIN
@@ -598,12 +596,12 @@ BEGIN
     END
 END
 
-IDR_CAPTURE_ACTIVEMENU MENU 
+IDR_CAPTURE_ACTIVEMENU MENU
 BEGIN
     MENUITEM "&Abort capture",              ID_ABORTCAPTURE
 END
 
-IDR_HEXVIEWER_MENU MENU 
+IDR_HEXVIEWER_MENU MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -632,7 +630,7 @@ BEGIN
     END
 END
 
-IDR_LOG_MENU MENU 
+IDR_LOG_MENU MENU
 BEGIN
     POPUP "dummy"
     BEGIN
@@ -642,7 +640,7 @@ BEGIN
     END
 END
 
-IDR_AUDIODISPLAY_MENU MENUEX 
+IDR_AUDIODISPLAY_MENU MENUEX
 BEGIN
     POPUP "audioDisplay",                   65535,MFT_STRING,MFS_ENABLED
     BEGIN
@@ -670,7 +668,7 @@ BEGIN
     END
 END
 
-IDR_BATCHWIZARD_MENU MENU 
+IDR_BATCHWIZARD_MENU MENU
 BEGIN
     POPUP "AddToQueue"
     BEGIN
@@ -682,13 +680,13 @@ BEGIN
     END
 END
 
-IDR_FRAME_SYSTEM_MENU MENU 
+IDR_FRAME_SYSTEM_MENU MENU
 BEGIN
     MENUITEM SEPARATOR
     MENUITEM "Always on top",               ID_SYSTEM_ALWAYSONTOP
 END
 
-IDR_FILTER_LIST_CONTEXT MENU 
+IDR_FILTER_LIST_CONTEXT MENU
 BEGIN
     POPUP "FilterList"
     BEGIN
@@ -704,7 +702,7 @@ BEGIN
     END
 END
 
-IDR_FILE_EXPORTMENU MENU 
+IDR_FILE_EXPORTMENU MENU
 BEGIN
     POPUP "E&xport"
     BEGIN
@@ -723,7 +721,7 @@ BEGIN
     END
 END
 
-IDR_TOOLS_MENU MENU 
+IDR_TOOLS_MENU MENU
 BEGIN
     POPUP "&Tools"
     BEGIN
@@ -746,7 +744,7 @@ BEGIN
     END
 END
 
-IDR_POSITION_MENU MENU 
+IDR_POSITION_MENU MENU
 BEGIN
     POPUP "frame Menu"
     BEGIN
@@ -792,7 +790,7 @@ BEGIN
     PUSHBUTTON      "&Abort",IDC_ABORT,129,149,50,14
 END
 
-IDD_INTERLEAVE DIALOG  0, 0, 249, 175
+IDD_INTERLEAVE DIALOG 0, 0, 249, 175
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Audio/Video Interleave Options"
 FONT 8, "MS Shell Dlg"
@@ -912,14 +910,20 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "About VirtualDub2"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "$n $p v$v $c",IDC_STATIC_VERSION,7,7,238,8
-    CONTROL         "Description: <a href=""https://sourceforge.net/p/vdfiltermod/wiki/Home/"">sourceforge.net/projects/vdfiltermod</a>\n\nThis program is free software and may be distributed according to the terms of the GNU General Public License.",IDC_STATIC,
-                    "SysLink",WS_TABSTOP,7,24,326,44
-    GROUPBOX        "About original version",IDC_STATIC,7,88,326,44
-    LTEXT           "Copyright (C) 1998-2012 by Avery Lee, All Rights Reserved.",IDC_STATIC,14,100,312,10
-    CONTROL         "Home page: <a href=""http:\\\\www.virtualdub.org"">virtualdub.org</a>",IDC_ORIGINAL,
-                    "SysLink",WS_TABSTOP,14,113,312,14
+    LTEXT           "$n $p v$v $c",IDC_STATIC_VERSION,14,7,238,8
+    LTEXT           "Copyright (C) 2015-2026 Anton Shekhovtsov, v0lt",IDC_STATIC,14,20,312,10
+    CONTROL         "Home page: <a href=""http://virtualdub2.com/"">virtualdub2.com</a>",IDC_STATIC,
+                    "SysLink",WS_TABSTOP,14,33,312,10
+    CONTROL         "Wiki: <a href=""https://sourceforge.net/p/vdfiltermod/wiki/Home/"">sourceforge.net/projects/vdfiltermod</a>",IDC_STATIC,
+                    "SysLink",WS_TABSTOP,14,46,312,10
+    CONTROL         "Source code: <a href=""https://github.com/v0lt/VirtualDub2"">github.com/v0lt/VirtualDub2</a>",IDC_STATIC,
+                    "SysLink",WS_TABSTOP,14,60,312,10
+    GROUPBOX        "About original VirtualDub",IDC_STATIC,7,75,326,40
+    LTEXT           "Copyright (C) 1998-2014 by Avery Lee, All Rights Reserved.",IDC_STATIC,14,87,312,10
+    CONTROL         "Home page: <a href=""https://www.virtualdub.org/"">virtualdub.org</a>",IDC_ORIGINAL,
+                    "SysLink",WS_TABSTOP,14,100,312,10
     DEFPUSHBUTTON   "OK",IDOK,283,141,50,14
+    LTEXT           "This program is free software and may be distributed according to the terms of the GNU General Public License.",IDC_STATIC,14,119,312,18
 END
 
 IDD_FILTER_CONVOLUTE DIALOGEX 0, 0, 231, 135
@@ -979,7 +983,7 @@ BEGIN
     CONTROL         "Bandwidth required: 0KB/s",IDC_BANDWIDTH_REQD,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,7,158,105,10,WS_EX_STATICEDGE
 END
 
-IDD_APNG_INFO DIALOG  0, 0, 290, 81
+IDD_APNG_INFO DIALOG 0, 0, 290, 81
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Animated PNG Information"
 FONT 8, "MS Shell Dlg"
@@ -1035,7 +1039,7 @@ BEGIN
     PUSHBUTTON      "&Copy",IDC_COPY,7,197,50,14
 END
 
-IDD_GIF_INFO DIALOG  0, 0, 290, 81
+IDD_GIF_INFO DIALOG 0, 0, 290, 81
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Animated GIF Information"
 FONT 8, "MS Shell Dlg"
@@ -1050,7 +1054,7 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,233,60,50,14
 END
 
-IDD_IMAGES_INFO DIALOG  0, 0, 290, 81
+IDD_IMAGES_INFO DIALOG 0, 0, 290, 81
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Image Sequence Information"
 FONT 8, "MS Shell Dlg"
@@ -1065,7 +1069,7 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,233,60,50,14
 END
 
-IDD_FILTER_EMBOSS DIALOG  0, 0, 307, 106
+IDD_FILTER_EMBOSS DIALOG 0, 0, 307, 106
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Filter: emboss"
 FONT 8, "MS Shell Dlg"
@@ -1170,7 +1174,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,127,109,50,14
 END
 
-IDD_SHOWTEXT DIALOG  0, 0, 350, 199
+IDD_SHOWTEXT DIALOG 0, 0, 350, 199
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "VirtualDub Change Log"
 FONT 8, "MS Shell Dlg"
@@ -1179,7 +1183,7 @@ BEGIN
     EDITTEXT        IDC_CHANGES,7,7,336,166,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
 END
 
-IDD_CAPTURE_PREALLOCATE DIALOG  0, 0, 250, 71
+IDD_CAPTURE_PREALLOCATE DIALOG 0, 0, 250, 71
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Preallocate capture file space"
 FONT 8, "MS Shell Dlg"
@@ -1229,7 +1233,7 @@ BEGIN
     LTEXT           "Balance",IDC_STATIC_BALANCE,7,97,27,15,SS_CENTERIMAGE | WS_DISABLED
 END
 
-IDD_DISASM DIALOG  0, 0, 320, 201
+IDD_DISASM DIALOG 0, 0, 320, 201
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dynamic code disassembly"
 FONT 8, "MS Shell Dlg"
@@ -1239,7 +1243,7 @@ BEGIN
     LTEXT           "<whee>",IDC_STATIC,8,182,245,8
 END
 
-IDD_PERF_DYNAMIC DIALOG  0, 0, 154, 60
+IDD_PERF_DYNAMIC DIALOG 0, 0, 154, 60
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dynamic Compilation Options"
 FONT 8, "MS Shell Dlg"
@@ -1325,7 +1329,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,60,133,50,14
 END
 
-IDD_PROGRESS DIALOG  0, 0, 187, 58
+IDD_PROGRESS DIALOG 0, 0, 187, 58
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Rebooting Yggrasil...."
 FONT 8, "MS Shell Dlg"
@@ -1336,7 +1340,7 @@ BEGIN
     LTEXT           "",IDC_CURRENT_VALUE,7,40,114,8
 END
 
-IDD_SERVER DIALOG  0, 0, 252, 103
+IDD_SERVER DIALOG 0, 0, 252, 103
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_MINIMIZEBOX | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Frameserver mode - VirtualDub"
 FONT 8, "MS Shell Dlg"
@@ -1354,7 +1358,7 @@ BEGIN
     LTEXT           "None ",IDC_STATIC_FCINSTALLED,102,65,143,8
 END
 
-IDD_SERVER_SETUP DIALOG  0, 0, 248, 46
+IDD_SERVER_SETUP DIALOG 0, 0, 248, 46
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Frameserver setup"
 FONT 8, "MS Shell Dlg"
@@ -1366,7 +1370,7 @@ BEGIN
     EDITTEXT        IDC_FSNAME,141,7,100,13,ES_AUTOHSCROLL
 END
 
-IDD_CAPTURE_HISTOGRAM DIALOG  0, 0, 14, 14
+IDD_CAPTURE_HISTOGRAM DIALOG 0, 0, 14, 14
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Histogram"
 FONT 8, "MS Shell Dlg"
@@ -1468,7 +1472,7 @@ BEGIN
     CONTROL         "test",IDC_SAVE_TEST,"Button",BS_AUTORADIOBUTTON,7,7,27,10
 END
 
-IDD_CAPTURE_HITOK DIALOG  0, 0, 186, 85
+IDD_CAPTURE_HITOK DIALOG 0, 0, 186, 85
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "I'm ready if you are..."
 FONT 8, "MS Shell Dlg"
@@ -1482,7 +1486,7 @@ BEGIN
     LTEXT           "Capture device and output file prepped.  Ready to capture on your mark.  Use right mouse button to end.",IDC_STATIC,7,7,172,20
 END
 
-IDD_EXTOPENOPTS_MPEG DIALOG  0, 0, 228, 77
+IDD_EXTOPENOPTS_MPEG DIALOG 0, 0, 228, 77
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Import Options: MPEG input filter"
 FONT 8, "MS Shell Dlg"
@@ -1494,7 +1498,7 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDCANCEL,88,56,50,14
 END
 
-IDD_EXTOPENOPTS_AVI DIALOG  0, 0, 280, 238
+IDD_EXTOPENOPTS_AVI DIALOG 0, 0, 280, 238
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Import options: AVI import filter"
 FONT 8, "MS Shell Dlg"
@@ -1563,7 +1567,7 @@ BEGIN
     DEFPUSHBUTTON   "Requeue Job as Waiting",IDOK,91,96,89,14
 END
 
-IDD_MPEG_INFO DIALOG  0, 0, 290, 173
+IDD_MPEG_INFO DIALOG 0, 0, 290, 173
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "MPEG Information"
 FONT 8, "MS Shell Dlg"
@@ -1593,7 +1597,7 @@ BEGIN
     RTEXT           "",IDC_AUDIO_SIZE,155,127,120,10,SS_SUNKEN
 END
 
-IDD_CAPTURE_PANEL DIALOG  0, 0, 120, 241
+IDD_CAPTURE_PANEL DIALOG 0, 0, 120, 241
 STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD
 FONT 8, "MS Shell Dlg"
 BEGIN
@@ -1661,7 +1665,7 @@ BEGIN
     RTEXT           "N/A",IDC_TIME_REMAINING,81,84,84,10,SS_SUNKEN
 END
 
-IDD_DUBBING_VIDEO DIALOG  0, 0, 172, 102
+IDD_DUBBING_VIDEO DIALOG 0, 0, 172, 102
 STYLE DS_SETFONT | DS_CONTROL | WS_CHILD | WS_VISIBLE
 FONT 8, "MS Shell Dlg"
 BEGIN
@@ -1670,7 +1674,7 @@ BEGIN
     RTEXT           "0K",IDC_STATIC_LOBOUND,146,71,19,8
 END
 
-IDD_COACH DIALOG  0, 0, 242, 124
+IDD_COACH DIALOG 0, 0, 242, 124
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Video coach warning"
 FONT 8, "MS Shell Dlg"
@@ -1687,7 +1691,7 @@ BEGIN
     LTEXT           "Your computer sucks.",IDC_MESSAGE,13,19,214,46,SS_SUNKEN
 END
 
-IDD_CAPTURE_STOPCOND DIALOG  0, 0, 230, 98
+IDD_CAPTURE_STOPCOND DIALOG 0, 0, 230, 98
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Stop conditions"
 FONT 8, "MS Shell Dlg"
@@ -1710,7 +1714,7 @@ BEGIN
     LTEXT           "percent",IDC_STATIC,168,59,25,10
 END
 
-IDD_CAPTURE_DISKIO DIALOG  0, 0, 230, 76
+IDD_CAPTURE_DISKIO DIALOG 0, 0, 230, 76
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Disk I/O (Internal capture mode only)"
 FONT 8, "MS Shell Dlg"
@@ -1779,7 +1783,7 @@ BEGIN
     LTEXT           "Using conversion: YUYV->RGB24",IDC_FORMAT_INFO,196,133,197,8
 END
 
-IDD_DISASM_CRASH DIALOG  0, 0, 399, 234
+IDD_DISASM_CRASH DIALOG 0, 0, 399, 234
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "VirtualDub2 Program Failure - Detail"
 FONT 8, "MS Shell Dlg"
@@ -1814,7 +1818,7 @@ BEGIN
     PUSHBUTTON      "Dump Status...",IDC_DUMPSTATUS,98,81,67,14
 END
 
-IDD_WELCOME DIALOG  0, 0, 300, 153
+IDD_WELCOME DIALOG 0, 0, 300, 153
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Before we start..."
 FONT 8, "MS Shell Dlg"
@@ -1829,7 +1833,7 @@ BEGIN
     LTEXT           "I started this program in my freshman year at UCSB because I didn't have a good capture or compression program.  It's grown steadily since then. Please feel free to explore and enjoy the result of three years' worth of work.",IDC_STATIC,38,28,255,26
 END
 
-IDD_DEBUGVAL DIALOG  0, 0, 83, 44
+IDD_DEBUGVAL DIALOG 0, 0, 83, 44
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Debug value"
 FONT 8, "MS Shell Dlg"
@@ -1847,7 +1851,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
 END
 
-IDD_FILTER_LEVELS DIALOG  0, 0, 300, 165
+IDD_FILTER_LEVELS DIALOG 0, 0, 300, 165
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Filter: levels"
 FONT 8, "MS Shell Dlg"
@@ -1870,7 +1874,7 @@ BEGIN
     CTEXT           "Click ""Sample frame"" or ""Sample video"" to display video histogram.",IDC_HISTOGRAM,7,7,286,54,SS_CENTERIMAGE | SS_SUNKEN
 END
 
-IDD_FILTER_SAMPLE DIALOG  0, 0, 186, 79
+IDD_FILTER_SAMPLE DIALOG 0, 0, 186, 79
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Sample input video"
 FONT 8, "MS Shell Dlg"
@@ -1885,7 +1889,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,129,58,50,14
 END
 
-IDD_CAPTURE_CUSTOMVIDEO DIALOG  0, 0, 324, 180
+IDD_CAPTURE_CUSTOMVIDEO DIALOG 0, 0, 324, 180
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Set custom video format"
 FONT 8, "MS Shell Dlg"
@@ -1906,7 +1910,7 @@ BEGIN
     LTEXT           "Note: Some formats are not supported by all capture devices.",IDC_STATIC,127,145,193,8
 END
 
-IDD_CAPTURE_NOISEREDUCTION DIALOG  0, 0, 203, 41
+IDD_CAPTURE_NOISEREDUCTION DIALOG 0, 0, 203, 41
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Noise reduction"
 FONT 8, "MS Shell Dlg"
@@ -1939,7 +1943,7 @@ BEGIN
     LTEXT           "",IDC_STATIC_FORMATID,229,152,96,8
 END
 
-IDD_CAPTURE_CLIPPING DIALOG  0, 0, 146, 34
+IDD_CAPTURE_CLIPPING DIALOG 0, 0, 146, 34
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Set capture clipping region"
 FONT 8, "MS Shell Dlg"
@@ -1949,7 +1953,7 @@ BEGIN
     CONTROL         "",IDC_BORDERS,"birdyClippingControl",WS_TABSTOP | 0x2,7,7,132,6
 END
 
-IDD_HEXVIEWER DIALOG  0, 0, 186, 69
+IDD_HEXVIEWER DIALOG 0, 0, 186, 69
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "microsoft no baka!"
 FONT 8, "MS Shell Dlg"
@@ -1975,7 +1979,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,107,47,50,14
 END
 
-IDD_LICENSE DIALOG  0, 0, 420, 250
+IDD_LICENSE DIALOG 0, 0, 420, 250
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "GNU General Public License"
 FONT 8, "MS Shell Dlg"
@@ -1985,7 +1989,7 @@ BEGIN
     EDITTEXT        IDC_LICENSE,7,29,406,194,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
 END
 
-IDD_DIVX_WARNING DIALOG  0, 0, 303, 183
+IDD_DIVX_WARNING DIALOG 0, 0, 303, 183
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "VirtualDub2 warning: DivX codec detected"
 FONT 8, "MS Shell Dlg"
@@ -1994,7 +1998,7 @@ BEGIN
     EDITTEXT        IDC_WARNING,7,7,289,150,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
-IDD_CAPTURE_BT8X8 DIALOG  0, 0, 273, 193
+IDD_CAPTURE_BT8X8 DIALOG 0, 0, 273, 193
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Capture: BT8x8 tweaker"
 FONT 8, "MS Shell Dlg"
@@ -2051,7 +2055,7 @@ BEGIN
     PUSHBUTTON      "Reassert",IDC_REASSERT,216,105,50,14
 END
 
-IDD_HEXVIEWER_FIND DIALOG  0, 0, 275, 63
+IDD_HEXVIEWER_FIND DIALOG 0, 0, 275, 63
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Find binary string"
 FONT 8, "MS Shell Dlg"
@@ -2087,7 +2091,7 @@ BEGIN
     CONTROL         "Tree1",IDC_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | WS_TABSTOP,0,0,271,257,WS_EX_CLIENTEDGE
 END
 
-IDD_FILTER_LOGO DIALOG  0, 0, 302, 198
+IDD_FILTER_LOGO DIALOG 0, 0, 302, 198
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "filter: logo"
 FONT 8, "MS Shell Dlg"
@@ -2128,7 +2132,7 @@ BEGIN
     RTEXT           "100%",IDC_STATIC_OPACITY,266,104,19,16,SS_CENTERIMAGE
 END
 
-IDD_JOBFINISH DIALOG  0, 0, 186, 71
+IDD_JOBFINISH DIALOG 0, 0, 186, 71
 STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_SETFOREGROUND | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "VirtualDub2 Warning"
 FONT 8, "MS Shell Dlg"
@@ -2174,7 +2178,7 @@ BEGIN
     CONTROL         "",IDC_POSITION,"birdyPositionControl",WS_TABSTOP,7,223,336,40
 END
 
-IDD_AF_XPASS DIALOG  0, 0, 175, 61
+IDD_AF_XPASS DIALOG 0, 0, 175, 61
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "filter: lowpass/highpass"
 FONT 8, "MS Shell Dlg"
@@ -2187,7 +2191,7 @@ BEGIN
     EDITTEXT        IDC_TAPS,98,21,70,12,ES_AUTOHSCROLL | ES_NUMBER
 END
 
-IDD_AF_RESAMPLE DIALOG  0, 0, 172, 58
+IDD_AF_RESAMPLE DIALOG 0, 0, 172, 58
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "filter: resample"
 FONT 8, "MS Shell Dlg"
@@ -2200,7 +2204,7 @@ BEGIN
     EDITTEXT        IDC_TAPS,95,21,70,12,ES_AUTOHSCROLL | ES_NUMBER
 END
 
-IDD_AF_PITCHSHIFT DIALOG  0, 0, 172, 50
+IDD_AF_PITCHSHIFT DIALOG 0, 0, 172, 50
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "filter: pitch shift"
 FONT 8, "MS Shell Dlg"
@@ -2211,7 +2215,7 @@ BEGIN
     EDITTEXT        IDC_RATIO,95,7,70,12,ES_AUTOHSCROLL
 END
 
-IDD_AF_STRETCH DIALOG  0, 0, 172, 50
+IDD_AF_STRETCH DIALOG 0, 0, 172, 50
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "filter: stretch"
 FONT 8, "MS Shell Dlg"
@@ -2233,7 +2237,7 @@ BEGIN
     LTEXT           "Filter information",IDC_FILTER_INFO,7,152,258,40,0,WS_EX_STATICEDGE
 END
 
-IDD_AF_GAIN DIALOG  0, 0, 172, 50
+IDD_AF_GAIN DIALOG 0, 0, 172, 50
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "filter: gain"
 FONT 8, "MS Shell Dlg"
@@ -2244,7 +2248,7 @@ BEGIN
     EDITTEXT        IDC_FACTOR,95,7,70,12,ES_AUTOHSCROLL
 END
 
-IDD_LOG DIALOG  0, 0, 270, 158
+IDD_LOG DIALOG 0, 0, 270, 158
 STYLE DS_SETFONT | DS_3DLOOK | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "VirtualDub2 Log"
 FONT 8, "MS Shell Dlg"
@@ -2252,7 +2256,7 @@ BEGIN
     CONTROL         "",IDC_LOG,"phaeronLogWindowControl",WS_VSCROLL | WS_TABSTOP,7,7,256,144
 END
 
-IDD_ERRORMODE DIALOG  0, 0, 219, 106
+IDD_ERRORMODE DIALOG 0, 0, 219, 106
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Decoder error mode"
 FONT 8, "MS Shell Dlg"
@@ -2307,7 +2311,7 @@ BEGIN
     LISTBOX         IDC_PROFILE_SUMMARY,7,7,256,184,LBS_USETABSTOPS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL
 END
 
-IDD_AF_NEWRATE DIALOG  0, 0, 172, 50
+IDD_AF_NEWRATE DIALOG 0, 0, 172, 50
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "filter: new rate"
 FONT 8, "MS Shell Dlg"
@@ -2318,7 +2322,7 @@ BEGIN
     EDITTEXT        IDC_FREQ,95,7,70,12,ES_AUTOHSCROLL
 END
 
-IDD_EXPERIMENTAL DIALOG  0, 0, 311, 105
+IDD_EXPERIMENTAL DIALOG 0, 0, 311, 105
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "VirtualDub2 warning"
 FONT 8, "MS Shell Dlg"
@@ -2330,7 +2334,7 @@ BEGIN
     LTEXT           "Please DO NOT report interoperability problems with this release to vendors of third party codecs and plugins unless you are SURE it is not caused by the experimental code in this release.  Verifying against the previous STABLE release is a good idea.",IDC_STATIC,7,53,297,30
 END
 
-IDD_CHANGE_LOG DIALOG  0, 0, 350, 199
+IDD_CHANGE_LOG DIALOG 0, 0, 350, 199
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "VirtualDub Change Log"
 FONT 8, "MS Shell Dlg"
@@ -2350,7 +2354,7 @@ BEGIN
     CONTROL         "List1",IDC_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_TABSTOP,7,7,276,124,WS_EX_CLIENTEDGE
 END
 
-IDD_AF_FORMATCONV DIALOG  0, 0, 172, 50
+IDD_AF_FORMATCONV DIALOG 0, 0, 172, 50
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "filter: format convert"
 FONT 8, "MS Shell Dlg"
@@ -2951,7 +2955,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_DUBBING, DIALOG
     BEGIN
@@ -3942,17 +3946,21 @@ END
 // STUFF
 //
 
-IDR_CHANGES             STUFF                   "..\\..\\..\\docs\Changes.txt"
+IDR_CHANGES             STUFF                   "..\\..\\..\\docs\\Changes.txt"
+
 IDR_RELEASE_NOTES       STUFF                   "rel_notes.bin"
+
 IDR_CREDITS             STUFF                   "credits.txt"
+
 IDR_LICENSE             STUFF                   "license.bin"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Accelerator
 //
 
-IDR_IDLE_KEYS ACCELERATORS 
+IDR_IDLE_KEYS ACCELERATORS
 BEGIN
     "N",            ID_AUDIO_CONVERSION,    VIRTKEY, CONTROL, NOINVERT
     "I",            ID_AUDIO_INTERLEAVE,    VIRTKEY, CONTROL, NOINVERT
@@ -4010,7 +4018,7 @@ BEGIN
     VK_F7,          ID_QUEUEBATCHOPERATION_SAVEASAVI, VIRTKEY, SHIFT, CONTROL, NOINVERT
 END
 
-IDR_CAPTURE_KEYS ACCELERATORS 
+IDR_CAPTURE_KEYS ACCELERATORS
 BEGIN
     "A",            ID_AUDIO_COMPRESSION,   VIRTKEY, NOINVERT
     "V",            ID_AUDIO_PEAKMETER,     VIRTKEY, NOINVERT
@@ -4044,7 +4052,7 @@ BEGIN
     "L",            ID_VIDEO_LEVELS,        VIRTKEY, NOINVERT
 END
 
-IDR_DUB_KEYS ACCELERATORS 
+IDR_DUB_KEYS ACCELERATORS
 BEGIN
     VK_F4,          ID_FILE_JOBCONTROL,     VIRTKEY, NOINVERT
     VK_F1,          ID_HELP_CONTENTS,       VIRTKEY, NOINVERT
@@ -4059,21 +4067,37 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_VIRTUALDUB          ICON                    "mod2.ico"
+
 IDI_POS_BACKWARD        ICON                    "pos_backward.ico"
+
 IDI_POS_FORWARD         ICON                    "pos_forward.ico"
+
 IDI_POS_START           ICON                    "pos_start.ico"
+
 IDI_POS_END             ICON                    "pos_end.ico"
+
 IDI_POS_MARKIN          ICON                    "pos_mark.ico"
+
 IDI_POS_MARKOUT         ICON                    "pos_markout.ico"
+
 IDI_POS_STOP            ICON                    "pos_stop.ico"
+
 IDI_POS_PLAY            ICON                    "pos_play.ico"
+
 IDI_POS_PREV_KEY        ICON                    "pos_prev_key.ico"
+
 IDI_POS_NEXT_KEY        ICON                    "pos_next_key.ico"
+
 IDI_POS_PLAYPREVIEW     ICON                    "pos_play2.ico"
+
 IDI_POS_SCENEFWD        ICON                    "pos_scenefwd.ico"
+
 IDI_POS_SCENEREV        ICON                    "pos_scenerev.ico"
+
 IDI_POS_MARKIN2         ICON                    "pos_mark2.ico"
+
 IDI_POS_MARKOUT2        ICON                    "pos_markout2.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -4081,20 +4105,35 @@ IDI_POS_MARKOUT2        ICON                    "pos_markout2.ico"
 //
 
 IDI_POS_STOP_x128       BITMAP                  "pos_stop_x128.bmp"
+
 IDI_POS_MARKIN_x128     BITMAP                  "pos_mark_x128.bmp"
+
 IDI_POS_MARKIN2_x128    BITMAP                  "pos_mark2_x128.bmp"
+
 IDI_POS_MARKOUT_x128    BITMAP                  "pos_markout_x128.bmp"
+
 IDI_POS_MARKOUT2_x128   BITMAP                  "pos_markout2_x128.bmp"
+
 IDI_POS_PLAY_x128       BITMAP                  "pos_play_x128.bmp"
+
 IDI_POS_PLAYPREVIEW_x128 BITMAP                  "pos_play2_x128.bmp"
+
 IDI_POS_FORWARD_x128    BITMAP                  "pos_forward_x128.bmp"
+
 IDI_POS_BACKWARD_x128   BITMAP                  "pos_backward_x128.bmp"
+
 IDI_POS_END_x128        BITMAP                  "pos_end_x128.bmp"
+
 IDI_POS_START_x128      BITMAP                  "pos_start_x128.bmp"
+
 IDI_POS_NEXT_KEY_x128   BITMAP                  "pos_next_key_x128.bmp"
+
 IDI_POS_PREV_KEY_x128   BITMAP                  "pos_prev_key_x128.bmp"
+
 IDI_POS_SCENEFWD_x128   BITMAP                  "pos_scenefwd_x128.bmp"
+
 IDI_POS_SCENEREV_x128   BITMAP                  "pos_scenerev_x128.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -4102,17 +4141,22 @@ IDI_POS_SCENEREV_x128   BITMAP                  "pos_scenerev_x128.bmp"
 //
 
 IDC_DRAGPOINT           CURSOR                  "dragpoint.cur"
+
 IDC_ADDPOINT            CURSOR                  "addpoint.cur"
+
 IDC_REMOVEPOINT         CURSOR                  "removepoint.cur"
+
 IDC_MODIFYPOINT         CURSOR                  "modifypoint.cur"
+
 IDC_CAP_POINT           CURSOR                  "cap_point.cur"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_TITLE_INITIAL       "$n $p v$v $s"
     IDS_TITLE_NOFILE        "$n $p v$v"
@@ -4124,7 +4168,7 @@ BEGIN
     IDS_TITLE_CAPTURE2      "$n $p v$v - capture mode [%s] (striped)%s"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_FILE_OPENAVI        "Select a file for processing."
     IDS_FILE_PREVIEWAVI     "Preview output stream in real time from the start."
@@ -4147,7 +4191,7 @@ BEGIN
     IDS_FILE_PREVIEWOUTPUT  "Preview output stream in real time from current location."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_VIDEO_FILTERS       "Modify video frame filter list."
     IDS_VIDEO_FRAMERATE     "Change the frame rate of the finished AVI, and/or systematically remove frames."
@@ -4162,7 +4206,7 @@ BEGIN
     IDS_VIDEO_MODE_FULL     "Enable full VirtualDub video processing."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_AUDIO_CONVERSION    "Convert audio format from one type to another."
     IDS_AUDIO_INTERLEAVE    "Alter the way audio and video data are mixed in the file."
@@ -4174,7 +4218,7 @@ BEGIN
     IDS_AUDIO_MODE_FULL     "Enable full VirtualDub audio processing."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_OPTIONS_PERFORMANCE "Alter VirtualDub's buffering parameters for best memory/speed tradeoff."
     IDS_OPTIONS_DISPLAYINPUTVIDEO "Toggle display of input video (left pane)."
@@ -4196,13 +4240,13 @@ BEGIN
                             "Enable use of hardware YUV overlays during input playback."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_HELP_CONTENTS       "Display help file."
     IDS_HELP_ABOUT          "Displays credits, copyright notice, and thanks."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_CAP_FILE_SETCAPTUREFILE "Select a file to capture to."
     IDS_CAP_FILE_ALLOCATEDISKSPACE 
@@ -4211,7 +4255,7 @@ BEGIN
                             "Exit capture mode and return to normal VirtualDub operation."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_CAP_AUDIO_COMPRESSION 
                             "Choose an audio format and optional compression for capture."
@@ -4219,7 +4263,7 @@ BEGIN
                             "Monitor incoming average and peak volume levels."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_CAP_VIDEO_OVERLAY   "Enable real-time overlay of incoming video."
     IDS_CAP_VIDEO_PREVIEW   "Enable CPU-assisted display of incoming video."
@@ -4238,7 +4282,7 @@ BEGIN
                             "Select a custom video format for your capture card, even if the driver's dialog box doesn't allow it."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_CAP_CAPTURE_SETTINGS "Specify parameters for video capture."
     IDS_CAP_CAPTURE_PREFERENCES 
@@ -4248,7 +4292,7 @@ BEGIN
                             "Enables/disables display of incoming video during video capture to save PCI bandwidth."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_VIDEO_SEEK_START    "Move to the beginning of the video file."
     IDS_VIDEO_SEEK_END      "Move to the end of the video file."
@@ -4266,14 +4310,14 @@ BEGIN
     IDS_EDIT_SETSELEND      "Mark the current frame as the end of a set of frames to delete or a subset to output."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_FILE_APPENDSEGMENT  "Attach segments of a single video clip that was originally split apart into multiple files."
     IDS_FILE_SAVESEGMENTEDAVI 
                             "Render output to a series of sequential AVI files to circumvent per-file size limits."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_TOOLS_HEXVIEWER     "Open VirtualDub's internal hex editor, designed for very large files."
     IDS_TOOLS_CREATESPARSEAVI 
@@ -4282,7 +4326,7 @@ BEGIN
                             "Expand a sparse AVI description to a full AVI with placeholder audio and video data."
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

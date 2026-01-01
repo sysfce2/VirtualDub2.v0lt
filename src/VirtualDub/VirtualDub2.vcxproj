@@ -743,6 +743,7 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
   </ItemGroup>
   <ItemGroup>
     <None Include="res\addpoint.cur" />
+    <None Include="res\cap_point.cur" />
     <None Include="res\dragpoint.cur" />
     <None Include="res\ico00001.ico" />
     <None Include="res\icon1.ico" />
@@ -933,6 +934,37 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
     <ProjectReference Include="..\zlib\zlib.vcxproj">
       <Project>{dbbe5717-54c3-494f-8eef-6123b6dc8a00}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\docs\Changes.txt" />
+    <Text Include="res\credits.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\pos_backward.ico" />
+    <Image Include="res\pos_backward_x128.bmp" />
+    <Image Include="res\pos_end_x128.bmp" />
+    <Image Include="res\pos_forward.ico" />
+    <Image Include="res\pos_forward_x128.bmp" />
+    <Image Include="res\pos_mark2.ico" />
+    <Image Include="res\pos_mark2_x128.bmp" />
+    <Image Include="res\pos_markout2.ico" />
+    <Image Include="res\pos_markout2_x128.bmp" />
+    <Image Include="res\pos_markout_x128.bmp" />
+    <Image Include="res\pos_mark_x128.bmp" />
+    <Image Include="res\pos_next_key.ico" />
+    <Image Include="res\pos_next_key_x128.bmp" />
+    <Image Include="res\pos_play2.ico" />
+    <Image Include="res\pos_play2_x128.bmp" />
+    <Image Include="res\pos_play_x128.bmp" />
+    <Image Include="res\pos_prev_key.ico" />
+    <Image Include="res\pos_prev_key_x128.bmp" />
+    <Image Include="res\pos_scenefwd.ico" />
+    <Image Include="res\pos_scenefwd_x128.bmp" />
+    <Image Include="res\pos_scenerev.ico" />
+    <Image Include="res\pos_scenerev_x128.bmp" />
+    <Image Include="res\pos_start.ico" />
+    <Image Include="res\pos_start_x128.bmp" />
+    <Image Include="res\pos_stop_x128.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

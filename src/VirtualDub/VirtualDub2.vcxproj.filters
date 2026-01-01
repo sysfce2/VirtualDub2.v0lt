@@ -1289,6 +1289,9 @@
     <None Include="res\mod2.ico">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\cap_point.cur">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\VirtualDub.rc">
@@ -1354,5 +1357,86 @@
     <CustomBuild Include="res\virtualdub.ami">
       <Filter>Resource Files</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\docs\Changes.txt" />
+    <Text Include="res\credits.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\pos_backward.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_forward.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_start.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_prev_key.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_next_key.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_play2.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_scenefwd.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_scenerev.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_mark2.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_markout2.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_stop_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_mark_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_mark2_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_markout_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_markout2_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_play_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_play2_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_forward_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_backward_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_end_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_start_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_next_key_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_prev_key_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_scenefwd_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pos_scenerev_x128.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
