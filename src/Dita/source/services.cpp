@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2016-2018 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -469,6 +469,7 @@ static const VDStringW VDGetFileName(bool bSaveAs, long nKey, VDGUIHandle ctxPar
 				break;
 			case VDFileDialogOption::kSelectedFilter_always:
 				selectedFilterAlways = true;
+				[[fallthrough]];
 			case VDFileDialogOption::kSelectedFilter:
 				VDASSERT(nSelectedFilterIndex < 0);
 				nSelectedFilterIndex = opt.mDstIdx;

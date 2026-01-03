@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2015-2019 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -172,8 +172,10 @@ INT_PTR VDDialogAudioConversionW32::DlgProc(UINT message, WPARAM wParam, LPARAM 
 			case IDC_SAMPLINGRATE_22KHZ:
 			case IDC_SAMPLINGRATE_44KHZ:
 			case IDC_SAMPLINGRATE_48KHZ:
-				if (!IsDlgButtonChecked(mhdlg, IDC_SAMPLINGRATE_CUSTOM))
+				if (!IsDlgButtonChecked(mhdlg, IDC_SAMPLINGRATE_CUSTOM)) {
 					EnableWindow(GetDlgItem(mhdlg, IDC_SAMPLINGRATE_CUSTOM_VAL), FALSE);
+				}
+				[[fallthrough]];
 			case IDC_PRECISION_NOCHANGE:
 			case IDC_PRECISION_8BIT:
 			case IDC_PRECISION_16BIT:

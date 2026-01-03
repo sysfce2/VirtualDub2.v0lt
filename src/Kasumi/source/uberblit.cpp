@@ -3,7 +3,7 @@
 //
 // Copyright (C) 1998-2009 Avery Lee
 // Copyright (C) 2015-2019 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -1508,11 +1508,13 @@ uint32 ConvertSpace_BGR(VDPixmapUberBlitterGenerator& gen, uint32 srcToken, uint
 		switch(srcSpace) {
 		case kVDPixSpace_YCC_601_FR:
 			src_fr = true;
+			[[fallthrough]];
 		case kVDPixSpace_YCC_601:
 			srcBasis = &g_VDPixmapGenYCbCrBasis_601;
 			break;
 		case kVDPixSpace_YCC_709_FR:
 			src_fr = true;
+			[[fallthrough]];
 		case kVDPixSpace_YCC_709:
 			srcBasis = &g_VDPixmapGenYCbCrBasis_709;
 			break;
