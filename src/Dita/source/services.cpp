@@ -410,11 +410,6 @@ static const VDStringW VDGetFileName(bool bSaveAs, long nKey, VDGUIHandle ctxPar
 
 	OPENFILENAMEW ofn = {};
 
-	// Slight annoyance: If we want to use custom templates and still keep the places
-	// bar, the lStructSize parameter must be greater than OPENFILENAME_SIZE_VERSION_400.
-	// But if sizeof(OPENFILENAME) is used under Windows 95/98, the open call fails.
-	// Argh.
-
 	ofn.lStructSize			= sizeof(OPENFILENAMEW);
 	ofn.hwndOwner			= (HWND)ctxParent;
 	ofn.lpstrCustomFilter	= NULL;
