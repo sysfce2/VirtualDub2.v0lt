@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2017-2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -47,18 +47,15 @@ bool VDInitiateSystemShutdown(VDSystemShutdownMode mode);
 
 class VDCPUUsageReader {
 public:
-	VDCPUUsageReader();
-	~VDCPUUsageReader();
+	VDCPUUsageReader() = default;
+	~VDCPUUsageReader() = default;
 
 	void Init();
-	void Shutdown();
+	void Shutdown() {};
 
 	void read(int& vd, int& sys);
 
 private:
-	bool fNTMethod;
-	VDZHKEY hkeyKernelCPU;
-
 	uint64 kt_last;
 	uint64 ut_last;
 	uint64 skt_last;

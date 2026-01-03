@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2007 Avery Lee
 // Copyright (C) 2015-2018 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -378,153 +378,38 @@ bool VDInitiateSystemShutdown(VDSystemShutdownMode mode) {
 
 ///////////////////////////////////////////////////////////////////////////
 
-bool VDEnableCPUTracking() {
-	HKEY hOpen;
-	DWORD cbData;
-	DWORD dwType;
-	LPBYTE pByte;
-	DWORD rc;
-
-	bool fSuccess = true;
-
-    if ( (rc = RegOpenKeyExA(HKEY_DYN_DATA,"PerfStats\\StartStat", 0,
-					KEY_READ, &hOpen)) == ERROR_SUCCESS) {
-
-		// query to get data size
-		if ( (rc = RegQueryValueExA(hOpen,"KERNEL\\CPUUsage",NULL,&dwType,
-				NULL, &cbData )) == ERROR_SUCCESS) {
-
-			pByte = (LPBYTE)allocmem(cbData);
-
-			rc = RegQueryValueExA(hOpen,"KERNEL\\CPUUsage",NULL,&dwType, pByte,
-                              &cbData );
-
-			freemem(pByte);
-		} else
-			fSuccess = false;
-
-		RegCloseKey(hOpen);
-	} else
-		fSuccess = false;
-
-	return fSuccess;
-}
-
-bool VDDisableCPUTracking() {
-	HKEY hOpen;
-	DWORD cbData;
-	DWORD dwType;
-	LPBYTE pByte;
-	DWORD rc;
-
-	bool fSuccess = true;
-
-    if ( (rc = RegOpenKeyExA(HKEY_DYN_DATA,"PerfStats\\StopStat", 0,
-					KEY_READ, &hOpen)) == ERROR_SUCCESS) {
-
-		// query to get data size
-		if ( (rc = RegQueryValueExA(hOpen,"KERNEL\\CPUUsage",NULL,&dwType,
-				NULL, &cbData )) == ERROR_SUCCESS) {
-
-			pByte = (LPBYTE)allocmem(cbData);
-
-			rc = RegQueryValueExA(hOpen,"KERNEL\\CPUUsage",NULL,&dwType, pByte,
-                              &cbData );
-
-			freemem(pByte);
-		} else
-			fSuccess = false;
-
-		RegCloseKey(hOpen);
-	} else
-		fSuccess = false;
-
-	return fSuccess;
-}
-
-VDCPUUsageReader::VDCPUUsageReader()
-	: hkeyKernelCPU(NULL)
-{
-}
-
-VDCPUUsageReader::~VDCPUUsageReader() {
-	Shutdown();
-}
-
 void VDCPUUsageReader::Init() {
 	FILETIME ftCreate, ftExit;
 
-	hkeyKernelCPU = NULL;
-	fNTMethod = false;
-
 	if (GetProcessTimes(GetCurrentProcess(), &ftCreate, &ftExit, (FILETIME *)&kt_last, (FILETIME *)&ut_last)) {
 
-		// Using Windows NT/2000 method
 		GetSystemTimes((FILETIME *)&idle_last, (FILETIME *)&skt_last, (FILETIME *)&sut_last);
+	}
+}
 
-		fNTMethod = true;
+void VDCPUUsageReader::read(int& vd, int& sys)
+{
+	FILETIME ftCreate, ftExit;
+	unsigned __int64 kt, ut, skt, sut, idle;
 
+	GetProcessTimes(GetCurrentProcess(), &ftCreate, &ftExit, (FILETIME*)&kt, (FILETIME*)&ut);
+	GetSystemTimes((FILETIME*)&idle, (FILETIME*)&skt, (FILETIME*)&sut);
+
+	unsigned __int64 sd = (skt - skt_last) + (sut - sut_last);
+
+	if (sd == 0) {
+		vd = -1;
+		sys = -1;
 	} else {
-
-		// Using Windows 95/98 method
-
-		HKEY hkey;
-
-		if (VDEnableCPUTracking()) {
-
-			if (ERROR_SUCCESS == RegOpenKeyExA(HKEY_DYN_DATA, "PerfStats\\StatData", 0, KEY_READ, &hkey)) {
-				hkeyKernelCPU = hkey;
-			} else
-				VDDisableCPUTracking();
-		}
-	}
-}
-
-void VDCPUUsageReader::Shutdown() {
-	if (hkeyKernelCPU) {
-		RegCloseKey(hkeyKernelCPU);
-		VDDisableCPUTracking();
-	}
-}
-
-void VDCPUUsageReader::read(int& vd, int& sys) {
-
-	if (hkeyKernelCPU) {
-		DWORD type;
-		DWORD dwUsage;
-		DWORD size = sizeof dwUsage;
-
-		if (ERROR_SUCCESS == RegQueryValueExA(hkeyKernelCPU, "KERNEL\\CPUUsage", 0, &type, (LPBYTE)&dwUsage, (LPDWORD)&size)) {
-			sys = (int)dwUsage;
-			vd = -1;
-			return;
-		}
-
-	} else if (fNTMethod) {
-		FILETIME ftCreate, ftExit;
-		unsigned __int64 kt, ut, skt, sut, idle;
-
-		GetProcessTimes(GetCurrentProcess(), &ftCreate, &ftExit, (FILETIME *)&kt, (FILETIME *)&ut);
-		GetSystemTimes((FILETIME *)&idle, (FILETIME *)&skt, (FILETIME *)&sut);
-
-		unsigned __int64 sd = (skt - skt_last) + (sut - sut_last);
-
-		if (sd==0) {
-			vd = -1;
-			sys = -1;
-		} else {
-			vd = (int)((100 * (kt + ut - kt_last - ut_last) + sd/2) / sd);
-			sys = (int)((100 * (sd - (idle-idle_last)) + sd/2) / sd);
-		}
-
-		kt_last = kt;
-		ut_last = ut;
-		skt_last = skt;
-		sut_last = sut;
-		idle_last = idle;
-		return;
+		vd = (int)((100 * (kt + ut - kt_last - ut_last) + sd/2) / sd);
+		sys = (int)((100 * (sd - (idle - idle_last)) + sd/2) / sd);
 	}
 
-	vd = -1;
-	sys = -1;
+	kt_last   = kt;
+	ut_last   = ut;
+	skt_last  = skt;
+	sut_last  = sut;
+	idle_last = idle;
+
+	return;
 }
