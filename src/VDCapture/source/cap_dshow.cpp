@@ -3,7 +3,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2015-2019 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -3285,7 +3285,7 @@ void VDCaptureDriverDS::DisplayDriverDialog(nsVDCapture::DriverDialog dlg) {
 			DisplayPropertyPages(mpCapTransformFilt, mhwndParent, NULL, 0);
 			break;
 		}
-		// fall through
+		[[fallthrough]];
 	case kDialogVideoFormat:
 	case kDialogVideoSource:
 

@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2015-2020 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -224,13 +224,14 @@ void JobCreateScript(JobScriptOutput& output, bool project_relative, const DubOp
 		if (audioSourceMode >= kVDAudioSourceMode_Source) {
 			int index = audioSourceMode - kVDAudioSourceMode_Source;
 
-			if (!index)
+			if (!index) {
 				output.addf("VirtualDub.audio.SetSource(1);");
-			else
+			} else {
 				output.addf("VirtualDub.audio.SetSource(1,%d);", index);
+			}
 			break;
 		}
-		// fall through
+		[[fallthrough]];
 	case kVDAudioSourceMode_None:
 		output.addf("VirtualDub.audio.SetSource(0);");
 		break;

@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2017-2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -967,9 +967,10 @@ void VDAVIOutputSegmented::Update() {
 
 			switch(stream->Flush(mNextSamples, mbSegmentEnding)) {
 				case VDAVIOutputSegmentedStream::kFlushPending:
-					if (!mbSegmentEnding)
+					if (!mbSegmentEnding) {
 						return;
-					// fall through
+					}
+					[[fallthrough]];
 				case VDAVIOutputSegmentedStream::kFlushEnded:
 					mStreamInterleaver.EndStream(mNextStream);
 					break;

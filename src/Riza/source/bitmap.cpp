@@ -3,7 +3,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2016-2019 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -816,7 +816,7 @@ uint32 VDMakeBitmapCompatiblePixmapLayout(VDPixmapLayout& layout, sint32 w, sint
 	switch(format) {
 	case kPixFormat_Pal8:
 		layout.palette = palette;
-		// fall through
+		[[fallthrough]];
 	case kPixFormat_XRGB1555:
 	case kPixFormat_RGB565:
 		// RGB can be flipped (but YUV can't)

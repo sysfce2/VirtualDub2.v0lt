@@ -2223,7 +2223,8 @@ LRESULT APIENTRY HexEditor::HexEditorWndProc(HWND hwnd, UINT msg, WPARAM wParam,
 
 	case WM_CREATE:
 		pcd->Init();
-//		return 0;		// intentional fall through to WM_SIZE
+		//return 0;
+		[[fallthrough]]; // intentional fall through to WM_SIZE
 
 	case WM_SIZE:
 		return pcd->Handle_WM_SIZE(wParam, lParam);

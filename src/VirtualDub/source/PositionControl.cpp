@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2016-2020 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -670,7 +670,7 @@ LRESULT CALLBACK VDPositionControlW32::WndProc(UINT msg, WPARAM wParam, LPARAM l
 	switch(msg) {
 	case WM_CREATE:
 		OnCreate();
-		// fall through
+		[[fallthrough]];
 	case WM_SIZE:
 		OnSize();
 		break;

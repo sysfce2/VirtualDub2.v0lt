@@ -287,7 +287,7 @@ LRESULT CALLBACK VDParameterCurveControlW32::WndProc(UINT msg, WPARAM wParam, LP
 	switch(msg) {
 	case WM_CREATE:
 		OnCreate();
-		// fall through
+		[[fallthrough]];
 	case WM_SIZE:
 		OnSize();
 		break;

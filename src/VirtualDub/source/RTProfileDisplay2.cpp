@@ -1028,7 +1028,7 @@ LRESULT VDRTProfileDisplay2::WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 					break;
 				}
 			}
-			// fall through
+			[[fallthrough]];
 		case WM_MBUTTONDOWN:
 			mDragOffsetX = (short)LOWORD(lParam);
 			mDragOffsetY = (short)HIWORD(lParam);

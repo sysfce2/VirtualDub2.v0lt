@@ -2,7 +2,7 @@
 // A/V interface library
 //
 // Copyright (C) 1998-2006 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -885,16 +885,19 @@ GLenum VDOpenGLBinding::InitTechniques(const VDOpenGLTechnique *techniques, int 
 
 		switch(tech.mFragmentShaderMode) {
 		case kVDOpenGLFragmentShaderModeNVRC2:
-			if (!NV_register_combiners2)
+			if (!NV_register_combiners2) {
 				continue;
-			// fall through
+			}
+			[[fallthrough]];
 		case kVDOpenGLFragmentShaderModeNVRC:
-			if (!NV_register_combiners)
+			if (!NV_register_combiners) {
 				continue;
+			}
 			break;
 		case kVDOpenGLFragmentShaderModeATIFS:
-			if (!ATI_fragment_shader)
+			if (!ATI_fragment_shader) {
 				continue;
+			}
 			break;
 		}
 

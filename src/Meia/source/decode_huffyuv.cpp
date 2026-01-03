@@ -2,6 +2,7 @@
 // Video decoding library
 //
 // Copyright (C) 1998-2008 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -803,8 +804,7 @@ void VDVideoDecoderHuffyuv::Init(uint32 w, uint32 h, uint32 depth, const uint8 *
 				mFrameBuffer.init(w, h, nsVDPixmap::kPixFormat_YUV420_Planar);
 				break;
 			}
-			// fall through
-
+			[[fallthrough]];
 		default:
 			throw MyError("The Huffyuv video stream uses an unsupported bit depth (%d).", depth);
 	}

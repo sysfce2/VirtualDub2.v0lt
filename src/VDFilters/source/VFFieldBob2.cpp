@@ -1,6 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2009 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -613,7 +614,7 @@ void VDVideoFilterFieldBob2::Start() {
 		mPrevBuffers[0].init(pxsrc.w, pxsrc.h, nsVDPixmap::kPixFormat_XRGB8888);
 		mPrevBuffers[1].init(pxsrc.w, pxsrc.h, nsVDPixmap::kPixFormat_XRGB8888);
 		mDifferenceBuffer.init(pxsrc.w, pxsrc.h, nsVDPixmap::kPixFormat_Y8);
-		// fall through
+		[[fallthrough]];
 	case VDVideoFilterFieldBob2Config::kModeELA:
 		mTempRow.resize(pxsrc.w * 3);
 		break;

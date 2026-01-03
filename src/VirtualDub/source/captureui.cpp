@@ -2766,7 +2766,7 @@ LRESULT VDCaptureProjectUI::MainWndProc(UINT msg, WPARAM wParam, LPARAM lParam) 
 				return 0;
 			if (LOWORD(wParam) != WM_LBUTTONDOWN)
 				break;
-			// fall through
+			[[fallthrough]];
 		case WM_LBUTTONDOWN:
 			if (mbStartOnLeft)
 				OnCommand(ID_CAPTURE_CAPTUREVIDEO);
