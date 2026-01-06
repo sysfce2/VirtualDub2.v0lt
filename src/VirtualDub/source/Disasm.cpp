@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -750,6 +750,7 @@ CodeDisassemblyWindow::CodeDisassemblyWindow(void *_code, long _length, void *_r
 
 	HDC hDC = GetDC(NULL);
 	const int nHeight = MulDiv(10, GetDeviceCaps(hDC, LOGPIXELSY), 96);
+	ReleaseDC(NULL, hDC);
 
 	hFontMono = CreateFontW(
 			nHeight,		// nHeight
@@ -894,6 +895,7 @@ BOOL CodeDisassemblyWindow::DoMeasureItem(LPARAM lParam) {
 
 	HDC hDC = GetDC(NULL);
 	const int h = MulDiv(11 * ((pent->len + 6) / 7), GetDeviceCaps(hDC, LOGPIXELSY), 96);
+	ReleaseDC(NULL, hDC);
 
 	pinfo->itemHeight = h ;
 	return TRUE;
