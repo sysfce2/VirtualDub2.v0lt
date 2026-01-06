@@ -1,6 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2006 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -225,9 +226,10 @@ void VDImageDecoderIFF::ParseRGBA(const uint8 *src, uint32 srclen) {
 						if (y >= h) {
 							y = 0;
 							++plane;
-							dstrow = dstrow0 + kPlaneOrder[plane];
-							if (plane >= 4)
+							if (plane >= 4) {
 								throw MyError("Cannot read IFF file: An RLE decoding error occurred while reading tiled image data.");
+							}
+							dstrow = dstrow0 + kPlaneOrder[plane];
 						}
 					}
 
@@ -250,9 +252,10 @@ void VDImageDecoderIFF::ParseRGBA(const uint8 *src, uint32 srclen) {
 						if (y >= h) {
 							y = 0;
 							++plane;
-							dstrow = dstrow0 + kPlaneOrder[plane];
-							if (plane >= 4)
+							if (plane >= 4) {
 								throw MyError("Cannot read IFF file: An RLE decoding error occurred while reading tiled image data.");
+							}
+							dstrow = dstrow0 + kPlaneOrder[plane];
 						}
 					}
 
