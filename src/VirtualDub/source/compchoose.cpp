@@ -514,6 +514,13 @@ void VDUIDialogChooseVideoCompressorW32::EnumerateCodecs() {
 				// TODO: patches welcome
 				continue;
 			}
+#else
+			if (!_wcsicmp(info.szDriver, L"pvljpg20.dll")) {
+				// "PICVideo Lossles JPEG Codec" win32 v2.10.0.29 crashes
+				// after changing the compiler for VirtualDub2 from VS 2008 to VS 2019/2022
+				// TODO: patches welcome
+				continue;
+			}
 #endif
 			EncoderHIC plugin;
 
