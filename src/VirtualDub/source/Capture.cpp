@@ -2191,6 +2191,7 @@ unknown_PCM_format:
 			VDFraction scaledRate(1000000, VDClampToSint32(outputFrameRate.scale64ir(1000000)));
 			icd.mpVideoCompressor->SetDriver(g_compression.driver, g_compression.lDataRate*1024, g_compression.lQ, g_compression.lKey, false);
 			if (icd.driverLayout.format) {
+				icd.createOutputBlitter(); // may change driverLayout alignment
 				icd.mpVideoCompressor->GetOutputFormat(&icd.driverLayout, bmiOutput);
 				icd.mpVideoCompressor->Start(icd.driverLayout, outputFormatInfo, bmiOutput.data(), bmiOutput.size(), scaledRate, 0x0FFFFFFF);
 				icd.mpVideoCompressor->GetOutputFormat(&icd.driverLayout, bmiOutput);
