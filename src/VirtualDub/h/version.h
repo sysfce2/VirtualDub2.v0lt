@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2008 Avery Lee
 // Copyright (C) 2016-2018 Anton Shekhovtsov
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -28,6 +28,8 @@
 
 #define VD_PROGRAM_VERSIONA		VERSION_STR
 #define VD_PROGRAM_VERSIONW		VD_WIDE_STRING_CONST(VD_PROGRAM_VERSIONA)
+
+#define VD_PROGRAM_REV_HASHW	VD_WIDE_STRING_CONST(MAKE_STR(REV_HASH))
 
 #define VD_PROGRAM_SPECIAL_BUILDA	""
 #define VD_PROGRAM_SPECIAL_BUILDW	VD_WIDE_STRING_CONST(VD_PROGRAM_SPECIAL_BUILDA)

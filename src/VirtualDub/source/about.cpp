@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2003 Avery Lee
 // Copyright (C) 2016-2017 Anton Shekhovtsov
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -277,7 +277,7 @@ static void CALLBACK AboutTimerProc(UINT uID, UINT, DWORD_PTR dwUser, DWORD_PTR,
 }
 */
 
-static void AboutSetCompilerBuild(HWND hwnd) {
+static void SubstituteWindowText(HWND hwnd) {
 	VDStringW s(VDGetWindowTextW32(hwnd));
 	VDSubstituteStrings(s);
 	VDSetWindowTextW32(hwnd, s.c_str());
@@ -323,7 +323,9 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 			{
 				char buf[128];
 
-				AboutSetCompilerBuild(GetDlgItem(hDlg, IDC_STATIC_VERSION));
+				VDStringW s(L"$n $p v$v $c ($h)");
+				VDSubstituteStrings(s);
+				VDSetWindowTextW32(GetDlgItem(hDlg, IDC_VERSION), s.c_str());
 
 				HRSRC hrsrc = FindResourceW(NULL, MAKEINTRESOURCEW(IDR_CREDITS), L"STUFF");
 				if (hrsrc) {
@@ -359,6 +361,11 @@ INT_PTR APIENTRY AboutDlgProc( HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 				}
 			}
             return (TRUE);
+
+		case WM_ACTIVATE:
+			SendMessageW(GetDlgItem(hDlg, IDC_VERSION), EM_SETSEL, -1, -1);
+			//SetFocus(GetDlgItem(hDlg, IDOK));
+			break;
 
         case WM_COMMAND:
             if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)

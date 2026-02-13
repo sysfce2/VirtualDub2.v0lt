@@ -189,6 +189,10 @@ void VDSubstituteStrings(VDStringW& s) {
 				t.append(VD_PROGRAM_VERSIONW);
 				break;
 
+			case L'h':
+				t.append(VD_PROGRAM_REV_HASHW);
+				break;
+
 			case L's':
 				t.append(VD_PROGRAM_SPECIAL_BUILDW);
 				break;

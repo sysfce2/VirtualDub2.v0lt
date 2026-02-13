@@ -842,7 +842,7 @@
 #define IDC_SPIN_YOFFSET                1390
 #define IDC_OPACITY                     1391
 #define IDC_STATIC_OPACITY              1392
-#define IDC_STATIC_VERSION              1393
+#define IDC_VERSION                     1393
 #define IDC_CRASH_HELP                  1395
 #define IDC_GRAPH                       1396
 #define IDC_FREQ                        1397
