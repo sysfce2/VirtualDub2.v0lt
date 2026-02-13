@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2015-2018 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -361,18 +361,16 @@ static ModuleInfo *CrashGetModules(void *&ptr) {
 		return NULL;
 	}
 
-	// Under Windows NT, we must use PSAPI.DLL.
+	// Under Windows NT, we must use PSAPI.
+	// Starting with Windows 7, PSAPI functions can be imported from kernel32.dll.
 
-	HMODULE hmodPSAPI = LoadLibraryW(L"psapi.dll");
+	HMODULE hmodKERNEL32 = LoadLibraryW(L"kernel32.dll");
 
-	if (hmodPSAPI) {
-		// Using PSAPI.DLL.  Call EnumProcessModules(), then GetModuleFileNameEx()
-		// and GetModuleInformation().
+	if (hmodKERNEL32) {
+		PENUMPROCESSMODULES pEnumProcessModules = (PENUMPROCESSMODULES)GetProcAddress(hmodKERNEL32, "EnumProcessModules");
+		PGETMODULEBASENAMEA pGetModuleBaseNameA = (PGETMODULEBASENAMEA)GetProcAddress(hmodKERNEL32, "GetModuleBaseNameA");
 
-		PENUMPROCESSMODULES pEnumProcessModules = (PENUMPROCESSMODULES)GetProcAddress(hmodPSAPI, "EnumProcessModules");
-		PGETMODULEBASENAMEA pGetModuleBaseNameA = (PGETMODULEBASENAMEA)GetProcAddress(hmodPSAPI, "GetModuleBaseNameA");
-
-		PGETMODULEINFORMATION pGetModuleInformation = (PGETMODULEINFORMATION)GetProcAddress(hmodPSAPI, "GetModuleInformation");
+		PGETMODULEINFORMATION pGetModuleInformation = (PGETMODULEINFORMATION)GetProcAddress(hmodKERNEL32, "GetModuleInformation");
 		HMODULE *pModules, *pModules0 = (HMODULE *)((char *)pMem + 0xF000);
 		DWORD cbNeeded;
 
@@ -418,12 +416,12 @@ static ModuleInfo *CrashGetModules(void *&ptr) {
 
 			pMod->name = NULL;
 
-			FreeLibrary(hmodPSAPI);
+			FreeLibrary(hmodKERNEL32);
 			ptr = pMem;
 			return pMod0;
 		}
 
-		FreeLibrary(hmodPSAPI);
+		FreeLibrary(hmodKERNEL32);
 	}
 
 	VirtualFree(pMem, 0, MEM_RELEASE);
@@ -681,7 +679,7 @@ static bool LookupModuleByAddress(ModuleInfo& mi, char *szTemp, const ModuleInfo
 				pmeminfo = &meminfo;
 		}
 
-		// Well, something failed, or we didn't have either PSAPI.DLL or ToolHelp
+		// Well, something failed, or we didn't have either PSAPI or ToolHelp
 		// to play with.  So we'll use a nastier method instead.
 
 		if (pmeminfo) {
