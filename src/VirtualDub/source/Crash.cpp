@@ -51,9 +51,6 @@
 #include <malloc.h> // for _malloca()
 
 #include <windows.h>
-#ifndef _M_AMD64
-#include <tlhelp32.h>
-#endif
 
 #include "resource.h"
 #include "crash.h"
@@ -356,12 +353,6 @@ typedef BOOL (__stdcall *PENUMPROCESSMODULES)(HANDLE, HMODULE *, DWORD, LPDWORD)
 typedef DWORD (__stdcall *PGETMODULEBASENAMEA)(HANDLE, HMODULE, LPSTR, DWORD);
 typedef BOOL (__stdcall *PGETMODULEINFORMATION)(HANDLE, HMODULE, Win32ModuleInfo *, DWORD);
 
-#ifndef _M_AMD64
-typedef HANDLE (__stdcall *PCREATETOOLHELP32SNAPSHOT)(DWORD, DWORD);
-typedef BOOL (WINAPI *PMODULE32FIRST)(HANDLE, LPMODULEENTRY32);
-typedef BOOL (WINAPI *PMODULE32NEXT)(HANDLE, LPMODULEENTRY32);
-#endif
-
 static ModuleInfo *CrashGetModules(void *&ptr) {
 	void *pMem = VirtualAlloc(NULL, 65536, MEM_COMMIT, PAGE_READWRITE);
 
@@ -370,10 +361,7 @@ static ModuleInfo *CrashGetModules(void *&ptr) {
 		return NULL;
 	}
 
-	// This sucks.  If we're running under Windows 9x, we must use
-	// TOOLHELP.DLL to get the module list.  Under Windows NT, we must
-	// use PSAPI.DLL.  With Windows 2000, we can use both (but prefer
-	// PSAPI.DLL).
+	// Under Windows NT, we must use PSAPI.DLL.
 
 	HMODULE hmodPSAPI = LoadLibraryW(L"psapi.dll");
 
@@ -437,68 +425,6 @@ static ModuleInfo *CrashGetModules(void *&ptr) {
 
 		FreeLibrary(hmodPSAPI);
 	}
-#ifndef _M_AMD64
-	else {
-		// No PSAPI.  Use the ToolHelp functions in KERNEL.
-
-		HMODULE hmodKERNEL32 = LoadLibraryW(L"kernel32.dll");
-
-		PCREATETOOLHELP32SNAPSHOT pCreateToolhelp32Snapshot = (PCREATETOOLHELP32SNAPSHOT)GetProcAddress(hmodKERNEL32, "CreateToolhelp32Snapshot");
-		PMODULE32FIRST pModule32First = (PMODULE32FIRST)GetProcAddress(hmodKERNEL32, "Module32First");
-		PMODULE32NEXT pModule32Next = (PMODULE32NEXT)GetProcAddress(hmodKERNEL32, "Module32Next");
-		HANDLE hSnap;
-
-		if (pCreateToolhelp32Snapshot && pModule32First && pModule32Next) {
-			if ((HANDLE)-1 != (hSnap = pCreateToolhelp32Snapshot(TH32CS_SNAPMODULE, 0))) {
-				ModuleInfo *pModInfo = (ModuleInfo *)((char *)pMem + 65536);
-				char *pszHeap = (char *)pMem;
-				MODULEENTRY32 me;
-
-				--pModInfo;
-				pModInfo->name = NULL;
-
-				me.dwSize = sizeof(MODULEENTRY32);
-
-				if (pModule32First(hSnap, &me))
-					do {
-						VDStringA modulename = VDTextWToA(me.szModule);
-						if (pszHeap + modulename.length() >= (char*)(pModInfo - 1)) {
-							break;
-						}
-
-						strcpy(pszHeap, modulename.c_str());
-
-						--pModInfo;
-						pModInfo->name = pszHeap;
-
-						char *period = NULL;
-
-						while(*pszHeap++);
-							if (pszHeap[-1]=='.')
-								period = pszHeap-1;
-
-						if (period) {
-							*period = 0;
-							pszHeap = period+1;
-						}
-
-						pModInfo->base = (unsigned long)me.modBaseAddr;
-						pModInfo->size = me.modBaseSize;
-
-					} while(pModule32Next(hSnap, &me));
-
-				CloseHandle(hSnap);
-
-				FreeLibrary(hmodKERNEL32);
-
-				ptr = pMem;
-				return pModInfo;
-			}
-		}
-
-		FreeLibrary(hmodKERNEL32);
-	}
-#endif
 
 	VirtualFree(pMem, 0, MEM_RELEASE);
 
