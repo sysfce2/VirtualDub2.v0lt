@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2010 Avery Lee
 // Copyright (C) 2015-2019 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -302,7 +302,11 @@ VDUIDialogExtEncVideo::VDUIDialogExtEncVideo(VDExtEncProfile& profile)
 	: VDDialogFrameW32(IDD_EXTENC_EDIT_VIDEO)
 	, mProfile(profile)
 {
-	LOGFONTW f = {14,0, 0,0, FW_NORMAL, 0,0,0, ANSI_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH,};
+	HDC hDC = GetDC(NULL);
+	const int nHeight = MulDiv(12, GetDeviceCaps(hDC, LOGPIXELSY), 96);
+	ReleaseDC(NULL, hDC);
+
+	LOGFONTW f = { nHeight,0, 0,0, FW_NORMAL, 0,0,0, ANSI_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH,};
 	wcscpy(f.lfFaceName,L"courier new");
 	fixed_font = CreateFontIndirectW(&f);
 }
