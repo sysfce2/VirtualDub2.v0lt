@@ -54,6 +54,7 @@ int vector_find(const vdfastvector<int>& a, int v) {
 ///////////////////////////////////////////////////////////////////////////
 
 INT_PTR CALLBACK ChooseCompressorDlgProc(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam);
+bool IsBlockedVfwCodec(const wchar_t* codecdll);
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -507,21 +508,10 @@ void VDUIDialogChooseVideoCompressorW32::EnumerateCodecs() {
 	vdprotected("enumerating video codecs") {
 		ICINFO info = {sizeof(ICINFO)};
 		for(int i=0; ICInfo(ICTYPE_VIDEO, i, &info); i++) {
-#ifdef _M_AMD64
-			if (!_wcsicmp(info.szDriver, L"ff_vfw.dll") || !_wcsicmp(info.szDriver, L"lvcod64.dll")) {
-				// "ffdshow Video Codec" x64 and "Logitech Video (I420)" x64 crashes
-				// after changing the compiler for VirtualDub2 from VS 2008 to VS 2019/2022
-				// TODO: patches welcome
+			if (IsBlockedVfwCodec(info.szDriver)) {
 				continue;
 			}
-#else
-			if (!_wcsicmp(info.szDriver, L"pvljpg20.dll")) {
-				// "PICVideo Lossles JPEG Codec" win32 v2.10.0.29 crashes
-				// after changing the compiler for VirtualDub2 from VS 2008 to VS 2019/2022
-				// TODO: patches welcome
-				continue;
-			}
-#endif
+
 			EncoderHIC plugin;
 
 			// Use "special" routine for ASV1.

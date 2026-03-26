@@ -4,7 +4,8 @@ VirtualDub2.x change log
 -----------------------
 Fixed display of the duration of the selected range in the status.
 Potential memory leaks have been fixed.
-32-bit "PICVideo Lossles JPEG Codec" (pvljpg20.dll) is not supported because it crashes when opening the video compression selection window.
+32-bit "PICVideo Lossles JPEG Codec" (pvljpg20.dll) is not supported because it crashes.
+64-bit "MLC lossless codec" (mlc.dll) is not supported because it crashes.
 Fixed video capture with compression in the "FFmpeg FFV1" and "x264 8 bit" codecs.
 Fixed loading of processing settings (script files).
 Cosmetic changes.
