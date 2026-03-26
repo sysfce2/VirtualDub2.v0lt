@@ -360,11 +360,11 @@ const wchar_t *VDVideoDecompressorVCM::GetName() {
 
 static const wchar_t* vfw_codec_blocklist[] = {
 #ifdef _M_AMD64
-	L"\\ff_vfw.dll",   // ffdshow vfw codec
-	L"\\lvcod64.dll",  // Logitech Video (I420) codec
-	L"\\mlc.dll",      // MLC lossless codec
+	L"ff_vfw.dll",   // ffdshow vfw codec
+	L"lvcod64.dll",  // Logitech Video (I420) codec
+	L"mlc.dll",      // MLC lossless codec
 #else
-	L"\\pvljpg20.dll", // PICVideo Lossles JPEG Codec
+	L"pvljpg20.dll", // PICVideo Lossles JPEG Codec
 #endif
 };
 
@@ -373,7 +373,7 @@ static const wchar_t* vfw_codec_blocklist[] = {
 bool IsBlockedVfwCodec(const wchar_t* codecdll)
 {
 	for (const auto& codec : vfw_codec_blocklist) {
-		if (_wcsicmp(codecdll, L"ff_vfw.dll") == 0) {
+		if (_wcsicmp(codecdll, codec) == 0) {
 			return true;
 		}
 	}
