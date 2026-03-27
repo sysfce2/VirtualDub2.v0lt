@@ -363,6 +363,7 @@ static const wchar_t* vfw_codec_blocklist[] = {
 	L"ff_vfw.dll",   // ffdshow vfw codec
 	L"lvcod64.dll",  // Logitech Video (I420) codec
 	L"mlc.dll",      // MLC lossless codec
+	L"pxc0.dll",     // Proxy Codec64
 #else
 	L"pvljpg20.dll", // PICVideo Lossles JPEG Codec
 #endif
