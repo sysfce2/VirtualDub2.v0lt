@@ -202,7 +202,7 @@ namespace {
 	class VDChunkAllocator {
 	public:
 		VDChunkAllocator(int chunkSize) : mpHead(NULL), mOffset(chunkSize), mChunkSize(chunkSize) {}
-		~VDChunkAllocator();
+		~VDChunkAllocator() = default;
 
 		void Shutdown();
 
@@ -219,9 +219,6 @@ namespace {
 		ChunkHeader *mpHead;
 		const int mChunkSize;
 	};
-
-	VDChunkAllocator::~VDChunkAllocator() {
-	}
 
 	void VDChunkAllocator::Shutdown() {
 		ChunkHeader *p = mpHead;
