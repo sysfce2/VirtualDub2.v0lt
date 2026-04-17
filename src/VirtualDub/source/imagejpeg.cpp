@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2004 Avery Lee
-// Copyright (C) 2024 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -43,7 +43,7 @@ namespace {
 
 class VDJPEGHuffmanTable {
 public:
-	VDJPEGHuffmanTable();
+	VDJPEGHuffmanTable() = default;
 
 	void Init();
 
@@ -59,11 +59,8 @@ public:
 private:
 	int mHistogram[257];			// one extra code point required to avoid FFFF
 	unsigned char mDHT[256 + 16];
-	int mDHTLength;
+	int mDHTLength = 0;
 };
-
-VDJPEGHuffmanTable::VDJPEGHuffmanTable() {
-}
 
 void VDJPEGHuffmanTable::Init() {
 	std::fill(mHistogram, mHistogram+256, 0);
