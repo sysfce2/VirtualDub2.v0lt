@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2017-2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -259,6 +259,9 @@ public:
 
 class AudioStreamAmplifier : public AudioStream {
 private:
+	typedef void(*AmplifyFn)(void* buffer, const long lBytes, const int iFactor);
+
+	AmplifyFn mAmplifyFn = nullptr;
 	int mFactor;
 
 public:

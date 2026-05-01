@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2017-2019 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -2038,28 +2038,50 @@ bool AudioSubset::_isEnd() {
 //
 ///////////////////////////////////////////////////////////////////////////
 
-static void amplify8(unsigned char *dst, int count, long lFactor) {
-	long lBias = 0x8080 - 0x80*lFactor;
+static void amplify8(void* buffer, const long lBytes, const int iFactor)
+{
+	long count = lBytes;
+	if (count) {
+		int lBias = 0x8080 - 0x80 * iFactor;
 
-	if (count)
+		uint8_t* dst = (uint8_t*)buffer;
 		do {
-			int y = ((long)*dst++ * lFactor + lBias) >> 8;
+			int y = ((int)*dst++ * iFactor + lBias) >> 8;
+			y = std::clamp(y, 0, 255);
 
-			if (y<0) y=0; else if (y>255) y=255;
-
-			dst[-1] = (unsigned char)y;
-		} while(--count);
+			dst[-1] = (uint8_t)y;
+		} while (--count);
+	}
 }
 
-static void amplify16(signed short *dst, int count, long lFactor) {
-	if (count)
+static void amplify16(void* buffer, const long lBytes, const int iFactor)
+{
+	long count = lBytes / sizeof(int16_t);
+	if (count) {
+		int16_t* dst = (int16_t*)buffer;
 		do {
-			int y = ((long)*dst++ * lFactor + 0x80) >> 8;
+			int y = ((int)*dst++ * iFactor + 0x80) >> 8;
+			y = std::clamp(y, -0x8000, 0x7FFF);
 
-			if (y<-0x8000) y=-0x8000; else if (y>0x7FFF) y=0x7FFF;
+			dst[-1] = (int16_t)y;
+		} while (--count);
+	}
+}
 
-			dst[-1] = (signed short)y;
-		} while(--count);
+static void amplify32f(void* buffer, const long lBytes, const int iFactor)
+{
+	long count = lBytes / sizeof(float);
+	if (count) {
+		float factor = (float)iFactor / 256;
+
+		float* dst = (float*)buffer;
+		do {
+			float y = *dst++ * factor;
+			y = std::clamp(y, -1.f, 1.f);
+
+			dst[-1] = y;
+		} while (--count);
+	}
 }
 
 AudioStreamAmplifier::AudioStreamAmplifier(AudioStream *src, float factor)
@@ -2071,6 +2093,16 @@ AudioStreamAmplifier::AudioStreamAmplifier(AudioStream *src, float factor)
 	memcpy(oFormat = AllocFormat(src->GetFormatLen()), iFormat, src->GetFormatLen());
 
 	SetSource(src);
+
+	if (is_audio_pcm(format)) {
+		switch (format->mSampleBits) {
+		case  8: mAmplifyFn = amplify8; break;
+		case 16: mAmplifyFn = amplify16; break;
+		}
+	}
+	else if (is_audio_float(format)) {
+		mAmplifyFn = amplify32f;
+	}
 }
 
 AudioStreamAmplifier::~AudioStreamAmplifier() {
@@ -2082,15 +2114,13 @@ long AudioStreamAmplifier::_Read(void *buffer, long samples, long *lplBytes) {
 
 	lActualSamples = source->Read(buffer, samples, &lBytes);
 
-	if (lActualSamples) {
-		if (GetFormat()->mSampleBits > 8)
-			amplify16((signed short *)buffer, lBytes/2, mFactor);
-		else
-			amplify8((unsigned char *)buffer, lBytes, mFactor);
+	if (lActualSamples && mAmplifyFn) {
+		mAmplifyFn(buffer, lBytes, mFactor);
 	}
 
-	if (lplBytes)
+	if (lplBytes) {
 		*lplBytes = lBytes;
+	}
 
 	return lActualSamples;
 }
