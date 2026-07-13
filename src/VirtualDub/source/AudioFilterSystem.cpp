@@ -520,7 +520,7 @@ void VDAudioFilterInstance::SerializeConfig(VDPluginConfig& config) {
 
 void VDAudioFilterInstance::DeserializeConfig(const VDPluginConfig& config) {
 	vdprotected1("restoring config for audio filter \"%s\"", const char *, mDebugName.c_str()) {
-		VDPluginConfig::const_iterator it(config.begin()), itEnd(config.end());
+		auto it(config.cbegin()), itEnd(config.cend());
 
 		mError.clear();
 		for(; it!=itEnd; ++it) {
@@ -1059,7 +1059,7 @@ void VDAudioFilterSystem::LoadFromGraph(const VDAudioFilterGraph& graph, std::ve
 
 	int connidx = 0;
 
-	for(std::list<VDAudioFilterGraph::FilterEntry>::const_iterator it(graph.mFilters.begin()), itEnd(graph.mFilters.end()); it!=itEnd; ++it) {
+	for(auto it(graph.mFilters.cbegin()), itEnd(graph.mFilters.cend()); it!=itEnd; ++it) {
 		const VDAudioFilterGraph::FilterEntry& f = *it;
 
 		VDPluginDescription *pDesc = VDGetPluginDescription(f.mFilterName.c_str(), kVDXPluginType_Audio);
@@ -1140,7 +1140,7 @@ void VDAudioFilterSystem::SortFilter(tFilterList& newList, VDAudioFilterInstance
 }
 
 void VDAudioFilterSystem::Sort() {
-	tFilterList::const_iterator it(mFilters.begin()), itEnd(mFilters.end());
+	auto it(mFilters.cbegin()), itEnd(mFilters.cend());
 	for(; it!=itEnd; ++it)
 		(*it)->SortKey() = 0;
 
@@ -1172,7 +1172,7 @@ void VDAudioFilterSystem::Prepare() {
 	vdprotected("preparing audio filter chain") {
 		Sort();
 
-		for(tFilterList::const_iterator it(mFilters.begin()), itEnd(mFilters.end()); it!=itEnd; ++it) {
+		for(auto it(mFilters.cbegin()), itEnd(mFilters.cend()); it!=itEnd; ++it) {
 			VDAudioFilterInstance *pInst = *it;
 
 			Prepare(pInst, true);
@@ -1257,7 +1257,7 @@ void VDAudioFilterSystem::Start() {
 
 	vdsynchronized(mcsStateChange) {
 		vdprotected("starting audio filter chain") {
-			for(tFilterList::const_iterator it(mFilters.begin()), itEnd(mFilters.end()); it!=itEnd; ++it) {
+			for(auto it(mFilters.cbegin()), itEnd(mFilters.cend()); it!=itEnd; ++it) {
 				VDAudioFilterInstance *pInst = *it;
 
 				pInst->Start();
@@ -1281,7 +1281,7 @@ void VDAudioFilterSystem::Seek(sint64 us) {
 	vdsynchronized(mcsStateChange) {
 		Suspend();
 
-		for(tFilterList::const_iterator it(mStartedFilters.begin()), itEnd(mStartedFilters.end()); it!=itEnd; ++it) {
+		for(auto it(mStartedFilters.cbegin()), itEnd(mStartedFilters.cend()); it!=itEnd; ++it) {
 			VDAudioFilterInstance *pInst = *it;
 
 			if (pInst->InputPinCount() && !pInst->OutputPinCount())
@@ -1297,7 +1297,7 @@ IVDAudioFilterInstance *VDAudioFilterSystem::GetClock() {
 }
 
 void VDAudioFilterSystem::Suspend() {
-	for(tFilterList::const_iterator it(mFilters.begin()), itEnd(mFilters.end()); it!=itEnd; ++it) {
+	for(auto it(mFilters.cbegin()), itEnd(mFilters.cend()); it!=itEnd; ++it) {
 		VDAudioFilterInstance *pInst = *it;
 
 		pInst->RemoveFromScheduler();
@@ -1305,7 +1305,7 @@ void VDAudioFilterSystem::Suspend() {
 }
 
 void VDAudioFilterSystem::Resume() {
-	for(tFilterList::const_iterator it(mFilters.begin()), itEnd(mFilters.end()); it!=itEnd; ++it) {
+	for(auto it(mFilters.cbegin()), itEnd(mFilters.cend()); it!=itEnd; ++it) {
 		VDAudioFilterInstance *pInst = *it;
 
 		if (pInst->IsSerializedIOOnly())
