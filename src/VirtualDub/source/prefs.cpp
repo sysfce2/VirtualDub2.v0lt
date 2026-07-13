@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2016-2020 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -660,11 +660,12 @@ public:
 						}
 					}
 
-					PlaybackDeviceKeys::const_iterator it(std::find(mPlaybackDeviceKeys.begin(), mPlaybackDeviceKeys.end(), mPrefs.mAudioPlaybackDeviceKey));
-					if (it != mPlaybackDeviceKeys.end())
-						win->SetValue(it - mPlaybackDeviceKeys.begin());
-					else
+					auto it(std::find(mPlaybackDeviceKeys.cbegin(), mPlaybackDeviceKeys.cend(), mPrefs.mAudioPlaybackDeviceKey));
+					if (it != mPlaybackDeviceKeys.cend()) {
+						win->SetValue(it - mPlaybackDeviceKeys.cbegin());
+					} else {
 						win->SetValue(0);
+					}
 				}
 			}
 

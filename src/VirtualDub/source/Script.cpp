@@ -646,7 +646,7 @@ static void func_VDVFilters_Add(IVDScriptInterpreter *isi, VDScriptValue *argv, 
 
 	const char *name = *argv[0].asString();
 
-	for(std::list<FilterBlurb>::const_iterator it(filterList.begin()), itEnd(filterList.end()); it!=itEnd; ++it) {
+	for(auto it(filterList.cbegin()), itEnd(filterList.cend()); it!=itEnd; ++it) {
 		const FilterBlurb& fb = *it;
 
 		if (strfuzzycompare(fb.name.c_str(), name)) {
@@ -947,8 +947,7 @@ static void func_VDVideo_GetCompression(IVDScriptInterpreter *, VDScriptValue *a
 }
 
 EncoderHIC* load_plugin_codec(const VDStringW& fileName, DWORD type, DWORD handler) {
-	std::list<class VDExternalModule *>::const_iterator it(g_pluginModules.begin()),
-			itEnd(g_pluginModules.end());
+	auto it(g_pluginModules.cbegin()), itEnd(g_pluginModules.cend());
 
 	for(; it!=itEnd; ++it) {
 		VDExternalModule *pModule = *it;
@@ -1533,8 +1532,8 @@ static void func_VDAFilters_Connect(IVDScriptInterpreter *isi, VDScriptValue *ar
 		throw MyError("VDAFilters.Connect(): Invalid target filter number %d (should be %d-%d)", dstfilt, srcfilt+1, nfilts-1);
 
 	// #&*$(
-	VDAudioFilterGraph::FilterList::const_iterator itsrc = g_audioFilterGraph.mFilters.begin();
-	VDAudioFilterGraph::FilterList::const_iterator itdst = g_audioFilterGraph.mFilters.begin();
+	auto itsrc = g_audioFilterGraph.mFilters.cbegin();
+	auto itdst = g_audioFilterGraph.mFilters.cbegin();
 	int dstconnidx = 0;
 
 	while(dstfilt-->0) {

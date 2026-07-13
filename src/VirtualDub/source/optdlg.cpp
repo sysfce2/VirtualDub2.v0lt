@@ -2589,17 +2589,19 @@ void VDDialogFileTextInfoW32::Activate(VDGUIHandle hParent) {
 }
 
 void VDDialogFileTextInfoW32::Read() {
-	tRawTextInfo::const_iterator itSrc(mTextInfoOrig.begin()), itSrcEnd(mTextInfoOrig.end());
-	for(; itSrc != itSrcEnd; ++itSrc)
+	auto itSrc(mTextInfoOrig.cbegin()), itSrcEnd(mTextInfoOrig.cend());
+	for (; itSrc != itSrcEnd; ++itSrc) {
 		mTextInfo[(*itSrc).first] = VDTextAToW((*itSrc).second);
+	}
 }
 
 void VDDialogFileTextInfoW32::Write() {
 	mTextInfoOrig.clear();
 
-	tTextInfo::const_iterator itSrc(mTextInfo.begin()), itSrcEnd(mTextInfo.end());
-	for(; itSrc != itSrcEnd; ++itSrc)
+	auto itSrc(mTextInfo.cbegin()), itSrcEnd(mTextInfo.cend());
+	for (; itSrc != itSrcEnd; ++itSrc) {
 		mTextInfoOrig.push_back(tRawTextInfo::value_type((*itSrc).first, VDTextWToA((*itSrc).second)));
+	}
 }
 
 void VDDialogFileTextInfoW32::ReinitDialog() {

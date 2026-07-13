@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2015-2020 Anton Shekhovtsov
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -3466,7 +3466,7 @@ bool FilterModSystem::FindVideoFilter(const char* name, FilterReturnInfo& a)
 
 	FilterEnumerateFilters(filterList);
 
-	for(std::list<FilterBlurb>::const_iterator it(filterList.begin()), itEnd(filterList.end()); it!=itEnd; ++it) {
+	for(auto it(filterList.cbegin()), itEnd(filterList.cend()); it!=itEnd; ++it) {
 		const FilterBlurb& fb = *it;
 
 		if (strfuzzycompare(fb.name.c_str(), name)) {

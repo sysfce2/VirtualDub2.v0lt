@@ -2,7 +2,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2015-2020 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -522,14 +522,14 @@ bool VDAddPluginModule(const wchar_t *pFilename) {
 	if (path.empty())
 		path = pFilename;
 
-	std::list<class VDExternalModule *>::const_iterator it(g_pluginModules.begin()),
-			itEnd(g_pluginModules.end());
+	auto it(g_pluginModules.cbegin()), itEnd(g_pluginModules.cend());
 
 	for(; it!=itEnd; ++it) {
 		VDExternalModule *pModule = *it;
 
-		if (pModule->GetFilename() == pFilename)
+		if (pModule->GetFilename() == pFilename) {
 			return true;
+		}
 	}
 
 	g_pluginModules.push_back(new VDExternalModule(path));
@@ -558,14 +558,14 @@ void VDAddInternalPlugins(const VDPluginInfo *const *ppInfo) {
 }
 
 VDExternalModule *VDGetExternalModuleByFilterModule(const VDXFilterModule *fm) {
-	std::list<class VDExternalModule *>::const_iterator it(g_pluginModules.begin()),
-			itEnd(g_pluginModules.end());
+	auto it(g_pluginModules.cbegin()), itEnd(g_pluginModules.cend());
 
 	for(; it!=itEnd; ++it) {
 		VDExternalModule *pModule = *it;
 
-		if (fm == &pModule->GetFilterModuleInfo())
+		if (fm == &pModule->GetFilterModuleInfo()) {
 			return pModule;
+		}
 	}
 
 	return NULL;
