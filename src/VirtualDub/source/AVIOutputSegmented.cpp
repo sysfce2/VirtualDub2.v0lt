@@ -322,7 +322,7 @@ bool VDAVIOutputSegmentedVideoStream::GetNextPendingRun(uint32& samples, uint32&
 }
 
 bool VDAVIOutputSegmentedVideoStream::GetPendingInfo(VDTime endTime, uint32& samples, uint32& bytes) {
-	std::list<Run>::const_iterator it(mPendingRuns.begin()), itEnd(mPendingRuns.end());
+	auto it(mPendingRuns.cbegin()), itEnd(mPendingRuns.cend());
 	bytes = 0;
 	samples = 0;
 

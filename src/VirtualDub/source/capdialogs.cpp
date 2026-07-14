@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2016-2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -785,7 +785,7 @@ public:
 		if (type == kEventAttach) {
 			mpBase = pBase;
 
-			std::list<vdstructex<VDWaveFormat> >::const_iterator it(mFormats.begin()), itEnd(mFormats.end());
+			auto it(mFormats.cbegin()), itEnd(mFormats.cend());
 
 			IVDUIList *pList = vdpoly_cast<IVDUIList *>(mpBase->GetControl(100));
 			for(; it!=itEnd; ++it) {

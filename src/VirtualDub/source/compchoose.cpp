@@ -561,8 +561,7 @@ void VDUIDialogChooseVideoCompressorW32::EnumerateCodecs() {
 }
 
 void VDUIDialogChooseVideoCompressorW32::EnumeratePluginCodecs() {
-	std::list<class VDExternalModule *>::const_iterator it(g_pluginModules.begin()),
-			itEnd(g_pluginModules.end());
+	auto it(g_pluginModules.cbegin()), itEnd(g_pluginModules.cend());
 
 	vdprotected("enumerating video codec plugins") {
 		for(; it!=itEnd; ++it) {

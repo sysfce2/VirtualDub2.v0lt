@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2016-2017 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -680,7 +680,7 @@ bool AVIOutputFile::init(const wchar_t *szFile) {
 		if (mTextInfoCodePage || mTextInfoCountryCode || mTextInfoLanguage || mTextInfoDialect)
 			mTextInfoListSize += 16;
 
-		tTextInfo::const_iterator it(mTextInfo.begin()), itEnd(mTextInfo.end());
+		auto it(mTextInfo.cbegin()), itEnd(mTextInfo.cend());
 		for(; it!=itEnd; ++it) {
 			const VDStringA& text = (*it).second;
 			mTextInfoListSize += (text.size() + 9 + 1) & ~1;
@@ -952,7 +952,7 @@ void AVIOutputFile::partialWriteIndexedChunkBegin(int nStream, uint32 flags, uin
 
 	mIndexSize = 8;
 
-	for(tStreams::const_iterator it(mStreams.begin()), itEnd(mStreams.end()); it!=itEnd; ++it) {
+	for(auto it(mStreams.cbegin()), itEnd(mStreams.cend()); it!=itEnd; ++it) {
 		const StreamInfo& s = *it;
 		uint32 chunkCount = stream.mChunkCount;
 
@@ -1167,7 +1167,7 @@ void AVIOutputFile::WriteIndexAVI1() {
 	dw[1] = 16 * mIndexEntries;
 	FastWrite(dw, 8);
 
-	tIndex::const_iterator it(mIndex.begin());
+	auto it(mIndex.cbegin());
 	const uint32 base = (uint32)(mBlocks.front().movi_pos + 8);
 
 	uint32 count = mIndexEntries;
@@ -1196,7 +1196,7 @@ void AVIOutputFile::WriteIndexAVI1() {
 }
 
 void AVIOutputFile::WriteIndexAVI2(AVISUPERINDEX *asi, _avisuperindex_entry *asie, int nStream) {
-	tStreams::const_iterator itStream(mStreams.begin());
+	auto itStream(mStreams.cbegin());
 	std::advance(itStream, nStream);
 	const StreamInfo& stream = *itStream;
 
@@ -1212,7 +1212,7 @@ void AVIOutputFile::WriteIndexAVI2(AVISUPERINDEX *asi, _avisuperindex_entry *asi
 
 	{
 		uint32 left = mIndexEntries;
-		tIndex::const_iterator it(mIndex.begin());
+		auto it(mIndex.cbegin());
 		while(left) {
 			const IndexEntryBlock& block = **it;
 			++it;

@@ -3412,7 +3412,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 				mpProject->GetAudioFormat(currentFormat);
 				mpProject->GetAvailableAudioFormats(aformats);
 
-				std::list<vdstructex<VDWaveFormat> >::const_iterator it(aformats.begin()), itEnd(aformats.end());
+				auto it(aformats.cbegin()), itEnd(aformats.cend());
 				int sel = -1;
 
 				for(int idx=0; it!=itEnd; ++it, ++idx) {
@@ -3427,7 +3427,7 @@ bool VDCaptureProjectUI::OnCommand(UINT id) {
 				sel = VDShowCaptureRawAudioFormatDialog(mhwnd, aformats, sel);
 
 				if (sel >= 0) {
-					std::list<vdstructex<VDWaveFormat> >::const_iterator it(aformats.begin());
+					auto it(aformats.cbegin());
 
 					std::advance(it, sel);
 
@@ -4172,7 +4172,7 @@ void VDCaptureProjectUI::RebuildPanel() {
 	mhPanelFont3 = CreateFontIndirectW(&lf);
 
 	for(int type=0; type<kVDCaptureInfoType_Count; ++type) {
-		VDCapturePreferences::InfoItems::const_iterator it(infoItems.begin()), itEnd(infoItems.end());
+		auto it(infoItems.cbegin()), itEnd(infoItems.cend());
 
 		int xpos = x1;
 		int xwidth = x2 - x1;
