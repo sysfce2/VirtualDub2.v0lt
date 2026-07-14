@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2016-2020 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -1073,7 +1073,7 @@ INT_PTR CALLBACK VDAutoLogDisplay::DlgProc(HWND hdlg, UINT msg, WPARAM wParam, L
 			const VDAutoLogger::tEntries& ents = *(VDAutoLogger::tEntries *)lParam;
 			IVDLogWindowControl *pLogWin = VDGetILogWindowControl(GetDlgItem(hdlg, IDC_LOG));
 
-			for(VDAutoLogger::tEntries::const_iterator it(ents.begin()), itEnd(ents.end()); it!=itEnd; ++it) {
+			for(auto it(ents.cbegin()), itEnd(ents.cend()); it!=itEnd; ++it) {
 				const VDAutoLogger::Entry& ent = *it;
 				pLogWin->AddEntry(ent.severity, ent.text);
 			}

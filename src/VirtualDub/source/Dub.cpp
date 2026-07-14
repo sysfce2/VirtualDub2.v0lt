@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2003 Avery Lee
 // Copyright (C) 2016-2020 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -2032,10 +2032,11 @@ void Dubber::Stop() {
 	if (fADecompressionOk)	{ aSrc->streamEnd(); }
 
 	{
-		std::vector<AudioStream *>::const_iterator it(mAudioStreams.begin()), itEnd(mAudioStreams.end());
+		auto it(mAudioStreams.cbegin()), itEnd(mAudioStreams.cend());
 
-		for(; it!=itEnd; ++it)
-			delete *it;
+		for (; it != itEnd; ++it) {
+			delete* it;
+		}
 
 		mAudioStreams.clear();
 	}

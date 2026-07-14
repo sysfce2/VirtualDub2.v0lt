@@ -308,21 +308,23 @@ void VDLogWindowControl::OnPaint() {
 		const sint32 x1 = mFontHeight;		// yes, this is correct
 		const sint32 x2 = rClient.right;
 
-		tLineArray::const_iterator itEnd(mLineArray.end());
+		auto itEnd(mLineArray.cend());
 		--itEnd;
 
 		Entry tmp1;
 		tmp1.mPos = y1;
 		Entry tmp2;
 		tmp2.mPos = y2;
-		tLineArray::const_iterator itFirst(std::lower_bound((tLineArray::const_iterator)mLineArray.begin(), itEnd, tmp1, Entry::sort));
-		tLineArray::const_iterator itLast(std::upper_bound(itFirst, itEnd, tmp2, Entry::sort));
+		auto itFirst(std::lower_bound(mLineArray.cbegin(), itEnd, tmp1, Entry::sort));
+		auto itLast(std::upper_bound(itFirst, itEnd, tmp2, Entry::sort));
 
-		if (itFirst != mLineArray.begin())
+		if (itFirst != mLineArray.cbegin()) {
 			--itFirst;
+		}
 
-		if (itLast == mLineArray.end())
+		if (itLast == mLineArray.cend()) {
 			--itLast;
+		}
 
 		HGDIOBJ hOldBrush = 0;
 

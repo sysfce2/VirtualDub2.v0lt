@@ -2,7 +2,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -126,7 +126,7 @@ VDUIJobLogDialog::VDUIJobLogDialog(const VDJob::tLogEntries& logents)
 bool VDUIJobLogDialog::OnLoaded() {
 	IVDLogWindowControl *pLogWin = VDGetILogWindowControl(GetDlgItem(mhdlg, IDC_LOG));
 
-	for(VDAutoLogger::tEntries::const_iterator it(mLogEnts.begin()), itEnd(mLogEnts.end()); it!=itEnd; ++it) {
+	for(auto it(mLogEnts.cbegin()), itEnd(mLogEnts.cend()); it!=itEnd; ++it) {
 		const VDAutoLogger::Entry& ent = *it;
 		pLogWin->AddEntry(ent.severity, ent.text);
 	}

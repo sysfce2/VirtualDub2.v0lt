@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2003 Avery Lee
 // Copyright (C) 2016-2020 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -185,19 +185,22 @@ void VDShutdownInputDrivers() {
 }
 
 void VDGetInputDrivers(tVDInputDrivers& l, uint32 flags) {
-	for(tVDInputDrivers::const_iterator it(g_VDInputDrivers.begin()), itEnd(g_VDInputDrivers.end()); it!=itEnd; ++it)
-		if ((*it)->GetFlags() & flags)
+	for (auto it(g_VDInputDrivers.cbegin()), itEnd(g_VDInputDrivers.cend()); it != itEnd; ++it) {
+		if ((*it)->GetFlags() & flags) {
 			l.push_back(*it);
+		}
+	}
 }
 
 IVDInputDriver *VDGetInputDriverByName(const wchar_t *name) {
-	for(tVDInputDrivers::const_iterator it(g_VDInputDrivers.begin()), itEnd(g_VDInputDrivers.end()); it!=itEnd; ++it) {
+	for(auto it(g_VDInputDrivers.cbegin()), itEnd(g_VDInputDrivers.cend()); it!=itEnd; ++it) {
 		IVDInputDriver *pDriver = *it;
 
 		const wchar_t *dvname = pDriver->GetSignatureName();
 
-		if (dvname && !_wcsicmp(name, dvname))
+		if (dvname && !_wcsicmp(name, dvname)) {
 			return pDriver;
+		}
 	}
 
 	return NULL;
@@ -276,7 +279,7 @@ void VDGetInputDriverFileFilters(const tVDInputDrivers& l, vdvector<VDStringW>& 
 	list.push_back(VDStringW());
 
 	int nDriver = 0;
-	for(tVDInputDrivers::const_iterator it(l.begin()), itEnd(l.end()); it!=itEnd; ++it, ++nDriver) {
+	for(auto it(l.cbegin()), itEnd(l.cend()); it!=itEnd; ++it, ++nDriver) {
 		const wchar_t *filt = (*it)->GetFilenamePattern();
 
 		if (filt) {
@@ -301,7 +304,7 @@ VDStringW VDMakeInputDriverFileFilter(const tVDInputDrivers& l, std::vector<int>
 	xlat.push_back(-1);
 
 	int nDriver = 0;
-	for(tVDInputDrivers::const_iterator it(l.begin()), itEnd(l.end()); it!=itEnd; ++it, ++nDriver) {
+	for(auto it(l.cbegin()), itEnd(l.cend()); it!=itEnd; ++it, ++nDriver) {
 		const wchar_t *filt = (*it)->GetFilenamePattern();
 
 		if (filt) {
@@ -455,7 +458,7 @@ int VDAutoselectInputDriverForFile(const wchar_t *fn, uint32 flags, tVDInputDriv
 	tVDInputDrivers inputDrivers;
 	VDGetInputDrivers(inputDrivers, flags);
 
-	tVDInputDrivers::const_iterator it(inputDrivers.begin()), itEnd(inputDrivers.end());
+	auto it(inputDrivers.cbegin()), itEnd(inputDrivers.cend());
 
 	IVDInputDriver::DetectionConfidence fitquality = IVDInputDriver::kDC_None;
 	int selectedDriver = -1;
@@ -498,7 +501,7 @@ void VDGetInputDriverForFile(uint32 flags, tVDInputDrivers& list) {
 	tVDInputDrivers inputDrivers;
 	VDGetInputDrivers(inputDrivers, flags);
 
-	tVDInputDrivers::const_iterator it(inputDrivers.begin()), itEnd(inputDrivers.end());
+	auto it(inputDrivers.cbegin()), itEnd(inputDrivers.cend());
 
 	for(; it!=itEnd; ++it) {
 		IVDInputDriver *pDriver = *it;
@@ -529,7 +532,7 @@ IVDInputDriver *VDAutoselectInputDriverForFile(const wchar_t *fn, uint32 flags) 
 		VDRegistryAppKey key(flags==IVDInputDriver::kF_Audio ? "File formats (audio)" : "File formats");
 		key.getString(format_id.c_str(), force_driver);
 
-		tVDInputDrivers::const_iterator it(list.begin()), itEnd(list.end());
+		auto it(list.cbegin()), itEnd(list.cend());
 		for(int i=0; it!=itEnd; ++it,i++) {
 			IVDInputDriver *pDriver = *it;
 			if (pDriver->GetSignatureName()==force_driver) {
@@ -552,7 +555,7 @@ IVDInputDriver *VDAutoselectInputDriverForFile(const wchar_t *fn, uint32 flags) 
 		key.getString(format_id.c_str(), force_driver);
 
 		if (!force_driver.empty()) {
-			tVDInputDrivers::const_iterator it(list.begin()), itEnd(list.end());
+			auto it(list.cbegin()), itEnd(list.cend());
 			for(int i=0; it!=itEnd; ++it,i++) {
 				IVDInputDriver *pDriver = *it;
 				if (pDriver->GetSignatureName()==force_driver) {

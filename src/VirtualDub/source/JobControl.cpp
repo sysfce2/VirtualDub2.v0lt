@@ -2,7 +2,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2015-2019 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -1091,7 +1091,7 @@ void VDJobQueue::Save(IVDStream *stream, uint64 signature, uint32 revision, bool
 		output.FormatLine("// $start_time %08lx %08lx", (unsigned long)(vdj->mDateStart >> 32), (unsigned long)vdj->mDateStart);
 		output.FormatLine("// $end_time %08lx %08lx", (unsigned long)(vdj->mDateEnd >> 32), (unsigned long)vdj->mDateEnd);
 
-		for(VDJob::tLogEntries::const_iterator it(vdj->mLogEntries.begin()), itEnd(vdj->mLogEntries.end()); it!=itEnd; ++it) {
+		for(auto it(vdj->mLogEntries.cbegin()), itEnd(vdj->mLogEntries.cend()); it!=itEnd; ++it) {
 			const VDJob::tLogEntries::value_type& ent = *it;
 			output.FormatLine("// $logent %d %s", ent.severity, VDTextWToA(ent.text).c_str());
 		}

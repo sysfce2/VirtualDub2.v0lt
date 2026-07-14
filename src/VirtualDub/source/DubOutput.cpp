@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2003 Avery Lee
 // Copyright (C) 2015-2019 Anton Shekhovtsov
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -151,10 +151,11 @@ IVDMediaOutput *VDAVIOutputFileSystem::CreateSegment() {
 	}
 
 	if (!mTextInfo.empty()) {
-		tTextInfo::const_iterator it(mTextInfo.begin()), itEnd(mTextInfo.end());
+		auto it(mTextInfo.cbegin()), itEnd(mTextInfo.cend());
 
-		for(; it!=itEnd; ++it)
+		for (; it != itEnd; ++it) {
 			pOutput->setTextInfo((*it).first, (*it).second.c_str());
+		}
 	}
 
 	pOutput->setBuffering(mBufferSize, mBufferSize >> 2);
@@ -385,10 +386,11 @@ IVDMediaOutput *VDAVIOutputPluginSystem::CreateSegment() {
 	}
 
 	if (!mTextInfo.empty()) {
-		tTextInfo::const_iterator it(mTextInfo.begin()), itEnd(mTextInfo.end());
+		auto it(mTextInfo.cbegin()), itEnd(mTextInfo.cend());
 
-		for(; it!=itEnd; ++it)
+		for (; it != itEnd; ++it) {
 			pOutput->setTextInfo((*it).first, (*it).second.c_str());
+		}
 	}
 
 	pOutput->init(mFilename.c_str());

@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2015-2019 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -149,13 +149,14 @@ namespace {
 }
 
 const char *VDGetStartupArgument(int index) {
-	tArguments::const_iterator it(g_VDStartupArguments.begin()), itEnd(g_VDStartupArguments.end());
+	auto it(g_VDStartupArguments.cbegin()), itEnd(g_VDStartupArguments.cend());
 
-	for(; it!=itEnd && index; ++it, --index)
-		;
+	for (; it != itEnd && index; ++it, --index) {
+	}
 
-	if (it == itEnd)
+	if (it == itEnd) {
 		return NULL;
+	}
 
 	return (*it).c_str();
 }

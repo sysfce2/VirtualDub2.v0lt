@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2015-2020 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -356,7 +356,7 @@ void VDOpenVideoDialogW32::ChangeFilename() {
 				}
 
 				if (!force_driver.empty()) {
-					tVDInputDrivers::const_iterator it(detectList.begin()), itEnd(detectList.end());
+					auto it(detectList.cbegin()), itEnd(detectList.cend());
 					for(int i=0; it!=itEnd; ++it,i++) {
 						IVDInputDriver *pDriver = *it;
 						if (pDriver->GetSignatureName()==force_driver) {
@@ -395,7 +395,7 @@ void VDOpenVideoDialogW32::ChangeFilename() {
 				}
 
 				if (!force_driver.empty()) {
-					tVDInputDrivers::const_iterator it(detectList.begin()), itEnd(detectList.end());
+					auto it(detectList.cbegin()), itEnd(detectList.cend());
 					for(int i=0; it!=itEnd; ++it,i++) {
 						IVDInputDriver *pDriver = *it;
 						if (pDriver->GetSignatureName()==force_driver) {
@@ -426,16 +426,18 @@ void VDOpenVideoDialogW32::ChangeFilename() {
 		if (detectList.empty())
 			SendMessageW(w1,CB_ADDSTRING,0,(LPARAM)driver->GetSignatureName());
 
-		tVDInputDrivers::const_iterator it(detectList.begin()), itEnd(detectList.end());
+		auto it(detectList.cbegin()), itEnd(detectList.cend());
 		for(int i=0; it!=itEnd; ++it, i++) {
 			IVDInputDriver *pDriver = *it;
-			if (pDriver==driver) select = i;
+			if (pDriver == driver) {
+				select = i;
+			}
 			SendMessageW(w1,CB_ADDSTRING,0,(LPARAM)pDriver->GetSignatureName());
 		}
 
 		SendMessageW(w1,CB_SETCURSEL,select,0);
 	} else {
-		tVDInputDrivers::const_iterator it(detectList.begin()), itEnd(detectList.end());
+		auto it(detectList.cbegin()), itEnd(detectList.cend());
 		for(int i=0; it!=itEnd; ++it, i++) {
 			IVDInputDriver *pDriver = *it;
 			SendMessageW(w1,CB_ADDSTRING,0,(LPARAM)pDriver->GetSignatureName());
@@ -1168,7 +1170,7 @@ void SaveAVI(HWND hWnd, bool fUseCompatibility, bool queueAsJob) {
 	if (!fUseCompatibility) {
 		tVDOutputDrivers drivers;
 		VDGetOutputDrivers(drivers);
-		for(tVDOutputDrivers::const_iterator it(drivers.begin()), itEnd(drivers.end()); it!=itEnd; ++it) {
+		for(auto it(drivers.cbegin()), itEnd(drivers.cend()); it!=itEnd; ++it) {
 			IVDOutputDriver *driver = *it;
 			bool match_driver = g_FileOutDriver == driver->GetSignatureName();
 			for(int i=0; ; i++){
@@ -1322,7 +1324,7 @@ void SaveAudio(HWND hWnd, bool queueAsJob) {
 
 	tVDOutputDrivers drivers;
 	VDGetOutputDrivers(drivers);
-	for(tVDOutputDrivers::const_iterator it(drivers.begin()), itEnd(drivers.end()); it!=itEnd; ++it) {
+	for(auto it(drivers.cbegin()), itEnd(drivers.cend()); it!=itEnd; ++it) {
 		IVDOutputDriver *driver = *it;
 		bool match_driver = g_AudioOutDriver == driver->GetSignatureName();
 		for(int i=0; ; i++){
