@@ -674,10 +674,10 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 		return false;
 	}
 
-	MENUITEMINFO mii = { sizeof(MENUITEMINFO) };
+	MENUITEMINFOW mii = { sizeof(MENUITEMINFOW) };
 	mii.fMask = MIIM_SUBMENU;
 	mii.hSubMenu = mhMenuSourceList;
-	if (!SetMenuItemInfo(mhMenuNormal, ID_AUDIO_SOURCE_AVI, FALSE, &mii)) {
+	if (!SetMenuItemInfoW(mhMenuNormal, ID_AUDIO_SOURCE_AVI, FALSE, &mii)) {
 		DestroyMenu(mhMenuSourceList);
 		mhMenuSourceList = NULL;
 		Detach();
@@ -5132,7 +5132,7 @@ void CollapseMRUName(VDStringW& name)
 
 void VDProjectUI::UpdateMRUList() {
 	HMENU hmenuFile = GetSubMenu(GetMenu((HWND)mhwnd), 0);
-	MENUITEMINFOW mii = {sizeof(MENUITEMINFO)};
+	MENUITEMINFOW mii = {sizeof(MENUITEMINFOW)};
 	int index=0;
 
 	for(;;) {
@@ -5155,8 +5155,8 @@ void VDProjectUI::UpdateMRUList() {
 
 		CollapseMRUName(name);
 
-		mii.fMask		= MIIM_TYPE | MIIM_STATE | MIIM_ID;
-		mii.fType		= MFT_STRING;
+		mii.fMask	= MIIM_TYPE | MIIM_STATE | MIIM_ID;
+		mii.fType	= MFT_STRING;
 		mii.fState	= MFS_ENABLED;
 		mii.wID		= ID_MRU_FILE0 + index;
 
@@ -5195,11 +5195,11 @@ void VDProjectUI::UpdateMRUList() {
 
 void VDProjectUI::UpdateCaptureMRUList() {
 	HMENU hmenuCap = GetSubMenu(GetMenu((HWND)mhwnd), 1);
-	MENUITEMINFOW mii = {sizeof(MENUITEMINFO)};
+	MENUITEMINFOW mii = {sizeof(MENUITEMINFOW)};
 	int index=0;
 
 	for(;;) {
-		mii.fMask			= MIIM_TYPE;
+		mii.fMask	= MIIM_TYPE;
 
 		if (!GetMenuItemInfoW(hmenuCap, mCaptureMRUListPosition, TRUE, &mii))
 			break;
@@ -5218,8 +5218,8 @@ void VDProjectUI::UpdateCaptureMRUList() {
 
 		CollapseMRUName(name);
 
-		mii.fMask		= MIIM_TYPE | MIIM_STATE | MIIM_ID;
-		mii.fType		= MFT_STRING;
+		mii.fMask	= MIIM_TYPE | MIIM_STATE | MIIM_ID;
+		mii.fType	= MFT_STRING;
 		mii.fState	= MFS_ENABLED;
 		mii.wID		= ID_CAPTURE_MRU_FILE0 + index;
 
