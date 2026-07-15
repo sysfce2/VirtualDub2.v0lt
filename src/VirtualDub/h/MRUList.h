@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2001 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -14,11 +14,11 @@
 
 class MRUList {
 private:
-	std::vector<char>			mKey;
-	std::vector<VDStringW>		mFiles;
-	const char		*mpKeyName;
-	int		mMaxCount;
-	bool			mbDirty;
+	std::vector<char>      mKey;
+	std::vector<VDStringW> mFiles;
+	const char*            mpKeyName;
+	int                    mMaxCount;
+	bool                   mbDirty;
 
 public:
 	MRUList(int max_files, const char* key);

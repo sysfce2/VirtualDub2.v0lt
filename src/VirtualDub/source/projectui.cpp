@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2003 Avery Lee
 // Copyright (C) 2015-2020 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -2838,8 +2838,8 @@ bool VDProjectUI::MenuHit(UINT id) {
 		case ID_DUBINPROGRESS_ABORT:			AbortOperation();			break;
 
 		default:
-			if (id >= ID_AUDIO_SOURCE_AVI_0 && id <= ID_AUDIO_SOURCE_AVI_0+99) {
-				SetAudioSourceNormal(id - ID_AUDIO_SOURCE_AVI_0);
+			if (id >= ID_AUDIO_SOURCE_0 && id <= ID_AUDIO_SOURCE_0+99) {
+				SetAudioSourceNormal(id - ID_AUDIO_SOURCE_0);
 			} else if (id >= ID_MRU_FILE0 && id <= ID_MRU_FILE0+99) {
 				const int index = id - ID_MRU_FILE0;
 				VDStringW name(mMRUList[index]);
@@ -2968,7 +2968,7 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 	VDCheckRadioMenuItemByCommandW32(hMenu, ID_AUDIO_SOURCE_NONE, audioSourceMode == kVDAudioSourceMode_None);
 	VDCheckRadioMenuItemByCommandW32(hMenu, ID_AUDIO_SOURCE_WAV, audioSourceMode == kVDAudioSourceMode_External);
 
-	CheckMenuRadioItem(hMenu, ID_AUDIO_SOURCE_AVI_0, ID_AUDIO_SOURCE_AVI_0+99, ID_AUDIO_SOURCE_AVI_0 + (audioSourceMode - kVDAudioSourceMode_Source), MF_BYCOMMAND);
+	CheckMenuRadioItem(hMenu, ID_AUDIO_SOURCE_0, ID_AUDIO_SOURCE_0+99, ID_AUDIO_SOURCE_0 + (audioSourceMode - kVDAudioSourceMode_Source), MF_BYCOMMAND);
 
 	CheckMenuRadioItem(hMenu, ID_VIDEO_MODE_DIRECT, ID_VIDEO_MODE_FULL, ID_VIDEO_MODE_DIRECT+g_dubOpts.video.mode, MF_BYCOMMAND);
 	CheckMenuRadioItem(hMenu, ID_AUDIO_MODE_DIRECT, ID_AUDIO_MODE_FULL, ID_AUDIO_MODE_DIRECT+g_dubOpts.audio.mode, MF_BYCOMMAND);
@@ -3232,7 +3232,7 @@ void VDProjectUI::UpdateAudioSourceMenu() {
 
 		for(int i=0; i<count; ++i) {
 			s.sprintf(L"Stream %d", i+1);
-			VDAppendMenuW32(mhMenuSourceList, MF_ENABLED, ID_AUDIO_SOURCE_AVI_0 + i, s.c_str());
+			VDAppendMenuW32(mhMenuSourceList, MF_ENABLED, ID_AUDIO_SOURCE_0 + i, s.c_str());
 		}
 	}
 }
@@ -5048,8 +5048,9 @@ void VDProjectUI::UIShuttleModeUpdated() {
 
 void VDProjectUI::UISourceFileUpdated(int open_flags) {
 	if (inputAVI) {
-		if (g_szInputAVIFile[0] && !g_bAutoTest && !(open_flags & f_open_skip_mru))
+		if (g_szInputAVIFile[0] && !g_bAutoTest && !(open_flags & f_open_skip_mru)) {
 			mMRUList.add(g_szInputAVIFile);
+		}
 
 		UpdateMRUList();
 
