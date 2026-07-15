@@ -1294,14 +1294,16 @@ void VDProjectUI::ExportViaDriverTool(const char* name) {
 	inputAVI->GetFileTool(&tool);
 	if (tool) {
 		ProjectState state;
-		{for(int id=0;;id++) {
+		for (int id = 0;; id++) {
 			char name2[128];
-			if (!tool->GetExportCommandName(id,name2,128)) break;
-			if (strcmp(name,name2)==0) {
-				tool->ExecuteExport(id,(VDXHWND)mhwnd,&state);
+			if (!tool->GetExportCommandName(id, name2, 128)) {
 				break;
 			}
-		}}
+			if (strcmp(name, name2) == 0) {
+				tool->ExecuteExport(id, (VDXHWND)mhwnd, &state);
+				break;
+			}
+		}
 		tool->Release();
 	}
 }
@@ -3047,21 +3049,23 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 		IFilterModFileTool* tool;
 		inputAVI->GetFileTool(&tool);
 		if (tool) {
-			{for(int i=0; i<3; i++){
+			for (int i = 0; i < 3; i++) {
 				char name[256];
 				bool enabled = true;
-				if (!tool->GetExportMenuInfo(i,name,sizeof(name),&enabled)) continue;
+				if (!tool->GetExportMenuInfo(i, name, sizeof(name), &enabled)) {
+					continue;
+				}
 
-				MENUITEMINFOA mii = {0};
-				mii.cbSize = sizeof(mii);
-				mii.fMask = MIIM_TYPE | MIIM_STATE | MIIM_ID;
-				mii.fType = MFT_STRING;
-				mii.fState = enabled ? 0 : MFS_DISABLED;
-				mii.wID	= ID_EXPORT_DRIVERTOOL0;
-				mii.dwTypeData	= name;
+				MENUITEMINFOA mii = { 0 };
+				mii.cbSize     = sizeof(mii);
+				mii.fMask      = MIIM_TYPE | MIIM_STATE | MIIM_ID;
+				mii.fType      = MFT_STRING;
+				mii.fState     = enabled ? 0 : MFS_DISABLED;
+				mii.wID        = ID_EXPORT_DRIVERTOOL0;
+				mii.dwTypeData = name;
 				InsertMenuItemA(hmenuExport, pos, TRUE, &mii);
 				pos++;
-			}}
+			}
 
 			tool->Release();
 		}
@@ -3077,18 +3081,19 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 	}
 
 	{
-		if (mhMenuTools)
+		if (mhMenuTools) {
 			DestroyMenu(mhMenuTools);
+		}
 		mhMenuTools = LoadMenuW(g_hInst, MAKEINTRESOURCEW(IDR_TOOLS_MENU));
 		HMENU hmenuTools = GetSubMenu(mhMenuTools, 0);
-		{for(int i=0; i<GetMenuItemCount(hmenuTools); i++){
+		for(int i=0; i<GetMenuItemCount(hmenuTools); i++){
 			if (GetMenuItemID(hmenuTools,i)==ID_TOOLS_PLUGIN) {
 				int pos = i;
 				RemoveMenu(hmenuTools, pos, MF_BYPOSITION);
 				VDToolInsertMenu(hmenuTools, pos);
 				break;
 			}
-		}}
+		}
 
 		VDUIUpdateMenuAcceleratorsW32(mhMenuTools, mAccelTableDef);
 
@@ -3220,18 +3225,19 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 }
 
 void VDProjectUI::UpdateAudioSourceMenu() {
-	for(int i = GetMenuItemCount(mhMenuSourceList)-1; i>=0; --i)
+	for (int i = GetMenuItemCount(mhMenuSourceList) - 1; i >= 0; --i) {
 		DeleteMenu(mhMenuSourceList, i, MF_BYPOSITION);
+	}
 
 	int count = GetAudioSourceCount();
 
-	if (!count)
+	if (!count) {
 		VDAppendMenuW32(mhMenuSourceList, MF_GRAYED, 0, L"None");
-	else {
+	} else {
 		VDStringW s;
 
-		for(int i=0; i<count; ++i) {
-			s.sprintf(L"Stream %d", i+1);
+		for (int i = 0; i < count; ++i) {
+			s.sprintf(L"Stream %d", i + 1);
 			VDAppendMenuW32(mhMenuSourceList, MF_ENABLED, ID_AUDIO_SOURCE_0 + i, s.c_str());
 		}
 	}
