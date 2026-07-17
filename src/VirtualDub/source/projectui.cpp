@@ -598,7 +598,7 @@ VDProjectUI::VDProjectUI()
 	, mAudioDisplayPosNext(-1)
 	, mbAudioDisplayReadActive(false)
 	, mhMenuNormal(NULL)
-	, mhMenuSourceList(NULL)
+	, mhMenuAudioSourceList(NULL)
 	, mhMenuDub(NULL)
 	, mhMenuDisplay(NULL)
 	, mhMenuExport(NULL)
@@ -668,18 +668,18 @@ bool VDProjectUI::Attach(VDGUIHandle hwnd) {
 		return false;
 	}
 
-	mhMenuSourceList = CreatePopupMenu();
-	if (!mhMenuSourceList) {
+	mhMenuAudioSourceList = CreatePopupMenu();
+	if (!mhMenuAudioSourceList) {
 		Detach();
 		return false;
 	}
 
 	MENUITEMINFOW mii = { sizeof(MENUITEMINFOW) };
 	mii.fMask = MIIM_SUBMENU;
-	mii.hSubMenu = mhMenuSourceList;
+	mii.hSubMenu = mhMenuAudioSourceList;
 	if (!SetMenuItemInfoW(mhMenuNormal, ID_AUDIO_SOURCE_AVI, FALSE, &mii)) {
-		DestroyMenu(mhMenuSourceList);
-		mhMenuSourceList = NULL;
+		DestroyMenu(mhMenuAudioSourceList);
+		mhMenuAudioSourceList = NULL;
 		Detach();
 		return false;
 	}
@@ -1072,7 +1072,7 @@ void VDProjectUI::Detach() {
 		mhMenuTools = NULL;
 	}
 
-	mhMenuSourceList = NULL;	// already destroyed via main menu
+	mhMenuAudioSourceList = NULL;	// already destroyed via main menu
 
 	if (mhMenuDub) {
 		DestroyMenu(mhMenuDub);
@@ -3225,20 +3225,20 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 }
 
 void VDProjectUI::UpdateAudioSourceMenu() {
-	for (int i = GetMenuItemCount(mhMenuSourceList) - 1; i >= 0; --i) {
-		DeleteMenu(mhMenuSourceList, i, MF_BYPOSITION);
+	for (int i = GetMenuItemCount(mhMenuAudioSourceList) - 1; i >= 0; --i) {
+		DeleteMenu(mhMenuAudioSourceList, i, MF_BYPOSITION);
 	}
 
 	int count = GetAudioSourceCount();
 
 	if (!count) {
-		VDAppendMenuW32(mhMenuSourceList, MF_GRAYED, 0, L"None");
+		VDAppendMenuW32(mhMenuAudioSourceList, MF_GRAYED, 0, L"None");
 	} else {
 		VDStringW s;
 
 		for (int i = 0; i < count; ++i) {
 			s.sprintf(L"Stream %d", i + 1);
-			VDAppendMenuW32(mhMenuSourceList, MF_ENABLED, ID_AUDIO_SOURCE_0 + i, s.c_str());
+			VDAppendMenuW32(mhMenuAudioSourceList, MF_ENABLED, ID_AUDIO_SOURCE_0 + i, s.c_str());
 		}
 	}
 }

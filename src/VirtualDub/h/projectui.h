@@ -2,6 +2,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2015-2020 Anton Shekhovtsov
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -218,7 +219,7 @@ protected:
 	bool		mbAudioDisplayReadActive;
 
 	HMENU		mhMenuNormal;
-	HMENU		mhMenuSourceList;
+	HMENU		mhMenuAudioSourceList;
 	HMENU		mhMenuDub;
 	HMENU		mhMenuDisplay;
 	HMENU		mhMenuExport;
