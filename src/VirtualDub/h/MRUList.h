@@ -25,6 +25,7 @@ public:
 	~MRUList();
 
 	VDStringW operator[](int i);
+	bool NonEmpty() const;
 
 	void set_capacity(int max_files);
 
