@@ -3023,7 +3023,7 @@ void VDProjectUI::UpdateMainMenu(HMENU hMenu) {
 	VDEnableMenuItemW32(hMenu, ID_FILE_AVIINFO				, bSourceFileExists);
 	VDEnableMenuItemW32(hMenu, ID_FILE_SETTEXTINFO			, bSourceFileExists);
 	VDEnableMenuItemW32(hMenu, ID_FILE_EXPORTEXTERNALENCODER, bSourceFileExists);
-	VDEnableMenuItemW32(hMenu, ID_FILE_EXPORT, bSourceFileExists);
+	VDEnableMenuItemW32(hMenu, ID_FILE_EXPORT				, bSourceFileExists);
 
 	HMENU hmenuFile = GetSubMenu(hMenu, 0);
 	if (bSourceFileExists) {

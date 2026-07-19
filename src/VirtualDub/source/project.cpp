@@ -1192,12 +1192,16 @@ void VDProject::OpenProject(const wchar_t *pFilename, bool readOnly) {
 			mProjectName = job->GetName();
 			VDStringW base = VDFileSplitPathLeft(mProjectFilename);
 			VDStringW back = VDTextU8ToW(job->GetProjectDir());
-			if (back!=base) mProjectBack = back;
+			if (back != base) {
+				mProjectBack = back;
+			}
 			RunScriptMemory(job->GetScript(), job->GetScriptLine(), true);
 			mProjectBack = L"";
 		}
 	} catch (MyTextError& e) {
-		if (!VDToolsHandleFileOpenError(pFilename, L"vdproject", e, e.line)) throw;
+		if (!VDToolsHandleFileOpenError(pFilename, L"vdproject", e, e.line)) {
+			throw;
+		}
 	}
 }
 
