@@ -248,7 +248,7 @@ void VDSaveFilespecSystemData() {
 		if (g_pFilespecMap) {
 			VDRegistryAppKey key("Saved filespecs");
 
-			for(tFilespecMap::const_iterator it(g_pFilespecMap->begin()), itEnd(g_pFilespecMap->end()); it!=itEnd; ++it) {
+			for(auto it(g_pFilespecMap->cbegin()), itEnd(g_pFilespecMap->cend()); it!=itEnd; ++it) {
 				long id = it->first;
 				const FilespecEntry& fse = it->second;
 				char buf[16];

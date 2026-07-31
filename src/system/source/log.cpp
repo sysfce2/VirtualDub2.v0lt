@@ -2,7 +2,7 @@
 // System library component
 //
 // Copyright (C) 1998-2004 Avery Lee, All Rights Reserved.
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: Zlib
 //
@@ -61,7 +61,7 @@ void VDLog(int severity, const wchar_t *s) {
 		g_logTail &= 16383;
 
 		VDThreadID currentThread = VDGetCurrentThreadID();
-		for(tVDLoggers::const_iterator it(g_loggers.begin()), itEnd(g_loggers.end()); it!=itEnd; ++it) {
+		for(auto it(g_loggers.cbegin()), itEnd(g_loggers.cend()); it!=itEnd; ++it) {
 			if (!(*it).second || currentThread == (*it).second)
 				(*it).first->AddLogEntry(severity, s);
 		}

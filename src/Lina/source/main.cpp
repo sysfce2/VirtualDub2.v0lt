@@ -1,7 +1,7 @@
 // Lina - HTML compiler for VirtualDub help system
 //
 // Copyright (C) 1998-2003 Avery Lee
-// Copyright (C) 2024 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -184,7 +184,7 @@ void dump_parse_tree(const TreeNode& tag, int indent = 0) {
 	} else {
 		printf("%*c<%s>\n", indent, ' ', tag.mName.c_str());
 
-		std::list<TreeNode *>::const_iterator it(tag.mChildren.begin()), itEnd(tag.mChildren.end());
+		auto it(tag.mChildren.cbegin()), itEnd(tag.mChildren.cend());
 		for(; it!=itEnd; ++it) {
 			dump_parse_tree(**it, indent+3);
 		}
@@ -196,7 +196,7 @@ void dump_parse_tree(const TreeNode& tag, int indent = 0) {
 ////////////////////////////////////////////////////////////////////////////////
 
 void output_tag_attributes(std::string& out, const TreeNode& tag) {
-	std::list<TreeAttribute>::const_iterator itAtt(tag.mAttribs.begin()), itAttEnd(tag.mAttribs.end());
+	auto itAtt(tag.mAttribs.cbegin()), itAttEnd(tag.mAttribs.cend());
 	bool is_anchor = (tag.mName == "a");
 	
 	for(; itAtt!=itAttEnd; ++itAtt) {
@@ -206,7 +206,7 @@ void output_tag_attributes(std::string& out, const TreeNode& tag) {
 		out += att.mName;
 
 		if (!att.mbNoValue) {
-			std::string::const_iterator its(att.mValue.begin()), itsEnd(att.mValue.end());
+			auto its(att.mValue.cbegin()), itsEnd(att.mValue.cend());
 			for(;its!=itsEnd; ++its)
 				if (!issafevaluechar(*its))
 					break;
@@ -214,7 +214,7 @@ void output_tag_attributes(std::string& out, const TreeNode& tag) {
 			std::string value(att.mValue);
 
 			if (is_anchor && att.mName == "href") {
-				std::list<std::pair<std::string, bool> >::const_iterator it(g_truncateURLs.begin()), itEnd(g_truncateURLs.end());
+				auto it(g_truncateURLs.cbegin()), itEnd(g_truncateURLs.cend());
 
 				for(; it!=itEnd; ++it) {
 					const std::pair<std::string, bool>& entry = *it;
@@ -261,7 +261,7 @@ void output_tag_contents(Context& ctx, std::string *out, const TreeNode& tag) {
 	if (recursion_depth > 64)
 		error(ctx, "recursion exceeded limits");
 
-	std::list<TreeNode *>::const_iterator it(tag.mChildren.begin()), itEnd(tag.mChildren.end());
+	auto it(tag.mChildren.cbegin()), itEnd(tag.mChildren.cend());
 	for(; it!=itEnd; ++it) {
 		output_tag(ctx, out, **it);
 	}
@@ -307,7 +307,7 @@ void output_standard_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 				if (ctx.pre_count) {
 					*out += tag.mName;
 				} else {
-					std::string::const_iterator it(tag.mName.begin()), itEnd(tag.mName.end());
+					auto it(tag.mName.cbegin()), itEnd(tag.mName.cend());
 
 					for(; it!=itEnd; ++it) {
 						const char c = *it;
@@ -326,7 +326,7 @@ void output_standard_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 					}
 				}
 			} else {
-				std::string::const_iterator it(tag.mName.begin()), itEnd(tag.mName.end());
+				auto it(tag.mName.cbegin()), itEnd(tag.mName.cend());
 
 				for(; it!=itEnd; ++it) {
 					const char c = *it;
@@ -375,7 +375,7 @@ void output_standard_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 }
 
 std::string HTMLize(const std::string& s) {
-	std::string::const_iterator it(s.begin()), itEnd(s.end());
+	auto it(s.cbegin()), itEnd(s.cend());
 	std::string t;
 
 	for(; it!=itEnd; ++it) {
@@ -413,11 +413,11 @@ void output_source_tags(Context& ctx, std::string *out, const TreeNode& tag) {
 
 		out->append("<ul marker=none>");
 
-		std::list<TreeNode *>::const_iterator itBegin(tag.mChildren.begin()), it(itBegin), itEnd(tag.mChildren.end());
+		auto it(tag.mChildren.cbegin()), itEnd(tag.mChildren.cend());
 		for(; it!=itEnd; ++it) {
-		out->append("<li>");
+			out->append("<li>");
 			output_source_tags(ctx, out, **it);
-		out->append("</li>");
+			out->append("</li>");
 		}
 
 		out->append("</ul>");
@@ -485,7 +485,7 @@ void output_toc_node(FILE *f, const TreeNode& node) {
 void output_toc_children(FILE *f, const TreeNode& node) {
 	bool nodesFound = false;
 
-	TreeNode::Children::const_iterator it(node.mChildren.begin()), itEnd(node.mChildren.end());
+	auto it(node.mChildren.cbegin()), itEnd(node.mChildren.cend());
 	for(; it!=itEnd; ++it) {
 		const TreeNode& childNode = **it;
 
@@ -604,7 +604,7 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 		if (ctx.invocation_stack.empty())
 			error(ctx, "<lina:arg> can only be used during macro expansion");
 
-		std::list<const TreeNode *>::const_iterator it(ctx.invocation_stack.end());
+		auto it(ctx.invocation_stack.cend());
 		--it;
 
 		int levels = 1;
@@ -613,8 +613,9 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 			++levels;
 			++name;
 
-			if (it == ctx.invocation_stack.begin())
+			if (it == ctx.invocation_stack.cbegin()) {
 				error(ctx, "Number of up-scope markers in name exceeds macro nesting level");
+			}
 
 			--it;
 		}
@@ -739,7 +740,7 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 		if (!parent)
 			error(ctx, "cannot resolve path \"%s\"", a->mValue.c_str());
 
-		std::list<TreeNode *>::const_iterator it2(parent->mChildren.begin()), it2End(parent->mChildren.end());
+		auto it2(parent->mChildren.cbegin()), it2End(parent->mChildren.cend());
 
 		ctx.invocation_stack.push_back(NULL);
 		for(; it2!=it2End; ++it2) {
@@ -751,15 +752,17 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 		ctx.invocation_stack.pop_back();
 	} else if (tag.mName == "lina:apply") {
 		const TreeAttribute *a = tag.Attrib("name");
-		if (!a)
+		if (!a) {
 			error(ctx, "<lina:apply> must have NAME attribute");
+		}
 
 		std::map<std::string, TreeNode *>::const_iterator it(ctx.mpDocument->mMacros.find(a->mValue));
 
-		if (it == ctx.mpDocument->mMacros.end())
+		if (it == ctx.mpDocument->mMacros.end()) {
 			error(ctx, "macro \"%s\" undeclared", a->mValue.c_str());
+		}
 		
-		std::list<TreeNode *>::const_iterator it2(tag.mChildren.begin()), it2End(tag.mChildren.end());
+		auto it2(tag.mChildren.cbegin()), it2End(tag.mChildren.cend());
 
 		ctx.invocation_stack.push_back(NULL);
 		for(; it2!=it2End; ++it2) {
@@ -807,7 +810,7 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 			output_tag_contents(ctx, out, tag);
 		--ctx.cdata_count;
 	} else if (tag.mName == "lina:delay") {
-		std::list<TreeNode *>::const_iterator it(tag.mChildren.begin()), itEnd(tag.mChildren.end());
+		auto it(tag.mChildren.cbegin()), itEnd(tag.mChildren.cend());
 		for(; it!=itEnd; ++it) {
 			output_standard_tag(ctx, out, **it);
 		}
@@ -885,7 +888,7 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 		// do nothing
 	} else if (tag.mName == "lina:source") {
 		if (out) {
-			std::list<TreeNode *>::const_iterator itBegin(tag.mChildren.begin()), it(itBegin), itEnd(tag.mChildren.end());
+			auto it(tag.mChildren.cbegin()), itEnd(tag.mChildren.cend());
 			for(; it!=itEnd; ++it) {
 				output_source_tags(ctx, out, **it);
 			}
@@ -970,7 +973,7 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 			, title_val->mValue.c_str()
 			);
 
-		std::list<std::string>::const_iterator it(g_htmlHelpFiles.begin()), itEnd(g_htmlHelpFiles.end());
+		auto it(g_htmlHelpFiles.cbegin()), itEnd(g_htmlHelpFiles.cend());
 		for(; it!=itEnd; ++it) {
 			fprintf(f, "%s\n", (*it).c_str());
 		}
@@ -1045,7 +1048,7 @@ int main(int argc, char **argv) {
 
 	// copy files
 
-	tFileCopies::const_iterator it(g_fileCopies.begin()), itEnd(g_fileCopies.end());
+	auto it(g_fileCopies.cbegin()), itEnd(g_fileCopies.cend());
 
 	for(; it!=itEnd; ++it) {
 		const tFileCopies::value_type& info = *it;

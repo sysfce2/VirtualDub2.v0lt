@@ -3,7 +3,7 @@
 //
 // Copyright (C) 1998-2006 Avery Lee
 // Copyright (C) 2017-2018 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -552,7 +552,7 @@ const wchar_t *VDCaptureDriverScreen::GetAudioInputName(int idx) {
 	if (!mbAudioHardwareEnabled || (unsigned)idx >= mMixerInputs.size())
 		return NULL;
 
-	MixerInputs::const_iterator it(mMixerInputs.begin());
+	auto it(mMixerInputs.cbegin());
 
 	std::advance(it, idx);
 

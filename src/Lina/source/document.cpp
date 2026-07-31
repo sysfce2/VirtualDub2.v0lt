@@ -1,6 +1,7 @@
 // Lina - HTML compiler for VirtualDub help system
 //
 // Copyright (C) 2013 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -43,11 +44,12 @@ TreeNode *TreeNode::ShallowClone() {
 }
 
 const TreeAttribute *TreeNode::Attrib(const std::string& s) const {
-	Attributes::const_iterator it(mAttribs.begin()), itEnd(mAttribs.end());
+	auto it(mAttribs.cbegin()), itEnd(mAttribs.cend());
 
 	for(; it!=itEnd; ++it) {
-		if ((*it).mName == s)
+		if ((*it).mName == s) {
 			return &*it;
+		}
 	}
 
 	return NULL;
@@ -75,7 +77,7 @@ const TreeNode *TreeNode::Child(const std::string& s) const {
 	std::string name;
 	const TreeNode *parent = ResolvePath(s, name);
 
-	Children::const_iterator it(mChildren.begin()), itEnd(mChildren.end());
+	auto it(mChildren.cbegin()), itEnd(mChildren.cend());
 
 	for(; it!=itEnd; ++it) {
 		TreeNode *child = *it;

@@ -1,7 +1,7 @@
 // Asuka - VirtualDub Build/Post-Mortem Utility
 //
 // Copyright (C) 2005-2006 Avery Lee
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -401,7 +401,7 @@ void GLCCompiler::Compile(const char *sourceName, const char *src, uint32 len, F
 	fputs("// techniques\n", f);
 	fputs("//\n", f);
 	fprintf(f, "static const struct VDOpenGLTechnique g_techniques[]={\n");
-	Techniques::const_iterator it(mTechniques.begin()), itEnd(mTechniques.end());
+	auto it(mTechniques.cbegin()), itEnd(mTechniques.cend());
 	for(; it!=itEnd; ++it) {
 		const Technique& tech = it->second;
 

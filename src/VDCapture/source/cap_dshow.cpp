@@ -2625,7 +2625,7 @@ bool VDCaptureDriverDS::SetVideoFormat(const BITMAPINFOHEADER *pbih, uint32 size
 		// similar to what we have here. If so, copy the fields from
 		// that format.
 
-		VideoFormats::const_iterator it(mPreferredVideoFormats.begin()), itEnd(mPreferredVideoFormats.end());
+		auto it(mPreferredVideoFormats.cbegin()), itEnd(mPreferredVideoFormats.cend());
 
 		for(; it!=itEnd; ++it) {
 			const AM_MEDIA_TYPE& amtype = *it;
@@ -4828,7 +4828,7 @@ int VDCaptureDriverDS::UpdateCrossbarSource(InputSources& sources, IAMCrossbar *
 	if (hr == S_FALSE || currentSource == -1)
 		return -1;
 
-	InputSources::const_iterator it(sources.begin()), itEnd(sources.end());
+	auto it(sources.cbegin()), itEnd(sources.cend());
 	int index = 0;
 	for(; it!=itEnd; ++it, ++index) {
 		const InputSource& src = *it;
@@ -4886,7 +4886,7 @@ LRESULT VDCaptureDriverDS::MessageSinkWndProc(HWND hwnd, UINT msg, WPARAM wParam
 	else if (msg == WM_APP+1)
 		CaptureStop();
 	else {
-		VideoWindows::const_iterator it(mVideoWindows.begin()), itEnd(mVideoWindows.end());
+		auto it(mVideoWindows.cbegin()), itEnd(mVideoWindows.cend());
 		for(; it!=itEnd; ++it) {
 			const IVideoWindowPtr& p = *it;
 

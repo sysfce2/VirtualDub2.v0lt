@@ -1,7 +1,7 @@
 // Ami - Language resource compiler for VirtualDub
 //
 // Copyright (C) 2013 Avery Lee
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -575,13 +575,14 @@ void parse_runtime_expression(tREBytecode& bytecode) {
 				{
 					int id = parse_prefix_expression();
 
-					std::vector<int>::const_iterator it(std::find(winrefs.begin(), winrefs.end(), id));
+					auto it(std::find(winrefs.cbegin(), winrefs.cend(), id));
 					bytecode.push_back(kBCE_GetValue);
-					bytecode.push_back(it - winrefs.begin());
-					if (it == winrefs.end()) {
+					bytecode.push_back(it - winrefs.cbegin());
+					if (it == winrefs.cend()) {
 						winrefs.push_back(id);
-						if (winrefs.size() > 255)
+						if (winrefs.size() > 255) {
 							fatal("too many window references in runtime expression");
+						}
 					}
 				}
 				expect_value = false;

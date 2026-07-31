@@ -1,7 +1,7 @@
 // Ami - Language resource compiler for VirtualDub
 //
 // Copyright (C) 2013 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -23,7 +23,7 @@ std::string ANSIify(const std::wstring& unicode)
 
 	// ugh
 
-	std::wstring::const_iterator it = unicode.begin(), itEnd = unicode.end();
+	auto it = unicode.cbegin(), itEnd = unicode.cend();
 
 	for(; it!=itEnd; ++it) {
 		char buf[8];
@@ -132,7 +132,7 @@ std::basic_string<unsigned char> ConvertToSCSU(const std::wstring& s)
 {
 	using namespace nsSCSU;
 
-	std::wstring::const_iterator it = s.begin(), itEnd = s.end();
+	auto it = s.cbegin(), itEnd = s.cend();
 	const unsigned static_windows[8]={0x0000,0x0080,0x0100,0x0300,0x2000,0x2080,0x2100,0x3000};
 	unsigned dynamic_windows[8]={0x0080,0x00c0,0x0400,0x0600,0x0900,0x3040,0x30A0,0xFF00};
 	int current_dynwnd = 0;

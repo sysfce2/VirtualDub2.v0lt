@@ -1,6 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2004 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -289,7 +290,7 @@ void VDUICreator::AddLastWindow() {
 	if (pBase && id) {
 		int expr = parms.GetI(nsVDUI::kUIParam_EnableLinkExpr, -1);
 		if (expr >= 0) {
-			tLinkExprs::const_iterator it(mLinkExprs.begin());
+			auto it(mLinkExprs.cbegin());
 
 			std::advance(it, expr);
 			pBase->Link(id, nsVDUI::kLinkTarget_Enable, &(*it).front(), (*it).size());
@@ -297,7 +298,7 @@ void VDUICreator::AddLastWindow() {
 
 		expr = parms.GetI(nsVDUI::kUIParam_ValueLinkExpr, -1);
 		if (expr >= 0) {
-			tLinkExprs::const_iterator it(mLinkExprs.begin());
+			auto it(mLinkExprs.cbegin());
 
 			std::advance(it, expr);
 			pBase->Link(id, nsVDUI::kLinkTarget_Value, &(*it).front(), (*it).size());
@@ -444,13 +445,14 @@ void VDUIRegisterWindowClass(uint32 classID, IVDUIWindow *(*pCreator)()) {
 }
 
 IVDUIWindow *VDUICreateWindowClass(uint32 classID) {
-	std::vector<VDUIWindowClassNode>::const_iterator it(g_VDUIWindowClassList.begin()), itEnd(g_VDUIWindowClassList.end());
+	auto it(g_VDUIWindowClassList.cbegin()), itEnd(g_VDUIWindowClassList.cend());
 
 	for(; it!=itEnd; ++it) {
 		const VDUIWindowClassNode& node = *it;
 
-		if (node.mClassID == classID)
+		if (node.mClassID == classID) {
 			return node.mpCreator();
+		}
 	}
 
 	return NULL;

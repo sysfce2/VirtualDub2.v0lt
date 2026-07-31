@@ -1,6 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2004 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -172,7 +173,7 @@ void VDUIGrid::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) {
 	mCols.BeginLayout();
 
 	// phase I: constraint gathering
-	tItems::const_iterator itItem(mItems.begin()), itItemEnd(mItems.end());
+	auto itItem(mItems.cbegin()), itItemEnd(mItems.cend());
 	for(; itItem != itItemEnd; ++itItem) {
 		const GridItem& item = *itItem;
 		const vduirect& cells = item.mPos;
@@ -202,7 +203,7 @@ void VDUIGrid::PostLayoutBase(const vduirect& target) {
 	// phase II: layout columns
 	mCols.Layout(target.left, target.width(), pad.w);
 
-	tItems::const_iterator itItem(mItems.begin()), itItemEnd(mItems.end());
+	auto itItem(mItems.cbegin()), itItemEnd(mItems.cend());
 	for(; itItem != itItemEnd; ++itItem) {
 		const GridItem& item = *itItem;
 		const vduirect& cells = item.mPos;
@@ -223,8 +224,8 @@ void VDUIGrid::PostLayoutBase(const vduirect& target) {
 	// phase III: final layout
 	mRows.Layout(target.top, target.height(), pad.h);
 
-	itItem = mItems.begin();
-	itItemEnd = mItems.end();
+	itItem = mItems.cbegin();
+	itItemEnd = mItems.cend();
 	for(; itItem != itItemEnd; ++itItem) {
 		const GridItem& item = *itItem;
 		const vduirect& cells = item.mPos;
