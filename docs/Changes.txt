@@ -8,6 +8,7 @@ Potential memory leaks have been fixed.
 64-bit "MLC lossless codec" (mlc.dll), "Proxy Codec64" (pxc0.dll) are not supported because it crashes.
 Fixed video capture with compression in the "FFmpeg FFV1" and "x264 8 bit" codecs.
 Fixed loading of processing settings (script files).
+Added VSFilterBE 2.47.1 plugin, which provides TextSub and VobSub video filters.
 Cosmetic changes.
 
 
