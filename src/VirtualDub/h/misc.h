@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -10,11 +10,12 @@
 #ifndef f_VIRTUALDUB_MISC_H
 #define f_VIRTUALDUB_MISC_H
 
-#include <mmsystem.h>
-
-#include <vd2/system/VDString.h>
-#include <vd2/system/text.h>
-#include <vd2/system/vdstl.h>
+#ifndef FCC
+#define FCC(ch4) ((((DWORD)(ch4) & 0xFF) << 24) |     \
+                  (((DWORD)(ch4) & 0xFF00) << 8) |    \
+                  (((DWORD)(ch4) & 0xFF0000) >> 8) |  \
+                  (((DWORD)(ch4) & 0xFF000000) >> 24))
+#endif
 
 long MulDivTrunc(long a, long b, long c);
 int NearestLongValue(long v, const long *array, int array_size);
