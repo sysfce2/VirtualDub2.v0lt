@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2015-2020 Anton Shekhovtsov
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -35,9 +35,9 @@
 #include "gui.h"
 #include "oshelper.h"
 #include "prefs.h"
-#include "misc.h"
 #include <vd2/VDLib/Dialog.h>
 #include <aviriff.h>
+#include "misc.h"
 
 #include "resource.h"
 
@@ -62,27 +62,39 @@ namespace {
 
 int detect_avi(VDXMediaInfo& info, const void *pHeader, int32 nHeaderSize)
 {
-	if(nHeaderSize<64) return -1;
+	if (nHeaderSize < 64) {
+		return -1;
+	}
 	uint8* data = (uint8*)pHeader;
 	int rsize = nHeaderSize;
 
 	RIFFCHUNK ch;
 	memcpy(&ch,data,sizeof(ch)); data+=sizeof(ch); rsize-=sizeof(ch);
-	if(ch.fcc!=0x46464952) return -1; //RIFF
+	if (ch.fcc != FCC('RIFF')) {
+		return -1;
+	}
 	DWORD fmt;
 	memcpy(&fmt,data,4); data+=4; rsize-=4;
-	if(fmt!=0x20495641) return -1; //AVI
+	if (fmt != FCC('AVI ')) {
+		return -1;
+	}
 	memcpy(&ch,data,sizeof(ch)); data+=sizeof(ch); rsize-=sizeof(ch);
-	if(ch.fcc!=0x5453494C) return -1; //LIST
+	if (ch.fcc != FCC('LIST')) {
+		return -1;
+	}
 	memcpy(&fmt,data,4); data+=4; rsize-=4;
-	if(fmt!=0x6C726468) return -1; //hdrl
+	if (fmt != FCC('hdrl')) {
+		return -1;
+	}
 
 	memcpy(&ch,data,sizeof(ch));
-	if(ch.fcc!=ckidMAINAVIHEADER) return -1; //avih
+	if (ch.fcc != ckidMAINAVIHEADER) { //avih
+		return -1;
+	}
 
-	if(rsize<sizeof(AVIMAINHEADER)){
-		AVIMAINHEADER mh = {0};
-		memcpy(&mh,data,rsize); data+=rsize; rsize=0;
+	if (rsize < sizeof(AVIMAINHEADER)) {
+		AVIMAINHEADER mh = { 0 };
+		memcpy(&mh, data, rsize); data += rsize; rsize = 0;
 		return 1;
 	}
 
@@ -92,28 +104,40 @@ int detect_avi(VDXMediaInfo& info, const void *pHeader, int32 nHeaderSize)
 	info.height = mh.dwHeight;
 	wcscpy(info.format_name,L"AVI");
 
-	if(rsize<sizeof(ch)) return 1;
+	if (rsize < sizeof(ch)) {
+		return 1;
+	}
 	memcpy(&ch,data,sizeof(ch)); data+=sizeof(ch); rsize-=sizeof(ch);
-	if(ch.fcc!=0x5453494C) return -1; //LIST
+	if (ch.fcc != FCC('LIST')) {
+		return -1;
+	}
 
-	if(rsize<sizeof(fmt)) return 1;
+	if (rsize < sizeof(fmt)) {
+		return 1;
+	}
 	memcpy(&fmt,data,4); data+=4; rsize-=4;
-	if(fmt!=ckidSTREAMLIST) return -1; //strl
+	if (fmt != ckidSTREAMLIST) { //strl
+		return -1;
+	}
 
-	if(rsize<sizeof(AVISTREAMHEADER)) return 1;
+	if (rsize < sizeof(AVISTREAMHEADER)) {
+		return 1;
+	}
 	AVISTREAMHEADER sh;
 	memcpy(&sh,data,sizeof(sh)); data+=sizeof(sh); rsize-=sizeof(sh);
-	if(sh.fcc!=ckidSTREAMHEADER) return -1; //strh
+	if (sh.fcc != ckidSTREAMHEADER) { //strh
+		return -1;
+	}
 
 	// reject if there is unsupported video codec
-	if(sh.fccType==streamtypeVIDEO){
+	if(sh.fccType==streamtypeVIDEO){ //vids
 		DWORD h1 = sh.fccHandler;
 		char* ch2 = (char*)(&h1);
-		{for(int i=0; i<4; i++){
+		for (int i = 0; i < 4; i++) {
 			int v = ch2[i];
 			info.vcodec_name[i] = (wchar_t)v;
-			info.vcodec_name[i+1] = 0;
-		}}
+			info.vcodec_name[i + 1] = 0;
+		}
 	}
 
 	return 1;
