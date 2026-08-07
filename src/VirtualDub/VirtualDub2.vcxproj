@@ -292,7 +292,6 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
     <ClCompile Include="source\AsyncBlitter.cpp" />
     <ClCompile Include="source\Audio.cpp" />
     <ClCompile Include="source\AudioFilterSystem.cpp" />
-    <ClCompile Include="source\autodetect.cpp" />
     <ClCompile Include="source\AutoRecover.cpp" />
     <ClCompile Include="source\auxdlg.cpp" />
     <ClCompile Include="source\AVIPipe.cpp" />
@@ -579,7 +578,6 @@ yasm -g cv8 -f win64 -o "$(IntDir)verstub.obj" verstub.asm
     <ClInclude Include="h\AsyncBlitter.h" />
     <ClInclude Include="h\Audio.h" />
     <ClInclude Include="h\AudioFilterSystem.h" />
-    <ClInclude Include="h\autodetect.h" />
     <ClInclude Include="h\AutoRecover.h" />
     <ClInclude Include="h\auxdlg.h" />
     <ClInclude Include="h\AVIPipe.h" />

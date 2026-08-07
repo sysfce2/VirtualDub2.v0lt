@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2007 Avery Lee
 // Copyright (C) 2015-2020 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -29,7 +29,6 @@
 
 ///////////////////////////
 
-extern const char *LookupVideoCodec(uint32);
 extern VDProject *g_project;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -542,11 +541,7 @@ VDVideoSourcePlugin::VDVideoSourcePlugin(IVDXVideoSource *pVS, VDInputDriverCont
 					buf[i] = c;
 			}
 
-			const char *s = LookupVideoCodec(mSSInfo.mfccHandler);
-
-			throw MyError("Unable to locate a video codec to decompress the video format '%s' (%s)."
-						, buf
-						,s ? s : "unknown");
+			throw MyError("Unable to locate a video codec to decompress the video format '%s'.", buf);
 		}
 	}
 

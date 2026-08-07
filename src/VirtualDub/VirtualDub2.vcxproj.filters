@@ -112,9 +112,6 @@
     <ClCompile Include="source\AudioFilterSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\autodetect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\AutoRecover.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -724,9 +721,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="h\AudioFilterSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="h\autodetect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="h\AutoRecover.h">
