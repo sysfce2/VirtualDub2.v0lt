@@ -800,16 +800,9 @@ public:
 		case kEventDetach:
 		case kEventSync:
 			{
-				unsigned v = 0;
-
-				swscanf(GetCaption(100).c_str(), L"%u", &v);
-
-				if (v < 0)
-					v = 0;
-				else if (v > 25)
-					v = 25;
-
-				mPrefs.mMRUSize = v;
+				int v = 0;
+				swscanf(GetCaption(100).c_str(), L"%d", &v);
+				mPrefs.mMRUSize = std::clamp(v, 0, 25);
 			}
 			return true;
 		case kEventSelect:
