@@ -494,13 +494,10 @@ void VDUIBaseWindowW32::RebuildLinkUpdateMap() {
 	mbLinkUpdateMapDirty = false;
 
 	mLinkUpdateMap.clear();
-	for(auto it(mLinkList.cbegin()), itEnd(mLinkList.cend()); it != itEnd; ++it) {
-		const tLinkList::value_type& data = *it;
+	for(const auto& data : mLinkList) {
 		const LinkEntry& linkEntry = data.second;
 
-		for(auto itLink(linkEntry.mLinkSources.cbegin()), itLinkEnd(linkEntry.mLinkSources.cend()); itLink != itLinkEnd; ++itLink) {
-			const uint32 sourceID = *itLink;
-
+		for(const auto& sourceID : linkEntry.mLinkSources) {
 			mLinkUpdateMap.insert(tLinkUpdateMap::value_type(sourceID, &data));
 		}
 	}
@@ -517,8 +514,8 @@ void VDUIBaseWindowW32::ExecuteAllLinks() {
 	uint32 last = 0;
 
 	std::list<uint32> queue;
-	for(auto it(mControls.cbegin()), itEnd(mControls.cend()); it!=itEnd; ++it) {
-		uint32 id = (*it).first;
+	for(const auto& item : mControls) {
+		uint32 id = item.first;
 
 		if (last != id) {
 			last = id;

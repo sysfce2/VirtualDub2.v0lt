@@ -23,17 +23,16 @@ std::string ANSIify(const std::wstring& unicode)
 
 	// ugh
 
-	auto it = unicode.cbegin(), itEnd = unicode.cend();
-
-	for(; it!=itEnd; ++it) {
+	for(const auto& ch : unicode) {
 		char buf[8];
 
-		int bytes = wctomb(buf, *it);
+		int bytes = wctomb(buf, ch);
 
-		if (bytes<0)
+		if (bytes < 0) {
 			ansi += '?';
-		else
+		} else {
 			ansi.append(buf, bytes);
+		}
 	}
 
 	return ansi;

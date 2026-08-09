@@ -173,9 +173,7 @@ void VDUIGrid::PreLayoutBase(const VDUILayoutSpecs& parentConstraints) {
 	mCols.BeginLayout();
 
 	// phase I: constraint gathering
-	auto itItem(mItems.cbegin()), itItemEnd(mItems.cend());
-	for(; itItem != itItemEnd; ++itItem) {
-		const GridItem& item = *itItem;
+	for(const auto& item : mItems) {
 		const vduirect& cells = item.mPos;
 
 		VDUILayoutSpecs cellConstraints;
@@ -203,9 +201,7 @@ void VDUIGrid::PostLayoutBase(const vduirect& target) {
 	// phase II: layout columns
 	mCols.Layout(target.left, target.width(), pad.w);
 
-	auto itItem(mItems.cbegin()), itItemEnd(mItems.cend());
-	for(; itItem != itItemEnd; ++itItem) {
-		const GridItem& item = *itItem;
+	for(const auto& item : mItems) {
 		const vduirect& cells = item.mPos;
 
 		VDUILayoutSpecs cellConstraints;
@@ -224,10 +220,7 @@ void VDUIGrid::PostLayoutBase(const vduirect& target) {
 	// phase III: final layout
 	mRows.Layout(target.top, target.height(), pad.h);
 
-	itItem = mItems.cbegin();
-	itItemEnd = mItems.cend();
-	for(; itItem != itItemEnd; ++itItem) {
-		const GridItem& item = *itItem;
+	for(const auto& item : mItems) {
 		const vduirect& cells = item.mPos;
 
 		item.mpWin->PostLayout(vduirect(mCols.GetStart(cells.left), mRows.GetStart(cells.top), mCols.GetEnd(cells.right-1), mRows.GetEnd(cells.bottom-1)));

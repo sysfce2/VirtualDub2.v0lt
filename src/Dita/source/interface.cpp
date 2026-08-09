@@ -444,12 +444,9 @@ void VDUIRegisterWindowClass(uint32 classID, IVDUIWindow *(*pCreator)()) {
 	g_VDUIWindowClassList.push_back(node);
 }
 
-IVDUIWindow *VDUICreateWindowClass(uint32 classID) {
-	auto it(g_VDUIWindowClassList.cbegin()), itEnd(g_VDUIWindowClassList.cend());
-
-	for(; it!=itEnd; ++it) {
-		const VDUIWindowClassNode& node = *it;
-
+IVDUIWindow *VDUICreateWindowClass(uint32 classID)
+{
+	for(const auto& node : g_VDUIWindowClassList) {
 		if (node.mClassID == classID) {
 			return node.mpCreator();
 		}
