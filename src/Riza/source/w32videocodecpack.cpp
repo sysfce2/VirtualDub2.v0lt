@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2006 Avery Lee
 // Copyright (C) 2016-2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -918,7 +918,7 @@ void VDVideoCompressorVCM::PackFrameInternal(void *dst, DWORD frameSize, DWORD q
 }
 
 void VDVideoCompressorVCM::GetState(vdfastvector<uint8>& data) {
-	DWORD res;
+	int res;
 	sint32 size;
 
 	{
@@ -938,8 +938,9 @@ void VDVideoCompressorVCM::GetState(vdfastvector<uint8>& data) {
 		res = driver->getState(data.data(), size);
 	}
 
-	if (res < 0)
+	if (res < 0) {
 		throw MyICError("Video compression", res);
+	}
 }
 
 //------------------------------------------------------------------------------------------------------

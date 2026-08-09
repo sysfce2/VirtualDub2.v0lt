@@ -346,8 +346,9 @@ void VDVideoDecompressorVCM::DecompressFrame(void *dst, const void *src, uint32 
 	pSrcFormat->biSizeImage = dwOldSize;
 
 	// We will get ICERR_DONTDRAW if we set preroll.
-	if (retval < 0)
-		throw MyICError(retval, "%%s (Error code: %d)", (int)retval);
+	if ((long)retval < 0) {
+		throw MyICError(retval, "%%s (Error code: %d)", retval);
+	}
 }
 
 const void *VDVideoDecompressorVCM::GetRawCodecHandlePtr() {
