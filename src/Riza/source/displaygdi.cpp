@@ -884,8 +884,7 @@ int VDVideoDisplayMinidriverGDI::GetScreenIntermediatePixmapFormat(HDC hdc) {
 			RGBQUAD buf[256];
 		} format={0};
 
-		if (GetDIBits(hdc, hbm, 0, 1, NULL, (LPBITMAPINFO)&format, DIB_RGB_COLORS)
-			&& GetDIBits(hdc, hbm, 0, 1, NULL, (LPBITMAPINFO)&format, DIB_RGB_COLORS))
+		if (GetDIBits(hdc, hbm, 0, 1, NULL, (LPBITMAPINFO)&format, DIB_RGB_COLORS))
 		{
 			if (format.hdr.bV5Size >= sizeof(BITMAPINFOHEADER)) {
 				const BITMAPV5HEADER& hdr = format.hdr;
