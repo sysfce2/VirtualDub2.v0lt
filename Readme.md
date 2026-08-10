@@ -38,6 +38,14 @@ To run the x64 version on Windows 7, you will need to find and replace the FFmpe
 * https://www.infognition.com/VirtualDubFilters/
 * https://altukhov.clan.su/forum/42
 
+## "Video for Windows" (VfW) codecs for AVI input driver
+* [Xvid   ](https://www.xvid.com/)
+* [x264vfw](https://sourceforge.net/projects/mpxplay/files/x264vfw/)
+* [x265vfw](https://sourceforge.net/projects/mpxplay/files/x265vfw/)
+* [xAV1vfw](https://sourceforge.net/projects/mpxplay/files/xAV1vfw/)
+* [Lagarith Lossless Video Codec](https://lags.leetcode.net/codec.html)
+* [ffdshow VFW 32-bit](https://sourceforge.net/projects/ffdshow-tryout/files/SVN%20builds%20by%20clsid/generic%20builds/)
+(ffdshow VFW 64-bit is broken)
 
 ## Donate
 ЮMoney - https://yoomoney.ru/to/4100115126389817
