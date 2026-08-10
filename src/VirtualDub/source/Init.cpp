@@ -365,7 +365,9 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine)
 	VDSetThreadDebugName(GetCurrentThreadId(), "Main");
 	VDInitProtectedScopeHook();
 
-	VDSetDataPath(VDGetProgramPath().c_str());
+	const VDStringW programPath(VDGetProgramPath());
+
+	VDSetDataPath(programPath.c_str());
 
 	const wchar_t* pDataPath = VDGetDataPath();
 	VDSetCrashDumpPath(pDataPath);
@@ -435,7 +437,7 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine)
 	if (portableAltFile) {
 		portableRegPath = portableAltFile;
 	} else {
-		portableRegPath = VDMakePath(VDGetProgramPath().c_str(), L"VirtualDub2.ini");
+		portableRegPath = VDMakePath(programPath.c_str(), L"VirtualDub2.ini");
 	}
 
 	if (portableAltFile || cmdLine.FindAndRemoveSwitch(L"portable") || VDDoesPathExist(portableRegPath.c_str())) {
@@ -514,8 +516,6 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine)
 	int pluginsFailed = 0;
 	vdprotected("autoloading filters at startup") {
 		int f, s;
-
-		VDStringW programPath(VDGetProgramPath());
 
 		VDLoadPlugins(VDMakePath(programPath.c_str(), L"plugins"), s, f);
 		pluginsSucceeded += s;
