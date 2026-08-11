@@ -42,6 +42,7 @@ SET PCKG_DIR=_out\VirtualDub2_v2.5
 MKDIR %PCKG_DIR%
 MKDIR %PCKG_DIR%\extra
 MKDIR %PCKG_DIR%\plugins64
+MKDIR %PCKG_DIR%\vfwcodecs
 
 COPY /Y /V "docs\Changes.txt"                   "%PCKG_DIR%\Changes.txt"
 COPY /Y /V "LICENSE.txt"                        "%PCKG_DIR%\LICENSE.txt"
@@ -56,7 +57,8 @@ COPY /Y /V "_out\ReleaseAMD64\vdicmdrv.dll"     "%PCKG_DIR%\extra\vdicmdrv.dll"
 COPY /Y /V "_out\ReleaseAMD64\vdlaunch.exe"     "%PCKG_DIR%\extra\vdlaunch.exe"
 COPY /Y /V "_out\ReleaseAMD64\vdremote.dll"     "%PCKG_DIR%\extra\vdremote.dll"
 COPY /Y /V "_out\ReleaseAMD64\vdsvrlnk.dll"     "%PCKG_DIR%\extra\vdsvrlnk.dll"
-COPY /Y /V "dist\plugins64\."                   "%PCKG_DIR%\plugins64\."
+COPY /Y /V "dist\x64\plugins64\."               "%PCKG_DIR%\plugins64\."
+COPY /Y /V "dist\x64\vfwcodecs\."               "%PCKG_DIR%\vfwcodecs\."
 
 COPY /Y /V "..\avlib_vdplugin\ffmpeg\bin_x64\avcodec-62.dll"      "%PCKG_DIR%\avcodec-62.dll"
 COPY /Y /V "..\avlib_vdplugin\ffmpeg\bin_x64\avformat-62.dll"     "%PCKG_DIR%\avformat-62.dll"
