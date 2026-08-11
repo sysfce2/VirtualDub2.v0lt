@@ -9,6 +9,8 @@ Potential memory leaks have been fixed.
 Fixed video capture with compression in the "FFmpeg FFV1" and "x264 8 bit" codecs.
 Fixed loading of processing settings (script files).
 Added VSFilterBE 2.47.1 plugin, which provides TextSub and VobSub video filters.
+Added the ability to temporarily register native VfW codecs from the "vfwcodecs" folder.
+Added the Xvid VfW encoder.
 Cosmetic changes.
 
 
