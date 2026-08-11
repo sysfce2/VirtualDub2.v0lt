@@ -10,6 +10,8 @@
 #ifndef f_VIRTUALDUB_MISC_H
 #define f_VIRTUALDUB_MISC_H
 
+#include <vfw.h>
+
 #ifndef FCC
 #define FCC(ch4) ((((DWORD)(ch4) & 0xFF) << 24) |     \
                   (((DWORD)(ch4) & 0xFF00) << 8) |    \

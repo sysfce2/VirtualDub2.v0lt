@@ -6,6 +6,7 @@
 //
 
 #include "stdafx.h"
+#include "VBitmap.h"
 
 #ifdef VD_CPU_X86
 void __declspec(naked) __cdecl VDVFLogoAlphaBltMMX(Pixel32 *dst, PixOffset dstoff, const Pixel32 *src, PixOffset srcoff, PixDim w, PixDim h) {
