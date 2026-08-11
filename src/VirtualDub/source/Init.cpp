@@ -59,6 +59,7 @@
 #include "AudioDisplay.h"
 #include "RTProfileDisplay.h"
 #include "plugins.h"
+#include "misc.h"
 
 #include "project.h"
 #include "projectui.h"
@@ -356,6 +357,53 @@ void VDEnableExceptionsFromUserCallbacksW32() {
 	}
 }
 
+std::list<VDStringW> g_pluginVfwCodec;
+
+static void VDLoadVfwCodecs(const VDStringW& path)
+{
+	int succeeded = 0;
+	int failed = 0;
+
+	VDDirectoryIterator it(VDMakePath(path.c_str(), L"*.dll").c_str());
+
+	while (it.Next()) {
+		VDDEBUG(L"VfW codecs: Attempting to load \"%s\"\n", it.GetFullPath().c_str());
+		VDStringW path(it.GetFullPath());
+
+		for (const auto& vfwCodec : g_pluginVfwCodec) {
+			if (vfwCodec == path) {
+				return;
+			}
+		}
+
+		try {
+			EncoderHIC* plugin = EncoderHIC::load(path, ICTYPE_VIDEO, 0, ICMODE_COMPRESS);
+			if (plugin) {
+				ICINFO ici = { sizeof(ICINFO) };
+				if (!plugin->vdproc) {
+					// only regular VfW encoders
+					plugin->getInfo(ici);
+				}
+				delete plugin;
+
+				if (ici.fccHandler) {
+					BOOL ret = ICInstall(FCC('VIDC'), ici.fccHandler, (LPARAM)path.c_str(), nullptr, ICINSTALL_DRIVERW);
+					if (ret) {
+						g_pluginVfwCodec.emplace_back(path);
+						++succeeded;
+					} else {
+						++failed;
+					}
+				}
+			}
+		}
+		catch (const MyError& e) {
+			VDLog(kVDLogWarning, VDStringW().sprintf(L"VfW codecs: Failed to load \"%s\": %s", it.GetFullPath().c_str(), e.gets()));
+			++failed;
+		}
+	}
+}
+
 bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine)
 {
 //#ifdef _DEBUG
@@ -581,6 +629,12 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine)
 	}
 	else if (pluginsSucceeded) {
 		guiSetStatus("Autoloaded %d filter(s).", 255, pluginsSucceeded);
+	}
+
+	// Load VfW coders from special folder
+
+	vdprotected("autoloading VfW codecs from folder at startup") {
+		VDLoadVfwCodecs(VDMakePath(programPath.c_str(), L"vfwcodecs"));
 	}
 
 	// Detect DivX.
