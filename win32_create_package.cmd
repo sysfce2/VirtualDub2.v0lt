@@ -57,6 +57,7 @@ COPY /Y /V "_out\Release\vdicmdrv.dll"          "%PCKG_DIR%\extra\vdicmdrv.dll"
 COPY /Y /V "_out\Release\vdlaunch.exe"          "%PCKG_DIR%\extra\vdlaunch.exe"
 COPY /Y /V "_out\Release\vdremote.dll"          "%PCKG_DIR%\extra\vdremote.dll"
 COPY /Y /V "_out\Release\vdsvrlnk.dll"          "%PCKG_DIR%\extra\vdsvrlnk.dll"
+COPY /Y /V "dist\win32\."                       "%PCKG_DIR%\."
 COPY /Y /V "dist\win32\plugins32\."             "%PCKG_DIR%\plugins32\."
 COPY /Y /V "dist\win32\vfwcodecs\."             "%PCKG_DIR%\vfwcodecs\."
 
