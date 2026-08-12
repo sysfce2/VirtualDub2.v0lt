@@ -14,8 +14,6 @@
 #include <vd2/system/int128.h>
 #include <vd2/system/linearalloc.h>
 #include <vd2/system/protscope.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include "ScriptInterpreter.h"
 #include "FilterFrame.h"
 #include "FilterFrameAllocatorManager.h"

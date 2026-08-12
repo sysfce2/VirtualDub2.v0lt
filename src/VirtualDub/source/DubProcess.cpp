@@ -8,10 +8,8 @@
 
 #include "stdafx.h"
 #include <vd2/Dita/resources.h>
-#include <vd2/system/error.h>
 #include <vd2/system/log.h>
 #include <vd2/system/w32assist.h>
-#include <vd2/Kasumi/pixmapops.h>
 #include <vd2/VDDisplay/display.h>
 #include <vd2/Riza/videocodec.h>
 #include <vd2/Riza/bitmap.h>

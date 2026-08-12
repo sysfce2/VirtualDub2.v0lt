@@ -9,8 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
-
 #include <vd2/system/thunk.h>
 #include <vd2/plugin/vdplugin.h>
 #include <vd2/plugin/vdvideofilt.h>

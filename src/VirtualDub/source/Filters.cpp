@@ -10,7 +10,6 @@
 
 #include <stdarg.h>
 #include <malloc.h>
-#include <windows.h>
 
 #include <ctype.h>
 
@@ -20,15 +19,11 @@
 
 #include "resource.h"
 #include <vd2/system/debug.h>
-#include <vd2/system/error.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/protscope.h>
 #include <vd2/system/refcount.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/vdalloc.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/VDLib/Dialog.h>
 #include "plugins.h"
 

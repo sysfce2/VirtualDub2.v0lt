@@ -16,8 +16,6 @@
 #include "misc.h"
 #include <vd2/system/cpuaccel.h>
 #include <vd2/Kasumi/pixel.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Kasumi/resample.h>
 #include <vd2/Kasumi/resample_kernels.h>
 #include <vd2/VDXFrame/VideoFilter.h>

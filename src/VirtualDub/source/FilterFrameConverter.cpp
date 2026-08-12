@@ -7,7 +7,6 @@
 //
 
 #include "stdafx.h"
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Riza/bitmap.h>
 #include <../Kasumi/h/uberblit_base.h>
 #include "FilterFrameConverter.h"

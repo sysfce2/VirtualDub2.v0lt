@@ -15,7 +15,6 @@
 #include <vd2/system/fraction.h>
 #include <vd2/system/binary.h>
 #include <vd2/system/log.h>
-#include <vd2/kasumi/pixmapops.h>
 #include "InputFile.h"
 #include "VideoSource.h"
 #include "gui.h"

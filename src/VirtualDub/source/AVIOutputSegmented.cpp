@@ -8,9 +8,7 @@
 //
 
 #include "stdafx.h"
-#include <list>
 #include <vd2/system/file.h>
-#include <vd2/system/error.h>
 #include <vd2/system/math.h>
 #include <vd2/Riza/audiocodec.h>
 #include "DubOutput.h"

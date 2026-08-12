@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <commctrl.h>
 #include <commdlg.h>
 #include <dlgs.h>
@@ -28,8 +27,6 @@
 #include <vd2/system/debug.h>
 #include <vd2/system/cmdline.h>
 #include <vd2/Dita/services.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/VDLib/Dialog.h>
 #include "VideoSource.h"
 #include "AudioSource.h"
@@ -49,7 +46,6 @@
 #include "InputFile.h"
 #include "AVIOutputImages.h"
 #include "AVIOutputPlugin.h"
-#include <vd2/system/error.h>
 #include <vd2/plugin/vdinputdriver.h>
 
 ///////////////////////////////////////////////////////////////////////////

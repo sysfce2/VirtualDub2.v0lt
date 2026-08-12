@@ -11,7 +11,6 @@
 #include <commctrl.h>
 #include <vfw.h>
 #include <shellapi.h>
-#include <vd2/system/error.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/system/registry.h>
@@ -43,7 +42,6 @@
 #include "AVIStripeSystem.h"
 #include "uiframe.h"
 #include "misc.h"
-#include <vd2/Kasumi/pixmaputils.h>
 
 #if NTDDI_VERSION<NTDDI_LONGHORN
 #undef NTDDI_VERSION

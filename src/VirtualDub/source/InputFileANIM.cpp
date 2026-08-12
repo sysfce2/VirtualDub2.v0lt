@@ -10,11 +10,7 @@
 #include "stdafx.h"
 
 #include <vd2/system/binary.h>
-#include <vd2/system/error.h>
 #include <vd2/system/file.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include "VideoSource.h"
 #include "VBitmap.h"
 #include "InputFileANIM.h"

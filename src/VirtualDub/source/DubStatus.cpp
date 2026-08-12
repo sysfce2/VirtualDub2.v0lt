@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <commctrl.h>
 #include <vfw.h>
 

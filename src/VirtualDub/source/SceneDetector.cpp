@@ -8,10 +8,7 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include <vd2/Kasumi/pixel.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 
 #include "SceneDetector.h"
 

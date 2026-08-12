@@ -1,14 +1,10 @@
 #include "stdafx.h"
 #if 0
 
-#include <windows.h>
 #include "VideoDisplay.h"
 #include <vd2/system/memory.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/vdalloc.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
-#include <vd2/Kasumi/pixmapops.h>
 #include <vd2/Kasumi/triblt.h>
 #include <vd2/Kasumi/resample.h>
 

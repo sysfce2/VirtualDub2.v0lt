@@ -9,12 +9,8 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <vd2/system/thread.h>
 #include <vd2/system/profile.h>
-#include <vector>
-#include <list>
-#include <algorithm>
 
 #include "gui.h"
 #include "oshelper.h"

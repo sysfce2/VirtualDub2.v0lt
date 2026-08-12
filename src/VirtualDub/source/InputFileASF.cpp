@@ -8,7 +8,6 @@
 
 #include "stdafx.h"
 #include "InputFile.h"
-#include <vd2/system/error.h>
 
 class VDInputDriverASF : public vdrefcounted<IVDInputDriver> {
 public:

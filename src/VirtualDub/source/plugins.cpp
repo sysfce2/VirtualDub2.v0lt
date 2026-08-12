@@ -8,10 +8,7 @@
 //
 
 #include "stdafx.h"
-#include <list>
-#include <vd2/system/VDString.h>
 #include <vd2/system/debug.h>
-#include <vd2/system/error.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/log.h>
 #include <vd2/system/refcount.h>

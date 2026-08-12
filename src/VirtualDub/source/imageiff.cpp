@@ -8,9 +8,6 @@
 
 #include "stdafx.h"
 #include <vd2/system/binary.h>
-#include <vd2/system/error.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include "imageiff.h"
 
 class VDImageDecoderIFF : public IVDImageDecoderIFF {

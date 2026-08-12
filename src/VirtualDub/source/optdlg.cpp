@@ -9,15 +9,12 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <commctrl.h>
 #include <vd2/system/registry.h>
 #include <vd2/system/math.h>
 #include <vd2/system/w32assist.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/VDLib/Dialog.h>
 
-#include <list>
 #include <utility>
 
 #include "optdlg.h"

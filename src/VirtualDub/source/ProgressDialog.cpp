@@ -8,14 +8,11 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <commctrl.h>
 
 #include "resource.h"
 
 #include "ProgressDialog.h"
-
-#include <vd2/system/error.h>
 
 extern HINSTANCE g_hInst;
 

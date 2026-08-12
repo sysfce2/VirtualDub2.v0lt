@@ -11,14 +11,12 @@
 
 #include <stdarg.h>
 
-#include <windows.h>
 #include <commctrl.h>
 #include <commdlg.h>
 
 #include "ClippingControl.h"
 #include "PositionControl.h"
 #include "VideoSource.h"
-#include <vd2/system/error.h>
 #include <vd2/system/list.h>
 #include <vd2/system/registry.h>
 #include <vd2/system/w32assist.h>

@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include <vd2/system/registry.h>
 
 #include "oshelper.h"

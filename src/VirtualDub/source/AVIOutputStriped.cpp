@@ -9,8 +9,6 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/text.h>
 
 #include "AVIOutputStriped.h"

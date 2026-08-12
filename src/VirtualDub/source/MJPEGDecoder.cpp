@@ -7,14 +7,10 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include "MJPEGDecoder.h"
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/memory.h>
 #include <vd2/system/binary.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 
 #ifdef VD_COMPILER_MSVC
 	#include <vd2/system/win32/intrin.h>

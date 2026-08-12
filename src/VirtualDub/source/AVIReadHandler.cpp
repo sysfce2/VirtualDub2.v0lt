@@ -16,14 +16,12 @@
 #include <vd2/system/binary.h>
 #include <vd2/system/bitmath.h>
 #include <vd2/system/debug.h>
-#include <vd2/system/error.h>
 #include <vd2/system/list.h>
 #include <vd2/system/file.h>
 #include <vd2/system/log.h>
 #include <vd2/system/text.h>
 #include <vd2/system/vdalloc.h>
 #include <vd2/system/vdstl.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/Dita/resources.h>
 #include "Fixes.h"

@@ -18,7 +18,6 @@
 
 #include <vd2/system/bitmath.h>
 #include <vd2/system/debug.h>
-#include <vd2/system/error.h>
 #include <vd2/system/text.h>
 #include <vd2/system/log.h>
 #include <vd2/system/protscope.h>
@@ -26,9 +25,7 @@
 #include <vd2/system/w32assist.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/Dita/resources.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
+
 #include <vd2/Riza/bitmap.h>
 #include <../dfsc/dfsc.h>
 #include "misc.h"

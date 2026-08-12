@@ -12,9 +12,6 @@
 #include "stdafx.h"
 
 #include <vd2/Riza/bitmap.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
-#include <vd2/Kasumi/pixmapops.h>
 #include "AVIOutputAPNG.h"
 #include "APNG.h"
 

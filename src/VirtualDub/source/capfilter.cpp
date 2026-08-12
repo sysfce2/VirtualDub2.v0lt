@@ -10,9 +10,6 @@
 #include "stdafx.h"
 #include <vd2/system/vdstl.h>
 #include <vd2/system/memory.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Riza/bitmap.h>
 #include "capfilter.h"
 #include "filters.h"

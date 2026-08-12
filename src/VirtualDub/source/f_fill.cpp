@@ -8,11 +8,9 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <commctrl.h>
 
 #include <vd2/system/refcount.h>
-#include <vd2/kasumi/pixmap.h>
 #include <vd2/VDXFrame/VideoFilter.h>
 #include <vd2/VDLib/Dialog.h>
 

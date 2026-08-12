@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <vfw.h>
 #include <richedit.h>
 #include <vd2/system/registry.h>
@@ -24,7 +23,6 @@
 #include <vd2/system/thread.h>
 #include <vd2/system/profile.h>
 #include <vd2/system/vdstl.h>
-#include <vd2/system/VDString.h>
 #include "LogWindow.h"
 #include "RTProfileDisplay.h"
 #include "projectui.h"

@@ -9,12 +9,10 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <vfw.h>
 #include <Ks.h>
 #include <Ksmedia.h>
 #include <vd2/system/file.h>
-#include <vd2/system/Error.h>
 #include <vd2/Dita/resources.h>
 
 #include "gui.h"

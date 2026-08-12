@@ -7,7 +7,6 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include "caputils.h"
 
 VDCaptureAutoPriority::VDCaptureAutoPriority() {

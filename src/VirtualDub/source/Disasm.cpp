@@ -9,8 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
-
 #include "resource.h"
 #include "disasm.h"
 

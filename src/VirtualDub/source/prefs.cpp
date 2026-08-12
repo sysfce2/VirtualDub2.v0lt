@@ -11,7 +11,6 @@
 
 #define f_PREFS_CPP
 
-#include <windows.h>
 #include <commctrl.h>
 #include <mmsystem.h>
 

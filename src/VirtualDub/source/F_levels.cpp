@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <commctrl.h>
 
 #include "ScriptInterpreter.h"
@@ -21,7 +20,6 @@
 #include "filter.h"
 #include "gui.h"
 #include "VBitmap.h"
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/system/cpuaccel.h>
 
 /////////////////////////////////////////////////////////////////////

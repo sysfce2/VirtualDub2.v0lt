@@ -8,7 +8,6 @@
 //
 
 #include <stdafx.h>
-#include <windows.h>
 #include <commctrl.h>
 #include <vfw.h>
 #include <vd2/system/vdtypes.h>
@@ -19,7 +18,6 @@
 #include <vd2/system/strutil.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/system/time.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Dita/basetypes.h>
 #include <vd2/Dita/services.h>
 #include <vd2/Dita/controls.h>

@@ -7,14 +7,11 @@
 //
 
 #include "stdafx.h"
-#include <vector>
-#include <list>
 #include <utility>
 
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/vdalloc.h>
 #include <vd2/system/VDScheduler.h>
-#include <vd2/system/Error.h>
 #include <vd2/system/protscope.h>
 #include <vd2/system/VDRingBuffer.h>
 #include <vd2/system/fraction.h>

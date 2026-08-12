@@ -11,11 +11,9 @@
 
 #include <ctype.h>
 
-#include <windows.h>
 #include <commdlg.h>
 #include <mmsystem.h>
 
-#include <vd2/system/error.h>
 #include <vd2/system/file.h>
 #include <vd2/Dita/services.h>
 #include "ProgressDialog.h"

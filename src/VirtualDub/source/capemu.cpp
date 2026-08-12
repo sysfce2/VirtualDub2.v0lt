@@ -12,9 +12,7 @@
 #include <vd2/VDCapture/capdriver.h>
 #include <vd2/Dita/services.h>
 #include <vd2/system/atomic.h>
-#include <vd2/system/error.h>
 #include <vd2/system/vdalloc.h>
-#include <vd2/system/vdstring.h>
 #include <vd2/system/refcount.h>
 #include <vd2/system/registry.h>
 #include <vd2/system/time.h>
@@ -23,7 +21,6 @@
 #include <vd2/system/VDRingBuffer.h>
 #include <vd2/VDDisplay/display.h>
 #include <vd2/Riza/audioout.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include "InputFile.h"
 #include "VideoSource.h"
 #include "AudioSource.h"

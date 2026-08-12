@@ -9,16 +9,10 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/thread.h>
 #include <vd2/system/log.h>
 #include <vd2/system/file.h>
-#include <vd2/system/error.h>
 #include <vd2/dita/services.h>
-#include <vector>
-#include <list>
-#include <algorithm>
 
 #include "resource.h"
 #include "oshelper.h"

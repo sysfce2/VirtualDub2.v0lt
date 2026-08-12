@@ -10,7 +10,6 @@
 #include "stdafx.h"
 #include <process.h>
 
-#include <windows.h>
 #include <vfw.h>
 #include <commdlg.h>
 
@@ -21,7 +20,6 @@
 #include "VideoSource.h"
 #include "VideoSourceAVI.h"
 #include <vd2/system/debug.h>
-#include <vd2/system/error.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/thread.h>
 #include <vd2/system/w32assist.h>

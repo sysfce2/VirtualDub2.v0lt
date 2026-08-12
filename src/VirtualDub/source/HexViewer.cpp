@@ -14,7 +14,6 @@
 #include <ctype.h>
 #include <new>
 
-#include <windows.h>
 #include <commctrl.h>
 #include <commdlg.h>
 #include <shellapi.h>
@@ -24,7 +23,6 @@
 #include "gui.h"
 #include "misc.h"
 #include <vd2/system/file.h>
-#include <vd2/system/error.h>
 #include <vd2/system/list.h>
 #include <vd2/system/strutil.h>
 #include <vd2/system/vdalloc.h>

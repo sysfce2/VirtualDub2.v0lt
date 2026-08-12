@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #if 0
 
-#include <windows.h>
 #include <stdarg.h>
 
 #include "DynamicCode.h"

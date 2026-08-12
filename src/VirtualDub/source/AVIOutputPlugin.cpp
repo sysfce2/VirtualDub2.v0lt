@@ -8,7 +8,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <vd2/plugin/vdplugin.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/debug.h>

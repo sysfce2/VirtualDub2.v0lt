@@ -8,7 +8,6 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <commctrl.h>
 #include <commdlg.h>
 #include <new>
@@ -17,9 +16,6 @@
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/strutil.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/VDXFrame/VideoFilter.h>
 #include <vd2/VDLib/Dialog.h>
 #include "resource.h"
@@ -28,7 +24,6 @@
 #include "vbitmap.h"
 #include "oshelper.h"
 #include "image.h"
-#include <vd2/system/error.h>
 
 extern HINSTANCE g_hInst;
 

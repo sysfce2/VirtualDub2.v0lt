@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include <vd2/Kasumi/blitter.h>
 #include <vd2/Riza/bitmap.h>
 #include <../Kasumi/h/uberblit_base.h>

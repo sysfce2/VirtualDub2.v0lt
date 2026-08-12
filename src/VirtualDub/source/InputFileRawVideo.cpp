@@ -9,13 +9,9 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include <vd2/system/file.h>
 #include <vd2/system/registry.h>
 #include <vd2/Dita/resources.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/VDLib/Dialog.h>
 #include "VideoSource.h"
 #include "InputFile.h"

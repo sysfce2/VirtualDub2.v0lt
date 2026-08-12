@@ -8,10 +8,8 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 
 #include "resource.h"
-#include <vd2/system/error.h>
 #include <vd2/system/time.h>
 #include <vd2/Dita/w32control.h>
 #include "capvumeter.h"

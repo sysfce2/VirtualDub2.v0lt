@@ -10,7 +10,6 @@
 #include "stdafx.h"
 
 #include "FrameSubset.h"
-#include <vd2/system/error.h>
 #include <vd2/system/fraction.h>
 
 FrameSubset::FrameSubset() {

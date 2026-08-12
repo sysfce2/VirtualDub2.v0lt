@@ -7,11 +7,8 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
-
 #include "VBitmap.h"
 #include "Histogram.h"
-#include <vd2/system/error.h>
 
 const char histo_log_table[]={
 8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,

@@ -11,7 +11,6 @@
 #include <mmsystem.h>
 
 #include <vd2/system/VDRingBuffer.h>
-#include <vd2/system/Error.h>
 #include <vd2/system/strutil.h>
 #include <vd2/system/fraction.h>
 #include <vd2/system/refcount.h>

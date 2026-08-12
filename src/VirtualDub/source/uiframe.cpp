@@ -8,7 +8,6 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <vd2/system/w32assist.h>
 #include "oshelper.h"
 #include "uiframe.h"

@@ -14,11 +14,9 @@
 
 #include <process.h>
 #include <time.h>
-#include <vector>
 #include <deque>
 #include <utility>
 
-#include <windows.h>
 #include <vfw.h>
 
 #include "resource.h"
@@ -35,9 +33,6 @@
 #include <vd2/system/protscope.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/Dita/resources.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Riza/bitmap.h>
 #include <vd2/VDDisplay/display.h>
 #include <vd2/Riza/videocodec.h>
@@ -51,7 +46,6 @@
 #include "misc.h"
 #include "timeline.h"
 
-#include <vd2/system/error.h>
 #include "AsyncBlitter.h"
 #include "AVIOutputPreview.h"
 #include "AVIOutput.h"

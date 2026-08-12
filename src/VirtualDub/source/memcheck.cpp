@@ -6,7 +6,6 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 
 #if 0
 

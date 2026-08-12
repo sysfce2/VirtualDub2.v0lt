@@ -9,13 +9,11 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include <vd2/system/profile.h>
 #include <vd2/Kasumi/region.h>
 #include <vd2/Kasumi/text.h>
 #include <vd2/Kasumi/triblt.h>
 #include <vd2/Kasumi/pixel.h>
-#include <vd2/Kasumi/pixmapops.h>
 #include <vd2/Kasumi/blitter.h>
 
 #include "VideoSource.h"

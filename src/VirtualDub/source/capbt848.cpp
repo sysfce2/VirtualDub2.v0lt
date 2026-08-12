@@ -12,10 +12,8 @@
 //	dTV Copyright (c) 2000 John Adcock.  All rights reserved.
 
 #include "stdafx.h"
-#include <windows.h>
 #include <commctrl.h>
 #include "resource.h"
-#include <vd2/system/error.h>
 #include "dtvdrv.h"
 
 extern const wchar_t g_szError[];

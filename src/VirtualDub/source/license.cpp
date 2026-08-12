@@ -8,7 +8,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <vd2/system/registry.h>
 #include "resource.h"
 

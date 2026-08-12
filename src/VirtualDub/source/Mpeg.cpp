@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 #include <process.h>
-#include <windows.h>
 #include <commctrl.h>
 #include <fcntl.h>
 #include <io.h>
@@ -17,7 +16,6 @@
 #include "AudioSource.h"
 #include "VideoSource.h"
 #include "FastReadStream.h"
-#include <vd2/system/error.h>
 #include <vd2/system/fraction.h>
 #include <vd2/system/log.h>
 #include <vd2/system/file.h>

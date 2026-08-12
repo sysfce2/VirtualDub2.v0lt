@@ -10,11 +10,9 @@
 
 #include <ctype.h>
 
-#include <windows.h>
 #include <vfw.h>
 
 #include "ProgressDialog.h"
-#include <vd2/system/error.h>
 
 #include "AVIStripeSystem.h"
 

@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <math.h>
 #include <vd2/system/binary.h>
 #include <vd2/system/refcount.h>

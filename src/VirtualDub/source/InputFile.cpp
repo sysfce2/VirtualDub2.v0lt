@@ -9,13 +9,10 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include "InputFile.h"
 #include "plugins.h"
 #include <vd2/plugin/vdplugin.h>
 #include <vd2/plugin/vdinputdriver.h>
-#include <vd2/system/error.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/file.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/registry.h>

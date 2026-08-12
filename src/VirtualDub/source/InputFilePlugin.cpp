@@ -13,14 +13,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <vd2/system/refcount.h>
-#include <vd2/system/error.h>
 #include <vd2/system/file.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/debug.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/Riza/bitmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include "InputFile.h"
 #include "VideoSource.h"
 #include "AudioSource.h"

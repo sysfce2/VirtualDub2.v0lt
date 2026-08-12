@@ -10,14 +10,11 @@
 #include "stdafx.h"
 
 #include "VideoSource.h"
-#include <vd2/system/error.h>
 #include <vd2/system/linearalloc.h>
 #include <vd2/system/list.h>
 #include <vd2/system/registry.h>
 #include <vd2/system/strutil.h>
 #include <vd2/Dita/services.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/VDLib/Dialog.h>
 #include <vd2/VDXFrame/VideoFilter.h>
 

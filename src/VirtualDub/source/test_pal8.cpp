@@ -1,10 +1,7 @@
 #include <stdafx.h>
-#include <vd2/system/error.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/vdalloc.h>
 #include <vd2/system/time.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Kasumi/resample.h>
 #include <vd2/Dita/services.h>
 #include "ProgressDialog.h"
@@ -12,7 +9,6 @@
 #include "VideoSource.h"
 #include "AVIOutput.h"
 #include "AVIOutputFile.h"
-#include <vector>
 
 extern const wchar_t g_szError[];
 

@@ -9,22 +9,16 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
-
 #include <map>
 
 #include "vdserver.h"
 
 #include "AudioSource.h"
 #include "VideoSource.h"
-#include <vd2/system/error.h>
 #include <vd2/system/file.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/strutil.h>
 #include <vd2/Dita/services.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include "FrameSubset.h"
 #include "FilterFrameVideoSource.h"
 

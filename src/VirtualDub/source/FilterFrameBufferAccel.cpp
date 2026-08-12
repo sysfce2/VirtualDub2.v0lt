@@ -6,7 +6,6 @@
 //
 
 #include "stdafx.h"
-#include <vd2/system/error.h>
 #include <vd2/Tessa/Context.h>
 #include "FilterAccelEngine.h"
 #include "FilterFrameBufferAccel.h"

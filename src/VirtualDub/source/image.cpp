@@ -8,14 +8,9 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include "VBitmap.h"
-#include <vd2/system/error.h>
 #include <vd2/system/file.h>
 #include <vd2/system/vdalloc.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Meia/decode_png.h>
 #include <vd2/Dita/resources.h>
 #include "imagejpegdec.h"

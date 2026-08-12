@@ -8,8 +8,6 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/Error.h>
-
 #include "filter.h"
 #include "af_base.h"
 #include "gui.h"

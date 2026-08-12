@@ -9,12 +9,9 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
-
 #include "gui.h"
 #include "crash.h"
 
-#include <vd2/system/error.h>
 #include <vd2/system/strutil.h>
 #include <vd2/system/fraction.h>
 #include <vd2/system/math.h>

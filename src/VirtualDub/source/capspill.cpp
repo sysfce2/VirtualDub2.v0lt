@@ -7,13 +7,11 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <commctrl.h>
 
 #include "resource.h"
 #include <vd2/system/list.h>
 #include <vd2/system/filesys.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/system/registry.h>
 #include "gui.h"

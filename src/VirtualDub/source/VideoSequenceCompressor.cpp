@@ -8,12 +8,9 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <vfw.h>
 
-#include <vd2/Kasumi/pixmap.h>
 #include <vd2/system/debug.h>
-#include <vd2/system/error.h>
 #include <vd2/system/log.h>
 #include <vd2/system/protscope.h>
 #include <vd2/system/w32assist.h>

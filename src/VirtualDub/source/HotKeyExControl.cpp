@@ -11,7 +11,6 @@
 #include <vd2/Dita/accel.h>
 #include <vd2/system/refcount.h>
 #include <vd2/system/w32assist.h>
-#include <vd2/system/VDString.h>
 #include "HotKeyExControl.h"
 
 class VDUIHotKeyExControlW32 : public vdrefcounted<IVDUIHotKeyExControl> {

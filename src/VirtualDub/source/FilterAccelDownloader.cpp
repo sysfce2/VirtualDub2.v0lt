@@ -7,7 +7,6 @@
 //
 
 #include "stdafx.h"
-#include <vd2/Kasumi/pixmaputils.h>
 #include "FilterAccelDownloader.h"
 #include "FilterAccelEngine.h"
 #include "FilterFrameBufferAccel.h"

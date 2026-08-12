@@ -8,13 +8,9 @@
 //
 
 #include "stdafx.h"
-#include <vector>
-#include <list>
 #include <map>
-#include <windows.h>
 #include <vfw.h>
 #include <vd2/system/binary.h>
-#include <vd2/system/error.h>
 #include <vd2/system/vdalloc.h>
 #include <vd2/system/fileasync.h>
 #include "AVIOutput.h"

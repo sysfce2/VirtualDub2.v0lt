@@ -50,8 +50,6 @@
 #include <stdarg.h>
 #include <malloc.h> // for _malloca()
 
-#include <windows.h>
-
 #include "resource.h"
 #include "crash.h"
 #include "disasm.h"

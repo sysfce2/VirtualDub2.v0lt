@@ -13,13 +13,11 @@
 #include <ctype.h>
 #include <process.h>
 
-#include <windows.h>
 #include <commctrl.h>
 #include <commdlg.h>
 #include <vfw.h>
 #include <shellapi.h>
 
-#include <vd2/system/error.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/int128.h>
 #include <vd2/system/registry.h>
@@ -34,9 +32,6 @@
 #include "AVIOutputStriped.h"
 #include "AVIStripeSystem.h"
 #include <vd2/Dita/services.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <../Kasumi/h/uberblit_rgb64.h>
 #include <../Kasumi/h/uberblit_16f.h>
 #include <vd2/Riza/bitmap.h>

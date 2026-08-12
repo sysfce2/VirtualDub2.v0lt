@@ -10,7 +10,6 @@
 #include "stdafx.h"
 #include <vd2/VDLib/Dialog.h>
 #include <vd2/VDLib/UIProxies.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include "FilterChainDesc.h"
 #include "FilterFrameVideoSource.h"
 #include "FilterSystem.h"

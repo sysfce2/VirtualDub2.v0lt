@@ -2,8 +2,6 @@
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/vdalloc.h>
 #include <vd2/system/time.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Kasumi/resample.h>
 #include <vd2/Dita/interface.h>
 

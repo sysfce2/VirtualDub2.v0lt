@@ -8,15 +8,9 @@
 
 #include "stdafx.h"
 
-#include <list>
-#include <vector>
-
-#include <windows.h>
-
 #include <vd2/system/text.h>
 #include <vd2/system/refcount.h>
 #include <vd2/system/vdalloc.h>
-#include <vd2/system/vdstring.h>
 
 #include "oshelper.h"
 #include "FilterGraph.h"

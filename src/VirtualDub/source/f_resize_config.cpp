@@ -8,12 +8,9 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <commctrl.h>
 #include <vd2/system/registry.h>
 #include <vd2/system/w32assist.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/plugin/vdvideofilt.h>
 #include "gui.h"
 #include "resource.h"

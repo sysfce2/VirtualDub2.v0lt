@@ -11,11 +11,9 @@
 
 #include <ddraw.h>
 
-#include <vd2/system/error.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/system/time.h>
-#include <vector>
 
 #include "DubUtils.h"
 #include "VideoSource.h"

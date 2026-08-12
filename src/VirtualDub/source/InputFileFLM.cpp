@@ -9,10 +9,7 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include <vd2/system/file.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
 #include "VideoSource.h"
 #include "InputFile.h"
 

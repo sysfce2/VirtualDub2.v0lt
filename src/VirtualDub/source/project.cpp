@@ -8,7 +8,7 @@
 //
 
 #include <stdafx.h>
-#include <windows.h>
+
 #include <vd2/system/filesys.h>
 #include <vd2/system/file.h>
 #include <vd2/system/thread.h>
@@ -19,9 +19,6 @@
 #include <vd2/system/w32assist.h>
 #include <vd2/Dita/services.h>
 #include <vd2/Dita/resources.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Riza/bitmap.h>
 #include "project.h"
 #include "VideoSource.h"

@@ -10,7 +10,6 @@
 
 #define f_POSITIONCONTROL_CPP
 
-#include <windows.h>
 #include <commctrl.h>
 
 #include "resource.h"

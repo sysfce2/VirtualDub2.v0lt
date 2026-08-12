@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <commctrl.h>
 #include <vfw.h>
 #include <shellapi.h>
@@ -22,7 +21,6 @@
 #include "oshelper.h"
 #include "prefs.h"
 #include "auxdlg.h"
-#include <vd2/system/error.h>
 #include "gui.h"
 #include "filters.h"
 #include "command.h"
@@ -35,7 +33,6 @@
 #include <vd2/system/registrymemory.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/w32assist.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/cmdline.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/protscope.h>

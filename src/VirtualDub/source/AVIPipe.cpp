@@ -10,8 +10,6 @@
 
 #include "VirtualDub.h"
 
-#include <windows.h>
-
 #include "AVIPipe.h"
 
 ///////////////////////////////

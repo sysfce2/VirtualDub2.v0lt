@@ -8,10 +8,8 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <io.h>
 
-#include <vd2/system/error.h>
 #include "FastReadStream.h"
 
 class FastReadStreamHeader {

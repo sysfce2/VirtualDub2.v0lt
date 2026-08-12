@@ -7,7 +7,6 @@
 //
 
 #include "stdafx.h"
-#include <vd2/system/error.h>
 #include "FilterFrameBufferMemory.h"
 
 namespace {

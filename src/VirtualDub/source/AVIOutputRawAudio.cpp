@@ -9,10 +9,7 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <vfw.h>
-
-#include <vd2/system/error.h>
 
 #include "AVIOutputRawAudio.h"
 

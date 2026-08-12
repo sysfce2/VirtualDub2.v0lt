@@ -10,7 +10,6 @@
 
 #include <vd2/system/thread.h>
 #include <vd2/system/refcount.h>
-#include <vd2/system/error.h>
 #include <vd2/system/registry.h>
 #include <vd2/system/fraction.h>
 #include <vd2/VDLib/Dialog.h>

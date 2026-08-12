@@ -11,8 +11,6 @@
 #include <windowsx.h>
 #include <vd2/system/w32assist.h>
 #include <vd2/VDDisplay/display.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Kasumi/pixel.h>
 #include <vd2/VDLib/Dialog.h>
 #include "FilterPreview.h"

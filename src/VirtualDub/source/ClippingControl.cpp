@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <vd2/VDDisplay/display.h>
 #include <vd2/VDDisplay/displaydrv.h>
 #include <vd2/system/w32assist.h>

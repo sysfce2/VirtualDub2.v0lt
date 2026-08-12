@@ -7,12 +7,9 @@
 //
 
 #include <stdafx.h>
-#include <windows.h>
 #include <stdio.h>
 #include <stddef.h>
 #include <math.h>
-#include <algorithm>
-#include <vector>
 #include <vd2/system/vdstl.h>
 #include "imagejpeg.h"
 

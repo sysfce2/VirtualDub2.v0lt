@@ -7,7 +7,6 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <richedit.h>
 #include <malloc.h>
 #include <stdio.h>

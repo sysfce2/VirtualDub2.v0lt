@@ -10,7 +10,6 @@
 #include "stdafx.h"
 
 #ifdef _DEBUG
-	#include <windows.h>
 	#include <vd2/system/memory.h>
 	#include <vd2/VDXFrame/VideoFilter.h>
 	#include <vd2/Kasumi/text.h>

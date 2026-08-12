@@ -10,7 +10,6 @@
 #include "stdafx.h"
 #include <ctype.h>
 
-#include <windows.h>
 #include <commctrl.h>
 #include <vfw.h>
 
@@ -24,7 +23,6 @@
 #include <vd2/VDLib/UIProxies.h>
 #include <vd2/Riza/videocodec.h>
 #include <vd2/Riza/bitmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 
 #include "resource.h"
 

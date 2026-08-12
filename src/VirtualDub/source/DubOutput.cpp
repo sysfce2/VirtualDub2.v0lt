@@ -9,8 +9,6 @@
 
 #include "stdafx.h"
 #include "DubOutput.h"
-#include <vd2/system/error.h>
-#include <list>
 #include "AVIOutput.h"
 #include "AVIOutputFile.h"
 #include "AVIOutputPlugin.h"

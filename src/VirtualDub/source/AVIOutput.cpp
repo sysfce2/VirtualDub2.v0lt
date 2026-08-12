@@ -7,7 +7,6 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include "AVIOutput.h"
 #include "oshelper.h"
 #include "misc.h"

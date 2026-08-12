@@ -20,8 +20,6 @@
 #include <vd2/system/filesys.h>
 #include <vd2/system/log.h>
 #include <vd2/system/registry.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmaputils.h>
 
 #ifdef _M_IX86
 	long __declspec(naked) MulDivTrunc(long a, long b, long c) {

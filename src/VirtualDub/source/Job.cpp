@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <commctrl.h>
 #include <commdlg.h>
 #include <shellapi.h>
@@ -20,10 +19,8 @@
 
 #include <vd2/system/list.h>
 #include <vd2/system/debug.h>
-#include <vd2/system/error.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/registry.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/log.h>
 #include <vd2/system/text.h>
 #include <vd2/system/file.h>

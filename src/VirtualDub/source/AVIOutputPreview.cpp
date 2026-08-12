@@ -8,7 +8,6 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include <vd2/system/profile.h>
 #include <vd2/system/time.h>
 #include <vd2/system/log.h>

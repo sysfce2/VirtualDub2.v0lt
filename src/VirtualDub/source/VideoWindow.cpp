@@ -9,10 +9,6 @@
 
 #include "stdafx.h"
 
-#include <algorithm>
-
-#include <windows.h>
-
 #include <vd2/system/fraction.h>
 #include <vd2/system/vdtypes.h>
 #include <vd2/system/w32assist.h>

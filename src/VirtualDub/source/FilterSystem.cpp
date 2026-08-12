@@ -12,13 +12,10 @@
 #include <bitset>
 #include <vd2/system/bitmath.h>
 #include <vd2/system/debug.h>
-#include <vd2/system/error.h>
 #include <vd2/system/linearalloc.h>
 #include <vd2/system/profile.h>
 #include <vd2/system/protscope.h>
 #include <vd2/system/VDScheduler.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include "VBitmap.h"
 #include "crash.h"
 #include "misc.h"

@@ -9,14 +9,11 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <shellapi.h>
 #include <shlobj.h>
 #include <shlwapi.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/zip.h>
-#include <vd2/system/Error.h>
 #include <vd2/system/w32assist.h>
 #include "oshelper.h"
 #include "version.h"

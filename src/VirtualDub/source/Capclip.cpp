@@ -7,16 +7,12 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 
 #include "resource.h"
 #include "oshelper.h"
 #include "vbitmap.h"
 #include "helpfile.h"
-#include <vd2/system/error.h>
 #include <vd2/system/thread.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include "ClippingControl.h"
 
 #include "capture.h"

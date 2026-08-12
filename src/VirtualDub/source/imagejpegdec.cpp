@@ -6,11 +6,9 @@
 //
 
 #include "stdafx.h"
-#include <vd2/system/error.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/vdstl.h>
 #include <vd2/Meia/MPEGIDCT.h>
-#include <vector>
 #include "imagejpegdec.h"
 
 namespace {

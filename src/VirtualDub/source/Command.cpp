@@ -8,10 +8,8 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 
 #include <vd2/system/file.h>
-#include <vd2/system/error.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/vdstl.h>
 

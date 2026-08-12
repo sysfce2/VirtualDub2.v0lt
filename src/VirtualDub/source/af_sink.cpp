@@ -9,7 +9,6 @@
 #include "stdafx.h"
 
 #include <vd2/system/VDRingBuffer.h>
-#include <vd2/system/Error.h>
 #include "af_base.h"
 #include "af_sink.h"
 

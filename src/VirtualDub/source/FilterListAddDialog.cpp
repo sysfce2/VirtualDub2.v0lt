@@ -11,7 +11,6 @@
 #include "filters.h"
 #include "plugins.h"
 #include "resource.h"
-#include <list>
 #include <vd2/Dita/services.h>
 #include <vd2/VDLib/Dialog.h>
 #include <vd2/VDLib/UIProxies.h>

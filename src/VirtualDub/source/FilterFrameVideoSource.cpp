@@ -7,7 +7,6 @@
 //
 
 #include "stdafx.h"
-#include <vd2/Kasumi/pixmaputils.h>
 #include "FilterFrameVideoSource.h"
 #include "VideoSource.h"
 

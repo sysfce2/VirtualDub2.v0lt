@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <mmsystem.h>
 #include <mmreg.h>
 #include <msacm.h>

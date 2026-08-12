@@ -11,7 +11,6 @@
 
 #define f_POSITIONCONTROL_CPP
 
-#include <windows.h>
 #include <commctrl.h>
 
 #include <vd2/system/vdtypes.h>

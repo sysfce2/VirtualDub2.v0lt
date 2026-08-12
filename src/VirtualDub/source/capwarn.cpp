@@ -7,7 +7,6 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <vd2/system/registry.h>
 #include "oshelper.h"
 #include "helpfile.h"

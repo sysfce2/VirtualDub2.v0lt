@@ -9,12 +9,8 @@
 
 #include "stdafx.h"
 
-#include <vd2/system/error.h>
 #include <vd2/system/fileasync.h>
 #include <vd2/system/binary.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
-#include <vd2/Kasumi/pixmaputils.h>
 #include <vd2/Riza/bitmap.h>
 #include "AVIOutput.h"
 #include "AVIOutputFLM.h"

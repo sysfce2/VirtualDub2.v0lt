@@ -9,7 +9,6 @@
 
 #include "stdafx.h"
 
-#include <windows.h>
 #include <mmsystem.h>
 #include <vfw.h>
 
@@ -18,14 +17,10 @@
 #include "ScriptInterpreter.h"
 #include "ScriptValue.h"
 #include "ScriptError.h"
-#include <vd2/system/error.h>
 #include <vd2/system/vdalloc.h>
 #include <vd2/system/file.h>
 #include <vd2/system/log.h>
-#include <vd2/system/VDString.h>
 #include <vd2/system/filesys.h>
-#include <vd2/Kasumi/pixmap.h>
-#include <vd2/Kasumi/pixmapops.h>
 #include <vd2/Dita/services.h>
 #include <vd2/plugin/vdplugin.h>
 #include <vd2/plugin/vdaudiofilt.h>

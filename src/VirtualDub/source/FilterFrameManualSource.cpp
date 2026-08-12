@@ -8,7 +8,6 @@
 //
 
 #include "stdafx.h"
-#include <vd2/Kasumi/pixmaputils.h>
 #include "FilterFrame.h"
 #include "FilterFrameManualSource.h"
 #include "FilterFrameRequest.h"

@@ -14,8 +14,6 @@
 	#pragma once
 #endif
 
-#include <wchar.h>
-
 #include <vd2/system/vdtypes.h>
 #include <vd2/system/vdstl.h>
 #include <vd2/system/math.h>
@@ -25,10 +23,8 @@
 #include <vd2/system/error.h>
 #include <vd2/system/text.h>
 #include <vd2/system/VDString.h>
-#include <vd2/system/VDRingBuffer.h>
-#include <stdlib.h>
+
 #include <stddef.h>
-#include <string.h>
 #include <stdio.h>
 #include <math.h>
 #include <vector>
@@ -40,15 +36,15 @@
 
 #include "VirtualDub.h"
 
-
 // Disable some stupid VC++ warnings so we can use warning level 4.  Most of these need
 // to be disabled because of the STL.
 #ifdef _MSC_VER
-#pragma warning(disable: 4511)			// warning C4511: copy constructor could not be generated
-#pragma warning(disable: 4018)			// warning C4018: signed/unsigned mismatch
-										// This one is just too annoying to leave on, and Intel C/C++'s value range warnings are much more useful.
+#pragma warning(disable: 4018)	// warning C4018: signed/unsigned mismatch
+								// This one is just too annoying to leave on, and Intel C/C++'s value range warnings are much more useful.
 #endif
 
 #include <vd2/Kasumi/pixmap.h>
+#include <vd2/Kasumi/pixmapops.h>
+#include <vd2/Kasumi/pixmaputils.h>
 
 #endif

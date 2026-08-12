@@ -7,7 +7,6 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <commctrl.h>
 #include <vd2/VDLib/Dialog.h>
 #include "resource.h"

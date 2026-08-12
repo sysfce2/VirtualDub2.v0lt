@@ -6,7 +6,6 @@
 //
 
 #include "stdafx.h"
-#include <vd2/system/error.h>
 #include "FilterFrame.h"
 #include "FilterFrameAllocator.h"
 #include "FilterFrameCache.h"

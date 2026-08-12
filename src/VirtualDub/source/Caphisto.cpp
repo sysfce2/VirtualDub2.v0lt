@@ -11,9 +11,7 @@
 
 #include "resource.h"
 #include <vd2/system/cpuaccel.h>
-#include <vd2/system/error.h>
 #include <vd2/system/thread.h>
-#include <vd2/Kasumi/pixmap.h>
 #include <vd2/Dita/w32control.h>
 
 #include "caphisto.h"

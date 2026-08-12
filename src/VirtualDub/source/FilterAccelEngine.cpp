@@ -7,13 +7,11 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <mmsystem.h>
 #include <vd2/system/bitmath.h>
 #include <vd2/system/cpuaccel.h>
 #include <vd2/system/profile.h>
 #include <vd2/system/w32assist.h>
-#include <vd2/Kasumi/pixmap.h>
 #include <vd2/Tessa/Context.h>
 #include "FilterAccelEngine.h"
 #include "FilterFrameBufferAccel.h"

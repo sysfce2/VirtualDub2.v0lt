@@ -12,7 +12,6 @@
 #include <vd2/system/registry.h>
 #include <vd2/system/filesys.h>
 #include <vd2/system/file.h>
-#include <vd2/system/error.h>
 #include <vd2/system/time.h>
 #include <vd2/Dita/controls.h>
 #include <vd2/Dita/interface.h>
