@@ -11,7 +11,6 @@
 #ifndef f_AVIOUTPUTAPNG_H
 #define f_AVIOUTPUTAPNG_H
 
-#include <vd2/system/VDString.h>
 #include "AVIOutput.h"
 
 class VideoSource;

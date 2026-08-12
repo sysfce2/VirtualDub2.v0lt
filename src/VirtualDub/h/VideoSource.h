@@ -14,7 +14,6 @@
 	#pragma once
 #endif
 
-#include <vd2/system/VDString.h>
 #include <vd2/system/vdalloc.h>
 #include <vd2/system/vdstl.h>
 #include <vd2/Kasumi/pixmap.h>

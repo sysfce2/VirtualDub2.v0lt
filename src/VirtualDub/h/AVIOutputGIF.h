@@ -8,7 +8,6 @@
 #ifndef f_AVIOUTPUTGIF_H
 #define f_AVIOUTPUTGIF_H
 
-#include <vd2/system/VDString.h>
 #include "AVIOutput.h"
 
 class VideoSource;
