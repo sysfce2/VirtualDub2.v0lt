@@ -7,8 +7,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
 
-#pragma warning(disable: 4786)
-
 #include <crtdbg.h>
 #include <stdio.h>
 #include <string.h>

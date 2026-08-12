@@ -8,10 +8,6 @@
 #ifndef f_VD2_DITA_BASETYPES_H
 #define f_VD2_DITA_BASETYPES_H
 
-#ifdef _MSC_VER
-#pragma warning(disable: 4786)
-#endif
-
 #include <math.h>
 
 #include <list>

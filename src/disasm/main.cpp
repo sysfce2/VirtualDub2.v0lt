@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
 
-#pragma warning(disable: 4786)
-
 #include <string>
 #include <list>
 #include <vector>
