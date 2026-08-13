@@ -1243,12 +1243,12 @@ index_complete:
 
 	// For now, use a O(n^2) algorithm to find the optimal size.
 
-	int blocksize = mSubIndexLimit;
+	uint32 blocksize = mSubIndexLimit;
 
 	while(blocksize > 1) {
-		int i;
+		uint32 i;
 		int nextblock = 0;
-		sint64 offset;
+		uint64 offset;
 
 		for(i=0; i<size; i++) {
 			if (i == nextblock) {
@@ -1256,20 +1256,22 @@ index_complete:
 				offset = asie2[i].offset;
 			}
 
-			if (asie2[i].offset >= offset + 0x100000000i64)
+			if (asie2[i].offset >= offset + 0x100000000i64) {
 				break;
+			}
 		}
 
-		if (i >= size)
+		if (i >= size) {
 			break;
+		}
 
 		--blocksize;
 	}
 
-	int blockcount = (size - 1) / blocksize + 1;
+	uint32 blockcount = (size - 1) / blocksize + 1;
 
 	if (blockcount > mSuperIndexLimit)
-		throw MyError("AVIOutput: Not enough superindex entries to index AVI file.  (%d slots required, %d slots preallocated)",
+		throw MyError("AVIOutput: Not enough superindex entries to index AVI file.  (%u slots required, %u slots preallocated)",
 			blockcount, mSuperIndexLimit);
 
 	// Write out the actual index blocks.
@@ -1278,9 +1280,9 @@ index_complete:
 
 	memset(asie, 0, sizeof(_avisuperindex_entry)*mSuperIndexLimit);
 
-	int indexnum=0;
+	uint32 indexnum=0;
 	while(size > 0) {
-		int tc = std::min<int>(size, blocksize);
+		uint32 tc = std::min(size, blocksize);
 
 		WriteSubIndexAVI2(&asie[indexnum++], asie2, tc, chunkID, dwSampleSize);
 

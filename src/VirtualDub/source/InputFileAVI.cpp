@@ -754,18 +754,18 @@ protected:
 	VDAtomicInt mbAbortScan;
 
 	long	lVideoKFrames;
-	long	lVideoKMinSize;
-	sint64 i64VideoKTotalSize;
-	long	lVideoKMaxSize;
+	uint32	lVideoKMinSize;
+	sint64	i64VideoKTotalSize;
+	uint32	lVideoKMaxSize;
 	long	lVideoCFrames;
-	long	lVideoCMinSize;
+	uint32	lVideoCMinSize;
 	sint64	i64VideoCTotalSize;
-	long	lVideoCMaxSize;
+	uint32	lVideoCMaxSize;
 
 	long	lAudioFrames;
-	long	lAudioMinSize;
+	uint32	lAudioMinSize;
 	sint64	i64AudioTotalSize;
-	long	lAudioMaxSize;
+	uint32	lAudioMaxSize;
 
 	long	lAudioPreload;
 
@@ -1124,7 +1124,7 @@ bool VDAVIFileInfoDialog::OnTimer(uint32 id) {
 	SetControlTextF(IDC_VIDEO_NUMKEYFRAMES, L"%ld", lVideoKFrames);
 
 	if (lVideoKFrames)
-		SetControlTextF(IDC_VIDEO_KEYFRAMESIZES, L"%ld/%lld/%ld (%lldK)"
+		SetControlTextF(IDC_VIDEO_KEYFRAMESIZES, L"%u/%lld/%u (%lldK)"
 					,lVideoKMinSize
 					,i64VideoKTotalSize/lVideoKFrames
 					,lVideoKMaxSize
@@ -1133,7 +1133,7 @@ bool VDAVIFileInfoDialog::OnTimer(uint32 id) {
 		SetControlText(IDC_VIDEO_KEYFRAMESIZES, L"(no key frames)");
 
 	if (lVideoCFrames)
-		SetControlTextF(IDC_VIDEO_NONKEYFRAMESIZES, L"%ld/%lld/%ld (%lldK)"
+		SetControlTextF(IDC_VIDEO_NONKEYFRAMESIZES, L"%u/%lld/%u (%lldK)"
 					,lVideoCMinSize
 					,i64VideoCTotalSize/lVideoCFrames
 					,lVideoCMaxSize
@@ -1149,7 +1149,7 @@ bool VDAVIFileInfoDialog::OnTimer(uint32 id) {
 		} else {
 
 			if (lAudioFrames)
-				SetControlTextF(IDC_AUDIO_FRAMESIZES, L"%ld/%I64d/%ld (%I64dK)"
+				SetControlTextF(IDC_AUDIO_FRAMESIZES, L"%u/%I64d/%u (%I64dK)"
 						,lAudioMinSize
 						,i64AudioTotalSize/lAudioFrames
 						,lAudioMaxSize

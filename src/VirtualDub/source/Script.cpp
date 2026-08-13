@@ -209,7 +209,7 @@ void RunScriptMemory(const char *mem, int start_line, bool stopAtReloadMarker, b
 		if (x1 && x1<x0) x0 = x1;
 		if (x2 && x2<x0) x0 = x2;
 		VDStringA text(s,x0-s);
-		int limit = 100;
+		const uint32 limit = 100;
 		if (text.length()>limit) {
 			text.replace(limit,text.length()-limit,"...",3);
 		}

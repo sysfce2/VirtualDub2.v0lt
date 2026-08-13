@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2001 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -471,7 +471,7 @@ void VDInputFileMP3::Init(const wchar_t *szFile) {
 	uint32 vbrBlockAlign = maxFrameSize + 1151;
 	vbrBlockAlign -= vbrBlockAlign % 1152;
 
-	int frameCount = (int)mFrames.size();
+	const uint32 frameCount = (uint32)mFrames.size();
 	if (framesWithLayer3 * 10 > frameCount * 9) {
 		mWaveFormat.resize(sizeof(mpeglayer3waveformat_tag));
 		mpeglayer3waveformat_tag& wf = *(mpeglayer3waveformat_tag *)mWaveFormat.data();
