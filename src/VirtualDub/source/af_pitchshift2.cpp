@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2006 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -213,7 +213,7 @@ uint32 VDAudioFilterPitchScale::Run() {
 	sint16 buf[4096];
 
 	// compute output samples
-	int samples = std::min<int>(mpContext->mCommonSamples, 4096 / format.mChannels);
+	uint32 samples = std::min<int>(mpContext->mCommonSamples, 4096 / format.mChannels);
 
 	if (!samples) {
 		if (pin.mbEnded && !mpContext->mInputSamples)
@@ -224,7 +224,7 @@ uint32 VDAudioFilterPitchScale::Run() {
 
 	// read buffer
 
-	int actual_samples = mpContext->mpInputs[0]->Read(buf, samples, false, kVFARead_PCM16);
+	const uint32 actual_samples = mpContext->mpInputs[0]->Read(buf, samples, false, kVFARead_PCM16);
 	VDASSERT(actual_samples == samples);
 
 	const uint32 nch = format.mChannels;
@@ -248,7 +248,7 @@ uint32 VDAudioFilterPitchScale::Run() {
 				sint16 *delay = chanInfo.mpDelayLine;
 
 				// write new samples
-				for(int i=0; i<discard; ++i) {
+				for (uint32 i = 0; i < discard; ++i) {
 					delay[(mDstOffset + i) & kDelayLineMask] = *src2;
 					src2 += nch;
 				}
@@ -259,7 +259,7 @@ uint32 VDAudioFilterPitchScale::Run() {
 			continue;
 		}
 
-		int tc = kHalfWindowSize - (mDstOffset & (kHalfWindowSize - 1));
+		uint32 tc = kHalfWindowSize - (mDstOffset & (kHalfWindowSize - 1));
 		if (tc > samples)
 			tc = samples;
 

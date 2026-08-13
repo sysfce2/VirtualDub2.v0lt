@@ -1,6 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2003 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -81,7 +82,7 @@ uint32 VDAudioFilterMix::Run() {
 
 		VDASSERT(tc == tca0 && tc == tca1);
 
-		int elements = tc * format1.mChannels;
+		unsigned elements = tc * format1.mChannels;
 
 		for(unsigned i=0; i<elements; ++i) {
 			const sint32 t = buf[i];

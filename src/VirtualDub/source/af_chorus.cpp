@@ -1,6 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2003 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -96,7 +97,7 @@ uint32 VDAudioFilterStereoChorus::Run() {
 	sint16 buf16[4096];
 
 	// compute output samples
-	int samples = std::min<int>(mpContext->mCommonSamples, 4096 / format.mChannels);
+	const uint32 samples = std::min<uint32>(mpContext->mCommonSamples, 4096 / format.mChannels);
 	sint16 *dst = (sint16 *)mpContext->mpOutputs[0]->mpBuffer;
 
 	if (!samples) {
@@ -108,7 +109,7 @@ uint32 VDAudioFilterStereoChorus::Run() {
 
 	// read buffer
 
-	int actual_samples = mpContext->mpInputs[0]->Read(buf16, samples, false, kVFARead_PCM16);
+	const uint32 actual_samples = mpContext->mpInputs[0]->Read(buf16, samples, false, kVFARead_PCM16);
 	VDASSERT(actual_samples == samples);
 
 	// apply filter

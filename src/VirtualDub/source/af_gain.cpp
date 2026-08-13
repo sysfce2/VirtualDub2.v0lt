@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2003 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -143,7 +143,7 @@ uint32 VDAudioFilterGain::Run() {
 	const VDXWaveFormat& format = *pin.mpFormat;
 
 	// compute output samples
-	int samples = mpContext->mCommonSamples;
+	const uint32 samples = mpContext->mCommonSamples;
 	sint16 *dst = (sint16 *)mpContext->mpOutputs[0]->mpBuffer;
 
 	if (!samples) {
@@ -156,7 +156,7 @@ uint32 VDAudioFilterGain::Run() {
 	// read buffer
 	unsigned count = format.mChannels * samples;
 
-	int actual_samples = mpContext->mpInputs[0]->Read(dst, samples, false, kVFARead_PCM16);
+	const uint32 actual_samples = mpContext->mpInputs[0]->Read(dst, samples, false, kVFARead_PCM16);
 	VDASSERT(actual_samples == samples);
 
 	for(unsigned i=0; i<count; ++i) {

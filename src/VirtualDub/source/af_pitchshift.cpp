@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2003 Avery Lee
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -155,18 +155,19 @@ uint32 VDAudioFilterPitchShift::Run() {
 	short buf16[4096];
 
 	// compute output samples
-	int samples = std::min<int>(mpContext->mCommonSamples, 4096 / format.mChannels);
+	const uint32 samples = std::min<uint32>(mpContext->mCommonSamples, 4096 / format.mChannels);
 
 	if (!samples) {
-		if (pin.mbEnded && !mpContext->mInputSamples)
+		if (pin.mbEnded && !mpContext->mInputSamples) {
 			return kVFARun_Finished;
+		}
 
 		return 0;
 	}
 
 	// read buffer
 
-	int actual_samples = mpContext->mpInputs[0]->Read(buf16, samples, false, kVFARead_PCM16);
+	const uint32 actual_samples = mpContext->mpInputs[0]->Read(buf16, samples, false, kVFARead_PCM16);
 	VDASSERT(actual_samples == samples);
 
 	// matrixing (2-channel only)
@@ -174,7 +175,7 @@ uint32 VDAudioFilterPitchShift::Run() {
 	if (format.mChannels == 2) {
 		sint16 *tmp = buf16;
 
-		for(unsigned i=0; i<samples; ++i) {
+		for(uint32 i=0; i<samples; ++i) {
 			const sint32 l = tmp[0];
 			const sint32 r = tmp[1];
 
@@ -185,7 +186,7 @@ uint32 VDAudioFilterPitchShift::Run() {
 	}
 
 	const int delta = mdudx > 0x10000 ? -128 : 128;
-	const ptrdiff_t nch = format.mChannels;
+	const unsigned nch = format.mChannels;
 	sint16 *dst = (sint16 *)mpContext->mpOutputs[0]->mpBuffer;
 
 	for(unsigned ch=0; ch<nch; ++ch) {
@@ -252,7 +253,7 @@ uint32 VDAudioFilterPitchShift::Run() {
 		uint32 srcidx = mSrcSamples;
 		sint16 *dst2 = dst + ch;
 
-		for(unsigned i=0; i<samples; ++i) {
+		for(uint32 i=0; i<samples; ++i) {
 			const unsigned inpos = srcidx++ & 2047;
 			const unsigned outpos0 = (u0>>16)&2047;
 
@@ -305,7 +306,7 @@ uint32 VDAudioFilterPitchShift::Run() {
 	if (format.mChannels == 2) {
 		sint16 *tmp = dst;
 
-		for(unsigned i=0; i<samples; ++i) {
+		for(uint32 i=0; i<samples; ++i) {
 			uint32 l = tmp[0] + tmp[1] + 0x8000;
 			uint32 r = tmp[0] - tmp[1] + 0x8000;
 

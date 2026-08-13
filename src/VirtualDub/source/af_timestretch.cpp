@@ -1,6 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2006 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -219,7 +220,7 @@ uint32 VDAudioFilterTimeStretch::Run() {
 		// read from input
 		const uint32 nch = format.mChannels;
 		if (pin.mCurrentLevel >= kHalfWindowSize) {
-			int actual_samples = pin.Read(mInputBuffer.data(), kHalfWindowSize, false, kVFARead_PCM16);
+			const uint32 actual_samples = pin.Read(mInputBuffer.data(), kHalfWindowSize, false, kVFARead_PCM16);
 			VDASSERT(actual_samples == kHalfWindowSize);
 
 			// deinterleave from input into delay lines
@@ -230,7 +231,7 @@ uint32 VDAudioFilterTimeStretch::Run() {
 				sint16 *delay = chanInfo.mpDelayLine;
 
 				// write new samples
-				for(int i=0; i<kHalfWindowSize; ++i) {
+				for(uint32 i=0; i<kHalfWindowSize; ++i) {
 					delay[(mDstOffset + i) & kDelayLineMask] = *src2;
 					src2 += nch;
 				}
