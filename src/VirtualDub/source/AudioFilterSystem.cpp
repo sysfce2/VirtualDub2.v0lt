@@ -321,19 +321,19 @@ VDAudioFilterInstance::VDAudioFilterInstance(VDPluginDescription *pDesc)
 	mpPluginInfo = VDLockPlugin(pDesc);
 	mpDefinition = reinterpret_cast<const VDAudioFilterDefinition *>(mpPluginInfo->mpTypeSpecificInfo);
 
-	const int inputPins = mpDefinition->mInputPins;
-	const int outputPins = mpDefinition->mOutputPins;
-	const int totalPins = inputPins + outputPins;
+	const unsigned inputPins = mpDefinition->mInputPins;
+	const unsigned outputPins = mpDefinition->mOutputPins;
+	const unsigned totalPins = inputPins + outputPins;
 
 	mFilterData.resize(mpDefinition->mFilterDataSize);
 	mPinPtrs.resize(totalPins);
 	mPins.resize(totalPins);
 	mOutputBuffers.resize(outputPins);
-	mDebugName	= VDTextWToA(pDesc->mName);
+	mDebugName = VDTextWToA(pDesc->mName);
 
-	for(unsigned i=0; i<totalPins; ++i) {
+	for (unsigned i = 0; i < totalPins; ++i) {
 		mPinPtrs[i] = &mPins[i];
-		mPins[i].SetFilter(this, i>=inputPins ? i-inputPins : i);
+		mPins[i].SetFilter(this, i >= inputPins ? i - inputPins : i);
 	}
 
 	mpFilterData		= mFilterData.data();

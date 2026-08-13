@@ -548,7 +548,7 @@ long AudioStreamSource::_Read(void *buffer, long max_samples, long *lplBytes) {
 		uint32 ltActualBytes, ltActualSamples;
 		LONG lBytesLeft = max_samples * GetFormat()->mBlockSize;
 		LONG lTotalBytes = lBytesLeft;
-		const int mBlockSize = ((VDWaveFormat *)aSrc->getWaveFormat())->mBlockSize;
+		const unsigned mBlockSize = ((VDWaveFormat *)aSrc->getWaveFormat())->mBlockSize;
 
 		while(lBytesLeft > 0) {
 			// hmm... data still in the output buffer?
