@@ -620,9 +620,9 @@ uint32 VDAudioFilterInstance::ReadData(unsigned nPin, void *dst, uint32 samples,
 			static const uint32 sBlkSize[]={0,1,2,4};
 
 			uint32 total = 0;
-			const uint32 ch			= format.mChannels;
-			const uint32 sblksize	= format.mBlockSize;
-			const uint32 dblksize	= sBlkSize[nFormat] * ch;
+			const uint32 ch    = format.mChannels;
+			const int sblksize = format.mBlockSize;
+			const int dblksize = sBlkSize[nFormat] * ch;
 
 			const tpVDConvertPCMVtbl vtbl = VDGetPCMConversionVtable();
 			VDRingBuffer<uint8>& buffer = mOutputBuffers[nPin];
@@ -693,8 +693,7 @@ bool VDAudioFilterInstance::Service() {
 		mOutputGranules	= 0;
 	}
 
-	int i;
-	for(i=0; i<mpDefinition->mInputPins; ++i) {
+	for(uint32 i = 0; i < mpDefinition->mInputPins; ++i) {
 		VDAudioFilterPinImpl& inpin			= InputPin(i);
 		VDAudioFilterPinImpl& inpinconn		= *inpin.Connection();
 
@@ -728,7 +727,7 @@ bool VDAudioFilterInstance::Service() {
 	}
 
 	// lock output pins
-	for(i=0; i<mpDefinition->mOutputPins; ++i) {
+	for(uint32 i = 0; i < mpDefinition->mOutputPins; ++i) {
 		VDAudioFilterPinImpl& outpin = OutputPin(i);
 		int avail;
 
@@ -781,7 +780,7 @@ bool VDAudioFilterInstance::Service() {
 
 	bool bAnyActivity = 0!=(res & kVFARun_InternalWork);
 
-	for(int k=0; k<mpDefinition->mInputPins; ++k) {
+	for(uint32 k = 0; k < mpDefinition->mInputPins; ++k) {
 		VDAudioFilterPinImpl& inpin = InputPin(k);
 
 		inpin.mbEnded = mbEnded;
@@ -792,14 +791,15 @@ bool VDAudioFilterInstance::Service() {
 		}
 	}
 
-	for(int j=0; j<mpDefinition->mOutputPins; ++j) {
+	for(uint32 j = 0; j < mpDefinition->mOutputPins; ++j) {
 		VDAudioFilterPinImpl& outpin = OutputPin(j);
 		VDRingBuffer<uint8>& buffer = mOutputBuffers[j];
 
 		outpin.mbEnded = mbEnded;
 
-		if (!j)
+		if (!j) {
 			mSamplesSinceLastSeekPoint += outpin.mSamplesWritten;
+		}
 
 		buffer.UnlockWrite(outpin.mSamplesWritten * outpin.mpFormat->mBlockSize);
 
