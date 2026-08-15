@@ -1927,7 +1927,7 @@ void Dubber::Stop() {
 	mAudioPipe.Abort();
 	mProcessThread.Abort();
 
-	int nObjectsToWaitOn = 0;
+	DWORD nObjectsToWaitOn = 0;
 	HANDLE hObjects[3];
 
 	if (VDSignal *pBlitterSigComplete = mProcessThread.GetBlitterSignal())

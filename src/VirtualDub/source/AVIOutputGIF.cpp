@@ -2,7 +2,7 @@
 //
 // Copyright (C) 1998-2001 Avery Lee
 // Copyright (C) 2017 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -682,14 +682,17 @@ void AVIVideoGIFOutputStream::write(uint32 flags, const void *pBuffer, uint32 cb
 	} dict[4096];
 
 	sint32 hash[256];
-	for(int i=0; i<256; ++i)
-		hash[i] = -1;
+	for (auto& h : hash) {
+		h = -1;
+	}
 
-	for(int i=0; i<palsize; ++i)
+	for (uint32 i = 0; i < palsize; ++i) {
 		dict[i].mPrevAndLastChar = (-1 << 16) + i;
+	}
 
-	for(int i=palsize; i<256; ++i)
+	for (uint32 i = palsize; i < 256u; ++i) {
 		dict[i].mPrevAndLastChar = -1;
+	}
 
 	const uint32 clearCode = 1 << initialCodeSize;
 	int nextEntry = clearCode + 2;
