@@ -676,7 +676,7 @@ bool AVIOutputFile::init(const wchar_t *szFile) {
 		if (mTextInfoCodePage || mTextInfoCountryCode || mTextInfoLanguage || mTextInfoDialect)
 			mTextInfoListSize += 16;
 
-		for(const auto& [id, text] : mTextInfo) {
+		for(const auto& [ckid, text] : mTextInfo) {
 			mTextInfoListSize += (text.size() + 9 + 1) & ~1;
 		}
 

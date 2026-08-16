@@ -126,8 +126,7 @@ VDUIJobLogDialog::VDUIJobLogDialog(const VDJob::tLogEntries& logents)
 bool VDUIJobLogDialog::OnLoaded() {
 	IVDLogWindowControl *pLogWin = VDGetILogWindowControl(GetDlgItem(mhdlg, IDC_LOG));
 
-	for(auto it(mLogEnts.cbegin()), itEnd(mLogEnts.cend()); it!=itEnd; ++it) {
-		const VDAutoLogger::Entry& ent = *it;
+	for(const auto& ent : mLogEnts) {
 		pLogWin->AddEntry(ent.severity, ent.text);
 	}
 

@@ -516,14 +516,11 @@ void VDDeinitPluginSystem() {
 bool VDAddPluginModule(const wchar_t *pFilename) {
 	VDStringW path(VDGetFullPath(pFilename));
 
-	if (path.empty())
+	if (path.empty()) {
 		path = pFilename;
+	}
 
-	auto it(g_pluginModules.cbegin()), itEnd(g_pluginModules.cend());
-
-	for(; it!=itEnd; ++it) {
-		VDExternalModule *pModule = *it;
-
+	for(const auto& pModule : g_pluginModules) {
 		if (pModule->GetFilename() == pFilename) {
 			return true;
 		}
@@ -554,12 +551,9 @@ void VDAddInternalPlugins(const VDPluginInfo *const *ppInfo) {
 	VDConnectPluginDescriptions(ppInfo, NULL);
 }
 
-VDExternalModule *VDGetExternalModuleByFilterModule(const VDXFilterModule *fm) {
-	auto it(g_pluginModules.cbegin()), itEnd(g_pluginModules.cend());
-
-	for(; it!=itEnd; ++it) {
-		VDExternalModule *pModule = *it;
-
+VDExternalModule *VDGetExternalModuleByFilterModule(const VDXFilterModule *fm)
+{
+	for(const auto& pModule : g_pluginModules) {
 		if (fm == &pModule->GetFilterModuleInfo()) {
 			return pModule;
 		}

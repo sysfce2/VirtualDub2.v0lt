@@ -3467,18 +3467,17 @@ bool FilterModSystem::FindVideoFilter(const char* name, FilterReturnInfo& a)
 
 	FilterEnumerateFilters(filterList);
 
-	for(auto it(filterList.cbegin()), itEnd(filterList.cend()); it!=itEnd; ++it) {
-		const FilterBlurb& fb = *it;
-
+	for (const auto& fb : filterList) {
 		if (strfuzzycompare(fb.name.c_str(), name)) {
 			a.setName(fb.name.c_str());
 			a.setMaker(fb.author.c_str());
 			a.setDesc(fb.description.c_str());
 			VDExternalModule* xm = fb.key->GetModule();
-			if(xm)
+			if (xm) {
 				a.setModulePath(xm->GetFilename().c_str());
-			else
+			} else {
 				a.setBuiltinDef(&fb.key->GetDef());
+			}
 			return true;
 		}
 	}

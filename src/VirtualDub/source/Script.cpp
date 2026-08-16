@@ -641,9 +641,7 @@ static void func_VDVFilters_Add(IVDScriptInterpreter *isi, VDScriptValue *argv, 
 
 	const char *name = *argv[0].asString();
 
-	for(auto it(filterList.cbegin()), itEnd(filterList.cend()); it!=itEnd; ++it) {
-		const FilterBlurb& fb = *it;
-
+	for(const auto& fb : filterList) {
 		if (strfuzzycompare(fb.name.c_str(), name)) {
 			vdrefptr<VDFilterChainEntry> ent(new_nothrow VDFilterChainEntry);
 			if (!ent) VDSCRIPT_EXT_ERROR(OUT_OF_MEMORY);
@@ -941,14 +939,14 @@ static void func_VDVideo_GetCompression(IVDScriptInterpreter *, VDScriptValue *a
 	arglist[0] = VDScriptValue(0);
 }
 
-EncoderHIC* load_plugin_codec(const VDStringW& fileName, DWORD type, DWORD handler) {
-	auto it(g_pluginModules.cbegin()), itEnd(g_pluginModules.cend());
-
-	for(; it!=itEnd; ++it) {
-		VDExternalModule *pModule = *it;
+EncoderHIC* load_plugin_codec(const VDStringW& fileName, DWORD type, DWORD handler)
+{
+	for (const auto& pModule : g_pluginModules) {
 		const VDStringW& path = pModule->GetFilename();
 		const wchar_t* name = VDFileSplitPath(path.c_str());
-		if (_wcsicmp(name,fileName.c_str())!=0) continue;
+		if (_wcsicmp(name, fileName.c_str()) != 0) {
+			continue;
+		}
 		return EncoderHIC::load(path, type, handler, ICMODE_COMPRESS);
 	}
 

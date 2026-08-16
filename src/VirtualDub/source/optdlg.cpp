@@ -2583,19 +2583,19 @@ void VDDialogFileTextInfoW32::Activate(VDGUIHandle hParent) {
 	ActivateDialog(hParent);
 }
 
-void VDDialogFileTextInfoW32::Read() {
-	auto itSrc(mTextInfoOrig.cbegin()), itSrcEnd(mTextInfoOrig.cend());
-	for (; itSrc != itSrcEnd; ++itSrc) {
-		mTextInfo[(*itSrc).first] = VDTextAToW((*itSrc).second);
+void VDDialogFileTextInfoW32::Read()
+{
+	for (const auto& [ckid, text] : mTextInfoOrig) {
+		mTextInfo[ckid] = VDTextAToW(text);
 	}
 }
 
-void VDDialogFileTextInfoW32::Write() {
+void VDDialogFileTextInfoW32::Write()
+{
 	mTextInfoOrig.clear();
 
-	auto itSrc(mTextInfo.cbegin()), itSrcEnd(mTextInfo.cend());
-	for (; itSrc != itSrcEnd; ++itSrc) {
-		mTextInfoOrig.push_back(tRawTextInfo::value_type((*itSrc).first, VDTextWToA((*itSrc).second)));
+	for (const auto& [ckid, text] : mTextInfo) {
+		mTextInfoOrig.push_back(tRawTextInfo::value_type(ckid, VDTextWToA(text)));
 	}
 }
 
