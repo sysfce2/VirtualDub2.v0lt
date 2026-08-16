@@ -494,9 +494,7 @@ void FrameSubset::rescale(const VDFraction& oldRate, sint64 oldLength, const VDF
 	mTimeline.swap(tmp);
 	invalidateCache();
 
-	for(auto it(tmp.cbegin()), itEnd(tmp.cend()); it!=itEnd; ++it) {
-		const FrameSubsetNode& fsn = *it;
-
+	for(const auto& fsn : tmp) {
 		sint64 start = fsn.start;
 		sint64 len = fsn.len;
 

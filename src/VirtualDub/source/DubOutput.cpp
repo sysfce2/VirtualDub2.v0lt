@@ -148,12 +148,8 @@ IVDMediaOutput *VDAVIOutputFileSystem::CreateSegment() {
 		pAudioOut->setStreamInfo(mAudioStreamInfo);
 	}
 
-	if (!mTextInfo.empty()) {
-		auto it(mTextInfo.cbegin()), itEnd(mTextInfo.cend());
-
-		for (; it != itEnd; ++it) {
-			pOutput->setTextInfo((*it).first, (*it).second.c_str());
-		}
+	for (const auto& [ckid, text] : mTextInfo) {
+		pOutput->setTextInfo(ckid, text.c_str());
 	}
 
 	pOutput->setBuffering(mBufferSize, mBufferSize >> 2);
@@ -383,12 +379,8 @@ IVDMediaOutput *VDAVIOutputPluginSystem::CreateSegment() {
 		pAudioOut->setStreamInfo(mAudioStreamInfo);
 	}
 
-	if (!mTextInfo.empty()) {
-		auto it(mTextInfo.cbegin()), itEnd(mTextInfo.cend());
-
-		for (; it != itEnd; ++it) {
-			pOutput->setTextInfo((*it).first, (*it).second.c_str());
-		}
+	for (const auto& [ckid, text] : mTextInfo) {
+		pOutput->setTextInfo(ckid, text.c_str());
 	}
 
 	pOutput->init(mFilename.c_str());

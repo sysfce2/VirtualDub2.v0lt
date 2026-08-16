@@ -2026,10 +2026,8 @@ void Dubber::Stop() {
 	if (fADecompressionOk)	{ aSrc->streamEnd(); }
 
 	{
-		auto it(mAudioStreams.cbegin()), itEnd(mAudioStreams.cend());
-
-		for (; it != itEnd; ++it) {
-			delete* it;
+		for (const auto pAudioStream : mAudioStreams) {
+			delete pAudioStream;
 		}
 
 		mAudioStreams.clear();

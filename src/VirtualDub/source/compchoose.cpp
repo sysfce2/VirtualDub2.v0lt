@@ -558,12 +558,10 @@ void VDUIDialogChooseVideoCompressorW32::EnumerateCodecs() {
 	}
 }
 
-void VDUIDialogChooseVideoCompressorW32::EnumeratePluginCodecs() {
-	auto it(g_pluginModules.cbegin()), itEnd(g_pluginModules.cend());
-
+void VDUIDialogChooseVideoCompressorW32::EnumeratePluginCodecs()
+{
 	vdprotected("enumerating video codec plugins") {
-		for(; it!=itEnd; ++it) {
-			VDExternalModule *pModule = *it;
+		for(const auto pModule : g_pluginModules) {
 			const VDStringW& path = pModule->GetFilename();
 
 			int next_fcc = 0;

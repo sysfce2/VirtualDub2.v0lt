@@ -1071,8 +1071,7 @@ INT_PTR CALLBACK VDAutoLogDisplay::DlgProc(HWND hdlg, UINT msg, WPARAM wParam, L
 			const VDAutoLogger::tEntries& ents = *(VDAutoLogger::tEntries *)lParam;
 			IVDLogWindowControl *pLogWin = VDGetILogWindowControl(GetDlgItem(hdlg, IDC_LOG));
 
-			for(auto it(ents.cbegin()), itEnd(ents.cend()); it!=itEnd; ++it) {
-				const VDAutoLogger::Entry& ent = *it;
+			for(const auto& ent : ents) {
 				pLogWin->AddEntry(ent.severity, ent.text);
 			}
 		}
