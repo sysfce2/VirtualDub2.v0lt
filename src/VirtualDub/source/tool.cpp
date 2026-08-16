@@ -144,8 +144,7 @@ struct VDTool {
 std::vector<VDTool*> g_VDTools;
 
 void VDShutdownTools() {
-	for(auto it(g_VDTools.cbegin()), itEnd(g_VDTools.cend()); it!=itEnd; ++it) {
-		VDTool *p = *it;
+	for(const auto& p : g_VDTools) {
 		delete p;
 	}
 	g_VDTools.clear();
@@ -195,8 +194,7 @@ void VDInitTools() {
 }
 
 void VDToolInsertMenu(HMENU menu, int pos) {
-	for(auto it(g_VDTools.cbegin()), itEnd(g_VDTools.cend()); it!=itEnd; ++it) {
-		VDTool *p = *it;
+	for(const auto& p : g_VDTools) {
 		{for(int id=0; ; id++) {
 			char name[256];
 			bool enabled = true;
@@ -218,8 +216,7 @@ void VDToolInsertMenu(HMENU menu, int pos) {
 }
 
 void VDToolExecuteCommand(int id, HWND parent) {
-	for(auto it(g_VDTools.cbegin()), itEnd(g_VDTools.cend()); it!=itEnd; ++it) {
-		VDTool *p = *it;
+	for(const auto& p : g_VDTools) {
 		if (id >= p->command_first && id <= p->command_last) {
 			p->object->ExecuteMenu(id-p->command_first,(VDXHWND)parent);
 			break;
@@ -233,8 +230,7 @@ bool VDToolCatchError(FileNameCommand* cmd, const MyError& e) {
 }
 
 bool VDCheckToolsDialogs(LPMSG pMsg) {
-	for(auto it(g_VDTools.cbegin()), itEnd(g_VDTools.cend()); it!=itEnd; ++it) {
-		VDTool *p = *it;
+	for(const auto& p : g_VDTools) {
 		if (p->object->TranslateMessage(*pMsg)) {
 			return true;
 		}
@@ -249,8 +245,7 @@ void VDToolsHandleFileOpen(const wchar_t* fname, IVDInputDriver *pDriver) {
 	const wchar_t* driver_name = pDriver->GetSignatureName();
 	HWND parent = g_projectui->GetHwnd();
 
-	for(auto it(g_VDTools.cbegin()), itEnd(g_VDTools.cend()); it!=itEnd; ++it) {
-		VDTool *p = *it;
+	for(const auto& p : g_VDTools) {
 		p->object->HandleFileOpen(fname, driver_name, (VDXHWND)parent);
 	}
 }
@@ -264,8 +259,7 @@ bool VDToolsHandleFileOpenError(const wchar_t* fname, const wchar_t* driver_name
 
 	HWND parent = g_projectui->GetHwnd();
 
-	for(auto it(g_VDTools.cbegin()), itEnd(g_VDTools.cend()); it!=itEnd; ++it) {
-		VDTool *p = *it;
+	for(const auto& p : g_VDTools) {
 		if (p->version < 2) {
 			continue;
 		}
@@ -278,15 +272,13 @@ bool VDToolsHandleFileOpenError(const wchar_t* fname, const wchar_t* driver_name
 }
 
 void VDToolsAttach(HWND hwnd) {
-	for(auto it(g_VDTools.cbegin()), itEnd(g_VDTools.cend()); it!=itEnd; ++it) {
-		VDTool *p = *it;
+	for(const auto& p : g_VDTools) {
 		p->object->Attach((VDXHWND)hwnd);
 	}
 }
 
 void VDToolsDetach(HWND hwnd) {
-	for(auto it(g_VDTools.cbegin()), itEnd(g_VDTools.cend()); it!=itEnd; ++it) {
-		VDTool *p = *it;
+	for(const auto& p : g_VDTools) {
 		p->object->Detach((VDXHWND)hwnd);
 	}
 }
