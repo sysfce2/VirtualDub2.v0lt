@@ -128,17 +128,16 @@ bool VDDialogAddAudioFilterW32::OnLoaded() {
 	INT tabs[]={ 175 };
 	SendMessageW(hwndList, LB_SETTABSTOPS, 1, (LPARAM)tabs);
 
-	for(auto it(mAudioFilters.cbegin()), itEnd(mAudioFilters.cend()); it!=itEnd; ++it) {
-		const VDPluginDescription& b = **it;
-
-		if (b.mName[0] != '*') {
+	for(const auto& af : mAudioFilters) {
+		if (af->mName[0] != '*') {
 			wchar_t buf[1024];
 
-			swprintf_s(buf, L"%s\t%s", b.mName.c_str(), b.mAuthor.c_str());
+			swprintf_s(buf, L"%s\t%s", af->mName.c_str(), af->mAuthor.c_str());
 			int idx = SendMessageW(hwndList, LB_ADDSTRING, 0, (LPARAM)buf);
 
-			if (idx != LB_ERR)
-				SendMessageW(hwndList, LB_SETITEMDATA, idx, (LPARAM)&b);
+			if (idx != LB_ERR) {
+				SendMessageW(hwndList, LB_SETITEMDATA, idx, (LPARAM)af);
+			}
 		}
 	}
 
@@ -490,9 +489,7 @@ void VDDialogAudioFiltersW32::LoadGraph(IVDFilterGraphControl *pSrcGraph, const 
 	// convert filters
 
 	{
-		for(auto it(graph.mFilters.cbegin()), itEnd(graph.mFilters.cend()); it!=itEnd; ++it) {
-			const VDAudioFilterGraph::FilterEntry& f = *it;
-
+		for(const auto& f : graph.mFilters) {
 			nodes.push_back(VDFilterGraphNode());
 			VDFilterGraphNode& node = nodes.back();
 
@@ -514,9 +511,7 @@ void VDDialogAudioFiltersW32::LoadGraph(IVDFilterGraphControl *pSrcGraph, const 
 	// convert connections
 
 	{
-		for(auto it(graph.mConnections.cbegin()), itEnd(graph.mConnections.cend()); it!=itEnd; ++it) {
-			const VDAudioFilterGraph::FilterConnection& conn = *it;
-
+		for(const auto& conn : graph.mConnections) {
 			VDFilterGraphConnection c;
 
 			c.srcfilt = conn.filt;

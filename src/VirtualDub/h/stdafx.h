@@ -39,7 +39,7 @@
 // Disable some stupid VC++ warnings so we can use warning level 4.  Most of these need
 // to be disabled because of the STL.
 #ifdef _MSC_VER
-//#pragma warning(disable: 4018)	// warning C4018: signed/unsigned mismatch
+#pragma warning(disable: 4018)	// warning C4018: signed/unsigned mismatch
 								// This one is just too annoying to leave on, and Intel C/C++'s value range warnings are much more useful.
 #endif
 
