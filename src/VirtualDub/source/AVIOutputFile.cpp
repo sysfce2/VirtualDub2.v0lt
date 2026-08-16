@@ -676,9 +676,7 @@ bool AVIOutputFile::init(const wchar_t *szFile) {
 		if (mTextInfoCodePage || mTextInfoCountryCode || mTextInfoLanguage || mTextInfoDialect)
 			mTextInfoListSize += 16;
 
-		auto it(mTextInfo.cbegin()), itEnd(mTextInfo.cend());
-		for(; it!=itEnd; ++it) {
-			const VDStringA& text = (*it).second;
+		for(const auto& [id, text] : mTextInfo) {
 			mTextInfoListSize += (text.size() + 9 + 1) & ~1;
 		}
 
@@ -948,22 +946,22 @@ void AVIOutputFile::partialWriteIndexedChunkBegin(int nStream, uint32 flags, uin
 
 	mIndexSize = 8;
 
-	for(auto it(mStreams.cbegin()), itEnd(mStreams.cend()); it!=itEnd; ++it) {
-		const StreamInfo& s = *it;
+	for (const auto& s : mStreams) {
 		uint32 chunkCount = stream.mChunkCount;
 
-		if (&s == &stream)
+		if (&s == &stream) {
 			++chunkCount;
+		}
 
 		if (mbExtendedAVI && s.mLargestPosDelta) {
 			const uint32 idxblocksize = std::min<uint32>(mSubIndexLimit, (uint32)(0xFFFFFFFF / s.mLargestPosDelta) + 1);
 			uint32 idxblocks = (s.mChunkCount + idxblocksize - 1) / idxblocksize;
 
-			mIndexSize += idxblocks * (sizeof(AVISTDINDEX) + 8*idxblocksize);
-			mIndexSize += 8*stream.mChunkCount;
+			mIndexSize += idxblocks * (sizeof(AVISTDINDEX) + 8 * idxblocksize);
+			mIndexSize += 8 * stream.mChunkCount;
 		}
 
-		mIndexSize += 16*stream.mChunkCount;
+		mIndexSize += 16 * stream.mChunkCount;
 	}
 
 	// Give ourselves ~4K of headroom...

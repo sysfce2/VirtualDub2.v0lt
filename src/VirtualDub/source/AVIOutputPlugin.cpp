@@ -384,16 +384,14 @@ void VDShutdownOutputDrivers() {
 }
 
 void VDGetOutputDrivers(tVDOutputDrivers& l) {
-	for(auto it(g_VDOutputDrivers.cbegin()), itEnd(g_VDOutputDrivers.cend()); it!=itEnd; ++it) {
-		l.push_back(*it);
+	for (const auto& pDriver : g_VDOutputDrivers) {
+		l.push_back(pDriver);
 	}
 }
 
 IVDOutputDriver *VDGetOutputDriverByName(const wchar_t *name) {
-	for(auto it(g_VDOutputDrivers.cbegin()), itEnd(g_VDOutputDrivers.cend()); it!=itEnd; ++it) {
-		IVDOutputDriver *pDriver = *it;
-
-		const wchar_t *dvname = pDriver->GetSignatureName();
+	for (const auto& pDriver : g_VDOutputDrivers) {
+		const wchar_t* dvname = pDriver->GetSignatureName();
 
 		if (dvname && !_wcsicmp(name, dvname)) {
 			return pDriver;
@@ -568,19 +566,17 @@ void VDShutdownAudioEnc() {
 }
 
 void VDGetAudioEncList(tVDAudioEncList& l) {
-	for(auto it(g_VDAudioEnc.cbegin()), itEnd(g_VDAudioEnc.cend()); it!=itEnd; ++it) {
-		l.push_back(*it);
+	for (const auto& pAudioEnc : g_VDAudioEnc) {
+		l.push_back(pAudioEnc);
 	}
 }
 
 IVDAudioEnc *VDGetAudioEncByName(const wchar_t* name) {
-	for(auto it(g_VDAudioEnc.cbegin()), itEnd(g_VDAudioEnc.cend()); it!=itEnd; ++it) {
-		IVDAudioEnc *pDriver = *it;
-
-		const wchar_t* dvname = pDriver->GetSignatureName();
+	for (const auto& pAudioEnc : g_VDAudioEnc) {
+		const wchar_t* dvname = pAudioEnc->GetSignatureName();
 
 		if (dvname && !_wcsicmp(name, dvname)) {
-			return pDriver;
+			return pAudioEnc;
 		}
 	}
 
