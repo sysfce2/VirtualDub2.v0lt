@@ -650,7 +650,7 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine)
 	// Load VfW coders from special folder
 
 	vdprotected("autoloading VfW codecs from folder at startup") {
-		//VDLoadVfwCodecs(VDMakePath(programPath.c_str(), L"vfwcodecs"));
+		VDLoadVfwCodecs(VDMakePath(programPath.c_str(), L"vfwcodecs"));
 	}
 
 	// Detect DivX.
