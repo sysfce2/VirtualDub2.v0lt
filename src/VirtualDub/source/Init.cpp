@@ -414,7 +414,7 @@ static void VDInstallVfwCodecs(const VDStringW& pathmask)
 		}
 
 		BOOL ret = ::ICInfo(ICTYPE_VIDEO, fccHandler, &icinfo);
-		if (ret) {
+		if (ret && VDDoesPathExist(icinfo.szDriver)) {
 			// the codec is already installed
 			continue;
 		}
@@ -422,6 +422,28 @@ static void VDInstallVfwCodecs(const VDStringW& pathmask)
 		ret = ICInstall(ICTYPE_VIDEO, fccHandler, (LPARAM)path.c_str(), nullptr, ICINSTALL_DRIVERW);
 		if (ret) {
 			g_pluginVfwCodec.emplace_back(path);
+		}
+	}
+}
+
+static void VDRemoveVfwCodecs(const VDStringW& path)
+{
+	size_t pathlen = path.length();
+	ICINFO icinfo = { sizeof(ICINFO) };
+
+	if (pathlen < std::size(icinfo.szDriver)) {
+		std::vector<DWORD> fccHandlers;
+
+		for (int i = 0; ::ICInfo(ICTYPE_VIDEO, i, &icinfo); i++) {
+			size_t len = wcsnlen_s(icinfo.szDriver, std::size(icinfo.szDriver));
+			if (_wcsnicmp(icinfo.szDriver, path.c_str(), pathlen) == 0) {
+				fccHandlers.emplace_back(icinfo.fccHandler);
+			}
+		}
+
+		for (auto rit = fccHandlers.crbegin(); rit != fccHandlers.crend(); ++rit) {
+			// TODO: For some reason ICRemove doesn't work!
+			::ICRemove(ICTYPE_VIDEO, *rit, 0);
 		}
 	}
 }
@@ -723,6 +745,8 @@ void Deinit() {
 	VDCHECKPOINT;
 
 	AVIFileExit();
+
+	VDRemoveVfwCodecs(VDMakePath(VDGetProgramPath().c_str(), L"vfwcodecs\\"));
 
 	_CrtCheckMemory();
 
