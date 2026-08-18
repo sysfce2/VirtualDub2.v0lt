@@ -358,9 +358,6 @@ std::list<VDStringW> g_pluginVfwCodec;
 
 static void VDLoadVfwCodecs(const VDStringW& path)
 {
-	int succeeded = 0;
-	int failed = 0;
-
 	VDDirectoryIterator it(VDMakePath(path.c_str(), L"*.dll").c_str());
 
 	while (it.Next()) {
@@ -369,34 +366,56 @@ static void VDLoadVfwCodecs(const VDStringW& path)
 
 		for (const auto& vfwCodec : g_pluginVfwCodec) {
 			if (vfwCodec == path) {
-				return;
+				continue;
 			}
 		}
+
+		HMODULE module = LoadLibraryW(path.c_str());
+		if (!module) {
+			continue;
+		}
+
+		if (GetProcAddress(module, "VDDriverProc")) {
+			// only regular VfW encoders
+			continue;
+		}
+
+		DriverProc* proc = (DriverProc*)GetProcAddress(module, "DriverProc");
+		if (!proc) {
+			continue;
+		}
+
+		ICOPEN open = {
+		.dwSize = sizeof(ICOPEN),
+		.fccType = ICTYPE_VIDEO,
+		.fccHandler = 0,
+		.dwFlags = ICMODE_QUERY
+		};
+		ICINFO info = { sizeof(ICINFO) };
 
 		try {
-			EncoderHIC* plugin = EncoderHIC::load(path, ICTYPE_VIDEO, 0, ICMODE_COMPRESS);
-			if (plugin) {
-				ICINFO ici = { sizeof(ICINFO) };
-				if (!plugin->vdproc) {
-					// only regular VfW encoders
-					plugin->getInfo(ici);
-				}
-				delete plugin;
-
-				if (ici.fccHandler) {
-					BOOL ret = ICInstall(FCC('VIDC'), ici.fccHandler, (LPARAM)path.c_str(), nullptr, ICINSTALL_DRIVERW);
-					if (ret) {
-						g_pluginVfwCodec.emplace_back(path);
-						++succeeded;
-					} else {
-						++failed;
-					}
+			DWORD_PTR obj = (DWORD_PTR)proc(0, 0, DRV_OPEN, 0, (LPARAM)&open);
+			if (obj) {
+				LRESULT res = proc(obj, 0, ICM_GETINFO, (LPARAM)&info, sizeof(info));
+				if (!res) {
+					info.fccHandler = 0;
 				}
 			}
 		}
-		catch (const MyError& e) {
-			VDLog(kVDLogWarning, VDStringW().sprintf(L"VfW codecs: Failed to load \"%s\": %s", it.GetFullPath().c_str(), e.gets()));
-			++failed;
+		catch (...) {
+			VDLog(kVDLogWarning, VDStringW().sprintf(L"VfW codecs: Failed to load: %s", it.GetFullPath().c_str()));
+			info.fccHandler = 0;
+		}
+
+		FreeLibrary(module);
+
+		if (!info.fccHandler) {
+			continue;
+		}
+
+		BOOL ret = ICInstall(FCC('VIDC'), info.fccHandler, (LPARAM)path.c_str(), nullptr, ICINSTALL_DRIVERW);
+		if (ret) {
+			g_pluginVfwCodec.emplace_back(path);
 		}
 	}
 }
@@ -631,7 +650,7 @@ bool Init(HINSTANCE hInstance, int nCmdShow, VDCommandLine& cmdLine)
 	// Load VfW coders from special folder
 
 	vdprotected("autoloading VfW codecs from folder at startup") {
-		VDLoadVfwCodecs(VDMakePath(programPath.c_str(), L"vfwcodecs"));
+		//VDLoadVfwCodecs(VDMakePath(programPath.c_str(), L"vfwcodecs"));
 	}
 
 	// Detect DivX.
