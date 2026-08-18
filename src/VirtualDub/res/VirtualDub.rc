@@ -910,7 +910,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "About VirtualDub2"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    EDITTEXT        IDC_VERSION,12,6,238,12,ES_READONLY | NOT WS_BORDER | ES_AUTOHSCROLL
+    EDITTEXT        IDC_VERSION,12,6,238,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     LTEXT           "Copyright (C) 2015-2026 Anton Shekhovtsov, v0lt",IDC_STATIC,14,20,312,10
     CONTROL         "Home page: <a href=""http://virtualdub2.com/"">virtualdub2.com</a>",IDC_STATIC,
                     "SysLink",WS_TABSTOP,14,33,312,10
@@ -1765,12 +1765,12 @@ BEGIN
     EDITTEXT        IDC_KEYRATE,285,184,46,13,ES_AUTOHSCROLL
     LTEXT           "frames",IDC_STATIC_KEYFRAMES,336,187,22,8
     GROUPBOX        "Video codec information",IDC_STATIC,191,7,202,102
-    LTEXT           "Delta frames",IDC_STATIC,197,19,68,8
-    LTEXT           "",IDC_STATIC_DELTA,265,19,62,8
-    LTEXT           "FOURCC code",IDC_STATIC,197,29,68,8
-    LTEXT           "",IDC_STATIC_FOURCC,265,29,60,8
-    LTEXT           "Driver name",IDC_STATIC,197,39,68,8
-    LTEXT           "",IDC_STATIC_DRIVER,265,39,121,8
+    LTEXT           "Delta frames",IDC_STATIC,197,19,47,8
+    LTEXT           "",IDC_STATIC_DELTA,249,19,76,8
+    LTEXT           "FOURCC code",IDC_STATIC,197,29,47,8
+    LTEXT           "",IDC_STATIC_FOURCC,249,29,76,8
+    LTEXT           "Driver name",IDC_STATIC,197,39,47,8
+    LTEXT           "",IDC_STATIC_DRIVER,249,39,137,8
     LTEXT           "YUV 4:2:0 planar",IDC_ACTIVEFORMAT,306,116,87,8
     LISTBOX         IDC_SIZE_RESTRICTIONS,198,52,188,51,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
     PUSHBUTTON      "&Configure",IDC_CONFIGURE,195,113,50,14
@@ -3347,7 +3347,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 393
         VERTGUIDE, 198
-        VERTGUIDE, 265
+        VERTGUIDE, 249
         VERTGUIDE, 285
         VERTGUIDE, 386
         TOPMARGIN, 7

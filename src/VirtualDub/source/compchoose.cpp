@@ -811,10 +811,9 @@ void VDUIDialogChooseVideoCompressorW32::SelectCompressor(CodecInfo *pii) {
 
 	PrintFCC(pii->fccHandler);
 
-	if(pii->path.empty())
-		SetControlText(IDC_STATIC_DRIVER, VDFileSplitPath(pii->szDriver));
-	else
-		SetControlText(IDC_STATIC_DRIVER, VDFileSplitPath(pii->path.c_str()));
+	const VDStringW driverPath(pii->path.empty() ? VDStringW(pii->szDriver) : pii->path);
+	const VDStringW relpath = VDFileGetRelativePath(VDGetProgramPath().c_str(), driverPath.c_str(), false);
+	SetControlText(IDC_STATIC_DRIVER, relpath.empty() ? driverPath.c_str() : relpath.c_str());
 
 	// Attempt to open the compressor.
 
