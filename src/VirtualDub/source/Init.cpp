@@ -41,6 +41,7 @@
 #include <vd2/VDDisplay/display.h>
 #include <vd2/Riza/direct3d.h>
 #include <vd2/Riza/videocodec.h>
+#include <vd2/Riza/bitmap.h>
 #include <vd2/VDLib/PortableRegistry.h>
 #include <vd2/VDLib/win32/DebugOutputFilter.h>
 #include "crash.h"
@@ -375,36 +376,34 @@ static void VDInstallVfwCodecs(const VDStringW& pathmask)
 			continue;
 		}
 
-		if (GetProcAddress(module, "VDDriverProc")) {
-			// only regular VfW encoders
-			continue;
-		}
-
-		DriverProc* proc = (DriverProc*)GetProcAddress(module, "DriverProc");
-		if (!proc) {
-			continue;
-		}
-
-		ICOPEN icopen = {
-			.dwSize     = sizeof(ICOPEN),
-			.fccType    = ICTYPE_VIDEO,
-			.fccHandler = 0,
-			.dwFlags    = ICMODE_QUERY
-		};
-		ICINFO icinfo = { sizeof(ICINFO) };
 		DWORD fccHandler = 0;
+		ICINFO icinfo = { sizeof(ICINFO) };
 
-		try {
-			DWORD_PTR obj = (DWORD_PTR)proc(0, 0, DRV_OPEN, 0, (LPARAM)&icopen);
-			if (obj) {
-				LRESULT res = proc(obj, 0, ICM_GETINFO, (LPARAM)&icinfo, sizeof(icinfo));
-				if (res) {
-					fccHandler = icinfo.fccHandler;
+		if (!GetProcAddress(module, "VDDriverProc")) {
+			// only regular VfW encoders
+
+			DriverProc* proc = (DriverProc*)GetProcAddress(module, "DriverProc");
+			if (proc) {
+				ICOPEN icopen = {
+					.dwSize     = sizeof(ICOPEN),
+					.fccType    = ICTYPE_VIDEO,
+					.fccHandler = 0,
+					.dwFlags    = ICMODE_QUERY
+				};
+
+				try {
+					DWORD_PTR obj = (DWORD_PTR)proc(0, 0, DRV_OPEN, 0, (LPARAM)&icopen);
+					if (obj) {
+						LRESULT res = proc(obj, 0, ICM_GETINFO, (LPARAM)&icinfo, sizeof(icinfo));
+						if (res) {
+							fccHandler = icinfo.fccHandler;
+						}
+					}
+				}
+				catch (...) {
+					VDLog(kVDLogError, VDStringW().sprintf(L"VfW codecs: DriverProc execution failed: %s", it.GetFullPath().c_str()));
 				}
 			}
-		}
-		catch (...) {
-			VDLog(kVDLogWarning, VDStringW().sprintf(L"VfW codecs: DriverProc execution failed: %s", it.GetFullPath().c_str()));
 		}
 
 		FreeLibrary(module);
@@ -416,10 +415,13 @@ static void VDInstallVfwCodecs(const VDStringW& pathmask)
 		BOOL ret = ::ICInfo(ICTYPE_VIDEO, fccHandler, &icinfo);
 		if (ret && VDDoesPathExist(icinfo.szDriver)) {
 			// the codec is already installed
+			VDDEBUG(L"VfW codecs: %s ('%s') is already installed\n",
+				VDFileSplitPath(icinfo.szDriver),
+				printW_fourcc(icinfo.fccHandler).c_str());
 			continue;
 		}
 
-		ret = ICInstall(ICTYPE_VIDEO, fccHandler, (LPARAM)path.c_str(), nullptr, ICINSTALL_DRIVERW);
+		ret = ::ICInstall(ICTYPE_VIDEO, icinfo.fccHandler, (LPARAM)path.c_str(), nullptr, ICINSTALL_DRIVERW);
 		if (ret) {
 			g_pluginVfwCodec.emplace_back(path);
 		}
