@@ -13,74 +13,125 @@
 #include <vd2/Kasumi/pixmaputils.h>
 #include <../Kasumi/h/uberblit_rgb64.h>
 
-void fourcc_codec_info(uint32 a, bool& useAlpha) {
-	useAlpha = false;
-
-	// utvideo alpha sources
-	if (a==VDMAKEFOURCC('U', 'L', 'R', 'A')) useAlpha = true;
-	if (a==VDMAKEFOURCC('U', 'Q', 'R', 'A')) useAlpha = true;
-
-	// magicyuv alpha sources
-	if (a==VDMAKEFOURCC('M', '8', 'R', 'A')) useAlpha = true;
-	if (a==VDMAKEFOURCC('M', '8', 'Y', 'A')) useAlpha = true;
-	if (a==VDMAKEFOURCC('M', '0', 'R', 'A')) useAlpha = true;
-	if (a==VDMAKEFOURCC('M', '2', 'R', 'A')) useAlpha = true;
-	if (a==VDMAKEFOURCC('M', '4', 'R', 'A')) useAlpha = true;
-}
-
-void fourcc_codec_input(uint32 a, int& format, int& variant) {
-	using namespace nsVDPixmap;
-	format = 0;
-	variant = 0;
-	if (a==VDMAKEFOURCC('M', '0', 'R', 'G')) { format = kPixFormat_RGB_Planar16; variant = kBitmapVariant_G3_0_10; }
-	if (a==VDMAKEFOURCC('M', '2', 'R', 'G')) { format = kPixFormat_RGB_Planar16; variant = kBitmapVariant_G3_0_12; }
-	if (a==VDMAKEFOURCC('M', '4', 'R', 'G')) { format = kPixFormat_RGB_Planar16; variant = kBitmapVariant_G3_0_14; }
-	if (a==VDMAKEFOURCC('M', '0', 'R', 'A')) { format = kPixFormat_RGBA_Planar16; variant = kBitmapVariant_G4_0_10; }
-	if (a==VDMAKEFOURCC('M', '2', 'R', 'A')) { format = kPixFormat_RGBA_Planar16; variant = kBitmapVariant_G4_0_12; }
-	if (a==VDMAKEFOURCC('M', '4', 'R', 'A')) { format = kPixFormat_RGBA_Planar16; variant = kBitmapVariant_G4_0_14; }
-}
-
-void fourcc_codec_output(uint32 a, int& format, int& variant) {
-	format = 0;
-	variant = 0;
-	fourcc_codec_input(a,format,variant);
-}
-
-uint32 fourcc_toupper(uint32 a) {
+uint32 fourcc_toupper(uint32 a)
+{
 	char* s = (char*)&a;
-	for(int i=0; i<4; i++){
-		if(s[i]>='a' && s[i]<='z')
-			s[i] = s[i]-'a'+'A';
+	for (int i = 0; i < 4; i++) {
+		if (s[i] >= 'a' && s[i] <= 'z') {
+			s[i] = s[i] - 'a' + 'A';
+		}
 	}
 	return a;
 }
 
-VDStringA print_fourcc(uint32 a) {
+VDStringA print_fourcc(uint32 a)
+{
 	uint8 fcc[4];
-	*(uint32 *)fcc = a;
-	VDStringA buf;
-	for(int i=0; i<4; ++i) {
+	*(uint32*)fcc = a;
+	VDStringA str;
+	for (int i = 0; i < 4; ++i) {
 		uint8 c = fcc[i];
-		if (isalpha(c) || isdigit(c))
-			buf += c;
-		else
-			buf.append_sprintf("[%d]", c);
+		if (isalpha(c) || isdigit(c)) {
+			str += c;
+		} else {
+			str.append_sprintf("[%d]", c);
+		}
 	}
-	return buf;
+	return str;
 }
 
-VDStringW printW_fourcc(uint32 a) {
+VDStringW printW_fourcc(uint32 a)
+{
 	uint8 fcc[4];
-	*(uint32 *)fcc = a;
-	VDStringW buf;
-	for(int i=0; i<4; ++i) {
+	*(uint32*)fcc = a;
+	VDStringW str;
+	for (int i = 0; i < 4; ++i) {
 		uint8 c = fcc[i];
-		if (isalpha(c) || isdigit(c))
-			buf += c;
-		else
-			buf.append_sprintf(L"[%d]", c);
+		if (isalpha(c) || isdigit(c)) {
+			str += c;
+		} else {
+			str.append_sprintf(L"[%d]", c);
+		}
 	}
-	return buf;
+	return str;
+}
+
+void fourcc_codec_info(uint32 a, bool& useAlpha)
+{
+	switch (a) {
+	// utvideo alpha sources
+	case VDMAKEFOURCC('U', 'L', 'R', 'A'):
+	case VDMAKEFOURCC('U', 'Q', 'R', 'A'):
+	// magicyuv alpha sources
+	case VDMAKEFOURCC('M', '8', 'R', 'A'):
+	case VDMAKEFOURCC('M', '8', 'Y', 'A'):
+	case VDMAKEFOURCC('M', '0', 'R', 'A'):
+	case VDMAKEFOURCC('M', '2', 'R', 'A'):
+	case VDMAKEFOURCC('M', '4', 'R', 'A'):
+		useAlpha = true;
+		break;
+	default:
+		useAlpha = false;
+	}
+}
+
+void fourcc_codec_input(uint32 a, int& format, int& variant)
+{
+	switch (a) {
+	case VDMAKEFOURCC('M', '0', 'R', 'G'):
+		format  = nsVDPixmap::kPixFormat_RGB_Planar16;
+		variant = kBitmapVariant_G3_0_10;
+		break;
+	case VDMAKEFOURCC('M', '2', 'R', 'G'):
+		format  = nsVDPixmap::kPixFormat_RGB_Planar16;
+		variant = kBitmapVariant_G3_0_12;
+		break;
+	case VDMAKEFOURCC('M', '4', 'R', 'G'):
+		format  = nsVDPixmap::kPixFormat_RGB_Planar16;
+		variant = kBitmapVariant_G3_0_14;
+		break;
+	case VDMAKEFOURCC('M', '0', 'R', 'A'):
+		format  = nsVDPixmap::kPixFormat_RGBA_Planar16;
+		variant = kBitmapVariant_G4_0_10;
+		break;
+	case VDMAKEFOURCC('M', '2', 'R', 'A'):
+		format  = nsVDPixmap::kPixFormat_RGBA_Planar16;
+		variant = kBitmapVariant_G4_0_12;
+		break;
+	case VDMAKEFOURCC('M', '4', 'R', 'A'):
+		format  = nsVDPixmap::kPixFormat_RGBA_Planar16;
+		variant = kBitmapVariant_G4_0_14;
+		break;
+	default:
+		format  = 0;
+		variant = 0;
+	}
+}
+
+void fourcc_codec_output(uint32 a, int& format, int& variant)
+{
+	fourcc_codec_input(a, format, variant);
+}
+
+int VDGetPixmapToBitmapVariants(int format)
+{
+	switch (format) {
+	case nsVDPixmap::kPixFormat_RGB888:
+	case nsVDPixmap::kPixFormat_RGB_Planar16:
+	case nsVDPixmap::kPixFormat_RGBA_Planar16:
+		return 4;
+	case nsVDPixmap::kPixFormat_YUV420_Planar:
+		return 3;
+	case nsVDPixmap::kPixFormat_XRGB8888:
+	case nsVDPixmap::kPixFormat_Y8:
+	case nsVDPixmap::kPixFormat_Y8_FR:
+	case nsVDPixmap::kPixFormat_YUV420_Planar16:
+	case nsVDPixmap::kPixFormat_YUV422_Planar16:
+	case nsVDPixmap::kPixFormat_YUV444_Planar16:
+		return 2;
+	default:
+		return 1;
+	}
 }
 
 int VDBitmapFormatToPixmapFormat(const VDAVIBitmapInfoHeader& hdr) {
@@ -327,40 +378,6 @@ int VDBitmapFormatToPixmapFormat(const VDAVIBitmapInfoHeader& hdr, int& variant)
 	}
 
 	return 0;
-}
-
-int VDGetPixmapToBitmapVariants(int format) {
-	if (format == nsVDPixmap::kPixFormat_RGB888)
-		return 4;
-
-	if (format == nsVDPixmap::kPixFormat_XRGB8888)
-		return 2;
-
-	if (format == nsVDPixmap::kPixFormat_YUV420_Planar)
-		return 3;
-
-	if (format == nsVDPixmap::kPixFormat_Y8)
-		return 2;
-
-	if (format == nsVDPixmap::kPixFormat_Y8_FR)
-		return 2;
-
-	if (format == nsVDPixmap::kPixFormat_YUV420_Planar16)
-		return 2;
-
-	if (format == nsVDPixmap::kPixFormat_YUV422_Planar16)
-		return 2;
-
-	if (format == nsVDPixmap::kPixFormat_YUV444_Planar16)
-		return 2;
-
-	if (format == nsVDPixmap::kPixFormat_RGB_Planar16)
-		return 4;
-
-	if (format == nsVDPixmap::kPixFormat_RGBA_Planar16)
-		return 4;
-
-	return 1;
 }
 
 bool VDMakeBitmapFormatFromPixmapFormat(vdstructex<VDAVIBitmapInfoHeader>& dst, const vdstructex<VDAVIBitmapInfoHeader>& src, int format, int variant) {

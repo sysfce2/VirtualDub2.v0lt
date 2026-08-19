@@ -3,6 +3,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2017-2019 Anton Shekhovtsov
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -82,6 +83,15 @@ enum {
 	kBitmapVariant_Y3_0_10 = 2,
 };
 
+uint32 fourcc_toupper(uint32 a);
+
+VDStringA print_fourcc(uint32 a);
+VDStringW printW_fourcc(uint32 a);
+
+void fourcc_codec_info(uint32 a, bool& useAlpha);
+void fourcc_codec_input(uint32 a, int& format, int& variant);
+void fourcc_codec_output(uint32 a, int& format, int& variant);
+
 int VDGetPixmapToBitmapVariants(int format);
 int VDBitmapFormatToPixmapFormat(const VDAVIBitmapInfoHeader& hdr);
 int VDBitmapFormatToPixmapFormat(const VDAVIBitmapInfoHeader& hdr, int& variant);
@@ -93,14 +103,5 @@ bool VDGetPixmapLayoutForBitmapFormat(const VDAVIBitmapInfoHeader& hdr, uint32 h
 VDPixmap VDGetPixmapForBitmap(const VDAVIBitmapInfoHeader& hdr, const void *data);
 void VDSetPixmapInfoForBitmap(FilterModPixmapInfo& info, int format, int variant=0);
 void VDAdjustPixmapInfoForRange(FilterModPixmapInfo& info, int format);
-
-uint32 fourcc_toupper(uint32 a);
-
-VDStringA print_fourcc(uint32 a);
-VDStringW printW_fourcc(uint32 a);
-
-void fourcc_codec_info(uint32 a, bool& useAlpha);
-void fourcc_codec_input(uint32 a, int& format, int& variant);
-void fourcc_codec_output(uint32 a, int& format, int& variant);
 
 #endif
