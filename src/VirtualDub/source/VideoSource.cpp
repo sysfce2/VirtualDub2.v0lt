@@ -34,12 +34,6 @@
 #include "resource.h"
 #include "VideoSourceAVI.h"
 
-#if defined(_M_AMD64)
-	#define VDPROT_PTR	"%p"
-#else
-	#define VDPROT_PTR	"%08x"
-#endif
-
 ///////////////////////////
 
 extern bool VDPreferencesIsDirectYCbCrInputEnabled();
@@ -2193,8 +2187,8 @@ const void *VideoSourceAVI::streamGetFrame(const void *inputBuffer, uint32 data_
 
 		if (data_len) {
 			try {
-				vdprotected2("using output buffer at "VDPROT_PTR"-"VDPROT_PTR, void *, mpFrameBuffer.get(), void *, (char *)mpFrameBuffer.get() + mFrameBufferSize - 1) {
-					vdprotected2("using input buffer at "VDPROT_PTR"-"VDPROT_PTR, const void *, inputBuffer, const void *, (const char *)inputBuffer + data_len - 1) {
+				vdprotected2("using output buffer at %p-%p", void *, mpFrameBuffer.get(), void *, (char *)mpFrameBuffer.get() + mFrameBufferSize - 1) {
+					vdprotected2("using input buffer at %p-%p", const void *, inputBuffer, const void *, (const char *)inputBuffer + data_len - 1) {
 						vdprotected1("decompressing video frame %lu", unsigned long, (unsigned long)frame_num) {
 							mpDecompressor->DecompressFrame(mpFrameBuffer.get(), inputBuffer, data_len, _isKey(frame_num), is_preroll);
 						}
