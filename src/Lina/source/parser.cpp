@@ -1,7 +1,7 @@
 // Lina - HTML compiler for VirtualDub help system
 //
 // Copyright (C) 2013 Avery Lee
-// Copyright (C) 2024 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -70,7 +70,12 @@ void TreeParser::ParseFile(const char *fname) {
 	}
 }
 
-void TreeParser::PushFile(const char *fname) {
+void TreeParser::PushFile(const char *fname)
+{
+	if (!fname) {
+		error("source file not specified");
+	}
+
 	FILE *f = nullptr;
 	errno_t err = fopen_s(&f, fname, "r");
 	if (err) {
