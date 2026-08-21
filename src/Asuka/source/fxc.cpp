@@ -826,11 +826,12 @@ void tool_fxc(const vdfastvector<const wchar_t*>& args, const vdfastvector<const
 
 				// slow... fix if perf bottleneck
 				int psIndex2 = 0;
-				for(auto it(mPixelShaders.cbegin()), itEnd(mPixelShaders.cend()); it!=itEnd; ++it, ++psIndex2) {
-					if (*it == ps) {
+				for(const auto& pixelShader : mPixelShaders) {
+					if (pixelShader == ps) {
 						psIndex = psIndex2;
 						break;
 					}
+					++psIndex2;
 				}
 
 				if (psIndex < 0) {
@@ -856,11 +857,12 @@ void tool_fxc(const vdfastvector<const wchar_t*>& args, const vdfastvector<const
 
 				// slow... fix if perf bottleneck
 				int vsIndex2 = 0;
-				for(auto it(mVertexShaders.cbegin()), itEnd(mVertexShaders.cend()); it!=itEnd; ++it, ++vsIndex2) {
-					if (*it == vs) {
+				for(const auto& vertexShader : mVertexShaders) {
+					if (vertexShader == vs) {
 						vsIndex = vsIndex2;
 						break;
 					}
+					++vsIndex2;
 				}
 
 				if (vsIndex < 0) {

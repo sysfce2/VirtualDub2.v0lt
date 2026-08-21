@@ -42,16 +42,14 @@ TreeNode *TreeNode::ShallowClone() {
 	return newNode;
 }
 
-const TreeAttribute *TreeNode::Attrib(const std::string& s) const {
-	auto it(mAttribs.cbegin()), itEnd(mAttribs.cend());
-
-	for(; it!=itEnd; ++it) {
-		if ((*it).mName == s) {
-			return &*it;
+const TreeAttribute *TreeNode::Attrib(const std::string& s) const
+{
+	for(const auto& attrib : mAttribs) {
+		if (attrib.mName == s) {
+			return &attrib;
 		}
 	}
-
-	return NULL;
+	return nullptr;
 }
 
 const TreeNode *TreeNode::ResolvePath(const std::string& path, std::string& name) const {
@@ -72,14 +70,12 @@ const TreeNode *TreeNode::ResolvePath(const std::string& path, std::string& name
 	}
 }
 
-const TreeNode *TreeNode::Child(const std::string& s) const {
+const TreeNode *TreeNode::Child(const std::string& s) const
+{
 	std::string name;
 	const TreeNode *parent = ResolvePath(s, name);
 
-	auto it(mChildren.cbegin()), itEnd(mChildren.cend());
-
-	for(; it!=itEnd; ++it) {
-		TreeNode *child = *it;
+	for(const auto& child : mChildren) {
 		if (!child->mbIsText) {
 			if (child->mName == "lina:data") {
 				const TreeNode *t = child->Child(name);
@@ -87,10 +83,10 @@ const TreeNode *TreeNode::Child(const std::string& s) const {
 					return t;
 			}
 			if (child->mName == name)
-				return *it;
+				return child;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 bool TreeNode::SupportsCDATA() const {

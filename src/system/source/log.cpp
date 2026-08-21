@@ -61,9 +61,10 @@ void VDLog(int severity, const wchar_t *s) {
 		g_logTail &= 16383;
 
 		VDThreadID currentThread = VDGetCurrentThreadID();
-		for(auto it(g_loggers.cbegin()), itEnd(g_loggers.cend()); it!=itEnd; ++it) {
-			if (!(*it).second || currentThread == (*it).second)
-				(*it).first->AddLogEntry(severity, s);
+		for(const auto& [logger, threadID] : g_loggers) {
+			if (!threadID || currentThread == threadID) {
+				logger->AddLogEntry(severity, s);
+			}
 		}
 	}
 }

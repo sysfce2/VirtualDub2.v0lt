@@ -2625,10 +2625,7 @@ bool VDCaptureDriverDS::SetVideoFormat(const BITMAPINFOHEADER *pbih, uint32 size
 		// similar to what we have here. If so, copy the fields from
 		// that format.
 
-		auto it(mPreferredVideoFormats.cbegin()), itEnd(mPreferredVideoFormats.cend());
-
-		for(; it!=itEnd; ++it) {
-			const AM_MEDIA_TYPE& amtype = *it;
+		for(const auto& amtype : mPreferredVideoFormats) {
 			const VIDEOINFOHEADER& vhdr2 = *(const VIDEOINFOHEADER *)amtype.pbFormat;
 
 			if (vhdr2.bmiHeader.biCompression == pbih->biCompression) {
@@ -4825,16 +4822,16 @@ int VDCaptureDriverDS::UpdateCrossbarSource(InputSources& sources, IAMCrossbar *
 		return -1;
 	}
 
-	if (hr == S_FALSE || currentSource == -1)
+	if (hr == S_FALSE || currentSource == -1) {
 		return -1;
+	}
 
-	auto it(sources.cbegin()), itEnd(sources.cend());
 	int index = 0;
-	for(; it!=itEnd; ++it, ++index) {
-		const InputSource& src = *it;
-
-		if (src.mCrossbarPin == currentSource)
+	for(const auto& src : sources) {
+		if (src.mCrossbarPin == currentSource) {
 			return index;
+		}
+		++index;
 	}
 
 	VDLog(kVDLogWarning, VDStringW(L"CapDShow: Current crossbar pin does not correspond to a known source.\n"));
@@ -4880,16 +4877,16 @@ LRESULT CALLBACK VDCaptureDriverDS::StaticMessageSinkWndProc(HWND hwnd, UINT msg
 	return pThis ? pThis->MessageSinkWndProc(hwnd, msg, wParam, lParam) : DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
-LRESULT VDCaptureDriverDS::MessageSinkWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	if (msg == WM_APP)
+LRESULT VDCaptureDriverDS::MessageSinkWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (msg == WM_APP) {
 		DoEvents();
-	else if (msg == WM_APP+1)
+	}
+	else if (msg == WM_APP + 1) {
 		CaptureStop();
+	}
 	else {
-		auto it(mVideoWindows.cbegin()), itEnd(mVideoWindows.cend());
-		for(; it!=itEnd; ++it) {
-			const IVideoWindowPtr& p = *it;
-
+		for(const auto& p : mVideoWindows) {
 			p->NotifyOwnerMessage((OAHWND)hwnd, msg, wParam, lParam);
 		}
 	}

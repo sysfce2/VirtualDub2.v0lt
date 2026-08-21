@@ -401,21 +401,18 @@ void GLCCompiler::Compile(const char *sourceName, const char *src, uint32 len, F
 	fputs("// techniques\n", f);
 	fputs("//\n", f);
 	fprintf(f, "static const struct VDOpenGLTechnique g_techniques[]={\n");
-	auto it(mTechniques.cbegin()), itEnd(mTechniques.cend());
-	for(; it!=itEnd; ++it) {
-		const Technique& tech = it->second;
 
+	for(const auto& [name, tech] : mTechniques) {
 		int index = std::find(mFragmentShaders.begin(), mFragmentShaders.end(), tech.mpFragmentShader) - mFragmentShaders.begin();
 
 		fprintf(f, "\t{ &g_fragmentShader%d, %s },\n", index, tech.mpFragmentShader->GetTypeString());
 	}
 	fprintf(f, "};\n");
-	
-	it = mTechniques.begin();
-	for(int techIndex = 0; it!=itEnd; ++it, ++techIndex) {
-		const char *name = it->first.c_str();
 
-		fprintf(f, "static const int kVDOpenGLTechIndex_%s = %d;\n", name, techIndex);
+	int techIndex = 0;
+	for(const auto& [name, tech] : mTechniques) {
+		fprintf(f, "static const int kVDOpenGLTechIndex_%s = %d;\n", name.c_str(), techIndex);
+		++techIndex;
 	}
 
 
