@@ -1,7 +1,7 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2003 Avery Lee
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -14,6 +14,7 @@
 
 #include "oshelper.h"
 #include "FilterGraph.h"
+#include <ranges>
 
 extern HINSTANCE g_hInst;
 extern const wchar_t g_szError[];
@@ -399,9 +400,7 @@ void VDFilterGraphControl::OnPaint() {
 		GDIAutoPtr brush_hi(CreateSolidBrush(color_blue));
 
 		{
-			for(tFilterList::reverse_iterator it(mFilters.rbegin()), itEnd(mFilters.rend()); it!=itEnd; ++it) {
-				Filter& f = *it;
-
+			for(auto& f : mFilters | std::views::reverse) {
 				RenderFilter(hdc, f, &f == mpSelectedFilter && mSelectedObject == kFilter);
 			}
 		}

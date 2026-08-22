@@ -69,6 +69,7 @@
 #include "AVIOutputPlugin.h"
 #include "FilterInstance.h"
 #include "InputFile.h"
+#include <ranges>
 
 #pragma comment(lib, "shlwapi")
 
@@ -443,9 +444,9 @@ static void VDRemoveVfwCodecs(const VDStringW& path)
 			}
 		}
 
-		for (auto rit = fccHandlers.crbegin(); rit != fccHandlers.crend(); ++rit) {
+		for (const auto& fccHandler : fccHandlers | std::views::reverse) {
 			// TODO: For some reason ICRemove doesn't work!
-			::ICRemove(ICTYPE_VIDEO, *rit, 0);
+			::ICRemove(ICTYPE_VIDEO, fccHandler, 0);
 		}
 	}
 }

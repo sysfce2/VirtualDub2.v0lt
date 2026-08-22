@@ -1,12 +1,14 @@
 // VirtualDub - Video processing and capture application
 //
 // Copyright (C) 1998-2001 Avery Lee
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
 
 #include "stdafx.h"
 #include "AVIReadCache.h"
+#include <ranges>
 
 //#define VDTRACE_AVIREADCACHE VDDEBUG
 #define VDTRACE_AVIREADCACHE (void)sizeof
@@ -116,9 +118,7 @@ long AVIReadCache::Read(void *dest, sint64 chunk_pos, sint64 pos, uint32 len) {
 	do {
 		// scan buffer looking for a range that contains data
 
-		for(tIndexBlockList::reverse_iterator it(mActiveIndices.rbegin()), itEnd(mActiveIndices.rend()); it!=itEnd; ++it) {
-			const IndexBlock& ib = *it;
-
+		for(const auto& ib : mActiveIndices | std::views::reverse) {
 			for(int i = ib.mHead; i < ib.mTail; ++i) {
 				const IndexBlockEntry& ibe = ib.mBlocks[i];
 
