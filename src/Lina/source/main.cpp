@@ -17,6 +17,7 @@
 #include <set>
 #include <vector>
 #include <utility>
+#include <ranges>
 #include "document.h"
 #include "parser.h"
 
@@ -40,15 +41,16 @@ struct Context {
 	Context() : pre_count(0), cdata_count(0), eat_next_space(true), holding_space(false) {}
 
 	const TreeNode *find_tag(std::string name) {
-		auto it(invocation_stack.crbegin()), itEnd(invocation_stack.crend());
 		const TreeNode *t = NULL;
-		
-		for(; it!=itEnd; ++it) {
-			t = (*it)->Child(name);
-			if (t)
+
+		for(const auto item : invocation_stack | std::views::reverse) {
+			t = item->Child(name);
+			if (t) {
 				break;
-			if (!name.empty() && name[0]=='/')
+			}
+			if (!name.empty() && name[0] == '/') {
 				break;
+			}
 		}
 
 		return t;
@@ -67,12 +69,11 @@ tFileCopies g_fileCopies;
 
 //////////////////////////////////////////////////////////////
 
-void error(const Context& ctx, const char *format, ...) {
+void error(const Context& ctx, const char *format, ...)
+{
 	va_list val;
 
-	auto it(ctx.stack.crbegin()), itEnd(ctx.stack.crend());
-
-	printf("%s(%d): Error! ", (*it)->mpLocation->mName.c_str(), (*it)->mLineno);
+	printf("%s(%d): Error! ", ctx.stack.back()->mpLocation->mName.c_str(), ctx.stack.back()->mLineno);
 
 	va_start(val, format);
 	vprintf(format, val);
@@ -80,15 +81,15 @@ void error(const Context& ctx, const char *format, ...) {
 	putchar('\n');
 
 	int indent = 3;
-	for(++it; it!=itEnd; ++it) {
-		const TreeNode& tag = **it;
+	for (const auto item : ctx.stack | std::views::reverse) {
+		const TreeNode& tag = *item;
 		printf("%*c%s(%d): while processing tag <%s>\n", indent, ' ', tag.mpLocation->mName.c_str(), tag.mLineno, tag.mName.c_str());
 		indent += 3;
 	}
 
 	indent = 3;
-	for(it=ctx.invocation_stack.crbegin(), itEnd=ctx.invocation_stack.crend(); it!=itEnd; ++it) {
-		const TreeNode& tag = **it;
+	for (const auto item : ctx.invocation_stack | std::views::reverse) {
+		const TreeNode& tag = *item;
 		printf("%*c%s(%d): while invoked from tag <%s> (%zu children)\n", indent, ' ', tag.mpLocation->mName.c_str(), tag.mLineno, tag.mName.c_str(), tag.mChildren.size());
 		indent += 3;
 	}
@@ -417,28 +418,26 @@ void output_source_tags(Context& ctx, std::string *out, const TreeNode& tag) {
 		out->append("<br>");
 }
 
-void dump_stack(Context& ctx) {
-	auto it(ctx.stack.crbegin()), itEnd(ctx.stack.crend());
-
+void dump_stack(Context& ctx)
+{
 	printf("Current execution stack:\n");
 	int indent = 3;
-	for(++it; it!=itEnd; ++it) {
-		const TreeNode& tag = **it;
+	for (const auto item : ctx.stack | std::views::reverse) {
+		const TreeNode& tag = *item;
 		printf("%*c%s(%d): processing <%s>\n", indent, ' ', tag.mpLocation->mName.c_str(), tag.mLineno, tag.mName.c_str());
 		indent += 3;
 	}
 
 	indent = 3;
-	auto it2(ctx.construction_stack.crbegin()), it2End(ctx.construction_stack.crend());
-	for(; it2!=it2End; ++it2) {
-		const TreeNode& tag = **it2;
+	for (const auto item : ctx.construction_stack | std::views::reverse) {
+		const TreeNode& tag = *item;
 		printf("%*c%s(%d): while creating tag <%s>\n", indent, ' ', tag.mpLocation->mName.c_str(), tag.mLineno, tag.mName.c_str());
 		indent += 3;
 	}
 
 	indent = 3;
-	for(it=ctx.invocation_stack.rbegin(), itEnd=ctx.invocation_stack.rend(); it!=itEnd; ++it) {
-		const TreeNode& tag = **it;
+	for (const auto item : ctx.invocation_stack | std::views::reverse) {
+		const TreeNode& tag = *item;
 		printf("%*c%s(%d): while invoked from tag <%s>\n", indent, ' ', tag.mpLocation->mName.c_str(), tag.mLineno, tag.mName.c_str());
 		indent += 3;
 	}
@@ -704,19 +703,20 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 		std::string node_name;
 		const TreeNode *parent;
 		if (ctx.invocation_stack.empty()) {
-			if (!a->mValue.empty() && a->mValue[0] == '/')
+			if (!a->mValue.empty() && a->mValue[0] == '/') {
 				parent = ctx.mpDocument->mpRoot->ResolvePath(a->mValue.substr(1), node_name);
-			else
+			} else {
 				error(ctx, "path must be absolute if not in macro context");
+			}
 		} else {
-			auto it(ctx.invocation_stack.crbegin()), itEnd(ctx.invocation_stack.crend());
-			
-			for(; it!=itEnd; ++it) {
-				parent = (*it)->ResolvePath(a->mValue, node_name);
-				if(parent)
+			for (const auto item : ctx.invocation_stack | std::views::reverse) {
+				parent = item->ResolvePath(a->mValue, node_name);
+				if (parent) {
 					break;
-				if (!a->mValue.empty() && a->mValue[0] == '/')
+				}
+				if (!a->mValue.empty() && a->mValue[0] == '/') {
 					break;
+				}
 			}
 		}
 
