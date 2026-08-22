@@ -40,7 +40,7 @@ struct Context {
 	Context() : pre_count(0), cdata_count(0), eat_next_space(true), holding_space(false) {}
 
 	const TreeNode *find_tag(std::string name) {
-		std::list<const TreeNode *>::reverse_iterator it(invocation_stack.rbegin()), itEnd(invocation_stack.rend());
+		auto it(invocation_stack.crbegin()), itEnd(invocation_stack.crend());
 		const TreeNode *t = NULL;
 		
 		for(; it!=itEnd; ++it) {
@@ -70,7 +70,7 @@ tFileCopies g_fileCopies;
 void error(const Context& ctx, const char *format, ...) {
 	va_list val;
 
-	std::list<const TreeNode *>::const_reverse_iterator it(ctx.stack.rbegin()), itEnd(ctx.stack.rend());
+	auto it(ctx.stack.crbegin()), itEnd(ctx.stack.crend());
 
 	printf("%s(%d): Error! ", (*it)->mpLocation->mName.c_str(), (*it)->mLineno);
 
@@ -87,7 +87,7 @@ void error(const Context& ctx, const char *format, ...) {
 	}
 
 	indent = 3;
-	for(it=ctx.invocation_stack.rbegin(), itEnd=ctx.invocation_stack.rend(); it!=itEnd; ++it) {
+	for(it=ctx.invocation_stack.crbegin(), itEnd=ctx.invocation_stack.crend(); it!=itEnd; ++it) {
 		const TreeNode& tag = **it;
 		printf("%*c%s(%d): while invoked from tag <%s> (%zu children)\n", indent, ' ', tag.mpLocation->mName.c_str(), tag.mLineno, tag.mName.c_str(), tag.mChildren.size());
 		indent += 3;
@@ -418,7 +418,7 @@ void output_source_tags(Context& ctx, std::string *out, const TreeNode& tag) {
 }
 
 void dump_stack(Context& ctx) {
-	std::list<const TreeNode *>::reverse_iterator it(ctx.stack.rbegin()), itEnd(ctx.stack.rend());
+	auto it(ctx.stack.crbegin()), itEnd(ctx.stack.crend());
 
 	printf("Current execution stack:\n");
 	int indent = 3;
@@ -429,7 +429,7 @@ void dump_stack(Context& ctx) {
 	}
 
 	indent = 3;
-	std::list<TreeNode *>::reverse_iterator it2(ctx.construction_stack.rbegin()), it2End(ctx.construction_stack.rend());
+	auto it2(ctx.construction_stack.crbegin()), it2End(ctx.construction_stack.crend());
 	for(; it2!=it2End; ++it2) {
 		const TreeNode& tag = **it2;
 		printf("%*c%s(%d): while creating tag <%s>\n", indent, ' ', tag.mpLocation->mName.c_str(), tag.mLineno, tag.mName.c_str());
@@ -709,7 +709,7 @@ void output_special_tag(Context& ctx, std::string *out, const TreeNode& tag) {
 			else
 				error(ctx, "path must be absolute if not in macro context");
 		} else {
-			std::list<const TreeNode *>::reverse_iterator it(ctx.invocation_stack.rbegin()), itEnd(ctx.invocation_stack.rend());
+			auto it(ctx.invocation_stack.crbegin()), itEnd(ctx.invocation_stack.crend());
 			
 			for(; it!=itEnd; ++it) {
 				parent = (*it)->ResolvePath(a->mValue, node_name);
