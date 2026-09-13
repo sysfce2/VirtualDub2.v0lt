@@ -1,12 +1,19 @@
 VirtualDub2.x change log
 
-2.5.4.x dev
+2.5.5.1212 - 2026-09-13
 -----------------------
 The VFW codec from the "vfwcodecs" folder will not be temporarily installed if the same codec is installed on the system.
 
 Updated avlib-1.vdplugin.
+    Improved support for interlaced videos (now uses kPixFormat_YUV420i_Planar).
+    Fixed the "Requested frame not found" error that occurred with some valid videos near the end of playback on certain PCs.
+    Cosmetic changes.
 
 Updated MPEG2.vdplugin.
+    Improved Unicode support.
+    Fixed setting of color space matrix coefficients if it is not specified in the video stream.
+    If a MPEG-2 4:2:0 video stream is defined as interlaced, the plugin will output in interlaced format by default.
+    The minimum supported version is VirtualDub 1.10.1 or later.
 
 
 2.5.3.1197 - 2026-08-25
