@@ -170,6 +170,9 @@
 #define IDC_ALPHA_MASK                  1501
 #define IDC_ALPHA_OPACITY_PM            1502
 #define IDC_ALPHA_OPACITY               1503
+#define IDC_SCAN_NONE                   1504
+#define IDC_SCAN_PROGRESSIVE            1505
+#define IDC_SCAN_INTERLACED             1506
 #define IDC_BLEND_WEIGHTING             1522
 #define IDC_STATIC_COLORRANGE           1531
 #define IDC_MATRIX_TITLE                1535
