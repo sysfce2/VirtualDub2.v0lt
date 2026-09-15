@@ -2,6 +2,8 @@ VirtualDub2.x change log
 
 2.5.6.x dev
 -----------------------
+Fixed the removal of temporary VFW codec registrations when both x86 and x64 versions of VirtualDub2 were running simultaneously.
+Added the ability to override the "Scan type" ("Progressive" or "Interlaced") in the "alias format" video filter.
 
 
 2.5.5.1212 - 2026-09-13
