@@ -209,7 +209,11 @@ void VDCPUTest() {
 ///////////////////////////////////////////////////////////////////////////
 
 const int MAX_INSTANCES = 64;
-const wchar_t* g_appSemName = L"Local\\VirtualDub2Semaphore";
+#ifdef _M_AMD64
+const wchar_t* g_appSemName = L"Local\\VirtualDub2Semaphore64";
+#else
+const wchar_t* g_appSemName = L"Local\\VirtualDub2Semaphore32";
+#endif
 HANDLE g_hAppSemaphore = NULL;
 
 ///////////////////////////////////////////////////////////////////////////
