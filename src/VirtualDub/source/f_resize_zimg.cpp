@@ -12,15 +12,11 @@
 #include "ScriptError.h"
 
 #include "misc.h"
-#include <vd2/system/cpuaccel.h>
 #include <vd2/Kasumi/pixel.h>
 #include <vd2/Kasumi/zimg_resample.h>
-#include <vd2/Kasumi/resample_kernels.h>
 #include <vd2/VDXFrame/VideoFilter.h>
-#include <vd2/plugin/vdvideoaccel.h>
 #include "resource.h"
 #include "filter.h"
-#include "vbitmap.h"
 #include "f_resize_config.h"
 
 #include "f_resize.inl"

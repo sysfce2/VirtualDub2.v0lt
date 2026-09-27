@@ -54,16 +54,20 @@ static const FilterDefinition *const builtin_filters[]={
 	NULL
 };
 
-void InitBuiltinFilters() {
-	const FilterDefinition *cur, *const *cpp;
+void InitBuiltinFilters()
+{
+	const FilterDefinition* cur;
+	const FilterDefinition* const* cpp;
 
 	VDXVideoFilter::SetAPIVersion(VIRTUALDUB_FILTERDEF_VERSION);
 
 	cpp = builtin_filters;
-	while(cur = *cpp++)
+	while (cur = *cpp++) {
 		FilterAddBuiltin(cur);
+	}
 
 	cpp = VDVFGetList();
-	while(cur = *cpp++)
+	while (cur = *cpp++) {
 		FilterAddBuiltin(cur);
+	}
 }
