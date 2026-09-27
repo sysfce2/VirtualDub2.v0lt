@@ -16,97 +16,97 @@
 #include <vd2/system/memory.h>
 
 extern VDPixmapFormatInfo g_vdPixmapFormats[] = {
-                                    // name         qchnk qw qh qwb qhb  qs ab aw ah as   ps
-    /* Null */                      { "null",       false, 1, 1,  0,  0,  0, 0, 0, 0, 0,   0 },
-    /* Pal1 */                      { "Pal1",        true, 8, 1,  3,  0,  1, 0, 0, 0, 0,   2 },
-    /* Pal2 */                      { "Pal2",        true, 4, 1,  2,  0,  1, 0, 0, 0, 0,   4 },
-    /* Pal4 */                      { "Pal4",        true, 2, 1,  1,  0,  1, 0, 0, 0, 0,  16 },
-    /* Pal8 */                      { "Pal8",       false, 1, 1,  0,  0,  1, 0, 0, 0, 0, 256 },
-    /* RGB16_555 */                 { "XRGB1555",   false, 1, 1,  0,  0,  2, 0, 0, 0, 0,   0 },
-    /* RGB16_565 */                 { "RGB565",     false, 1, 1,  0,  0,  2, 0, 0, 0, 0,   0 },
-    /* RGB24 */                     { "RGB24",      false, 1, 1,  0,  0,  3, 0, 0, 0, 0,   0 },
-    /* RGB32 */                     { "RGBA32",     false, 1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
-    /* Y8 */                        { "Y8",         false, 1, 1,  0,  0,  1, 0, 0, 0, 0,   0 },
-    /* YUV422_UYVY */               { "UYVY",        true, 2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV422_YUYV */               { "YUYV",        true, 2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV444_XVYU */               { "XVYU",       false, 1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV444_Planar */             { "YUV444",     false, 1, 1,  0,  0,  1, 2, 0, 0, 1,   0 },
-    /* YUV422_Planar */             { "YUV422",     false, 1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
-    /* YUV420_Planar */             { "YUV420",     false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV411_Planar */             { "YUV411",     false, 1, 1,  0,  0,  1, 2, 2, 0, 1,   0 },
-    /* YUV410_Planar */             { "YUV410",     false, 1, 1,  0,  0,  1, 2, 2, 2, 1,   0 },
-    /* YUV422_Planar_Centered */    { "YUV422C",    false, 1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
-    /* YUV420_Planar_Centered */    { "YUV420C",    false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV422_Planar_16F */         { "YUV422_16F", false, 1, 1,  0,  0,  2, 2, 1, 0, 2,   0 },
-    /* V210 */                      { "v210",        true,24, 1,  2,  0, 64, 0, 0, 0, 1,   0 },
-    /* YUV422_UYVY_709 */           { "UYVY-709",    true, 2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
-    /* NV12 */                      { "NV12",       false, 1, 1,  0,  0,  1, 1, 1, 1, 2,   0 },
-    /* Y8-FR */                     { "Y8-FR",      false, 1, 1,  1,  0,  1, 0, 0, 0, 0,   0 },
-    /* YUV422_YUYV_709 */           { "YUYV-709",    true, 2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV444_Planar_709 */         { "YUV444-709", false, 1, 1,  0,  0,  1, 2, 0, 0, 1,   0 },
-    /* YUV422_Planar_709 */         { "YUV422-709", false, 1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
-    /* YUV420_Planar_709 */         { "YUV420-709", false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV411_Planar_709 */         { "YUV411-709", false, 1, 1,  0,  0,  1, 2, 2, 0, 1,   0 },
-    /* YUV410_Planar_709 */         { "YUV410-709", false, 1, 1,  0,  0,  1, 2, 2, 2, 1,   0 },
-    /* YUV422_UYVY_FR */            { "UYVY-FR",     true, 2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV422_YUYV_FR */            { "YUYV-FR",     true, 2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV444_Planar_FR */          { "YUV444-FR",  false, 1, 1,  0,  0,  1, 2, 0, 0, 1,   0 },
-    /* YUV422_Planar_FR */          { "YUV422-FR",  false, 1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
-    /* YUV420_Planar_FR */          { "YUV420-FR",  false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV411_Planar_FR */          { "YUV411-FR",  false, 1, 1,  0,  0,  1, 2, 2, 0, 1,   0 },
-    /* YUV410_Planar_FR */          { "YUV410-FR",  false, 1, 1,  0,  0,  1, 2, 2, 2, 1,   0 },
-                                    // name              qchnk qw qh qwb qhb  qs ab aw ah as   ps
-    /* YUV422_UYVY_FR_709 */        { "UYVY-709-FR",     true, 2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV422_YUYV_FR_709 */        { "YUYV-709-FR",     true, 2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV444_Planar_FR_709 */      { "YUV444-709-FR",  false, 1, 1,  0,  0,  1, 2, 0, 0, 1,   0 },
-    /* YUV422_Planar_FR_709 */      { "YUV422-709-FR",  false, 1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
-    /* YUV420_Planar_FR_709 */      { "YUV420-709-FR",  false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV411_Planar_FR_709 */      { "YUV411-709-FR",  false, 1, 1,  0,  0,  1, 2, 2, 0, 1,   0 },
-    /* YUV410_Planar_FR_709 */      { "YUV410-709-FR",  false, 1, 1,  0,  0,  1, 2, 2, 2, 1,   0 },
-    /* YUV420i_Planar */            { "YUV420i",        false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420i_Planar_FR */         { "YUV420i-FR",     false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420i_Planar_709 */        { "YUV420i-709",    false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420i_Planar_709_FR */     { "YUV420i-709-FR", false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420it_Planar */           { "YUV420it",       false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420it_Planar_FR */        { "YUV420it-FR",    false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420it_Planar_709 */       { "YUV420it-709",   false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420it_Planar_709_FR */    { "YUV420it-709-FR",false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420ib_Planar */           { "YUV420ib",       false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420ib_Planar_FR */        { "YUV420ib-FR",    false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420ib_Planar_709 */       { "YUV420ib-709",   false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* YUV420ib_Planar_709_FR */    { "YUV420ib-709-FR",false, 1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
-    /* RGB64 */                     { "RGBA64",         false, 1, 1,  0,  0,  8, 0, 0, 0, 0,   0 },
-    /* YUV444_Planar16 */           { "YUV444P16",      false, 1, 1,  0,  0,  2, 2, 0, 0, 2,   0 },
-    /* YUV422_Planar16 */           { "YUV422P16",      false, 1, 1,  0,  0,  2, 2, 1, 0, 2,   0 },
-    /* YUV420_Planar16 */           { "YUV420P16",      false, 1, 1,  0,  0,  2, 2, 1, 1, 2,   0 },
-    /* Y16 */                       { "Y16",            false, 1, 1,  1,  0,  2, 0, 0, 0, 0,   0 },
-    /* YUVA444_Y416 */              { "Y416",           false, 1, 1,  0,  0,  8, 0, 0, 0, 0,   0 },
-    /* YUV444_V410 */               { "v410",           false, 1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV444_Y410 */               { "Y410",           false, 1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
-    /* r210 */                      { "r210",           false, 1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
-    /* r10k */                      { "R10k",           false, 1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
-    /* YUV444_V308 */               { "v308",           false, 1, 1,  0,  0,  3, 0, 0, 0, 0,   0 },
-    /* YUV422_P210 */               { "P210",           false, 1, 1,  0,  0,  2, 1, 1, 0, 4,   0 },
-    /* YUV420_P010 */               { "P010",           false, 1, 1,  0,  0,  2, 1, 1, 1, 4,   0 },
-    /* YUV422_P216 */               { "P216",           false, 1, 1,  0,  0,  2, 1, 1, 0, 4,   0 },
-    /* YUV420_P016 */               { "P016",           false, 1, 1,  0,  0,  2, 1, 1, 1, 4,   0 },
-                                    // name              qchnk qw qh qwb qhb  qs ab aw ah as   ps  as4
-    /* YUV444_Alpha_Planar */       { "YUVA444",        false, 1, 1,  0,  0,  1, 3, 0, 0, 1,   0,  1 },
-    /* YUV422_Alpha_Planar */       { "YUVA422",        false, 1, 1,  0,  0,  1, 3, 1, 0, 1,   0,  1 },
-    /* YUV420_Alpha_Planar */       { "YUVA420",        false, 1, 1,  0,  0,  1, 3, 1, 1, 1,   0,  1 },
-    /* YUV444_Alpha_Planar16 */     { "YUVA444P16",     false, 1, 1,  0,  0,  2, 3, 0, 0, 2,   0,  2 },
-    /* YUV422_Alpha_Planar16 */     { "YUVA422P16",     false, 1, 1,  0,  0,  2, 3, 1, 0, 2,   0,  2 },
-    /* YUV420_Alpha_Planar16 */     { "YUVA420P16",     false, 1, 1,  0,  0,  2, 3, 1, 1, 2,   0,  2 },
-    /* YUV422_YU64 */               { "YU64",           true,  2, 1,  1,  0,  8, 0, 0, 0, 0,   0,  0 },
-    /* B64A */                      { "b64a",           false, 1, 1,  0,  0,  8, 0, 0, 0, 0,   0,  0 },
-    /* RGB_Planar */                { "RGB-P8",         false, 1, 1,  0,  0,  1, 2, 0, 0, 1,   0,  0 },
-    /* RGB_Planar16 */              { "RGB-P16",        false, 1, 1,  0,  0,  2, 2, 0, 0, 2,   0,  0 },
-    /* RGB_Planar32F */             { "RGB-Float",      false, 1, 1,  0,  0,  4, 2, 0, 0, 4,   0,  0 },
-    /* RGBA_Planar */               { "RGBA-P8",        false, 1, 1,  0,  0,  1, 3, 0, 0, 1,   0,  1 },
-    /* RGBA_Planar16 */             { "RGBA-P16",       false, 1, 1,  0,  0,  2, 3, 0, 0, 2,   0,  2 },
-    /* RGBA_Planar32F */            { "RGBA-Float",     false, 1, 1,  0,  0,  4, 3, 0, 0, 4,   0,  4 },
-    /* R_32F */                     { "R-Float",        false, 1, 1,  0,  0,  4, 0, 0, 0, 4,   0,  0 },
-    /* B48R */                      { "b48r",           false, 1, 1,  0,  0,  6, 0, 0, 0, 0,   0,  0 },
+                                  // name             qchnk  qw qh qwb qhb  qs ab aw ah as   ps
+     /* Null */                   { "null",           false,  1, 1,  0,  0,  0, 0, 0, 0, 0,   0 },
+     /* Pal1 */                   { "Pal1",            true,  8, 1,  3,  0,  1, 0, 0, 0, 0,   2 },
+     /* Pal2 */                   { "Pal2",            true,  4, 1,  2,  0,  1, 0, 0, 0, 0,   4 },
+     /* Pal4 */                   { "Pal4",            true,  2, 1,  1,  0,  1, 0, 0, 0, 0,  16 },
+     /* Pal8 */                   { "Pal8",           false,  1, 1,  0,  0,  1, 0, 0, 0, 0, 256 },
+     /* RGB16_555 */              { "XRGB1555",       false,  1, 1,  0,  0,  2, 0, 0, 0, 0,   0 },
+     /* RGB16_565 */              { "RGB565",         false,  1, 1,  0,  0,  2, 0, 0, 0, 0,   0 },
+     /* RGB24 */                  { "RGB24",          false,  1, 1,  0,  0,  3, 0, 0, 0, 0,   0 },
+     /* RGB32 */                  { "RGBA32",         false,  1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
+     /* Y8 */                     { "Y8",             false,  1, 1,  0,  0,  1, 0, 0, 0, 0,   0 },
+     /* YUV422_UYVY */            { "UYVY",            true,  2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV422_YUYV */            { "YUYV",            true,  2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV444_XVYU */            { "XVYU",           false,  1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV444_Planar */          { "YUV444",         false,  1, 1,  0,  0,  1, 2, 0, 0, 1,   0 },
+     /* YUV422_Planar */          { "YUV422",         false,  1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
+     /* YUV420_Planar */          { "YUV420",         false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV411_Planar */          { "YUV411",         false,  1, 1,  0,  0,  1, 2, 2, 0, 1,   0 },
+     /* YUV410_Planar */          { "YUV410",         false,  1, 1,  0,  0,  1, 2, 2, 2, 1,   0 },
+     /* YUV422_Planar_Centered */ { "YUV422C",        false,  1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
+     /* YUV420_Planar_Centered */ { "YUV420C",        false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV422_Planar_16F */      { "YUV422_16F",     false,  1, 1,  0,  0,  2, 2, 1, 0, 2,   0 },
+     /* V210 */                   { "v210",            true, 24, 1,  2,  0, 64, 0, 0, 0, 1,   0 },
+     /* YUV422_UYVY_709 */        { "UYVY-709",        true,  2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
+     /* NV12 */                   { "NV12",           false,  1, 1,  0,  0,  1, 1, 1, 1, 2,   0 },
+     /* Y8-FR */                  { "Y8-FR",          false,  1, 1,  1,  0,  1, 0, 0, 0, 0,   0 },
+     /* YUV422_YUYV_709 */        { "YUYV-709",        true,  2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV444_Planar_709 */      { "YUV444-709",     false,  1, 1,  0,  0,  1, 2, 0, 0, 1,   0 },
+     /* YUV422_Planar_709 */      { "YUV422-709",     false,  1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
+     /* YUV420_Planar_709 */      { "YUV420-709",     false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV411_Planar_709 */      { "YUV411-709",     false,  1, 1,  0,  0,  1, 2, 2, 0, 1,   0 },
+     /* YUV410_Planar_709 */      { "YUV410-709",     false,  1, 1,  0,  0,  1, 2, 2, 2, 1,   0 },
+     /* YUV422_UYVY_FR */         { "UYVY-FR",         true,  2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV422_YUYV_FR */         { "YUYV-FR",         true,  2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV444_Planar_FR */       { "YUV444-FR",      false,  1, 1,  0,  0,  1, 2, 0, 0, 1,   0 },
+     /* YUV422_Planar_FR */       { "YUV422-FR",      false,  1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
+     /* YUV420_Planar_FR */       { "YUV420-FR",      false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV411_Planar_FR */       { "YUV411-FR",      false,  1, 1,  0,  0,  1, 2, 2, 0, 1,   0 },
+     /* YUV410_Planar_FR */       { "YUV410-FR",      false,  1, 1,  0,  0,  1, 2, 2, 2, 1,   0 },
+                                  // name             qchnk  qw qh qwb qhb  qs ab aw ah as   ps
+     /* YUV422_UYVY_FR_709 */     { "UYVY-709-FR",     true,  2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV422_YUYV_FR_709 */     { "YUYV-709-FR",     true,  2, 1,  1,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV444_Planar_FR_709 */   { "YUV444-709-FR",  false,  1, 1,  0,  0,  1, 2, 0, 0, 1,   0 },
+     /* YUV422_Planar_FR_709 */   { "YUV422-709-FR",  false,  1, 1,  0,  0,  1, 2, 1, 0, 1,   0 },
+     /* YUV420_Planar_FR_709 */   { "YUV420-709-FR",  false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV411_Planar_FR_709 */   { "YUV411-709-FR",  false,  1, 1,  0,  0,  1, 2, 2, 0, 1,   0 },
+     /* YUV410_Planar_FR_709 */   { "YUV410-709-FR",  false,  1, 1,  0,  0,  1, 2, 2, 2, 1,   0 },
+     /* YUV420i_Planar */         { "YUV420i",        false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420i_Planar_FR */      { "YUV420i-FR",     false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420i_Planar_709 */     { "YUV420i-709",    false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420i_Planar_709_FR */  { "YUV420i-709-FR", false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420it_Planar */        { "YUV420it",       false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420it_Planar_FR */     { "YUV420it-FR",    false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420it_Planar_709 */    { "YUV420it-709",   false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420it_Planar_709_FR */ { "YUV420it-709-FR",false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420ib_Planar */        { "YUV420ib",       false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420ib_Planar_FR */     { "YUV420ib-FR",    false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420ib_Planar_709 */    { "YUV420ib-709",   false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* YUV420ib_Planar_709_FR */ { "YUV420ib-709-FR",false,  1, 1,  0,  0,  1, 2, 1, 1, 1,   0 },
+     /* RGB64 */                  { "RGBA64",         false,  1, 1,  0,  0,  8, 0, 0, 0, 0,   0 },
+     /* YUV444_Planar16 */        { "YUV444P16",      false,  1, 1,  0,  0,  2, 2, 0, 0, 2,   0 },
+     /* YUV422_Planar16 */        { "YUV422P16",      false,  1, 1,  0,  0,  2, 2, 1, 0, 2,   0 },
+     /* YUV420_Planar16 */        { "YUV420P16",      false,  1, 1,  0,  0,  2, 2, 1, 1, 2,   0 },
+     /* Y16 */                    { "Y16",            false,  1, 1,  1,  0,  2, 0, 0, 0, 0,   0 },
+     /* YUVA444_Y416 */           { "Y416",           false,  1, 1,  0,  0,  8, 0, 0, 0, 0,   0 },
+     /* YUV444_V410 */            { "v410",           false,  1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV444_Y410 */            { "Y410",           false,  1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
+     /* r210 */                   { "r210",           false,  1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
+     /* r10k */                   { "R10k",           false,  1, 1,  0,  0,  4, 0, 0, 0, 0,   0 },
+     /* YUV444_V308 */            { "v308",           false,  1, 1,  0,  0,  3, 0, 0, 0, 0,   0 },
+     /* YUV422_P210 */            { "P210",           false,  1, 1,  0,  0,  2, 1, 1, 0, 4,   0 },
+     /* YUV420_P010 */            { "P010",           false,  1, 1,  0,  0,  2, 1, 1, 1, 4,   0 },
+     /* YUV422_P216 */            { "P216",           false,  1, 1,  0,  0,  2, 1, 1, 0, 4,   0 },
+     /* YUV420_P016 */            { "P016",           false,  1, 1,  0,  0,  2, 1, 1, 1, 4,   0 },
+                                  // name             qchnk  qw qh qwb qhb  qs ab aw ah as   ps as4
+     /* YUV444_Alpha_Planar */    { "YUVA444",        false,  1, 1,  0,  0,  1, 3, 0, 0, 1,   0, 1 },
+     /* YUV422_Alpha_Planar */    { "YUVA422",        false,  1, 1,  0,  0,  1, 3, 1, 0, 1,   0, 1 },
+     /* YUV420_Alpha_Planar */    { "YUVA420",        false,  1, 1,  0,  0,  1, 3, 1, 1, 1,   0, 1 },
+     /* YUV444_Alpha_Planar16 */  { "YUVA444P16",     false,  1, 1,  0,  0,  2, 3, 0, 0, 2,   0, 2 },
+     /* YUV422_Alpha_Planar16 */  { "YUVA422P16",     false,  1, 1,  0,  0,  2, 3, 1, 0, 2,   0, 2 },
+     /* YUV420_Alpha_Planar16 */  { "YUVA420P16",     false,  1, 1,  0,  0,  2, 3, 1, 1, 2,   0, 2 },
+     /* YUV422_YU64 */            { "YU64",           true,   2, 1,  1,  0,  8, 0, 0, 0, 0,   0, 0 },
+     /* B64A */                   { "b64a",           false,  1, 1,  0,  0,  8, 0, 0, 0, 0,   0, 0 },
+     /* RGB_Planar */             { "RGB-P8",         false,  1, 1,  0,  0,  1, 2, 0, 0, 1,   0, 0 },
+     /* RGB_Planar16 */           { "RGB-P16",        false,  1, 1,  0,  0,  2, 2, 0, 0, 2,   0, 0 },
+     /* RGB_Planar32F */          { "RGB-Float",      false,  1, 1,  0,  0,  4, 2, 0, 0, 4,   0, 0 },
+     /* RGBA_Planar */            { "RGBA-P8",        false,  1, 1,  0,  0,  1, 3, 0, 0, 1,   0, 1 },
+     /* RGBA_Planar16 */          { "RGBA-P16",       false,  1, 1,  0,  0,  2, 3, 0, 0, 2,   0, 2 },
+     /* RGBA_Planar32F */         { "RGBA-Float",     false,  1, 1,  0,  0,  4, 3, 0, 0, 4,   0, 4 },
+     /* R_32F */                  { "R-Float",        false,  1, 1,  0,  0,  4, 0, 0, 0, 4,   0, 0 },
+     /* B48R */                   { "b48r",           false,  1, 1,  0,  0,  6, 0, 0, 0, 0,   0, 0 },
 };
 
 bool VDPixmapFormatHasAlpha(sint32 format) {
@@ -1543,7 +1543,8 @@ VDPixmapBuffer::~VDPixmapBuffer() {
 	delete[] mpBuffer;
 }
 
-void VDPixmapBuffer::init(sint32 width, sint32 height, int f) {
+void VDPixmapBuffer::init(sint32 width, sint32 height, int f)
+{
 	const VDPixmapFormatInfo& srcinfo = VDPixmapGetInfo(f);
 	sint32		qw			= (width + srcinfo.qw - 1) / srcinfo.qw;
 	sint32		qh			= -(-height >> srcinfo.qhbits);
@@ -1560,8 +1561,10 @@ void VDPixmapBuffer::init(sint32 width, sint32 height, int f) {
 	switch (srcinfo.auxbufs) {
 	case 3:
 		totalsize64 += asize;
+		[[fallthrough]];
 	case 2:
 		totalsize64 += subsize;
+		[[fallthrough]];
 	case 1:
 		totalsize64 += subsize;
 	}
@@ -1579,9 +1582,10 @@ void VDPixmapBuffer::init(sint32 width, sint32 height, int f) {
 
 	if (mLinearSize != totalsize) {
 		clear();
-		mpBuffer = new_nothrow char[totalsize + 15];
-		if (!mpBuffer)
+		mpBuffer = new(std::nothrow) char[totalsize + 15];
+		if (!mpBuffer) {
 			throw MyMemoryError(totalsize + 15);
+		}
 		mLinearSize = totalsize;
 	}
 
@@ -1589,9 +1593,9 @@ void VDPixmapBuffer::init(sint32 width, sint32 height, int f) {
 
 #ifdef _DEBUG
 	*(uint32 *)p = totalsize;
-	for(int i=0; i<12; ++i)
-		p[4+i] = (char)(0xa0 + i);
-
+	for (int i = 0; i < 12; ++i) {
+		p[4 + i] = (char)(0xa0 + i);
+	}
 	p += 16;
 #endif
 
@@ -1635,12 +1639,14 @@ void VDPixmapBuffer::init(sint32 width, sint32 height, int f) {
 	}
 
 #ifdef _DEBUG
-	for(int j=0; j<12; ++j)
+	for (int j = 0; j < 12; ++j) {
 		p[j] = (char)(0xb0 + j);
+	}
 #endif
 }
 
-void VDPixmapBuffer::init(const VDPixmapLayout& layout, uint32 additionalPadding) {
+void VDPixmapBuffer::init(const VDPixmapLayout& layout, uint32 additionalPadding)
+{
 	const VDPixmapFormatInfo& srcinfo = VDPixmapGetInfo(layout.format);
 	sint32		qw			= (layout.w + srcinfo.qw - 1) / srcinfo.qw;
 	sint32		qh			= -(-layout.h >> srcinfo.qhbits);
@@ -1705,9 +1711,10 @@ void VDPixmapBuffer::init(const VDPixmapLayout& layout, uint32 additionalPadding
 
 	if (mLinearSize != totalsize) {
 		clear();
-		mpBuffer = new_nothrow char[totalsize + 15];
-		if (!mpBuffer)
+		mpBuffer = new(std::nothrow) char[totalsize + 15];
+		if (!mpBuffer) {
 			throw MyMemoryError(totalsize + 15);
+		}
 		mLinearSize = totalsize;
 	}
 
@@ -1715,9 +1722,9 @@ void VDPixmapBuffer::init(const VDPixmapLayout& layout, uint32 additionalPadding
 
 #ifdef _DEBUG
 	*(uint32 *)p = totalsize - 28;
-	for(int i=0; i<12; ++i)
-		p[4+i] = (char)(0xa0 + i);
-
+	for (int i = 0; i < 12; ++i) {
+		p[4 + i] = (char)(0xa0 + i);
+	}
 	p += 16;
 #endif
 
@@ -1740,19 +1747,22 @@ void VDPixmapBuffer::init(const VDPixmapLayout& layout, uint32 additionalPadding
 	if (srcinfo.palsize) {
 		palette = (const uint32 *)(p + linsize);
 
-		if (layout.palette)
-			memcpy((void *)palette, layout.palette, 4*srcinfo.palsize);
+		if (layout.palette) {
+			memcpy((void*)palette, layout.palette, 4 * srcinfo.palsize);
+		}
 	}
 
 #ifdef _DEBUG
-	for(int j=0; j<12; ++j)
+	for (int j = 0; j < 12; ++j) {
 		p[totalsize + j - 28] = (char)(0xb0 + j);
+	}
 #endif
 
 	VDAssertValidPixmap(*this);
 }
 
-void VDPixmapBuffer::assign(const VDPixmap& src) {
+void VDPixmapBuffer::assign(const VDPixmap& src)
+{
 	if (!src.format) {
 		delete[] mpBuffer;
 		mpBuffer = NULL;
@@ -1774,36 +1784,45 @@ void VDPixmapBuffer::assign(const VDPixmap& src) {
 		switch(srcinfo.auxbufs) {
 		case 3:
 			VDMemcpyRect(data4, pitch4, src.data4, src.pitch4, src.w * srcinfo.aux4size, src.h);
+			[[fallthrough]];
 		case 2:
 			VDMemcpyRect(data3, pitch3, src.data3, src.pitch3, subw, subh);
+			[[fallthrough]];
 		case 1:
 			VDMemcpyRect(data2, pitch2, src.data2, src.pitch2, subw, subh);
+			[[fallthrough]];
 		case 0:
 			VDMemcpyRect(data, pitch, src.data, src.pitch, qw * srcinfo.qsize, qh);
 		}
 	}
 }
 
-void VDPixmapBuffer::swap(VDPixmapBuffer& dst) {
+void VDPixmapBuffer::swap(VDPixmapBuffer& dst)
+{
 	std::swap(mpBuffer, dst.mpBuffer);
 	std::swap(mLinearSize, dst.mLinearSize);
 	std::swap(static_cast<VDPixmap&>(*this), static_cast<VDPixmap&>(dst));
 }
 
 #ifdef _DEBUG
-void VDPixmapBuffer::validate() {
+void VDPixmapBuffer::validate()
+{
 	if (mpBuffer) {
 		char *p = (char *)(((uintptr)mpBuffer + 15) & ~(uintptr)15);
 
 		// verify head bytes
-		for(int i=0; i<12; ++i)
-			if (p[i+4] != (char)(0xa0 + i))
+		for (int i = 0; i < 12; ++i) {
+			if (p[i + 4] != (char)(0xa0 + i)) {
 				VDASSERT(!"VDPixmapBuffer: Buffer underflow detected.\n");
+			}
+		}
 
 		// verify tail bytes
-		for(int j=0; j<12; ++j)
-			if (p[mLinearSize - 12 + j] != (char)(0xb0 + j))
+		for (int j = 0; j < 12; ++j) {
+			if (p[mLinearSize - 12 + j] != (char)(0xb0 + j)) {
 				VDASSERT(!"VDPixmapBuffer: Buffer overflow detected.\n");
+			}
+		}
 	}
 }
 #endif
