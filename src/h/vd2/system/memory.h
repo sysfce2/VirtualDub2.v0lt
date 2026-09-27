@@ -3,6 +3,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee, All Rights Reserved.
 // Copyright (C) 2016 Anton Shekhovtsov
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: Zlib
 //
@@ -11,6 +12,19 @@
 #define f_VD2_SYSTEM_MEMORY_H
 
 #include <vd2/system/vdtypes.h>
+
+template <typename T>
+inline constexpr T VDAlignDown(const T value, const T align) // aligning downwards is just truncation
+{
+	return value & ~(align - 1);
+};
+
+template <typename T>
+inline constexpr T VDAlignUp(const T value, const T align) // align up: round up to next boundary
+{
+	const T align_mask = align - 1;
+	return (value + align_mask) & ~align_mask;
+};
 
 void *VDAlignedMalloc(size_t n, unsigned alignment);
 void VDAlignedFree(void *p);
