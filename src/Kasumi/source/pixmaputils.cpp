@@ -1517,30 +1517,46 @@ VDPixmap VDPixmapExtractField(const VDPixmap& src, bool field2) {
 
 ///////////////////////////////////////////////////////////////////////////
 
+VDPixmapBuffer::VDPixmapBuffer()
+{
+	VDPixmap::clear();
+}
+
 VDPixmapBuffer::VDPixmapBuffer(const VDPixmap& src)
-	: mpBuffer(NULL)
-	, mLinearSize(0)
 {
 	assign(src);
 }
 
 VDPixmapBuffer::VDPixmapBuffer(const VDPixmapBuffer& src)
-	: mpBuffer(NULL)
-	, mLinearSize(0)
 {
 	assign(src);
 }
 
-VDPixmapBuffer::VDPixmapBuffer(const VDPixmapLayout& layout) {
+VDPixmapBuffer::VDPixmapBuffer(sint32 w, sint32 h, int format)
+{
+	init(w, h, format);
+}
+
+VDPixmapBuffer::VDPixmapBuffer(const VDPixmapLayout& layout)
+{
 	init(layout);
 }
 
-VDPixmapBuffer::~VDPixmapBuffer() {
+VDPixmapBuffer::~VDPixmapBuffer()
+{
 #ifdef _DEBUG
 	validate();
 #endif
 
 	delete[] mpBuffer;
+}
+
+void VDPixmapBuffer::clear()
+{
+	delete[] mpBuffer;
+	mpBuffer = nullptr;
+	mLinearSize = 0;
+	format = nsVDPixmap::kPixFormat_Null;
 }
 
 void VDPixmapBuffer::init(sint32 width, sint32 height, int f)
