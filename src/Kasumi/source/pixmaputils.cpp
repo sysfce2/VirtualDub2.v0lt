@@ -1260,10 +1260,13 @@ VDPixmap VDPixmapOffset(const VDPixmap& src, vdpixpos x, vdpixpos y) {
 	switch(info.auxbufs) {
 	case 3:
 		temp.data4 = (char *)temp.data4 + x*info.aux4size + y*temp.pitch4;
+		[[fallthrough]];
 	case 2:
 		temp.data3 = (char *)temp.data3 + (x >> info.auxwbits)*info.auxsize + (y >> info.auxhbits)*temp.pitch3;
+		[[fallthrough]];
 	case 1:
 		temp.data2 = (char *)temp.data2 + (x >> info.auxwbits)*info.auxsize + (y >> info.auxhbits)*temp.pitch2;
+		[[fallthrough]];
 	case 0:
 		temp.data = (char *)temp.data + x*info.qsize + y*temp.pitch;
 	}
@@ -1283,10 +1286,13 @@ VDPixmapLayout VDPixmapLayoutOffset(const VDPixmapLayout& src, vdpixpos x, vdpix
 	switch(info.auxbufs) {
 	case 3:
 		temp.data4 += x*info.aux4size + y*temp.pitch4;
+		[[fallthrough]];
 	case 2:
 		temp.data3 += -(-x >> info.auxwbits)*info.auxsize + -(-y >> info.auxhbits)*temp.pitch3;
+		[[fallthrough]];
 	case 1:
 		temp.data2 += -(-x >> info.auxwbits)*info.auxsize + -(-y >> info.auxhbits)*temp.pitch2;
+		[[fallthrough]];
 	case 0:
 		temp.data += x*info.qsize + y*temp.pitch;
 	}
@@ -1820,9 +1826,36 @@ void VDPixmapBuffer::swap(VDPixmapBuffer& dst)
 	std::swap(static_cast<VDPixmap&>(*this), static_cast<VDPixmap&>(dst));
 }
 
+void* VDPixmapBuffer::base()
+{
 #ifdef _DEBUG
+	return mpBuffer + (-(int)(uintptr)mpBuffer & 15) + 16;
+#else
+	return mpBuffer + (-(int)(uintptr)mpBuffer & 15);
+#endif
+}
+
+const void* VDPixmapBuffer::base() const
+{
+#ifdef _DEBUG
+	return mpBuffer + (-(int)(uintptr)mpBuffer & 15) + 16;
+#else
+	return mpBuffer + (-(int)(uintptr)mpBuffer & 15);
+#endif
+}
+
+size_t VDPixmapBuffer::size() const
+{
+#ifdef _DEBUG
+	return mLinearSize - 28;
+#else
+	return mLinearSize;
+#endif
+}
+
 void VDPixmapBuffer::validate()
 {
+#ifdef _DEBUG
 	if (mpBuffer) {
 		char *p = (char *)(((uintptr)mpBuffer + 15) & ~(uintptr)15);
 
@@ -1840,5 +1873,5 @@ void VDPixmapBuffer::validate()
 			}
 		}
 	}
-}
 #endif
+}

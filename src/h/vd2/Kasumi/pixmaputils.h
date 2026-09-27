@@ -3,6 +3,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2016-2018 Anton Shekhovtsov
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -211,19 +212,11 @@ public:
 
 	void clear();
 
-#ifdef _DEBUG
-	void *base() { return mpBuffer + (-(int)(uintptr)mpBuffer & 15) + 16; }
-	const void *base() const { return mpBuffer + (-(int)(uintptr)mpBuffer & 15) + 16; }
-	size_t size() const { return mLinearSize - 28; }
+	void* base();
+	const void* base() const;
+	size_t size() const;
 
 	void validate();
-#else
-	void *base() { return mpBuffer + (-(int)(uintptr)mpBuffer & 15); }
-	const void *base() const { return mpBuffer + (-(int)(uintptr)mpBuffer & 15); }
-	size_t size() const { return mLinearSize; }
-
-	void validate() {}
-#endif
 
 	void init(sint32 w, sint32 h, int format);
 	void init(const VDPixmapLayout&, uint32 additionalPadding = 0);
