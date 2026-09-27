@@ -47,4 +47,6 @@
 #include <vd2/Kasumi/pixmapops.h>
 #include <vd2/Kasumi/pixmaputils.h>
 
+#define ENABLE_RESIZE_ZIMG 0
+
 #endif

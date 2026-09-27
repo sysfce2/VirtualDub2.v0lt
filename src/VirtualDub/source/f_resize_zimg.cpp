@@ -7,6 +7,8 @@
 
 #include "stdafx.h"
 
+#if ENABLE_RESIZE_ZIMG
+
 #include <vd2/system/vdtypes.h>
 #include "ScriptInterpreter.h"
 #include "ScriptError.h"
@@ -522,3 +524,5 @@ extern const VDXFilterDefinition filterDef_resize_zimg = VDXVideoFilterDefinitio
 
 // warning C4505: 'VDXVideoFilter::[thunk]: __thiscall VDXVideoFilter::`vcall'{48,{flat}}' }'' : unreferenced local function has been removed
 #pragma warning(disable: 4505)
+
+#endif
