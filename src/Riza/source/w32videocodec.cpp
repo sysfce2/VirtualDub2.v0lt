@@ -592,7 +592,7 @@ namespace {
 								0
 							};
 
-							unpackedSrc.biSizeImage = ((unpackedSrc.biWidth*3+3)&~3)*abs(unpackedSrc.biHeight);
+							unpackedSrc.biSizeImage = VDAlignUp(unpackedSrc.biWidth*3, 4) * abs(unpackedSrc.biHeight);
 
 							LONG size = ICCompressGetFormatSize(hic, &unpackedSrc);
 

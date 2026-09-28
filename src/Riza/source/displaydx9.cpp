@@ -3,7 +3,7 @@
 //
 // Copyright (C) 1998-2005 Avery Lee
 // Copyright (C) 2016-2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -3777,7 +3777,7 @@ namespace {
 		IDirect3DDevice9 *dev = pManager->GetDevice();
 
 		// Round up to next multiple of 128 pixels to reduce reallocation.
-		int texw = (w + 127) & ~127;
+		int texw = VDAlignUp(w, 128);
 		int texh = 1;
 		pManager->AdjustTextureSize(texw, texh);
 
@@ -4208,8 +4208,8 @@ bool VDVideoDisplayMinidriverDX9::UpdateBackbuffer(const RECT& rClient0, UpdateM
 			}
 
 			if (!mpSwapChain || mSwapChainW < rClippedClient.right || mSwapChainH < rClippedClient.bottom) {
-				int scw = std::min<int>((rClippedClient.right + 127) & ~127, rtw);
-				int sch = std::min<int>((rClippedClient.bottom + 127) & ~127, rth);
+				int scw = std::min<int>(VDAlignUp(rClippedClient.right, 128), rtw);
+				int sch = std::min<int>(VDAlignUp(rClippedClient.bottom, 128), rth);
 
 				if (!mpManager->CreateSwapChain(mhwnd, scw, sch, mbClipToMonitor, ~mpSwapChain))
 					return false;

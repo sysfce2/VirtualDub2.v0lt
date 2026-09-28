@@ -414,7 +414,7 @@ bool VDMakeBitmapFormatFromPixmapFormat(vdstructex<VDAVIBitmapInfoHeader>& dst, 
 		dst->biPlanes			= 1;
 		dst->biBitCount			= 8;
 		dst->biCompression		= VDAVIBitmapInfoHeader::kCompressionRGB;
-		dst->biSizeImage		= ((w+3)&~3)*h;
+		dst->biSizeImage		= VDAlignUp(w, 4) * h;
 		dst->biXPelsPerMeter	= src->biXPelsPerMeter;
 		dst->biYPelsPerMeter	= src->biYPelsPerMeter;
 		dst->biClrUsed			= src->biClrUsed;
@@ -496,12 +496,12 @@ bool VDMakeBitmapFormatFromPixmapFormat(vdstructex<VDAVIBitmapInfoHeader>& dst, 
 	case kPixFormat_XRGB1555:
 		dst->biCompression	= VDAVIBitmapInfoHeader::kCompressionRGB;
 		dst->biBitCount		= 16;
-		dst->biSizeImage	= ((w*2+3)&~3) * h;
+		dst->biSizeImage	= VDAlignUp(w*2, 4) * h;
 		break;
 	case kPixFormat_RGB565:
 		dst->biCompression	= VDAVIBitmapInfoHeader::kCompressionBitfields;
 		dst->biBitCount		= 16;
-		dst->biSizeImage	= ((w*2+3)&~3) * h;
+		dst->biSizeImage	= VDAlignUp(w*2, 4) * h;
 		dst.resize(sizeof(VDAVIBitmapInfoHeader) + 3*sizeof(uint32));
 		{
 			uint32 *fields = (uint32 *)(dst.data() + 1);
@@ -527,7 +527,7 @@ bool VDMakeBitmapFormatFromPixmapFormat(vdstructex<VDAVIBitmapInfoHeader>& dst, 
 			break;
 		}
 		dst->biBitCount		= 24;
-		dst->biSizeImage	= ((w*3+3)&~3) * h;
+		dst->biSizeImage	= VDAlignUp(w*3, 4) * h;
 		break;
 	case kPixFormat_XRGB8888:
 		switch(variant) {
@@ -675,7 +675,7 @@ bool VDMakeBitmapFormatFromPixmapFormat(vdstructex<VDAVIBitmapInfoHeader>& dst, 
 			break;
 		}
 		dst->biBitCount		= 8;
-		dst->biSizeImage	= ((w+3) & ~3) * h;
+		dst->biSizeImage	= VDAlignUp(w, 4) * h;
 		break;
 	case kPixFormat_YUV422_V210:
 		dst->biCompression	= VDMAKEFOURCC('v', '2', '1', '0');
@@ -720,7 +720,7 @@ bool VDMakeBitmapFormatFromPixmapFormat(vdstructex<VDAVIBitmapInfoHeader>& dst, 
 		case kBitmapVariant_Y8_FR:
 			dst->biCompression	= VDMAKEFOURCC('Y', '8', ' ', ' ');
 			dst->biBitCount		= 8;
-			dst->biSizeImage	= ((w+3) & ~3) * h;
+			dst->biSizeImage	= VDAlignUp(w, 4)* h;
 			break;
 		case kBitmapVariant_Y8_Pal:
 		default:
@@ -728,7 +728,7 @@ bool VDMakeBitmapFormatFromPixmapFormat(vdstructex<VDAVIBitmapInfoHeader>& dst, 
 			dst->biBitCount		= 8;
 			dst->biClrUsed		= 256;
 			dst->biClrImportant	= 256;
-			dst->biSizeImage	= ((w+3) & ~3)*h;
+			dst->biSizeImage	= VDAlignUp(w, 4) * h;
 			dst.resize(sizeof(VDAVIBitmapInfoHeader) + 256*sizeof(VDAVIRGBQuad));
 
 			{
@@ -821,7 +821,9 @@ uint32 VDMakeBitmapCompatiblePixmapLayout(VDPixmapLayout& layout, sint32 w, sint
 		if (imageSize && imageSize==w*h*4) alignment = 1;
 	} else if (format == kPixFormat_YUV444_V308) {
 		alignment = 1;
-		if (imageSize && ((w*3+3) & ~3)*h==imageSize) alignment = 4;
+		if (imageSize && VDAlignUp(w, 4) * h == imageSize) {
+			alignment = 4;
+		}
 	} else if (format == kPixFormat_Y8) {
 		if (imageSize && w*h==imageSize) alignment = 1;
 	} else if (VDPixmapGetInfo(format).auxbufs > 1)

@@ -2,7 +2,7 @@
 // A/V interface library
 //
 // Copyright (C) 1998-2005 Avery Lee
-// Copyright (C) 2023-2025 v0lt
+// Copyright (C) 2023-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -948,8 +948,8 @@ bool VDVideoDisplayMinidriverD3DFX::UpdateBackbuffer(const RECT& rClient0, Updat
 			}
 
 			if ((!mpSwapChain || mSwapChainW < dw || mSwapChainH < dh)) {
-				int scw = std::min<int>((dw + 127) & ~127, dm.Width);
-				int sch = std::min<int>((dh + 127) & ~127, dm.Height);
+				int scw = std::min<int>(VDAlignUp(dw, 128), dm.Width);
+				int sch = std::min<int>(VDAlignUp(dh, 128), dm.Height);
 
 				VDDEBUG("Resizing swap chain to %dx%d\n", scw, sch);
 

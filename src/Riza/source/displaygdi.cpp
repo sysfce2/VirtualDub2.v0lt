@@ -3,7 +3,7 @@
 //
 // Copyright (C) 2013 Avery Lee
 // Copyright (C) 2015-2018 Anton Shekhovtsov
-// Copyright (C) 2025 v0lt
+// Copyright (C) 2025-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -434,7 +434,7 @@ bool VDVideoDisplayMinidriverGDI::Init(HWND hwnd, HMONITOR hmonitor, const VDVid
 				bih.hdr.biCompression	= BI_RGB;
 				bih.hdr.biBitCount		= 8;
 
-				mPitch = ((mSource.pixmap.w + 3) & ~3);
+				mPitch = VDAlignUp(mSource.pixmap.w, 4);
 				bih.hdr.biSizeImage		= mPitch * mSource.pixmap.h;
 				bih.hdr.biClrUsed		= 216;
 				bih.hdr.biClrImportant	= 216;
@@ -463,7 +463,7 @@ bool VDVideoDisplayMinidriverGDI::Init(HWND hwnd, HMONITOR hmonitor, const VDVid
 				bih.hdr.biCompression	= BI_RGB;
 				bih.hdr.biBitCount		= 8;
 
-				mPitch = ((mSource.pixmap.w + 3) & ~3);
+				mPitch = VDAlignUp(mSource.pixmap.w, 4);
 				bih.hdr.biSizeImage		= mPitch * mSource.pixmap.h;
 				bih.hdr.biClrUsed		= 256;
 				bih.hdr.biClrImportant	= 256;
