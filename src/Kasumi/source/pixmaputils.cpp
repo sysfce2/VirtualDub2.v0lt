@@ -1300,9 +1300,8 @@ VDPixmapLayout VDPixmapLayoutOffset(const VDPixmapLayout& src, vdpixpos x, vdpix
 	return temp;
 }
 
-uint32 VDPixmapCreateLinearLayout(VDPixmapLayout& layout, VDPixmapFormatEx format, vdpixsize w, vdpixsize h, int alignment) {
-	const ptrdiff_t alignmask = alignment - 1;
-
+uint32 VDPixmapCreateLinearLayout(VDPixmapLayout& layout, VDPixmapFormatEx format, vdpixsize w, vdpixsize h, int alignment)
+{
 	const VDPixmapFormatInfo& srcinfo = VDPixmapGetInfo(format);
 	sint32		qw			= (w + srcinfo.qw - 1) / srcinfo.qw;
 	sint32		qh			= -(-h >> srcinfo.qhbits);
@@ -1310,7 +1309,7 @@ uint32 VDPixmapCreateLinearLayout(VDPixmapLayout& layout, VDPixmapFormatEx forma
 	sint32		subh		= -(-h >> srcinfo.auxhbits);
 	sint32		auxsize		= srcinfo.auxsize;
 
-	ptrdiff_t	mainpitch	= (srcinfo.qsize * qw + alignmask) & ~alignmask;
+	ptrdiff_t	mainpitch	= VDAlignUp(srcinfo.qsize * qw, alignment);
 	size_t		mainsize	= mainpitch * qh;
 
 	layout.data		= 0;
@@ -1328,7 +1327,7 @@ uint32 VDPixmapCreateLinearLayout(VDPixmapLayout& layout, VDPixmapFormatEx forma
 	layout.formatEx	= format;
 
 	if (srcinfo.auxbufs >= 1) {
-		ptrdiff_t	subpitch	= (subw * auxsize + alignmask) & ~alignmask;
+		ptrdiff_t	subpitch	= VDAlignUp(subw * auxsize, alignment);
 		size_t		subsize		= subpitch * subh;
 
 		layout.data2	= mainsize;
@@ -1343,7 +1342,7 @@ uint32 VDPixmapCreateLinearLayout(VDPixmapLayout& layout, VDPixmapFormatEx forma
 	}
 
 	if (srcinfo.auxbufs >= 3) {
-		ptrdiff_t	apitch	= (srcinfo.aux4size * w + alignmask) & ~alignmask;
+		ptrdiff_t	apitch	= VDAlignUp(srcinfo.aux4size * w, alignment);
 		size_t		asize	= apitch * h;
 
 		layout.data4	= mainsize;

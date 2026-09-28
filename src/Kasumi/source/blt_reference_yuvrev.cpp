@@ -440,7 +440,7 @@ void VDPixmapBlt_YUVPlanar_encode_reference(const VDPixmap& dstbm, const VDPixma
 
 	if (!vfunc) {
 		if (hfunc) {
-			uint32 tmpsize = (w + 15) & ~15;
+			uint32 tmpsize = VDAlignUp(w, 16);
 
 			vdblock<uint8> tmp(tmpsize * 2);
 			uint8 *const cbtmp = tmp.data();
@@ -457,7 +457,7 @@ void VDPixmapBlt_YUVPlanar_encode_reference(const VDPixmap& dstbm, const VDPixma
 			} while(--h);
 		} else if (dstbm.format == nsVDPixmap::kPixFormat_Y8) {
 			// wasteful, but oh well
-			uint32 tmpsize = (w2+15)&~15;
+			uint32 tmpsize = VDAlignUp(w2, 16);
 			vdblock<uint8> tmp(tmpsize);
 
 			cbdst = tmp.data();

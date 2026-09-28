@@ -38,13 +38,14 @@ public:
 		VDASSERT(mWindowMaxDY >= mWindowMinDY);
 		mWindowSize = mWindowMaxDY + 1 - mWindowMinDY;
 
-		mWindowPitch = (rowbytes + 15) & ~15;
+		mWindowPitch = VDAlignUp(rowbytes, 16);
 		mWindowBuffer.resize(mWindowPitch * mWindowSize * outputCount + 15);
 		mWindow.resize(mWindowSize * 2);
 
-		size_t buf_base = size_t(mWindowBuffer.data() + 15) & ~15; 
-		for(sint32 i=0; i<mWindowSize; ++i)
-			mWindow[i] = mWindow[i + mWindowSize] = (uint8*)buf_base + (mWindowPitch * outputCount * i);
+		uint8* buf_base = (uint8*)VDAlignUp((size_t)mWindowBuffer.data(), 16);
+		for (sint32 i = 0; i < mWindowSize; ++i) {
+			mWindow[i] = mWindow[i + mWindowSize] = buf_base + (mWindowPitch * outputCount * i);
+		}
 
 		mWindowIndex = 0;
 		mWindowLastY = -0x3FFFFFFF;

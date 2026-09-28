@@ -1090,8 +1090,8 @@ void VDPixmapBlt_YUVPlanar_decode_reference(const VDPixmap& dst, const VDPixmap&
 #endif
 
 	uint32 chroma_srcwidth = -(-w >> srcinfo.auxwbits);
-	horiz_buffer_size = (horiz_buffer_size + 15) & ~15;
-	vert_buffer_size = (vert_buffer_size + 15) & ~15;
+	horiz_buffer_size = VDAlignUp(horiz_buffer_size, 16);
+	vert_buffer_size  = VDAlignUp(vert_buffer_size, 16);
 
 	// allocate buffers
 
@@ -1271,7 +1271,7 @@ namespace {
 		const uint8 *window[16];
 
 		vdblock<uint8> tmpbuf;
-		ptrdiff_t tmppitch = (w+15) & ~15;
+		ptrdiff_t tmppitch = VDAlignUp(w, 16);
 
 		if (vfunc && hfunc)
 			tmpbuf.resize(tmppitch * winsize);
