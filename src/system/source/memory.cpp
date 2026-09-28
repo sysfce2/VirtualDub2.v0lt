@@ -3,7 +3,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee, All Rights Reserved.
 // Copyright (C) 2016 Anton Shekhovtsov
-// Copyright (C) 2024 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: Zlib
 //
@@ -16,28 +16,21 @@
 #include <vd2/system/seh.h>
 #include <vd2/system/cpuaccel.h>
 
-void *VDAlignedMalloc(size_t n, unsigned alignment) {
+void* VDAlignedMalloc(size_t n, unsigned alignment)
+{
 #ifdef VD_COMPILER_MSVC
 	return _aligned_malloc(n, alignment);
 #else
-	void *p = malloc(n + sizeof(void *) + alignment - 1);
-
-	if (p) {
-		void *alignedp = (void *)(((uintptr)p + sizeof(void *) + alignment - 1) & ~((uintptr)alignment - 1));
-
-		((void **)alignedp)[-1] = p;
-		p = alignedp;
-	}
-
-	return p;
+	return std::aligned_alloc(n, alignment);
 #endif
 }
 
-void VDAlignedFree(void *p) {
+void VDAlignedFree(void *p)
+{
 #ifdef VD_COMPILER_MSVC
 	_aligned_free(p);
 #else
-	free(((void **)p)[-1]);
+	std::free(p);
 #endif
 }
 
