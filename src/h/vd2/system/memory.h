@@ -13,16 +13,16 @@
 
 #include <vd2/system/vdtypes.h>
 
-template <typename T>
-inline constexpr T VDAlignDown(const T value, const T align) // aligning downwards is just truncation
+template <typename T, typename U>
+inline constexpr T VDAlignDown(const T value, const U align) // aligning downwards is just truncation
 {
-	return value & ~(align - 1);
+	return value & ~((T)align - 1);
 };
 
-template <typename T>
-inline constexpr T VDAlignUp(const T value, const T align) // align up: round up to next boundary
+template <typename T, typename U>
+inline constexpr T VDAlignUp(const T value, const U align) // align up: round up to next boundary
 {
-	const T align_mask = align - 1;
+	const T align_mask = (T)align - 1;
 	return (value + align_mask) & ~align_mask;
 };
 
