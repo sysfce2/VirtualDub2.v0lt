@@ -1531,8 +1531,10 @@ constexpr T VDPixmap_AlignUp(const T value) // align up: round up to next bounda
 	return (value + align_mask) & ~align_mask;
 };
 
-#define VDPIXMAP_DEBUG_HEAD_BYTES (VDPIXMAP_ALIGNMENT)
-#define VDPIXMAP_DEBUG_TAIL_BYTES (VDPIXMAP_ALIGNMENT)
+#ifdef _DEBUG
+	#define VDPIXMAP_DEBUG_HEAD_BYTES (VDPIXMAP_ALIGNMENT)
+	#define VDPIXMAP_DEBUG_TAIL_BYTES (VDPIXMAP_ALIGNMENT)
+#endif
 
 VDPixmapBuffer::VDPixmapBuffer()
 {
@@ -1565,12 +1567,12 @@ VDPixmapBuffer::~VDPixmapBuffer()
 	validate();
 #endif
 
-	::operator delete[](mpBuffer, std::align_val_t(VDPIXMAP_ALIGNMENT));
+	VDAlignedFree(mpBuffer);
 }
 
 void VDPixmapBuffer::clear()
 {
-	::operator delete[](mpBuffer, std::align_val_t(VDPIXMAP_ALIGNMENT));
+	VDAlignedFree(mpBuffer);
 	mpBuffer = nullptr;
 	mLinearSize = 0;
 	format = nsVDPixmap::kPixFormat_Null;
@@ -1589,8 +1591,8 @@ void VDPixmapBuffer::init(sint32 width, sint32 height, int f)
 	uint64		mainsize	= (uint64)mainpitch * qh;
 	uint64		subsize		= (uint64)subpitch * subh;
 	uint64		asize		= (uint64)apitch * height;
-	uint64		totalsize64	= mainsize + 4 * srcinfo.palsize;
 
+	uint64 totalsize64	= mainsize;
 	switch (srcinfo.auxbufs) {
 	case 3:
 		totalsize64 += asize;
@@ -1601,6 +1603,7 @@ void VDPixmapBuffer::init(sint32 width, sint32 height, int f)
 	case 1:
 		totalsize64 += subsize;
 	}
+	totalsize64 += srcinfo.palsize * 4;
 
 #ifdef _DEBUG
 	totalsize64 += VDPIXMAP_DEBUG_HEAD_BYTES + VDPIXMAP_DEBUG_TAIL_BYTES;
@@ -1615,20 +1618,19 @@ void VDPixmapBuffer::init(sint32 width, sint32 height, int f)
 
 	if (mLinearSize != totalsize) {
 		clear();
-		mpBuffer = new(std::align_val_t(VDPIXMAP_ALIGNMENT), std::nothrow) char[totalsize];
+		mpBuffer = VDAlignedMalloc(totalsize, VDPIXMAP_ALIGNMENT);
 		if (!mpBuffer) {
 			throw MyMemoryError(totalsize);
 		}
-		VDASSERT(((size_t)mpBuffer & (VDPIXMAP_ALIGNMENT - 1)) == 0);
 		mLinearSize = totalsize;
 	}
 
-	char *p = mpBuffer;
+	char *p = (char*)mpBuffer;
 
 #ifdef _DEBUG
-	*(uint32*)p = totalsize - (VDPIXMAP_DEBUG_HEAD_BYTES + VDPIXMAP_DEBUG_TAIL_BYTES);
-	for (size_t i = 0; i < (VDPIXMAP_DEBUG_HEAD_BYTES - sizeof(uint32)); ++i) {
-		p[sizeof(uint32) + i] = (char)(0xa0 + i);
+	*(uint32*)p = totalsize;
+	for (int i = sizeof(uint32); i < VDPIXMAP_DEBUG_HEAD_BYTES; ++i) {
+		p[i] = (char)(0xa0 + i);
 	}
 	p += VDPIXMAP_DEBUG_HEAD_BYTES;
 #endif
@@ -1729,7 +1731,7 @@ void VDPixmapBuffer::init(const VDPixmapLayout& layout, uint32 additionalPadding
 
 	sint64 linsize64 = VDPixmap_AlignUp(maxo - mino);
 
-	sint64 totalsize64 = linsize64 + 4*srcinfo.palsize + additionalPadding;
+	sint64 totalsize64 = linsize64 + srcinfo.palsize * 4 + additionalPadding;
 
 #ifdef _DEBUG
 	totalsize64 += VDPIXMAP_DEBUG_HEAD_BYTES + VDPIXMAP_DEBUG_TAIL_BYTES;
@@ -1745,20 +1747,19 @@ void VDPixmapBuffer::init(const VDPixmapLayout& layout, uint32 additionalPadding
 
 	if (mLinearSize != totalsize) {
 		clear();
-		mpBuffer = new(std::align_val_t(VDPIXMAP_ALIGNMENT), std::nothrow) char[totalsize];
+		mpBuffer = VDAlignedMalloc(totalsize, VDPIXMAP_ALIGNMENT);
 		if (!mpBuffer) {
 			throw MyMemoryError(totalsize);
 		}
-		VDASSERT(((size_t)mpBuffer & (VDPIXMAP_ALIGNMENT - 1)) == 0);
 		mLinearSize = totalsize;
 	}
 
-	char* p = mpBuffer;
+	char* p = (char*)mpBuffer;
 
 #ifdef _DEBUG
-	*(uint32*)p = totalsize - (VDPIXMAP_DEBUG_HEAD_BYTES + VDPIXMAP_DEBUG_TAIL_BYTES);
-	for (size_t i = 0; i < (VDPIXMAP_DEBUG_HEAD_BYTES - sizeof(uint32)); ++i) {
-		p[sizeof(uint32) + i] = (char)(0xa0 + i);
+	*(uint32*)p = totalsize;
+	for (int i = sizeof(uint32); i < VDPIXMAP_DEBUG_HEAD_BYTES; ++i) {
+		p[i] = (char)(0xa0 + i);
 	}
 	p += VDPIXMAP_DEBUG_HEAD_BYTES;
 #endif
@@ -1788,8 +1789,9 @@ void VDPixmapBuffer::init(const VDPixmapLayout& layout, uint32 additionalPadding
 	}
 
 #ifdef _DEBUG
+	p = (char*)mpBuffer + totalsize - VDPIXMAP_DEBUG_TAIL_BYTES;
 	for (int j = 0; j < VDPIXMAP_DEBUG_TAIL_BYTES; ++j) {
-		p[totalsize - VDPIXMAP_DEBUG_TAIL_BYTES + j] = (char)(0xb0 + j);
+		p[j] = (char)(0xb0 + j);
 	}
 #endif
 
@@ -1799,9 +1801,9 @@ void VDPixmapBuffer::init(const VDPixmapLayout& layout, uint32 additionalPadding
 void VDPixmapBuffer::assign(const VDPixmap& src)
 {
 	if (!src.format) {
-		::operator delete[](mpBuffer, std::align_val_t(VDPIXMAP_ALIGNMENT));
-		mpBuffer = NULL;
-		data = NULL;
+		VDAlignedFree(mpBuffer);
+		mpBuffer = nullptr;
+		data = nullptr;
 		format = 0;
 	} else {
 		init(src.w, src.h, src.format);
@@ -1842,7 +1844,7 @@ void VDPixmapBuffer::swap(VDPixmapBuffer& dst)
 void* VDPixmapBuffer::base()
 {
 #ifdef _DEBUG
-	return mpBuffer + VDPIXMAP_DEBUG_HEAD_BYTES;
+	return (char*)mpBuffer + VDPIXMAP_DEBUG_HEAD_BYTES;
 #else
 	return mpBuffer;
 #endif
@@ -1851,7 +1853,7 @@ void* VDPixmapBuffer::base()
 const void* VDPixmapBuffer::base() const
 {
 #ifdef _DEBUG
-	return mpBuffer + VDPIXMAP_DEBUG_HEAD_BYTES;
+	return (char*)mpBuffer + VDPIXMAP_DEBUG_HEAD_BYTES;
 #else
 	return mpBuffer;
 #endif
@@ -1870,23 +1872,25 @@ void VDPixmapBuffer::validate()
 {
 #ifdef _DEBUG
 	if (mpBuffer) {
-		char *p = mpBuffer;
+		char* p = (char*)mpBuffer;
 
 		// verify size
-		if (*(uint32*)p + VDPIXMAP_DEBUG_HEAD_BYTES + VDPIXMAP_DEBUG_TAIL_BYTES != mLinearSize) {
+		if (*(uint32*)p != mLinearSize) {
 			VDASSERT(!"VDPixmapBuffer: Buffer underflow detected.\n");
 		}
 
 		// verify head bytes
-		for (size_t i = 0; i < (VDPIXMAP_DEBUG_HEAD_BYTES - sizeof(uint32)); ++i) {
-			if (p[sizeof(uint32) + i] != (char)(0xa0 + i)) {
+		for (int i = sizeof(uint32); i < VDPIXMAP_DEBUG_HEAD_BYTES; ++i) {
+			if (p[i] != (char)(0xa0 + i)) {
 				VDASSERT(!"VDPixmapBuffer: Buffer underflow detected.\n");
 			}
 		}
 
 		// verify tail bytes
-		for (size_t j = 0; j < VDPIXMAP_DEBUG_TAIL_BYTES; ++j) {
-			if (p[mLinearSize - VDPIXMAP_DEBUG_TAIL_BYTES + j] != (char)(0xb0 + j)) {
+		p = (char*)mpBuffer + mLinearSize - VDPIXMAP_DEBUG_TAIL_BYTES;
+
+		for (int j = 0; j < VDPIXMAP_DEBUG_TAIL_BYTES; ++j) {
+			if (p[j] != (char)(0xb0 + j)) {
 				VDASSERT(!"VDPixmapBuffer: Buffer overflow detected.\n");
 			}
 		}

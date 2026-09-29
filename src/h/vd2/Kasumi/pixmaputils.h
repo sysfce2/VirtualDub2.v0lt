@@ -226,7 +226,7 @@ public:
 	void swap(VDPixmapBuffer&);
 
 protected:
-	char *mpBuffer = nullptr;
+	void* mpBuffer = nullptr;
 	size_t mLinearSize = 0;
 };
 
