@@ -124,7 +124,7 @@ protected:
 	zimgxx::zfilter_graph_builder_params mParams;
 
 	zimgxx::FilterGraph mGraph;
-	std::unique_ptr<void, std::integral_constant<decltype(&_aligned_free), &_aligned_free>> mTempBuffer;
+	std::unique_ptr<void, std::integral_constant<decltype(&VDAlignedFree), &VDAlignedFree>> mTempBuffer;
 };
 
 IVDPixmapResampler *VDCreatePixmapZimgResampler() { return new VDPixmapZimgResampler; }
@@ -252,7 +252,7 @@ bool VDPixmapZimgResampler::Init(const vdrect32f& dstrect0, uint32 dw, uint32 dh
 	//unsigned output_buffering = mGraph.get_output_buffering();
 
 	size_t tmp_size = mGraph.get_tmp_size();
-	mTempBuffer.reset(_aligned_malloc(tmp_size, 64));
+	mTempBuffer.reset(VDAlignedMalloc(tmp_size, 64));
 
 	return true;
 }

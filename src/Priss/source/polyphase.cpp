@@ -2,6 +2,7 @@
 //
 // Copyright (C) 2003 Avery Lee
 // Copyright (C) 2016 Anton Shekhovtsov
+// Copyright (C) 2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -10,6 +11,7 @@
 #include <math.h>
 #include <malloc.h>
 #include <vd2/system/cpuaccel.h>
+#include <vd2/system/memory.h>
 #include "polyphase.h"
 
 #ifdef _M_AMD64
@@ -85,11 +87,11 @@ namespace {
 }
 
 void *VDMPEGAudioPolyphaseFilter::operator new(size_t s) {
-	return _aligned_malloc(s, 32);
+	return VDAlignedMalloc(s, 32);
 }
 
 void VDMPEGAudioPolyphaseFilter::operator delete(void *p) {
-	_aligned_free(p);
+	VDAlignedFree(p);
 }
 
 VDMPEGAudioPolyphaseFilter *VDMPEGAudioPolyphaseFilter::Create() {

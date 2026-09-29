@@ -3,7 +3,7 @@
 //
 // Copyright (C) 1998-2004 Avery Lee
 // Copyright (C) 2016 Anton Shekhovtsov
-// Copyright (C) 2024-2025 v0lt
+// Copyright (C) 2024-2026 v0lt
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 //
@@ -25,8 +25,8 @@ public:
 	void		DecompressFrame(const void *src, bool isPAL);
 	VDPixmap	GetFrameBuffer();
 
-	void* operator new(size_t i)  { return _aligned_malloc(i, 16); }
-	void operator delete(void* p) { _aligned_free(p); }
+	void* operator new(size_t i)  { return VDAlignedMalloc(i, 16); }
+	void operator delete(void* p) { VDAlignedFree(p); }
 
 protected:
 	void InterpolatePALChroma();
