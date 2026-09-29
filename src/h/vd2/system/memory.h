@@ -26,10 +26,10 @@ inline constexpr T VDAlignUp(const T value, const U align) // align up: round up
 	return (value + align_mask) & ~align_mask;
 };
 
-void *VDAlignedMalloc(size_t n, unsigned alignment);
+void *VDAlignedMalloc(size_t n, size_t alignment);
 void VDAlignedFree(void *p);
 
-template<unsigned alignment>
+template<size_t alignment>
 struct VDAlignedObject {
 	inline void *operator new(size_t n) { return VDAlignedMalloc(n, alignment); }
 	inline void operator delete(void *p) { VDAlignedFree(p); }

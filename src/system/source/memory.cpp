@@ -16,7 +16,7 @@
 #include <vd2/system/seh.h>
 #include <vd2/system/cpuaccel.h>
 
-void* VDAlignedMalloc(size_t n, unsigned alignment)
+void* VDAlignedMalloc(size_t n, size_t alignment)
 {
 #ifdef VD_COMPILER_MSVC
 	return _aligned_malloc(n, alignment);
