@@ -197,18 +197,15 @@ public:
 	bool	VDXAPIENTRY IsDecodable(sint64 sample_num);
 
 protected:
-	sint64	mLastFrame;
-	sint64	mNextFrame;
-	sint64	mDesiredFrame;
+	sint64	mLastFrame    = -1;
+	sint64	mNextFrame    = -1;
+	sint64	mDesiredFrame = -1;
 
 	IVDVideoSource *mpVS;
 };
 
 VDVideoDecoderModelDefaultIP::VDVideoDecoderModelDefaultIP(IVDVideoSource *pVS)
 	: mpVS(pVS)
-	, mLastFrame(-1)
-	, mNextFrame(-1)
-	, mDesiredFrame(-1)
 {
 }
 
@@ -292,8 +289,8 @@ public:
 	const void *		VDXAPIENTRY GetFrameBufferBase();
 
 protected:
-	VDPosition	mCurrentSample;
-	VDXPixmap	mFrameBuffer;
+	VDPosition	mCurrentSample = -1;
+	VDXPixmap	mFrameBuffer   = {};
 	int			mWidth;
 	int			mHeight;
 	void		*mpFrameBufferBase;
@@ -302,14 +299,14 @@ protected:
 };
 
 VDVideoDecoderDefault::VDVideoDecoderDefault(IVDVideoDecompressor *decomp, int w, int h)
-	: mCurrentSample(-1)
-	, mpDecompressor(decomp)
+	: mpDecompressor(decomp)
 	, mWidth(w)
 	, mHeight(h)
-	, mpFrameBufferBase(malloc(((w + 3) & ~3) * h * 4))
+	, mpFrameBufferBase(malloc(VDAlignUp(w, 4) * h * 4))
 {
-	if (!mpFrameBufferBase)
+	if (!mpFrameBufferBase) {
 		throw MyMemoryError();
+	}
 }
 
 VDVideoDecoderDefault::~VDVideoDecoderDefault() {
